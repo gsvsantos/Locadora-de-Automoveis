@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36623.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Distribuição", "01-Distribuição", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Locadora-de-Automoveis.WebAPI", "web-api\Locadora-de-Automoveis.WebAPI.csproj", "{E58CD31A-7391-BFB7-8DBE-2E516E7435FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-Core", "02-Core", "{C928C1CC-7A91-4677-9DB5-D679347C9D61}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Infraestrutura", "03-Infraestrutura", "{369CB01D-A1A7-72D2-AABC-3F0945D148A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-Testes", "04-Testes", "{7DC331D0-3EC4-40A6-69FB-1CBEB2E0D1EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E58CD31A-7391-BFB7-8DBE-2E516E7435FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E58CD31A-7391-BFB7-8DBE-2E516E7435FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E58CD31A-7391-BFB7-8DBE-2E516E7435FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E58CD31A-7391-BFB7-8DBE-2E516E7435FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E58CD31A-7391-BFB7-8DBE-2E516E7435FE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C42B427F-2643-4473-A4B4-E821638E875F}
+	EndGlobalSection
+EndGlobal

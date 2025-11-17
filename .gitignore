@@ -1,0 +1,5 @@
+## Block IDE environment files
+
+.idea
+.vs
+.vscode
