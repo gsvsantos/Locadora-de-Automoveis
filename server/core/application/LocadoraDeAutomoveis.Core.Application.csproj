@@ -31,8 +31,4 @@
 	  <ProjectReference Include="..\domain\LocadoraDeAutomoveis.Core.Domain.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Auth\Commands\Register\" />
-	</ItemGroup>
-
 </Project>
