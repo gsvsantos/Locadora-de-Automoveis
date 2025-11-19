@@ -22,7 +22,7 @@ public static class DependencyInjection
 
         if (string.IsNullOrWhiteSpace(connectionString))
         {
-            throw new Exception("The SQL_CONNECTION_STRING variable was not provided.");
+            throw new Exception("The environment variable \"SQL_CONNECTION_STRING\" was not provided.");
         }
 
         services.AddDbContext<IUnitOfWork, AppDbContext>(options =>
@@ -59,14 +59,14 @@ public static class DependencyInjection
             }
             else
             {
-                string? origensPermitidasString = configuration["CORS_ALLOWED_ORIGINS"];
+                string? corsAllowedString = configuration["CORS_ALLOWED_ORIGINS"];
 
-                if (string.IsNullOrWhiteSpace(origensPermitidasString))
+                if (string.IsNullOrWhiteSpace(corsAllowedString))
                 {
                     throw new Exception("The environment variable \"CORS_ALLOWED_ORIGINS\" was not provided.");
                 }
 
-                string[] origensPermitidas = origensPermitidasString
+                string[] corsAllowed = corsAllowedString
                     .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                     .Select(x => x.TrimEnd('/'))
                     .Distinct(StringComparer.OrdinalIgnoreCase)
@@ -75,7 +75,7 @@ public static class DependencyInjection
                 options.AddDefaultPolicy(policy =>
                 {
                     policy
-                        .WithOrigins(origensPermitidas)
+                        .WithOrigins(corsAllowed)
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();
@@ -144,7 +144,7 @@ public static class DependencyInjection
 
         if (string.IsNullOrWhiteSpace(licenseKey))
         {
-            throw new Exception("The NEWRELIC_LICENSE_KEY variable was not provided.");
+            throw new Exception("The environment variable \"NEWRELIC_LICENSE_KEY\" was not provided.");
         }
 
         Log.Logger = new LoggerConfiguration()
@@ -188,8 +188,15 @@ public static class DependencyInjection
 
     private static void ConfigureHangFire(this IServiceCollection services, IConfiguration configuration)
     {
+        string? hangfireConnectionString = configuration["HANGFIRE_SQL_CONNECTION_STRING"];
+
+        if (string.IsNullOrWhiteSpace(hangfireConnectionString))
+        {
+            throw new Exception("The environment variable \"HANGFIRE_SQL_CONNECTION_STRING\" was not provided.");
+        }
+
         services.AddHangfire(config =>
-            config.UseSqlServerStorage(configuration["HANGFIRE_SQL_CONNECTION_STRING"]));
+            config.UseSqlServerStorage(hangfireConnectionString));
 
         services.AddHangfireServer();
     }
@@ -197,6 +204,11 @@ public static class DependencyInjection
     private static void ConfigureRedisCache(this IServiceCollection services, IConfiguration configuration)
     {
         string? redisConnectionString = configuration["REDIS_CONNECTION_STRING"];
+
+        if (string.IsNullOrWhiteSpace(redisConnectionString))
+        {
+            throw new Exception("The environment variable \"REDIS_CONNECTION_STRING\" was not provided.");
+        }
 
         services.AddStackExchangeRedisCache(option =>
         {
