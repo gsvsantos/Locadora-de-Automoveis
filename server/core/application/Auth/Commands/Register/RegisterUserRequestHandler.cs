@@ -48,7 +48,7 @@ public class RegisterUserRequestHandler(
             {
                 await unitOfWork.RollbackAsync();
 
-                return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token")));
+                return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token.")));
             }
 
             return Result.Ok(accessToken);
