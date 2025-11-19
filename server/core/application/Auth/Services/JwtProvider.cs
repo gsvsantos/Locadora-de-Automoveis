@@ -83,7 +83,8 @@ public class JwtProvider : ITokenProvider
                 Id = user.Id,
                 FullName = user.FullName ?? string.Empty,
                 UserName = user.UserName ?? string.Empty,
-                Email = user.Email ?? string.Empty
+                Email = user.Email ?? string.Empty,
+                PhoneNumber = user.PhoneNumber ?? string.Empty
             }
         };
     }

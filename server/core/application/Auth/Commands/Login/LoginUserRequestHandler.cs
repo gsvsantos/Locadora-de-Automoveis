@@ -12,7 +12,6 @@ namespace LocadoraDeAutomoveis.Core.Application.Auth.Commands.Login;
 public class LoginUserRequestHandler(
     SignInManager<User> signInManager,
     UserManager<User> userManager,
-    ITenantProvider tenantProvider,
     ITokenProvider tokenProvider,
     IUnitOfWork unitOfWork,
     ILogger<LoginUserRequestHandler> logger

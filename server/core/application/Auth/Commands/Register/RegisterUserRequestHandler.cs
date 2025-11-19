@@ -23,7 +23,8 @@ public class RegisterUserRequestHandler(
         {
             UserName = request.UserName,
             FullName = request.FullName,
-            Email = request.Email
+            Email = request.Email,
+            PhoneNumber = request.PhoneNumber
         };
 
         try

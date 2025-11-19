@@ -8,5 +8,6 @@ public record RegisterUserRequest(
     string UserName,
     string FullName,
     string Email,
+    string PhoneNumber,
     string Password
 ) : IRequest<Result<TokenResponse>>;
