@@ -1,3 +1,5 @@
+using Locadora_de_Automoveis.WebAPI.Configuration;
+using Locadora_de_Automoveis.WebAPI.Extensions;
 
 namespace Locadora_de_Automoveis.WebAPI;
 
@@ -7,27 +9,36 @@ public class Program
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
+        // Database Provider [env SQL_CONNECTION_STRING]
+        builder.Services.ConfigureDbContext(builder.Configuration, builder.Environment);
 
-        builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        // CORS [env CORS_ALLOWED_ORIGINS]
+        builder.Services.ConfigureCorsPolicy(builder.Environment, builder.Configuration);
+
+        // API Documentation 
+        builder.Services.ConfigureOpenApiAuthHeaders();
+
+        // Add Scoped Dependencies
+        builder.Services.ConfigureRepositories();
+
+        // Logging [env NEWRELIC_LICENSE_KEY]
+        builder.Services.ConfigureSerilog(builder.Logging, builder.Configuration);
+
+        // Services
+        builder.Services.ConfigureServices(builder.Configuration);
+
+        // Auth [env JWT_GENERATION_KEY, JWT_AUDIENCE_DOMAIN]
+        builder.Services.ConfigureIdentityProviders();
+        builder.Services.ConfigureJwtAuthentication(builder.Configuration);
+
+        // Controllers
+        builder.Services.ConfigureControllers();
 
         WebApplication app = builder.Build();
 
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+        app.AutoMigrateDatabase();
 
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-        app.MapControllers();
+        app.UseWebApiPipelineDefaults();
 
         app.Run();
     }
