@@ -4,6 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>8099bc8b-d390-44f2-a010-8310cf3f3d2b</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -34,7 +35,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Controllers\" />
 		<Folder Include="Services\" />
 	</ItemGroup>
 
