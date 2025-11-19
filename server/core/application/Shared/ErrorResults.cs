@@ -2,7 +2,7 @@
 
 namespace LocadoraDeAutomoveis.Core.Application.Shared;
 
-public abstract class ErrorsResult
+public abstract class ErrorResults
 {
     public static Error ConflictError(string error)
     {
@@ -11,18 +11,18 @@ public abstract class ErrorsResult
             .WithMetadata("ErrorType", "Conflict");
     }
 
-    public static Error InvalidRequestError(string error)
+    public static Error BadRequestError(string error)
     {
         return new Error("Invalid request")
             .CausedBy(error)
-            .WithMetadata("ErrorType", "InvalidRequest");
+            .WithMetadata("ErrorType", "BadRequest");
     }
 
-    public static Error InvalidRequestError(IEnumerable<string> errors)
+    public static Error BadRequestError(IEnumerable<string> errors)
     {
         return new Error("Invalid request")
             .CausedBy(errors)
-            .WithMetadata("ErrorType", "InvalidRequest");
+            .WithMetadata("ErrorType", "BadRequest");
     }
 
     public static Error DuplicateRecordError(string errorMessage)
@@ -32,18 +32,18 @@ public abstract class ErrorsResult
             .WithMetadata("ErrorType", "DuplicateRecord");
     }
 
-    public static Error RecordNotFoundError(Guid id)
+    public static Error NotFoundError(Guid id)
     {
         return new Error("Record not found")
             .CausedBy($"Could not retrieve record with ID: {id}")
-            .WithMetadata("ErrorType", "RecordNotFound");
+            .WithMetadata("ErrorType", "NotFound");
     }
 
-    public static Error RecordNotFoundError(string record)
+    public static Error NotFoundError(string record)
     {
         return new Error("Record not found")
             .CausedBy($"Could not retrieve record: {record}")
-            .WithMetadata("ErrorType", "RecordNotFound");
+            .WithMetadata("ErrorType", "NotFound");
     }
 
     public static Error DeletionBlockedError(string errorMessage)
@@ -53,10 +53,10 @@ public abstract class ErrorsResult
             .WithMetadata("ErrorType", "DeletionBlocked");
     }
 
-    public static Error InternalExceptionError(Exception ex)
+    public static Error InternalServerError(Exception ex)
     {
         return new Error("An internal server error occurred")
             .CausedBy(ex)
-            .WithMetadata("ErrorType", "InternalException");
+            .WithMetadata("ErrorType", "InternalServer");
     }
 }

@@ -37,14 +37,14 @@ public static class ControllerExtensions
             "RecordNotFound" => controller.NotFound(messages),  // 404
 
             // 400 (Bad Request)
-            "InvalidRequest" => controller.BadRequest(messages),   // 400
+            "BadRequest" => controller.BadRequest(messages),   // 400
 
             // 401/403 (Auth)
             "Unauthorized" => controller.Unauthorized(),   // 401
             "Forbidden" => controller.Forbid(),  // 403
 
             // 500 (Internal Server Error)
-            "InternalException" => controller.StatusCode(500, messages),  // 500
+            "InternalServer" => controller.StatusCode(500, messages),  // 500
 
             // fallback
             _ => controller.BadRequest(messages)   // fallback
