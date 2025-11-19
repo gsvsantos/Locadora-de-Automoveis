@@ -4,7 +4,7 @@ namespace Locadora_de_Automoveis.Core.Aplicacao.Shared;
 
 public abstract class ResultadosErro
 {
-public static Error ConflictError(string error)
+    public static Error ConflictError(string error)
     {
         return new Error("Conflict")
             .CausedBy(error)
