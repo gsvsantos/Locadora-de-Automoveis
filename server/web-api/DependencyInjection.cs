@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using Hangfire;
+using LocadoraDeAutomoveis.Core.Application.Auth.Commands.Register;
+using LocadoraDeAutomoveis.Core.Domain.Auth;
 using LocadoraDeAutomoveis.Core.Domain.Shared;
 using LocadoraDeAutomoveis.Infrastructure.ORM.Shared;
 using Microsoft.EntityFrameworkCore;
@@ -169,10 +171,12 @@ public static class DependencyInjection
         Assembly assembly = typeof(DependencyInjection).Assembly;
 
         services.AddAutoMapper(assembly);
-        services.AddValidatorsFromAssembly(assembly);
+
+        services.AddValidatorsFromAssemblyContaining<User>();
+
         services.AddMediatR(config =>
         {
-            config.RegisterServicesFromAssembly(assembly);
+            config.RegisterServicesFromAssemblyContaining<RegisterUserRequest>();
         });
 
         services.ConfigureHangFire(configuration);

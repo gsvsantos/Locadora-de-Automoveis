@@ -18,9 +18,9 @@ public static class AuthDependencyInjection
         services.AddScoped<ITenantProvider, IdentityTenantProvider>();
 
         services.AddIdentity<User, Role>(options =>
-        {
-            options.User.RequireUniqueEmail = true;
-        })
+            {
+                options.User.RequireUniqueEmail = true;
+            })
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
     }
