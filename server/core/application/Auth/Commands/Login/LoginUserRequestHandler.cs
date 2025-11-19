@@ -29,8 +29,6 @@ public class LoginUserRequestHandler(
 
         try
         {
-            IList<string> userRoles = await userManager.GetRolesAsync(user);
-
             SignInResult loginResult = await signInManager.PasswordSignInAsync(
                 user.UserName!,
                 request.Password,
