@@ -1,11 +1,10 @@
-using LocadoraDeAutomoveis.WebAPI.Configuration;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
 
 namespace LocadoraDeAutomoveis.WebAPI;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +13,10 @@ public class Program
 
         // CORS [env CORS_ALLOWED_ORIGINS]
         builder.Services.ConfigureCorsPolicy(builder.Environment, builder.Configuration);
+
+        // HealthChecks
+        builder.Services.AddHealthChecks();
+        builder.Services.AddProblemDetails();
 
         // API Documentation 
         builder.Services.ConfigureOpenApiAuthHeaders();
@@ -36,9 +39,7 @@ public class Program
 
         WebApplication app = builder.Build();
 
-        app.AutoMigrateDatabase();
-
-        app.UseWebApiPipelineDefaults();
+        await app.UseWebApiPipelineDefaults();
 
         app.Run();
     }

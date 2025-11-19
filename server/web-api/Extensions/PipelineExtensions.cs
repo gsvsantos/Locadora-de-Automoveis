@@ -5,8 +5,11 @@ namespace LocadoraDeAutomoveis.WebAPI.Extensions;
 
 public static class PipelineExtensions
 {
-    public static WebApplication UseWebApiPipelineDefaults(this WebApplication app)
+    public static async Task<WebApplication> UseWebApiPipelineDefaults(this WebApplication app)
     {
+        app.AutoMigrateDatabase();
+
+        await app.IdentitySeeder();
 
         app.UseGlobalExceptionHandler();
 
