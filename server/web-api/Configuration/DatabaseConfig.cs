@@ -1,6 +1,6 @@
-﻿using Locadora_de_Automoveis.Infraestrutura.ORM.Shared;
+﻿using LocadoraDeAutomoveis.Infrastructure.ORM.Shared;
 
-namespace Locadora_de_Automoveis.WebAPI.Configuration;
+namespace LocadoraDeAutomoveis.WebAPI.Configuration;
 
 public static class DatabaseConfig
 {

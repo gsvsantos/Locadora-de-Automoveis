@@ -1,8 +1,8 @@
 ﻿using FluentResults;
 
-namespace Locadora_de_Automoveis.Core.Aplicacao.Shared;
+namespace LocadoraDeAutomoveis.Core.Application.Shared;
 
-public abstract class ResultadosErro
+public abstract class ErrorsResult
 {
     public static Error ConflictError(string error)
     {

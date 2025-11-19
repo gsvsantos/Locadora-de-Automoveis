@@ -1,14 +1,14 @@
 ﻿using FluentValidation;
 using Hangfire;
-using Locadora_de_Automoveis.Core.Dominio.Shared;
-using Locadora_de_Automoveis.Infraestrutura.ORM.Shared;
+using LocadoraDeAutomoveis.Core.Domain.Shared;
+using LocadoraDeAutomoveis.Infrastructure.ORM.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
-namespace Locadora_de_Automoveis.WebAPI;
+namespace LocadoraDeAutomoveis.WebAPI;
 
 public static class DependencyInjection
 {
@@ -22,7 +22,7 @@ public static class DependencyInjection
 
         if (string.IsNullOrWhiteSpace(connectionString))
         {
-            throw new Exception("A variável SQL_CONNECTION_STRING não foi fornecida.");
+            throw new Exception("The SQL_CONNECTION_STRING variable was not provided.");
         }
 
         services.AddDbContext<IUnitOfWork, AppDbContext>(options =>
@@ -63,7 +63,7 @@ public static class DependencyInjection
 
                 if (string.IsNullOrWhiteSpace(origensPermitidasString))
                 {
-                    throw new Exception("A variável de ambiente \"CORS_ALLOWED_ORIGINS\" não foi fornecida.");
+                    throw new Exception("The environment variable \"CORS_ALLOWED_ORIGINS\" was not provided.");
                 }
 
                 string[] origensPermitidas = origensPermitidasString
@@ -110,7 +110,7 @@ public static class DependencyInjection
             {
                 In = ParameterLocation.Header,
                 Name = "Authorization",
-                Description = "Informe o TOKEN JWT no padrão {Bearer token}",
+                Description = "Inform the JWT TOKEN in the format {Bearer token}",
                 Type = SecuritySchemeType.ApiKey,
                 Scheme = "Bearer",
                 BearerFormat = "JWT"
@@ -144,7 +144,7 @@ public static class DependencyInjection
 
         if (string.IsNullOrWhiteSpace(licenseKey))
         {
-            throw new Exception("A variável NEWRELIC_LICENSE_KEY não foi fornecida.");
+            throw new Exception("The NEWRELIC_LICENSE_KEY variable was not provided.");
         }
 
         Log.Logger = new LoggerConfiguration()

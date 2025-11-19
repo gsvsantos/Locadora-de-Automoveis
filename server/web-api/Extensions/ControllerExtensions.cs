@@ -1,41 +1,53 @@
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Locadora_de_Automoveis.WebAPI.Extensions;
+namespace LocadoraDeAutomoveis.WebAPI.Extensions;
 
 public static class ControllerExtensions
 {
-    public static ActionResult MapearFalha(this ControllerBase controller, Result result)
+    public static ActionResult MapFailure(this ControllerBase controller, Result result)
     {
-        string[] mensagens = result.Errors
+        string[] messages = result.Errors
             .SelectMany(e => e.Reasons.OfType<IError>())
             .Select(e => e.Message)
             .ToArray();
 
-        bool possuiTipo = result.Errors.Any(e => e.HasMetadataKey("TipoErro"));
-        if (!possuiTipo)
+        bool hasErrorType = result.Errors.Any(e => e.HasMetadataKey("ErrorType"));
+
+        if (!hasErrorType)
         {
             return controller.StatusCode(StatusCodes.Status500InternalServerError);
         }
 
-        string? tipo = result.Errors
+        string? type = result.Errors
             .SelectMany(e => e.Metadata)
-            .Where(kvp => kvp.Key == "TipoErro")
+            .Where(kvp => kvp.Key == "ErrorType")
             .Select(kvp => kvp.Value?.ToString())
             .FirstOrDefault();
 
-        return tipo switch
+        return type switch
         {
-            "Conflito" => controller.Conflict(mensagens),   // 409
-            "RegistroDuplicado" => controller.Conflict(mensagens),  // 409
-            "ExclusaoBloqueada" => controller.Conflict(mensagens),  // 409
-            "NaoEncontrado" => controller.NotFound(mensagens),  // 404
-            "RegistroNaoEncontrado" => controller.NotFound(mensagens),  // 404
-            "RequisicaoInvalida" => controller.BadRequest(mensagens),   // 400
-            "NaoAutorizado" => controller.Unauthorized(),   // 401
-            "Proibido" => controller.Forbid(),  // 403
-            "ExcecaoInterna" => controller.StatusCode(500, mensagens),  // 500
-            _ => controller.BadRequest(mensagens)   // fallback safe
+            // 409 (Conflict)
+            "Conflict" => controller.Conflict(messages),   // 409
+            "DuplicateRecord" => controller.Conflict(messages),  // 409
+            "DeletionBlocked" => controller.Conflict(messages),  // 409
+
+            // 404 (Not Found)
+            "NotFound" => controller.NotFound(messages),  // 404
+            "RecordNotFound" => controller.NotFound(messages),  // 404
+
+            // 400 (Bad Request)
+            "InvalidRequest" => controller.BadRequest(messages),   // 400
+
+            // 401/403 (Auth)
+            "Unauthorized" => controller.Unauthorized(),   // 401
+            "Forbidden" => controller.Forbid(),  // 403
+
+            // 500 (Internal Server Error)
+            "InternalException" => controller.StatusCode(500, messages),  // 500
+
+            // fallback
+            _ => controller.BadRequest(messages)   // fallback
         };
     }
 }

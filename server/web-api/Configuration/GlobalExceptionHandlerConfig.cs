@@ -2,10 +2,12 @@
 using System.Net;
 using System.Text.Json;
 
-namespace Locadora_de_Automoveis.WebAPI.Configuration;
+namespace LocadoraDeAutomoveis.WebAPI.Configuration;
 
 public static class GlobalExceptionHandlerConfig
 {
+    private static readonly string[] handler = ["Internal server error"];
+
     public static IApplicationBuilder UseGlobalExceptionHandler(this IApplicationBuilder app)
     {
         return app.UseExceptionHandler(builder =>
@@ -25,7 +27,7 @@ public static class GlobalExceptionHandlerConfig
                 var objeto = new
                 {
                     Sucesso = false,
-                    Erros = new string[] { "Erro interno do servidor" }
+                    Erros = handler
                 };
 
                 string respostaJson = JsonSerializer.Serialize(objeto);

@@ -1,7 +1,7 @@
 using Hangfire;
-using Locadora_de_Automoveis.WebAPI.Configuration;
+using LocadoraDeAutomoveis.WebAPI.Configuration;
 
-namespace Locadora_de_Automoveis.WebAPI.Extensions;
+namespace LocadoraDeAutomoveis.WebAPI.Extensions;
 
 public static class PipelineExtensions
 {

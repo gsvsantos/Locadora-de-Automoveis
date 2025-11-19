@@ -1,7 +1,7 @@
-using Locadora_de_Automoveis.WebAPI.Configuration;
-using Locadora_de_Automoveis.WebAPI.Extensions;
+using LocadoraDeAutomoveis.WebAPI.Configuration;
+using LocadoraDeAutomoveis.WebAPI.Extensions;
 
-namespace Locadora_de_Automoveis.WebAPI;
+namespace LocadoraDeAutomoveis.WebAPI;
 
 public class Program
 {

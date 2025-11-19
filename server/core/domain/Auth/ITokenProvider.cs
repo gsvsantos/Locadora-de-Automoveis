@@ -1,4 +1,4 @@
-﻿namespace Locadora_de_Automoveis.Core.Dominio.Auth;
+﻿namespace LocadoraDeAutomoveis.Core.Domain.Auth;
 
 public interface ITokenProvider
 {
