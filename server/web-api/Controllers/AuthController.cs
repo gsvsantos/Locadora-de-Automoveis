@@ -5,6 +5,7 @@ using LocadoraDeAutomoveis.Core.Application.Auth.DTOs;
 using LocadoraDeAutomoveis.Core.Domain.Auth;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,5 +39,14 @@ public class AuthController(IMediator mediator, SignInManager<User> signInManage
         }
 
         return Ok(result.Value);
+    }
+
+    [HttpPost("logout")]
+    [Authorize]
+    public async Task<IActionResult> Logout()
+    {
+        await signInManager.SignOutAsync();
+
+        return Ok();
     }
 }
