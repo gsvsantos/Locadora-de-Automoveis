@@ -1,0 +1,10 @@
+﻿using LocadoraDeAutomoveis.Core.Domain.Auth;
+
+namespace LocadoraDeAutomoveis.Core.Application.Auth.DTOs;
+
+public class TokenResponse : IAccessToken
+{
+    public required string Key { get; set; }
+    public required DateTime Expiration { get; set; }
+    public required UserAuthenticatedDto User { get; set; }
+}
