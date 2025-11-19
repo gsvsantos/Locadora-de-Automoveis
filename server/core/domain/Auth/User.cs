@@ -10,5 +10,6 @@ public class User : IdentityUser<Guid>
     {
         this.Id = Guid.NewGuid();
         this.EmailConfirmed = true;
+        this.PhoneNumberConfirmed = true;
     }
 }

@@ -39,10 +39,10 @@ public abstract class ErrorResults
             .WithMetadata("ErrorType", "NotFound");
     }
 
-    public static Error NotFoundError(string record)
+    public static Error NotFoundError(string message)
     {
         return new Error("Record not found")
-            .CausedBy($"Could not retrieve record: {record}")
+            .CausedBy($"Could not retrieve record: {message}")
             .WithMetadata("ErrorType", "NotFound");
     }
 
