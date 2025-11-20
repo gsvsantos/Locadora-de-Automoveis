@@ -16,10 +16,8 @@ public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvi
     {
         if (tenantProvider is not null)
         {
-            Guid userId = tenantProvider.GetTenantId();
-
             modelBuilder.Entity<Employee>()
-                .HasQueryFilter(x => x.TenantId.Equals(userId));
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
         }
 
         Assembly assembly = typeof(AppDbContext).Assembly;
