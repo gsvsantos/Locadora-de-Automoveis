@@ -1,4 +1,5 @@
 using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Shared;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -17,8 +18,8 @@ public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvi
         {
             Guid userId = tenantProvider.GetTenantId();
 
-            //modelBuilder.Entity<Exemplo>()
-            //    .HasQueryFilter(x => x.TenantId.Equals(userId));
+            modelBuilder.Entity<Employee>()
+                .HasQueryFilter(x => x.TenantId.Equals(userId));
         }
 
         Assembly assembly = typeof(AppDbContext).Assembly;
