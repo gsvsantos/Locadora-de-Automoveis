@@ -43,6 +43,8 @@ public class RegisterUserRequestHandler(
 
         try
         {
+            user.AssociateTenant(user.Id);
+
             await userManager.AddToRoleAsync(user, "Admin");
 
             TokenResponse? accessToken = await tokenProvider.GenerateAccessToken(user) as TokenResponse;

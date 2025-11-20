@@ -3,7 +3,7 @@ using System.Security.Claims;
 
 namespace LocadoraDeAutomoveis.WebAPI.Identity;
 
-public sealed class IdentityTenantProvider(IHttpContextAccessor contextAccessor) : ITenantProvider
+public sealed class IdentityTenantProvider(IHttpContextAccessor contextAccessor) : ITenantProvider, IUserContext
 {
     public Guid? TenantId
     {
@@ -17,6 +17,27 @@ public sealed class IdentityTenantProvider(IHttpContextAccessor contextAccessor)
             }
 
             Claim? claimId = claimsPrincipal.FindFirst("sub");
+
+            if (claimId == null)
+            {
+                return null;
+            }
+
+            return TryParseGuid(claimId.Value);
+        }
+    }
+    public Guid? UserId
+    {
+        get
+        {
+            ClaimsPrincipal? claimsPrincipal = contextAccessor.HttpContext?.User;
+
+            if (claimsPrincipal?.Identity?.IsAuthenticated != true)
+            {
+                return null;
+            }
+
+            Claim? claimId = claimsPrincipal.FindFirst("user_id");
 
             if (claimId == null)
             {

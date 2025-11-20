@@ -17,6 +17,7 @@ public static class AuthDependencyInjection
         services.AddHttpContextAccessor();
 
         services.AddScoped<ITenantProvider, IdentityTenantProvider>();
+        services.AddScoped<IUserContext, IdentityTenantProvider>();
         services.AddScoped<ITokenProvider, JwtProvider>();
 
         services.AddIdentity<User, Role>(options =>

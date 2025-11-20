@@ -28,7 +28,7 @@ public class CreateEmployeeRequestHandler(
             UserName = request.UserName,
             FullName = request.FullName,
             Email = request.Email,
-            PhoneNumber = request.PhoneNumber
+            PhoneNumber = request.PhoneNumber,
         };
 
         try
@@ -50,7 +50,6 @@ public class CreateEmployeeRequestHandler(
 
             Employee employee = new()
             {
-                Id = user.Id,
                 FullName = request.FullName,
                 AdmissionDate = request.AdmissionDate,
                 Salary = request.Salary
@@ -73,6 +72,9 @@ public class CreateEmployeeRequestHandler(
             {
                 return Result.Fail(EmployeeErrorResults.DuplicateNameError(request.FullName));
             }
+
+            user.AssociateTenant(tenantProvider.GetTenantId());
+
             employee.AssociateUser(user);
 
             employee.AssociateTenant(tenantProvider.GetTenantId());

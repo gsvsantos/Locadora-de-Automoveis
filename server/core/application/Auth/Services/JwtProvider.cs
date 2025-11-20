@@ -47,9 +47,10 @@ public class JwtProvider : ITokenProvider
 
         List<Claim> claims =
         [
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Sub, user.TenantId.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-            new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName!)
+            new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName!),
+            new Claim("user_id", user.Id.ToString())
         ];
 
         foreach (string role in userRoles)
