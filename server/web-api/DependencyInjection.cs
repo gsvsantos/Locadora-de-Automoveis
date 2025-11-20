@@ -1,8 +1,9 @@
 ﻿using FluentValidation;
 using Hangfire;
-using LocadoraDeAutomoveis.Application.Auth.Commands.Register;
-using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Application.Employees.Commands.Create;
+using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -135,10 +136,7 @@ public static class DependencyInjection
         });
     }
 
-    public static void ConfigureRepositories(this IServiceCollection services)
-    {
-        //services.AddScoped<IExampleRepository, ExampleRepository>();
-    }
+    public static void ConfigureRepositories(this IServiceCollection services) => services.AddScoped<IRepositoryEmployee, EmployeeRepository>();
 
     public static void ConfigureSerilog(this IServiceCollection services, ILoggingBuilder logging, IConfiguration configuration)
     {
@@ -172,11 +170,11 @@ public static class DependencyInjection
 
         services.AddAutoMapper(assembly);
 
-        services.AddValidatorsFromAssemblyContaining<User>();
+        services.AddValidatorsFromAssemblyContaining<EmployeeValidators>();
 
         services.AddMediatR(config =>
         {
-            config.RegisterServicesFromAssemblyContaining<RegisterUserRequest>();
+            config.RegisterServicesFromAssemblyContaining<CreateEmployeeRequest>();
         });
 
         services.ConfigureHangFire(configuration);
