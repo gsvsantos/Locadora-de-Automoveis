@@ -2,7 +2,7 @@ using LocadoraDeAutomoveis.Domain.Auth;
 
 namespace LocadoraDeAutomoveis.Domain.Shared;
 
-public abstract class BaseEntity<Tipo>
+public abstract class BaseEntity<T>
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public Guid TenantId { get; set; }
@@ -10,5 +10,5 @@ public abstract class BaseEntity<Tipo>
 
     protected BaseEntity() => this.Id = Guid.NewGuid();
 
-    public abstract void Update(Tipo registroEditado);
+    public abstract void Update(T updatedEntity);
 }

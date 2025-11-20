@@ -26,7 +26,14 @@ public class Employee : BaseEntity<Employee>
         this.UserId = user.Id;
     }
 
+    public void AssociateTenant(Guid tenantId) => this.TenantId = tenantId;
+
     public void Deactivate() => this.IsActive = false;
 
-    public override void Update(Employee registroEditado) => throw new NotImplementedException();
+    public override void Update(Employee updatedEmployee)
+    {
+        this.FullName = updatedEmployee.FullName;
+        this.AdmissionDate = updatedEmployee.AdmissionDate;
+        this.Salary = updatedEmployee.Salary;
+    }
 }
