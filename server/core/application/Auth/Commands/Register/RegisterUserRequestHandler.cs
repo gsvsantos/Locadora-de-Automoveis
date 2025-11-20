@@ -27,22 +27,22 @@ public class RegisterUserRequestHandler(
             PhoneNumber = request.PhoneNumber
         };
 
+        IdentityResult usuarioResult = await userManager.CreateAsync(user, request.Password);
+
+        if (!usuarioResult.Succeeded)
+        {
+            IEnumerable<string> erros = usuarioResult
+                .Errors
+                .Select(failure => failure.Description)
+                .ToList();
+
+            await userManager.DeleteAsync(user);
+
+            return Result.Fail(ErrorResults.BadRequestError(erros));
+        }
+
         try
         {
-            IdentityResult usuarioResult = await userManager.CreateAsync(user, request.Password);
-
-            if (!usuarioResult.Succeeded)
-            {
-                IEnumerable<string> erros = usuarioResult
-                    .Errors
-                    .Select(failure => failure.Description)
-                    .ToList();
-
-                await userManager.DeleteAsync(user);
-
-                return Result.Fail(ErrorResults.BadRequestError(erros));
-            }
-
             await userManager.AddToRoleAsync(user, "Admin");
 
             TokenResponse? accessToken = await tokenProvider.GenerateAccessToken(user) as TokenResponse;
@@ -59,6 +59,8 @@ public class RegisterUserRequestHandler(
         catch (Exception ex)
         {
             await unitOfWork.RollbackAsync();
+
+            await userManager.DeleteAsync(user);
 
             logger.LogError(
                 ex,
