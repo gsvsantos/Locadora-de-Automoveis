@@ -19,13 +19,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAPI", "WebAPI", "{D62887
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ORM", "ORM", "{E383657F-958F-4AB8-9EE0-E77D5367464D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.Infrastructure.ORM", "infrastructure\orm\LocadoraDeAutomoveis.Infrastructure.ORM.csproj", "{B1169751-5AA0-3D8E-8568-FBA12D0F9375}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.Infrastructure", "infrastructure\orm\LocadoraDeAutomoveis.Infrastructure.csproj", "{B1169751-5AA0-3D8E-8568-FBA12D0F9375}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.Core.Domain", "core\domain\LocadoraDeAutomoveis.Core.Domain.csproj", "{E6BB1D3B-7782-DCCB-1A4D-14D4F667770A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.Domain", "core\domain\LocadoraDeAutomoveis.Domain.csproj", "{E6BB1D3B-7782-DCCB-1A4D-14D4F667770A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.Core.Application", "core\application\LocadoraDeAutomoveis.Core.Application.csproj", "{60BC23DC-D45F-C6EE-51AF-90C92BF679D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.Application", "core\application\LocadoraDeAutomoveis.Application.csproj", "{60BC23DC-D45F-C6EE-51AF-90C92BF679D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.WebAPI", "web-api\LocadoraDeAutomoveis.WebAPI.csproj", "{BFE7E912-8076-5139-F52C-B18711532EF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.WebApi", "web-api\LocadoraDeAutomoveis.WebApi.csproj", "{BFE7E912-8076-5139-F52C-B18711532EF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{5BE4D413-7C50-4F75-B26E-B10B3D527ED7}"
 EndProject

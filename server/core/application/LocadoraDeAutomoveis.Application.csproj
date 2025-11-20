@@ -28,7 +28,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\domain\LocadoraDeAutomoveis.Core.Domain.csproj" />
+	  <ProjectReference Include="..\domain\LocadoraDeAutomoveis.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

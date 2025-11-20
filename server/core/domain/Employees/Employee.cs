@@ -1,7 +1,7 @@
 ﻿using LocadoraDeAutomoveis.Core.Domain.Auth;
 using LocadoraDeAutomoveis.Core.Domain.Shared;
 
-namespace LocadoraDeAutomoveis.Core.Domain.Employee;
+namespace LocadoraDeAutomoveis.Domain.Employees;
 
 public class Employee : BaseEntity<Employee>
 {

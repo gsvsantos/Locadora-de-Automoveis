@@ -1,5 +1,5 @@
 ﻿using LocadoraDeAutomoveis.Core.Domain.Shared;
 
-namespace LocadoraDeAutomoveis.Core.Domain.Employee;
+namespace LocadoraDeAutomoveis.Domain.Employees;
 
 public interface IRepositoryEmployee : IRepository<Employee>;
