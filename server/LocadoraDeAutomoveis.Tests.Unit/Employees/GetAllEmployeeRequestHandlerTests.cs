@@ -42,14 +42,25 @@ public class GetAllEmployeeRequestHandlerTests
         // Act
         Result<GetAllEmployeeResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
 
-        IEnumerable<GetAllEmployeeDto> employeesCreated = result.Value.Employees;
+        List<GetAllEmployeeDto> employeesDto = [.. result.Value.Employees];
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
         Assert.AreEqual(2, result.Value.Quantity);
-        Assert.AreEqual(employees.Count, employeesCreated.Count());
-        Assert.IsTrue(employeesCreated.Any(e => e.FullName.Equals("Employee 1")));
-        Assert.IsTrue(employeesCreated.Any(e => e.FullName.Equals("Employee 2")));
+        Assert.AreEqual(employees.Count, employeesDto.Count);
+
+        for (int i = 0; i < employees.Count; i++)
+        {
+            for (int j = 0; j < employeesDto.Count; j++)
+            {
+                if (employees[i].Id == employeesDto[j].Id)
+                {
+                    Assert.AreEqual(employees[i].FullName, employeesDto[j].FullName);
+                    Assert.AreEqual(employees[i].AdmissionDate, employeesDto[j].AdmissionDate);
+                    Assert.AreEqual(employees[i].Salary, employeesDto[j].Salary);
+                }
+            }
+        }
     }
     #endregion
 }
