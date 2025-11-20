@@ -38,6 +38,8 @@ public class RegisterUserRequestHandler(
                     .Select(failure => failure.Description)
                     .ToList();
 
+                await userManager.DeleteAsync(user);
+
                 return Result.Fail(ErrorResults.BadRequestError(erros));
             }
 
