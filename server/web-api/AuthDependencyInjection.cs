@@ -14,15 +14,23 @@ public static class AuthDependencyInjection
 {
     public static void ConfigureIdentityProviders(this IServiceCollection services)
     {
-        services.AddScoped<ITokenProvider, JwtProvider>();
+        services.AddHttpContextAccessor();
+
         services.AddScoped<ITenantProvider, IdentityTenantProvider>();
+        services.AddScoped<ITokenProvider, JwtProvider>();
 
         services.AddIdentity<User, Role>(options =>
             {
                 options.User.RequireUniqueEmail = true;
-            })
-            .AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders();
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+            }
+        )
+        .AddEntityFrameworkStores<AppDbContext>()
+        .AddDefaultTokenProviders();
     }
 
     public static void ConfigureJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
