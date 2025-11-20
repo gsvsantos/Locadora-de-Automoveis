@@ -9,7 +9,7 @@ public static class PipelineExtensions
     {
         app.AutoMigrateDatabase();
 
-        await app.IdentitySeeder();
+        await app.IdentitySeederAsync();
 
         app.UseGlobalExceptionHandler();
 

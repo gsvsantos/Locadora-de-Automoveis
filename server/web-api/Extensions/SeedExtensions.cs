@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Identity;
 
 public static class SeedExtensions
 {
-    public static async Task IdentitySeeder(this WebApplication app)
+    public static async Task IdentitySeederAsync(this WebApplication app)
     {
         using IServiceScope scope = app.Services.CreateScope();
 
         ILogger logger = scope.ServiceProvider
             .GetRequiredService<ILoggerFactory>()
-            .CreateLogger("IdentitySeeder");
+            .CreateLogger("IdentitySeederAsync");
 
         IConfiguration configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
