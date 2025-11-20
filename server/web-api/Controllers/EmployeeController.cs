@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Application.Employees.Commands.Create;
+using LocadoraDeAutomoveis.Application.Employees.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Employees.Commands.Update;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
 using MediatR;
@@ -38,6 +39,21 @@ public class EmployeeController(IMediator mediator) : ControllerBase
         );
 
         Result<UpdateEmployeeResponse> result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return this.MapFailure(result.ToResult());
+        }
+
+        return Ok(result.Value);
+    }
+
+    [HttpDelete("delete/{id:guid}")]
+    public async Task<IActionResult> Excluir(Guid id)
+    {
+        DeleteEmployeeRequest request = new(id);
+
+        Result<DeleteEmployeeResponse> result = await mediator.Send(request);
 
         if (result.IsFailed)
         {
