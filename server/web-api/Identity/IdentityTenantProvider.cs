@@ -5,8 +5,6 @@ namespace LocadoraDeAutomoveis.WebAPI.Identity;
 
 public sealed class IdentityTenantProvider(IHttpContextAccessor contextAccessor) : ITenantProvider
 {
-    private const string ClaimTypeNameIdentifier = ClaimTypes.NameIdentifier;
-
     public Guid? TenantId
     {
         get
@@ -18,7 +16,7 @@ public sealed class IdentityTenantProvider(IHttpContextAccessor contextAccessor)
                 return null;
             }
 
-            Claim? claimId = claimsPrincipal.FindFirst(ClaimTypeNameIdentifier);
+            Claim? claimId = claimsPrincipal.FindFirst("sub");
 
             if (claimId == null)
             {
