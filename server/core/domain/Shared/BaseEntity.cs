@@ -5,8 +5,8 @@ namespace LocadoraDeAutomoveis.Core.Domain.Shared;
 public abstract class BaseEntity<Tipo>
 {
     public Guid Id { get; set; } = Guid.NewGuid();
-    public Guid UserId { get; set; }
-    public User? User { get; set; }
+    public Guid TenantId { get; set; }
+    public User? Tenant { get; set; }
 
     protected BaseEntity() => this.Id = Guid.NewGuid();
 

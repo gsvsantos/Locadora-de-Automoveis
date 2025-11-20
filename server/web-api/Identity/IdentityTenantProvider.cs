@@ -7,7 +7,7 @@ public sealed class IdentityTenantProvider(IHttpContextAccessor contextAccessor)
 {
     private const string ClaimTypeNameIdentifier = ClaimTypes.NameIdentifier;
 
-    public Guid? UserId
+    public Guid? TenantId
     {
         get
         {

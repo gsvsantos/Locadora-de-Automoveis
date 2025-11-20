@@ -2,6 +2,6 @@
 
 public interface ITenantProvider
 {
-    Guid? UserId { get; }
-    Guid GetUserId() => this.UserId.GetValueOrDefault();
+    Guid? TenantId { get; }
+    Guid GetTenantId() => this.TenantId.GetValueOrDefault();
 }

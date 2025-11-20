@@ -15,7 +15,7 @@ public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvi
     {
         if (tenantProvider is not null)
         {
-            Guid userId = tenantProvider.GetUserId();
+            Guid userId = tenantProvider.GetTenantId();
 
             //modelBuilder.Entity<Exemplo>()
             //    .HasQueryFilter(x => x.TenantId.Equals(userId));
