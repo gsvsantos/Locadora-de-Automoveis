@@ -1,7 +1,9 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Application.Employees.Commands.Create;
 using LocadoraDeAutomoveis.Application.Employees.Commands.Delete;
+using LocadoraDeAutomoveis.Application.Employees.Commands.SelfUpdate;
 using LocadoraDeAutomoveis.Application.Employees.Commands.Update;
+using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -11,10 +13,10 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 
 [ApiController]
 [Route("api/employee")]
-[Authorize(Roles = "Admin")]
 public class EmployeeController(IMediator mediator) : ControllerBase
 {
     [HttpPost("create")]
+    [Authorize("AdminPolicy")]
     public async Task<IActionResult> Create([FromBody] CreateEmployeeRequest request)
     {
         Result<CreateEmployeeResponse> result = await mediator.Send(request);
@@ -28,6 +30,7 @@ public class EmployeeController(IMediator mediator) : ControllerBase
     }
 
     [HttpPut("update/{id:guid}")]
+    [Authorize("AdminPolicy")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateEmployeeRequestPartial partialRequest)
     {
 
@@ -48,7 +51,32 @@ public class EmployeeController(IMediator mediator) : ControllerBase
         return Ok(result.Value);
     }
 
+    [HttpPut("self-update")]
+    [Authorize("EmployeePolicy")]
+    public async Task<IActionResult> SelfUpdate(
+        [FromServices] IUserContext userContext,
+        [FromBody] SelfUpdateEmployeeRequestPartial partialRequest
+    )
+    {
+        SelfUpdateEmployeeRequest request = new(
+            userContext.GetUserId(),
+            partialRequest.FullName,
+            partialRequest.AdmissionDate,
+            partialRequest.Salary
+        );
+
+        Result<SelfUpdateEmployeeResponse> result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return this.MapFailure(result.ToResult());
+        }
+
+        return Ok(result.Value);
+    }
+
     [HttpDelete("delete/{id:guid}")]
+    [Authorize("AdminPolicy")]
     public async Task<IActionResult> Excluir(Guid id)
     {
         DeleteEmployeeRequest request = new(id);
