@@ -48,12 +48,11 @@ public class CreateEmployeeRequestHandler(
             }
             await userManager.AddToRoleAsync(user, "Employee");
 
-            Employee employee = new()
-            {
-                FullName = request.FullName,
-                AdmissionDate = request.AdmissionDate,
-                Salary = request.Salary
-            };
+            Employee employee = new(
+                request.FullName,
+                request.AdmissionDate,
+                request.Salary
+            );
 
             ValidationResult validationResult = await validator.ValidateAsync(employee, cancellationToken);
 
