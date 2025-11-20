@@ -1,4 +1,4 @@
-﻿using LocadoraDeAutomoveis.Core.Domain.Auth;
+﻿using LocadoraDeAutomoveis.Domain.Auth;
 using System.Security.Claims;
 
 namespace LocadoraDeAutomoveis.WebAPI.Identity;

@@ -1,6 +1,6 @@
-﻿using LocadoraDeAutomoveis.Core.Domain.Auth;
+﻿using LocadoraDeAutomoveis.Domain.Auth;
 
-namespace LocadoraDeAutomoveis.Core.Application.Auth.DTOs;
+namespace LocadoraDeAutomoveis.Application.Auth.DTOs;
 
 public class TokenResponse : IAccessToken
 {

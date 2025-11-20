@@ -1,4 +1,4 @@
-﻿using LocadoraDeAutomoveis.Infrastructure.ORM.Shared;
+﻿using LocadoraDeAutomoveis.Infrastructure.Shared;
 
 namespace LocadoraDeAutomoveis.WebAPI.Configuration;
 

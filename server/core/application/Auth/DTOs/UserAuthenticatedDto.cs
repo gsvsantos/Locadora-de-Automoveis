@@ -1,4 +1,4 @@
-﻿namespace LocadoraDeAutomoveis.Core.Application.Auth.DTOs;
+﻿namespace LocadoraDeAutomoveis.Application.Auth.DTOs;
 
 public class UserAuthenticatedDto
 {

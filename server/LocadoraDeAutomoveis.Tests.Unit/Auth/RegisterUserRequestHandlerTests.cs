@@ -1,7 +1,7 @@
-﻿using LocadoraDeAutomoveis.Core.Application.Auth.Commands.Register;
-using LocadoraDeAutomoveis.Core.Application.Auth.DTOs;
-using LocadoraDeAutomoveis.Core.Domain.Auth;
-using LocadoraDeAutomoveis.Core.Domain.Shared;
+﻿using LocadoraDeAutomoveis.Application.Auth.Commands.Register;
+using LocadoraDeAutomoveis.Application.Auth.DTOs;
+using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Auth;
 

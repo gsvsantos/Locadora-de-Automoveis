@@ -1,6 +1,6 @@
-using LocadoraDeAutomoveis.Core.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Auth;
 
-namespace LocadoraDeAutomoveis.Core.Domain.Shared;
+namespace LocadoraDeAutomoveis.Domain.Shared;
 
 public abstract class BaseEntity<Tipo>
 {

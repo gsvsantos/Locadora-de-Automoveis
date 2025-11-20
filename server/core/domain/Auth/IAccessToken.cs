@@ -1,3 +1,3 @@
-﻿namespace LocadoraDeAutomoveis.Core.Domain.Auth;
+﻿namespace LocadoraDeAutomoveis.Domain.Auth;
 
 public interface IAccessToken { }

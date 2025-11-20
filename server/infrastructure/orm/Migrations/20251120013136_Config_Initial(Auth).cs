@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace LocadoraDeAutomoveis.Infrastructure.ORM.Migrations
+namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class Config_InitialAuth : Migration

@@ -1,6 +1,6 @@
 ﻿using FluentResults;
 
-namespace LocadoraDeAutomoveis.Core.Application.Shared;
+namespace LocadoraDeAutomoveis.Application.Shared;
 
 public abstract class ErrorResults
 {

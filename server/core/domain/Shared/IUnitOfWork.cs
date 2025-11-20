@@ -1,4 +1,4 @@
-namespace LocadoraDeAutomoveis.Core.Domain.Shared;
+namespace LocadoraDeAutomoveis.Domain.Shared;
 
 public interface IUnitOfWork
 {

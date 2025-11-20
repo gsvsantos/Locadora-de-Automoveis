@@ -1,11 +1,11 @@
-using LocadoraDeAutomoveis.Core.Domain.Auth;
-using LocadoraDeAutomoveis.Core.Domain.Shared;
+using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Shared;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Reflection;
 
-namespace LocadoraDeAutomoveis.Infrastructure.ORM.Shared;
+namespace LocadoraDeAutomoveis.Infrastructure.Shared;
 
 public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvider = null)
     : IdentityDbContext<User, Role, Guid>(options), IUnitOfWork

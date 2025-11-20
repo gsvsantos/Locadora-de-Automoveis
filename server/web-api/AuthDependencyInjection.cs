@@ -1,6 +1,6 @@
-﻿using LocadoraDeAutomoveis.Core.Application.Auth.Services;
-using LocadoraDeAutomoveis.Core.Domain.Auth;
-using LocadoraDeAutomoveis.Infrastructure.ORM.Shared;
+﻿using LocadoraDeAutomoveis.Application.Auth.Services;
+using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Infrastructure.Shared;
 using LocadoraDeAutomoveis.WebAPI.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

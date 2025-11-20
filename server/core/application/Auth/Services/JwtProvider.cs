@@ -1,5 +1,5 @@
-﻿using LocadoraDeAutomoveis.Core.Application.Auth.DTOs;
-using LocadoraDeAutomoveis.Core.Domain.Auth;
+﻿using LocadoraDeAutomoveis.Application.Auth.DTOs;
+using LocadoraDeAutomoveis.Domain.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -7,7 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace LocadoraDeAutomoveis.Core.Application.Auth.Services;
+namespace LocadoraDeAutomoveis.Application.Auth.Services;
 
 public class JwtProvider : ITokenProvider
 {

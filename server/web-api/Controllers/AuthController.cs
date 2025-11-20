@@ -1,8 +1,8 @@
 ﻿using FluentResults;
-using LocadoraDeAutomoveis.Core.Application.Auth.Commands.Login;
-using LocadoraDeAutomoveis.Core.Application.Auth.Commands.Register;
-using LocadoraDeAutomoveis.Core.Application.Auth.DTOs;
-using LocadoraDeAutomoveis.Core.Domain.Auth;
+using LocadoraDeAutomoveis.Application.Auth.Commands.Login;
+using LocadoraDeAutomoveis.Application.Auth.Commands.Register;
+using LocadoraDeAutomoveis.Application.Auth.DTOs;
+using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

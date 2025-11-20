@@ -1,7 +1,7 @@
-﻿using LocadoraDeAutomoveis.Core.Application.Auth.Commands.Login;
-using LocadoraDeAutomoveis.Core.Application.Auth.DTOs;
-using LocadoraDeAutomoveis.Core.Domain.Auth;
-using LocadoraDeAutomoveis.Core.Domain.Shared;
+﻿using LocadoraDeAutomoveis.Application.Auth.Commands.Login;
+using LocadoraDeAutomoveis.Application.Auth.DTOs;
+using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Shared;
 using Microsoft.AspNetCore.Http;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Auth;

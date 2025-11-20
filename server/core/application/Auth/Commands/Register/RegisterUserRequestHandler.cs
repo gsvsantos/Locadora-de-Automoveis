@@ -1,13 +1,13 @@
 ﻿using FluentResults;
-using LocadoraDeAutomoveis.Core.Application.Auth.DTOs;
-using LocadoraDeAutomoveis.Core.Application.Shared;
-using LocadoraDeAutomoveis.Core.Domain.Auth;
-using LocadoraDeAutomoveis.Core.Domain.Shared;
+using LocadoraDeAutomoveis.Application.Auth.DTOs;
+using LocadoraDeAutomoveis.Application.Shared;
+using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
-namespace LocadoraDeAutomoveis.Core.Application.Auth.Commands.Register;
+namespace LocadoraDeAutomoveis.Application.Auth.Commands.Register;
 
 public class RegisterUserRequestHandler(
     UserManager<User> userManager,

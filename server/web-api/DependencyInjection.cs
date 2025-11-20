@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using Hangfire;
-using LocadoraDeAutomoveis.Core.Application.Auth.Commands.Register;
-using LocadoraDeAutomoveis.Core.Domain.Auth;
-using LocadoraDeAutomoveis.Core.Domain.Shared;
-using LocadoraDeAutomoveis.Infrastructure.ORM.Shared;
+using LocadoraDeAutomoveis.Application.Auth.Commands.Register;
+using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Infrastructure.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;

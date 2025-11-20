@@ -1,8 +1,8 @@
 ﻿using FluentResults;
-using LocadoraDeAutomoveis.Core.Application.Auth.DTOs;
+using LocadoraDeAutomoveis.Application.Auth.DTOs;
 using MediatR;
 
-namespace LocadoraDeAutomoveis.Core.Application.Auth.Commands.Login;
+namespace LocadoraDeAutomoveis.Application.Auth.Commands.Login;
 
 public record LoginUserRequest(
     string UserName,

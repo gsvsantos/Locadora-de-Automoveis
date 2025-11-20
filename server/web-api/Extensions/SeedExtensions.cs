@@ -1,4 +1,4 @@
-﻿using LocadoraDeAutomoveis.Core.Domain.Auth;
+﻿using LocadoraDeAutomoveis.Domain.Auth;
 using Microsoft.AspNetCore.Identity;
 
 public static class SeedExtensions

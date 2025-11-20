@@ -1,6 +1,6 @@
 ﻿using FluentResults;
 
-namespace LocadoraDeAutomoveis.Core.Application.Auth;
+namespace LocadoraDeAutomoveis.Application.Auth;
 
 public abstract class AuthErrorResults
 {

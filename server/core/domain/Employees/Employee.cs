@@ -1,5 +1,5 @@
-﻿using LocadoraDeAutomoveis.Core.Domain.Auth;
-using LocadoraDeAutomoveis.Core.Domain.Shared;
+﻿using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Shared;
 
 namespace LocadoraDeAutomoveis.Domain.Employees;
 

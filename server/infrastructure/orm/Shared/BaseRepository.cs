@@ -1,7 +1,7 @@
-using LocadoraDeAutomoveis.Core.Domain.Shared;
+using LocadoraDeAutomoveis.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 
-namespace LocadoraDeAutomoveis.Infrastructure.ORM.Shared;
+namespace LocadoraDeAutomoveis.Infrastructure.Shared;
 
 public class BaseRepository<T>(AppDbContext context) where T : BaseEntity<T>
 {

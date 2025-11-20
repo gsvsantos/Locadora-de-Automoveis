@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace LocadoraDeAutomoveis.Core.Domain.Auth;
+namespace LocadoraDeAutomoveis.Domain.Auth;
 
 public class Role : IdentityRole<Guid>;
 

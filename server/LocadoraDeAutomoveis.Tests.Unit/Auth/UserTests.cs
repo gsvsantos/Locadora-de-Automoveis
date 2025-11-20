@@ -1,4 +1,4 @@
-﻿using LocadoraDeAutomoveis.Core.Domain.Auth;
+﻿using LocadoraDeAutomoveis.Domain.Auth;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Auth;
 

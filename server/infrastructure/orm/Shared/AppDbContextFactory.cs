@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace LocadoraDeAutomoveis.Infrastructure.ORM.Shared;
+namespace LocadoraDeAutomoveis.Infrastructure.Shared;
 
 public static class AppDbContextFactory
 {

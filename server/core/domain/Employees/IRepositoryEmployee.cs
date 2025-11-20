@@ -1,4 +1,4 @@
-﻿using LocadoraDeAutomoveis.Core.Domain.Shared;
+﻿using LocadoraDeAutomoveis.Domain.Shared;
 
 namespace LocadoraDeAutomoveis.Domain.Employees;
 
