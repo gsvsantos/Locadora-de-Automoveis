@@ -1,9 +1,15 @@
 ﻿using DotNet.Testcontainers.Containers;
 using FizzWare.NBuilder;
+using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Testcontainers.MsSql;
 
 namespace LocadoraDeAutomoveis.Tests.Integration.Shared;
@@ -13,6 +19,7 @@ public abstract class TestFixture
 {
     protected AppDbContext dbContext = null!;
 
+    protected UserManager<User> userManager = null!;
     protected EmployeeRepository employeeRepository = null!;
 
     private static IDatabaseContainer? dbContainer = null!;
@@ -50,7 +57,10 @@ public abstract class TestFixture
 
         ConfigureTables(this.dbContext);
 
+        this.userManager = CreateUserManager(this.dbContext);
         this.employeeRepository = new(this.dbContext);
+
+        BuilderSetup.SetCreatePersistenceMethod<User>(u => this.userManager.CreateAsync(u).GetAwaiter().GetResult());
 
         BuilderSetup.SetCreatePersistenceMethod<Employee>(e => this.employeeRepository.AddAsync(e).GetAwaiter().GetResult());
         BuilderSetup.SetCreatePersistenceMethod<IList<Employee>>(e => this.employeeRepository.AddMultiplyAsync(e).GetAwaiter().GetResult());
@@ -118,5 +128,31 @@ public abstract class TestFixture
         dbContext.Employees.RemoveRange(dbContext.Employees);
 
         dbContext.SaveChanges();
+    }
+
+    private static UserManager<User> CreateUserManager(AppDbContext dbContext)
+    {
+        UserStore<User, Role, AppDbContext, Guid> userStore = new(dbContext);
+
+        List<IUserValidator<User>> userValidators = [];
+        List<IPasswordValidator<User>> passwordValidators = [new PasswordValidator<User>()];
+
+        ServiceProvider serviceProvider = new ServiceCollection()
+            .AddLogging()
+            .BuildServiceProvider();
+
+        UserManager<User> userManager = new(
+            userStore,
+            new OptionsWrapper<IdentityOptions>(new IdentityOptions()),
+            new PasswordHasher<User>(),
+            userValidators,
+            passwordValidators,
+            new UpperInvariantLookupNormalizer(),
+            new IdentityErrorDescriber(),
+            serviceProvider,
+            new Logger<UserManager<User>>(serviceProvider.GetRequiredService<ILoggerFactory>())
+        );
+
+        return userManager;
     }
 }
