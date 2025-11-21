@@ -149,6 +149,6 @@ public class UpdateEmployeeRequestHandlerTests
         Assert.IsTrue(result.IsSuccess);
         Assert.IsNotNull(result.Value);
         Assert.AreEqual(employee.Id, result.Value.Id);
-        #endregion
     }
+    #endregion
 }
