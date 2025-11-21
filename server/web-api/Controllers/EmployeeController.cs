@@ -30,7 +30,7 @@ public class EmployeeController(IMediator mediator) : ControllerBase
         return Ok(result.Value);
     }
 
-    [HttpGet("GetAll")]
+    [HttpGet("get-all")]
     [Authorize("AdminPolicy")]
     public async Task<IActionResult> GetAll()
     {
