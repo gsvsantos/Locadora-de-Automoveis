@@ -53,7 +53,7 @@ public abstract class TestFixture
             throw new InvalidOperationException("O banco de dados não foi inicializado corretamente.");
         }
 
-        this.dbContext = AppDbContextFactory.CreateDbContext(applicationConnectionString);
+        this.dbContext = TestAppDbContext.CreateDbContext(applicationConnectionString);
 
         ConfigureTables(this.dbContext);
 
@@ -124,6 +124,9 @@ public abstract class TestFixture
     private static void ConfigureTables(AppDbContext dbContext)
     {
         dbContext.Database.EnsureCreated();
+
+        dbContext.Roles.RemoveRange(dbContext.Roles);
+        dbContext.Users.RemoveRange(dbContext.Users);
 
         dbContext.Employees.RemoveRange(dbContext.Employees);
 
