@@ -8,17 +8,17 @@ public class GetAllEmployeeRequestHandlerTests
 {
     private GetAllEmployeeRequestHandler handler;
 
-    private Mock<IRepositoryEmployee> repositoryMock = null!;
+    private Mock<IRepositoryEmployee> repositoryEmployeeMock = null!;
     private Mock<ILogger<GetAllEmployeeRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
     public void Setup()
     {
-        this.repositoryMock = new Mock<IRepositoryEmployee>();
+        this.repositoryEmployeeMock = new Mock<IRepositoryEmployee>();
         this.loggerMock = new Mock<ILogger<GetAllEmployeeRequestHandler>>();
 
         this.handler = new GetAllEmployeeRequestHandler(
-            this.repositoryMock.Object,
+            this.repositoryEmployeeMock.Object,
             this.loggerMock.Object);
     }
 
@@ -33,7 +33,7 @@ public class GetAllEmployeeRequestHandlerTests
             new Employee("Employee 2", DateTimeOffset.Now.AddYears(-1), 60000m)
         ];
 
-        this.repositoryMock
+        this.repositoryEmployeeMock
             .Setup(repo => repo.GetAllAsync())
             .ReturnsAsync(employees);
 

@@ -11,7 +11,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Shared;
 public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvider = null)
     : IdentityDbContext<User, Role, Guid>(options), IUnitOfWork
 {
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         if (tenantProvider is not null)
