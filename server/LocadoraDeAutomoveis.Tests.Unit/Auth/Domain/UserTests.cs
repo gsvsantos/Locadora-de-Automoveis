@@ -1,12 +1,13 @@
 ﻿using LocadoraDeAutomoveis.Domain.Auth;
 
-namespace LocadoraDeAutomoveis.Tests.Unit.Auth;
+namespace LocadoraDeAutomoveis.Tests.Unit.Auth.Domain;
 
 [TestClass]
+[TestCategory("User Domain - Unit Tests")]
 public sealed class UserTests
 {
     [TestMethod]
-    public void User_DefaultConstructor_ShouldInitializeProperties()
+    public void UserConstructor_Default_ShouldInitializeProperties()
     {
         // Arrange & Act
         User user = new();
@@ -21,7 +22,7 @@ public sealed class UserTests
     }
 
     [TestMethod]
-    public void User_ParameterizedConstructor_ShouldWorks()
+    public void UserConstructor_Parameterized_ShouldWorks()
     {
         // Arrange & Act
         User user = new()
@@ -40,5 +41,18 @@ public sealed class UserTests
         Assert.AreEqual("Clebinho Da Silva", user.FullName);
         Assert.AreEqual("cleber@dasilva.net", user.Email);
         Assert.AreEqual("(99) 99999-9999", user.PhoneNumber);
+    }
+
+    [TestMethod]
+    public void UserMethod_AssociateTenant_ShouldWorks()
+    {
+        // Arrange & Act
+        Guid tenantId = Guid.NewGuid();
+
+        User user = new();
+        user.AssociateTenant(tenantId);
+
+        // Assert
+        Assert.AreEqual(tenantId, user.TenantId);
     }
 }

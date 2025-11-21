@@ -3,10 +3,11 @@ using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Shared;
 
-namespace LocadoraDeAutomoveis.Tests.Unit.Employees;
+namespace LocadoraDeAutomoveis.Tests.Unit.Employees.Application;
 
 [TestClass]
-public class SelfUpdateEmployeeRequestHandlerTests
+[TestCategory("Employee Application - Unit Tests")]
+public sealed class SelfUpdateEmployeeRequestHandlerTests
 {
     private SelfUpdateEmployeeRequestHandler handler = null!;
 

@@ -1,10 +1,11 @@
 ﻿using LocadoraDeAutomoveis.Application.Employees.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.Employees;
 
-namespace LocadoraDeAutomoveis.Tests.Unit.Employees;
+namespace LocadoraDeAutomoveis.Tests.Unit.Employees.Application;
 
 [TestClass]
-public class GetAllEmployeeRequestHandlerTests
+[TestCategory("Employee Application - Unit Tests")]
+public sealed class GetAllEmployeeRequestHandlerTests
 {
     private GetAllEmployeeRequestHandler handler;
 

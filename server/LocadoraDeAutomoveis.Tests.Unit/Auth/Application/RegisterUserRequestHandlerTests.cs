@@ -3,9 +3,10 @@ using LocadoraDeAutomoveis.Application.Auth.DTOs;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Shared;
 
-namespace LocadoraDeAutomoveis.Tests.Unit.Auth;
+namespace LocadoraDeAutomoveis.Tests.Unit.Auth.Application;
 
 [TestClass]
+[TestCategory("Employee Application - Unit Tests")]
 public sealed class RegisterUserRequestHandlerTests
 {
     private RegisterUserRequestHandler handler = null!;

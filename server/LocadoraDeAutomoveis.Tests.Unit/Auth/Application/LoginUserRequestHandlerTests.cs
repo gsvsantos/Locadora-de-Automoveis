@@ -4,7 +4,7 @@ using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Shared;
 using Microsoft.AspNetCore.Http;
 
-namespace LocadoraDeAutomoveis.Tests.Unit.Auth;
+namespace LocadoraDeAutomoveis.Tests.Unit.Auth.Application;
 
 [TestClass]
 public sealed class LoginUserRequestHandlerTests
