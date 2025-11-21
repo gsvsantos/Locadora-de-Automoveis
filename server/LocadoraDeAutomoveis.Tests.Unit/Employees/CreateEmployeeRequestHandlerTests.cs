@@ -47,6 +47,7 @@ public class CreateEmployeeRequestHandlerTests
         );
     }
 
+    #region CreateEmployee Tests (Happy Path)
     [TestMethod]
     public void Handler_ShouldCreateEmployee_Successfully()
     {
@@ -150,4 +151,5 @@ public class CreateEmployeeRequestHandlerTests
 
         Assert.IsTrue(result.IsSuccess);
     }
+    #endregion
 }
