@@ -14,7 +14,6 @@ public class DeleteEmployeeRequestHandlerTests
     private const string _fullName = "Employee Teste da Silva";
     private const string _email = "employeeTesteDS@gmail.com";
     private const string _phoneNumber = "(51) 90000-0001";
-    private const string _password = "@SenhaForte123!";
 
     private Mock<UserManager<User>> userManagerMock = null!;
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
