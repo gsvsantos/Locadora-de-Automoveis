@@ -2,10 +2,10 @@
 
 public record GetAllEmployeeResponse(
     int Quantity,
-    IEnumerable<GetAllEmployeeDto> Employees
+    IEnumerable<EmployeeDto> Employees
 );
 
-public record GetAllEmployeeDto(
+public record EmployeeDto(
     Guid Id,
     string FullName,
     DateTimeOffset AdmissionDate,

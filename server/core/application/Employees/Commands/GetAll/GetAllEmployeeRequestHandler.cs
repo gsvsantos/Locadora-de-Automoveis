@@ -19,7 +19,7 @@ public class GetAllEmployeeRequestHandler(
 
             GetAllEmployeeResponse response = new(
                 employees.Count(),
-                employees.Select(employee => new GetAllEmployeeDto(
+                employees.Select(employee => new EmployeeDto(
                     employee.Id,
                     employee.FullName,
                     employee.AdmissionDate,

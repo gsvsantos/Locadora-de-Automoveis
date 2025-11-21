@@ -42,7 +42,7 @@ public class GetAllEmployeeRequestHandlerTests
         // Act
         Result<GetAllEmployeeResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
 
-        List<GetAllEmployeeDto> employeesDto = [.. result.Value.Employees];
+        List<EmployeeDto> employeesDto = [.. result.Value.Employees];
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
