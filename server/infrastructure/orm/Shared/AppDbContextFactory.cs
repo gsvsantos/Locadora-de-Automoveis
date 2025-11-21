@@ -10,7 +10,10 @@ public static class AppDbContextFactory
             .UseSqlServer(connectionString, opt =>
             {
                 opt.EnableRetryOnFailure(3);
+                opt.CommandTimeout(60);
             })
+            .EnableSensitiveDataLogging()
+            .EnableDetailedErrors()
             .Options;
 
         return new(options);
