@@ -31,12 +31,6 @@ public class UpdateEmployeeRequestHandler(
 
         try
         {
-            Employee updatedEmployee = new(
-            request.FullName,
-            request.AdmissionDate,
-            request.Salary
-            );
-
             ValidationResult validationResult = await validator.ValidateAsync(selectedEmployee, cancellationToken);
 
             if (!validationResult.IsValid)
@@ -49,6 +43,12 @@ public class UpdateEmployeeRequestHandler(
             }
 
             List<Employee> existingEmployees = await repositoryEmployee.GetAllAsync();
+
+            Employee updatedEmployee = new(
+            request.FullName,
+            request.AdmissionDate,
+            request.Salary
+            );
 
             if (DuplicateName(updatedEmployee, existingEmployees))
             {
