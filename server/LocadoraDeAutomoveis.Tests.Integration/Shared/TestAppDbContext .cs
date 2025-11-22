@@ -1,4 +1,5 @@
-﻿using LocadoraDeAutomoveis.Infrastructure.Shared;
+﻿using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Infrastructure.Shared;
 using LocadoraDeAutomoveis.Tests.Integration.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +22,16 @@ public sealed class TestAppDbContext : AppDbContext
 
             builder.Property(x => x.Name).HasColumnType("nvarchar(max)");
             builder.Property(x => x.Age);
+
+            builder.HasOne<User>()
+                   .WithMany()
+                   .HasForeignKey(x => x.TenantId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne<User>()
+                   .WithMany()
+                   .HasForeignKey(x => x.UserId)
+                   .OnDelete(DeleteBehavior.Restrict);
         });
     }
     public static TestAppDbContext CreateDbContext(string connectionString)

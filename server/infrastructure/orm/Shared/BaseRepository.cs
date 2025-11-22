@@ -39,9 +39,12 @@ public class BaseRepository<T>(AppDbContext context) where T : BaseEntity<T>
         return true;
     }
 
-    public virtual async Task<List<T>> GetAllAsync() => await this.records.ToListAsync();
+    public virtual async Task<List<T>> GetAllAsync() =>
+        await this.records.Include(x => x.User).ToListAsync();
 
-    public virtual async Task<List<T>> GetAllAsync(int quantity) => await this.records.Take(quantity).ToListAsync();
+    public virtual async Task<List<T>> GetAllAsync(int quantity) =>
+        await this.records.Include(x => x.User).Take(quantity).ToListAsync();
 
-    public virtual async Task<T?> GetByIdAsync(Guid entityId) => await this.records.FirstOrDefaultAsync(x => x.Id.Equals(entityId));
+    public virtual async Task<T?> GetByIdAsync(Guid entityId) =>
+        await this.records.Include(x => x.User).FirstOrDefaultAsync(x => x.Id.Equals(entityId));
 }

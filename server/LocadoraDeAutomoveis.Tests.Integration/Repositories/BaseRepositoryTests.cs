@@ -40,6 +40,7 @@ public sealed class BaseRepositoryTests : TestFixture
             .With(x => x.Age = 30)
             .Build();
         entity.AssociateTenant(tenant.Id);
+        entity.AssociateUser(tenant);
 
         // Act
         await this.baseRepositoryTest.AddAsync(entity);
@@ -69,6 +70,7 @@ public sealed class BaseRepositoryTests : TestFixture
         foreach (TestEntity entity in entities)
         {
             entity.AssociateTenant(tenant.Id);
+            entity.AssociateUser(tenant);
         }
 
         // Act
@@ -95,6 +97,7 @@ public sealed class BaseRepositoryTests : TestFixture
             .With(x => x.Age = 30)
             .Build();
         entity.AssociateTenant(tenant.Id);
+        entity.AssociateUser(tenant);
 
         await this.baseRepositoryTest.AddAsync(entity);
         await this.dbContext.SaveChangesAsync();
@@ -135,6 +138,7 @@ public sealed class BaseRepositoryTests : TestFixture
             .With(x => x.Age = 30)
             .Build();
         entity.AssociateTenant(tenant.Id);
+        entity.AssociateUser(tenant);
 
         await this.baseRepositoryTest.AddAsync(entity);
         await this.dbContext.SaveChangesAsync();
@@ -177,6 +181,7 @@ public sealed class BaseRepositoryTests : TestFixture
         foreach (TestEntity entity in entities)
         {
             entity.AssociateTenant(tenant.Id);
+            entity.AssociateUser(tenant);
         }
 
         await this.baseRepositoryTest.AddMultiplyAsync(entities);
@@ -206,6 +211,7 @@ public sealed class BaseRepositoryTests : TestFixture
         foreach (TestEntity entity in entities)
         {
             entity.AssociateTenant(tenant.Id);
+            entity.AssociateUser(tenant);
         }
 
         await this.baseRepositoryTest.AddMultiplyAsync(entities);
@@ -233,6 +239,7 @@ public sealed class BaseRepositoryTests : TestFixture
             .With(x => x.Age = 30)
             .Build();
         entity.AssociateTenant(tenant.Id);
+        entity.AssociateUser(tenant);
 
         await this.baseRepositoryTest.AddAsync(entity);
         await this.dbContext.SaveChangesAsync();

@@ -2,7 +2,9 @@
 using FizzWare.NBuilder;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Employees;
+using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
+using LocadoraDeAutomoveis.Infrastructure.Groups;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -17,10 +19,11 @@ namespace LocadoraDeAutomoveis.Tests.Integration.Shared;
 [TestClass]
 public abstract class TestFixture
 {
-    protected AppDbContext dbContext = null!;
+    protected TestAppDbContext dbContext = null!;
 
     protected UserManager<User> userManager = null!;
     protected EmployeeRepository employeeRepository = null!;
+    protected GroupRepository groupRepository = null!;
 
     private static IDatabaseContainer? dbContainer = null!;
 
@@ -59,11 +62,15 @@ public abstract class TestFixture
 
         this.userManager = CreateUserManager(this.dbContext);
         this.employeeRepository = new(this.dbContext);
+        this.groupRepository = new(this.dbContext);
 
         BuilderSetup.SetCreatePersistenceMethod<User>(u => this.userManager.CreateAsync(u).GetAwaiter().GetResult());
 
         BuilderSetup.SetCreatePersistenceMethod<Employee>(e => this.employeeRepository.AddAsync(e).GetAwaiter().GetResult());
         BuilderSetup.SetCreatePersistenceMethod<IList<Employee>>(e => this.employeeRepository.AddMultiplyAsync(e).GetAwaiter().GetResult());
+
+        BuilderSetup.SetCreatePersistenceMethod<Group>(g => this.groupRepository.AddAsync(g).GetAwaiter().GetResult());
+        BuilderSetup.SetCreatePersistenceMethod<IList<Group>>(g => this.groupRepository.AddMultiplyAsync(g).GetAwaiter().GetResult());
 
     }
 
@@ -121,13 +128,14 @@ public abstract class TestFixture
         applicationConnectionString = null;
     }
 
-    private static void ConfigureTables(AppDbContext dbContext)
+    private static void ConfigureTables(TestAppDbContext dbContext)
     {
         dbContext.Database.EnsureCreated();
 
         dbContext.Roles.RemoveRange(dbContext.Roles);
         dbContext.Users.RemoveRange(dbContext.Users);
 
+        dbContext.TestEntities.RemoveRange(dbContext.TestEntities);
         dbContext.Employees.RemoveRange(dbContext.Employees);
 
         dbContext.SaveChanges();
