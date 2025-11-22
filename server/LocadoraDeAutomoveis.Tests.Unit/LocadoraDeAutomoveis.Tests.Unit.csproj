@@ -18,8 +18,4 @@
     <ProjectReference Include="..\core\domain\LocadoraDeAutomoveis.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Groups\Domain\" />
-  </ItemGroup>
-
 </Project>
