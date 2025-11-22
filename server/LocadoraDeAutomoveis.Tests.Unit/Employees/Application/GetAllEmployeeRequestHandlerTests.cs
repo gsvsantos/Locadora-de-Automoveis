@@ -60,9 +60,7 @@ public sealed class GetAllEmployeeRequestHandlerTests
             }
         }
     }
-    #endregion
 
-    #region GetAllEmployees Tests (Happy Path)
     [TestMethod]
     public void Handler_ShouldGetFiveEmployees_Successfully()
     {
@@ -82,6 +80,7 @@ public sealed class GetAllEmployeeRequestHandlerTests
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
+        Assert.AreEqual(10, employees.Count);
         Assert.AreEqual(5, result.Value.Quantity);
         Assert.AreEqual(5, employeesDto.Count);
 
