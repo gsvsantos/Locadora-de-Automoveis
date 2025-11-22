@@ -1,8 +1,6 @@
-﻿using FizzWare.NBuilder;
-using LocadoraDeAutomoveis.Domain.Auth;
+﻿using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Vehicles;
-using LocadoraDeAutomoveis.Tests.Integration.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Integration.Repositories;
 
@@ -15,15 +13,15 @@ public sealed class GroupRepositoryTests : TestFixture
     {
         // Arrange
         User tenant = Builder<User>.CreateNew()
-            .With(t => t.FullName == "Tenant User")
+            .With(t => t.FullName = "Tenant User")
             .With(t => t.UserName = $"tenantUser-{Guid.NewGuid()}")
-            .With(t => t.Id == Guid.NewGuid()).Persist();
+            .With(t => t.Id = Guid.NewGuid()).Persist();
         tenant.AssociateTenant(tenant.Id);
 
         User userEmployee = Builder<User>.CreateNew()
-            .With(uE => uE.FullName == "Employee User")
+            .With(uE => uE.FullName = "Employee User")
             .With(uE => uE.UserName = $"employeeUser-{Guid.NewGuid()}")
-            .With(uE => uE.Id == Guid.NewGuid()).Persist();
+            .With(uE => uE.Id = Guid.NewGuid()).Persist();
         userEmployee.AssociateTenant(tenant.Id);
 
         List<Group> existingGroups = Builder<Group>.CreateListOfSize(10).Build().ToList();
@@ -58,15 +56,15 @@ public sealed class GroupRepositoryTests : TestFixture
     {
         // Arrange
         User tenant = Builder<User>.CreateNew()
-            .With(t => t.FullName == "Tenant User")
+            .With(t => t.FullName = "Tenant User")
             .With(t => t.UserName = $"tenantUser-{Guid.NewGuid()}")
-            .With(t => t.Id == Guid.NewGuid()).Persist();
+            .With(t => t.Id = Guid.NewGuid()).Persist();
         tenant.AssociateTenant(tenant.Id);
 
         User userEmployee = Builder<User>.CreateNew()
-            .With(uE => uE.FullName == "Employee User")
+            .With(uE => uE.FullName = "Employee User")
             .With(uE => uE.UserName = $"employeeUser-{Guid.NewGuid()}")
-            .With(uE => uE.Id == Guid.NewGuid()).Persist();
+            .With(uE => uE.Id = Guid.NewGuid()).Persist();
         userEmployee.AssociateTenant(tenant.Id);
 
         List<Group> existingGroups = Builder<Group>.CreateListOfSize(10).Build().ToList();
@@ -100,15 +98,15 @@ public sealed class GroupRepositoryTests : TestFixture
     {
         // Arrange
         User tenant = Builder<User>.CreateNew()
-            .With(t => t.FullName == "Tenant User")
+            .With(t => t.FullName = "Tenant User")
             .With(t => t.UserName = $"tenantUser-{Guid.NewGuid()}")
-            .With(t => t.Id == Guid.NewGuid()).Persist();
+            .With(t => t.Id = Guid.NewGuid()).Persist();
         tenant.AssociateTenant(tenant.Id);
 
         User userEmployee = Builder<User>.CreateNew()
-            .With(uE => uE.FullName == "Employee User")
+            .With(uE => uE.FullName = "Employee User")
             .With(uE => uE.UserName = $"employeeUser-{Guid.NewGuid()}")
-            .With(uE => uE.Id == Guid.NewGuid()).Persist();
+            .With(uE => uE.Id = Guid.NewGuid()).Persist();
         userEmployee.AssociateTenant(tenant.Id);
 
         Group group = Builder<Group>.CreateNew().Build();
@@ -116,6 +114,7 @@ public sealed class GroupRepositoryTests : TestFixture
         group.AssociateUser(userEmployee);
 
         Vehicle vehicle = Builder<Vehicle>.CreateNew().Build();
+
         vehicle.AssociateTenant(tenant.Id);
         vehicle.AssociateUser(userEmployee);
 
