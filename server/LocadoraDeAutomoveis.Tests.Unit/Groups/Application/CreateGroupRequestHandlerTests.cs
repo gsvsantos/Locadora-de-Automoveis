@@ -15,7 +15,6 @@ public sealed class CreateGroupRequestHandlerTests
     private const string _fullName = "Clebinho Da Silva";
     private const string _email = "cleber@dasilva.net";
     private const string _phoneNumber = "(99) 99999-9999";
-    private const string _password = "@CleberDS123!";
 
     private Mock<UserManager<User>> userManagerMock = null!;
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
@@ -51,9 +50,9 @@ public sealed class CreateGroupRequestHandlerTests
         );
     }
 
-    #region CreateEmployee Tests (Happy Path)
+    #region CreateGroup Tests (Happy Path)
     [TestMethod]
-    public void Handler_ShouldCreateEmployee_Successfully()
+    public void Handler_ShouldCreateGroup_Successfully()
     {
         // Arrange
         Guid tenantId = Guid.NewGuid();
