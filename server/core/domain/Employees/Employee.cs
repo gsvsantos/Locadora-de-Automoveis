@@ -8,9 +8,6 @@ public class Employee : BaseEntity<Employee>
     public string FullName { get; set; } = string.Empty;
     public DateTimeOffset AdmissionDate { get; set; }
     public decimal Salary { get; set; }
-    public bool IsActive { get; set; } = true;
-    public Guid UserId { get; set; }
-    public User User { get; set; } = new User();
 
     public Employee() { }
     public Employee(string fullName, DateTimeOffset admissionDate, decimal salary) : this()
