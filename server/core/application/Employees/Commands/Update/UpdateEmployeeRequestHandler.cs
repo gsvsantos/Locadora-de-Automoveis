@@ -59,7 +59,7 @@ public class UpdateEmployeeRequestHandler(
 
             await repositoryEmployee.UpdateAsync(request.Id, selectedEmployee);
 
-            selectedEmployee.User.FullName = request.FullName;
+            selectedEmployee.User!.FullName = request.FullName;
 
             await userManager.UpdateAsync(selectedEmployee.User);
 
@@ -83,7 +83,9 @@ public class UpdateEmployeeRequestHandler(
     private static bool DuplicateName(Employee employee, List<Employee> existingEmployees)
     {
         return existingEmployees
-            .Any(entity => string.Equals(
+            .Any(entity =>
+            entity.Id != employee.Id &&
+            string.Equals(
                 entity.FullName,
                 employee.FullName,
                 StringComparison.CurrentCultureIgnoreCase)
