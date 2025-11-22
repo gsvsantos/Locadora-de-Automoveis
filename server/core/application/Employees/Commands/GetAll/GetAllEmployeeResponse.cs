@@ -1,8 +1,10 @@
-﻿namespace LocadoraDeAutomoveis.Application.Employees.Commands.GetAll;
+﻿using System.Collections.Immutable;
+
+namespace LocadoraDeAutomoveis.Application.Employees.Commands.GetAll;
 
 public record GetAllEmployeeResponse(
     int Quantity,
-    IEnumerable<EmployeeDto> Employees
+    ImmutableList<EmployeeDto> Employees
 );
 
 public record EmployeeDto(

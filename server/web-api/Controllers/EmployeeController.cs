@@ -33,9 +33,9 @@ public class EmployeeController(IMediator mediator) : ControllerBase
 
     [HttpGet("get-all")]
     [Authorize("AdminPolicy")]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] GetAllEmployeeRequest? request)
     {
-        GetAllEmployeeRequest request = new();
+        request = request ?? new GetAllEmployeeRequest(0);
 
         Result<GetAllEmployeeResponse> result = await mediator.Send(request);
 
