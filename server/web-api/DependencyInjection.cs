@@ -4,9 +4,11 @@ using LocadoraDeAutomoveis.Application.Employees.Commands.Create;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Groups;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
+using LocadoraDeAutomoveis.Infrastructure.Vehicles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -142,6 +144,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IRepositoryEmployee, EmployeeRepository>();
         services.AddScoped<IRepositoryGroup, GroupRepository>();
+        services.AddScoped<IRepositoryVehicle, VehicleRepository>();
     }
 
     public static void ConfigureSerilog(this IServiceCollection services, ILoggingBuilder logging, IConfiguration configuration)
