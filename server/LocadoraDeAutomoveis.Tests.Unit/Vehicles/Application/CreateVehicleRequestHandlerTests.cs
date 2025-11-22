@@ -20,6 +20,7 @@ public sealed class CreateVehicleRequestHandlerTests
     private Mock<UserManager<User>> userManagerMock = null!;
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryVehicle> repositoryVehicleMock = null!;
+    private Mock<IRepositoryGroup> repositoryGroupMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IUserContext> userContextMock = null!;
     private Mock<IValidator<Vehicle>> validatorMock = null!;
@@ -35,6 +36,7 @@ public sealed class CreateVehicleRequestHandlerTests
 
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryVehicleMock = new Mock<IRepositoryVehicle>();
+        this.repositoryGroupMock = new Mock<IRepositoryGroup>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.userContextMock = new Mock<IUserContext>();
         this.validatorMock = new Mock<IValidator<Vehicle>>();
@@ -44,6 +46,7 @@ public sealed class CreateVehicleRequestHandlerTests
             this.userManagerMock.Object,
             this.unitOfWorkMock.Object,
             this.repositoryVehicleMock.Object,
+            this.repositoryGroupMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,
             this.validatorMock.Object,
@@ -51,9 +54,9 @@ public sealed class CreateVehicleRequestHandlerTests
         );
     }
 
-    #region CreateGroup Tests (Happy Path)
+    #region CreateVehicle Tests (Happy Path)
     [TestMethod]
-    public void Handler_ShouldCreateGroup_Successfully()
+    public void Handler_ShouldCreateVehicle_Successfully()
     {
         // Arrange
         Guid tenantId = Guid.NewGuid();
@@ -75,6 +78,10 @@ public sealed class CreateVehicleRequestHandlerTests
         Group group = new("Group A") { Id = groupId };
         group.AssociateTenant(tenantId);
         group.AssociateUser(user);
+
+        this.repositoryGroupMock
+            .Setup(r => r.GetByIdAsync(groupId))
+            .ReturnsAsync(group);
 
         DateTimeOffset date = new(1984, 1, 1, 0, 0, 0, TimeSpan.Zero);
         CreateVehicleRequest request = new(
@@ -141,6 +148,14 @@ public sealed class CreateVehicleRequestHandlerTests
         Result<CreateVehicleResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
 
         // Assert
+        this.userManagerMock
+            .Verify(r => r.FindByIdAsync(this.userContextMock.Object.GetUserId().ToString()),
+            Times.Once);
+
+        this.repositoryGroupMock
+            .Verify(r => r.GetByIdAsync(groupId),
+            Times.Once);
+
         this.validatorMock
             .Verify(v => v.ValidateAsync(
                 It.Is<Vehicle>(v =>

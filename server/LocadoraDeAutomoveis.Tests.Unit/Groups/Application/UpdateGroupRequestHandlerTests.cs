@@ -46,10 +46,12 @@ public sealed class UpdateGroupRequestHandlerTests
             .Setup(r => r.GetByIdAsync(groupId))
             .ReturnsAsync(group);
 
+        Group updatedGroup = new(request.Name);
+
         this.validatorMock
             .Setup(v => v.ValidateAsync(
                 It.Is<Group>(g =>
-                    g.Name == group.Name
+                    g.Name == updatedGroup.Name
                     ), CancellationToken.None
                 ))
             .ReturnsAsync(new ValidationResult());
@@ -57,8 +59,6 @@ public sealed class UpdateGroupRequestHandlerTests
         this.repositoryGroupMock
             .Setup(r => r.GetAllAsync())
             .ReturnsAsync([group]);
-
-        Group updatedGroup = new(request.Name);
 
         this.repositoryGroupMock
             .Setup(r => r.UpdateAsync(request.Id, updatedGroup))
@@ -78,7 +78,7 @@ public sealed class UpdateGroupRequestHandlerTests
         this.validatorMock
             .Verify(v => v.ValidateAsync(
                 It.Is<Group>(g =>
-                    g.Name == request.Name
+                    g.Name == updatedGroup.Name
                     ), CancellationToken.None
                 ), Times.Once
             );
@@ -100,7 +100,7 @@ public sealed class UpdateGroupRequestHandlerTests
 
         Assert.IsTrue(result.IsSuccess);
         Assert.IsNotNull(result.Value);
-        Assert.AreEqual(group.Id, result.Value.Id);
+        Assert.AreEqual(groupId, result.Value.Id);
     }
     #endregion
 }

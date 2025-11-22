@@ -28,7 +28,9 @@ public class UpdateGroupRequestHandler(
 
         try
         {
-            ValidationResult validationResult = await validator.ValidateAsync(selectedGroup, cancellationToken);
+            Group updatedGroup = new(request.Name);
+
+            ValidationResult validationResult = await validator.ValidateAsync(updatedGroup, cancellationToken);
 
             if (!validationResult.IsValid)
             {
@@ -41,16 +43,12 @@ public class UpdateGroupRequestHandler(
 
             List<Group> existingGroups = await repositoryGroup.GetAllAsync();
 
-            Group updatedGroup = new(request.Name);
-
             if (DuplicateName(updatedGroup, existingGroups))
             {
                 return Result.Fail(GroupErrorResults.DuplicateNameError(request.Name));
             }
 
-            selectedGroup.Update(updatedGroup);
-
-            await repositoryGroup.UpdateAsync(request.Id, selectedGroup);
+            await repositoryGroup.UpdateAsync(request.Id, updatedGroup);
 
             await unitOfWork.CommitAsync();
 
