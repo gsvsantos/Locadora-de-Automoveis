@@ -106,6 +106,16 @@ public sealed class CreateGroupRequestHandlerTests
                 ), Times.Once
             );
 
+        this.repositoryGroupMock
+            .Verify(r => r.GetAllAsync(), Times.Once);
+
+        this.repositoryGroupMock
+            .Verify(r => r.AddAsync(
+                It.Is<Group>(g =>
+                    g.Name == request.Name
+                    )), Times.Once
+            );
+
         Assert.IsTrue(result.IsSuccess);
     }
     #endregion
