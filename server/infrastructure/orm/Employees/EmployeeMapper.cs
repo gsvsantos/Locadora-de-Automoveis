@@ -27,8 +27,8 @@ public class EmployeeMapper : IEntityTypeConfiguration<Employee>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(u => u.User)
-            .WithOne()
-            .HasForeignKey<Employee>(e => e.UserId)
+            .WithMany()
+            .HasForeignKey(e => e.UserId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(f => new { f.TenantId, f.UserId, f.IsActive });
