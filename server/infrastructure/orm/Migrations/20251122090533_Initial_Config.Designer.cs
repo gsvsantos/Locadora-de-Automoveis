@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251122005707_Initial_Config")]
+    [Migration("20251122090533_Initial_Config")]
     partial class Initial_Config
     {
         /// <inheritdoc />
@@ -154,8 +154,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.HasIndex("TenantId", "UserId", "IsActive");
 
@@ -183,8 +182,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.HasIndex("TenantId", "UserId", "IsActive");
 
@@ -363,8 +361,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "User")
-                        .WithOne()
-                        .HasForeignKey("LocadoraDeAutomoveis.Domain.Employees.Employee", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -382,8 +380,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "User")
-                        .WithOne()
-                        .HasForeignKey("LocadoraDeAutomoveis.Domain.Groups.Group", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

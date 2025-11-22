@@ -151,8 +151,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.HasIndex("TenantId", "UserId", "IsActive");
 
@@ -180,8 +179,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.HasIndex("TenantId", "UserId", "IsActive");
 
@@ -360,8 +358,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "User")
-                        .WithOne()
-                        .HasForeignKey("LocadoraDeAutomoveis.Domain.Employees.Employee", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -379,8 +377,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "User")
-                        .WithOne()
-                        .HasForeignKey("LocadoraDeAutomoveis.Domain.Groups.Group", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

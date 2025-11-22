@@ -302,8 +302,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_UserId",
                 table: "Employees",
-                column: "UserId",
-                unique: true);
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_TenantId_UserId_IsActive",
@@ -313,8 +312,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_UserId",
                 table: "Groups",
-                column: "UserId",
-                unique: true);
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_GroupId",

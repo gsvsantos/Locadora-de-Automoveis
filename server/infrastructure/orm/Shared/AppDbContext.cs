@@ -25,6 +25,8 @@ public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvi
                 .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
             modelBuilder.Entity<Group>()
                 .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<Vehicle>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
         }
 
         Assembly assembly = typeof(AppDbContext).Assembly;
