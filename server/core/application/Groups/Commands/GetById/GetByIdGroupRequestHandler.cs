@@ -17,17 +17,17 @@ public class GetByIdGroupRequestHandler(
     {
         try
         {
-            Group? group = await repositoryGroup.GetByIdAsync(request.Id);
+            Group? selectedGroup = await repositoryGroup.GetByIdAsync(request.Id);
 
-            if (group == null)
+            if (selectedGroup == null)
             {
                 return Result.Fail(ErrorResults.NotFoundError(request.Id));
             }
 
             GetByIdGroupResponse response = new(
                  new GroupDto(
-                    group.Id,
-                    group.Name
+                    selectedGroup.Id,
+                    selectedGroup.Name
                 )
             );
 
