@@ -3,9 +3,11 @@ using FizzWare.NBuilder;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
+using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Groups;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
+using LocadoraDeAutomoveis.Infrastructure.Vehicles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
@@ -24,6 +26,7 @@ public abstract class TestFixture
     protected UserManager<User> userManager = null!;
     protected EmployeeRepository employeeRepository = null!;
     protected GroupRepository groupRepository = null!;
+    protected VehicleRepository vehicleRepository = null!;
 
     private static IDatabaseContainer? dbContainer = null!;
 
@@ -63,6 +66,7 @@ public abstract class TestFixture
         this.userManager = CreateUserManager(this.dbContext);
         this.employeeRepository = new(this.dbContext);
         this.groupRepository = new(this.dbContext);
+        this.vehicleRepository = new(this.dbContext);
 
         BuilderSetup.SetCreatePersistenceMethod<User>(u => this.userManager.CreateAsync(u).GetAwaiter().GetResult());
 
@@ -72,6 +76,8 @@ public abstract class TestFixture
         BuilderSetup.SetCreatePersistenceMethod<Group>(g => this.groupRepository.AddAsync(g).GetAwaiter().GetResult());
         BuilderSetup.SetCreatePersistenceMethod<IList<Group>>(g => this.groupRepository.AddMultiplyAsync(g).GetAwaiter().GetResult());
 
+        BuilderSetup.SetCreatePersistenceMethod<Vehicle>(v => this.vehicleRepository.AddAsync(v).GetAwaiter().GetResult());
+        BuilderSetup.SetCreatePersistenceMethod<IList<Vehicle>>(v => this.vehicleRepository.AddMultiplyAsync(v).GetAwaiter().GetResult());
     }
 
     private static async Task StartDatabaseAsync()

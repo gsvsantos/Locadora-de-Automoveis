@@ -41,8 +41,8 @@ public class VehicleMapper : IEntityTypeConfiguration<Vehicle>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(u => u.User)
-            .WithOne()
-            .HasForeignKey<Vehicle>(e => e.UserId)
+            .WithMany()
+            .HasForeignKey(g => g.UserId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(f => new { f.TenantId, f.UserId, f.IsActive });
