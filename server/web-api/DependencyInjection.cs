@@ -2,8 +2,10 @@
 using Hangfire;
 using LocadoraDeAutomoveis.Application.Employees.Commands.Create;
 using LocadoraDeAutomoveis.Domain.Employees;
+using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
+using LocadoraDeAutomoveis.Infrastructure.Groups;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -136,7 +138,11 @@ public static class DependencyInjection
         });
     }
 
-    public static void ConfigureRepositories(this IServiceCollection services) => services.AddScoped<IRepositoryEmployee, EmployeeRepository>();
+    public static void ConfigureRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<IRepositoryEmployee, EmployeeRepository>();
+        services.AddScoped<IRepositoryGroup, GroupRepository>();
+    }
 
     public static void ConfigureSerilog(this IServiceCollection services, ILoggingBuilder logging, IConfiguration configuration)
     {
