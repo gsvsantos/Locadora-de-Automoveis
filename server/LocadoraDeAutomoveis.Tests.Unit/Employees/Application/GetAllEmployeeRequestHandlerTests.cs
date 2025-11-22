@@ -1,4 +1,5 @@
-﻿using LocadoraDeAutomoveis.Application.Employees.Commands.GetAll;
+﻿using FizzWare.NBuilder;
+using LocadoraDeAutomoveis.Application.Employees.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.Employees;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Employees.Application;
@@ -28,17 +29,13 @@ public sealed class GetAllEmployeeRequestHandlerTests
     public void Handler_ShouldGetAllEmployees_Successfully()
     {
         // Arrange
-        List<Employee> employees =
-        [
-            new Employee("Employee 1", DateTimeOffset.Now.AddYears(-2), 50000m),
-            new Employee("Employee 2", DateTimeOffset.Now.AddYears(-1), 60000m)
-        ];
+        List<Employee> employees = Builder<Employee>.CreateListOfSize(10).Build().ToList();
 
         this.repositoryEmployeeMock
             .Setup(repo => repo.GetAllAsync())
             .ReturnsAsync(employees);
 
-        GetAllEmployeeRequest request = new();
+        GetAllEmployeeRequest request = new(null);
 
         // Act
         Result<GetAllEmployeeResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
@@ -47,10 +44,48 @@ public sealed class GetAllEmployeeRequestHandlerTests
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
-        Assert.AreEqual(2, result.Value.Quantity);
+        Assert.AreEqual(10, result.Value.Quantity);
         Assert.AreEqual(employees.Count, employeesDto.Count);
 
         for (int i = 0; i < employees.Count; i++)
+        {
+            for (int j = 0; j < employeesDto.Count; j++)
+            {
+                if (employees[i].Id == employeesDto[j].Id)
+                {
+                    Assert.AreEqual(employees[i].FullName, employeesDto[j].FullName);
+                    Assert.AreEqual(employees[i].AdmissionDate, employeesDto[j].AdmissionDate);
+                    Assert.AreEqual(employees[i].Salary, employeesDto[j].Salary);
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region GetAllEmployees Tests (Happy Path)
+    [TestMethod]
+    public void Handler_ShouldGetFiveEmployees_Successfully()
+    {
+        // Arrange
+        List<Employee> employees = Builder<Employee>.CreateListOfSize(10).Build().ToList();
+
+        this.repositoryEmployeeMock
+            .Setup(repo => repo.GetAllAsync(5))
+            .ReturnsAsync(employees.Take(5).ToList());
+
+        GetAllEmployeeRequest request = new(5);
+
+        // Act
+        Result<GetAllEmployeeResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
+
+        List<EmployeeDto> employeesDto = [.. result.Value.Employees];
+
+        // Assert
+        Assert.IsTrue(result.IsSuccess);
+        Assert.AreEqual(5, result.Value.Quantity);
+        Assert.AreEqual(5, employeesDto.Count);
+
+        for (int i = 0; i < 5; i++)
         {
             for (int j = 0; j < employeesDto.Count; j++)
             {
