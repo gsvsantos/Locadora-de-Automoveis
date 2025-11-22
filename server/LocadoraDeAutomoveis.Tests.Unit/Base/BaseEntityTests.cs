@@ -1,11 +1,13 @@
-﻿namespace LocadoraDeAutomoveis.Tests.Unit.Base;
+﻿using LocadoraDeAutomoveis.Domain.Auth;
+
+namespace LocadoraDeAutomoveis.Tests.Unit.Base;
 
 [TestClass]
 [TestCategory("BaseEntity Domain - Unit Tests")]
 public sealed class BaseEntityTests
 {
     [TestMethod]
-    public void EmployeeConstructor_Default_ShouldInitializeProperties()
+    public void EntityConstructor_Default_ShouldInitializeProperties()
     {
         // Arrange & Act
         TestEntity entity = new();
@@ -19,7 +21,7 @@ public sealed class BaseEntityTests
     }
 
     [TestMethod]
-    public void EmployeeConstructor_Parameterized_ShouldWorks()
+    public void EntityConstructor_Parameterized_ShouldWorks()
     {
         // Arrange & Act
         DateTimeOffset admissionDate = DateTimeOffset.UtcNow;
@@ -36,5 +38,43 @@ public sealed class BaseEntityTests
         Assert.IsNull(entity.Tenant);
         Assert.AreEqual("Entity Teste da Silva", entity.Name);
         Assert.AreEqual(33, entity.Age);
+    }
+
+    [TestMethod]
+    public void EntityMethod_AssociateUser_ShouldWorks()
+    {
+        // Arrange & Act
+        User user = new();
+
+        TestEntity entity = new();
+        entity.AssociateUser(user);
+
+        // Assert
+        Assert.AreEqual(user, entity.User);
+        Assert.AreEqual(user.Id, entity.User!.Id);
+    }
+
+    [TestMethod]
+    public void EntityMethod_AssociateTenant_ShouldWorks()
+    {
+        // Arrange & Act
+        Guid tenantId = Guid.NewGuid();
+
+        TestEntity entity = new();
+        entity.AssociateTenant(tenantId);
+
+        // Assert
+        Assert.AreEqual(tenantId, entity.TenantId);
+    }
+
+    [TestMethod]
+    public void EntityMethod_Deactivate_ShouldWorks()
+    {
+        // Arrange & Act
+        TestEntity entity = new();
+        entity.Deactivate();
+
+        // Assert
+        Assert.IsFalse(entity.IsActive);
     }
 }
