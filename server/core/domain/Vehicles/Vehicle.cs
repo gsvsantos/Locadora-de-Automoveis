@@ -5,15 +5,15 @@ namespace LocadoraDeAutomoveis.Domain.Vehicles;
 
 public class Vehicle : BaseEntity<Vehicle>
 {
-    public string LicensePlate { get; set; }
-    public string Brand { get; set; }
-    public string Color { get; set; }
-    public string Model { get; set; }
-    public string FuelType { get; set; }
-    public int CapacityInLiters { get; set; }
-    public DateTimeOffset Year { get; set; }
-    public string PhotoPath { get; set; } // não é obrigatóio, pode ser nulo ou vazio
-    public Guid GroupId { get; set; }
+    public string LicensePlate { get; set; } = string.Empty;
+    public string Brand { get; set; } = string.Empty;
+    public string Color { get; set; } = string.Empty;
+    public string Model { get; set; } = string.Empty;
+    public string FuelType { get; set; } = string.Empty;
+    public int CapacityInLiters { get; set; } = 0;
+    public DateTimeOffset Year { get; set; } = DateTimeOffset.MinValue;
+    public string? PhotoPath { get; set; }
+    public Guid GroupId { get; set; } = Guid.Empty;
     public Group Group { get; set; } = null!;
 
     public Vehicle() { }
