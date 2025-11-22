@@ -37,7 +37,10 @@ public class GetByIdEmployeeRequestHandler(
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error retrieving employee by ID {EmployeeId}", request.Id);
+            logger.LogError(
+                ex,
+                "Error retrieving employee by ID {EmployeeId}", request.Id);
+
             return Result.Fail(new Error("An error occurred while retrieving the employee."));
         }
     }
