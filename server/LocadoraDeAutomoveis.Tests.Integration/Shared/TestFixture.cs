@@ -132,11 +132,12 @@ public abstract class TestFixture
     {
         dbContext.Database.EnsureCreated();
 
-        dbContext.Roles.RemoveRange(dbContext.Roles);
-        dbContext.Users.RemoveRange(dbContext.Users);
-
         dbContext.TestEntities.RemoveRange(dbContext.TestEntities);
         dbContext.Employees.RemoveRange(dbContext.Employees);
+        dbContext.Vehicles.RemoveRange(dbContext.Vehicles);
+        dbContext.Groups.RemoveRange(dbContext.Groups);
+        dbContext.Users.RemoveRange(dbContext.Users);
+        dbContext.Roles.RemoveRange(dbContext.Roles);
 
         dbContext.SaveChanges();
     }
