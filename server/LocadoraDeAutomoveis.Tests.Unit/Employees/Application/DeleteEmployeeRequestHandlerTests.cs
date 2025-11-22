@@ -69,7 +69,7 @@ public sealed class DeleteEmployeeRequestHandlerTests
             .Setup(r => r.DeleteAsync(employeeId));
 
         this.userManagerMock
-            .Setup(r => r.DeleteAsync(employee.User));
+            .Setup(r => r.DeleteAsync(employee.User!));
 
         this.unitOfWorkMock
             .Setup(u => u.CommitAsync());
