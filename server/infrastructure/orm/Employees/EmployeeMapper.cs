@@ -19,17 +19,17 @@ public class EmployeeMapper : IEntityTypeConfiguration<Employee>
             .IsRequired();
 
         builder.Property(e => e.Salary)
-               .HasPrecision(18, 2);
+            .HasPrecision(18, 2);
 
         builder.HasOne(t => t.Tenant)
-               .WithMany()
-               .HasForeignKey(t => t.TenantId)
-               .OnDelete(DeleteBehavior.Restrict);
+            .WithMany()
+            .HasForeignKey(t => t.TenantId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(u => u.User)
-               .WithOne()
-               .HasForeignKey<Employee>(e => e.UserId)
-               .OnDelete(DeleteBehavior.Restrict);
+            .WithOne()
+            .HasForeignKey<Employee>(e => e.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(f => new { f.TenantId, f.UserId, f.IsActive });
     }
