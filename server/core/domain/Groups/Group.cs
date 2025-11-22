@@ -11,5 +11,9 @@ public class Group : BaseEntity<Group>
     public Group() { }
     public Group(string name) : this() => this.Name = name;
 
+    public void AddVehicle(Vehicle vehicle) => this.Vehicles.Add(vehicle);
+
+    public void RemoveVehicle(Vehicle vehicle) => this.Vehicles.Remove(vehicle);
+
     public override void Update(Group updatedEntity) => this.Name = updatedEntity.Name;
 }

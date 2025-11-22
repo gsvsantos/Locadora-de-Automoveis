@@ -16,10 +16,11 @@ public class Vehicle : BaseEntity<Vehicle>
     public Guid GroupId { get; set; }
     public Group Group { get; set; } = null!;
 
+    public Vehicle() { }
     public Vehicle(
         string licensePlate, string brand, string color, string model,
         string fuelType, int capacityInLiters, DateTimeOffset year, string photoPath
-    )
+    ) : this()
     {
         this.LicensePlate = licensePlate;
         this.Brand = brand;
@@ -38,9 +39,21 @@ public class Vehicle : BaseEntity<Vehicle>
             return;
         }
 
-        group.Vehicles.Add(this);
+        group.AddVehicle(this);
         this.Group = group;
         this.GroupId = group.Id;
+    }
+
+    public void DisassociateGroup()
+    {
+        if (this.Group is null)
+        {
+            return;
+        }
+
+        this.Group.RemoveVehicle(this);
+        this.Group = null!;
+        this.GroupId = Guid.Empty;
     }
 
     public override void Update(Vehicle updatedEntity) => throw new NotImplementedException();
