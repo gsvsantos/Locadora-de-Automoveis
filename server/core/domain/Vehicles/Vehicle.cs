@@ -34,9 +34,14 @@ public class Vehicle : BaseEntity<Vehicle>
 
     public void AssociateGroup(Group group)
     {
-        if (this.Group is not null)
+        if (this.Group is not null && this.Group.Id.Equals(group.Id))
         {
             return;
+        }
+
+        if (this.Group is not null)
+        {
+            DisassociateGroup();
         }
 
         group.AddVehicle(this);
