@@ -3,6 +3,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
@@ -15,6 +16,7 @@ public class CreateVehicleRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
     IRepositoryVehicle repositoryVehicle,
+    IRepositoryGroup repositoryGroup,
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<Vehicle> validator,
@@ -29,6 +31,13 @@ public class CreateVehicleRequestHandler(
         if (user is null)
         {
             return Result.Fail(ErrorResults.NotFoundError(userContext.GetUserId()));
+        }
+
+        Group? selectedGroup = await repositoryGroup.GetByIdAsync(request.GroupId);
+
+        if (selectedGroup is null)
+        {
+            return Result.Fail(ErrorResults.NotFoundError(request.GroupId));
         }
 
         Vehicle vehicle = new(
@@ -65,6 +74,8 @@ public class CreateVehicleRequestHandler(
             vehicle.AssociateTenant(tenantProvider.GetTenantId());
 
             vehicle.AssociateUser(user);
+
+            vehicle.AssociateGroup(selectedGroup);
 
             await repositoryVehicle.AddAsync(vehicle);
 
