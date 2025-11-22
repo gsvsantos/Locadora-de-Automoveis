@@ -67,8 +67,8 @@ public sealed class GetAllGroupRequestHandlerTests
         List<Group> groups = Builder<Group>.CreateListOfSize(10).Build().ToList();
 
         this.repositoryGroupMock
-            .Setup(repo => repo.GetAllAsync(5))
-            .ReturnsAsync(groups.Take(5).ToList());
+            .Setup(r => r.GetAllAsync(5))
+            .ReturnsAsync([.. groups.Take(5)]);
 
         GetAllGroupRequest request = new(5);
 

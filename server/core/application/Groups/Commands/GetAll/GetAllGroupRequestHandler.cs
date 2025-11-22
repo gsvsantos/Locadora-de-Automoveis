@@ -17,13 +17,13 @@ public class GetAllGroupRequestHandler(
     {
         try
         {
-            IEnumerable<Group> groups =
+            List<Group> groups =
                 request.Quantity.HasValue && request.Quantity.Value > 0 ?
                 await repositoryGroup.GetAllAsync(request.Quantity.Value) :
                 await repositoryGroup.GetAllAsync();
 
             GetAllGroupResponse response = new(
-                groups.Count(),
+                groups.Count,
                 groups.Select(group => new GroupDto(
                     group.Id,
                     group.Name
