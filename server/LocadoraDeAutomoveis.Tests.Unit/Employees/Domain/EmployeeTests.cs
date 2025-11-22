@@ -1,5 +1,4 @@
-﻿using LocadoraDeAutomoveis.Domain.Auth;
-using LocadoraDeAutomoveis.Domain.Employees;
+﻿using LocadoraDeAutomoveis.Domain.Employees;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Employees.Domain;
 
@@ -42,40 +41,27 @@ public sealed class EmployeeTests
     }
 
     [TestMethod]
-    public void EmployeeMethod_AssociateUser_ShouldWorks()
+    public void EmployeeMethod_Update_ShouldWorks()
     {
-        // Arrange & Act
-        User user = new();
+        // Arrange
+        DateTimeOffset admissionDate = DateTimeOffset.UtcNow;
+        Employee employee = new(
+            "Employee Teste da Silva",
+            admissionDate,
+            2469m
+            );
+        Employee updatedEmployee = new(
+            "Employee Updated da Silva",
+            admissionDate.AddDays(10),
+            3000m
+            );
 
-        Employee employee = new();
-        employee.AssociateUser(user);
+        // Act
+        employee.Update(updatedEmployee);
 
         // Assert
-        Assert.AreEqual(user, employee.User);
-        Assert.AreEqual(user.Id, employee.User.Id);
-    }
-
-    [TestMethod]
-    public void EmployeeMethod_AssociateTenant_ShouldWorks()
-    {
-        // Arrange & Act
-        Guid tenantId = Guid.NewGuid();
-
-        Employee employee = new();
-        employee.AssociateTenant(tenantId);
-
-        // Assert
-        Assert.AreEqual(tenantId, employee.TenantId);
-    }
-
-    [TestMethod]
-    public void EmployeeMethod_Deactivate_ShouldWorks()
-    {
-        // Arrange & Act
-        Employee employee = new();
-        employee.Deactivate();
-
-        // Assert
-        Assert.IsFalse(employee.IsActive);
+        Assert.AreEqual("Employee Updated da Silva", employee.FullName);
+        Assert.AreEqual(admissionDate.AddDays(10), employee.AdmissionDate);
+        Assert.AreEqual(3000m, employee.Salary);
     }
 }
