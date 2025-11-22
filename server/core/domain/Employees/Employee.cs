@@ -1,5 +1,4 @@
-﻿using LocadoraDeAutomoveis.Domain.Auth;
-using LocadoraDeAutomoveis.Domain.Shared;
+﻿using LocadoraDeAutomoveis.Domain.Shared;
 
 namespace LocadoraDeAutomoveis.Domain.Employees;
 
@@ -16,16 +15,6 @@ public class Employee : BaseEntity<Employee>
         this.AdmissionDate = admissionDate;
         this.Salary = salary;
     }
-
-    public void AssociateUser(User user)
-    {
-        this.User = user;
-        this.UserId = user.Id;
-    }
-
-    public void AssociateTenant(Guid tenantId) => this.TenantId = tenantId;
-
-    public void Deactivate() => this.IsActive = false;
 
     public override void Update(Employee updatedEmployee)
     {

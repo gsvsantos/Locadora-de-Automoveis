@@ -13,5 +13,15 @@ public abstract class BaseEntity<T>
 
     protected BaseEntity() => this.Id = Guid.NewGuid();
 
+    public void Deactivate() => this.IsActive = false;
+
+    public void AssociateUser(User user)
+    {
+        this.User = user;
+        this.UserId = user.Id;
+    }
+
+    public void AssociateTenant(Guid tenantId) => this.TenantId = tenantId;
+
     public abstract void Update(T updatedEntity);
 }
