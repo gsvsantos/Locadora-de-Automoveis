@@ -186,6 +186,40 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.ToTable("Groups", (string)null);
                 });
 
+            modelBuilder.Entity("LocadoraDeAutomoveis.Domain.PricingPlans.PricingPlan", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GroupId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("GroupId1");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("TenantId", "UserId", "IsActive");
+
+                    b.ToTable("PricingPlans", (string)null);
+                });
+
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Vehicles.Vehicle", b =>
                 {
                     b.Property<Guid>("Id")
@@ -222,7 +256,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhotoPath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("TenantId")
@@ -238,8 +271,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.HasIndex("TenantId", "UserId", "IsActive");
 
@@ -387,6 +419,114 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("LocadoraDeAutomoveis.Domain.PricingPlans.PricingPlan", b =>
+                {
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Groups.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Groups.Group", null)
+                        .WithMany("PricingPlans")
+                        .HasForeignKey("GroupId1");
+
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsOne("LocadoraDeAutomoveis.Domain.PricingPlans.ControlledPlanProps", "ControlledPlan", b1 =>
+                        {
+                            b1.Property<Guid>("PricingPlanId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("AvailableKm")
+                                .HasColumnType("int")
+                                .HasColumnName("ControlledPlan_AvailableKm");
+
+                            b1.Property<decimal>("DailyRate")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("decimal(18,2)")
+                                .HasColumnName("ControlledPlan_Price");
+
+                            b1.Property<decimal>("PricePerKmExtrapolated")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("decimal(18,2)")
+                                .HasColumnName("ControlledPlan_ExtrapolatedPrice");
+
+                            b1.HasKey("PricingPlanId");
+
+                            b1.ToTable("PricingPlans");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PricingPlanId");
+                        });
+
+                    b.OwnsOne("LocadoraDeAutomoveis.Domain.PricingPlans.DailyPlanProps", "DailyPlan", b1 =>
+                        {
+                            b1.Property<Guid>("PricingPlanId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<decimal>("DailyRate")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("decimal(18,2)")
+                                .HasColumnName("DailyPlan_Price");
+
+                            b1.Property<decimal>("PricePerKm")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("decimal(18,2)")
+                                .HasColumnName("DailyPlan_PricePerKm");
+
+                            b1.HasKey("PricingPlanId");
+
+                            b1.ToTable("PricingPlans");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PricingPlanId");
+                        });
+
+                    b.OwnsOne("LocadoraDeAutomoveis.Domain.PricingPlans.FreePlanProps", "FreePlan", b1 =>
+                        {
+                            b1.Property<Guid>("PricingPlanId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<decimal>("FixedRate")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("decimal(18,2)")
+                                .HasColumnName("FreePlan_FixedRate");
+
+                            b1.HasKey("PricingPlanId");
+
+                            b1.ToTable("PricingPlans");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PricingPlanId");
+                        });
+
+                    b.Navigation("ControlledPlan")
+                        .IsRequired();
+
+                    b.Navigation("DailyPlan")
+                        .IsRequired();
+
+                    b.Navigation("FreePlan")
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Tenant");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Vehicles.Vehicle", b =>
                 {
                     b.HasOne("LocadoraDeAutomoveis.Domain.Groups.Group", "Group")
@@ -402,8 +542,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "User")
-                        .WithOne()
-                        .HasForeignKey("LocadoraDeAutomoveis.Domain.Vehicles.Vehicle", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -467,6 +607,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Groups.Group", b =>
                 {
+                    b.Navigation("PricingPlans");
+
                     b.Navigation("Vehicles");
                 });
 #pragma warning restore 612, 618

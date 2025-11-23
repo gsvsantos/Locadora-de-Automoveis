@@ -15,29 +15,55 @@ public class PricingPlanMapper : IEntityTypeConfiguration<PricingPlan>
         builder.OwnsOne(p => p.DailyPlan, daily =>
         {
             daily.Property(d => d.DailyRate)
-                .HasColumnName("DailyPlan_Price");
+                .HasColumnName("DailyPlan_Price")
+                .HasPrecision(18, 2)
+                .IsRequired();
             daily.Property(d => d.PricePerKm)
-                .HasColumnName("DailyPlan_PricePerKm");
+                .HasColumnName("DailyPlan_PricePerKm")
+                .HasPrecision(18, 2)
+                .IsRequired();
         });
 
         builder.OwnsOne(p => p.ControlledPlan, controlled =>
         {
             controlled.Property(c => c.DailyRate)
-                .HasColumnName("ControlledPlan_Price");
-            controlled.Property(c => c.AvailableKm)
-                .HasColumnName("ControlledPlan_AvailableKm");
+                .HasColumnName("ControlledPlan_Price")
+                .HasPrecision(18, 2)
+                .IsRequired();
+
             controlled.Property(c => c.PricePerKmExtrapolated)
-                .HasColumnName("ControlledPlan_ExtrapolatedPrice");
+                .HasColumnName("ControlledPlan_ExtrapolatedPrice")
+                .HasPrecision(18, 2)
+                .IsRequired();
+
+            controlled.Property(c => c.AvailableKm)
+                .HasColumnName("ControlledPlan_AvailableKm")
+                .IsRequired();
         });
 
         builder.OwnsOne(p => p.FreePlan, free =>
         {
-            free.Property(f => f.FixedRate).HasColumnName("FreePlan_FixedRate");
+            free.Property(f => f.FixedRate)
+                .HasColumnName("FreePlan_FixedRate")
+                .HasPrecision(18, 2)
+                .IsRequired();
         });
 
         builder.HasOne(pp => pp.Group)
             .WithMany()
             .HasForeignKey(pp => pp.GroupId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(t => t.Tenant)
+            .WithMany()
+            .HasForeignKey(t => t.TenantId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(u => u.User)
+            .WithMany()
+            .HasForeignKey(g => g.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasIndex(f => new { f.TenantId, f.UserId, f.IsActive });
     }
 }
