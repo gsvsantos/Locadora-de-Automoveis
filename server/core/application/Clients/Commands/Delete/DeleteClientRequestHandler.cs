@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using LocadoraDeAutomoveis.Application.Clients.Commands.Update;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Shared;
@@ -11,7 +10,7 @@ namespace LocadoraDeAutomoveis.Application.Clients.Commands.Delete;
 public class DeleteClientRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryClient repositoryClient,
-    ILogger<UpdateClientRequestHandler> logger
+    ILogger<DeleteClientRequestHandler> logger
 ) : IRequestHandler<DeleteClientRequest, Result<DeleteClientResponse>>
 {
     public async Task<Result<DeleteClientResponse>> Handle(

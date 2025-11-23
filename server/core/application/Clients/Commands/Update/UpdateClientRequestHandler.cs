@@ -2,21 +2,16 @@
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
-using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Clients.Commands.Update;
 
 public class UpdateClientRequestHandler(
-    UserManager<User> userManager,
     IUnitOfWork unitOfWork,
     IRepositoryClient repositoryClient,
-    ITenantProvider tenantProvider,
-    IUserContext userContext,
     IValidator<Client> validator,
     ILogger<UpdateClientRequestHandler> logger
 ) : IRequestHandler<UpdateClientRequest, Result<UpdateClientResponse>>

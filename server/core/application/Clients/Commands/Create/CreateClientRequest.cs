@@ -6,7 +6,6 @@ public record CreateClientRequest(
     string FullName,
     string Email,
     string PhoneNumber,
-    bool IsJurifical,
     string State,
     string City,
     string Neighborhood,

@@ -28,7 +28,7 @@ public sealed class GetByIdPricingPlanRequestHandlerTests
 
     #region GetPricingPlansById Tests (Happy Path)
     [TestMethod]
-    public void Handler_ShouldGetVehicleById_Successfuly()
+    public void Handler_ShouldGetPricingPlansById_Successfuly()
     {
         // Arrange
         Guid groupId = Guid.NewGuid();

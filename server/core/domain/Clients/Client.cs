@@ -20,11 +20,11 @@ public class Client : BaseEntity<Client>
     public Driver Driver { get; set; } = null!;
 
     public Client() { }
-    public Client(string name, string email, string phoneNumber, string state, string city,
+    public Client(string fullName, string email, string phoneNumber, string state, string city,
         string neighborhood, string street, int number, string document
     ) : this()
     {
-        this.FullName = name;
+        this.FullName = fullName;
         this.Email = email;
         this.PhoneNumber = phoneNumber;
         this.State = state;
