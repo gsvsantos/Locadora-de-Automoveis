@@ -10,8 +10,8 @@ public sealed class GetAllPricingPlanRequestHandlerTests
 {
     private GetAllPricingPlanRequestHandler handler = null!;
 
-    private Mock<IRepositoryPricingPlan> repositoryPricingPlanMock;
-    private Mock<ILogger<GetAllPricingPlanRequestHandler>> loggerMock;
+    private Mock<IRepositoryPricingPlan> repositoryPricingPlanMock = null!;
+    private Mock<ILogger<GetAllPricingPlanRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
     public void Setup()
@@ -61,8 +61,8 @@ public sealed class GetAllPricingPlanRequestHandlerTests
                 if (pricingPlans[i].Id == pricingPlansDto[j].Id)
                 {
                     Assert.AreEqual(pricingPlans[i].DailyPlan, pricingPlans[j].DailyPlan);
-                    Assert.AreEqual(pricingPlans[i].FreePlan, pricingPlans[j].FreePlan);
                     Assert.AreEqual(pricingPlans[i].ControlledPlan, pricingPlans[j].ControlledPlan);
+                    Assert.AreEqual(pricingPlans[i].FreePlan, pricingPlans[j].FreePlan);
                     Assert.AreEqual(pricingPlans[i].GroupId, pricingPlans[j].GroupId);
                 }
             }

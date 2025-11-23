@@ -37,19 +37,19 @@ public class UpdateVehicleRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.GroupId));
         }
 
+        Vehicle updatedVehicle = new(
+            request.LicensePlate,
+            request.Brand,
+            request.Color,
+            request.Model,
+            request.FuelType,
+            request.CapacityInLiters,
+            request.Year,
+            request.PhotoPath ?? string.Empty
+        );
+
         try
         {
-            Vehicle updatedVehicle = new(
-                request.LicensePlate,
-                request.Brand,
-                request.Color,
-                request.Model,
-                request.FuelType,
-                request.CapacityInLiters,
-                request.Year,
-                request.PhotoPath ?? string.Empty
-            );
-
             ValidationResult validationResult = await validator.ValidateAsync(updatedVehicle, cancellationToken);
 
             if (!validationResult.IsValid)

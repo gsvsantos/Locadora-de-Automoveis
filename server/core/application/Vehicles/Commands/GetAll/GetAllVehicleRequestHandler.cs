@@ -18,9 +18,9 @@ public class GetAllVehicleRequestHandler(
         try
         {
             List<Vehicle> vehicles =
-                request.Quantity.HasValue && request.Quantity.Value > 0 ?
-                await repositoryVehicle.GetAllAsync(request.Quantity.Value) :
-                await repositoryVehicle.GetAllAsync();
+                request.Quantity.HasValue && request.Quantity.Value > 0
+                ? await repositoryVehicle.GetAllAsync(request.Quantity.Value)
+                : await repositoryVehicle.GetAllAsync();
 
             GetAllVehicleResponse response = new(
                 vehicles.Count,
