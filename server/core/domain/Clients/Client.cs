@@ -1,4 +1,5 @@
-﻿using LocadoraDeAutomoveis.Domain.Shared;
+﻿using LocadoraDeAutomoveis.Domain.Drivers;
+using LocadoraDeAutomoveis.Domain.Shared;
 
 namespace LocadoraDeAutomoveis.Domain.Clients;
 
@@ -15,6 +16,8 @@ public class Client : BaseEntity<Client>
     public int Number { get; set; } = 0;
     public string? Document { get; set; } = null;
     public string? LicenseNumber { get; set; } = null;
+    public Guid DriverId { get; set; }
+    public Driver Driver { get; set; } = null!;
 
     public Client() { }
     public Client(string name, string email, string phoneNumber, string state,
@@ -37,6 +40,33 @@ public class Client : BaseEntity<Client>
     public void MarkAsJuridical() => this.IsJuridical = true;
 
     public void MarkAsPhysical() => this.IsJuridical = false;
+
+    public void AssociateClient(Driver driver)
+    {
+        if (this.Driver is not null && this.Driver.Id.Equals(driver.Id))
+        {
+            return;
+        }
+
+        if (this.Driver is not null)
+        {
+            DisassociateDriver();
+        }
+
+        this.Driver = driver;
+        this.DriverId = driver.Id;
+    }
+
+    public void DisassociateDriver()
+    {
+        if (this.Driver is null)
+        {
+            return;
+        }
+
+        this.Driver = null!;
+        this.DriverId = Guid.Empty;
+    }
 
     public override void Update(Client updatedEntity)
     {
