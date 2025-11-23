@@ -5,24 +5,18 @@ namespace LocadoraDeAutomoveis.Domain.PricingPlans;
 
 public class PricingPlan : BaseEntity<PricingPlan>
 {
-    public decimal DailyRate { get; set; } = 0;
-    public decimal PricePerKm { get; set; } = 0;
-    public int AvailableKm { get; set; } = 0;
-    public decimal DailyPrice { get; set; } = 0;
-    public decimal PricePerKmExtrapolated { get; set; } = 0;
-    public decimal FixedRate { get; set; } = 0;
+    public DailyPlanProps DailyPlan { get; set; }
+    public ControlledPlanProps ControlledPlan { get; set; }
+    public FreePlanProps FreePlan { get; set; }
     public Guid GroupId { get; set; } = Guid.Empty;
-    public Group? Group { get; set; } = null;
+    public Group Group { get; set; } = null!;
 
     public PricingPlan() { }
-    public PricingPlan(decimal dailyRate, decimal pricePerKm, int availableKm, decimal dailyPrice, decimal pricePerKmExtrapolated, decimal fixedRate)
+    public PricingPlan(DailyPlanProps dailyPlanProps, ControlledPlanProps controlledPlanProps, FreePlanProps freePlanProps) : this()
     {
-        this.DailyRate = dailyRate;
-        this.PricePerKm = pricePerKm;
-        this.AvailableKm = availableKm;
-        this.DailyPrice = dailyPrice;
-        this.PricePerKmExtrapolated = pricePerKmExtrapolated;
-        this.FixedRate = fixedRate;
+        this.DailyPlan = dailyPlanProps;
+        this.ControlledPlan = controlledPlanProps;
+        this.FreePlan = freePlanProps;
     }
 
     public void AssociateGroup(Group group)
@@ -56,11 +50,12 @@ public class PricingPlan : BaseEntity<PricingPlan>
 
     public override void Update(PricingPlan updatedEntity)
     {
-        this.DailyPrice = updatedEntity.DailyPrice;
-        this.PricePerKm = updatedEntity.PricePerKm;
-        this.AvailableKm = updatedEntity.AvailableKm;
-        this.DailyRate = updatedEntity.DailyRate;
-        this.PricePerKmExtrapolated = updatedEntity.PricePerKmExtrapolated;
-        this.FixedRate = updatedEntity.FixedRate;
+        this.DailyPlan = updatedEntity.DailyPlan;
+        this.ControlledPlan = updatedEntity.ControlledPlan;
+        this.FreePlan = updatedEntity.FreePlan;
     }
 }
+
+public record DailyPlanProps(decimal DailyRate, decimal PricePerKm);
+public record ControlledPlanProps(decimal DailyRate, decimal PricePerKmExtrapolated, int AvailableKm);
+public record FreePlanProps(decimal FixedRate);
