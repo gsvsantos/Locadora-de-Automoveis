@@ -1,6 +1,7 @@
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
+using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -16,6 +17,7 @@ public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvi
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Group> Groups { get; set; }
     public DbSet<Vehicle> Vehicles { get; set; }
+    public DbSet<PricingPlan> PricingPlans { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -26,6 +28,8 @@ public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvi
             modelBuilder.Entity<Group>()
                 .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
             modelBuilder.Entity<Vehicle>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<PricingPlan>()
                 .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
         }
 
