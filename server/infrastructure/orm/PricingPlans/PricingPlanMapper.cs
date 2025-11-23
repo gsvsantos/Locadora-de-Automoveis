@@ -32,7 +32,7 @@ public class PricingPlanMapper : IEntityTypeConfiguration<PricingPlan>
 
         builder.OwnsOne(p => p.FreePlan, free =>
         {
-            free.Property(f => f.DailyRate).HasColumnName("FreePlan_Price");
+            free.Property(f => f.FixedRate).HasColumnName("FreePlan_FixedRate");
         });
 
         builder.HasOne(pp => pp.Group)
