@@ -3,10 +3,12 @@ using Hangfire;
 using LocadoraDeAutomoveis.Application.Employees.Commands.Create;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
+using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Groups;
+using LocadoraDeAutomoveis.Infrastructure.PricingPlans;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using LocadoraDeAutomoveis.Infrastructure.Vehicles;
 using Microsoft.EntityFrameworkCore;
@@ -145,6 +147,7 @@ public static class DependencyInjection
         services.AddScoped<IRepositoryEmployee, EmployeeRepository>();
         services.AddScoped<IRepositoryGroup, GroupRepository>();
         services.AddScoped<IRepositoryVehicle, VehicleRepository>();
+        services.AddScoped<IRepositoryPricingPlan, PricingPlanRepository>();
     }
 
     public static void ConfigureSerilog(this IServiceCollection services, ILoggingBuilder logging, IConfiguration configuration)
