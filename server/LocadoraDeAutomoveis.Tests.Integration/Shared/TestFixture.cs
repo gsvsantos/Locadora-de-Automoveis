@@ -1,18 +1,17 @@
 ﻿using DotNet.Testcontainers.Containers;
-using FizzWare.NBuilder;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
+using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Groups;
+using LocadoraDeAutomoveis.Infrastructure.PricingPlans;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using LocadoraDeAutomoveis.Infrastructure.Vehicles;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Testcontainers.MsSql;
 
@@ -27,6 +26,7 @@ public abstract class TestFixture
     protected EmployeeRepository employeeRepository = null!;
     protected GroupRepository groupRepository = null!;
     protected VehicleRepository vehicleRepository = null!;
+    protected PricingPlanRepository pricingPlanRepository = null!;
 
     private static IDatabaseContainer? dbContainer = null!;
 
@@ -67,6 +67,7 @@ public abstract class TestFixture
         this.employeeRepository = new(this.dbContext);
         this.groupRepository = new(this.dbContext);
         this.vehicleRepository = new(this.dbContext);
+        this.pricingPlanRepository = new(this.dbContext);
 
         BuilderSetup.SetCreatePersistenceMethod<User>(u => this.userManager.CreateAsync(u).GetAwaiter().GetResult());
 
@@ -78,6 +79,9 @@ public abstract class TestFixture
 
         BuilderSetup.SetCreatePersistenceMethod<Vehicle>(v => this.vehicleRepository.AddAsync(v).GetAwaiter().GetResult());
         BuilderSetup.SetCreatePersistenceMethod<IList<Vehicle>>(v => this.vehicleRepository.AddMultiplyAsync(v).GetAwaiter().GetResult());
+
+        BuilderSetup.SetCreatePersistenceMethod<PricingPlan>(pp => this.pricingPlanRepository.AddAsync(pp).GetAwaiter().GetResult());
+        BuilderSetup.SetCreatePersistenceMethod<IList<PricingPlan>>(pp => this.pricingPlanRepository.AddMultiplyAsync(pp).GetAwaiter().GetResult());
     }
 
     private static async Task StartDatabaseAsync()
@@ -139,9 +143,10 @@ public abstract class TestFixture
         dbContext.Database.EnsureCreated();
 
         dbContext.TestEntities.RemoveRange(dbContext.TestEntities);
-        dbContext.Employees.RemoveRange(dbContext.Employees);
-        dbContext.Vehicles.RemoveRange(dbContext.Vehicles);
         dbContext.Groups.RemoveRange(dbContext.Groups);
+        dbContext.Vehicles.RemoveRange(dbContext.Vehicles);
+        dbContext.PricingPlans.RemoveRange(dbContext.PricingPlans);
+        dbContext.Employees.RemoveRange(dbContext.Employees);
         dbContext.Users.RemoveRange(dbContext.Users);
         dbContext.Roles.RemoveRange(dbContext.Roles);
 
