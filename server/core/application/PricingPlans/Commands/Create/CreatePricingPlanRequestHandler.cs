@@ -41,9 +41,9 @@ public class CreatePricingPlanRequestHandler(
         }
 
         PricingPlan pricingPlan = new(
-            request.DailyPlan.ConvertToProps(),
-            request.ControlledPlan.ConvertToProps(),
-            request.FreePlan.ConvertToProps()
+            request.DailyPlan.ToProps(),
+            request.ControlledPlan.ToProps(),
+            request.FreePlan.ToProps()
         );
 
         try
