@@ -146,10 +146,10 @@ public sealed class VehicleRepositoryTests : TestFixture
         await this.dbContext.CommitAsync();
 
         // Act 
-        Vehicle? selectedVehicles = await this.vehicleRepository.GetByIdAsync(vehicle.Id);
+        Vehicle? selectedVehicle = await this.vehicleRepository.GetByIdAsync(vehicle.Id);
 
         // Assert
-        Assert.IsNotNull(selectedVehicles);
-        Assert.AreEqual(group, selectedVehicles.Group);
+        Assert.IsNotNull(selectedVehicle);
+        Assert.AreEqual(group, selectedVehicle.Group);
     }
 }
