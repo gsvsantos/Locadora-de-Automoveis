@@ -13,8 +13,7 @@ public record UpdateClientRequestPartial(
     string Neighborhood,
     string Street,
     int Number,
-    string? Document,
-    string? LicenseNumber
+    string Document
 );
 
 public record UpdateClientRequest(
@@ -28,6 +27,5 @@ public record UpdateClientRequest(
     string Neighborhood,
     string Street,
     int Number,
-    string? Document,
-    string? LicenseNumber
+    string Document
 ) : IRequest<Result<UpdateClientResponse>>;

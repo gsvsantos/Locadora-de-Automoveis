@@ -8,6 +8,7 @@ using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using System.Text.RegularExpressions;
 
 namespace LocadoraDeAutomoveis.Application.Clients.Commands.Create;
 
@@ -40,8 +41,7 @@ public class CreateClientRequestHandler(
             request.Neighborhood,
             request.Street,
             request.Number,
-            request.Document,
-            request.LicenseNumber
+            request.Document
         );
 
         try
@@ -61,12 +61,21 @@ public class CreateClientRequestHandler(
 
             if (DocumentAlreadyRegistred(client, existingClients))
             {
-                return Result.Fail(ClientErrorResults.DocumentAlreadyRegistredError(request.Document!));
+                return Result.Fail(ClientErrorResults.DocumentAlreadyRegistredError(request.Document));
             }
 
             client.AssociateTenant(tenantProvider.GetTenantId());
 
             client.AssociateUser(user);
+
+            if (IsCnpj(client.Document))
+            {
+                client.MarkAsJuridical();
+            }
+            else
+            {
+                client.MarkAsPhysical();
+            }
 
             await repositoryClient.AddAsync(client);
 
@@ -95,5 +104,16 @@ public class CreateClientRequestHandler(
                 client.Document,
                 StringComparison.CurrentCultureIgnoreCase)
             );
+    }
+    private bool IsCnpj(string cnpj)
+    {
+        cnpj = Regex.Replace(cnpj, "[^0-9]", "");
+
+        if (cnpj.Length != 14)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

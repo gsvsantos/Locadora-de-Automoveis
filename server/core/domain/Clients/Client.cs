@@ -14,15 +14,14 @@ public class Client : BaseEntity<Client>
     public string Neighborhood { get; set; } = string.Empty;
     public string Street { get; set; } = string.Empty;
     public int Number { get; set; } = 0;
-    public string? Document { get; set; } = null;
+    public string Document { get; set; } = string.Empty;
     public string? LicenseNumber { get; set; } = null;
     public Guid DriverId { get; set; }
     public Driver Driver { get; set; } = null!;
 
     public Client() { }
-    public Client(string name, string email, string phoneNumber, string state,
-        string city, string neighborhood, string street, int number,
-        string? document, string? LicenseNumber
+    public Client(string name, string email, string phoneNumber, string state, string city,
+        string neighborhood, string street, int number, string document
     ) : this()
     {
         this.FullName = name;
@@ -34,7 +33,6 @@ public class Client : BaseEntity<Client>
         this.Street = street;
         this.Number = number;
         this.Document = document;
-        this.LicenseNumber = LicenseNumber;
     }
 
     public void MarkAsJuridical() => this.IsJuridical = true;

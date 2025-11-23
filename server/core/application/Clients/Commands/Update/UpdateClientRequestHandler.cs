@@ -40,8 +40,7 @@ public class UpdateClientRequestHandler(
             request.Neighborhood,
             request.Street,
             request.Number,
-            request.Document,
-            request.LicenseNumber
+            request.Document
         )
         { Id = selectedClient.Id };
 
@@ -62,7 +61,7 @@ public class UpdateClientRequestHandler(
 
             if (DocumentAlreadyRegistred(updatedClient, existingClients))
             {
-                return Result.Fail(ClientErrorResults.DocumentAlreadyRegistredError(request.Document!));
+                return Result.Fail(ClientErrorResults.DocumentAlreadyRegistredError(request.Document));
             }
 
             await repositoryClient.UpdateAsync(selectedClient.Id, updatedClient);

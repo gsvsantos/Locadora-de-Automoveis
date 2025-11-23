@@ -32,10 +32,16 @@ public class DriverMapper : IEntityTypeConfiguration<Driver>
         builder.Property(d => d.LicenseValidity)
             .IsRequired();
 
-        builder.HasOne(d => d.Client)
+        builder.HasOne(d => d.ClientCPF)
             .WithMany()
-            .HasForeignKey(d => d.ClientId)
+            .HasForeignKey(d => d.ClientCPFId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(d => d.ClientCNPJ)
+            .WithMany()
+            .HasForeignKey(d => d.ClientCNPJId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired(false);
 
         builder.HasOne(d => d.Tenant)
             .WithMany()

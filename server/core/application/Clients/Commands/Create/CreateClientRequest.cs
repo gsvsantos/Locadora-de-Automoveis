@@ -12,6 +12,5 @@ public record CreateClientRequest(
     string Neighborhood,
     string Street,
     int Number,
-    string? Document,
-    string? LicenseNumber
+    string Document
 ) : IRequest<Result<CreateClientResponse>>;

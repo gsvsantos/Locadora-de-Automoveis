@@ -10,14 +10,15 @@ public class Driver : BaseEntity<Driver>
     public string PhoneNumber { get; set; } = string.Empty;
     public string Document { get; set; } = string.Empty;
     public string LicenseNumber { get; set; } = string.Empty;
-    public string LicenseValidity { get; set; } = string.Empty;
-    public Guid ClientId { get; set; }
-    public Client Client { get; set; } = null!;
+    public DateTimeOffset LicenseValidity { get; set; }
+    public Guid ClientCPFId { get; set; }
+    public Client ClientCPF { get; set; } = null!;
+    public Guid ClientCNPJId { get; set; }
+    public Client? ClientCNPJ { get; set; } = null!;
 
     public Driver() { }
     public Driver(string fullName, string email, string phoneNumber,
-        string document, string licenseNumber, string licenseValidity,
-        Guid clientId, Client client
+        string document, string licenseNumber, DateTimeOffset licenseValidity
     ) : this()
     {
         this.FullName = fullName;
@@ -26,35 +27,60 @@ public class Driver : BaseEntity<Driver>
         this.Document = document;
         this.LicenseNumber = licenseNumber;
         this.LicenseValidity = licenseValidity;
-        this.ClientId = clientId;
-        this.Client = client;
     }
 
-    public void AssociateClient(Client client)
+    public void AssociateClientCPF(Client client)
     {
-        if (this.Client is not null && this.Client.Id.Equals(client.Id))
+        if (this.ClientCPF is not null && this.ClientCPF.Id.Equals(client.Id))
         {
             return;
         }
 
-        if (this.Client is not null)
+        if (this.ClientCPF is not null)
         {
-            DisassociateClient();
+            DisassociateClientCPF();
         }
 
-        this.Client = client;
-        this.ClientId = client.Id;
+        this.ClientCPF = client;
+        this.ClientCPFId = client.Id;
     }
 
-    public void DisassociateClient()
+    public void DisassociateClientCPF()
     {
-        if (this.Client is null)
+        if (this.ClientCPF is null)
         {
             return;
         }
 
-        this.Client = null!;
-        this.ClientId = Guid.Empty;
+        this.ClientCPF = null!;
+        this.ClientCPFId = Guid.Empty;
+    }
+
+    public void AssociateClientCNPJ(Client client)
+    {
+        if (this.ClientCNPJ is not null && this.ClientCNPJ.Id.Equals(client.Id))
+        {
+            return;
+        }
+
+        if (this.ClientCNPJ is not null)
+        {
+            DisassociateClientCNPJ();
+        }
+
+        this.ClientCNPJ = client;
+        this.ClientCNPJId = client.Id;
+    }
+
+    public void DisassociateClientCNPJ()
+    {
+        if (this.ClientCNPJ is null)
+        {
+            return;
+        }
+
+        this.ClientCNPJ = null!;
+        this.ClientCNPJId = Guid.Empty;
     }
 
     public override void Update(Driver updatedEntity)
@@ -65,7 +91,7 @@ public class Driver : BaseEntity<Driver>
         this.Document = updatedEntity.Document;
         this.LicenseNumber = updatedEntity.LicenseNumber;
         this.LicenseValidity = updatedEntity.LicenseValidity;
-        this.ClientId = updatedEntity.ClientId;
-        this.Client = updatedEntity.Client;
+        this.ClientCPFId = updatedEntity.ClientCPFId;
+        this.ClientCPF = updatedEntity.ClientCPF;
     }
 }

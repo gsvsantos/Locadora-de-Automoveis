@@ -41,13 +41,13 @@ public class GetByIdClientRequestHandler(
                 )
             );
 
-            return response;
+            return Result.Ok(response);
         }
         catch (Exception ex)
         {
             logger.LogError(
                 ex,
-                "Error retrieving Client by ID {ClientId}", request.Id);
+                "Error retrieving ClientCPF by ID {ClientCPFId}", request.Id);
 
             return Result.Fail(new Error("An error occurred while retrieving the client."));
         }
