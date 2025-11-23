@@ -9,7 +9,7 @@ public record UpdatePricingPlanRequestPartial(
     DailyPlanDto DailyPlan,
     ControlledPlanDto ControlledPlan,
     FreePlanDto FreePlan
-) : IRequest<Result<UpdatePricingPlanResponse>>;
+);
 
 public record UpdatePricingPlanRequest(
     Guid Id,

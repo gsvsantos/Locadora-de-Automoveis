@@ -22,7 +22,7 @@ public class Client : BaseEntity<Client>
     public Client() { }
     public Client(string name, string email, string phoneNumber, string state,
         string city, string neighborhood, string street, int number,
-        string? document, string? cnh
+        string? document, string? LicenseNumber
     ) : this()
     {
         this.FullName = name;
@@ -34,14 +34,14 @@ public class Client : BaseEntity<Client>
         this.Street = street;
         this.Number = number;
         this.Document = document;
-        this.LicenseNumber = cnh;
+        this.LicenseNumber = LicenseNumber;
     }
 
     public void MarkAsJuridical() => this.IsJuridical = true;
 
     public void MarkAsPhysical() => this.IsJuridical = false;
 
-    public void AssociateClient(Driver driver)
+    public void AssociateDriver(Driver driver)
     {
         if (this.Driver is not null && this.Driver.Id.Equals(driver.Id))
         {

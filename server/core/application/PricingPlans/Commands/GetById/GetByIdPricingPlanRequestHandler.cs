@@ -26,12 +26,12 @@ public class GetByIdPricingPlanRequestHandler(
 
             GetByIdPricingPlanResponse response = new(
                 new PricingPlanDto(
-                        selectedPricingPlan.Id,
-                        selectedPricingPlan.GroupId,
-                        new(selectedPricingPlan.DailyPlan.DailyRate, selectedPricingPlan.DailyPlan.PricePerKm),
-                        new(selectedPricingPlan.ControlledPlan.DailyRate, selectedPricingPlan.ControlledPlan.AvailableKm, selectedPricingPlan.ControlledPlan.PricePerKmExtrapolated),
-                        new(selectedPricingPlan.FreePlan.FixedRate)
-                    )
+                    selectedPricingPlan.Id,
+                    selectedPricingPlan.GroupId,
+                    new(selectedPricingPlan.DailyPlan.DailyRate, selectedPricingPlan.DailyPlan.PricePerKm),
+                    new(selectedPricingPlan.ControlledPlan.DailyRate, selectedPricingPlan.ControlledPlan.AvailableKm, selectedPricingPlan.ControlledPlan.PricePerKmExtrapolated),
+                    new(selectedPricingPlan.FreePlan.FixedRate)
+                )
             );
 
             return Result.Ok(response);

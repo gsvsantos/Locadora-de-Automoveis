@@ -7,7 +7,7 @@ public record UpdateEmployeeRequestPartial(
     string FullName,
     DateTimeOffset AdmissionDate,
     decimal Salary
-) : IRequest<Result<UpdateEmployeeResponse>>;
+);
 
 public record UpdateEmployeeRequest(
     Guid Id,

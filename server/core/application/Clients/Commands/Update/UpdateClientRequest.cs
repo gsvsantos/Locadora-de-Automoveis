@@ -15,7 +15,7 @@ public record UpdateClientRequestPartial(
     int Number,
     string? Document,
     string? LicenseNumber
-    );
+);
 
 public record UpdateClientRequest(
     Guid Id,

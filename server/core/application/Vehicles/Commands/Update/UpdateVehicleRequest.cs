@@ -13,7 +13,7 @@ public record UpdateVehicleRequestPartial(
     DateTimeOffset Year,
     string? PhotoPath,
     Guid GroupId
-) : IRequest<Result<UpdateVehicleResponse>>;
+);
 
 public record UpdateVehicleRequest(
     Guid Id,
