@@ -50,7 +50,7 @@ public class PricingPlanMapper : IEntityTypeConfiguration<PricingPlan>
         });
 
         builder.HasOne(pp => pp.Group)
-            .WithMany()
+            .WithMany(g => g.PricingPlans)
             .HasForeignKey(pp => pp.GroupId)
             .OnDelete(DeleteBehavior.Restrict);
 

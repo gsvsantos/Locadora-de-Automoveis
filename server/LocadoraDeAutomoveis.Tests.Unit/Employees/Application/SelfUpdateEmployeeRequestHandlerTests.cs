@@ -81,16 +81,6 @@ public sealed class SelfUpdateEmployeeRequestHandlerTests
             .Setup(r => r.GetByUserIdAsync(request.Id))
             .ReturnsAsync(employee);
 
-        this.validatorMock
-            .Setup(v => v.ValidateAsync(
-                It.Is<Employee>(emp =>
-                    emp.FullName == employee.FullName &&
-                    emp.AdmissionDate == employee.AdmissionDate &&
-                    emp.Salary == employee.Salary
-                    ), CancellationToken.None
-                ))
-            .ReturnsAsync(new ValidationResult());
-
         this.repositoryEmployeeMock
             .Setup(r => r.GetAllAsync())
             .ReturnsAsync([employee]);
@@ -100,6 +90,16 @@ public sealed class SelfUpdateEmployeeRequestHandlerTests
             request.AdmissionDate,
             request.Salary
         );
+
+        this.validatorMock
+            .Setup(v => v.ValidateAsync(
+                It.Is<Employee>(emp =>
+                    emp.FullName == updatedEmployee.FullName &&
+                    emp.AdmissionDate == updatedEmployee.AdmissionDate &&
+                    emp.Salary == updatedEmployee.Salary
+                    ), CancellationToken.None
+                ))
+            .ReturnsAsync(new ValidationResult());
 
         this.repositoryEmployeeMock
             .Setup(r => r.UpdateAsync(request.Id, updatedEmployee))
@@ -142,9 +142,9 @@ public sealed class SelfUpdateEmployeeRequestHandlerTests
             .Verify(r => r.UpdateAsync(
                 request.Id,
                 It.Is<Employee>(emp =>
-                    emp.FullName == request.FullName &&
-                    emp.AdmissionDate == request.AdmissionDate &&
-                    emp.Salary == request.Salary
+                    emp.FullName == updatedEmployee.FullName &&
+                    emp.AdmissionDate == updatedEmployee.AdmissionDate &&
+                    emp.Salary == updatedEmployee.Salary
                     )
                 ), Times.Once
             );

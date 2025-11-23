@@ -42,7 +42,8 @@ public class UpdatePricingPlanRequestHandler(
             request.DailyPlan.ToProps(),
             request.ControlledPlan.ToProps(),
             request.FreePlan.ToProps()
-        );
+        )
+        { Id = selectedPricingPlan.Id };
 
         try
         {
@@ -57,7 +58,7 @@ public class UpdatePricingPlanRequestHandler(
                 return Result.Fail(ErrorResults.BadRequestError(errors));
             }
 
-            updatedPricingPlan.AssociateGroup(selectedGroup);
+            selectedPricingPlan.AssociateGroup(selectedGroup);
 
             List<PricingPlan> existingPricingPlans = await repositoryPricingPlan.GetAllAsync();
 

@@ -195,9 +195,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("GroupId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -210,8 +207,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
-
-                    b.HasIndex("GroupId1");
 
                     b.HasIndex("UserId");
 
@@ -422,14 +417,10 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.PricingPlans.PricingPlan", b =>
                 {
                     b.HasOne("LocadoraDeAutomoveis.Domain.Groups.Group", "Group")
-                        .WithMany()
+                        .WithMany("PricingPlans")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("LocadoraDeAutomoveis.Domain.Groups.Group", null)
-                        .WithMany("PricingPlans")
-                        .HasForeignKey("GroupId1");
 
                     b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "Tenant")
                         .WithMany()

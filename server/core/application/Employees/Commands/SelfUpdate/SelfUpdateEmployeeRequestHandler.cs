@@ -36,9 +36,16 @@ public class SelfUpdateEmployeeRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
         }
 
+        Employee updatedEmployee = new(
+        request.FullName,
+        request.AdmissionDate,
+        request.Salary
+        )
+        { Id = selectedEmployee.Id };
+
         try
         {
-            ValidationResult validationResult = await validator.ValidateAsync(selectedEmployee, cancellationToken);
+            ValidationResult validationResult = await validator.ValidateAsync(updatedEmployee, cancellationToken);
 
             if (!validationResult.IsValid)
             {
@@ -51,20 +58,12 @@ public class SelfUpdateEmployeeRequestHandler(
 
             List<Employee> existingEmployees = await repositoryEmployee.GetAllAsync();
 
-            Employee updatedEmployee = new(
-            request.FullName,
-            request.AdmissionDate,
-            request.Salary
-            );
-
             if (DuplicateName(updatedEmployee, existingEmployees))
             {
                 return Result.Fail(EmployeeErrorResults.DuplicateNameError(request.FullName));
             }
 
-            selectedEmployee.Update(updatedEmployee);
-
-            await repositoryEmployee.UpdateAsync(request.Id, selectedEmployee);
+            await repositoryEmployee.UpdateAsync(request.Id, updatedEmployee);
 
             selectedEmployee.User.FullName = request.FullName;
 

@@ -7,9 +7,6 @@ public class PricingPlanValidators : AbstractValidator<PricingPlan>
 {
     public PricingPlanValidators()
     {
-        RuleFor(p => p.GroupId)
-            .NotEmpty().WithMessage("The GroupId is required.");
-
         RuleFor(p => p.DailyPlan)
             .NotNull().WithMessage("The Daily Plan configuration is required.")
             .SetValidator(new DailyPlanPropsValidator());

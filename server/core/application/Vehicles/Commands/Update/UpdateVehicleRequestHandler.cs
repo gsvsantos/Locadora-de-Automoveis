@@ -46,7 +46,8 @@ public class UpdateVehicleRequestHandler(
             request.CapacityInLiters,
             request.Year,
             request.PhotoPath ?? string.Empty
-        );
+        )
+        { Id = selectedVehicle.Id };
 
         try
         {
@@ -61,6 +62,8 @@ public class UpdateVehicleRequestHandler(
                 return Result.Fail(ErrorResults.BadRequestError(errors));
             }
 
+            selectedVehicle.AssociateGroup(selectedGroup);
+
             List<Vehicle> existingVehicles = await repositoryVehicle.GetAllAsync();
 
             if (DuplicatePlate(updatedVehicle, existingVehicles))
@@ -68,9 +71,7 @@ public class UpdateVehicleRequestHandler(
                 return Result.Fail(VehicleErrorResults.DuplicateLicensePlateError(request.LicensePlate));
             }
 
-            updatedVehicle.AssociateGroup(selectedGroup);
-
-            await repositoryVehicle.UpdateAsync(request.Id, updatedVehicle);
+            await repositoryVehicle.UpdateAsync(selectedVehicle.Id, updatedVehicle);
 
             await unitOfWork.CommitAsync();
 

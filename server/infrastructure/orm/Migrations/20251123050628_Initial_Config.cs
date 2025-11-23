@@ -226,7 +226,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     ControlledPlan_AvailableKm = table.Column<int>(type: "int", nullable: false),
                     FreePlan_FixedRate = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GroupId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
@@ -252,11 +251,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         principalTable: "Groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PricingPlans_Groups_GroupId1",
-                        column: x => x.GroupId1,
-                        principalTable: "Groups",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -363,11 +357,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                 name: "IX_PricingPlans_GroupId",
                 table: "PricingPlans",
                 column: "GroupId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PricingPlans_GroupId1",
-                table: "PricingPlans",
-                column: "GroupId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PricingPlans_TenantId_UserId_IsActive",

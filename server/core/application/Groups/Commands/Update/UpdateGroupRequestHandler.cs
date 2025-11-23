@@ -28,7 +28,8 @@ public class UpdateGroupRequestHandler(
 
         try
         {
-            Group updatedGroup = new(request.Name);
+            Group updatedGroup = new(request.Name)
+            { Id = selectedGroup.Id };
 
             ValidationResult validationResult = await validator.ValidateAsync(updatedGroup, cancellationToken);
 

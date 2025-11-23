@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251123043220_Initial_Config")]
+    [Migration("20251123050628_Initial_Config")]
     partial class Initial_Config
     {
         /// <inheritdoc />
@@ -198,9 +198,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("GroupId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -213,8 +210,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
-
-                    b.HasIndex("GroupId1");
 
                     b.HasIndex("UserId");
 
@@ -425,14 +420,10 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.PricingPlans.PricingPlan", b =>
                 {
                     b.HasOne("LocadoraDeAutomoveis.Domain.Groups.Group", "Group")
-                        .WithMany()
+                        .WithMany("PricingPlans")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("LocadoraDeAutomoveis.Domain.Groups.Group", null)
-                        .WithMany("PricingPlans")
-                        .HasForeignKey("GroupId1");
 
                     b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "Tenant")
                         .WithMany()
