@@ -5,12 +5,14 @@ using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
+using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.Clients;
 using LocadoraDeAutomoveis.Infrastructure.Drivers;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Groups;
 using LocadoraDeAutomoveis.Infrastructure.PricingPlans;
+using LocadoraDeAutomoveis.Infrastructure.RateServices;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using LocadoraDeAutomoveis.Infrastructure.Vehicles;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -33,6 +35,7 @@ public abstract class TestFixture
     protected PricingPlanRepository pricingPlanRepository = null!;
     protected ClientRepository clientRepository = null!;
     protected DriverRepository driverRepository = null!;
+    protected RateServiceRepository rateServiceRepository = null!;
 
     private static IDatabaseContainer? dbContainer = null!;
 
@@ -76,6 +79,7 @@ public abstract class TestFixture
         this.pricingPlanRepository = new(this.dbContext);
         this.clientRepository = new(this.dbContext);
         this.driverRepository = new(this.dbContext);
+        this.rateServiceRepository = new(this.dbContext);
 
         BuilderSetup.SetCreatePersistenceMethod<User>(u => this.userManager.CreateAsync(u).GetAwaiter().GetResult());
 
@@ -96,6 +100,9 @@ public abstract class TestFixture
 
         BuilderSetup.SetCreatePersistenceMethod<Driver>(d => this.driverRepository.AddAsync(d).GetAwaiter().GetResult());
         BuilderSetup.SetCreatePersistenceMethod<IList<Driver>>(d => this.driverRepository.AddMultiplyAsync(d).GetAwaiter().GetResult());
+
+        BuilderSetup.SetCreatePersistenceMethod<RateService>(rS => this.rateServiceRepository.AddAsync(rS).GetAwaiter().GetResult());
+        BuilderSetup.SetCreatePersistenceMethod<IList<RateService>>(rS => this.rateServiceRepository.AddMultiplyAsync(rS).GetAwaiter().GetResult());
     }
 
     private static async Task StartDatabaseAsync()
@@ -163,6 +170,8 @@ public abstract class TestFixture
         dbContext.Employees.RemoveRange(dbContext.Employees);
         dbContext.Drivers.RemoveRange(dbContext.Drivers);
         dbContext.Clients.RemoveRange(dbContext.Clients);
+        dbContext.RateServices.RemoveRange(dbContext.RateServices);
+        dbContext.Configurations.RemoveRange(dbContext.Configurations);
         dbContext.Users.RemoveRange(dbContext.Users);
         dbContext.Roles.RemoveRange(dbContext.Roles);
 

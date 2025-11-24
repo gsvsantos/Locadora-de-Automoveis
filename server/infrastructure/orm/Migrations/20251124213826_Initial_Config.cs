@@ -195,6 +195,36 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Configurations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GasolinePrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    GasPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    DieselPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    AlcoholPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Configurations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Configurations_AspNetUsers_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Configurations_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
                 {
@@ -244,6 +274,35 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Groups_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RateServices",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    IsFixed = table.Column<bool>(type: "bit", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RateServices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RateServices_AspNetUsers_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RateServices_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -432,6 +491,16 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Configurations_TenantId_UserId_IsActive",
+                table: "Configurations",
+                columns: new[] { "TenantId", "UserId", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Configurations_UserId",
+                table: "Configurations",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Drivers_ClientCNPJId",
                 table: "Drivers",
                 column: "ClientCNPJId");
@@ -499,6 +568,16 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RateServices_TenantId_UserId_IsActive",
+                table: "RateServices",
+                columns: new[] { "TenantId", "UserId", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RateServices_UserId",
+                table: "RateServices",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_GroupId",
                 table: "Vehicles",
                 column: "GroupId");
@@ -533,6 +612,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Configurations");
+
+            migrationBuilder.DropTable(
                 name: "Drivers");
 
             migrationBuilder.DropTable(
@@ -540,6 +622,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "PricingPlans");
+
+            migrationBuilder.DropTable(
+                name: "RateServices");
 
             migrationBuilder.DropTable(
                 name: "Vehicles");

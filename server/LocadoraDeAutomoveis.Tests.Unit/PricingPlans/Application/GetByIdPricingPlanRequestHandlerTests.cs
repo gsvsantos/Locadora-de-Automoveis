@@ -26,7 +26,7 @@ public sealed class GetByIdPricingPlanRequestHandlerTests
         );
     }
 
-    #region GetPricingPlansById Tests (Happy Path)
+    #region GetPricingPlanById Tests (Happy Path)
     [TestMethod]
     public void Handler_ShouldGetPricingPlansById_Successfuly()
     {

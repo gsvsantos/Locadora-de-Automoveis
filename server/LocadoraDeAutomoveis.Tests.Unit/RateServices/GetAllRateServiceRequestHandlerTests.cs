@@ -8,7 +8,7 @@ namespace LocadoraDeAutomoveis.Tests.Unit.RateServices;
 [TestCategory("RateService Application - Unit Tests")]
 public sealed class GetAllRateServiceRequestHandlerTests
 {
-    private GetAllRateServiceRequestHandler handler = null;
+    private GetAllRateServiceRequestHandler handler = null!;
 
     private Mock<IRepositoryRateService> repositoryRateServiceMock = null!;
     private Mock<ILogger<GetAllRateServiceRequestHandler>> loggerMock = null!;

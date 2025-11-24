@@ -3,7 +3,7 @@ using LocadoraDeAutomoveis.Domain.RateServices;
 
 namespace LocadoraDeAutomoveis.Application.Validators;
 
-internal class RateServiceValidators : AbstractValidator<RateService>
+public class RateServiceValidators : AbstractValidator<RateService>
 {
     public RateServiceValidators()
     {

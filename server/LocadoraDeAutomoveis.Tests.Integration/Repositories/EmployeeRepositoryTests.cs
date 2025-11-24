@@ -1,7 +1,5 @@
-﻿using FizzWare.NBuilder;
-using LocadoraDeAutomoveis.Domain.Auth;
+﻿using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Employees;
-using LocadoraDeAutomoveis.Tests.Integration.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Integration.Repositories;
 

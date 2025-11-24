@@ -1,4 +1,5 @@
-﻿using LocadoraDeAutomoveis.Infrastructure.Shared;
+﻿using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Infrastructure.Shared;
 
 namespace LocadoraDeAutomoveis.Infrastructure.RateServices;
 
