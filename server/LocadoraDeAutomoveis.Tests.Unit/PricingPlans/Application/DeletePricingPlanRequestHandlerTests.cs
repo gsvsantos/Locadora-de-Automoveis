@@ -37,6 +37,7 @@ public class DeletePricingPlanRequestHandlerTests
         DeletePricingPlanRequest request = new(pricingPlanId);
 
         PricingPlan pricingPlan = new(
+            "SUV Plan",
             new DailyPlanProps(90m, 1.5m),
             new ControlledPlanProps(140m, 2, 90),
             new FreePlanProps(190m)

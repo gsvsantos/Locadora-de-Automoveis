@@ -27,10 +27,11 @@ public class GetByIdPricingPlanRequestHandler(
             GetByIdPricingPlanResponse response = new(
                 new PricingPlanDto(
                     selectedPricingPlan.Id,
-                    selectedPricingPlan.GroupId,
+                    $"{selectedPricingPlan.Group.Name} - Pricing Plans",
                     new(selectedPricingPlan.DailyPlan.DailyRate, selectedPricingPlan.DailyPlan.PricePerKm),
                     new(selectedPricingPlan.ControlledPlan.DailyRate, selectedPricingPlan.ControlledPlan.AvailableKm, selectedPricingPlan.ControlledPlan.PricePerKmExtrapolated),
-                    new(selectedPricingPlan.FreePlan.FixedRate)
+                    new(selectedPricingPlan.FreePlan.FixedRate),
+                    selectedPricingPlan.GroupId
                 )
             );
 

@@ -101,6 +101,7 @@ public sealed class CreatePricingPlanRequestHandlerTests
             .ReturnsAsync(user);
 
         PricingPlan pricingPlan = new(
+            "SUV Plan",
             request.DailyPlan.ToProps(),
             request.ControlledPlan.ToProps(),
             request.FreePlan.ToProps()

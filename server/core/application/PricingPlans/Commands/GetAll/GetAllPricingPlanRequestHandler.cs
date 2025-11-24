@@ -26,10 +26,11 @@ public class GetAllPricingPlanRequestHandler(
                 pricingPlans.Count,
                 pricingPlans.Select(pricingPlan => new PricingPlanDto(
                     pricingPlan.Id,
-                    pricingPlan.GroupId,
+                    $"{pricingPlan.Group.Name} - Pricing Plans",
                     new(pricingPlan.DailyPlan.DailyRate, pricingPlan.DailyPlan.PricePerKm),
                     new(pricingPlan.ControlledPlan.DailyRate, pricingPlan.ControlledPlan.AvailableKm, pricingPlan.ControlledPlan.PricePerKmExtrapolated),
-                    new(pricingPlan.FreePlan.FixedRate)
+                    new(pricingPlan.FreePlan.FixedRate),
+                    pricingPlan.GroupId
                 )).ToImmutableList()
             );
 

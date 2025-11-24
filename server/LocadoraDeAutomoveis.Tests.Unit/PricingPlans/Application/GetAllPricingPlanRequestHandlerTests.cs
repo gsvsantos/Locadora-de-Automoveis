@@ -32,6 +32,7 @@ public sealed class GetAllPricingPlanRequestHandlerTests
         // Arrange
         RandomGenerator random = new();
         List<PricingPlan> pricingPlans = Builder<PricingPlan>.CreateListOfSize(10).All()
+            .Do(v => v.Name = random.NextString(1, 5))
             .Do(v => v.DailyPlan = new(random.Decimal(), random.Decimal()))
             .Do(v => v.ControlledPlan = new(random.Decimal(), random.Decimal(), random.Int()))
             .Do(v => v.FreePlan = new(random.Decimal()))
@@ -60,6 +61,7 @@ public sealed class GetAllPricingPlanRequestHandlerTests
             {
                 if (pricingPlans[i].Id == pricingPlansDto[j].Id)
                 {
+                    Assert.AreEqual(pricingPlans[i].Name, pricingPlans[j].Name);
                     Assert.AreEqual(pricingPlans[i].DailyPlan, pricingPlans[j].DailyPlan);
                     Assert.AreEqual(pricingPlans[i].ControlledPlan, pricingPlans[j].ControlledPlan);
                     Assert.AreEqual(pricingPlans[i].FreePlan, pricingPlans[j].FreePlan);
@@ -75,6 +77,7 @@ public sealed class GetAllPricingPlanRequestHandlerTests
         // Arrange
         RandomGenerator random = new();
         List<PricingPlan> pricingPlans = Builder<PricingPlan>.CreateListOfSize(10).All()
+            .Do(v => v.Name = random.NextString(1, 5))
             .Do(v => v.DailyPlan = new(random.Decimal(), random.Decimal()))
             .Do(v => v.ControlledPlan = new(random.Decimal(), random.Decimal(), random.Int()))
             .Do(v => v.FreePlan = new(random.Decimal()))
@@ -104,6 +107,7 @@ public sealed class GetAllPricingPlanRequestHandlerTests
             {
                 if (pricingPlans[i].Id == pricingPlansDto[j].Id)
                 {
+                    Assert.AreEqual(pricingPlans[i].Name, pricingPlans[j].Name);
                     Assert.AreEqual(pricingPlans[i].DailyPlan, pricingPlans[j].DailyPlan);
                     Assert.AreEqual(pricingPlans[i].FreePlan, pricingPlans[j].FreePlan);
                     Assert.AreEqual(pricingPlans[i].ControlledPlan, pricingPlans[j].ControlledPlan);

@@ -39,6 +39,7 @@ public class UpdatePricingPlanRequestHandler(
         }
 
         PricingPlan updatedPricingPlan = new(
+            $"{selectedGroup.Name} - Pricing Plans",
             request.DailyPlan.ToProps(),
             request.ControlledPlan.ToProps(),
             request.FreePlan.ToProps()

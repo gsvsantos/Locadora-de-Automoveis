@@ -38,6 +38,7 @@ public sealed class GetByIdPricingPlanRequestHandlerTests
         Guid pricingPlanId = Guid.NewGuid();
         GetByIdPricingPlanRequest request = new(pricingPlanId);
         PricingPlan pricingPlan = new(
+            $"{group.Name} - Pricing Plans",
             new DailyPlanProps(90m, 1.5m),
             new ControlledPlanProps(140m, 2, 90),
             new FreePlanProps(190m)
@@ -57,6 +58,7 @@ public sealed class GetByIdPricingPlanRequestHandlerTests
         // Assert
         Assert.IsTrue(result.IsSuccess);
         Assert.AreEqual(pricingPlan.Id, dto.Id);
+        Assert.AreEqual(pricingPlan.Name, dto.Name);
         Assert.AreEqual(pricingPlan.DailyPlan.DailyRate, dto.DailyPlan.DailyRate);
         Assert.AreEqual(pricingPlan.DailyPlan.PricePerKm, dto.DailyPlan.PricePerKm);
         Assert.AreEqual(pricingPlan.ControlledPlan.DailyRate, dto.ControlledPlan.DailyRate);

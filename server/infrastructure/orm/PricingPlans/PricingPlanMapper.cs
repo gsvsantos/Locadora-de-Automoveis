@@ -18,6 +18,7 @@ public class PricingPlanMapper : IEntityTypeConfiguration<PricingPlan>
                 .HasColumnName("DailyPlan_Price")
                 .HasPrecision(18, 2)
                 .IsRequired();
+
             daily.Property(d => d.PricePerKm)
                 .HasColumnName("DailyPlan_PricePerKm")
                 .HasPrecision(18, 2)

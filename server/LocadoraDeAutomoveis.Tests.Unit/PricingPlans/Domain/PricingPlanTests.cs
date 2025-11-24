@@ -31,11 +31,12 @@ public class PricingPlanTests
         FreePlanProps freePlan = new(70m);
 
         PricingPlan pricingPlan = new(
-            dailyPlan, controlledPlan, freePlan
+            "SUV Plan", dailyPlan, controlledPlan, freePlan
         );
 
         // Assert
         Assert.AreNotEqual(Guid.Empty, pricingPlan.Id);
+        Assert.AreEqual("SUV Plan", pricingPlan.Name);
         Assert.AreEqual(dailyPlan, pricingPlan.DailyPlan);
         Assert.AreEqual(controlledPlan, pricingPlan.ControlledPlan);
         Assert.AreEqual(freePlan, pricingPlan.FreePlan);
@@ -52,7 +53,7 @@ public class PricingPlanTests
         FreePlanProps freePlan1 = new(70m);
 
         PricingPlan pricingPlan1 = new(
-            dailyPlan1, controlledPlan1, freePlan1
+            "SuuuV Plan", dailyPlan1, controlledPlan1, freePlan1
         );
 
         DailyPlanProps dailyPlan2 = new(120m, 2.5m);
@@ -60,13 +61,14 @@ public class PricingPlanTests
         FreePlanProps freePlan2 = new(75m);
 
         PricingPlan pricingPlan2 = new(
-            dailyPlan2, controlledPlan2, freePlan2
+            "SUV Plan", dailyPlan2, controlledPlan2, freePlan2
         );
 
         // Act
         pricingPlan1.Update(pricingPlan2);
 
         // Assert
+        Assert.AreEqual(pricingPlan2.Name, pricingPlan1.Name);
         Assert.AreEqual(dailyPlan2, pricingPlan1.DailyPlan);
         Assert.AreEqual(controlledPlan2, pricingPlan1.ControlledPlan);
         Assert.AreEqual(freePlan2, pricingPlan1.FreePlan);
@@ -77,6 +79,7 @@ public class PricingPlanTests
     {
         // Arrange
         PricingPlan pricingPlan = new(
+            "SUV Plan",
             new DailyPlanProps(100m, 2m),
             new ControlledPlanProps(80m, 3m, 200),
             new FreePlanProps(70m)
@@ -88,6 +91,7 @@ public class PricingPlanTests
 
         // Assert
         Assert.AreEqual(group.Id, pricingPlan.GroupId);
+        Assert.AreEqual("SUV Plan", pricingPlan.Name);
         Assert.AreEqual(group, pricingPlan.Group);
         Assert.IsTrue(group.PricingPlans.Contains(pricingPlan));
     }
@@ -97,6 +101,7 @@ public class PricingPlanTests
     {
         // Arrange
         PricingPlan pricingPlan = new(
+            "SUV Plan",
             new DailyPlanProps(100m, 2m),
             new ControlledPlanProps(80m, 3m, 200),
             new FreePlanProps(70m)
@@ -111,6 +116,7 @@ public class PricingPlanTests
 
         // Assert
         Assert.AreEqual(Guid.Empty, pricingPlan.GroupId);
+        Assert.AreEqual("SUV Plan", pricingPlan.Name);
         Assert.IsNull(pricingPlan.Group);
         Assert.IsFalse(group.PricingPlans.Contains(pricingPlan));
     }

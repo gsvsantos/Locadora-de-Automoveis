@@ -47,6 +47,7 @@ public sealed class UpdatePricingPlanRequestHandlerTests
 
         Guid pricingPlanId = Guid.NewGuid();
         PricingPlan pricingPlan = new(
+            "SuuuV Plan",
             new DailyPlanProps(90m, 1.5m),
             new ControlledPlanProps(140m, 2, 90),
             new FreePlanProps(190m)
@@ -74,6 +75,7 @@ public sealed class UpdatePricingPlanRequestHandlerTests
         );
 
         PricingPlan updatedPricingPlan = new(
+            "SUV Plan",
             request.DailyPlan.ToProps(),
             request.ControlledPlan.ToProps(),
             request.FreePlan.ToProps()

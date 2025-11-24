@@ -10,8 +10,9 @@ public record GetAllPricingPlanResponse(
 
 public record PricingPlanDto(
     Guid Id,
-    Guid GroupId,
+    string Name,
     DailyPlanDto DailyPlan,
     ControlledPlanDto ControlledPlan,
-    FreePlanDto FreePlan
+    FreePlanDto FreePlan,
+    Guid GroupId
 );

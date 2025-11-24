@@ -5,15 +5,17 @@ namespace LocadoraDeAutomoveis.Domain.PricingPlans;
 
 public class PricingPlan : BaseEntity<PricingPlan>
 {
-    public DailyPlanProps DailyPlan { get; set; }
-    public ControlledPlanProps ControlledPlan { get; set; }
-    public FreePlanProps FreePlan { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public DailyPlanProps DailyPlan { get; set; } = null!;
+    public ControlledPlanProps ControlledPlan { get; set; } = null!;
+    public FreePlanProps FreePlan { get; set; } = null!;
     public Guid GroupId { get; set; } = Guid.Empty;
     public Group Group { get; set; } = null!;
 
     public PricingPlan() { }
-    public PricingPlan(DailyPlanProps dailyPlanProps, ControlledPlanProps controlledPlanProps, FreePlanProps freePlanProps) : this()
+    public PricingPlan(string name, DailyPlanProps dailyPlanProps, ControlledPlanProps controlledPlanProps, FreePlanProps freePlanProps) : this()
     {
+        this.Name = name;
         this.DailyPlan = dailyPlanProps;
         this.ControlledPlan = controlledPlanProps;
         this.FreePlan = freePlanProps;
@@ -50,6 +52,7 @@ public class PricingPlan : BaseEntity<PricingPlan>
 
     public override void Update(PricingPlan updatedEntity)
     {
+        this.Name = updatedEntity.Name;
         this.DailyPlan = updatedEntity.DailyPlan;
         this.ControlledPlan = updatedEntity.ControlledPlan;
         this.FreePlan = updatedEntity.FreePlan;
