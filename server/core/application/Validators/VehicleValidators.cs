@@ -31,6 +31,6 @@ public class VehicleValidators : AbstractValidator<Vehicle>
             .GreaterThan(0).WithMessage("The {PropertyName} must be greater than zero.");
 
         RuleFor(v => v.Year)
-            .LessThanOrEqualTo(DateTimeOffset.Now).WithMessage("The {PropertyName} cannot be in the future.");
+            .GreaterThan(1950).WithMessage("The {PropertyName} must be between 1950 and {DateTime.UtcNow.Year}.");
     }
 }

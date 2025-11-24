@@ -22,7 +22,7 @@ public sealed class VehicleTests
         Assert.AreEqual(string.Empty, vehicle.Model);
         Assert.AreEqual(string.Empty, vehicle.FuelType);
         Assert.AreEqual(0, vehicle.CapacityInLiters);
-        Assert.AreEqual(DateTimeOffset.MinValue, vehicle.Year);
+        Assert.AreEqual(0, vehicle.Year);
         Assert.IsNull(vehicle.PhotoPath);
     }
 
@@ -30,7 +30,6 @@ public sealed class VehicleTests
     public void VehicleConstructor_Parameterized_ShouldWorks()
     {
         // Arrange & Act
-        DateTimeOffset date = new(1984, 1, 1, 0, 0, 0, TimeSpan.Zero);
         Vehicle vehicle = new(
             "ABC-1A84",
             "Chevrolet",
@@ -38,7 +37,7 @@ public sealed class VehicleTests
             "Chevette",
             "Gasolina",
             45,
-            date,
+            1984,
             string.Empty
         );
 
@@ -51,7 +50,7 @@ public sealed class VehicleTests
         Assert.AreEqual("Chevette", vehicle.Model);
         Assert.AreEqual("Gasolina", vehicle.FuelType);
         Assert.AreEqual(45, vehicle.CapacityInLiters);
-        Assert.AreEqual(date, vehicle.Year);
+        Assert.AreEqual(1984, vehicle.Year);
         Assert.AreEqual(string.Empty, vehicle.PhotoPath);
     }
 
@@ -59,7 +58,6 @@ public sealed class VehicleTests
     public void VehicleMethod_Update_ShouldWorks()
     {
         // Arrange
-        DateTimeOffset date = new(1984, 1, day: 1, 0, 0, 0, TimeSpan.Zero);
         Vehicle vehicle = new(
             "ABC-1A84",
             "Chervrolette",
@@ -67,7 +65,7 @@ public sealed class VehicleTests
             "Chevette",
             "Gasolina",
             45,
-            new(2004, 1, 1, 0, 0, 0, TimeSpan.Zero),
+            2004,
             string.Empty
         );
 
@@ -78,7 +76,7 @@ public sealed class VehicleTests
             "Chevette",
             "Gasolina",
             45,
-            date,
+            1984,
             "https://aquelesite.net/ze"
         );
 
@@ -94,7 +92,7 @@ public sealed class VehicleTests
         Assert.AreEqual("Chevette", vehicle.Model);
         Assert.AreEqual("Gasolina", vehicle.FuelType);
         Assert.AreEqual(45, vehicle.CapacityInLiters);
-        Assert.AreEqual(date, vehicle.Year);
+        Assert.AreEqual(1984, vehicle.Year);
         Assert.AreEqual("https://aquelesite.net/ze", vehicle.PhotoPath);
     }
 

@@ -13,6 +13,7 @@ public class VehicleRepository(AppDbContext context)
     public override Task<List<Vehicle>> GetAllAsync(int quantity) =>
         this.records.Include(g => g.Group).Take(quantity).ToListAsync();
 
-    public override Task<Vehicle?> GetByIdAsync(Guid id) =>
-        this.records.Include(g => g.Group).FirstOrDefaultAsync(v => v.Id == id);
+    public override Task<Vehicle?> GetByIdAsync(Guid entityId) =>
+        this.records.Include(g => g.Group)
+        .FirstOrDefaultAsync(d => d.Id.Equals(entityId));
 }

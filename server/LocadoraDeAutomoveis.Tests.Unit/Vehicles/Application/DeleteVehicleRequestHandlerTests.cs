@@ -43,7 +43,7 @@ public sealed class DeleteVehicleRequestHandlerTests
             "Chevette",
             "Gasolina",
             45,
-            new(1984, 1, 1, 0, 0, 0, TimeSpan.Zero),
+            1984,
             string.Empty
         )
         { Id = vehicleId };

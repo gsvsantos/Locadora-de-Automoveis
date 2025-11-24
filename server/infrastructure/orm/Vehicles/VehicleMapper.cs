@@ -35,6 +35,12 @@ public class VehicleMapper : IEntityTypeConfiguration<Vehicle>
 
         builder.Property(v => v.PhotoPath);
 
+        builder.HasOne(v => v.Group)
+            .WithMany(g => g.Vehicles)
+            .HasForeignKey(v => v.GroupId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired();
+
         builder.HasOne(t => t.Tenant)
             .WithMany()
             .HasForeignKey(t => t.TenantId)

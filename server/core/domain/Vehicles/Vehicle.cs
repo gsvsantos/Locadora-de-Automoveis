@@ -11,7 +11,7 @@ public class Vehicle : BaseEntity<Vehicle>
     public string Model { get; set; } = string.Empty;
     public string FuelType { get; set; } = string.Empty;
     public int CapacityInLiters { get; set; } = 0;
-    public DateTimeOffset Year { get; set; } = DateTimeOffset.MinValue;
+    public int Year { get; set; } = 0;
     public string? PhotoPath { get; set; }
     public Guid GroupId { get; set; } = Guid.Empty;
     public Group Group { get; set; } = null!;
@@ -19,7 +19,7 @@ public class Vehicle : BaseEntity<Vehicle>
     public Vehicle() { }
     public Vehicle(
         string licensePlate, string brand, string color, string model,
-        string fuelType, int capacityInLiters, DateTimeOffset year, string photoPath
+        string fuelType, int capacityInLiters, int year, string photoPath
     ) : this()
     {
         this.LicensePlate = licensePlate;

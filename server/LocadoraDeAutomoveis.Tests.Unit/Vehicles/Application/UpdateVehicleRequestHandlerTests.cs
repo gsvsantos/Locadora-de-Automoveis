@@ -46,7 +46,6 @@ public sealed class UpdateVehicleRequestHandlerTests
         Group group = new("Grupo Ed")
         { Id = groupId };
 
-        DateTimeOffset date = new(1984, 1, 1, 0, 0, 0, TimeSpan.Zero);
         UpdateVehicleRequest request = new(
             vehicleId,
             "ABC-1A84",
@@ -55,7 +54,7 @@ public sealed class UpdateVehicleRequestHandlerTests
             "Chevette",
             "Gasolina",
             45,
-            date,
+            1984,
             null,
             groupId
             );
@@ -67,7 +66,7 @@ public sealed class UpdateVehicleRequestHandlerTests
             "Chevette",
             "Gazolina",
             45,
-            new(2004, 1, 1, 0, 0, 0, TimeSpan.Zero),
+            2004,
             string.Empty
         )
         { Id = vehicleId };

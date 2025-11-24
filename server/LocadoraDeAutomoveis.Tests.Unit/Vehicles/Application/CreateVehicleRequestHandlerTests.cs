@@ -83,7 +83,6 @@ public sealed class CreateVehicleRequestHandlerTests
             .Setup(r => r.GetByIdAsync(groupId))
             .ReturnsAsync(group);
 
-        DateTimeOffset date = new(1984, 1, 1, 0, 0, 0, TimeSpan.Zero);
         CreateVehicleRequest request = new(
             "ABC-1A84",
             "Chevrolet",
@@ -91,7 +90,7 @@ public sealed class CreateVehicleRequestHandlerTests
             "Chevette",
             "Gasolina",
             45,
-            date,
+            1984,
             null,
             groupId
         );

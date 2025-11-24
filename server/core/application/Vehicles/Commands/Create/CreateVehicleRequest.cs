@@ -10,7 +10,7 @@ public record CreateVehicleRequest(
     string Model,
     string FuelType,
     int CapacityInLiters,
-    DateTimeOffset Year,
+    int Year,
     string? PhotoPath,
     Guid GroupId
 ) : IRequest<Result<CreateVehicleResponse>>;

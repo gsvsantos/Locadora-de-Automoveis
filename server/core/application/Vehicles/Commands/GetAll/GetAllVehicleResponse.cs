@@ -15,7 +15,7 @@ public record VehicleDto(
     string Model,
     string FuelType,
     int CapacityInLiters,
-    DateTimeOffset Year,
+    int Year,
     string? PhotoPath,
     Guid GroupId
 );

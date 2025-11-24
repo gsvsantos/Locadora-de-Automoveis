@@ -10,7 +10,7 @@ public record UpdateVehicleRequestPartial(
     string Model,
     string FuelType,
     int CapacityInLiters,
-    DateTimeOffset Year,
+    int Year,
     string? PhotoPath,
     Guid GroupId
 );
@@ -23,7 +23,7 @@ public record UpdateVehicleRequest(
     string Model,
     string FuelType,
     int CapacityInLiters,
-    DateTimeOffset Year,
+    int Year,
     string? PhotoPath,
     Guid GroupId
 ) : IRequest<Result<UpdateVehicleResponse>>;
