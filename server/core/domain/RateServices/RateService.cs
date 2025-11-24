@@ -1,6 +1,6 @@
 ﻿using LocadoraDeAutomoveis.Domain.Shared;
 
-namespace LocadoraDeAutomoveis.Domain.RateService;
+namespace LocadoraDeAutomoveis.Domain.RateServices;
 
 public class RateService : BaseEntity<RateService>
 {
@@ -23,5 +23,6 @@ public class RateService : BaseEntity<RateService>
     {
         this.Name = updatedEntity.Name;
         this.Price = updatedEntity.Price;
+        this.IsFixed = updatedEntity.IsFixed;
     }
 }

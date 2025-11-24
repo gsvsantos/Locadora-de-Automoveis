@@ -1,4 +1,4 @@
-﻿using LocadoraDeAutomoveis.Domain.RateService;
+﻿using LocadoraDeAutomoveis.Domain.RateServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,29 +10,29 @@ public class RateServiceMapper : IEntityTypeConfiguration<RateService>
     {
         builder.ToTable("RateServices");
 
-        builder.HasKey(rs => rs.Id);
+        builder.HasKey(rS => rS.Id);
 
-        builder.Property(rs => rs.Name)
+        builder.Property(rS => rS.Name)
             .HasMaxLength(255)
             .IsRequired();
 
-        builder.Property(rs => rs.Price)
+        builder.Property(rS => rS.Price)
             .HasPrecision(18, 2)
             .IsRequired();
 
-        builder.Property(rs => rs.IsFixed)
+        builder.Property(rS => rS.IsFixed)
             .IsRequired();
 
-        builder.HasOne(rs => rs.Tenant)
+        builder.HasOne(rS => rS.Tenant)
             .WithMany()
-            .HasForeignKey(t => t.TenantId)
+            .HasForeignKey(rS => rS.TenantId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(rs => rs.User)
+        builder.HasOne(rS => rS.User)
             .WithMany()
-            .HasForeignKey(rs => rs.UserId)
+            .HasForeignKey(rS => rS.UserId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasIndex(rs => new { rs.TenantId, rs.UserId, rs.IsActive });
+        builder.HasIndex(rS => new { rS.TenantId, rS.UserId, rS.IsActive });
     }
 }
