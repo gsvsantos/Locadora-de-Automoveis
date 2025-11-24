@@ -46,7 +46,7 @@ public sealed class GetByIdVehicleRequestHandlerTests
         { Id = vehicleId };
 
         this.repositoryVehicleMock
-            .Setup(rr => rr.GetByIdAsync(vehicleId))
+            .Setup(rr => rr.GetByIdAsync(request.Id))
             .ReturnsAsync(vehicle);
 
         // Act
@@ -55,6 +55,9 @@ public sealed class GetByIdVehicleRequestHandlerTests
         VehicleDto dto = result.Value.Vehicle;
 
         // Assert
+        this.repositoryVehicleMock
+            .Verify(r => r.GetByIdAsync(request.Id), Times.Once);
+
         Assert.IsTrue(result.IsSuccess);
         Assert.AreEqual(vehicle.Id, dto.Id);
         Assert.AreEqual(vehicle.LicensePlate, dto.LicensePlate);

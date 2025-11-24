@@ -142,7 +142,7 @@ public sealed class CreateVehicleRequestHandlerTests
                     v.FuelType == request.FuelType && v.CapacityInLiters == request.CapacityInLiters &&
                     v.Year == request.Year && v.PhotoPath == expectedPhotoPath
                     ))
-            );
+            ).Verifiable();
 
         // Act
         Result<CreateVehicleResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
@@ -177,7 +177,8 @@ public sealed class CreateVehicleRequestHandlerTests
                     v.Color == request.Color && v.Model == request.Model &&
                     v.FuelType == request.FuelType && v.CapacityInLiters == request.CapacityInLiters &&
                     v.Year == request.Year && v.PhotoPath == expectedPhotoPath
-                    )), Times.Once
+                    )
+                ), Times.Once
             );
 
         Assert.IsTrue(result.IsSuccess);

@@ -128,7 +128,9 @@ public class CreateDriverRequestHandler(
     private static bool DocumentAlreadyRegistred(Client client, List<Client> existingClients)
     {
         return existingClients
-            .Any(entity => string.Equals(
+            .Any(entity =>
+            entity.Id != client.Id &&
+            string.Equals(
                 entity.Document,
                 client.Document,
                 StringComparison.CurrentCultureIgnoreCase)

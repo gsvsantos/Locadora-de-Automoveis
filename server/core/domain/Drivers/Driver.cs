@@ -41,6 +41,8 @@ public class Driver : BaseEntity<Driver>
             DisassociateClientCPF();
         }
 
+        client.AssociateDriver(this);
+
         this.ClientCPF = client;
         this.ClientCPFId = client.Id;
     }
@@ -51,6 +53,8 @@ public class Driver : BaseEntity<Driver>
         {
             return;
         }
+
+        this.ClientCPF.DisassociateDriver();
 
         this.ClientCPF = null!;
         this.ClientCPFId = Guid.Empty;
@@ -68,6 +72,8 @@ public class Driver : BaseEntity<Driver>
             DisassociateClientCNPJ();
         }
 
+        client.AssociateDriver(this);
+
         this.ClientCNPJ = client;
         this.ClientCNPJId = client.Id;
     }
@@ -78,6 +84,10 @@ public class Driver : BaseEntity<Driver>
         {
             return;
         }
+
+        DisassociateClientCPF();
+
+        this.ClientCNPJ.DisassociateDriver();
 
         this.ClientCNPJ = null!;
         this.ClientCNPJId = Guid.Empty;

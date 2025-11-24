@@ -57,7 +57,8 @@ public sealed class DeleteVehicleRequestHandlerTests
             .Verifiable();
 
         this.unitOfWorkMock
-            .Setup(u => u.CommitAsync());
+            .Setup(u => u.CommitAsync())
+            .Verifiable();
 
         // Act
         Result<DeleteVehicleResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
@@ -68,7 +69,7 @@ public sealed class DeleteVehicleRequestHandlerTests
             Times.Once);
 
         this.repositoryVehicleMock
-            .Verify(r => r.DeleteAsync(vehicleId),
+            .Verify(r => r.DeleteAsync(request.Id),
             Times.Once);
 
         this.unitOfWorkMock.Verify(c => c.CommitAsync(), Times.Once);

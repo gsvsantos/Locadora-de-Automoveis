@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using LocadoraDeAutomoveis.Application.Clients.Commands.Update;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Shared;
@@ -11,7 +10,7 @@ namespace LocadoraDeAutomoveis.Application.Drivers.Commands.Delete;
 public class DeleteDriverRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryDriver repositoryDriver,
-    ILogger<UpdateClientRequestHandler> logger
+    ILogger<DeleteDriverRequestHandler> logger
 ) : IRequestHandler<DeleteDriverRequest, Result<DeleteDriverResponse>>
 {
     public async Task<Result<DeleteDriverResponse>> Handle(
