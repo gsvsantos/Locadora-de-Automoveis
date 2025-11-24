@@ -35,7 +35,17 @@ public class DriverMapper : IEntityTypeConfiguration<Driver>
         builder.HasOne(d => d.ClientCPF)
             .WithMany()
             .HasForeignKey(d => d.ClientCPFId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired();
+
+        builder.Property(d => d.ClientCNPJId)
+            .HasConversion(
+                toDb =>
+                    toDb == Guid.Empty
+                    ? (Guid?)null
+                    : toDb,
+                fromDb => fromDb ?? Guid.Empty)
+            .IsRequired(false);
 
         builder.HasOne(d => d.ClientCNPJ)
             .WithMany()
@@ -54,7 +64,6 @@ public class DriverMapper : IEntityTypeConfiguration<Driver>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(d => new { d.TenantId, d.UserId, d.IsActive });
-
         builder.HasIndex(d => new { d.Document, d.TenantId }).IsUnique();
         builder.HasIndex(d => new { d.LicenseNumber, d.TenantId }).IsUnique();
     }

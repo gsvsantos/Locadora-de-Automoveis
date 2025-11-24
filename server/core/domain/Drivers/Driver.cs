@@ -13,7 +13,7 @@ public class Driver : BaseEntity<Driver>
     public DateTimeOffset LicenseValidity { get; set; }
     public Guid ClientCPFId { get; set; }
     public Client ClientCPF { get; set; } = null!;
-    public Guid ClientCNPJId { get; set; }
+    public Guid? ClientCNPJId { get; set; }
     public Client? ClientCNPJ { get; set; } = null!;
 
     public Driver() { }

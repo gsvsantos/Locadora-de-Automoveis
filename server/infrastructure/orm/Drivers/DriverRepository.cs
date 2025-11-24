@@ -20,5 +20,5 @@ public class DriverRepository(AppDbContext context)
     public override Task<Driver?> GetByIdAsync(Guid entityId) =>
         this.records.Include(d => d.ClientCPF)
         .Include(d => d.ClientCNPJ)
-        .FirstOrDefaultAsync();
+        .FirstOrDefaultAsync(d => d.Id.Equals(entityId));
 }
