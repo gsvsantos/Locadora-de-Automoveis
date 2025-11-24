@@ -1,4 +1,6 @@
 using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
@@ -18,6 +20,8 @@ public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvi
     public DbSet<Group> Groups { get; set; }
     public DbSet<Vehicle> Vehicles { get; set; }
     public DbSet<PricingPlan> PricingPlans { get; set; }
+    public DbSet<Client> Clients { get; set; }
+    public DbSet<Driver> Drivers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -30,6 +34,10 @@ public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvi
             modelBuilder.Entity<Vehicle>()
                 .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
             modelBuilder.Entity<PricingPlan>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<Client>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<Driver>()
                 .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
         }
 

@@ -62,7 +62,9 @@ public class ClientMapper : IEntityTypeConfiguration<Client>
         builder.HasIndex(c => new { c.TenantId, c.UserId, c.IsActive });
 
         builder.HasIndex(c => new { c.Document, c.TenantId })
-            .IsUnique()
-            .HasFilter("[Document] IS NOT NULL");
+            .IsUnique();
+
+        builder.Ignore(c => c.Driver);
+        builder.Ignore(c => c.DriverId);
     }
 }
