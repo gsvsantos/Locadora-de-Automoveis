@@ -35,6 +35,11 @@ public class DeleteEmployeeRequestHandler(
 
             await repositoryEmployee.DeleteAsync(request.Id);
 
+            if (selectedEmployee.User is null)
+            {
+                return Result.Fail(ErrorResults.NotFoundError("Something went wrong! The selected employee don't contains a user."));
+            }
+
             await userManager.DeleteAsync(selectedEmployee.User);
 
             await unitOfWork.CommitAsync();

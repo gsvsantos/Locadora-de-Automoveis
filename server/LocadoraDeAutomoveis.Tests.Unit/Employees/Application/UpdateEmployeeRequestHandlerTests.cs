@@ -101,6 +101,8 @@ public sealed class UpdateEmployeeRequestHandlerTests
             .Setup(r => r.UpdateAsync(request.Id, updatedEmployee))
             .Verifiable();
 
+        Assert.IsNotNull(employee.User);
+
         this.userManagerMock
             .Setup(um => um.UpdateAsync(employee.User))
             .ReturnsAsync(IdentityResult.Success);

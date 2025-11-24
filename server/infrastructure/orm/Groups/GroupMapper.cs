@@ -13,6 +13,7 @@ public class GroupMapper : IEntityTypeConfiguration<Group>
         builder.HasKey(g => g.Id);
 
         builder.Property(g => g.Name)
+            .HasMaxLength(255)
             .IsRequired();
 
         builder.HasMany(g => g.Vehicles)

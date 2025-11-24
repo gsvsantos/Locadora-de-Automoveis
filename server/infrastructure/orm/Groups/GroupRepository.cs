@@ -14,5 +14,6 @@ public class GroupRepository(AppDbContext context)
         this.records.Include(g => g.Vehicles).Take(quantity).ToListAsync();
 
     public override Task<Group?> GetByIdAsync(Guid entityId) =>
-        this.records.Include(g => g.Vehicles).FirstOrDefaultAsync(g => g.Id.Equals(entityId));
+        this.records.Include(g => g.Vehicles)
+        .FirstOrDefaultAsync(d => d.Id.Equals(entityId));
 }

@@ -86,6 +86,8 @@ public sealed class DeleteEmployeeRequestHandlerTests
             .Verify(r => r.DeleteAsync(employeeId),
             Times.Once);
 
+        Assert.IsNotNull(employee.User);
+
         this.userManagerMock
             .Verify(r => r.DeleteAsync(employee.User),
             Times.Once);

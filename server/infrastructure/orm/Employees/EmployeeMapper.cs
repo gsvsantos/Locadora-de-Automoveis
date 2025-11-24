@@ -13,6 +13,7 @@ public class EmployeeMapper : IEntityTypeConfiguration<Employee>
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.FullName)
+            .HasMaxLength(255)
             .IsRequired();
 
         builder.Property(e => e.AdmissionDate)

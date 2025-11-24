@@ -65,6 +65,11 @@ public class SelfUpdateEmployeeRequestHandler(
 
             await repositoryEmployee.UpdateAsync(request.Id, updatedEmployee);
 
+            if (selectedEmployee.User is null)
+            {
+                return Result.Fail(ErrorResults.NotFoundError("Something went wrong! The selected employee don't contains a user."));
+            }
+
             selectedEmployee.User.FullName = request.FullName;
 
             await userManager.UpdateAsync(selectedEmployee.User);

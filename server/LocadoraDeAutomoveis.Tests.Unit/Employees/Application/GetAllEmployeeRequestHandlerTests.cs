@@ -8,7 +8,7 @@ namespace LocadoraDeAutomoveis.Tests.Unit.Employees.Application;
 [TestCategory("Employee Application - Unit Tests")]
 public sealed class GetAllEmployeeRequestHandlerTests
 {
-    private GetAllEmployeeRequestHandler handler;
+    private GetAllEmployeeRequestHandler handler = null!;
 
     private Mock<IRepositoryEmployee> repositoryEmployeeMock = null!;
     private Mock<ILogger<GetAllEmployeeRequestHandler>> loggerMock = null!;
