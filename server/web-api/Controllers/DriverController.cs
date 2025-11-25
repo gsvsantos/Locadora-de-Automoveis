@@ -72,4 +72,3 @@ public class DriverController(IMediator mediator) : ControllerBase
         return Ok(result.Value);
     }
 }
-
