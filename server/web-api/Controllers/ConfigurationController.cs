@@ -27,7 +27,7 @@ public class ConfigurationController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("details")]
-    public async Task<IActionResult> Details([FromQuery] DetailsRequest? request)
+    public async Task<IActionResult> Details([FromQuery] DetailsRequest request)
     {
         Result<DetailsResponse> result = await mediator.Send(request);
 
