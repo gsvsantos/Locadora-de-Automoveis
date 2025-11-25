@@ -727,7 +727,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsOne("LocadoraDeAutomoveis.Domain.PricingPlans.ControlledPlanProps", "ControlledPlan", b1 =>
+                    b.OwnsOne("LocadoraDeAutomoveis.Domain.PricingPlans.PricingPlan.ControlledPlan#LocadoraDeAutomoveis.Domain.PricingPlans.ControlledPlanProps", "ControlledPlan", b1 =>
                         {
                             b1.Property<Guid>("PricingPlanId")
                                 .HasColumnType("uniqueidentifier");
@@ -748,13 +748,13 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                             b1.HasKey("PricingPlanId");
 
-                            b1.ToTable("PricingPlans");
+                            b1.ToTable("PricingPlans", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("PricingPlanId");
                         });
 
-                    b.OwnsOne("LocadoraDeAutomoveis.Domain.PricingPlans.DailyPlanProps", "DailyPlan", b1 =>
+                    b.OwnsOne("LocadoraDeAutomoveis.Domain.PricingPlans.PricingPlan.DailyPlan#LocadoraDeAutomoveis.Domain.PricingPlans.DailyPlanProps", "DailyPlan", b1 =>
                         {
                             b1.Property<Guid>("PricingPlanId")
                                 .HasColumnType("uniqueidentifier");
@@ -771,13 +771,13 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                             b1.HasKey("PricingPlanId");
 
-                            b1.ToTable("PricingPlans");
+                            b1.ToTable("PricingPlans", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("PricingPlanId");
                         });
 
-                    b.OwnsOne("LocadoraDeAutomoveis.Domain.PricingPlans.FreePlanProps", "FreePlan", b1 =>
+                    b.OwnsOne("LocadoraDeAutomoveis.Domain.PricingPlans.PricingPlan.FreePlan#LocadoraDeAutomoveis.Domain.PricingPlans.FreePlanProps", "FreePlan", b1 =>
                         {
                             b1.Property<Guid>("PricingPlanId")
                                 .HasColumnType("uniqueidentifier");
@@ -789,7 +789,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                             b1.HasKey("PricingPlanId");
 
-                            b1.ToTable("PricingPlans");
+                            b1.ToTable("PricingPlans", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("PricingPlanId");

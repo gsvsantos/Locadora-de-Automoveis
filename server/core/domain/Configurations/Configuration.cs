@@ -9,8 +9,10 @@ public class Configuration : BaseEntity<Configuration>
     public decimal DieselPrice { get; set; } = 0;
     public decimal AlcoholPrice { get; set; } = 0;
 
+    public Configuration() { }
     public Configuration(decimal gasolinePrice, decimal gasPrice,
-        decimal dieselPrice, decimal alcoholPrice)
+        decimal dieselPrice, decimal alcoholPrice
+    ) : this()
     {
         this.GasolinePrice = gasolinePrice;
         this.GasPrice = gasPrice;

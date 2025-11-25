@@ -2,4 +2,7 @@
 
 namespace LocadoraDeAutomoveis.Domain.Configurations;
 
-public interface IRepositoryConfiguration : IRepository<Configuration>;
+public interface IRepositoryConfiguration : IRepository<Configuration>
+{
+    Task<Configuration?> GetByTenantId(Guid tenantId);
+}
