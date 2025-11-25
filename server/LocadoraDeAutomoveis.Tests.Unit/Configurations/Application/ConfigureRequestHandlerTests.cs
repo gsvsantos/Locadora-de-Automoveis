@@ -6,7 +6,7 @@ using LocadoraDeAutomoveis.Domain.Shared;
 namespace LocadoraDeAutomoveis.Tests.Unit.Configurations.Application;
 
 [TestClass]
-[TestCategory("Configure Application - Unit Tests")]
+[TestCategory("Configuration Application - Unit Tests")]
 public sealed class ConfigureRequestHandlerTests
 {
     private ConfigureRequestHandler handler = null!;
@@ -50,7 +50,7 @@ public sealed class ConfigureRequestHandlerTests
         );
     }
 
-    #region CreateGroup Tests (Happy Path)
+    #region Configuration Tests (Happy Path)
     [TestMethod]
     public void Handler_ShouldConfigure_Successfully()
     {
@@ -200,10 +200,10 @@ public sealed class ConfigureRequestHandlerTests
             .ReturnsAsync(new ValidationResult());
 
         Configuration config = new(
-            request.GasolinePrice,
-            request.GasPrice,
-            request.DieselPrice,
-            request.AlcoholPrice
+            20m,
+            40m,
+            15m,
+            12m
         );
 
         this.tenantProviderMock
