@@ -1,6 +1,7 @@
 ﻿using DotNet.Testcontainers.Containers;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Configurations;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
@@ -8,6 +9,7 @@ using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.Clients;
+using LocadoraDeAutomoveis.Infrastructure.Configurations;
 using LocadoraDeAutomoveis.Infrastructure.Drivers;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Groups;
@@ -36,6 +38,7 @@ public abstract class TestFixture
     protected ClientRepository clientRepository = null!;
     protected DriverRepository driverRepository = null!;
     protected RateServiceRepository rateServiceRepository = null!;
+    protected ConfigurationRepository configurationRepository = null!;
 
     private static IDatabaseContainer? dbContainer = null!;
 
@@ -80,6 +83,7 @@ public abstract class TestFixture
         this.clientRepository = new(this.dbContext);
         this.driverRepository = new(this.dbContext);
         this.rateServiceRepository = new(this.dbContext);
+        this.configurationRepository = new(this.dbContext);
 
         BuilderSetup.SetCreatePersistenceMethod<User>(u => this.userManager.CreateAsync(u).GetAwaiter().GetResult());
 
@@ -103,6 +107,9 @@ public abstract class TestFixture
 
         BuilderSetup.SetCreatePersistenceMethod<RateService>(rS => this.rateServiceRepository.AddAsync(rS).GetAwaiter().GetResult());
         BuilderSetup.SetCreatePersistenceMethod<IList<RateService>>(rS => this.rateServiceRepository.AddMultiplyAsync(rS).GetAwaiter().GetResult());
+
+        BuilderSetup.SetCreatePersistenceMethod<Configuration>(rS => this.configurationRepository.AddAsync(rS).GetAwaiter().GetResult());
+        BuilderSetup.SetCreatePersistenceMethod<IList<Configuration>>(rS => this.configurationRepository.AddMultiplyAsync(rS).GetAwaiter().GetResult());
     }
 
     private static async Task StartDatabaseAsync()
