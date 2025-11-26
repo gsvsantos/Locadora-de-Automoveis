@@ -7,7 +7,7 @@ public class RateService : BaseEntity<RateService>
     public string Name { get; set; } = string.Empty;
     public decimal Price { get; set; } = 0;
     public bool IsChargedPerDay { get; set; }
-    public ERateType ERateType { get; set; }
+    public ERateType RateType { get; set; }
 
     public RateService() { }
     public RateService(string name, decimal price) : this()
@@ -20,11 +20,7 @@ public class RateService : BaseEntity<RateService>
 
     public void MarkAsDaily() => this.IsChargedPerDay = false;
 
-    public void MarkAsGenericType() => this.ERateType = ERateType.Generic;
-
-    public void MarkAsInsuranceClientType() => this.ERateType = ERateType.InsuranceClient;
-
-    public void MarkAsInsuranceThirdPartyType() => this.ERateType = ERateType.InsuranceThirdParty;
+    public void DefineRateType(ERateType rateType) => this.RateType = rateType;
 
     public override void Update(RateService updatedEntity)
     {
