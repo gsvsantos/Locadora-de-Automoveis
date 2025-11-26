@@ -107,7 +107,7 @@ public static class DependencyInjection
 
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Locadora de Automóveis API", Version = "v1" });
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Locadora de Veículos API", Version = "v1" });
 
             options.MapType<TimeSpan>(() => new OpenApiSchema
             {
@@ -176,7 +176,7 @@ public static class DependencyInjection
             .WriteTo.Console()
             .WriteTo.NewRelicLogs(
                 endpointUrl: "https://log-api.newrelic.com/log/v1",
-                applicationName: "locadora-de-automoveis-api",
+                applicationName: "locadora-de-veiculos-api",
                 licenseKey: licenseKey
             )
             .CreateLogger();
