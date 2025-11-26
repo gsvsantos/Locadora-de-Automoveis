@@ -21,7 +21,7 @@ public sealed class VehicleTests
         Assert.AreEqual(string.Empty, vehicle.Color);
         Assert.AreEqual(string.Empty, vehicle.Model);
         Assert.AreEqual(string.Empty, vehicle.FuelType);
-        Assert.AreEqual(0, vehicle.CapacityInLiters);
+        Assert.AreEqual(0, vehicle.FuelTankCapacity);
         Assert.AreEqual(0, vehicle.Year);
         Assert.IsNull(vehicle.PhotoPath);
     }
@@ -49,7 +49,7 @@ public sealed class VehicleTests
         Assert.AreEqual("Preto", vehicle.Color);
         Assert.AreEqual("Chevette", vehicle.Model);
         Assert.AreEqual("Gasolina", vehicle.FuelType);
-        Assert.AreEqual(45, vehicle.CapacityInLiters);
+        Assert.AreEqual(45, vehicle.FuelTankCapacity);
         Assert.AreEqual(1984, vehicle.Year);
         Assert.AreEqual(string.Empty, vehicle.PhotoPath);
     }
@@ -91,7 +91,7 @@ public sealed class VehicleTests
         Assert.AreEqual("Preto", vehicle.Color);
         Assert.AreEqual("Chevette", vehicle.Model);
         Assert.AreEqual("Gasolina", vehicle.FuelType);
-        Assert.AreEqual(45, vehicle.CapacityInLiters);
+        Assert.AreEqual(45, vehicle.FuelTankCapacity);
         Assert.AreEqual(1984, vehicle.Year);
         Assert.AreEqual("https://aquelesite.net/ze", vehicle.PhotoPath);
     }
