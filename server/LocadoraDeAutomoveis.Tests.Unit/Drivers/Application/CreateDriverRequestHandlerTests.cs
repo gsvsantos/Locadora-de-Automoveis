@@ -88,12 +88,13 @@ public sealed class CreateDriverRequestHandlerTests
             "João Físico",
             "joao@email.com",
             "fone",
+            "000.000.000-01",
+            new(
             "RS",
-            "Cidade",
-            "Bairro",
-            "Rua",
-            1,
-            "111.111.111-11"
+            "Carazinho",
+            "Marcondes",
+            "Edi Marcondes",
+            33)
         )
         { Id = clientId };
 
@@ -232,12 +233,13 @@ public sealed class CreateDriverRequestHandlerTests
             "Empresa LTDA",
             "empresa@email.com",
             "(51) 90000-0001",
+            "000.000.000-01",
+            new(
             "RS",
-            "Cidade",
-            "Bairro",
-            "Rua",
-            1,
-            "00.000.000/0001-00"
+            "Carazinho",
+            "Marcondes",
+            "Edi Marcondes",
+            33)
         )
         { Id = clientId };
         juridicalClient.MarkAsJuridical();
@@ -289,17 +291,12 @@ public sealed class CreateDriverRequestHandlerTests
             request.FullName,
             request.Email,
             request.PhoneNumber,
-            juridicalClient.State,
-            juridicalClient.City,
-            juridicalClient.Neighborhood,
-            juridicalClient.State,
-            juridicalClient.Number,
-            request.Document
+            request.Document,
+            juridicalClient.Address
         );
         physicalClient.MarkAsPhysical();
 
-        driver.AssociateClientCPF(physicalClient);
-        driver.AssociateClientCNPJ(juridicalClient);
+        driver.AssociateClient(physicalClient);
 
         this.repositoryClientMock
             .Setup(r => r.AddAsync(

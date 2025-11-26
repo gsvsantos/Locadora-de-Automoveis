@@ -45,7 +45,7 @@ public sealed class GetByIdDriverRequestHandlerTests
             DateTimeOffset.Now
         )
         { Id = driverId };
-        driver.AssociateClientCPF(client);
+        driver.AssociateClient(client);
 
         this.repositoryDriverMock
             .Setup(r => r.GetByIdAsync(request.Id))

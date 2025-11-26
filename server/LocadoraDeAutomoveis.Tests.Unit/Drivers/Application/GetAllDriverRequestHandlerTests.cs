@@ -31,7 +31,7 @@ public sealed class GetAllDriverRequestHandlerTests
     {
         // Arrange
         List<Driver> drivers = Builder<Driver>.CreateListOfSize(10).All()
-            .Do(d => d.ClientCPF = new())
+            .Do(d => d.Client = new())
             .Build().ToList();
 
         this.repositoryDriverMock
@@ -70,7 +70,7 @@ public sealed class GetAllDriverRequestHandlerTests
     {
         // Arrange
         List<Driver> drivers = Builder<Driver>.CreateListOfSize(10).All()
-            .Do(d => d.ClientCPF = new())
+            .Do(d => d.Client = new())
             .Build().ToList();
 
         this.repositoryDriverMock
