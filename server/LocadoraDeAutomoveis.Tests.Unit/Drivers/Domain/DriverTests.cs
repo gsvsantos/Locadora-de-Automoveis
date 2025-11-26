@@ -99,13 +99,12 @@ public sealed class DriverTests
         client.MarkAsPhysical();
 
         // Act
-        driver.AssociateClientCPF(client);
+        driver.AssociateClient(client);
 
         // Assert
-        Assert.AreEqual(client.Id, driver.ClientCPFId);
-        Assert.AreEqual(client, driver.ClientCPF);
-        Assert.AreEqual(client.Driver, driver);
-        Assert.AreEqual(client.DriverId, driver.Id);
+        Assert.AreEqual(client.Id, driver.ClientId);
+        Assert.AreEqual(client, driver.Client);
+        Assert.IsTrue(driver.Client.ClientType == EClientType.Physical);
     }
 
     [TestMethod]
@@ -117,16 +116,14 @@ public sealed class DriverTests
         Client client = Builder<Client>.CreateNew().Build();
         client.MarkAsPhysical();
 
-        driver.AssociateClientCPF(client);
+        driver.AssociateClient(client);
 
         // Act
-        driver.DisassociateClientCPF();
+        driver.DisassociateClient();
 
         // Assert
-        Assert.AreNotEqual(client.Id, driver.ClientCPFId);
-        Assert.AreNotEqual(client, driver.ClientCPF);
-        Assert.AreNotEqual(client.Driver, driver);
-        Assert.AreNotEqual(client.DriverId, driver.Id);
+        Assert.AreNotEqual(client.Id, driver.ClientId);
+        Assert.AreNotEqual(client, driver.Client);
     }
 
     [TestMethod]
@@ -135,26 +132,16 @@ public sealed class DriverTests
         // Arrange
         Driver driver = new();
 
-        Client clientCPF = Builder<Client>.CreateNew().Build();
-        clientCPF.MarkAsPhysical();
-
         Client clientCNPJ = Builder<Client>.CreateNew().Build();
         clientCNPJ.MarkAsJuridical();
 
         // Act
-        driver.AssociateClientCPF(clientCPF);
-        driver.AssociateClientCNPJ(clientCNPJ);
+        driver.AssociateClient(clientCNPJ);
 
         // Assert
-        Assert.AreEqual(clientCPF.Id, driver.ClientCPFId);
-        Assert.AreEqual(clientCPF, driver.ClientCPF);
-        Assert.AreEqual(clientCPF.Driver, driver);
-        Assert.AreEqual(clientCPF.DriverId, driver.Id);
-        Assert.IsNotNull(driver.ClientCNPJ);
-        Assert.AreEqual(clientCNPJ.Id, driver.ClientCNPJ.Id);
-        Assert.AreEqual(clientCNPJ, driver.ClientCNPJ);
-        Assert.AreEqual(clientCNPJ.Driver, driver);
-        Assert.AreEqual(clientCNPJ.DriverId, driver.Id);
+        Assert.AreEqual(clientCNPJ.Id, driver.ClientId);
+        Assert.AreEqual(clientCNPJ, driver.Client);
+        Assert.IsTrue(driver.Client.ClientType == EClientType.Juristic);
     }
 
     [TestMethod]
@@ -163,27 +150,16 @@ public sealed class DriverTests
         // Arrange
         Driver driver = new();
 
-        Client clientCPF = Builder<Client>.CreateNew().Build();
-        clientCPF.MarkAsPhysical();
-
         Client clientCNPJ = Builder<Client>.CreateNew().Build();
         clientCNPJ.MarkAsJuridical();
 
-        driver.AssociateClientCPF(clientCPF);
-        driver.AssociateClientCNPJ(clientCNPJ);
+        driver.AssociateClient(clientCNPJ);
 
         // Act
-        driver.DisassociateClientCNPJ();
+        driver.DisassociateClient();
 
         // Assert
-        Assert.AreNotEqual(clientCPF.Id, driver.ClientCPFId);
-        Assert.AreNotEqual(clientCPF, driver.ClientCPF);
-        Assert.AreNotEqual(clientCPF.Driver, driver);
-        Assert.AreNotEqual(clientCPF.DriverId, driver.Id);
-        Assert.IsNull(driver.ClientCNPJ);
-        Assert.AreNotEqual(clientCNPJ.Id, driver.ClientCNPJ?.Id);
-        Assert.AreNotEqual(clientCNPJ, driver.ClientCNPJ);
-        Assert.AreNotEqual(clientCNPJ.Driver, driver);
-        Assert.AreNotEqual(clientCNPJ.DriverId, driver.Id);
+        Assert.AreNotEqual(clientCNPJ.Id, driver.ClientId);
+        Assert.AreNotEqual(clientCNPJ, driver.Client);
     }
 }
