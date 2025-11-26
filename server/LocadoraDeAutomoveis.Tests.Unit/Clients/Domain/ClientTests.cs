@@ -1,6 +1,5 @@
 ﻿using FizzWare.NBuilder;
 using LocadoraDeAutomoveis.Domain.Clients;
-using LocadoraDeAutomoveis.Domain.Drivers;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Clients.Domain;
 
@@ -28,8 +27,6 @@ public sealed class ClientTests
         Assert.AreEqual(0, client.Number);
         Assert.AreEqual(string.Empty, client.Document);
         Assert.IsNull(client.LicenseNumber);
-        Assert.AreEqual(Guid.Empty, client.DriverId);
-        Assert.IsNull(client.Driver);
     }
 
     [TestMethod]
@@ -62,8 +59,6 @@ public sealed class ClientTests
         Assert.AreEqual(33, client.Number);
         Assert.AreEqual("000.000.000-01", client.Document);
         Assert.IsNull(client.LicenseNumber);
-        Assert.AreEqual(Guid.Empty, client.DriverId);
-        Assert.IsNull(client.Driver);
     }
 
     [TestMethod]
@@ -111,8 +106,6 @@ public sealed class ClientTests
         Assert.AreEqual(11, client.Number);
         Assert.AreEqual("000.000.000-02", client.Document);
         Assert.IsNull(client.LicenseNumber);
-        Assert.AreEqual(Guid.Empty, client.DriverId);
-        Assert.IsNull(client.Driver);
     }
 
     [TestMethod]
@@ -139,39 +132,5 @@ public sealed class ClientTests
 
         // Assert
         Assert.IsTrue(client.ClientType == EClientType.Physical);
-    }
-
-    [TestMethod]
-    public void ClientMethod_AssociateDriver_ShouldWorks()
-    {
-        // Arrange
-        Client client = Builder<Client>.CreateNew().Build();
-
-        Driver driver = Builder<Driver>.CreateNew().Build();
-
-        // Act
-        client.AssociateDriver(driver);
-
-        // Assert
-        Assert.AreEqual(driver.Id, client.Driver.Id);
-        Assert.AreEqual(driver, client.Driver);
-    }
-
-    [TestMethod]
-    public void ClientMethod_DissociateDriver_ShouldWorks()
-    {
-        // Arrange
-        Client client = Builder<Client>.CreateNew().Build();
-
-        Driver driver = Builder<Driver>.CreateNew().Build();
-
-        client.AssociateDriver(driver);
-
-        // Act
-        client.DisassociateDriver();
-
-        // Assert
-        Assert.AreNotEqual(driver.Id, client.DriverId);
-        Assert.AreNotEqual(driver, client.Driver);
     }
 }
