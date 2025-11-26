@@ -94,9 +94,7 @@ public class EmployeeController(IMediator mediator) : ControllerBase
     {
         SelfUpdateEmployeeRequest request = new(
             userContext.GetUserId(),
-            partialRequest.FullName,
-            partialRequest.AdmissionDate,
-            partialRequest.Salary
+            partialRequest.FullName
         );
 
         Result<SelfUpdateEmployeeResponse> result = await mediator.Send(request);
