@@ -74,7 +74,8 @@ public sealed class CreateRateServiceRequestHandlerTests
         CreateRateServiceRequest request = new(
             "GPS",
             20,
-            true
+            true,
+            ERateType.Generic
         );
 
         this.userContextMock
@@ -125,7 +126,7 @@ public sealed class CreateRateServiceRequestHandlerTests
                 It.Is<RateService>(rS =>
                 rS.Name == request.Name &&
                 rS.Price == request.Price &&
-                rS.IsFixed == request.IsFixed
+                rS.IsChargedPerDay == request.IsFixed
                 )), Times.Once
             );
 

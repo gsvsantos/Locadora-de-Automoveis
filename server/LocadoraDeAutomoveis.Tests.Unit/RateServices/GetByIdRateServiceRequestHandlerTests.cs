@@ -56,7 +56,7 @@ public sealed class GetByIdRateServiceRequestHandlerTests
         Assert.AreEqual(rateService.Id, dto.Id);
         Assert.AreEqual(rateService.Name, dto.Name);
         Assert.AreEqual(rateService.Price, dto.Price);
-        Assert.AreEqual(rateService.IsFixed, dto.IsFixed);
+        Assert.AreEqual(rateService.IsChargedPerDay, dto.IsFixed);
     }
     #endregion
 }

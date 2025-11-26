@@ -60,7 +60,7 @@ public sealed class GetAllRateServiceRequestHandlerTests
                 {
                     Assert.AreEqual(rateServices[i].Name, rateServices[j].Name);
                     Assert.AreEqual(rateServices[i].Price, rateServices[j].Price);
-                    Assert.AreEqual(rateServices[i].IsFixed, rateServices[j].IsFixed);
+                    Assert.AreEqual(rateServices[i].IsChargedPerDay, rateServices[j].IsChargedPerDay);
                 }
             }
         }
@@ -101,7 +101,7 @@ public sealed class GetAllRateServiceRequestHandlerTests
                 {
                     Assert.AreEqual(rateServices[i].Name, rateServices[j].Name);
                     Assert.AreEqual(rateServices[i].Price, rateServices[j].Price);
-                    Assert.AreEqual(rateServices[i].IsFixed, rateServices[j].IsFixed);
+                    Assert.AreEqual(rateServices[i].IsChargedPerDay, rateServices[j].IsChargedPerDay);
                 }
             }
         }
