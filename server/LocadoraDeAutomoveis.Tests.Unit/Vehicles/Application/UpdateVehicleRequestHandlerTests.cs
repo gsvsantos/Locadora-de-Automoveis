@@ -96,7 +96,7 @@ public sealed class UpdateVehicleRequestHandlerTests
                 It.Is<Vehicle>(v =>
                     v.LicensePlate == updatedVehicle.LicensePlate && v.Brand == updatedVehicle.Brand &&
                     v.Color == updatedVehicle.Color && v.Model == updatedVehicle.Model &&
-                    v.FuelType == updatedVehicle.FuelType && v.CapacityInLiters == updatedVehicle.CapacityInLiters &&
+                    v.FuelType == updatedVehicle.FuelType && v.FuelTankCapacity == updatedVehicle.FuelTankCapacity &&
                     v.Year == updatedVehicle.Year && v.PhotoPath == expectedPhotoPath
                     ), CancellationToken.None
                 ))
@@ -130,7 +130,7 @@ public sealed class UpdateVehicleRequestHandlerTests
                 It.Is<Vehicle>(v =>
                     v.LicensePlate == updatedVehicle.LicensePlate && v.Brand == updatedVehicle.Brand &&
                     v.Color == updatedVehicle.Color && v.Model == updatedVehicle.Model &&
-                    v.FuelType == updatedVehicle.FuelType && v.CapacityInLiters == updatedVehicle.CapacityInLiters &&
+                    v.FuelType == updatedVehicle.FuelType && v.FuelTankCapacity == updatedVehicle.FuelTankCapacity &&
                     v.Year == updatedVehicle.Year && v.PhotoPath == expectedPhotoPath
                     ), CancellationToken.None
                 ), Times.Once
@@ -146,7 +146,7 @@ public sealed class UpdateVehicleRequestHandlerTests
                 It.Is<Vehicle>(v =>
                     v.LicensePlate == updatedVehicle.LicensePlate && v.Brand == updatedVehicle.Brand &&
                     v.Color == updatedVehicle.Color && v.Model == updatedVehicle.Model &&
-                    v.FuelType == updatedVehicle.FuelType && v.CapacityInLiters == updatedVehicle.CapacityInLiters &&
+                    v.FuelType == updatedVehicle.FuelType && v.FuelTankCapacity == updatedVehicle.FuelTankCapacity &&
                     v.Year == updatedVehicle.Year && v.PhotoPath == expectedPhotoPath
                     )
                 ), Times.Once

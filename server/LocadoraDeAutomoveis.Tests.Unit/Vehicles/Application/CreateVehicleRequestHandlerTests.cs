@@ -123,7 +123,7 @@ public sealed class CreateVehicleRequestHandlerTests
                 It.Is<Vehicle>(v =>
                     v.LicensePlate == request.LicensePlate && v.Brand == request.Brand &&
                     v.Color == request.Color && v.Model == request.Model &&
-                    v.FuelType == request.FuelType && v.CapacityInLiters == request.CapacityInLiters &&
+                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.CapacityInLiters &&
                     v.Year == request.Year && v.PhotoPath == expectedPhotoPath
                     ), CancellationToken.None
                 ))
@@ -138,7 +138,7 @@ public sealed class CreateVehicleRequestHandlerTests
                 It.Is<Vehicle>(v =>
                     v.LicensePlate == request.LicensePlate && v.Brand == request.Brand &&
                     v.Color == request.Color && v.Model == request.Model &&
-                    v.FuelType == request.FuelType && v.CapacityInLiters == request.CapacityInLiters &&
+                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.CapacityInLiters &&
                     v.Year == request.Year && v.PhotoPath == expectedPhotoPath
                     ))
             ).Verifiable();
@@ -160,7 +160,7 @@ public sealed class CreateVehicleRequestHandlerTests
                 It.Is<Vehicle>(v =>
                     v.LicensePlate == request.LicensePlate && v.Brand == request.Brand &&
                     v.Color == request.Color && v.Model == request.Model &&
-                    v.FuelType == request.FuelType && v.CapacityInLiters == request.CapacityInLiters &&
+                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.CapacityInLiters &&
                     v.Year == request.Year && v.PhotoPath == expectedPhotoPath
                     ), CancellationToken.None
                 ), Times.Once
@@ -174,7 +174,7 @@ public sealed class CreateVehicleRequestHandlerTests
                 It.Is<Vehicle>(v =>
                     v.LicensePlate == request.LicensePlate && v.Brand == request.Brand &&
                     v.Color == request.Color && v.Model == request.Model &&
-                    v.FuelType == request.FuelType && v.CapacityInLiters == request.CapacityInLiters &&
+                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.CapacityInLiters &&
                     v.Year == request.Year && v.PhotoPath == expectedPhotoPath
                     )
                 ), Times.Once

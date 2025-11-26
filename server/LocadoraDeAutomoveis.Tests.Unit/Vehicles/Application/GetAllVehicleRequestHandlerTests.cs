@@ -61,7 +61,7 @@ public sealed class GetAllVehicleRequestHandlerTests
                     Assert.AreEqual(vehicles[i].Color, vehicles[j].Color);
                     Assert.AreEqual(vehicles[i].Model, vehicles[j].Model);
                     Assert.AreEqual(vehicles[i].FuelType, vehicles[j].FuelType);
-                    Assert.AreEqual(vehicles[i].CapacityInLiters, vehicles[j].CapacityInLiters);
+                    Assert.AreEqual(vehicles[i].FuelTankCapacity, vehicles[j].FuelTankCapacity);
                     Assert.AreEqual(vehicles[i].Year, vehicles[j].Year);
                     Assert.AreEqual(vehicles[i].PhotoPath, vehicles[j].PhotoPath);
                     Assert.AreEqual(vehicles[i].GroupId, vehicles[j].GroupId);
@@ -106,7 +106,7 @@ public sealed class GetAllVehicleRequestHandlerTests
                     Assert.AreEqual(vehicles[i].Color, vehicles[j].Color);
                     Assert.AreEqual(vehicles[i].Model, vehicles[j].Model);
                     Assert.AreEqual(vehicles[i].FuelType, vehicles[j].FuelType);
-                    Assert.AreEqual(vehicles[i].CapacityInLiters, vehicles[j].CapacityInLiters);
+                    Assert.AreEqual(vehicles[i].FuelTankCapacity, vehicles[j].FuelTankCapacity);
                     Assert.AreEqual(vehicles[i].Year, vehicles[j].Year);
                     Assert.AreEqual(vehicles[i].PhotoPath, vehicles[j].PhotoPath);
                     Assert.AreEqual(vehicles[i].GroupId, vehicles[j].GroupId);
