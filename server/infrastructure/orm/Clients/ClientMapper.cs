@@ -28,27 +28,33 @@ public class ClientMapper : IEntityTypeConfiguration<Client>
             .HasColumnType("int")
             .IsRequired();
 
-        builder.Property(c => c.State)
+        builder.OwnsOne(c => c.Address, a =>
+        {
+            a.Property(p => p.State)
             .IsRequired();
 
-        builder.Property(c => c.City)
-            .IsRequired()
-            .HasMaxLength(100);
-
-        builder.Property(c => c.Neighborhood)
-            .IsRequired()
-            .HasMaxLength(100);
-
-        builder.Property(c => c.Street)
-            .IsRequired()
-            .HasMaxLength(100);
-
-        builder.Property(c => c.Number)
+            a.Property(p => p.City)
             .IsRequired();
+
+            a.Property(p => p.Neighborhood)
+            .IsRequired();
+
+            a.Property(p => p.Street)
+            .IsRequired();
+
+            a.Property(p => p.Number)
+            .IsRequired();
+        });
 
         builder.Property(c => c.Document);
 
         builder.Property(c => c.LicenseNumber);
+
+        builder.HasOne(d => d.JuristicClient)
+            .WithMany()
+            .HasForeignKey(d => d.JuristicClientId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired(false);
 
         builder.HasOne(c => c.Tenant)
             .WithMany()
@@ -64,8 +70,5 @@ public class ClientMapper : IEntityTypeConfiguration<Client>
 
         builder.HasIndex(c => new { c.Document, c.TenantId })
             .IsUnique();
-
-        builder.Ignore(c => c.Driver);
-        builder.Ignore(c => c.DriverId);
     }
 }
