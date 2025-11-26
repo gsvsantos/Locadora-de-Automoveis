@@ -10,7 +10,7 @@ public class Vehicle : BaseEntity<Vehicle>
     public string Color { get; set; } = string.Empty;
     public string Model { get; set; } = string.Empty;
     public string FuelType { get; set; } = string.Empty;
-    public int CapacityInLiters { get; set; } = 0;
+    public int FuelTankCapacity { get; set; } = 0;
     public int Year { get; set; } = 0;
     public string? PhotoPath { get; set; }
     public Guid GroupId { get; set; } = Guid.Empty;
@@ -19,7 +19,7 @@ public class Vehicle : BaseEntity<Vehicle>
     public Vehicle() { }
     public Vehicle(
         string licensePlate, string brand, string color, string model,
-        string fuelType, int capacityInLiters, int year, string photoPath
+        string fuelType, int fuelTankCapacity, int year, string photoPath
     ) : this()
     {
         this.LicensePlate = licensePlate;
@@ -27,7 +27,7 @@ public class Vehicle : BaseEntity<Vehicle>
         this.Color = color;
         this.Model = model;
         this.FuelType = fuelType;
-        this.CapacityInLiters = capacityInLiters;
+        this.FuelTankCapacity = fuelTankCapacity;
         this.Year = year;
         this.PhotoPath = photoPath;
     }
@@ -68,7 +68,7 @@ public class Vehicle : BaseEntity<Vehicle>
         this.Color = updatedEntity.Color;
         this.Model = updatedEntity.Model;
         this.FuelType = updatedEntity.FuelType;
-        this.CapacityInLiters = updatedEntity.CapacityInLiters;
+        this.FuelTankCapacity = updatedEntity.FuelTankCapacity;
         this.Year = updatedEntity.Year;
         this.PhotoPath = updatedEntity.PhotoPath;
 
