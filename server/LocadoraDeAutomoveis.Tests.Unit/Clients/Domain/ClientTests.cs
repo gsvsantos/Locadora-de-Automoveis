@@ -23,6 +23,8 @@ public sealed class ClientTests
         Assert.IsNull(client.Address);
         Assert.AreEqual(string.Empty, client.Document);
         Assert.IsNull(client.LicenseNumber);
+        Assert.IsNull(client.JuristicClientId);
+        Assert.IsNull(client.JuristicClient);
     }
 
     [TestMethod]
@@ -56,6 +58,8 @@ public sealed class ClientTests
         Assert.AreEqual(33, client.Address.Number);
         Assert.AreEqual("000.000.000-01", client.Document);
         Assert.IsNull(client.LicenseNumber);
+        Assert.IsNull(client.JuristicClientId);
+        Assert.IsNull(client.JuristicClient);
     }
 
     [TestMethod]
@@ -87,6 +91,7 @@ public sealed class ClientTests
             "Edi MarcondesED",
             11)
         );
+        client2.SetLicenseNumber("12345678900");
 
         // Act
         client.Update(client2);
@@ -104,7 +109,7 @@ public sealed class ClientTests
         Assert.AreEqual("Edi MarcondesED", client.Address.Street);
         Assert.AreEqual(11, client.Address.Number);
         Assert.AreEqual("000.000.000-02", client.Document);
-        Assert.IsNull(client.LicenseNumber);
+        Assert.AreEqual("12345678900", client.LicenseNumber);
     }
 
     [TestMethod]
@@ -131,5 +136,34 @@ public sealed class ClientTests
 
         // Assert
         Assert.IsTrue(client.ClientType == EClientType.Physical);
+    }
+
+    [TestMethod]
+    public void ClientMethod_SetLicenseNumber_ShouldWorks()
+    {
+        // Arrange
+        Client client = Builder<Client>.CreateNew().Build();
+        string cnh = "123456789";
+
+        // Act
+        client.SetLicenseNumber(cnh);
+
+        // Assert
+        Assert.AreEqual(cnh, client.LicenseNumber);
+    }
+
+    [TestMethod]
+    public void ClientMethod_AssociateJuristicClient_ShouldWorks()
+    {
+        // Arrange
+        Client physicalClient = Builder<Client>.CreateNew().Build();
+        Client juristicClient = Builder<Client>.CreateNew().Build();
+
+        // Act
+        physicalClient.AssociateJuristicClient(juristicClient);
+
+        // Assert
+        Assert.AreEqual(juristicClient.Id, physicalClient.JuristicClientId);
+        Assert.AreEqual(juristicClient, physicalClient.JuristicClient);
     }
 }
