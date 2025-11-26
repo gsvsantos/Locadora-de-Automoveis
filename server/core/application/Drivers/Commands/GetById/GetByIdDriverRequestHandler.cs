@@ -33,8 +33,7 @@ public class GetByIdDriverRequestHandler(
                     selectedDriver.Document,
                     selectedDriver.LicenseNumber,
                     selectedDriver.LicenseValidity,
-                    selectedDriver.ClientCPF.FullName,
-                    selectedDriver.ClientCNPJ?.FullName
+                    selectedDriver.Client.FullName
                 )
             );
 

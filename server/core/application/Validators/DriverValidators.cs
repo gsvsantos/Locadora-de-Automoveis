@@ -22,8 +22,8 @@ public class DriverValidators : AbstractValidator<Driver>
             .Matches(@"^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$").WithMessage("The Phone Number must be in a valid format (e.g., (11) 99999-9999).");
 
         RuleFor(d => d.Document)
-            .NotEmpty().WithMessage("The CPF (Individual Tax ID) is required.")
-            .Must(IsValidCpf).WithMessage("The provided CPF is invalid.");
+            .NotEmpty().WithMessage("The Physical (Individual Tax ID) is required.")
+            .Must(IsValidCpf).WithMessage("The provided Physical is invalid.");
 
         RuleFor(d => d.LicenseNumber)
             .NotEmpty().WithMessage("The Driver's License Number (CNH) is required.")

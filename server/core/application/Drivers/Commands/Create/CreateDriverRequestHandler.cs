@@ -91,15 +91,13 @@ public class CreateDriverRequestHandler(
 
                 newCLient.AssociateUser(user);
 
-                driver.AssociateClientCPF(newCLient);
-
-                driver.AssociateClientCNPJ(newCLient);
+                driver.AssociateClient(newCLient);
 
                 await repositoryClient.AddAsync(newCLient);
             }
             else
             {
-                driver.AssociateClientCPF(selectedClient);
+                driver.AssociateClient(selectedClient);
             }
 
             driver.AssociateTenant(tenantProvider.GetTenantId());

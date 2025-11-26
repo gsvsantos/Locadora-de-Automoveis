@@ -32,8 +32,7 @@ public class GetAllDriverRequestHandler(
                     driver.Document,
                     driver.LicenseNumber,
                     driver.LicenseValidity,
-                    driver.ClientCPF.FullName,
-                    driver.ClientCNPJ?.FullName
+                    driver.Client.FullName
                 )).ToImmutableList()
             );
 
