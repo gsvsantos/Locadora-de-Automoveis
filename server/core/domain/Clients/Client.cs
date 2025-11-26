@@ -1,5 +1,4 @@
-﻿using LocadoraDeAutomoveis.Domain.Drivers;
-using LocadoraDeAutomoveis.Domain.Shared;
+﻿using LocadoraDeAutomoveis.Domain.Shared;
 
 namespace LocadoraDeAutomoveis.Domain.Clients;
 
@@ -8,16 +7,15 @@ public class Client : BaseEntity<Client>
     public string FullName { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
-    public bool IsJuridical { get; set; } = false;
+    public EClientType ClientType { get; set; }
+    public string Document { get; set; } = string.Empty;
+    public string? LicenseNumber { get; set; } = null;
+    public DateTimeOffset? LicenseExpiry { get; set; }
     public string State { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;
     public string Neighborhood { get; set; } = string.Empty;
     public string Street { get; set; } = string.Empty;
     public int Number { get; set; } = 0;
-    public string Document { get; set; } = string.Empty;
-    public string? LicenseNumber { get; set; } = null;
-    public Guid DriverId { get; set; }
-    public Driver Driver { get; set; } = null!;
 
     public Client() { }
     public Client(string fullName, string email, string phoneNumber, string state, string city,
@@ -35,36 +33,9 @@ public class Client : BaseEntity<Client>
         this.Document = document;
     }
 
-    public void MarkAsJuridical() => this.IsJuridical = true;
+    public void MarkAsJuridical() => this.ClientType = EClientType.Juristic;
 
-    public void MarkAsPhysical() => this.IsJuridical = false;
-
-    public void AssociateDriver(Driver driver)
-    {
-        if (this.Driver is not null && this.Driver.Id.Equals(driver.Id))
-        {
-            return;
-        }
-
-        if (this.Driver is not null)
-        {
-            DisassociateDriver();
-        }
-
-        this.Driver = driver;
-        this.DriverId = driver.Id;
-    }
-
-    public void DisassociateDriver()
-    {
-        if (this.Driver is null)
-        {
-            return;
-        }
-
-        this.Driver = null!;
-        this.DriverId = Guid.Empty;
-    }
+    public void MarkAsPhysical() => this.ClientType = EClientType.Physical;
 
     public override void Update(Client updatedEntity)
     {
@@ -79,4 +50,10 @@ public class Client : BaseEntity<Client>
         this.Document = updatedEntity.Document;
         this.LicenseNumber = updatedEntity.LicenseNumber;
     }
+}
+
+public enum EClientType
+{
+    Physical,
+    Juristic
 }
