@@ -19,12 +19,8 @@ public sealed class ClientTests
         Assert.AreEqual(string.Empty, client.FullName);
         Assert.AreEqual(string.Empty, client.Email);
         Assert.AreEqual(string.Empty, client.PhoneNumber);
-        Assert.IsFalse(client.ClientType == EClientType.Juristic);
-        Assert.AreEqual(string.Empty, client.State);
-        Assert.AreEqual(string.Empty, client.City);
-        Assert.AreEqual(string.Empty, client.Neighborhood);
-        Assert.AreEqual(string.Empty, client.Street);
-        Assert.AreEqual(0, client.Number);
+        Assert.IsTrue(client.ClientType == EClientType.Physical);
+        Assert.IsNull(client.Address);
         Assert.AreEqual(string.Empty, client.Document);
         Assert.IsNull(client.LicenseNumber);
     }
@@ -37,12 +33,13 @@ public sealed class ClientTests
             "Ricardo",
             "ricardo@gmail.com",
             "(51) 90000-0001",
+            "000.000.000-01",
+            new(
             "RS",
             "Carazinho",
             "Marcondes",
             "Edi Marcondes",
-            33,
-            "000.000.000-01"
+            33)
         );
 
         // Assert
@@ -52,11 +49,11 @@ public sealed class ClientTests
         Assert.AreEqual("ricardo@gmail.com", client.Email);
         Assert.AreEqual("(51) 90000-0001", client.PhoneNumber);
         Assert.IsFalse(client.ClientType == EClientType.Juristic);
-        Assert.AreEqual("RS", client.State);
-        Assert.AreEqual("Carazinho", client.City);
-        Assert.AreEqual("Marcondes", client.Neighborhood);
-        Assert.AreEqual("Edi Marcondes", client.Street);
-        Assert.AreEqual(33, client.Number);
+        Assert.AreEqual("RS", client.Address.State);
+        Assert.AreEqual("Carazinho", client.Address.City);
+        Assert.AreEqual("Marcondes", client.Address.Neighborhood);
+        Assert.AreEqual("Edi Marcondes", client.Address.Street);
+        Assert.AreEqual(33, client.Address.Number);
         Assert.AreEqual("000.000.000-01", client.Document);
         Assert.IsNull(client.LicenseNumber);
     }
@@ -69,24 +66,26 @@ public sealed class ClientTests
             "Ricardo",
             "ricardo@gmail.com",
             "(51) 90000-0001",
+            "000.000.000-01",
+            new(
             "RS",
             "Carazinho",
             "Marcondes",
             "Edi Marcondes",
-            33,
-            "000.000.000-01"
+            33)
         );
 
         Client client2 = new(
             "Ricardo ED",
             "ricardoED@gmail.com",
             "(51) 90000-0002",
+            "000.000.000-02",
+            new(
             "SA",
             "CarazinhoED",
             "MarcondesED",
             "Edi MarcondesED",
-            11,
-            "000.000.000-02"
+            11)
         );
 
         // Act
@@ -99,11 +98,11 @@ public sealed class ClientTests
         Assert.AreEqual("ricardoED@gmail.com", client.Email);
         Assert.AreEqual("(51) 90000-0002", client.PhoneNumber);
         Assert.IsFalse(client.ClientType == EClientType.Juristic);
-        Assert.AreEqual("SA", client.State);
-        Assert.AreEqual("CarazinhoED", client.City);
-        Assert.AreEqual("MarcondesED", client.Neighborhood);
-        Assert.AreEqual("Edi MarcondesED", client.Street);
-        Assert.AreEqual(11, client.Number);
+        Assert.AreEqual("SA", client.Address.State);
+        Assert.AreEqual("CarazinhoED", client.Address.City);
+        Assert.AreEqual("MarcondesED", client.Address.Neighborhood);
+        Assert.AreEqual("Edi MarcondesED", client.Address.Street);
+        Assert.AreEqual(11, client.Address.Number);
         Assert.AreEqual("000.000.000-02", client.Document);
         Assert.IsNull(client.LicenseNumber);
     }
