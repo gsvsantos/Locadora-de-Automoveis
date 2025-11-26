@@ -67,24 +67,21 @@ public class CreateDriverRequestHandler(
 
             List<Driver> existingDrivers = await repositoryDriver.GetAllAsync();
 
-            if (selectedClient.IsJuridical && DocumentAlreadyRegistred(selectedClient, existingClients))
+            if (selectedClient.ClientType == EClientType.Juristic && DocumentAlreadyRegistred(selectedClient, existingClients))
             {
                 return Result.Fail(ClientErrorResults.DocumentAlreadyRegistredError(request.Document));
             }
 
-            if (selectedClient.IsJuridical)
+            if (selectedClient.ClientType == EClientType.Juristic)
             {
                 Client newCLient = new(
                     request.FullName,
                     request.Email,
                     request.PhoneNumber,
-                    selectedClient.State,
-                    selectedClient.City,
-                    selectedClient.Neighborhood,
-                    selectedClient.Street,
-                    selectedClient.Number,
-                    request.Document
+                    request.Document,
+                    selectedClient.Address
                 );
+
                 newCLient.MarkAsPhysical();
 
                 newCLient.AssociateTenant(tenantProvider.GetTenantId());
