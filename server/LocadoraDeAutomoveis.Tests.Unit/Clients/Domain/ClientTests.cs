@@ -20,7 +20,7 @@ public sealed class ClientTests
         Assert.AreEqual(string.Empty, client.FullName);
         Assert.AreEqual(string.Empty, client.Email);
         Assert.AreEqual(string.Empty, client.PhoneNumber);
-        Assert.IsFalse(client.IsJuridical);
+        Assert.IsFalse(client.ClientType == EClientType.Juristic);
         Assert.AreEqual(string.Empty, client.State);
         Assert.AreEqual(string.Empty, client.City);
         Assert.AreEqual(string.Empty, client.Neighborhood);
@@ -54,7 +54,7 @@ public sealed class ClientTests
         Assert.AreEqual("Ricardo", client.FullName);
         Assert.AreEqual("ricardo@gmail.com", client.Email);
         Assert.AreEqual("(51) 90000-0001", client.PhoneNumber);
-        Assert.IsFalse(client.IsJuridical);
+        Assert.IsFalse(client.ClientType == EClientType.Juristic);
         Assert.AreEqual("RS", client.State);
         Assert.AreEqual("Carazinho", client.City);
         Assert.AreEqual("Marcondes", client.Neighborhood);
@@ -103,7 +103,7 @@ public sealed class ClientTests
         Assert.AreEqual("Ricardo ED", client.FullName);
         Assert.AreEqual("ricardoED@gmail.com", client.Email);
         Assert.AreEqual("(51) 90000-0002", client.PhoneNumber);
-        Assert.IsFalse(client.IsJuridical);
+        Assert.IsFalse(client.ClientType == EClientType.Juristic);
         Assert.AreEqual("SA", client.State);
         Assert.AreEqual("CarazinhoED", client.City);
         Assert.AreEqual("MarcondesED", client.Neighborhood);
@@ -125,7 +125,7 @@ public sealed class ClientTests
         client.MarkAsJuridical();
 
         // Assert
-        Assert.IsTrue(client.IsJuridical);
+        Assert.IsTrue(client.ClientType == EClientType.Juristic);
     }
 
     [TestMethod]
@@ -138,7 +138,7 @@ public sealed class ClientTests
         client.MarkAsPhysical();
 
         // Assert
-        Assert.IsFalse(client.IsJuridical);
+        Assert.IsTrue(client.ClientType == EClientType.Physical);
     }
 
     [TestMethod]
