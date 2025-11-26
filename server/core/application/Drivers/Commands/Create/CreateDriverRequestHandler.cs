@@ -88,12 +88,18 @@ public class CreateDriverRequestHandler(
 
                 newCLient.AssociateUser(user);
 
+                newCLient.AssociateJuristicClient(selectedClient);
+
+                newCLient.SetLicenseNumber(request.LicenseNumber);
+
                 driver.AssociateClient(newCLient);
 
                 await repositoryClient.AddAsync(newCLient);
             }
             else
             {
+                selectedClient.SetLicenseNumber(request.LicenseNumber);
+
                 driver.AssociateClient(selectedClient);
             }
 
