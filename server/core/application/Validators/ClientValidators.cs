@@ -21,23 +21,23 @@ public class ClientValidators : AbstractValidator<Client>
             .NotEmpty().WithMessage("The Phone Number is required.")
             .Matches(@"^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$").WithMessage("The Phone Number must be in a valid format (e.g., (11) 99999-9999).");
 
-        RuleFor(c => c.State)
+        RuleFor(c => c.Address.State)
             .NotEmpty().WithMessage("The State is required.")
             .Length(2).WithMessage("The State must be the 2-letter abbreviation (e.g., SP, NY).");
 
-        RuleFor(c => c.City)
+        RuleFor(c => c.Address.City)
             .NotEmpty().WithMessage("The City is required.");
 
-        RuleFor(c => c.Neighborhood)
+        RuleFor(c => c.Address.Neighborhood)
             .NotEmpty().WithMessage("The Neighborhood/District is required.");
 
-        RuleFor(c => c.Street)
+        RuleFor(c => c.Address.Street)
             .NotEmpty().WithMessage("The Street is required.");
 
-        RuleFor(c => c.Number)
+        RuleFor(c => c.Address.Number)
             .GreaterThan(0).WithMessage("The Number must be greater than zero.");
 
-        When(c => c.IsJuridical, () =>
+        When(c => c.ClientType == EClientType.Juristic, () =>
         {
             RuleFor(c => c.Document)
                 .NotEmpty().WithMessage("The Juristic (Corporate Tax ID) is required for Legal Entities.")
