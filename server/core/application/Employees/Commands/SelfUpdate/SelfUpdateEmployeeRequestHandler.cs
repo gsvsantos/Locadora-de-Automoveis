@@ -37,9 +37,9 @@ public class SelfUpdateEmployeeRequestHandler(
         }
 
         Employee updatedEmployee = new(
-        request.FullName,
-        request.AdmissionDate,
-        request.Salary
+            request.FullName,
+            selectedEmployee.AdmissionDate,
+            selectedEmployee.Salary
         )
         { Id = selectedEmployee.Id };
 
