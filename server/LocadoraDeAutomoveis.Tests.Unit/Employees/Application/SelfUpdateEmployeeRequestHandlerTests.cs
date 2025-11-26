@@ -52,9 +52,7 @@ public sealed class SelfUpdateEmployeeRequestHandlerTests
         Guid userId = Guid.NewGuid();
         SelfUpdateEmployeeRequest request = new(
             userId,
-            "Employee Teste da Silva SelfUpdate",
-            DateTime.UtcNow.AddDays(-1),
-            5000m
+            "Employee Teste da Silva SelfUpdate"
         );
 
         User user = new()
@@ -87,8 +85,8 @@ public sealed class SelfUpdateEmployeeRequestHandlerTests
 
         Employee updatedEmployee = new(
             request.FullName,
-            request.AdmissionDate,
-            request.Salary
+            employee.AdmissionDate,
+            employee.Salary
         );
 
         this.validatorMock
@@ -102,7 +100,13 @@ public sealed class SelfUpdateEmployeeRequestHandlerTests
             .ReturnsAsync(new ValidationResult());
 
         this.repositoryEmployeeMock
-            .Setup(r => r.UpdateAsync(request.Id, updatedEmployee))
+            .Setup(r => r.UpdateAsync(request.Id,
+                It.Is<Employee>(emp =>
+                    emp.FullName == updatedEmployee.FullName &&
+                    emp.AdmissionDate == updatedEmployee.AdmissionDate &&
+                    emp.Salary == updatedEmployee.Salary
+                    )
+                ))
             .Verifiable();
 
         Assert.IsNotNull(employee.User);
@@ -129,9 +133,9 @@ public sealed class SelfUpdateEmployeeRequestHandlerTests
         this.validatorMock
             .Verify(v => v.ValidateAsync(
                 It.Is<Employee>(emp =>
-                    emp.FullName == request.FullName &&
-                    emp.AdmissionDate == request.AdmissionDate &&
-                    emp.Salary == request.Salary
+                    emp.FullName == updatedEmployee.FullName &&
+                    emp.AdmissionDate == updatedEmployee.AdmissionDate &&
+                    emp.Salary == updatedEmployee.Salary
                     ), CancellationToken.None
                 ), Times.Once
             );
