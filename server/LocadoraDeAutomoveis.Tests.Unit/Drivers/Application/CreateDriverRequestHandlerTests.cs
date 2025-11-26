@@ -112,6 +112,16 @@ public sealed class CreateDriverRequestHandlerTests
             DateTimeOffset.Now
         );
 
+        this.validatorMock
+            .Setup(v => v.ValidateAsync(
+                It.Is<Driver>(d =>
+                    d.FullName == request.FullName && d.Email == request.Email &&
+                    d.PhoneNumber == request.PhoneNumber && d.Document == request.Document &&
+                    d.LicenseNumber == request.LicenseNumber && d.LicenseValidity == request.LicenseValidity
+                    ), CancellationToken.None
+                ))
+            .ReturnsAsync(new ValidationResult());
+
         Guid driverId = Guid.NewGuid();
         Driver driver = new(
             request.FullName,
@@ -122,16 +132,6 @@ public sealed class CreateDriverRequestHandlerTests
             request.LicenseValidity
         )
         { Id = driverId };
-
-        this.validatorMock
-            .Setup(v => v.ValidateAsync(
-                It.Is<Driver>(d =>
-                    d.FullName == request.FullName && d.Email == request.Email &&
-                    d.PhoneNumber == request.PhoneNumber && d.Document == request.Document &&
-                    d.LicenseNumber == request.LicenseNumber && d.LicenseValidity == request.LicenseValidity
-                    ), CancellationToken.None
-                ))
-            .ReturnsAsync(new ValidationResult());
 
         this.repositoryClientMock
             .Setup(r => r.GetAllAsync())
@@ -170,10 +170,10 @@ public sealed class CreateDriverRequestHandlerTests
 
         this.validatorMock
             .Verify(v => v.ValidateAsync(
-                It.Is<Driver>(d =>
-                    d.FullName == request.FullName && d.Email == request.Email &&
-                    d.PhoneNumber == request.PhoneNumber && d.Document == request.Document &&
-                    d.LicenseNumber == request.LicenseNumber && d.LicenseValidity == request.LicenseValidity
+                    It.Is<Driver>(d =>
+                        d.FullName == request.FullName && d.Email == request.Email &&
+                        d.PhoneNumber == request.PhoneNumber && d.Document == request.Document &&
+                        d.LicenseNumber == request.LicenseNumber && d.LicenseValidity == request.LicenseValidity
                     ), CancellationToken.None
                 ), Times.Once
             );
@@ -186,13 +186,15 @@ public sealed class CreateDriverRequestHandlerTests
 
         this.repositoryDriverMock
             .Verify(r => r.AddAsync(
-                It.Is<Driver>(d =>
-                    d.FullName == request.FullName && d.Email == request.Email &&
-                    d.PhoneNumber == request.PhoneNumber && d.Document == request.Document &&
-                    d.LicenseNumber == request.LicenseNumber && d.LicenseValidity == request.LicenseValidity
-                    )
+                    It.Is<Driver>(d =>
+                        d.FullName == request.FullName && d.Email == request.Email &&
+                        d.PhoneNumber == request.PhoneNumber && d.Document == request.Document &&
+                        d.LicenseNumber == request.LicenseNumber && d.LicenseValidity == request.LicenseValidity)
                 ), Times.Once
             );
+
+        this.repositoryClientMock
+            .Verify(r => r.AddAsync(It.IsAny<Client>()), Times.Never);
 
         this.unitOfWorkMock
             .Verify(u => u.CommitAsync(), Times.Once);
@@ -233,7 +235,7 @@ public sealed class CreateDriverRequestHandlerTests
             "Empresa LTDA",
             "empresa@email.com",
             "(51) 90000-0001",
-            "000.000.000-01",
+            "00.000.000/0001-00",
             new(
             "RS",
             "Carazinho",
@@ -258,17 +260,6 @@ public sealed class CreateDriverRequestHandlerTests
             DateTimeOffset.Now
         );
 
-        Guid driverId = Guid.NewGuid();
-        Driver driver = new(
-            request.FullName,
-            request.Email,
-            request.PhoneNumber,
-            request.Document,
-            request.LicenseNumber,
-            request.LicenseValidity
-        )
-        { Id = driverId };
-
         this.validatorMock
             .Setup(v => v.ValidateAsync(
                 It.Is<Driver>(d =>
@@ -287,20 +278,13 @@ public sealed class CreateDriverRequestHandlerTests
             .Setup(r => r.GetAllAsync())
             .ReturnsAsync([]);
 
-        Client physicalClient = new(
-            request.FullName,
-            request.Email,
-            request.PhoneNumber,
-            request.Document,
-            juridicalClient.Address
-        );
-        physicalClient.MarkAsPhysical();
-
-        driver.AssociateClient(physicalClient);
-
         this.repositoryClientMock
             .Setup(r => r.AddAsync(
-                It.IsAny<Client>())
+                It.Is<Client>(c =>
+                    c.FullName == request.FullName && c.Email == request.Email &&
+                    c.PhoneNumber == request.PhoneNumber && c.Document == request.Document &&
+                    c.Address == juridicalClient.Address
+                    ))
             ).Verifiable();
 
         this.repositoryDriverMock
@@ -348,7 +332,12 @@ public sealed class CreateDriverRequestHandlerTests
 
         this.repositoryClientMock
             .Verify(r => r.AddAsync(
-                It.IsAny<Client>()), Times.Once);
+                It.Is<Client>(c =>
+                    c.FullName == request.FullName && c.Email == request.Email &&
+                    c.PhoneNumber == request.PhoneNumber && c.Document == request.Document &&
+                    c.Address == juridicalClient.Address
+                    )
+                ), Times.Once);
 
         this.repositoryDriverMock
             .Verify(r => r.AddAsync(
