@@ -2,7 +2,7 @@
 using LocadoraDeAutomoveis.Application.RateServices.Commands.GetById;
 using LocadoraDeAutomoveis.Domain.RateServices;
 
-namespace LocadoraDeAutomoveis.Tests.Unit.RateServices;
+namespace LocadoraDeAutomoveis.Tests.Unit.RateServices.Application;
 
 [TestClass]
 [TestCategory("RateService Application - Unit Tests")]

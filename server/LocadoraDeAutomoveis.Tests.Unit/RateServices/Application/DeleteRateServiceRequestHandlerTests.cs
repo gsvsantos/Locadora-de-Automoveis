@@ -2,7 +2,7 @@
 using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Shared;
 
-namespace LocadoraDeAutomoveis.Tests.Unit.RateServices;
+namespace LocadoraDeAutomoveis.Tests.Unit.RateServices.Application;
 
 [TestClass]
 [TestCategory("RateService Application - Unit Tests")]
