@@ -41,12 +41,13 @@ public sealed class UpdateClientRequestHandlerTests
             "Ricardo",
             "ricardo@gmail.com",
             "(51) 90000-0001",
+            "000.000.000-01",
+            new(
             "RS",
             "Carazinho",
             "Marcondes",
             "Edi Marcondes",
-            33,
-            "000.000.000-01"
+            33)
         )
         { Id = clientId };
 
@@ -72,16 +73,20 @@ public sealed class UpdateClientRequestHandlerTests
         );
 
         Guid updatedClientId = Guid.NewGuid();
-        Client updatedClient = new(
-            request.FullName,
-            request.Email,
-            request.PhoneNumber,
+        Address address = new(
             request.State,
             request.City,
             request.Neighborhood,
             request.Street,
-            request.Number,
-            request.Document
+            request.Number
+        );
+
+        Client updatedClient = new(
+            request.FullName,
+            request.Email,
+            request.PhoneNumber,
+            request.Document,
+            address
         )
         { Id = updatedClientId };
 

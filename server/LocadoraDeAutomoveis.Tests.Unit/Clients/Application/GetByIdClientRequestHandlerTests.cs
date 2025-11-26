@@ -36,12 +36,13 @@ public sealed class GetByIdClientRequestHandlerTests
             "Ricardo",
             "ricardo@gmail.com",
             "(51) 90000-0001",
+            "000.000.000-01",
+            new(
             "RS",
             "Carazinho",
             "Marcondes",
             "Edi Marcondes",
-            33,
-            "000.000.000-01"
+            33)
         )
         { Id = clientId };
 
@@ -60,11 +61,11 @@ public sealed class GetByIdClientRequestHandlerTests
         Assert.AreEqual(client.FullName, dto.FullName);
         Assert.AreEqual(client.Email, dto.Email);
         Assert.AreEqual(client.PhoneNumber, dto.PhoneNumber);
-        Assert.AreEqual(client.State, dto.State);
-        Assert.AreEqual(client.City, dto.City);
-        Assert.AreEqual(client.Neighborhood, dto.Neighborhood);
-        Assert.AreEqual(client.Street, dto.Street);
-        Assert.AreEqual(client.Number, dto.Number);
+        Assert.AreEqual(client.Address.State, dto.Address.State);
+        Assert.AreEqual(client.Address.City, dto.Address.City);
+        Assert.AreEqual(client.Address.Neighborhood, dto.Address.Neighborhood);
+        Assert.AreEqual(client.Address.Street, dto.Address.Street);
+        Assert.AreEqual(client.Address.Number, dto.Address.Number);
         Assert.AreEqual(client.Document, dto.Document);
     }
     #endregion

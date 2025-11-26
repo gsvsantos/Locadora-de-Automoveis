@@ -35,16 +35,18 @@ public sealed class DeleteClientRequestHandlerTests
         // Arrange
         Guid clientId = Guid.NewGuid();
         DeleteClientRequest request = new(clientId);
+
         Client client = new(
             "Ricardo",
             "ricardo@gmail.com",
             "(51) 90000-0001",
+            "000.000.000-01",
+            new(
             "RS",
             "Carazinho",
             "Marcondes",
             "Edi Marcondes",
-            33,
-            "000.000.000-01"
+            33)
         )
         { Id = clientId };
 

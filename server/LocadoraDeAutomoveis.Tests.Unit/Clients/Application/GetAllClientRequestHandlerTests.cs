@@ -30,7 +30,15 @@ public sealed class GetAllClientRequestHandlerTests
     public void Handler_ShouldGetClients_Successfully()
     {
         // Arrange
+        RandomGenerator random = new();
         List<Client> clients = Builder<Client>.CreateListOfSize(10).All()
+            .Do(c => c.Address = new Address(
+                random.NextString(5, 5),
+                random.NextString(5, 5),
+                random.NextString(5, 5),
+                random.NextString(5, 5),
+                random.Int()
+                ))
             .Build().ToList();
 
         this.repositoryClientMock
@@ -58,11 +66,11 @@ public sealed class GetAllClientRequestHandlerTests
                     Assert.AreEqual(clients[i].FullName, clients[j].FullName);
                     Assert.AreEqual(clients[i].Email, clients[j].Email);
                     Assert.AreEqual(clients[i].PhoneNumber, clients[j].PhoneNumber);
-                    Assert.AreEqual(clients[i].State, clients[j].State);
-                    Assert.AreEqual(clients[i].City, clients[j].City);
-                    Assert.AreEqual(clients[i].Neighborhood, clients[j].Neighborhood);
-                    Assert.AreEqual(clients[i].Street, clients[j].Street);
-                    Assert.AreEqual(clients[i].Number, clients[j].Number);
+                    Assert.AreEqual(clients[i].Address.State, clients[j].Address.State);
+                    Assert.AreEqual(clients[i].Address.City, clients[j].Address.City);
+                    Assert.AreEqual(clients[i].Address.Neighborhood, clients[j].Address.Neighborhood);
+                    Assert.AreEqual(clients[i].Address.Street, clients[j].Address.Street);
+                    Assert.AreEqual(clients[i].Address.Number, clients[j].Address.Number);
                     Assert.AreEqual(clients[i].Document, clients[j].Document);
                 }
             }
@@ -75,6 +83,13 @@ public sealed class GetAllClientRequestHandlerTests
         // Arrange
         RandomGenerator random = new();
         List<Client> clients = Builder<Client>.CreateListOfSize(10).All()
+            .Do(c => c.Address = new Address(
+                random.NextString(5, 5),
+                random.NextString(5, 5),
+                random.NextString(5, 5),
+                random.NextString(5, 5),
+                random.Int()
+                ))
             .Build().ToList();
 
         this.repositoryClientMock
@@ -103,11 +118,11 @@ public sealed class GetAllClientRequestHandlerTests
                     Assert.AreEqual(clients[i].FullName, clients[j].FullName);
                     Assert.AreEqual(clients[i].Email, clients[j].Email);
                     Assert.AreEqual(clients[i].PhoneNumber, clients[j].PhoneNumber);
-                    Assert.AreEqual(clients[i].State, clients[j].State);
-                    Assert.AreEqual(clients[i].City, clients[j].City);
-                    Assert.AreEqual(clients[i].Neighborhood, clients[j].Neighborhood);
-                    Assert.AreEqual(clients[i].Street, clients[j].Street);
-                    Assert.AreEqual(clients[i].Number, clients[j].Number);
+                    Assert.AreEqual(clients[i].Address.State, clients[j].Address.State);
+                    Assert.AreEqual(clients[i].Address.City, clients[j].Address.City);
+                    Assert.AreEqual(clients[i].Address.Neighborhood, clients[j].Address.Neighborhood);
+                    Assert.AreEqual(clients[i].Address.Street, clients[j].Address.Street);
+                    Assert.AreEqual(clients[i].Address.Number, clients[j].Address.Number);
                     Assert.AreEqual(clients[i].Document, clients[j].Document);
                 }
             }
