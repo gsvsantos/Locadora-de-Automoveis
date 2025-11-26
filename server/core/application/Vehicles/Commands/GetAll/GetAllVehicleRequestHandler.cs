@@ -31,7 +31,7 @@ public class GetAllVehicleRequestHandler(
                     vehicle.Color,
                     vehicle.Model,
                     vehicle.FuelType,
-                    vehicle.CapacityInLiters,
+                    vehicle.FuelTankCapacity,
                     vehicle.Year,
                     vehicle.PhotoPath,
                     vehicle.GroupId

@@ -32,7 +32,7 @@ public class GetByIdVehicleRequestHandler(
                     selectedVehicle.Color,
                     selectedVehicle.Model,
                     selectedVehicle.FuelType,
-                    selectedVehicle.CapacityInLiters,
+                    selectedVehicle.FuelTankCapacity,
                     selectedVehicle.Year,
                     selectedVehicle.PhotoPath,
                     selectedVehicle.GroupId

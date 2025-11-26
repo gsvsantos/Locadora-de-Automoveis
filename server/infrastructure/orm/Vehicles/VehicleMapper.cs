@@ -27,7 +27,7 @@ public class VehicleMapper : IEntityTypeConfiguration<Vehicle>
         builder.Property(v => v.FuelType)
             .IsRequired();
 
-        builder.Property(v => v.CapacityInLiters)
+        builder.Property(v => v.FuelTankCapacity)
             .IsRequired();
 
         builder.Property(v => v.Year)
