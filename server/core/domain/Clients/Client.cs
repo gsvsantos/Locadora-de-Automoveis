@@ -31,6 +31,8 @@ public class Client : BaseEntity<Client>
 
     public void MarkAsPhysical() => this.ClientType = EClientType.Physical;
 
+    public void SetLicenseNumber(string licenseNumber) => this.LicenseNumber = licenseNumber;
+
     public void AssociateJuristicClient(Client juristiClient)
     {
         this.JuristicClientId = juristiClient.Id;
