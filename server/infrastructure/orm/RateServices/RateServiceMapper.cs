@@ -20,7 +20,10 @@ public class RateServiceMapper : IEntityTypeConfiguration<RateService>
             .HasPrecision(18, 2)
             .IsRequired();
 
-        builder.Property(rS => rS.IsFixed)
+        builder.Property(rS => rS.IsChargedPerDay)
+            .IsRequired();
+
+        builder.Property(rS => rS.RateType)
             .IsRequired();
 
         builder.HasOne(rS => rS.Tenant)

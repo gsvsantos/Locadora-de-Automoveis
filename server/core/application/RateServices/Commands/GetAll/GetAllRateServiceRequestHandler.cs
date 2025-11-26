@@ -28,7 +28,8 @@ public class GetAllRateServiceRequestHandler(
                     rateService.Id,
                     rateService.Name,
                     rateService.Price,
-                    rateService.IsFixed
+                    rateService.IsChargedPerDay,
+                    rateService.RateType.ToString()
                 )).ToImmutableList()
             );
 

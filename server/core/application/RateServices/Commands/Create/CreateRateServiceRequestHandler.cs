@@ -35,6 +35,7 @@ public class CreateRateServiceRequestHandler(
             request.Name,
             request.Price
         );
+        rateService.DefineRateType(request.RateType);
 
         try
         {

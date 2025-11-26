@@ -15,5 +15,9 @@ public class RateServiceValidators : AbstractValidator<RateService>
         RuleFor(m => m.Price)
             .NotEmpty().WithMessage("The {PropertyName} field is required")
             .GreaterThan(0).WithMessage("The {PropertyName} field must be greater than zero");
+
+        RuleFor(m => m.RateType)
+            .IsInEnum()
+            .WithMessage("The value '{PropertyValue}' is not a valid Rate Type.");
     }
 }

@@ -29,7 +29,8 @@ public class GetByIdRateServiceRequestHandler(
                     selectedRateService.Id,
                     selectedRateService.Name,
                     selectedRateService.Price,
-                    selectedRateService.IsFixed
+                    selectedRateService.IsChargedPerDay,
+                    selectedRateService.RateType.ToString()
                 )
             );
 
