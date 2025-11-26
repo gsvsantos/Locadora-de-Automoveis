@@ -30,7 +30,7 @@ public class GetByIdClientRequestHandler(
                     client.FullName,
                     client.Email,
                     client.PhoneNumber,
-                    client.IsJuridical,
+                    client.ClientType,
                     client.State,
                     client.City,
                     client.Neighborhood,
@@ -47,7 +47,7 @@ public class GetByIdClientRequestHandler(
         {
             logger.LogError(
                 ex,
-                "Error retrieving ClientCPF by ID {ClientCPFId}", request.Id);
+                "Error retrieving Client by ID {ClientId}", request.Id);
 
             return Result.Fail(new Error("An error occurred while retrieving the client."));
         }

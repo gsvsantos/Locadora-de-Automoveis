@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using LocadoraDeAutomoveis.Domain.Clients;
+using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.Clients.Commands.GetAll;
 
@@ -12,7 +13,7 @@ public record ClientDto(
     string FullName,
     string Email,
     string PhoneNumber,
-    bool IsJurifical,
+    EClientType ClientType,
     string State,
     string City,
     string Neighborhood,

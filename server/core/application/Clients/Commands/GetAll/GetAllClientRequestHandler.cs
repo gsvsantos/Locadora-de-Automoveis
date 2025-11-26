@@ -29,7 +29,7 @@ public class GetAllClientRequestHandler(
                     client.FullName,
                     client.Email,
                     client.PhoneNumber,
-                    client.IsJuridical,
+                    client.ClientType,
                     client.State,
                     client.City,
                     client.Neighborhood,

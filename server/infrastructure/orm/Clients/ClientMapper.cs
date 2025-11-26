@@ -24,7 +24,8 @@ public class ClientMapper : IEntityTypeConfiguration<Client>
             .HasMaxLength(20)
             .IsRequired();
 
-        builder.Property(c => c.IsJuridical)
+        builder.Property(c => c.ClientType)
+            .HasColumnType("int")
             .IsRequired();
 
         builder.Property(c => c.State)

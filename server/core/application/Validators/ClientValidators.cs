@@ -40,8 +40,8 @@ public class ClientValidators : AbstractValidator<Client>
         When(c => c.IsJuridical, () =>
         {
             RuleFor(c => c.Document)
-                .NotEmpty().WithMessage("The CNPJ (Corporate Tax ID) is required for Legal Entities.")
-                .Must(IsValidCnpj).WithMessage("The provided CNPJ is invalid.");
+                .NotEmpty().WithMessage("The Juristic (Corporate Tax ID) is required for Legal Entities.")
+                .Must(IsValidCnpj).WithMessage("The provided Juristic is invalid.");
 
             RuleFor(c => c.LicenseNumber)
                 .Empty().WithMessage("The Driver's License Number should not be filled for Legal Entities.");
@@ -49,8 +49,8 @@ public class ClientValidators : AbstractValidator<Client>
         .Otherwise(() =>
         {
             RuleFor(c => c.Document)
-                .NotEmpty().WithMessage("The CPF (Individual Tax ID) is required for Individuals.")
-                .Must(IsValidCpf).WithMessage("The provided CPF is invalid.");
+                .NotEmpty().WithMessage("The Physical (Individual Tax ID) is required for Individuals.")
+                .Must(IsValidCpf).WithMessage("The provided Physical is invalid.");
 
             RuleFor(c => c.LicenseNumber)
                 .NotEmpty().WithMessage("The Driver's License Number (CNH) is required for Individual clients.")
