@@ -8,6 +8,8 @@ namespace LocadoraDeAutomoveis.Tests.Integration.Repositories;
 [TestCategory("ClientRepository Infrastructure - Integration Tests")]
 public sealed class ClientRepositoryTests : TestFixture
 {
+    private readonly RandomGenerator random = new();
+
     [TestMethod]
     public async Task Should_GetAllAsync_ReturnsClients_Successfully()
     {
@@ -24,9 +26,20 @@ public sealed class ClientRepositoryTests : TestFixture
             .With(uE => uE.Id = Guid.NewGuid()).Persist();
         userEmployee.AssociateTenant(tenant.Id);
 
-        List<Client> existingCPFClients = Builder<Client>.CreateListOfSize(8)
-            .All()
+        List<Client> existingCPFClients = Builder<Client>.CreateListOfSize(8).All()
+            .Do(c => c.Address = new Address(
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.Int()
+            ))
             .Do(c => c.Document = Guid.NewGuid().ToString()[..11])
+            .Do(c =>
+            {
+                c.JuristicClientId = null;
+                c.JuristicClient = null;
+            })
             .Build().ToList();
 
         foreach (Client client in existingCPFClients)
@@ -37,9 +50,20 @@ public sealed class ClientRepositoryTests : TestFixture
         }
         await this.clientRepository.AddMultiplyAsync(existingCPFClients);
 
-        List<Client> existingCNPJClients = Builder<Client>.CreateListOfSize(4)
-            .All()
+        List<Client> existingCNPJClients = Builder<Client>.CreateListOfSize(4).All()
+            .Do(c => c.Address = new Address(
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.Int()
+            ))
             .Do(c => c.Document = Guid.NewGuid().ToString()[..14])
+            .Do(c =>
+            {
+                c.JuristicClientId = null;
+                c.JuristicClient = null;
+            })
             .Build().ToList();
 
         foreach (Client client in existingCNPJClients)
@@ -56,13 +80,11 @@ public sealed class ClientRepositoryTests : TestFixture
             .All()
             .Do(d =>
             {
-                d.Document = $"DRV-CPF-{Guid.NewGuid()}";
-                d.LicenseNumber = $"LIC-CPF-{Guid.NewGuid()}";
-                d.FullName = $"Driver CPF {Guid.NewGuid()}";
+                d.Document = $"DRV-Physical-{Guid.NewGuid()}";
+                d.LicenseNumber = $"LIC-Physical-{Guid.NewGuid()}";
+                d.FullName = $"Driver Physical {Guid.NewGuid()}";
                 d.Email = $"cpf-{Guid.NewGuid()}@test.com";
                 d.LicenseValidity = DateTimeOffset.UtcNow.AddYears(2);
-                d.ClientCNPJId = null;
-                d.ClientCNPJ = null;
             })
             .Build().ToList();
 
@@ -73,7 +95,7 @@ public sealed class ClientRepositoryTests : TestFixture
 
             driver.AssociateTenant(tenant.Id);
             driver.AssociateUser(userEmployee);
-            driver.AssociateClientCPF(physicalClient);
+            driver.AssociateClient(physicalClient);
         }
         await this.driverRepository.AddMultiplyAsync(driversCPFClients);
 
@@ -81,9 +103,9 @@ public sealed class ClientRepositoryTests : TestFixture
             .All()
             .Do(d =>
             {
-                d.Document = $"DRV-CNPJ-{Guid.NewGuid()}";
-                d.LicenseNumber = $"LIC-CNPJ-{Guid.NewGuid()}";
-                d.FullName = $"Driver CNPJ {Guid.NewGuid()}";
+                d.Document = $"DRV-Juristic-{Guid.NewGuid()}";
+                d.LicenseNumber = $"LIC-Juristic-{Guid.NewGuid()}";
+                d.FullName = $"Driver Juristic {Guid.NewGuid()}";
                 d.Email = $"cnpj-{Guid.NewGuid()}@test.com";
                 d.LicenseValidity = DateTimeOffset.UtcNow.AddYears(2);
             })
@@ -97,8 +119,7 @@ public sealed class ClientRepositoryTests : TestFixture
 
             driver.AssociateTenant(tenant.Id);
             driver.AssociateUser(userEmployee);
-            driver.AssociateClientCPF(physicalClient);
-            driver.AssociateClientCNPJ(juridicalClient);
+            driver.AssociateClient(physicalClient);
         }
         await this.driverRepository.AddMultiplyAsync(driversCNPJClients);
 
@@ -109,8 +130,8 @@ public sealed class ClientRepositoryTests : TestFixture
 
         // Assert
         Assert.AreEqual(12, clients.Count);
-        Assert.AreEqual(8, clients.Count(c => !c.IsJuridical));
-        Assert.AreEqual(4, clients.Count(c => c.IsJuridical));
+        Assert.AreEqual(8, clients.Count(c => !c.ClientType.Equals(EClientType.Juristic)));
+        Assert.AreEqual(4, clients.Count(c => c.ClientType.Equals(EClientType.Juristic)));
 
         List<Guid> expectedClientIds = existingCPFClients
             .Concat(existingCNPJClients)
@@ -128,10 +149,10 @@ public sealed class ClientRepositoryTests : TestFixture
         }
 
         Client cpfClient0 = clients.First(c => c.Id == existingCPFClients[0].Id);
-        Assert.IsFalse(cpfClient0.IsJuridical);
+        Assert.IsFalse(cpfClient0.ClientType == EClientType.Juristic);
 
         Client cnpjClient0 = clients.First(c => c.Id == existingCNPJClients[0].Id);
-        Assert.IsTrue(cnpjClient0.IsJuridical);
+        Assert.IsTrue(cnpjClient0.ClientType == EClientType.Juristic);
     }
 
     [TestMethod]
@@ -150,9 +171,20 @@ public sealed class ClientRepositoryTests : TestFixture
             .With(uE => uE.Id = Guid.NewGuid()).Persist();
         userEmployee.AssociateTenant(tenant.Id);
 
-        List<Client> existingCPFClients = Builder<Client>.CreateListOfSize(8)
-            .All()
+        List<Client> existingCPFClients = Builder<Client>.CreateListOfSize(8).All()
+            .Do(c => c.Address = new Address(
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.Int()
+            ))
             .Do(c => c.Document = Guid.NewGuid().ToString()[..11])
+            .Do(c =>
+            {
+                c.JuristicClientId = null;
+                c.JuristicClient = null;
+            })
             .Build().ToList();
 
         foreach (Client client in existingCPFClients)
@@ -163,9 +195,20 @@ public sealed class ClientRepositoryTests : TestFixture
         }
         await this.clientRepository.AddMultiplyAsync(existingCPFClients);
 
-        List<Client> existingCNPJClients = Builder<Client>.CreateListOfSize(4)
-            .All()
+        List<Client> existingCNPJClients = Builder<Client>.CreateListOfSize(4).All()
+            .Do(c => c.Address = new Address(
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.Int()
+            ))
             .Do(c => c.Document = Guid.NewGuid().ToString()[..14])
+            .Do(c =>
+            {
+                c.JuristicClientId = null;
+                c.JuristicClient = null;
+            })
             .Build().ToList();
 
         foreach (Client client in existingCNPJClients)
@@ -182,13 +225,11 @@ public sealed class ClientRepositoryTests : TestFixture
             .All()
             .Do(d =>
             {
-                d.Document = $"DRV-CPF-{Guid.NewGuid()}";
-                d.LicenseNumber = $"LIC-CPF-{Guid.NewGuid()}";
-                d.FullName = $"Driver CPF {Guid.NewGuid()}";
+                d.Document = $"DRV-Physical-{Guid.NewGuid()}";
+                d.LicenseNumber = $"LIC-Physical-{Guid.NewGuid()}";
+                d.FullName = $"Driver Physical {Guid.NewGuid()}";
                 d.Email = $"cpf-{Guid.NewGuid()}@test.com";
                 d.LicenseValidity = DateTimeOffset.UtcNow.AddYears(2);
-                d.ClientCNPJId = null;
-                d.ClientCNPJ = null;
             })
             .Build().ToList();
 
@@ -199,7 +240,7 @@ public sealed class ClientRepositoryTests : TestFixture
 
             driver.AssociateTenant(tenant.Id);
             driver.AssociateUser(userEmployee);
-            driver.AssociateClientCPF(physicalClient);
+            driver.AssociateClient(physicalClient);
         }
         await this.driverRepository.AddMultiplyAsync(driversCPFClients);
 
@@ -207,9 +248,9 @@ public sealed class ClientRepositoryTests : TestFixture
             .All()
             .Do(d =>
             {
-                d.Document = $"DRV-CNPJ-{Guid.NewGuid()}";
-                d.LicenseNumber = $"LIC-CNPJ-{Guid.NewGuid()}";
-                d.FullName = $"Driver CNPJ {Guid.NewGuid()}";
+                d.Document = $"DRV-Juristic-{Guid.NewGuid()}";
+                d.LicenseNumber = $"LIC-Juristic-{Guid.NewGuid()}";
+                d.FullName = $"Driver Juristic {Guid.NewGuid()}";
                 d.Email = $"cnpj-{Guid.NewGuid()}@test.com";
                 d.LicenseValidity = DateTimeOffset.UtcNow.AddYears(2);
             })
@@ -223,8 +264,7 @@ public sealed class ClientRepositoryTests : TestFixture
 
             driver.AssociateTenant(tenant.Id);
             driver.AssociateUser(userEmployee);
-            driver.AssociateClientCPF(physicalClient);
-            driver.AssociateClientCNPJ(juridicalClient);
+            driver.AssociateClient(physicalClient);
         }
         await this.driverRepository.AddMultiplyAsync(driversCNPJClients);
 
@@ -265,7 +305,19 @@ public sealed class ClientRepositoryTests : TestFixture
         userEmployee.AssociateTenant(tenant.Id);
 
         Client existingCPFClient = Builder<Client>.CreateNew()
+            .Do(c => c.Address = new Address(
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.Int()
+            ))
             .Do(c => c.Document = Guid.NewGuid().ToString()[..11])
+            .Do(c =>
+            {
+                c.JuristicClientId = null;
+                c.JuristicClient = null;
+            })
             .Build();
 
         existingCPFClient.AssociateTenant(tenant.Id);
@@ -281,7 +333,7 @@ public sealed class ClientRepositoryTests : TestFixture
         // Assert
         Assert.IsNotNull(selectedClient);
         Assert.AreEqual(existingCPFClient.Id, selectedClient.Id);
-        Assert.IsFalse(selectedClient.IsJuridical);
+        Assert.IsFalse(selectedClient.ClientType == EClientType.Juristic);
         Assert.AreEqual(existingCPFClient.Document, selectedClient.Document);
     }
 
@@ -302,7 +354,19 @@ public sealed class ClientRepositoryTests : TestFixture
         userEmployee.AssociateTenant(tenant.Id);
 
         Client existingCNPJClient = Builder<Client>.CreateNew()
+            .Do(c => c.Address = new Address(
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.NextString(5, 5),
+                this.random.Int()
+            ))
             .Do(c => c.Document = Guid.NewGuid().ToString()[..14])
+            .Do(c =>
+            {
+                c.JuristicClientId = null;
+                c.JuristicClient = null;
+            })
             .Build();
 
         existingCNPJClient.AssociateTenant(tenant.Id);
@@ -318,7 +382,7 @@ public sealed class ClientRepositoryTests : TestFixture
         // Assert
         Assert.IsNotNull(selectedClient);
         Assert.AreEqual(existingCNPJClient.Id, selectedClient.Id);
-        Assert.IsTrue(selectedClient.IsJuridical);
+        Assert.IsTrue(selectedClient.ClientType == EClientType.Juristic);
         Assert.AreEqual(existingCNPJClient.Document, selectedClient.Document);
     }
 }
