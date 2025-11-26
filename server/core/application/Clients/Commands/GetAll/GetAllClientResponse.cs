@@ -13,13 +13,9 @@ public record ClientDto(
     string FullName,
     string Email,
     string PhoneNumber,
-    EClientType ClientType,
-    string State,
-    string City,
-    string Neighborhood,
-    string Street,
-    int Number,
     string? Document,
+    Address Address,
+    EClientType ClientType,
     string? LicenseNumber
 );
 

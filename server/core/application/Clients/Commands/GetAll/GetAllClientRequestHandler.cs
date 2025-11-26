@@ -29,14 +29,10 @@ public class GetAllClientRequestHandler(
                     client.FullName,
                     client.Email,
                     client.PhoneNumber,
+                    client.Document ?? string.Empty,
+                    client.Address,
                     client.ClientType,
-                    client.State,
-                    client.City,
-                    client.Neighborhood,
-                    client.Street,
-                    client.Number,
-                    client.Document,
-                    client.LicenseNumber
+                    client.LicenseNumber ?? string.Empty
                 )).ToImmutableList()
             );
 

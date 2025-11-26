@@ -32,16 +32,20 @@ public class CreateClientRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(userContext.GetUserId()));
         }
 
-        Client client = new(
-            request.FullName,
-            request.Email,
-            request.PhoneNumber,
+        Address address = new(
             request.State,
             request.City,
             request.Neighborhood,
             request.Street,
-            request.Number,
-            request.Document
+            request.Number
+        );
+
+        Client client = new(
+            request.FullName,
+            request.Email,
+            request.PhoneNumber,
+            request.Document,
+            address
         );
 
         try

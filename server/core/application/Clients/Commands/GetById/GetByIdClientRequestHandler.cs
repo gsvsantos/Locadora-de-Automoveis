@@ -26,18 +26,14 @@ public class GetByIdClientRequestHandler(
 
             GetByIdClientResponse response = new(
                 new ClientDto(
-                    request.Id,
+                    client.Id,
                     client.FullName,
                     client.Email,
                     client.PhoneNumber,
+                    client.Document ?? string.Empty,
+                    client.Address,
                     client.ClientType,
-                    client.State,
-                    client.City,
-                    client.Neighborhood,
-                    client.Street,
-                    client.Number,
-                    client.Document,
-                    client.LicenseNumber
+                    client.LicenseNumber ?? string.Empty
                 )
             );
 

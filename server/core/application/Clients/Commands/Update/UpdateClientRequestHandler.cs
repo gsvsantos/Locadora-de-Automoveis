@@ -26,16 +26,20 @@ public class UpdateClientRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
         }
 
-        Client updatedClient = new(
-            request.FullName,
-            request.Email,
-            request.PhoneNumber,
+        Address address = new(
             request.State,
             request.City,
             request.Neighborhood,
             request.Street,
-            request.Number,
-            request.Document
+            request.Number
+        );
+
+        Client updatedClient = new(
+            request.FullName,
+            request.Email,
+            request.PhoneNumber,
+            request.Document,
+            address
         )
         { Id = selectedClient.Id };
 
