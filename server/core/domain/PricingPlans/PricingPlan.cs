@@ -59,6 +59,7 @@ public class PricingPlan : BaseEntity<PricingPlan>
     }
 }
 
-public record DailyPlanProps(decimal DailyRate, decimal PricePerKm);
-public record ControlledPlanProps(decimal DailyRate, decimal PricePerKmExtrapolated, int AvailableKm);
-public record FreePlanProps(decimal FixedRate);
+public abstract record AvailablePlan;
+public record DailyPlanProps(decimal DailyRate, decimal PricePerKm) : AvailablePlan;
+public record ControlledPlanProps(decimal DailyRate, decimal PricePerKmExtrapolated) : AvailablePlan;
+public record FreePlanProps(decimal FixedRate) : AvailablePlan;
