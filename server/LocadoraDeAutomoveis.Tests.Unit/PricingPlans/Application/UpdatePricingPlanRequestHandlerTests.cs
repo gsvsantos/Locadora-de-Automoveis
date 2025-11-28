@@ -49,7 +49,7 @@ public sealed class UpdatePricingPlanRequestHandlerTests
         PricingPlan pricingPlan = new(
             "SuuuV Plan",
             new DailyPlanProps(90m, 1.5m),
-            new ControlledPlanProps(140m, 2, 90),
+            new ControlledPlanProps(140m, 90),
             new FreePlanProps(190m)
         )
         { Id = pricingPlanId };
@@ -70,7 +70,7 @@ public sealed class UpdatePricingPlanRequestHandlerTests
             pricingPlanId,
             group2Id,
             new DailyPlanDto(100m, 2m),
-            new ControlledPlanDto(150m, 3, 100),
+            new ControlledPlanDto(150m, 100),
             new FreePlanDto(200m)
         );
 

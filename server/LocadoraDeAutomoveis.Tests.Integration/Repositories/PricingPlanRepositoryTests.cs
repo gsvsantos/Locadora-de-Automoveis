@@ -38,7 +38,7 @@ public sealed class PricingPlanRepositoryTests : TestFixture
         RandomGenerator random = new();
         List<PricingPlan> existingPricingPlans = Builder<PricingPlan>.CreateListOfSize(10).All()
             .Do(v => v.DailyPlan = new(random.Decimal(), random.Decimal()))
-            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Decimal(), random.Int()))
+            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Int()))
             .Do(v => v.FreePlan = new(random.Decimal()))
             .Build().ToList();
         foreach (PricingPlan pricingPlan in existingPricingPlans)
@@ -94,7 +94,7 @@ public sealed class PricingPlanRepositoryTests : TestFixture
         RandomGenerator random = new();
         List<PricingPlan> existingPricingPlans = Builder<PricingPlan>.CreateListOfSize(10).All()
             .Do(v => v.DailyPlan = new(random.Decimal(), random.Decimal()))
-            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Decimal(), random.Int()))
+            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Int()))
             .Do(v => v.FreePlan = new(random.Decimal()))
             .Build().ToList();
         foreach (PricingPlan pricingPlan in existingPricingPlans)
@@ -145,7 +145,7 @@ public sealed class PricingPlanRepositoryTests : TestFixture
         RandomGenerator random = new();
         PricingPlan pricingPlan = Builder<PricingPlan>.CreateNew()
             .Do(v => v.DailyPlan = new(random.Decimal(), random.Decimal()))
-            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Decimal(), random.Int()))
+            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Int()))
             .Do(v => v.FreePlan = new(random.Decimal()))
             .Build();
 

@@ -40,7 +40,7 @@ public sealed class GetByIdPricingPlanRequestHandlerTests
         PricingPlan pricingPlan = new(
             $"{group.Name} - Pricing Plans",
             new DailyPlanProps(90m, 1.5m),
-            new ControlledPlanProps(140m, 2, 90),
+            new ControlledPlanProps(140m, 90),
             new FreePlanProps(190m)
         )
         { Id = pricingPlanId };
@@ -63,7 +63,6 @@ public sealed class GetByIdPricingPlanRequestHandlerTests
         Assert.AreEqual(pricingPlan.DailyPlan.PricePerKm, dto.DailyPlan.PricePerKm);
         Assert.AreEqual(pricingPlan.ControlledPlan.DailyRate, dto.ControlledPlan.DailyRate);
         Assert.AreEqual(pricingPlan.ControlledPlan.PricePerKmExtrapolated, dto.ControlledPlan.PricePerKmExtrapolated);
-        Assert.AreEqual(pricingPlan.ControlledPlan.AvailableKm, dto.ControlledPlan.AvailableKm);
         Assert.AreEqual(pricingPlan.FreePlan.FixedRate, dto.FreePlan.FixedRate);
         Assert.AreEqual(pricingPlan.GroupId, dto.GroupId);
     }

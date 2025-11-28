@@ -36,10 +36,6 @@ public class PricingPlanMapper : IEntityTypeConfiguration<PricingPlan>
                 .HasColumnName("ControlledPlan_ExtrapolatedPrice")
                 .HasPrecision(18, 2)
                 .IsRequired();
-
-            controlled.Property(c => c.AvailableKm)
-                .HasColumnName("ControlledPlan_AvailableKm")
-                .IsRequired();
         });
 
         builder.OwnsOne(p => p.FreePlan, free =>

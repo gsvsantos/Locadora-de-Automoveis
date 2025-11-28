@@ -29,7 +29,7 @@ public class GetByIdPricingPlanRequestHandler(
                     selectedPricingPlan.Id,
                     $"{selectedPricingPlan.Group.Name} - Pricing Plans",
                     new(selectedPricingPlan.DailyPlan.DailyRate, selectedPricingPlan.DailyPlan.PricePerKm),
-                    new(selectedPricingPlan.ControlledPlan.DailyRate, selectedPricingPlan.ControlledPlan.AvailableKm, selectedPricingPlan.ControlledPlan.PricePerKmExtrapolated),
+                    new(selectedPricingPlan.ControlledPlan.DailyRate, selectedPricingPlan.ControlledPlan.PricePerKmExtrapolated),
                     new(selectedPricingPlan.FreePlan.FixedRate),
                     selectedPricingPlan.GroupId
                 )

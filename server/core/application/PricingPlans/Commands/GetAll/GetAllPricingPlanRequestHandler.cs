@@ -28,7 +28,7 @@ public class GetAllPricingPlanRequestHandler(
                     pricingPlan.Id,
                     $"{pricingPlan.Group.Name} - Pricing Plans",
                     new(pricingPlan.DailyPlan.DailyRate, pricingPlan.DailyPlan.PricePerKm),
-                    new(pricingPlan.ControlledPlan.DailyRate, pricingPlan.ControlledPlan.AvailableKm, pricingPlan.ControlledPlan.PricePerKmExtrapolated),
+                    new(pricingPlan.ControlledPlan.DailyRate, pricingPlan.ControlledPlan.PricePerKmExtrapolated),
                     new(pricingPlan.FreePlan.FixedRate),
                     pricingPlan.GroupId
                 )).ToImmutableList()

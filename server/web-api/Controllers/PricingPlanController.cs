@@ -66,7 +66,7 @@ public class PricingPlanController(IMediator mediator) : ControllerBase
             id,
             partialRequest.GroupId,
             new(partialRequest.DailyPlan.DailyRate, partialRequest.DailyPlan.PricePerKm),
-            new(partialRequest.ControlledPlan.DailyRate, partialRequest.ControlledPlan.AvailableKm, partialRequest.ControlledPlan.PricePerKmExtrapolated),
+            new(partialRequest.ControlledPlan.DailyRate, partialRequest.ControlledPlan.PricePerKmExtrapolated),
             new(partialRequest.FreePlan.FixedRate)
         );
 

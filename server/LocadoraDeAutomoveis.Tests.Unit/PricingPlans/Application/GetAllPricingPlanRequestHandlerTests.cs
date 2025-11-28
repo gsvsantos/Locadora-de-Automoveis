@@ -34,7 +34,7 @@ public sealed class GetAllPricingPlanRequestHandlerTests
         List<PricingPlan> pricingPlans = Builder<PricingPlan>.CreateListOfSize(10).All()
             .Do(v => v.Name = random.NextString(1, 5))
             .Do(v => v.DailyPlan = new(random.Decimal(), random.Decimal()))
-            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Decimal(), random.Int()))
+            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Int()))
             .Do(v => v.FreePlan = new(random.Decimal()))
             .Do(v => v.AssociateGroup(new($"group-{Guid.NewGuid()}")))
             .Build().ToList();
@@ -79,7 +79,7 @@ public sealed class GetAllPricingPlanRequestHandlerTests
         List<PricingPlan> pricingPlans = Builder<PricingPlan>.CreateListOfSize(10).All()
             .Do(v => v.Name = random.NextString(1, 5))
             .Do(v => v.DailyPlan = new(random.Decimal(), random.Decimal()))
-            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Decimal(), random.Int()))
+            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Int()))
             .Do(v => v.FreePlan = new(random.Decimal()))
             .Do(v => v.AssociateGroup(new($"group-{Guid.NewGuid()}")))
             .Build().ToList();

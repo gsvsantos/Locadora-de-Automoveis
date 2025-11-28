@@ -88,7 +88,7 @@ public sealed class CreatePricingPlanRequestHandlerTests
         CreatePricingPlanRequest request = new(
             groupId,
             new DailyPlanDto(100m, 2m),
-            new ControlledPlanDto(150m, 3, 100),
+            new ControlledPlanDto(150m, 100),
             new FreePlanDto(200m)
         );
 

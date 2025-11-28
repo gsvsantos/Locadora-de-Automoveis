@@ -46,6 +46,7 @@ public class CreatePricingPlanRequestHandler(
             request.ControlledPlan.ToProps(),
             request.FreePlan.ToProps()
         );
+        pricingPlan.AssociateGroup(selectedGroup);
 
         try
         {
@@ -70,8 +71,6 @@ public class CreatePricingPlanRequestHandler(
             pricingPlan.AssociateTenant(tenantProvider.GetTenantId());
 
             pricingPlan.AssociateUser(user);
-
-            pricingPlan.AssociateGroup(selectedGroup);
 
             await repositoryPricingPlan.AddAsync(pricingPlan);
 

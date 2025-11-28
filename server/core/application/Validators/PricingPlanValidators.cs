@@ -40,9 +40,6 @@ public class ControlledPlanPropsValidator : AbstractValidator<ControlledPlanProp
         RuleFor(x => x.DailyRate)
             .GreaterThan(0).WithMessage("The daily rate for the Controlled Plan must be greater than 0.");
 
-        RuleFor(x => x.AvailableKm)
-            .GreaterThan(0).WithMessage("The available km limit for the Controlled Plan must be greater than 0.");
-
         RuleFor(x => x.PricePerKmExtrapolated)
             .GreaterThan(0).WithMessage("The price per extrapolated km for the Controlled Plan must be greater than 0.");
     }

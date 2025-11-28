@@ -18,7 +18,6 @@ public record DailyPlanDto(
 
 public record ControlledPlanDto(
     decimal DailyRate,
-    int AvailableKm,
     decimal PricePerKmExtrapolated
 );
 
@@ -31,7 +30,7 @@ public static class RecordExtensions
     public static DailyPlanProps ToProps(this DailyPlanDto dto) =>
         new(dto.DailyRate, dto.PricePerKm);
     public static ControlledPlanProps ToProps(this ControlledPlanDto dto) =>
-        new(dto.DailyRate, dto.PricePerKmExtrapolated, dto.AvailableKm);
+        new(dto.DailyRate, dto.PricePerKmExtrapolated);
     public static FreePlanProps ToProps(this FreePlanDto dto) => new(dto.FixedRate);
 
 }

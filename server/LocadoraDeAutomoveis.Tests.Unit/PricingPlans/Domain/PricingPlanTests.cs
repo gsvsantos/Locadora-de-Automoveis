@@ -27,7 +27,7 @@ public class PricingPlanTests
     {
         // Arrange & Act
         DailyPlanProps dailyPlan = new(100m, 2m);
-        ControlledPlanProps controlledPlan = new(80m, 3m, 200);
+        ControlledPlanProps controlledPlan = new(80m, 200);
         FreePlanProps freePlan = new(70m);
 
         PricingPlan pricingPlan = new(
@@ -49,7 +49,7 @@ public class PricingPlanTests
     {
         // Arrange
         DailyPlanProps dailyPlan1 = new(100m, 2m);
-        ControlledPlanProps controlledPlan1 = new(80m, 3m, 200);
+        ControlledPlanProps controlledPlan1 = new(80m, 200);
         FreePlanProps freePlan1 = new(70m);
 
         PricingPlan pricingPlan1 = new(
@@ -57,7 +57,7 @@ public class PricingPlanTests
         );
 
         DailyPlanProps dailyPlan2 = new(120m, 2.5m);
-        ControlledPlanProps controlledPlan2 = new(90m, 3.5m, 250);
+        ControlledPlanProps controlledPlan2 = new(90m, 250);
         FreePlanProps freePlan2 = new(75m);
 
         PricingPlan pricingPlan2 = new(
@@ -81,7 +81,7 @@ public class PricingPlanTests
         PricingPlan pricingPlan = new(
             "SUV Plan",
             new DailyPlanProps(100m, 2m),
-            new ControlledPlanProps(80m, 3m, 200),
+            new ControlledPlanProps(80m, 200),
             new FreePlanProps(70m)
         );
         Group group = new("Group A");
@@ -103,7 +103,7 @@ public class PricingPlanTests
         PricingPlan pricingPlan = new(
             "SUV Plan",
             new DailyPlanProps(100m, 2m),
-            new ControlledPlanProps(80m, 3m, 200),
+            new ControlledPlanProps(80m, 200),
             new FreePlanProps(70m)
         );
 
