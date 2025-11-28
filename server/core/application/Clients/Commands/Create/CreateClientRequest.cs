@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using LocadoraDeAutomoveis.Domain.Clients;
 using MediatR;
 
 namespace LocadoraDeAutomoveis.Application.Clients.Commands.Create;
@@ -11,5 +12,6 @@ public record CreateClientRequest(
     string Neighborhood,
     string Street,
     int Number,
+    EClientType ClientType,
     string Document
 ) : IRequest<Result<CreateClientResponse>>;

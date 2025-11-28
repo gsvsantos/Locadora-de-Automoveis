@@ -47,6 +47,7 @@ public class CreateClientRequestHandler(
             request.Document,
             address
         );
+        client.SetClientType(request.ClientType);
 
         try
         {
@@ -71,15 +72,6 @@ public class CreateClientRequestHandler(
             client.AssociateTenant(tenantProvider.GetTenantId());
 
             client.AssociateUser(user);
-
-            if (IsCnpj(client.Document))
-            {
-                client.MarkAsJuridical();
-            }
-            else
-            {
-                client.MarkAsPhysical();
-            }
 
             await repositoryClient.AddAsync(client);
 
