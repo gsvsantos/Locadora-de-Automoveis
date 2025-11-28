@@ -27,9 +27,7 @@ public class Client : BaseEntity<Client>
         this.Address = address;
     }
 
-    public void MarkAsJuridical() => this.ClientType = EClientType.Juristic;
-
-    public void MarkAsPhysical() => this.ClientType = EClientType.Physical;
+    public void SetClientType(EClientType clientType) => this.ClientType = clientType;
 
     public void SetLicenseNumber(string licenseNumber) => this.LicenseNumber = licenseNumber;
 
@@ -60,6 +58,6 @@ public record Address(
 
 public enum EClientType
 {
-    Physical,
-    Juristic
+    Individual,
+    Business
 }
