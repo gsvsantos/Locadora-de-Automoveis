@@ -24,8 +24,8 @@ public class VehicleValidators : AbstractValidator<Vehicle>
             .MaximumLength(100).WithMessage("The model cannot exceed {MaxLength} characters.");
 
         RuleFor(v => v.FuelType)
-            .NotEmpty().WithMessage("The {PropertyName} cannot be empty.")
-            .MaximumLength(50).WithMessage("The fuel type cannot exceed {MaxLength} characters.");
+            .IsInEnum()
+            .WithMessage("The value '{PropertyValue}' is not a valid Fuel Type.");
 
         RuleFor(v => v.FuelTankCapacity)
             .GreaterThan(0).WithMessage("The {PropertyName} must be greater than zero.");
