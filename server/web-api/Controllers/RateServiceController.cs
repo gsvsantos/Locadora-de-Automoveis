@@ -13,7 +13,7 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 [ApiController]
 [Route("api/rate-service")]
 [Authorize("AdminOrEmployeePolicy")]
-public class RateServiceControllerI(Mediator mediator) : ControllerBase
+public class RateServiceController(IMediator mediator) : ControllerBase
 {
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateRateServiceRequest request)
