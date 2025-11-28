@@ -80,6 +80,7 @@ public sealed class CreateClientRequestHandlerTests
             "Marcondes",
             "Edi Marcondes",
             33,
+            EClientType.Individual,
             "000.000.000-01"
         );
 

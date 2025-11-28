@@ -46,7 +46,7 @@ public sealed class ClientRepositoryTests : TestFixture
         {
             client.AssociateTenant(tenant.Id);
             client.AssociateUser(userEmployee);
-            client.MarkAsPhysical();
+            client.SetClientType(EClientType.Individual);
         }
         await this.clientRepository.AddMultiplyAsync(existingCPFClients);
 
@@ -70,7 +70,7 @@ public sealed class ClientRepositoryTests : TestFixture
         {
             client.AssociateTenant(tenant.Id);
             client.AssociateUser(userEmployee);
-            client.MarkAsJuridical();
+            client.SetClientType(EClientType.Business);
         }
         await this.clientRepository.AddMultiplyAsync(existingCNPJClients);
 
@@ -80,9 +80,9 @@ public sealed class ClientRepositoryTests : TestFixture
             .All()
             .Do(d =>
             {
-                d.Document = $"DRV-Physical-{Guid.NewGuid()}";
-                d.LicenseNumber = $"LIC-Physical-{Guid.NewGuid()}";
-                d.FullName = $"Driver Physical {Guid.NewGuid()}";
+                d.Document = $"DRV-Individual-{Guid.NewGuid()}";
+                d.LicenseNumber = $"LIC-Individual-{Guid.NewGuid()}";
+                d.FullName = $"Driver Individual {Guid.NewGuid()}";
                 d.Email = $"cpf-{Guid.NewGuid()}@test.com";
                 d.LicenseValidity = DateTimeOffset.UtcNow.AddYears(2);
             })
@@ -103,9 +103,9 @@ public sealed class ClientRepositoryTests : TestFixture
             .All()
             .Do(d =>
             {
-                d.Document = $"DRV-Juristic-{Guid.NewGuid()}";
-                d.LicenseNumber = $"LIC-Juristic-{Guid.NewGuid()}";
-                d.FullName = $"Driver Juristic {Guid.NewGuid()}";
+                d.Document = $"DRV-Business-{Guid.NewGuid()}";
+                d.LicenseNumber = $"LIC-Business-{Guid.NewGuid()}";
+                d.FullName = $"Driver Business {Guid.NewGuid()}";
                 d.Email = $"cnpj-{Guid.NewGuid()}@test.com";
                 d.LicenseValidity = DateTimeOffset.UtcNow.AddYears(2);
             })
@@ -130,8 +130,8 @@ public sealed class ClientRepositoryTests : TestFixture
 
         // Assert
         Assert.AreEqual(12, clients.Count);
-        Assert.AreEqual(8, clients.Count(c => !c.ClientType.Equals(EClientType.Juristic)));
-        Assert.AreEqual(4, clients.Count(c => c.ClientType.Equals(EClientType.Juristic)));
+        Assert.AreEqual(8, clients.Count(c => !c.ClientType.Equals(EClientType.Business)));
+        Assert.AreEqual(4, clients.Count(c => c.ClientType.Equals(EClientType.Business)));
 
         List<Guid> expectedClientIds = existingCPFClients
             .Concat(existingCNPJClients)
@@ -149,10 +149,10 @@ public sealed class ClientRepositoryTests : TestFixture
         }
 
         Client cpfClient0 = clients.First(c => c.Id == existingCPFClients[0].Id);
-        Assert.IsFalse(cpfClient0.ClientType == EClientType.Juristic);
+        Assert.IsFalse(cpfClient0.ClientType == EClientType.Business);
 
         Client cnpjClient0 = clients.First(c => c.Id == existingCNPJClients[0].Id);
-        Assert.IsTrue(cnpjClient0.ClientType == EClientType.Juristic);
+        Assert.IsTrue(cnpjClient0.ClientType == EClientType.Business);
     }
 
     [TestMethod]
@@ -191,7 +191,7 @@ public sealed class ClientRepositoryTests : TestFixture
         {
             client.AssociateTenant(tenant.Id);
             client.AssociateUser(userEmployee);
-            client.MarkAsPhysical();
+            client.SetClientType(EClientType.Individual);
         }
         await this.clientRepository.AddMultiplyAsync(existingCPFClients);
 
@@ -215,7 +215,7 @@ public sealed class ClientRepositoryTests : TestFixture
         {
             client.AssociateTenant(tenant.Id);
             client.AssociateUser(userEmployee);
-            client.MarkAsJuridical();
+            client.SetClientType(EClientType.Business);
         }
         await this.clientRepository.AddMultiplyAsync(existingCNPJClients);
 
@@ -225,9 +225,9 @@ public sealed class ClientRepositoryTests : TestFixture
             .All()
             .Do(d =>
             {
-                d.Document = $"DRV-Physical-{Guid.NewGuid()}";
-                d.LicenseNumber = $"LIC-Physical-{Guid.NewGuid()}";
-                d.FullName = $"Driver Physical {Guid.NewGuid()}";
+                d.Document = $"DRV-Individual-{Guid.NewGuid()}";
+                d.LicenseNumber = $"LIC-Individual-{Guid.NewGuid()}";
+                d.FullName = $"Driver Individual {Guid.NewGuid()}";
                 d.Email = $"cpf-{Guid.NewGuid()}@test.com";
                 d.LicenseValidity = DateTimeOffset.UtcNow.AddYears(2);
             })
@@ -248,9 +248,9 @@ public sealed class ClientRepositoryTests : TestFixture
             .All()
             .Do(d =>
             {
-                d.Document = $"DRV-Juristic-{Guid.NewGuid()}";
-                d.LicenseNumber = $"LIC-Juristic-{Guid.NewGuid()}";
-                d.FullName = $"Driver Juristic {Guid.NewGuid()}";
+                d.Document = $"DRV-Business-{Guid.NewGuid()}";
+                d.LicenseNumber = $"LIC-Business-{Guid.NewGuid()}";
+                d.FullName = $"Driver Business {Guid.NewGuid()}";
                 d.Email = $"cnpj-{Guid.NewGuid()}@test.com";
                 d.LicenseValidity = DateTimeOffset.UtcNow.AddYears(2);
             })
@@ -322,7 +322,7 @@ public sealed class ClientRepositoryTests : TestFixture
 
         existingCPFClient.AssociateTenant(tenant.Id);
         existingCPFClient.AssociateUser(userEmployee);
-        existingCPFClient.MarkAsPhysical();
+        existingCPFClient.SetClientType(EClientType.Individual);
 
         await this.clientRepository.AddAsync(existingCPFClient);
         await this.dbContext.SaveChangesAsync();
@@ -333,7 +333,7 @@ public sealed class ClientRepositoryTests : TestFixture
         // Assert
         Assert.IsNotNull(selectedClient);
         Assert.AreEqual(existingCPFClient.Id, selectedClient.Id);
-        Assert.IsFalse(selectedClient.ClientType == EClientType.Juristic);
+        Assert.IsFalse(selectedClient.ClientType == EClientType.Business);
         Assert.AreEqual(existingCPFClient.Document, selectedClient.Document);
     }
 
@@ -371,7 +371,7 @@ public sealed class ClientRepositoryTests : TestFixture
 
         existingCNPJClient.AssociateTenant(tenant.Id);
         existingCNPJClient.AssociateUser(userEmployee);
-        existingCNPJClient.MarkAsJuridical();
+        existingCNPJClient.SetClientType(EClientType.Business);
 
         await this.clientRepository.AddAsync(existingCNPJClient);
         await this.dbContext.SaveChangesAsync();
@@ -382,7 +382,7 @@ public sealed class ClientRepositoryTests : TestFixture
         // Assert
         Assert.IsNotNull(selectedClient);
         Assert.AreEqual(existingCNPJClient.Id, selectedClient.Id);
-        Assert.IsTrue(selectedClient.ClientType == EClientType.Juristic);
+        Assert.IsTrue(selectedClient.ClientType == EClientType.Business);
         Assert.AreEqual(existingCNPJClient.Document, selectedClient.Document);
     }
 }
