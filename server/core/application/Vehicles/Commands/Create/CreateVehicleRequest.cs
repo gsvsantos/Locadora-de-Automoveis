@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
 
 namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.Create;
@@ -8,7 +9,7 @@ public record CreateVehicleRequest(
     string Brand,
     string Color,
     string Model,
-    string FuelType,
+    EFuelType FuelType,
     int CapacityInLiters,
     int Year,
     string? PhotoPath,

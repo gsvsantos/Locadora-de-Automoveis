@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using LocadoraDeAutomoveis.Domain.Vehicles;
+using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAll;
 
@@ -13,7 +14,7 @@ public record VehicleDto(
     string Brand,
     string Color,
     string Model,
-    string FuelType,
+    EFuelType FuelType,
     int CapacityInLiters,
     int Year,
     string? PhotoPath,

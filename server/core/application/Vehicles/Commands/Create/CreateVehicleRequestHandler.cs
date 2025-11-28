@@ -45,11 +45,11 @@ public class CreateVehicleRequestHandler(
             request.Brand,
             request.Color,
             request.Model,
-            request.FuelType,
             request.CapacityInLiters,
             request.Year,
             request.PhotoPath ?? string.Empty
         );
+        vehicle.SetFuelType(request.FuelType);
 
         try
         {

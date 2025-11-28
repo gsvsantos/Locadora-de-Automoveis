@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
 
 namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.Update;
@@ -8,7 +9,7 @@ public record UpdateVehicleRequestPartial(
     string Brand,
     string Color,
     string Model,
-    string FuelType,
+    EFuelType FuelType,
     int CapacityInLiters,
     int Year,
     string? PhotoPath,
@@ -21,7 +22,7 @@ public record UpdateVehicleRequest(
     string Brand,
     string Color,
     string Model,
-    string FuelType,
+    EFuelType FuelType,
     int CapacityInLiters,
     int Year,
     string? PhotoPath,

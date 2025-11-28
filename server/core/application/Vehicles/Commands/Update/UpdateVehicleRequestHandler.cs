@@ -42,12 +42,12 @@ public class UpdateVehicleRequestHandler(
             request.Brand,
             request.Color,
             request.Model,
-            request.FuelType,
             request.CapacityInLiters,
             request.Year,
             request.PhotoPath ?? string.Empty
         )
         { Id = selectedVehicle.Id };
+        updatedVehicle.SetFuelType(request.FuelType);
 
         try
         {
