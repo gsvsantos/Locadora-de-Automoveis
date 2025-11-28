@@ -9,7 +9,7 @@ public class Vehicle : BaseEntity<Vehicle>
     public string Brand { get; set; } = string.Empty;
     public string Color { get; set; } = string.Empty;
     public string Model { get; set; } = string.Empty;
-    public string FuelType { get; set; } = string.Empty;
+    public EFuelType FuelType { get; set; }
     public int FuelTankCapacity { get; set; } = 0;
     public int Year { get; set; } = 0;
     public string? PhotoPath { get; set; }
@@ -19,14 +19,13 @@ public class Vehicle : BaseEntity<Vehicle>
     public Vehicle() { }
     public Vehicle(
         string licensePlate, string brand, string color, string model,
-        string fuelType, int fuelTankCapacity, int year, string photoPath
+        int fuelTankCapacity, int year, string photoPath
     ) : this()
     {
         this.LicensePlate = licensePlate;
         this.Brand = brand;
         this.Color = color;
         this.Model = model;
-        this.FuelType = fuelType;
         this.FuelTankCapacity = fuelTankCapacity;
         this.Year = year;
         this.PhotoPath = photoPath;
@@ -61,6 +60,8 @@ public class Vehicle : BaseEntity<Vehicle>
         this.GroupId = Guid.Empty;
     }
 
+    public void SetFuelType(EFuelType fuelType) => this.FuelType = fuelType;
+
     public override void Update(Vehicle updatedEntity)
     {
         this.LicensePlate = updatedEntity.LicensePlate;
@@ -78,4 +79,13 @@ public class Vehicle : BaseEntity<Vehicle>
             AssociateGroup(updatedEntity.Group);
         }
     }
+}
+
+public enum EFuelType
+{
+    Gasoline,
+    Gas,
+    Diesel,
+    Alcohol,
+    Ethanol
 }
