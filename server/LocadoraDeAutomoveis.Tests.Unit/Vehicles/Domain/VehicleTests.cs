@@ -20,7 +20,7 @@ public sealed class VehicleTests
         Assert.AreEqual(string.Empty, vehicle.Brand);
         Assert.AreEqual(string.Empty, vehicle.Color);
         Assert.AreEqual(string.Empty, vehicle.Model);
-        Assert.AreEqual(string.Empty, vehicle.FuelType);
+        Assert.AreEqual(EFuelType.Gasoline, vehicle.FuelType);
         Assert.AreEqual(0, vehicle.FuelTankCapacity);
         Assert.AreEqual(0, vehicle.Year);
         Assert.IsNull(vehicle.PhotoPath);
@@ -35,11 +35,11 @@ public sealed class VehicleTests
             "Chevrolet",
             "Preto",
             "Chevette",
-            "Gasolina",
             45,
             1984,
             string.Empty
         );
+        vehicle.SetFuelType(EFuelType.Gasoline);
 
         // Assert
         Assert.AreNotEqual(Guid.Empty, vehicle.Id);
@@ -48,7 +48,7 @@ public sealed class VehicleTests
         Assert.AreEqual("Chevrolet", vehicle.Brand);
         Assert.AreEqual("Preto", vehicle.Color);
         Assert.AreEqual("Chevette", vehicle.Model);
-        Assert.AreEqual("Gasolina", vehicle.FuelType);
+        Assert.AreEqual(EFuelType.Gasoline, vehicle.FuelType);
         Assert.AreEqual(45, vehicle.FuelTankCapacity);
         Assert.AreEqual(1984, vehicle.Year);
         Assert.AreEqual(string.Empty, vehicle.PhotoPath);
@@ -63,22 +63,22 @@ public sealed class VehicleTests
             "Chervrolette",
             "Preto",
             "Chevette",
-            "Gasolina",
             45,
             2004,
             string.Empty
         );
+        vehicle.SetFuelType(EFuelType.Gas);
 
         Vehicle updatedVehicle = new(
             "ABC-1A84",
             "Chevrolet",
             "Preto",
             "Chevette",
-            "Gasolina",
             45,
             1984,
             "https://aquelesite.net/ze"
         );
+        vehicle.SetFuelType(EFuelType.Gasoline);
 
         // Act
         vehicle.Update(updatedVehicle);
@@ -90,7 +90,7 @@ public sealed class VehicleTests
         Assert.AreEqual("Chevrolet", vehicle.Brand);
         Assert.AreEqual("Preto", vehicle.Color);
         Assert.AreEqual("Chevette", vehicle.Model);
-        Assert.AreEqual("Gasolina", vehicle.FuelType);
+        Assert.AreEqual(EFuelType.Gasoline, vehicle.FuelType);
         Assert.AreEqual(45, vehicle.FuelTankCapacity);
         Assert.AreEqual(1984, vehicle.Year);
         Assert.AreEqual("https://aquelesite.net/ze", vehicle.PhotoPath);

@@ -38,12 +38,12 @@ public sealed class GetByIdVehicleRequestHandlerTests
             "Chevrolet Ed",
             "Preto",
             "Chevette",
-            "Gasolina",
             45,
             1984,
             string.Empty
         )
         { Id = vehicleId };
+        vehicle.SetFuelType(EFuelType.Gasoline);
 
         this.repositoryVehicleMock
             .Setup(rr => rr.GetByIdAsync(request.Id))

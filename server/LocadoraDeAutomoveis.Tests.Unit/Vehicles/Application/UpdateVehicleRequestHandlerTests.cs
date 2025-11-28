@@ -52,7 +52,7 @@ public sealed class UpdateVehicleRequestHandlerTests
             "Chevrolet Ed",
             "Preto",
             "Chevette",
-            "Gasolina",
+            EFuelType.Gasoline,
             45,
             1984,
             null,
@@ -64,12 +64,12 @@ public sealed class UpdateVehicleRequestHandlerTests
             "Chervrolet",
             "Bege",
             "Chevette",
-            "Gazolina",
             45,
             2004,
             string.Empty
         )
         { Id = vehicleId };
+        vehicle.SetFuelType(EFuelType.Gas);
 
         this.repositoryVehicleMock
             .Setup(r => r.GetByIdAsync(vehicleId))
@@ -84,11 +84,11 @@ public sealed class UpdateVehicleRequestHandlerTests
             request.Brand,
             request.Color,
             request.Model,
-            request.FuelType,
             request.CapacityInLiters,
             request.Year,
             request.PhotoPath ?? string.Empty
         );
+        updatedVehicle.SetFuelType(request.FuelType);
 
         string expectedPhotoPath = request.PhotoPath ?? string.Empty;
         this.validatorMock

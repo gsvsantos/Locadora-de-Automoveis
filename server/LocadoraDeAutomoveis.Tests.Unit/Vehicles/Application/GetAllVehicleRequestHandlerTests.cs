@@ -32,6 +32,7 @@ public sealed class GetAllVehicleRequestHandlerTests
         // Arrange
         Guid groupId = Guid.NewGuid();
         List<Vehicle> vehicles = Builder<Vehicle>.CreateListOfSize(10).All()
+            .Do(v => v.SetFuelType(EFuelType.Gasoline))
             .With(v => v.GroupId = groupId).Build().ToList();
 
         this.repositoryVehicleMock
@@ -76,6 +77,7 @@ public sealed class GetAllVehicleRequestHandlerTests
         // Arrange
         Guid groupId = Guid.NewGuid();
         List<Vehicle> vehicles = Builder<Vehicle>.CreateListOfSize(10).All()
+            .Do(v => v.SetFuelType(EFuelType.Gasoline))
             .With(v => v.GroupId = groupId).Build().ToList();
 
         this.repositoryVehicleMock

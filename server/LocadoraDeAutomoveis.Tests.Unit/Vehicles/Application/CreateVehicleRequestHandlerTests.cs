@@ -88,7 +88,7 @@ public sealed class CreateVehicleRequestHandlerTests
             "Chevrolet",
             "Bege",
             "Chevette",
-            "Gasolina",
+            EFuelType.Gasoline,
             45,
             1984,
             null,
@@ -109,7 +109,6 @@ public sealed class CreateVehicleRequestHandlerTests
             request.Brand,
             request.Color,
             request.Model,
-            request.FuelType,
             request.CapacityInLiters,
             request.Year,
             request.PhotoPath ?? string.Empty

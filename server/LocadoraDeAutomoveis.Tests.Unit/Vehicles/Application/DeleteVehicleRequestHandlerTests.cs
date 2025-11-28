@@ -41,12 +41,12 @@ public sealed class DeleteVehicleRequestHandlerTests
             "Chevrolet Ed",
             "Preto",
             "Chevette",
-            "Gasolina",
             45,
             1984,
             string.Empty
         )
         { Id = vehicleId };
+        vehicle.SetFuelType(EFuelType.Gasoline);
 
         this.repositoryVehicleMock
             .Setup(r => r.GetByIdAsync(vehicleId))
