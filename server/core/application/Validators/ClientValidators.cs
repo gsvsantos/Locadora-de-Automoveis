@@ -37,24 +37,17 @@ public class ClientValidators : AbstractValidator<Client>
         RuleFor(c => c.Address.Number)
             .GreaterThan(0).WithMessage("The Number must be greater than zero.");
 
-        When(c => c.ClientType == EClientType.Juristic, () =>
+        When(c => c.ClientType == EClientType.Business, () =>
         {
             RuleFor(c => c.Document)
-                .NotEmpty().WithMessage("The Juristic (Corporate Tax ID) is required for Legal Entities.")
-                .Must(IsValidCnpj).WithMessage("The provided Juristic is invalid.");
-
-            RuleFor(c => c.LicenseNumber)
-                .Empty().WithMessage("The Driver's License Number should not be filled for Legal Entities.");
+                .NotEmpty().WithMessage("The Business (Corporate Tax ID) is required for Legal Entities.")
+                .Must(IsValidCnpj).WithMessage("The provided Business is invalid.");
         })
         .Otherwise(() =>
         {
             RuleFor(c => c.Document)
-                .NotEmpty().WithMessage("The Physical (Individual Tax ID) is required for Individuals.")
-                .Must(IsValidCpf).WithMessage("The provided Physical is invalid.");
-
-            RuleFor(c => c.LicenseNumber)
-                .NotEmpty().WithMessage("The Driver's License Number (CNH) is required for Individual clients.")
-                .Length(11).WithMessage("The Driver's License Number must contain 11 digits.");
+                .NotEmpty().WithMessage("The Individual (Individual Tax ID) is required for Individuals.")
+                .Must(IsValidCpf).WithMessage("The provided Individual is invalid.");
         });
     }
 
