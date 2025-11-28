@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251124213826_Initial_Config")]
+    [Migration("20251127194022_Initial_Config")]
     partial class Initial_Config
     {
         /// <inheritdoc />
@@ -132,10 +132,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<int>("ClientType")
+                        .HasColumnType("int");
 
                     b.Property<string>("Document")
                         .IsRequired()
@@ -154,33 +152,19 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsJuridical")
-                        .HasColumnType("bit");
+                    b.Property<Guid?>("JuristicClientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("LicenseExpiry")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("LicenseNumber")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Neighborhood")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
@@ -189,6 +173,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("JuristicClientId");
 
                     b.HasIndex("UserId");
 
@@ -246,10 +232,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ClientCNPJId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ClientCPFId")
+                    b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Document")
@@ -288,9 +271,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientCNPJId");
-
-                    b.HasIndex("ClientCPFId");
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("UserId");
 
@@ -412,7 +393,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsFixed")
+                    b.Property<bool>("IsChargedPerDay")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -423,6 +404,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("RateType")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
@@ -449,16 +433,15 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CapacityInLiters")
-                        .HasColumnType("int");
-
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FuelType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("FuelTankCapacity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FuelType")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
@@ -602,6 +585,11 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Clients.Client", b =>
                 {
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Clients.Client", "JuristicClient")
+                        .WithMany()
+                        .HasForeignKey("JuristicClientId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
@@ -613,6 +601,43 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.OwnsOne("LocadoraDeAutomoveis.Domain.Clients.Address", "Address", b1 =>
+                        {
+                            b1.Property<Guid>("ClientId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Neighborhood")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<int>("Number")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ClientId");
+
+                            b1.ToTable("Clients");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ClientId");
+                        });
+
+                    b.Navigation("Address")
+                        .IsRequired();
+
+                    b.Navigation("JuristicClient");
 
                     b.Navigation("Tenant");
 
@@ -640,14 +665,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Drivers.Driver", b =>
                 {
-                    b.HasOne("LocadoraDeAutomoveis.Domain.Clients.Client", "ClientCNPJ")
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Clients.Client", "Client")
                         .WithMany()
-                        .HasForeignKey("ClientCNPJId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("LocadoraDeAutomoveis.Domain.Clients.Client", "ClientCPF")
-                        .WithMany()
-                        .HasForeignKey("ClientCPFId")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -663,9 +683,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("ClientCNPJ");
-
-                    b.Navigation("ClientCPF");
+                    b.Navigation("Client");
 
                     b.Navigation("Tenant");
 
@@ -734,10 +752,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         {
                             b1.Property<Guid>("PricingPlanId")
                                 .HasColumnType("uniqueidentifier");
-
-                            b1.Property<int>("AvailableKm")
-                                .HasColumnType("int")
-                                .HasColumnName("ControlledPlan_AvailableKm");
 
                             b1.Property<decimal>("DailyRate")
                                 .HasPrecision(18, 2)

@@ -166,14 +166,16 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     FullName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(254)", maxLength: 254, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    IsJuridical = table.Column<bool>(type: "bit", nullable: false),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Neighborhood = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Street = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Number = table.Column<int>(type: "int", nullable: false),
                     Document = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Address_State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_Neighborhood = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_Number = table.Column<int>(type: "int", nullable: false),
+                    ClientType = table.Column<int>(type: "int", nullable: false),
                     LicenseNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LicenseExpiry = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    JuristicClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
@@ -190,6 +192,12 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         name: "FK_Clients_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Clients_Clients_JuristicClientId",
+                        column: x => x.JuristicClientId,
+                        principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -287,7 +295,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    IsFixed = table.Column<bool>(type: "bit", nullable: false),
+                    IsChargedPerDay = table.Column<bool>(type: "bit", nullable: false),
+                    RateType = table.Column<int>(type: "int", nullable: false),
                     TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
@@ -320,8 +329,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     Document = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LicenseNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LicenseValidity = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    ClientCPFId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClientCNPJId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
@@ -341,14 +349,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Drivers_Clients_ClientCNPJId",
-                        column: x => x.ClientCNPJId,
-                        principalTable: "Clients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Drivers_Clients_ClientCPFId",
-                        column: x => x.ClientCPFId,
+                        name: "FK_Drivers_Clients_ClientId",
+                        column: x => x.ClientId,
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -364,7 +366,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     DailyPlan_PricePerKm = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     ControlledPlan_Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     ControlledPlan_ExtrapolatedPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    ControlledPlan_AvailableKm = table.Column<int>(type: "int", nullable: false),
                     FreePlan_FixedRate = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -403,8 +404,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FuelType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CapacityInLiters = table.Column<int>(type: "int", nullable: false),
+                    FuelType = table.Column<int>(type: "int", nullable: false),
+                    FuelTankCapacity = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -481,6 +482,11 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Clients_JuristicClientId",
+                table: "Clients",
+                column: "JuristicClientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Clients_TenantId_UserId_IsActive",
                 table: "Clients",
                 columns: new[] { "TenantId", "UserId", "IsActive" });
@@ -501,14 +507,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Drivers_ClientCNPJId",
+                name: "IX_Drivers_ClientId",
                 table: "Drivers",
-                column: "ClientCNPJId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Drivers_ClientCPFId",
-                table: "Drivers",
-                column: "ClientCPFId");
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Drivers_Document_TenantId",
