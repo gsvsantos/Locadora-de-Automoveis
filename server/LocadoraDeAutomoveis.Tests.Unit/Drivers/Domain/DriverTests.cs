@@ -96,7 +96,7 @@ public sealed class DriverTests
         Driver driver = new();
 
         Client client = Builder<Client>.CreateNew().Build();
-        client.MarkAsPhysical();
+        client.SetClientType(EClientType.Individual);
 
         // Act
         driver.AssociateClient(client);
@@ -104,7 +104,7 @@ public sealed class DriverTests
         // Assert
         Assert.AreEqual(client.Id, driver.ClientId);
         Assert.AreEqual(client, driver.Client);
-        Assert.IsTrue(driver.Client.ClientType == EClientType.Physical);
+        Assert.IsTrue(driver.Client.ClientType == EClientType.Individual);
     }
 
     [TestMethod]
@@ -114,7 +114,7 @@ public sealed class DriverTests
         Driver driver = new();
 
         Client client = Builder<Client>.CreateNew().Build();
-        client.MarkAsPhysical();
+        client.SetClientType(EClientType.Individual);
 
         driver.AssociateClient(client);
 
@@ -133,7 +133,7 @@ public sealed class DriverTests
         Driver driver = new();
 
         Client clientCNPJ = Builder<Client>.CreateNew().Build();
-        clientCNPJ.MarkAsJuridical();
+        clientCNPJ.SetClientType(EClientType.Business);
 
         // Act
         driver.AssociateClient(clientCNPJ);
@@ -141,7 +141,7 @@ public sealed class DriverTests
         // Assert
         Assert.AreEqual(clientCNPJ.Id, driver.ClientId);
         Assert.AreEqual(clientCNPJ, driver.Client);
-        Assert.IsTrue(driver.Client.ClientType == EClientType.Juristic);
+        Assert.IsTrue(driver.Client.ClientType == EClientType.Business);
     }
 
     [TestMethod]
@@ -151,7 +151,7 @@ public sealed class DriverTests
         Driver driver = new();
 
         Client clientCNPJ = Builder<Client>.CreateNew().Build();
-        clientCNPJ.MarkAsJuridical();
+        clientCNPJ.SetClientType(EClientType.Business);
 
         driver.AssociateClient(clientCNPJ);
 

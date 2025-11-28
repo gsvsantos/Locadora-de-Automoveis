@@ -46,7 +46,7 @@ public sealed class DriverRepositoryTests : TestFixture
         {
             client.AssociateTenant(tenant.Id);
             client.AssociateUser(userEmployee);
-            client.MarkAsPhysical();
+            client.SetClientType(EClientType.Individual);
         }
 
         await this.clientRepository.AddMultiplyAsync(existingCPFClients);
@@ -71,7 +71,7 @@ public sealed class DriverRepositoryTests : TestFixture
         {
             client.AssociateTenant(tenant.Id);
             client.AssociateUser(userEmployee);
-            client.MarkAsJuridical();
+            client.SetClientType(EClientType.Business);
         }
 
         foreach (Client client in existingCPFClients.Concat(existingCNPJClients))
@@ -88,9 +88,9 @@ public sealed class DriverRepositoryTests : TestFixture
             .All()
             .Do(d =>
             {
-                d.Document = $"DRV-Physical-{Guid.NewGuid()}";
-                d.LicenseNumber = $"LIC-Physical-{Guid.NewGuid()}";
-                d.FullName = $"Driver Physical {Guid.NewGuid()}";
+                d.Document = $"DRV-Individual-{Guid.NewGuid()}";
+                d.LicenseNumber = $"LIC-Individual-{Guid.NewGuid()}";
+                d.FullName = $"Driver Individual {Guid.NewGuid()}";
                 d.Email = $"cpf-{Guid.NewGuid()}@test.com";
                 d.LicenseValidity = DateTimeOffset.UtcNow.AddYears(2);
             })
@@ -112,9 +112,9 @@ public sealed class DriverRepositoryTests : TestFixture
             .All()
             .Do(d =>
             {
-                d.Document = $"DRV-Juristic-{Guid.NewGuid()}";
-                d.LicenseNumber = $"LIC-Juristic-{Guid.NewGuid()}";
-                d.FullName = $"Driver Juristic {Guid.NewGuid()}";
+                d.Document = $"DRV-Business-{Guid.NewGuid()}";
+                d.LicenseNumber = $"LIC-Business-{Guid.NewGuid()}";
+                d.FullName = $"Driver Business {Guid.NewGuid()}";
                 d.Email = $"cnpj-{Guid.NewGuid()}@test.com";
                 d.LicenseValidity = DateTimeOffset.UtcNow.AddYears(2);
             })
@@ -139,12 +139,12 @@ public sealed class DriverRepositoryTests : TestFixture
 
         // Assert
         Assert.AreEqual(8, drivers.Count);
-        Assert.AreEqual(8, drivers.Count(d => !d.Client.ClientType.Equals(EClientType.Juristic)));
+        Assert.AreEqual(8, drivers.Count(d => !d.Client.ClientType.Equals(EClientType.Business)));
 
         foreach (Driver driver in drivers)
         {
             Assert.AreEqual(driver.ClientId, driver.Client.Id);
-            Assert.IsFalse(driver.Client.ClientType == EClientType.Juristic);
+            Assert.IsFalse(driver.Client.ClientType == EClientType.Business);
         }
 
         Driver driver1 = drivers.First(d => d.Id == driversCPFClients[0].Id);
@@ -215,14 +215,14 @@ public sealed class DriverRepositoryTests : TestFixture
         {
             juridicalClient.AssociateTenant(tenant.Id);
             juridicalClient.AssociateUser(userEmployee);
-            juridicalClient.MarkAsJuridical();
+            juridicalClient.SetClientType(EClientType.Business);
         }
 
         foreach (Client physicalClient in existingCPFClients)
         {
             physicalClient.AssociateTenant(tenant.Id);
             physicalClient.AssociateUser(userEmployee);
-            physicalClient.MarkAsPhysical();
+            physicalClient.SetClientType(EClientType.Individual);
         }
 
         List<Client> existingClients = existingCNPJClients
@@ -249,9 +249,9 @@ public sealed class DriverRepositoryTests : TestFixture
             .All()
             .Do(d =>
             {
-                d.Document = $"DRV-Physical-{Guid.NewGuid()}";
-                d.LicenseNumber = $"LIC-Physical-{Guid.NewGuid()}";
-                d.FullName = $"Driver Physical {Guid.NewGuid()}";
+                d.Document = $"DRV-Individual-{Guid.NewGuid()}";
+                d.LicenseNumber = $"LIC-Individual-{Guid.NewGuid()}";
+                d.FullName = $"Driver Individual {Guid.NewGuid()}";
                 d.Email = $"cpf-{Guid.NewGuid()}@test.com";
                 d.LicenseValidity = DateTimeOffset.UtcNow.AddYears(2);
             })
@@ -273,9 +273,9 @@ public sealed class DriverRepositoryTests : TestFixture
             .All()
             .Do(d =>
             {
-                d.Document = $"DRV-Juristic-{Guid.NewGuid()}";
-                d.LicenseNumber = $"LIC-Juristic-{Guid.NewGuid()}";
-                d.FullName = $"Driver Juristic {Guid.NewGuid()}";
+                d.Document = $"DRV-Business-{Guid.NewGuid()}";
+                d.LicenseNumber = $"LIC-Business-{Guid.NewGuid()}";
+                d.FullName = $"Driver Business {Guid.NewGuid()}";
                 d.Email = $"cnpj-{Guid.NewGuid()}@test.com";
                 d.LicenseValidity = DateTimeOffset.UtcNow.AddYears(2);
             })
@@ -304,7 +304,7 @@ public sealed class DriverRepositoryTests : TestFixture
         foreach (Driver driver in drivers)
         {
             Assert.AreEqual(driver.ClientId, driver.Client.Id);
-            Assert.IsFalse(driver.Client.ClientType == EClientType.Juristic);
+            Assert.IsFalse(driver.Client.ClientType == EClientType.Business);
         }
     }
 
@@ -342,7 +342,7 @@ public sealed class DriverRepositoryTests : TestFixture
 
         existingCPFClient.AssociateTenant(tenant.Id);
         existingCPFClient.AssociateUser(userEmployee);
-        existingCPFClient.MarkAsPhysical();
+        existingCPFClient.SetClientType(EClientType.Individual);
 
         await this.clientRepository.AddAsync(existingCPFClient);
 
@@ -351,9 +351,9 @@ public sealed class DriverRepositoryTests : TestFixture
         Driver driver = Builder<Driver>.CreateNew()
             .Do(d =>
             {
-                d.Document = $"DRV-Physical-{Guid.NewGuid()}";
-                d.LicenseNumber = $"LIC-Physical-{Guid.NewGuid()}";
-                d.FullName = $"Driver Physical {Guid.NewGuid()}";
+                d.Document = $"DRV-Individual-{Guid.NewGuid()}";
+                d.LicenseNumber = $"LIC-Individual-{Guid.NewGuid()}";
+                d.FullName = $"Driver Individual {Guid.NewGuid()}";
                 d.Email = $"cpf-{Guid.NewGuid()}@test.com";
                 d.LicenseValidity = DateTimeOffset.UtcNow.AddYears(2);
             })
@@ -374,7 +374,7 @@ public sealed class DriverRepositoryTests : TestFixture
         Assert.IsNotNull(selectedDriver);
         Assert.AreEqual(existingCPFClient.Id, selectedDriver.Client.Id);
         Assert.AreEqual(existingCPFClient.FullName, selectedDriver.Client.FullName);
-        Assert.AreEqual(EClientType.Physical, selectedDriver.Client.ClientType);
+        Assert.AreEqual(EClientType.Individual, selectedDriver.Client.ClientType);
     }
 
     [TestMethod]
@@ -411,7 +411,7 @@ public sealed class DriverRepositoryTests : TestFixture
 
         existingCPFClient.AssociateTenant(tenant.Id);
         existingCPFClient.AssociateUser(userEmployee);
-        existingCPFClient.MarkAsPhysical();
+        existingCPFClient.SetClientType(EClientType.Individual);
 
         await this.clientRepository.AddAsync(existingCPFClient);
 
@@ -433,7 +433,7 @@ public sealed class DriverRepositoryTests : TestFixture
 
         existingClientCNPJ.AssociateTenant(tenant.Id);
         existingClientCNPJ.AssociateUser(userEmployee);
-        existingClientCNPJ.MarkAsJuridical();
+        existingClientCNPJ.SetClientType(EClientType.Business);
 
         await this.clientRepository.AddAsync(existingClientCNPJ);
 
@@ -446,9 +446,9 @@ public sealed class DriverRepositoryTests : TestFixture
         Driver driver = Builder<Driver>.CreateNew()
             .Do(d =>
             {
-                d.Document = $"DRV-Physical-{Guid.NewGuid()}";
-                d.LicenseNumber = $"LIC-Physical-{Guid.NewGuid()}";
-                d.FullName = $"Driver Physical {Guid.NewGuid()}";
+                d.Document = $"DRV-Individual-{Guid.NewGuid()}";
+                d.LicenseNumber = $"LIC-Individual-{Guid.NewGuid()}";
+                d.FullName = $"Driver Individual {Guid.NewGuid()}";
                 d.Email = $"cpf-{Guid.NewGuid()}@test.com";
                 d.LicenseValidity = DateTimeOffset.UtcNow.AddYears(2);
             })
@@ -469,7 +469,7 @@ public sealed class DriverRepositoryTests : TestFixture
         Assert.IsNotNull(selectedDriver);
         Assert.AreEqual(existingCPFClient.Id, selectedDriver.Client.Id);
         Assert.AreEqual(existingCPFClient.FullName, selectedDriver.Client.FullName);
-        Assert.AreEqual(EClientType.Physical, selectedDriver.Client.ClientType);
+        Assert.AreEqual(EClientType.Individual, selectedDriver.Client.ClientType);
 
         Assert.IsNotNull(selectedDriver.Client.JuristicClient);
         Assert.AreEqual(existingClientCNPJ.Id, selectedDriver.Client.JuristicClient.Id);
