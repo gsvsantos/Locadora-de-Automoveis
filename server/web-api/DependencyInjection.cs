@@ -8,6 +8,7 @@ using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.Clients;
@@ -17,6 +18,7 @@ using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Groups;
 using LocadoraDeAutomoveis.Infrastructure.PricingPlans;
 using LocadoraDeAutomoveis.Infrastructure.RateServices;
+using LocadoraDeAutomoveis.Infrastructure.Rentals;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using LocadoraDeAutomoveis.Infrastructure.Vehicles;
 using Microsoft.EntityFrameworkCore;
@@ -160,6 +162,7 @@ public static class DependencyInjection
         services.AddScoped<IRepositoryDriver, DriverRepository>();
         services.AddScoped<IRepositoryRateService, RateServiceRepository>();
         services.AddScoped<IRepositoryConfiguration, ConfigurationRepository>();
+        services.AddScoped<IRepositoryRental, RentalRepository>();
     }
 
     public static void ConfigureSerilog(this IServiceCollection services, ILoggingBuilder logging, IConfiguration configuration)
