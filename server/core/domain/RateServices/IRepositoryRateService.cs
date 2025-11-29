@@ -2,4 +2,7 @@
 
 namespace LocadoraDeAutomoveis.Domain.RateServices;
 
-public interface IRepositoryRateService : IRepository<RateService>;
+public interface IRepositoryRateService : IRepository<RateService>
+{
+    Task<List<RateService>> GetMultiplyByIds(List<Guid> ids);
+}

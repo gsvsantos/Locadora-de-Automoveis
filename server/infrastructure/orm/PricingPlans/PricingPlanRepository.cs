@@ -14,6 +14,8 @@ public class PricingPlanRepository(AppDbContext context)
         this.records.Include(pp => pp.Group).Take(quantity).ToListAsync();
 
     public override Task<PricingPlan?> GetByIdAsync(Guid id) =>
-        this.records.Include(pp => pp.Group).FirstOrDefaultAsync(predicate: v => v.Id == id);
+        this.records.Include(pp => pp.Group).FirstOrDefaultAsync(v => v.Id == id);
 
+    public Task<PricingPlan?> GetByGroupId(Guid id) =>
+        this.records.Include(pp => pp.Group).FirstOrDefaultAsync(v => v.GroupId == id);
 }
