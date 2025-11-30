@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using LocadoraDeAutomoveis.Application.Rentals.Commands.Update;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
@@ -11,7 +10,7 @@ namespace LocadoraDeAutomoveis.Application.Rentals.Commands.Delete;
 public class DeleteRentalRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryRental repositoryRental,
-    ILogger<UpdateRentalRequestHandler> logger
+    ILogger<DeleteRentalRequestHandler> logger
 ) : IRequestHandler<DeleteRentalRequest, Result<DeleteRentalResponse>>
 {
     public async Task<Result<DeleteRentalResponse>> Handle(

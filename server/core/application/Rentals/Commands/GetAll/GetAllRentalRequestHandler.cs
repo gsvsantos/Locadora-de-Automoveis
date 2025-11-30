@@ -1,6 +1,5 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
-using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -27,19 +26,24 @@ public class GetAllRentalRequestHandler(
                 rentals.Count,
                 rentals.Select(rental => new RentalDto(
                     rental.Id,
-                    rental.Driver.FullName,
-                    new VehicleDto(
-                        rental.Vehicle.Id,
-                        rental.Vehicle.LicensePlate,
-                        rental.Vehicle.Brand,
-                        rental.Vehicle.Color,
-                        rental.Vehicle.Model,
-                        rental.Vehicle.FuelType,
-                       rental.Vehicle.FuelTankCapacity,
-                        rental.Vehicle.Year,
-                        rental.Vehicle.PhotoPath,
-                        rental.Vehicle.GroupId
-                    ),
+                    (rental.Employee is not null)
+                        ? new RentalEmployeeDto(
+                            rental.Employee.Id,
+                            rental.Employee.FullName
+                            )
+                        : null,
+                    new RentalClientDto(
+                        rental.ClientId,
+                        rental.Client.FullName
+                        ),
+                    new RentalDriverDto(
+                        rental.DriverId,
+                        rental.Driver.FullName
+                        ),
+                    new RentalVehicleDto(
+                        rental.VehicleId,
+                        rental.Vehicle.LicensePlate
+                        ),
                     rental.SelectedPlanType,
                     rental.StartDate,
                     rental.ExpectedReturnDate,

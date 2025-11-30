@@ -116,6 +116,7 @@ public class Rental : BaseEntity<Rental>
         this.DriverId = updatedEntity.Driver.Id;
         this.PricingPlan = updatedEntity.PricingPlan;
         this.PricingPlanId = updatedEntity.PricingPlan.Id;
+        this.RateServices = updatedEntity.RateServices;
     }
 }
 

@@ -8,7 +8,6 @@ public record CreateRentalRequest(
     DateTimeOffset StartDate,
     DateTimeOffset ExpectedReturnDate,
     decimal StartKm,
-    decimal BaseRentalPrice,
     Guid? EmployeeId,
     Guid ClientId,
     Guid DriverId,
