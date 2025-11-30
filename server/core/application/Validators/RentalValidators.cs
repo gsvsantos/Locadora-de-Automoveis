@@ -8,34 +8,34 @@ public class RentalValidator : AbstractValidator<Rental>
     public RentalValidator()
     {
         RuleFor(r => r.ClientId)
-            .NotEmpty().WithMessage("O Cliente é obrigatório.");
+            .NotEmpty().WithMessage("The Client is required.");
 
         RuleFor(r => r.DriverId)
-            .NotEmpty().WithMessage("O Condutor é obrigatório.");
+            .NotEmpty().WithMessage("The Driver is required.");
 
         RuleFor(r => r.VehicleId)
-            .NotEmpty().WithMessage("O Veículo é obrigatório.");
+            .NotEmpty().WithMessage("The Vehicle is required.");
 
         RuleFor(r => r.PricingPlanId)
-            .NotEmpty().WithMessage("O Plano de Cobrança é obrigatório.");
+            .NotEmpty().WithMessage("The Pricing Plan is required.");
 
         RuleFor(r => r.StartDate)
-            .NotEmpty().WithMessage("A Data de Início é obrigatória.");
+            .NotEmpty().WithMessage("The Start Date is required.");
 
         RuleFor(r => r.ExpectedReturnDate)
-            .NotEmpty().WithMessage("A Data Prevista de Devolução é obrigatória.")
+            .NotEmpty().WithMessage("The Expected Return Date is required.")
             .GreaterThan(r => r.StartDate)
-            .WithMessage("A Data Prevista de Devolução deve ser maior que a Data de Início.");
+            .WithMessage("The Expected Return Date must be greater than the Start Date.");
 
         RuleFor(r => r.StartKm)
             .GreaterThanOrEqualTo(0)
-            .WithMessage("A Quilometragem Inicial não pode ser negativa.");
+            .WithMessage("The Start Km cannot be negative.");
 
         When(r => r.SelectedPlanType == EPricingPlanType.Controlled, () =>
         {
             RuleFor(r => r.EstimatedKilometers)
-                .NotNull().WithMessage("Para o Plano Controlado, é obrigatório informar a Quilometragem Estimada.")
-                .GreaterThan(0).WithMessage("A Quilometragem Estimada deve ser maior que zero.");
+                .NotNull().WithMessage("For the Controlled Plan, the Estimated Kilometers is required.")
+                .GreaterThan(0).WithMessage("The Estimated Kilometers must be greater than zero.");
         });
     }
 }
