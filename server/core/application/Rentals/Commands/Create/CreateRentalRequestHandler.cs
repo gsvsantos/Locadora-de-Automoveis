@@ -86,6 +86,10 @@ public class CreateRentalRequestHandler(
             request.ExpectedReturnDate,
             request.StartKm
         );
+        rental.AssociateClient(client);
+        rental.AssociateDriver(driver);
+        rental.AssociateVehicle(vehicle);
+        rental.AssociatePricingPlan(pricingPlan);
 
         try
         {
@@ -101,11 +105,6 @@ public class CreateRentalRequestHandler(
             }
 
             List<RateService> rateServices = await repositoryRateService.GetMultiplyByIds(request.RentalRateServicesIds);
-
-            rental.AssociateClient(client);
-            rental.AssociateDriver(driver);
-            rental.AssociateVehicle(vehicle);
-            rental.AssociatePricingPlan(pricingPlan);
 
             if (rateServices.Count >= 1)
             {
