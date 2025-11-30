@@ -405,6 +405,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<int>("RateType")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("RentalId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
 
@@ -413,11 +416,92 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RentalId");
+
                     b.HasIndex("UserId");
 
                     b.HasIndex("TenantId", "UserId", "IsActive");
 
                     b.ToTable("RateServices", (string)null);
+                });
+
+            modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Rentals.Rental", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("BaseRentalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("EstimatedKilometers")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("ExpectedReturnDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<decimal>("FinalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("GuaranteeValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("PricingPlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("ReturnDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("SelectedPlanType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("StartDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<decimal>("StartKm")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("VehicleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("DriverId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("PricingPlanId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VehicleId");
+
+                    b.HasIndex("TenantId", "UserId", "IsActive");
+
+                    b.ToTable("Rentals", (string)null);
                 });
 
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Vehicles.Vehicle", b =>
@@ -827,6 +911,11 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.RateServices.RateService", b =>
                 {
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Rentals.Rental", null)
+                        .WithMany("RateServices")
+                        .HasForeignKey("RentalId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
@@ -842,6 +931,64 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Navigation("Tenant");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Rentals.Rental", b =>
+                {
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Clients.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Drivers.Driver", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Employees.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("LocadoraDeAutomoveis.Domain.PricingPlans.PricingPlan", "PricingPlan")
+                        .WithMany()
+                        .HasForeignKey("PricingPlanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Vehicles.Vehicle", "Vehicle")
+                        .WithMany()
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Driver");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("PricingPlan");
+
+                    b.Navigation("Tenant");
+
+                    b.Navigation("User");
+
+                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Vehicles.Vehicle", b =>
@@ -927,6 +1074,11 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Navigation("PricingPlans");
 
                     b.Navigation("Vehicles");
+                });
+
+            modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Rentals.Rental", b =>
+                {
+                    b.Navigation("RateServices");
                 });
 #pragma warning restore 612, 618
         }
