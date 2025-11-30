@@ -7,5 +7,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Employees;
 public class EmployeeRepository(AppDbContext context)
     : BaseRepository<Employee>(context), IRepositoryEmployee
 {
-    public async Task<Employee?> GetByUserIdAsync(Guid userId) => await this.records.FirstOrDefaultAsync(e => e.UserId == userId);
+    public async Task<Employee?> GetByUserIdAsync(Guid userId)
+    {
+        return await this.records
+            .FirstOrDefaultAsync(e => e.UserId == userId);
+    }
 }

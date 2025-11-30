@@ -7,13 +7,24 @@ namespace LocadoraDeAutomoveis.Infrastructure.Groups;
 public class GroupRepository(AppDbContext context)
     : BaseRepository<Group>(context), IRepositoryGroup
 {
-    public override Task<List<Group>> GetAllAsync() =>
-        this.records.Include(g => g.Vehicles).ToListAsync();
+    public override async Task<List<Group>> GetAllAsync()
+    {
+        return await this.records
+            .Include(g => g.Vehicles)
+            .ToListAsync();
+    }
 
-    public override Task<List<Group>> GetAllAsync(int quantity) =>
-        this.records.Include(g => g.Vehicles).Take(quantity).ToListAsync();
+    public override async Task<List<Group>> GetAllAsync(int quantity)
+    {
+        return await this.records
+            .Include(g => g.Vehicles)
+            .Take(quantity).ToListAsync();
+    }
 
-    public override Task<Group?> GetByIdAsync(Guid entityId) =>
-        this.records.Include(g => g.Vehicles)
-        .FirstOrDefaultAsync(d => d.Id.Equals(entityId));
+    public override async Task<Group?> GetByIdAsync(Guid entityId)
+    {
+        return await this.records
+            .Include(g => g.Vehicles)
+            .FirstOrDefaultAsync(d => d.Id.Equals(entityId));
+    }
 }

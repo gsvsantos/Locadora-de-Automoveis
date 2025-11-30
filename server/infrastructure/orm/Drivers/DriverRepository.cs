@@ -7,15 +7,24 @@ namespace LocadoraDeAutomoveis.Infrastructure.Drivers;
 public class DriverRepository(AppDbContext context)
     : BaseRepository<Driver>(context), IRepositoryDriver
 {
-    public override Task<List<Driver>> GetAllAsync() =>
-        this.records.Include(d => d.Client)
-        .ToListAsync();
+    public override async Task<List<Driver>> GetAllAsync()
+    {
+        return await this.records
+            .Include(d => d.Client)
+            .ToListAsync();
+    }
 
-    public override Task<List<Driver>> GetAllAsync(int quantity) =>
-        this.records.Include(d => d.Client)
-        .Take(quantity).ToListAsync();
+    public override async Task<List<Driver>> GetAllAsync(int quantity)
+    {
+        return await this.records
+            .Include(d => d.Client)
+            .Take(quantity).ToListAsync();
+    }
 
-    public override Task<Driver?> GetByIdAsync(Guid entityId) =>
-        this.records.Include(d => d.Client)
-        .FirstOrDefaultAsync(d => d.Id.Equals(entityId));
+    public override async Task<Driver?> GetByIdAsync(Guid entityId)
+    {
+        return await this.records
+            .Include(d => d.Client)
+            .FirstOrDefaultAsync(d => d.Id.Equals(entityId));
+    }
 }
