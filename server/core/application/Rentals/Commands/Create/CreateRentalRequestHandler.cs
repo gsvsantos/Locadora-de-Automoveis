@@ -43,9 +43,10 @@ public class CreateRentalRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(userContext.GetUserId()));
         }
 
+        Employee? employee = null;
         if (request.EmployeeId.HasValue && request.EmployeeId != Guid.Empty)
         {
-            Employee? employee = await repositoryEmployee.GetByIdAsync(request.EmployeeId.Value);
+            employee = await repositoryEmployee.GetByIdAsync(request.EmployeeId.Value);
 
             if (employee is null)
             {
@@ -86,6 +87,12 @@ public class CreateRentalRequestHandler(
             request.ExpectedReturnDate,
             request.StartKm
         );
+
+        if (employee is not null)
+        {
+            rental.AssociateEmployee(employee);
+        }
+
         rental.AssociateClient(client);
         rental.AssociateDriver(driver);
         rental.AssociateVehicle(vehicle);
