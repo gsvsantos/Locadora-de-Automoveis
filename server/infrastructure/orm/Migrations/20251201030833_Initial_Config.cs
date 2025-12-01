@@ -425,7 +425,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     VehicleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PricingPlanId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SelectedPlanType = table.Column<int>(type: "int", nullable: false),
-                    EstimatedKilometers = table.Column<int>(type: "int", nullable: true),
+                    EstimatedKilometers = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
@@ -508,6 +508,47 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_RateServices_Rentals_RentalId",
+                        column: x => x.RentalId,
+                        principalTable: "Rentals",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RentalReturns",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReturnDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    EndKm = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalMileage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ServicesTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    FuelPenalty = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PenaltyTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    FinalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    FuelLevelAtReturn = table.Column<int>(type: "int", nullable: false),
+                    RentalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RentalReturns", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RentalReturns_AspNetUsers_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RentalReturns_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RentalReturns_Rentals_RentalId",
                         column: x => x.RentalId,
                         principalTable: "Rentals",
                         principalColumn: "Id",
@@ -662,6 +703,21 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RentalReturns_RentalId",
+                table: "RentalReturns",
+                column: "RentalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RentalReturns_TenantId_UserId_IsActive",
+                table: "RentalReturns",
+                columns: new[] { "TenantId", "UserId", "IsActive" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RentalReturns_UserId",
+                table: "RentalReturns",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Rentals_ClientId",
                 table: "Rentals",
                 column: "ClientId");
@@ -735,6 +791,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "RateServices");
+
+            migrationBuilder.DropTable(
+                name: "RentalReturns");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
