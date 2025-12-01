@@ -405,9 +405,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<int>("RateType")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("RentalId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
 
@@ -415,8 +412,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RentalId");
 
                     b.HasIndex("UserId");
 
@@ -717,6 +712,21 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("RateServiceRental", b =>
+                {
+                    b.Property<Guid>("RateServicesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RentalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("RateServicesId", "RentalId");
+
+                    b.HasIndex("RentalId");
+
+                    b.ToTable("RentalRateServices", (string)null);
+                });
+
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Clients.Client", b =>
                 {
                     b.HasOne("LocadoraDeAutomoveis.Domain.Clients.Client", "JuristicClient")
@@ -964,11 +974,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.RateServices.RateService", b =>
                 {
-                    b.HasOne("LocadoraDeAutomoveis.Domain.Rentals.Rental", null)
-                        .WithMany("RateServices")
-                        .HasForeignKey("RentalId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
@@ -1149,16 +1154,26 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RateServiceRental", b =>
+                {
+                    b.HasOne("LocadoraDeAutomoveis.Domain.RateServices.RateService", null)
+                        .WithMany()
+                        .HasForeignKey("RateServicesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Rentals.Rental", null)
+                        .WithMany()
+                        .HasForeignKey("RentalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Groups.Group", b =>
                 {
                     b.Navigation("PricingPlans");
 
                     b.Navigation("Vehicles");
-                });
-
-            modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Rentals.Rental", b =>
-                {
-                    b.Navigation("RateServices");
                 });
 #pragma warning restore 612, 618
         }
