@@ -1,4 +1,5 @@
 ﻿using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
@@ -26,6 +27,8 @@ public class Rental : BaseEntity<Rental>
     public Driver Driver { get; set; } = null!;
     public Guid VehicleId { get; set; }
     public Vehicle Vehicle { get; set; } = null!;
+    public Guid? CouponId { get; set; }
+    public Coupon? Coupon { get; set; }
     public Guid PricingPlanId { get; set; }
     public PricingPlan PricingPlan { get; set; } = null!;
     public EPricingPlanType SelectedPlanType { get; set; }
@@ -42,18 +45,20 @@ public class Rental : BaseEntity<Rental>
 
     public void CalculateBasePrice()
     {
-        switch (this.SelectedPlanType)
+        decimal planPrice = this.SelectedPlanType switch
         {
-            case EPricingPlanType.Daily:
-                this.BaseRentalPrice = this.PricingPlan.DailyPlan.DailyRate + this.PricingPlan.DailyPlan.PricePerKm;
-                break;
-            case EPricingPlanType.Controlled:
-                this.BaseRentalPrice = this.PricingPlan.ControlledPlan.DailyRate + this.PricingPlan.ControlledPlan.PricePerKmExtrapolated;
-                break;
-            case EPricingPlanType.Free:
-                this.BaseRentalPrice = this.PricingPlan.FreePlan.FixedRate;
-                break;
+            EPricingPlanType.Daily => this.PricingPlan.DailyPlan.DailyRate + this.PricingPlan.DailyPlan.PricePerKm,
+            EPricingPlanType.Controlled => this.PricingPlan.ControlledPlan.DailyRate + this.PricingPlan.ControlledPlan.PricePerKmExtrapolated,
+            EPricingPlanType.Free => this.PricingPlan.FreePlan.FixedRate,
+            _ => 0
+        };
+
+        if (this.Coupon is not null)
+        {
+            planPrice -= this.Coupon.DiscountValue;
         }
+
+        this.BaseRentalPrice = Math.Max(0, planPrice);
     }
 
     public void AddMultiplyRateService(List<RateService> rateServices) => this.RateServices.AddRange(rateServices);
@@ -92,6 +97,12 @@ public class Rental : BaseEntity<Rental>
     {
         this.Vehicle = vehicle;
         this.VehicleId = vehicle.Id;
+    }
+
+    public void AssociateCoupon(Coupon coupon)
+    {
+        this.Coupon = coupon;
+        this.CouponId = coupon.Id;
     }
 
     public void AssociatePricingPlan(PricingPlan PricingPlan)
