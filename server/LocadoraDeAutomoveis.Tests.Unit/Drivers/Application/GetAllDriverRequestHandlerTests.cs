@@ -65,6 +65,7 @@ public sealed class GetAllDriverRequestHandlerTests
             }
         }
     }
+
     [TestMethod]
     public void Handler_ShouldGetFiveDrivers_Successfully()
     {
