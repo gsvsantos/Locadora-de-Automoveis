@@ -7,7 +7,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.RateServices;
 public class RateServiceRepository(AppDbContext context)
     : BaseRepository<RateService>(context), IRepositoryRateService
 {
-    public async Task<List<RateService>> GetMultiplyByIds(List<Guid> ids)
+    public async Task<List<RateService>> GetManyByIds(List<Guid> ids)
     {
         return await this.records
             .Include(x => x.User)

@@ -25,7 +25,6 @@ public class UpdateRentalRequestHandler(
     IRepositoryVehicle repositoryVehicle,
     IRepositoryPricingPlan repositoryPricingPlan,
     IRepositoryRateService repositoryRateService,
-    ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<Rental> validator,
     ILogger<UpdateRentalRequestHandler> logger
@@ -110,7 +109,7 @@ public class UpdateRentalRequestHandler(
                 return Result.Fail(ErrorResults.BadRequestError(errors));
             }
 
-            List<RateService> rateServices = await repositoryRateService.GetMultiplyByIds(request.RentalRateServicesIds);
+            List<RateService> rateServices = await repositoryRateService.GetManyByIds(request.RentalRateServicesIds);
 
             if (rateServices.Count >= 1)
             {

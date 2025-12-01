@@ -29,7 +29,7 @@ public class Rental : BaseEntity<Rental>
     public Guid PricingPlanId { get; set; }
     public PricingPlan PricingPlan { get; set; } = null!;
     public EPricingPlanType SelectedPlanType { get; set; }
-    public int? EstimatedKilometers { get; set; }
+    public decimal? EstimatedKilometers { get; set; }
     public List<RateService> RateServices { get; set; } = [];
 
     public Rental() { }
@@ -62,9 +62,11 @@ public class Rental : BaseEntity<Rental>
 
     public void RemoveRentalService(RateService service) => this.RateServices.Remove(service);
 
-    public void SetEstimatedKilometers(int estimatedKilometers) => this.EstimatedKilometers = estimatedKilometers;
+    public void SetEstimatedKilometers(decimal estimatedKilometers) => this.EstimatedKilometers = estimatedKilometers;
 
     public void SetStatus(ERentalStatus status) => this.Status = status;
+
+    public void SetPricingPlanType(EPricingPlanType selectedPlanType) => this.SelectedPlanType = selectedPlanType;
 
     public void SetFinalPrice(decimal finalPrice) => this.FinalPrice = finalPrice;
 

@@ -13,5 +13,6 @@ public record CreateRentalRequest(
     Guid DriverId,
     Guid VehicleId,
     EPricingPlanType SelectedPlanType,
+    decimal? EstimatedKilometers,
     List<Guid> RentalRateServicesIds
 ) : IRequest<Result<CreateRentalResponse>>;

@@ -18,9 +18,6 @@ public class RentalMapper : IEntityTypeConfiguration<Rental>
         builder.Property(r => r.ExpectedReturnDate)
             .IsRequired();
 
-        builder.Property(r => r.ReturnDate)
-            .IsRequired(false);
-
         builder.Property(r => r.StartKm)
             .HasColumnType("decimal(18,2)")
             .IsRequired();
@@ -33,20 +30,22 @@ public class RentalMapper : IEntityTypeConfiguration<Rental>
             .HasColumnType("decimal(18,2)")
             .IsRequired();
 
-        builder.Property(r => r.FinalPrice)
-            .HasColumnType("decimal(18,2)")
-            .IsRequired();
-
-        builder.Property(r => r.EstimatedKilometers)
-            .IsRequired(false);
-
         builder.Property(r => r.Status)
             .HasConversion<int>()
             .IsRequired();
 
-        builder.Property(r => r.SelectedPlanType)
-            .HasConversion<int>()
+        builder.Property(r => r.ReturnDate)
+            .IsRequired(false);
+
+        builder.Property(r => r.FinalPrice)
+            .HasColumnType("decimal(18,2)")
             .IsRequired();
+
+        builder.HasOne(r => r.Employee)
+            .WithMany()
+            .HasForeignKey(r => r.EmployeeId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(r => r.Client)
             .WithMany()
@@ -68,11 +67,13 @@ public class RentalMapper : IEntityTypeConfiguration<Rental>
             .HasForeignKey(r => r.PricingPlanId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(r => r.Employee)
-            .WithMany()
-            .HasForeignKey(r => r.EmployeeId)
-            .IsRequired(false)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.Property(r => r.SelectedPlanType)
+            .HasConversion<int>()
+            .IsRequired();
+
+        builder.Property(r => r.EstimatedKilometers)
+            .HasColumnType("decimal(18,2)")
+            .IsRequired(false);
 
         builder.HasMany(r => r.RateServices)
             .WithOne()

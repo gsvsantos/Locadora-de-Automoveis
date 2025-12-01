@@ -50,7 +50,7 @@ public class CreateRentalRequestHandler(
 
             if (employee is null)
             {
-                return Result.Fail(ErrorResults.NotFoundError(userContext.GetUserId()));
+                return Result.Fail(ErrorResults.NotFoundError(request.EmployeeId.Value));
             }
         }
 
@@ -97,6 +97,13 @@ public class CreateRentalRequestHandler(
         rental.AssociateDriver(driver);
         rental.AssociateVehicle(vehicle);
         rental.AssociatePricingPlan(pricingPlan);
+        rental.SetPricingPlanType(request.SelectedPlanType);
+
+        if (request.SelectedPlanType.Equals(EPricingPlanType.Controlled)
+            && request.EstimatedKilometers.HasValue)
+        {
+            rental.SetEstimatedKilometers(request.EstimatedKilometers.Value);
+        }
 
         try
         {
@@ -111,7 +118,7 @@ public class CreateRentalRequestHandler(
                 return Result.Fail(ErrorResults.BadRequestError(errors));
             }
 
-            List<RateService> rateServices = await repositoryRateService.GetMultiplyByIds(request.RentalRateServicesIds);
+            List<RateService> rateServices = await repositoryRateService.GetManyByIds(request.RentalRateServicesIds);
 
             if (rateServices.Count >= 1)
             {
