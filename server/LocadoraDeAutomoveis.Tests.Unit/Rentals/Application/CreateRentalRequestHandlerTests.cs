@@ -134,12 +134,13 @@ public sealed class CreateRentalRequestHandlerTests
         )
         { Id = driverId };
 
-        this.repositoryDriverMock.
-            Setup(r => r.GetByIdAsync(driverId))
+        this.repositoryDriverMock
+            .Setup(r => r.GetByIdAsync(driverId))
             .ReturnsAsync(driver);
 
         Guid groupId = Guid.NewGuid();
         Group group = new("Grupo Teste") { Id = groupId };
+
         Guid vehicleId = Guid.NewGuid();
         Vehicle vehicle = new(
             "ABC-1234",
@@ -174,24 +175,24 @@ public sealed class CreateRentalRequestHandlerTests
         List<Guid> serviceIds = [Guid.NewGuid(), Guid.NewGuid()];
         List<RateService> services =
         [
-            new RateService("GPS", 10) {IsChargedPerDay = true, RateType = ERateType.Generic},
-            new RateService("Cadeira", 20) {IsChargedPerDay = true, RateType = ERateType.Generic}
+            new RateService("GPS", 10) { IsChargedPerDay = true, RateType = ERateType.Generic },
+            new RateService("Cadeira", 20) { IsChargedPerDay = true, RateType = ERateType.Generic }
         ];
 
         this.repositoryRateServiceMock
-            .Setup(r => r.GetMultiplyByIds(serviceIds))
+            .Setup(r => r.GetManyByIds(serviceIds))
             .ReturnsAsync(services);
 
         CreateRentalRequest request = new(
             DateTimeOffset.Now,
             DateTimeOffset.Now.AddDays(5),
             1000m,
-            0,
             null,
             clientId,
             driverId,
             vehicleId,
             EPricingPlanType.Daily,
+            null,
             serviceIds
         );
 
@@ -230,12 +231,13 @@ public sealed class CreateRentalRequestHandlerTests
             .Verify(r => r.GetByGroupId(groupId), Times.Once);
 
         this.repositoryRateServiceMock
-            .Verify(r => r.GetMultiplyByIds(serviceIds), Times.Once);
+            .Verify(r => r.GetManyByIds(serviceIds), Times.Once);
 
         this.validatorMock
             .Verify(v => v.ValidateAsync(
-                It.IsAny<Rental>(), CancellationToken.None
-                ), Times.Once
+                    It.IsAny<Rental>(), CancellationToken.None
+                ),
+                Times.Once
             );
 
         this.repositoryRentalMock
@@ -245,9 +247,11 @@ public sealed class CreateRentalRequestHandlerTests
                         rental.DriverId == driverId &&
                         rental.VehicleId == vehicleId &&
                         rental.RateServices.Count == 2 &&
-                        rental.Status == ERentalStatus.Open
+                        rental.Status == ERentalStatus.Open &&
+                        rental.SelectedPlanType == EPricingPlanType.Daily
                     )
-                ), Times.Once
+                ),
+                Times.Once
             );
 
         this.unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
