@@ -163,6 +163,7 @@ public static class DependencyInjection
         services.AddScoped<IRepositoryRateService, RateServiceRepository>();
         services.AddScoped<IRepositoryConfiguration, ConfigurationRepository>();
         services.AddScoped<IRepositoryRental, RentalRepository>();
+        services.AddScoped<IRepositoryRentalReturn, RentalReturnRepository>();
     }
 
     public static void ConfigureSerilog(this IServiceCollection services, ILoggingBuilder logging, IConfiguration configuration)
