@@ -7,8 +7,6 @@ namespace LocadoraDeAutomoveis.Tests.Integration.Repositories;
 [TestCategory("RateServiceRepository Infrastructure - Integration Tests")]
 public sealed class RateServiceRepositoryTests : TestFixture
 {
-    // to-do: testar com include de Aluguél
-
     [TestMethod]
     public async Task Should_GetAllAsync_ReturnRateServices_Successfuly()
     {

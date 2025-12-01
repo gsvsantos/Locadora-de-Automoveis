@@ -197,6 +197,7 @@ public sealed class RentalRepositoryTests : TestFixture
         await this.pricingPlanRepository.AddAsync(pricingPlan);
 
         Vehicle vehicle = Builder<Vehicle>.CreateNew().Build();
+
         vehicle.AssociateTenant(tenant.Id);
         vehicle.AssociateUser(userEmployee);
         vehicle.AssociateGroup(group);

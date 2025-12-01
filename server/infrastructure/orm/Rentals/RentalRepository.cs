@@ -23,6 +23,7 @@ public class RentalRepository(AppDbContext context)
             .Include(r => r.Client)
             .Include(r => r.Driver)
             .Include(r => r.Vehicle)
+                .ThenInclude(v => v.Group)
             .Include(r => r.PricingPlan)
             .Include(r => r.RateServices);
 }

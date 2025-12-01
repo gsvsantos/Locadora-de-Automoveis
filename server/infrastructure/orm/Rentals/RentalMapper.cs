@@ -76,9 +76,8 @@ public class RentalMapper : IEntityTypeConfiguration<Rental>
             .IsRequired(false);
 
         builder.HasMany(r => r.RateServices)
-            .WithOne()
-            .OnDelete(DeleteBehavior.Restrict)
-            .IsRequired(false);
+            .WithMany()
+            .UsingEntity(j => j.ToTable("RentalRateServices"));
 
         builder.HasOne(t => t.Tenant)
             .WithMany()

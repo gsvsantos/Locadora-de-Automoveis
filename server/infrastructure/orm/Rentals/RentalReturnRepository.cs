@@ -1,7 +1,38 @@
 ﻿using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
+using Microsoft.EntityFrameworkCore;
 
 namespace LocadoraDeAutomoveis.Infrastructure.Rentals;
 
 public class RentalReturnRepository(AppDbContext context)
-    : BaseRepository<RentalReturn>(context), IRepositoryRentalReturn;
+    : BaseRepository<RentalReturn>(context), IRepositoryRentalReturn
+{
+    public override async Task<List<RentalReturn>> GetAllAsync() =>
+        await WithIncludes().ToListAsync();
+
+    public override async Task<List<RentalReturn>> GetAllAsync(int quantity) =>
+        await WithIncludes().Take(quantity).ToListAsync();
+
+    public override async Task<RentalReturn?> GetByIdAsync(Guid entityId) =>
+        await WithIncludes().FirstOrDefaultAsync(rr => rr.Id == entityId);
+
+    private IQueryable<RentalReturn> WithIncludes()
+    {
+        return this.records
+            .Include(rr => rr.Rental)
+                .ThenInclude(r => r.Client)
+            .Include(rr => rr.Rental)
+                .ThenInclude(r => r.Driver)
+
+            .Include(rr => rr.Rental)
+                .ThenInclude(r => r.Vehicle)
+                    .ThenInclude(v => v.Group)
+            .Include(rr => rr.Rental)
+                .ThenInclude(r => r.PricingPlan)
+            .Include(rr => rr.Rental)
+                .ThenInclude(r => r.RateServices)
+            .Include(rr => rr.Rental)
+                .ThenInclude(r => r.Employee)
+            .Include(rr => rr.User);
+    }
+}
