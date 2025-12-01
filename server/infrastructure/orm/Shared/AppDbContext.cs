@@ -28,6 +28,7 @@ public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvi
     public DbSet<RateService> RateServices { get; set; }
     public DbSet<Configuration> Configurations { get; set; }
     public DbSet<Rental> Rentals { get; set; }
+    public DbSet<RentalReturn> RentalReturns { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -50,6 +51,8 @@ public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvi
             modelBuilder.Entity<Configuration>()
                 .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
             modelBuilder.Entity<Rental>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<RentalReturn>()
                 .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
         }
 
