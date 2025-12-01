@@ -13,7 +13,7 @@ using LocadoraDeAutomoveis.Domain.Vehicles;
 namespace LocadoraDeAutomoveis.Tests.Unit.Rentals.Application;
 
 [TestClass]
-[TestCategory("RateService Application - Unit Tests")]
+[TestCategory("Rental Application - Unit Tests")]
 public sealed class CreateRentalRequestHandlerTests
 {
     private CreateRentalRequestHandler handler = null!;
@@ -159,7 +159,6 @@ public sealed class CreateRentalRequestHandlerTests
             .Setup(r => r.GetByIdAsync(vehicleId))
             .ReturnsAsync(vehicle);
 
-        // PricingPlan Setup
         PricingPlan pricingPlan = new(
             "Plano Teste",
             new DailyPlanProps(100, 10),
