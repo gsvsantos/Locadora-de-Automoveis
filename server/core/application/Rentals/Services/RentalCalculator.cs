@@ -8,6 +8,15 @@ namespace LocadoraDeAutomoveis.Application.Rentals.Services;
 
 public static class RentalCalculator
 {
+    public static decimal CalculateFinalPrice(decimal planCost, decimal servicesCost, decimal penalties, decimal discountValue)
+    {
+        decimal total = planCost + servicesCost + penalties;
+
+        total -= discountValue;
+
+        return Math.Max(0, total);
+    }
+
     public static decimal CalculateServicesCost(List<RateService> rateServices, int daysUsed)
     {
         return rateServices.Sum(service =>

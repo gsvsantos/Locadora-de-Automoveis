@@ -12,6 +12,7 @@ public record CreateRentalRequest(
     Guid ClientId,
     Guid DriverId,
     Guid VehicleId,
+    Guid? CouponId,
     EPricingPlanType SelectedPlanType,
     decimal? EstimatedKilometers,
     List<Guid> RentalRateServicesIds

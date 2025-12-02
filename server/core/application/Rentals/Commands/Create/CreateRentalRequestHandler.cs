@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
@@ -25,6 +26,7 @@ public class CreateRentalRequestHandler(
     IRepositoryClient repositoryClient,
     IRepositoryDriver repositoryDriver,
     IRepositoryVehicle repositoryVehicle,
+    IRepositoryCoupon repositoryCoupon,
     IRepositoryPricingPlan repositoryPricingPlan,
     IRepositoryRateService repositoryRateService,
     ITenantProvider tenantProvider,
@@ -82,6 +84,27 @@ public class CreateRentalRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(vehicle.GroupId));
         }
 
+        Coupon? coupon = null;
+        if (request.CouponId.HasValue && request.CouponId != Guid.Empty)
+        {
+            coupon = await repositoryCoupon.GetByIdAsync(request.CouponId.Value);
+            if (coupon is null)
+            {
+                return Result.Fail(ErrorResults.NotFoundError(request.CouponId.Value));
+            }
+
+            if (coupon.IsExpired())
+            {
+                return Result.Fail(ErrorResults.BadRequestError("The coupon is expired."));
+            }
+
+            bool alreadyUsed = await repositoryRental.HasClientUsedCoupon(client.Id, coupon.Id);
+            if (alreadyUsed)
+            {
+                return Result.Fail(ErrorResults.BadRequestError("This client has already used this coupon."));
+            }
+        }
+
         Rental rental = new(
             request.StartDate,
             request.ExpectedReturnDate,
@@ -91,6 +114,11 @@ public class CreateRentalRequestHandler(
         if (employee is not null)
         {
             rental.AssociateEmployee(employee);
+        }
+
+        if (coupon is not null)
+        {
+            rental.AssociateCoupon(coupon);
         }
 
         rental.AssociateClient(client);

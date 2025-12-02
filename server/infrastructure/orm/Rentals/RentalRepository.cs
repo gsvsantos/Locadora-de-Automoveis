@@ -7,6 +7,16 @@ namespace LocadoraDeAutomoveis.Infrastructure.Rentals;
 public class RentalRepository(AppDbContext context)
     : BaseRepository<Rental>(context), IRepositoryRental
 {
+    public async Task<bool> HasClientUsedCoupon(Guid clientId, Guid couponId)
+    {
+        return await this.records
+            .AnyAsync(r =>
+                r.ClientId.Equals(clientId) &&
+                r.CouponId.Equals(couponId) &&
+                r.Status != ERentalStatus.Canceled
+            );
+    }
+
     public override async Task<List<Rental>> GetAllAsync() =>
         await WithIncludes().ToListAsync();
 
@@ -24,6 +34,8 @@ public class RentalRepository(AppDbContext context)
             .Include(r => r.Driver)
             .Include(r => r.Vehicle)
                 .ThenInclude(v => v.Group)
+            .Include(r => r.Coupon)
+                .ThenInclude(c => c!.Partner)
             .Include(r => r.PricingPlan)
             .Include(r => r.RateServices);
 }

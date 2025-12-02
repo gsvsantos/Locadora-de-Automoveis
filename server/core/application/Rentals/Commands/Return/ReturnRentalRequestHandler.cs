@@ -117,7 +117,11 @@ public class ReturnRentalRequestHandler(
 
             rentalReturn.SetPenaltyTotal(totalPenalties);
 
-            decimal finalPrice = planCost + servicesCost + totalPenalties;
+            decimal discount = selectedRental.Coupon?.DiscountValue ?? 0;
+
+            decimal finalPrice = RentalCalculator.CalculateFinalPrice(
+                planCost, servicesCost, totalPenalties, discount
+            );
 
             selectedRental.SetStatus(ERentalStatus.Completed);
             selectedRental.ReturnDate = returnDate;
