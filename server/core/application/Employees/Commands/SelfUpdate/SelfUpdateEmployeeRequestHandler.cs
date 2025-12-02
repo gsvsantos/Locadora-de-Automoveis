@@ -63,7 +63,7 @@ public class SelfUpdateEmployeeRequestHandler(
                 return Result.Fail(EmployeeErrorResults.DuplicateNameError(request.FullName));
             }
 
-            await repositoryEmployee.UpdateAsync(request.Id, updatedEmployee);
+            await repositoryEmployee.UpdateAsync(selectedEmployee.Id, updatedEmployee);
 
             if (selectedEmployee.User is null)
             {
@@ -76,7 +76,7 @@ public class SelfUpdateEmployeeRequestHandler(
 
             await unitOfWork.CommitAsync();
 
-            return Result.Ok(new SelfUpdateEmployeeResponse(request.Id));
+            return Result.Ok(new SelfUpdateEmployeeResponse(selectedEmployee.Id));
         }
         catch (Exception ex)
         {
