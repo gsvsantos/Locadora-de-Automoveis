@@ -3,9 +3,11 @@ using Hangfire;
 using LocadoraDeAutomoveis.Application.Employees.Commands.Create;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Configurations;
+using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
+using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Rentals;
@@ -13,9 +15,11 @@ using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.Clients;
 using LocadoraDeAutomoveis.Infrastructure.Configurations;
+using LocadoraDeAutomoveis.Infrastructure.Coupons;
 using LocadoraDeAutomoveis.Infrastructure.Drivers;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Groups;
+using LocadoraDeAutomoveis.Infrastructure.Partners;
 using LocadoraDeAutomoveis.Infrastructure.PricingPlans;
 using LocadoraDeAutomoveis.Infrastructure.RateServices;
 using LocadoraDeAutomoveis.Infrastructure.Rentals;
@@ -164,6 +168,8 @@ public static class DependencyInjection
         services.AddScoped<IRepositoryConfiguration, ConfigurationRepository>();
         services.AddScoped<IRepositoryRental, RentalRepository>();
         services.AddScoped<IRepositoryRentalReturn, RentalReturnRepository>();
+        services.AddScoped<IRepositoryPartner, PartnerRepository>();
+        services.AddScoped<IRepositoryCoupon, CouponRepository>();
     }
 
     public static void ConfigureSerilog(this IServiceCollection services, ILoggingBuilder logging, IConfiguration configuration)
