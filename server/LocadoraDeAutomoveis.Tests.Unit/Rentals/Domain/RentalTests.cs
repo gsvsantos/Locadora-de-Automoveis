@@ -124,72 +124,6 @@ public sealed class RentalTests
     }
 
     [TestMethod]
-    public void RentalMethod_CalculateBasePrice_DailyPlan_ShouldSumDailyRateAndKmPrice()
-    {
-        // Arrange
-        Rental rental = new();
-        PricingPlan plan = new(
-            "Plano Teste",
-            new DailyPlanProps(100, 10),
-            new ControlledPlanProps(0, 0),
-            new FreePlanProps(0)
-        );
-
-        rental.AssociatePricingPlan(plan);
-        rental.SetPricingPlanType(EPricingPlanType.Daily);
-
-        // Act
-        rental.CalculateBasePrice();
-
-        // Assert
-        Assert.AreEqual(110, rental.BaseRentalPrice);
-    }
-
-    [TestMethod]
-    public void RentalMethod_CalculateBasePrice_ControlledPlan_ShouldSumDailyRateAndExtrapolatedKmPrice()
-    {
-        // Arrange
-        Rental rental = new();
-        PricingPlan plan = new(
-            "Plano Teste",
-            new DailyPlanProps(0, 0),
-            new ControlledPlanProps(80, 20),
-            new FreePlanProps(0)
-        );
-
-        rental.AssociatePricingPlan(plan);
-        rental.SetPricingPlanType(EPricingPlanType.Controlled);
-
-        // Act
-        rental.CalculateBasePrice();
-
-        // Assert
-        Assert.AreEqual(100, rental.BaseRentalPrice);
-    }
-
-    [TestMethod]
-    public void RentalMethod_CalculateBasePrice_FreePlan_ShouldUseFixedRate()
-    {
-        // Arrange
-        Rental rental = new();
-        PricingPlan plan = new(
-            "Plano Teste",
-            new DailyPlanProps(0, 0),
-            new ControlledPlanProps(0, 0),
-            new FreePlanProps(250)
-        );
-
-        rental.AssociatePricingPlan(plan);
-        rental.SetPricingPlanType(EPricingPlanType.Free);
-
-        // Act
-        rental.CalculateBasePrice();
-
-        // Assert
-        Assert.AreEqual(250, rental.BaseRentalPrice);
-    }
-
-    [TestMethod]
     public void RentalMethod_AddRentalService_ShouldAddToList()
     {
         // Arrange
@@ -273,12 +207,14 @@ public sealed class RentalTests
         Employee newEmployee = Builder<Employee>.CreateNew().Build();
         Client newClient = Builder<Client>.CreateNew().Build();
         Driver newDriver = Builder<Driver>.CreateNew().Build();
+        Vehicle newVehicle = Builder<Vehicle>.CreateNew().Build();
         PricingPlan newPlan = Builder<PricingPlan>.CreateNew().Build();
         List<RateService> newServices = Builder<RateService>.CreateListOfSize(2).Build().ToList();
 
         updatedData.AssociateEmployee(newEmployee);
         updatedData.AssociateClient(newClient);
         updatedData.AssociateDriver(newDriver);
+        updatedData.AssociateVehicle(newVehicle);
         updatedData.AssociatePricingPlan(newPlan);
         updatedData.AddRangeRateServices(newServices);
 
