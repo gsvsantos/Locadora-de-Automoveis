@@ -5,7 +5,6 @@ namespace LocadoraDeAutomoveis.Domain.Coupons;
 
 public class Coupon : BaseEntity<Coupon>
 {
-
     public string Name { get; set; } = string.Empty;
     public decimal DiscountValue { get; set; }
     public DateTimeOffset ExpirationDate { get; set; }
