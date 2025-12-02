@@ -150,7 +150,7 @@ public class CreateRentalRequestHandler(
 
             if (rateServices.Count >= 1)
             {
-                rental.AddMultiplyRateService(rateServices);
+                rental.AddRangeRateServices(rateServices);
             }
 
             rental.CalculateBasePrice();

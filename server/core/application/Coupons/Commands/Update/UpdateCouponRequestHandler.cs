@@ -21,7 +21,6 @@ public class UpdateCouponRequestHandler(
     public async Task<Result<UpdateCouponResponse>> Handle(
         UpdateCouponRequest request, CancellationToken cancellationToken)
     {
-
         Coupon? selectedCoupon = await repositoryCoupon.GetByIdAsync(request.Id);
 
         if (selectedCoupon is null)

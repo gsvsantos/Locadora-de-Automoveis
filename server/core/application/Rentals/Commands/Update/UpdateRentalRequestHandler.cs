@@ -113,7 +113,7 @@ public class UpdateRentalRequestHandler(
 
             if (rateServices.Count >= 1)
             {
-                updatedRental.AddMultiplyRateService(rateServices);
+                updatedRental.AddRangeRateServices(rateServices);
             }
 
             updatedRental.CalculateBasePrice();

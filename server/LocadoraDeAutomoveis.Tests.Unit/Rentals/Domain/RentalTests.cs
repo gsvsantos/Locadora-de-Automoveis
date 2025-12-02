@@ -212,7 +212,7 @@ public sealed class RentalTests
         List<RateService> services = Builder<RateService>.CreateListOfSize(3).Build().ToList();
 
         // Act
-        rental.AddMultiplyRateService(services);
+        rental.AddRangeRateServices(services);
 
         // Assert
         Assert.AreEqual(3, rental.RateServices.Count);
@@ -280,7 +280,7 @@ public sealed class RentalTests
         updatedData.AssociateClient(newClient);
         updatedData.AssociateDriver(newDriver);
         updatedData.AssociatePricingPlan(newPlan);
-        updatedData.AddMultiplyRateService(newServices);
+        updatedData.AddRangeRateServices(newServices);
 
         // Act
         rental.Update(updatedData);

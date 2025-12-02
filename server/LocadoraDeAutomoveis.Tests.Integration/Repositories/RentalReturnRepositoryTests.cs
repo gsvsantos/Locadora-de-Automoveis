@@ -138,7 +138,7 @@ public sealed class RentalReturnRepositoryTests : TestFixture
             rental.AssociateDriver(driver);
             rental.AssociateVehicle(vehicle);
             rental.AssociatePricingPlan(pricingPlan);
-            rental.AddMultiplyRateService(services);
+            rental.AddRangeRateServices(services);
 
             await this.rentalRepository.AddAsync(rental);
 
@@ -277,7 +277,7 @@ public sealed class RentalReturnRepositoryTests : TestFixture
             rental.AssociateDriver(driver);
             rental.AssociateVehicle(vehicle);
             rental.AssociatePricingPlan(pricingPlan);
-            rental.AddMultiplyRateService(services);
+            rental.AddRangeRateServices(services);
 
             await this.rentalRepository.AddAsync(rental);
 

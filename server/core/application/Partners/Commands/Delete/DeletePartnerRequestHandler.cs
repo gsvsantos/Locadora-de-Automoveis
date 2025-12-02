@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using LocadoraDeAutomoveis.Application.Partners.Commands.Create;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.Shared;
@@ -11,7 +10,7 @@ namespace LocadoraDeAutomoveis.Application.Partners.Commands.Delete;
 public class DeletePartnerRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryPartner repositoryPartner,
-    ILogger<CreatePartnerRequestHandler> logger
+    ILogger<DeletePartnerRequestHandler> logger
 ) : IRequestHandler<DeletePartnerRequest, Result<DeletePartnerResponse>>
 {
     public async Task<Result<DeletePartnerResponse>> Handle(

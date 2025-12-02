@@ -136,7 +136,7 @@ public sealed class RentalRepositoryTests : TestFixture
             rental.AssociateDriver(driver);
             rental.AssociateVehicle(vehicle);
             rental.AssociatePricingPlan(pricingPlan);
-            rental.AddMultiplyRateService(services);
+            rental.AddRangeRateServices(services);
             existingRentals.Add(rental);
         }
 
