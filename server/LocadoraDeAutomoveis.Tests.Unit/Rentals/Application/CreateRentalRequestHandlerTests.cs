@@ -1,6 +1,7 @@
 ﻿using LocadoraDeAutomoveis.Application.Rentals.Commands.Create;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
@@ -30,6 +31,7 @@ public sealed class CreateRentalRequestHandlerTests
     private Mock<IRepositoryClient> repositoryClientMock = null!;
     private Mock<IRepositoryDriver> repositoryDriverMock = null!;
     private Mock<IRepositoryVehicle> repositoryVehicleMock = null!;
+    private Mock<IRepositoryCoupon> repositoryCouponMock = null!;
     private Mock<IRepositoryPricingPlan> repositoryPricingPlanMock = null!;
     private Mock<IRepositoryRateService> repositoryRateServiceMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
@@ -51,6 +53,7 @@ public sealed class CreateRentalRequestHandlerTests
         this.repositoryClientMock = new Mock<IRepositoryClient>();
         this.repositoryDriverMock = new Mock<IRepositoryDriver>();
         this.repositoryVehicleMock = new Mock<IRepositoryVehicle>();
+        this.repositoryCouponMock = new Mock<IRepositoryCoupon>();
         this.repositoryPricingPlanMock = new Mock<IRepositoryPricingPlan>();
         this.repositoryRateServiceMock = new Mock<IRepositoryRateService>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
@@ -66,6 +69,7 @@ public sealed class CreateRentalRequestHandlerTests
             this.repositoryClientMock.Object,
             this.repositoryDriverMock.Object,
             this.repositoryVehicleMock.Object,
+            this.repositoryCouponMock.Object,
             this.repositoryPricingPlanMock.Object,
             this.repositoryRateServiceMock.Object,
             this.tenantProviderMock.Object,
@@ -190,6 +194,7 @@ public sealed class CreateRentalRequestHandlerTests
             clientId,
             driverId,
             vehicleId,
+            null,
             EPricingPlanType.Daily,
             null,
             serviceIds
