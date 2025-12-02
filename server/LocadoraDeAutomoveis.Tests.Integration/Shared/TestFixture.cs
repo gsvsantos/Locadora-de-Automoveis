@@ -2,18 +2,22 @@
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Configurations;
+using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
+using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.Clients;
 using LocadoraDeAutomoveis.Infrastructure.Configurations;
+using LocadoraDeAutomoveis.Infrastructure.Coupons;
 using LocadoraDeAutomoveis.Infrastructure.Drivers;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Groups;
+using LocadoraDeAutomoveis.Infrastructure.Partners;
 using LocadoraDeAutomoveis.Infrastructure.PricingPlans;
 using LocadoraDeAutomoveis.Infrastructure.RateServices;
 using LocadoraDeAutomoveis.Infrastructure.Rentals;
@@ -43,6 +47,8 @@ public abstract class TestFixture
     protected ConfigurationRepository configurationRepository = null!;
     protected RentalRepository rentalRepository = null!;
     protected RentalReturnRepository rentalReturnRepository = null!;
+    protected PartnerRepository partnerRepository = null!;
+    protected CouponRepository couponRepository = null!;
 
     protected readonly RandomGenerator random = new();
 
@@ -92,6 +98,8 @@ public abstract class TestFixture
         this.configurationRepository = new(this.dbContext);
         this.rentalRepository = new(this.dbContext);
         this.rentalReturnRepository = new(this.dbContext);
+        this.partnerRepository = new(this.dbContext);
+        this.couponRepository = new(this.dbContext);
 
         BuilderSetup.SetCreatePersistenceMethod<User>(u => this.userManager.CreateAsync(u).GetAwaiter().GetResult());
 
@@ -124,6 +132,12 @@ public abstract class TestFixture
 
         BuilderSetup.SetCreatePersistenceMethod<RentalReturn>(rR => this.rentalReturnRepository.AddAsync(rR).GetAwaiter().GetResult());
         BuilderSetup.SetCreatePersistenceMethod<IList<RentalReturn>>(rR => this.rentalReturnRepository.AddMultiplyAsync(rR).GetAwaiter().GetResult());
+
+        BuilderSetup.SetCreatePersistenceMethod<Partner>(p => this.partnerRepository.AddAsync(p).GetAwaiter().GetResult());
+        BuilderSetup.SetCreatePersistenceMethod<IList<Partner>>(p => this.partnerRepository.AddMultiplyAsync(p).GetAwaiter().GetResult());
+
+        BuilderSetup.SetCreatePersistenceMethod<Coupon>(c => this.couponRepository.AddAsync(c).GetAwaiter().GetResult());
+        BuilderSetup.SetCreatePersistenceMethod<IList<Coupon>>(c => this.couponRepository.AddMultiplyAsync(c).GetAwaiter().GetResult());
     }
 
     private static async Task StartDatabaseAsync()
