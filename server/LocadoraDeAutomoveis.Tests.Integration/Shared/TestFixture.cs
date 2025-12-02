@@ -73,7 +73,10 @@ public abstract class TestFixture
     }
 
     [AssemblyCleanup]
-    public static async Task Teardown() => await ShutdownDatabaseAsync();
+    public static async Task Teardown()
+    {
+        await ShutdownDatabaseAsync();
+    }
 
     [TestInitialize]
     public virtual void ConfigurarTestes()
@@ -200,11 +203,13 @@ public abstract class TestFixture
 
         dbContext.RentalReturns.RemoveRange(dbContext.RentalReturns);
         dbContext.Rentals.RemoveRange(dbContext.Rentals);
+        dbContext.Coupons.RemoveRange(dbContext.Coupons);
         dbContext.Drivers.RemoveRange(dbContext.Drivers);
         dbContext.Vehicles.RemoveRange(dbContext.Vehicles);
         dbContext.PricingPlans.RemoveRange(dbContext.PricingPlans);
         dbContext.Clients.RemoveRange(dbContext.Clients);
         dbContext.Employees.RemoveRange(dbContext.Employees);
+        dbContext.Partners.RemoveRange(dbContext.Partners);
         dbContext.Groups.RemoveRange(dbContext.Groups);
         dbContext.RateServices.RemoveRange(dbContext.RateServices);
         dbContext.TestEntities.RemoveRange(dbContext.TestEntities);

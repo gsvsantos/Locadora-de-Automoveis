@@ -48,7 +48,8 @@ public sealed class DeleteGroupRequestHandlerTests
             .Verifiable();
 
         this.unitOfWorkMock
-            .Setup(u => u.CommitAsync());
+            .Setup(u => u.CommitAsync()
+            ).Verifiable();
 
         // Act
         Result<DeleteGroupResponse> result = this.handler.Handle(request, CancellationToken.None).Result;

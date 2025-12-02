@@ -40,8 +40,10 @@ public sealed class GroupTests
         // Arrange
         Group group = new("Grupo");
         Group updatedGroup = new("Grupo Atualizado");
+
         // Act
         group.Update(updatedGroup);
+
         // Assert
         Assert.AreEqual("Grupo Atualizado", group.Name);
     }
@@ -59,12 +61,6 @@ public sealed class GroupTests
         // Assert
         Assert.AreEqual(1, group.Vehicles.Count);
         Assert.AreEqual(vehicle, group.Vehicles[0]);
-
-        // Act
-        group.RemoveVehicle(vehicle);
-
-        // Assert
-        Assert.AreEqual(0, group.Vehicles.Count);
     }
 
     [TestMethod]

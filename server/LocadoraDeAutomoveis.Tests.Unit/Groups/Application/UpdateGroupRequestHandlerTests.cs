@@ -65,7 +65,8 @@ public sealed class UpdateGroupRequestHandlerTests
             .Verifiable();
 
         this.unitOfWorkMock
-            .Setup(u => u.CommitAsync());
+            .Setup(u => u.CommitAsync()
+            ).Verifiable();
 
         // Act
         Result<UpdateGroupResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
