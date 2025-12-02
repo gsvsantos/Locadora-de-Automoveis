@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\infrastructure\orm\LocadoraDeAutomoveis.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\infrastructure\orm\LocadoraDeAutomoveis.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
