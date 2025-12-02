@@ -61,7 +61,7 @@ public class Rental : BaseEntity<Rental>
         this.BaseRentalPrice = Math.Max(0, planPrice);
     }
 
-    public void AddMultiplyRateService(List<RateService> rateServices)
+    public void AddRangeRateServices(List<RateService> rateServices)
     {
         this.RateServices.AddRange(rateServices);
     }

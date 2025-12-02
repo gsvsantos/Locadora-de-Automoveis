@@ -32,6 +32,8 @@ public class Coupon : BaseEntity<Coupon>
 
     public void AssociatePartner(Partner partner)
     {
+        partner.AddCoupon(this);
+
         this.Partner = partner;
         this.PartnerId = partner.Id;
     }

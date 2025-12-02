@@ -14,6 +14,35 @@ public class Partner : BaseEntity<Partner>
         this.FullName = fullName;
     }
 
+    public void AddRangeCoupons(List<Coupon> coupons)
+    {
+        List<Coupon> newCoupons = coupons
+        .Where(newC => !this.Coupons.Any(existing =>
+            existing.Id.Equals(newC.Id))
+        )
+        .ToList();
+
+        if (newCoupons.Count > 0)
+        {
+            this.Coupons.AddRange(newCoupons);
+        }
+    }
+
+    public void AddCoupon(Coupon coupon)
+    {
+        if (this.Coupons.Any(c => c.Equals(coupon)))
+        {
+            return;
+        }
+
+        this.Coupons.Add(coupon);
+    }
+
+    public void RemoveCoupon(Coupon coupon)
+    {
+        this.Coupons.Remove(coupon);
+    }
+
     public override void Update(Partner updatedEntity)
     {
         this.FullName = updatedEntity.FullName;
