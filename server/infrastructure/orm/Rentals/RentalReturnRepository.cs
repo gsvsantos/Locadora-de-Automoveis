@@ -7,14 +7,20 @@ namespace LocadoraDeAutomoveis.Infrastructure.Rentals;
 public class RentalReturnRepository(AppDbContext context)
     : BaseRepository<RentalReturn>(context), IRepositoryRentalReturn
 {
-    public override async Task<List<RentalReturn>> GetAllAsync() =>
-        await WithIncludes().ToListAsync();
+    public override async Task<List<RentalReturn>> GetAllAsync()
+    {
+        return await WithIncludes().ToListAsync();
+    }
 
-    public override async Task<List<RentalReturn>> GetAllAsync(int quantity) =>
-        await WithIncludes().Take(quantity).ToListAsync();
+    public override async Task<List<RentalReturn>> GetAllAsync(int quantity)
+    {
+        return await WithIncludes().Take(quantity).ToListAsync();
+    }
 
-    public override async Task<RentalReturn?> GetByIdAsync(Guid entityId) =>
-        await WithIncludes().FirstOrDefaultAsync(rr => rr.Id == entityId);
+    public override async Task<RentalReturn?> GetByIdAsync(Guid entityId)
+    {
+        return await WithIncludes().FirstOrDefaultAsync(rr => rr.Id == entityId);
+    }
 
     private IQueryable<RentalReturn> WithIncludes()
     {

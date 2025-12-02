@@ -27,10 +27,18 @@ public record FreePlanDto(
 
 public static class RecordExtensions
 {
-    public static DailyPlanProps ToProps(this DailyPlanDto dto) =>
-        new(dto.DailyRate, dto.PricePerKm);
-    public static ControlledPlanProps ToProps(this ControlledPlanDto dto) =>
-        new(dto.DailyRate, dto.PricePerKmExtrapolated);
-    public static FreePlanProps ToProps(this FreePlanDto dto) => new(dto.FixedRate);
+    public static DailyPlanProps ToProps(this DailyPlanDto dto)
+    {
+        return new(dto.DailyRate, dto.PricePerKm);
+    }
 
+    public static ControlledPlanProps ToProps(this ControlledPlanDto dto)
+    {
+        return new(dto.DailyRate, dto.PricePerKmExtrapolated);
+    }
+
+    public static FreePlanProps ToProps(this FreePlanDto dto)
+    {
+        return new(dto.FixedRate);
+    }
 }

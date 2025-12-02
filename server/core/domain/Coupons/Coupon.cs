@@ -20,9 +20,15 @@ public class Coupon : BaseEntity<Coupon>
         this.ExpirationDate = expirationDate;
     }
 
-    public void SetManuallyDisabledTrue() => this.IsManuallyDisabled = true;
+    public void SetManuallyDisabledTrue()
+    {
+        this.IsManuallyDisabled = true;
+    }
 
-    public bool IsExpired() => DateTimeOffset.UtcNow > this.ExpirationDate;
+    public bool IsExpired()
+    {
+        return DateTimeOffset.UtcNow > this.ExpirationDate;
+    }
 
     public void AssociatePartner(Partner partner)
     {

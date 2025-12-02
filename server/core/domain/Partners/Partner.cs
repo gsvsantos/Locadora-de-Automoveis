@@ -9,7 +9,13 @@ public class Partner : BaseEntity<Partner>
     public List<Coupon> Coupons { get; set; } = [];
 
     public Partner() { }
-    public Partner(string fullName) : this() => this.FullName = fullName;
+    public Partner(string fullName) : this()
+    {
+        this.FullName = fullName;
+    }
 
-    public override void Update(Partner updatedEntity) => this.FullName = updatedEntity.FullName;
+    public override void Update(Partner updatedEntity)
+    {
+        this.FullName = updatedEntity.FullName;
+    }
 }

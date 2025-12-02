@@ -74,7 +74,7 @@ public class UpdatePartnerRequestHandler(
     {
         return existingPartners
             .Any(entity =>
-            entity.Id != partner.id &&
+            entity.Id != partner.Id &&
             string.Equals(
                 entity.FullName,
                 partner.FullName,

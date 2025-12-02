@@ -48,7 +48,10 @@ public sealed class IdentityTenantProvider(IHttpContextAccessor contextAccessor)
         }
     }
 
-    public bool IsInRole(string roleName) => contextAccessor.HttpContext?.User?.IsInRole(roleName) ?? false;
+    public bool IsInRole(string roleName)
+    {
+        return contextAccessor.HttpContext?.User?.IsInRole(roleName) ?? false;
+    }
 
     private static Guid? TryParseGuid(string? value)
     {

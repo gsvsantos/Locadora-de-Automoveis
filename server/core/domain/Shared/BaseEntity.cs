@@ -11,9 +11,15 @@ public abstract class BaseEntity<T>
     public User? User { get; set; }
     public bool IsActive { get; set; } = true;
 
-    protected BaseEntity() => this.Id = Guid.NewGuid();
+    protected BaseEntity()
+    {
+        this.Id = Guid.NewGuid();
+    }
 
-    public void Deactivate() => this.IsActive = false;
+    public void Deactivate()
+    {
+        this.IsActive = false;
+    }
 
     public void AssociateUser(User user)
     {

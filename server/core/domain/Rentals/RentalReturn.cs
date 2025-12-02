@@ -24,15 +24,30 @@ public class RentalReturn : BaseEntity<RentalReturn>
         this.TotalMileage = totalMileage;
     }
 
-    public void SetFuelLevel(EFuelLevel eFuelLevel) => this.FuelLevelAtReturn = eFuelLevel;
+    public void SetFuelLevel(EFuelLevel eFuelLevel)
+    {
+        this.FuelLevelAtReturn = eFuelLevel;
+    }
 
-    public void SetServicesTotal(decimal total) => this.ServicesTotal = total;
+    public void SetServicesTotal(decimal total)
+    {
+        this.ServicesTotal = total;
+    }
 
-    public void SetFuelPenalty(decimal fuelPenality) => this.FuelPenalty = fuelPenality;
+    public void SetFuelPenalty(decimal fuelPenality)
+    {
+        this.FuelPenalty = fuelPenality;
+    }
 
-    public void SetPenaltyTotal(decimal penaltyTotal) => this.PenaltyTotal = penaltyTotal;
+    public void SetPenaltyTotal(decimal penaltyTotal)
+    {
+        this.PenaltyTotal = penaltyTotal;
+    }
 
-    public void SetFinalPrice(decimal finalPrice) => this.FinalPrice = finalPrice;
+    public void SetFinalPrice(decimal finalPrice)
+    {
+        this.FinalPrice = finalPrice;
+    }
 
     public void AssociateRental(Rental rental)
     {

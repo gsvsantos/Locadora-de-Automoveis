@@ -17,17 +17,24 @@ public class RentalRepository(AppDbContext context)
             );
     }
 
-    public override async Task<List<Rental>> GetAllAsync() =>
-        await WithIncludes().ToListAsync();
+    public override async Task<List<Rental>> GetAllAsync()
+    {
+        return await WithIncludes().ToListAsync();
+    }
 
-    public override async Task<List<Rental>> GetAllAsync(int quantity) =>
-        await WithIncludes().Take(quantity).ToListAsync();
+    public override async Task<List<Rental>> GetAllAsync(int quantity)
+    {
+        return await WithIncludes().Take(quantity).ToListAsync();
+    }
 
-    public override async Task<Rental?> GetByIdAsync(Guid entityId) =>
-        await WithIncludes().FirstOrDefaultAsync(r => r.Id == entityId);
+    public override async Task<Rental?> GetByIdAsync(Guid entityId)
+    {
+        return await WithIncludes().FirstOrDefaultAsync(r => r.Id == entityId);
+    }
 
-    private IQueryable<Rental> WithIncludes() =>
-        this.records
+    private IQueryable<Rental> WithIncludes()
+    {
+        return this.records
             .Include(r => r.User)
             .Include(r => r.Employee)
             .Include(r => r.Client)
@@ -38,4 +45,5 @@ public class RentalRepository(AppDbContext context)
                 .ThenInclude(c => c!.Partner)
             .Include(r => r.PricingPlan)
             .Include(r => r.RateServices);
+    }
 }

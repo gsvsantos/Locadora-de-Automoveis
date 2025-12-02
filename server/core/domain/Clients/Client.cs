@@ -27,9 +27,15 @@ public class Client : BaseEntity<Client>
         this.Address = address;
     }
 
-    public void SetClientType(EClientType clientType) => this.ClientType = clientType;
+    public void SetClientType(EClientType clientType)
+    {
+        this.ClientType = clientType;
+    }
 
-    public void SetLicenseNumber(string licenseNumber) => this.LicenseNumber = licenseNumber;
+    public void SetLicenseNumber(string licenseNumber)
+    {
+        this.LicenseNumber = licenseNumber;
+    }
 
     public void AssociateJuristicClient(Client juristiClient)
     {

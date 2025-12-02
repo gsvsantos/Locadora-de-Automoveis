@@ -11,15 +11,33 @@ public class Group : BaseEntity<Group>
     public List<PricingPlan> PricingPlans { get; set; } = [];
 
     public Group() { }
-    public Group(string name) : this() => this.Name = name;
+    public Group(string name) : this()
+    {
+        this.Name = name;
+    }
 
-    public void AddVehicle(Vehicle vehicle) => this.Vehicles.Add(vehicle);
+    public void AddVehicle(Vehicle vehicle)
+    {
+        this.Vehicles.Add(vehicle);
+    }
 
-    public void RemoveVehicle(Vehicle vehicle) => this.Vehicles.Remove(vehicle);
+    public void RemoveVehicle(Vehicle vehicle)
+    {
+        this.Vehicles.Remove(vehicle);
+    }
 
-    public void AddPricingPlan(PricingPlan pricingPlan) => this.PricingPlans.Add(pricingPlan);
+    public void AddPricingPlan(PricingPlan pricingPlan)
+    {
+        this.PricingPlans.Add(pricingPlan);
+    }
 
-    public void RemovePricingPlan(PricingPlan pricingPlan) => this.PricingPlans.Remove(pricingPlan);
+    public void RemovePricingPlan(PricingPlan pricingPlan)
+    {
+        this.PricingPlans.Remove(pricingPlan);
+    }
 
-    public override void Update(Group updatedEntity) => this.Name = updatedEntity.Name;
+    public override void Update(Group updatedEntity)
+    {
+        this.Name = updatedEntity.Name;
+    }
 }

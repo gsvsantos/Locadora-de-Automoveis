@@ -14,5 +14,8 @@ public class User : IdentityUser<Guid>
         this.PhoneNumberConfirmed = true;
     }
 
-    public void AssociateTenant(Guid tenantId) => this.TenantId = tenantId;
+    public void AssociateTenant(Guid tenantId)
+    {
+        this.TenantId = tenantId;
+    }
 }

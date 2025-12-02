@@ -60,7 +60,10 @@ public class Vehicle : BaseEntity<Vehicle>
         this.GroupId = Guid.Empty;
     }
 
-    public void SetFuelType(EFuelType fuelType) => this.FuelType = fuelType;
+    public void SetFuelType(EFuelType fuelType)
+    {
+        this.FuelType = fuelType;
+    }
 
     public override void Update(Vehicle updatedEntity)
     {

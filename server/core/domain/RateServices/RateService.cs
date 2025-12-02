@@ -16,11 +16,20 @@ public class RateService : BaseEntity<RateService>
         this.Price = price;
     }
 
-    public void MarkAsFixed() => this.IsChargedPerDay = true;
+    public void MarkAsFixed()
+    {
+        this.IsChargedPerDay = true;
+    }
 
-    public void MarkAsDaily() => this.IsChargedPerDay = false;
+    public void MarkAsDaily()
+    {
+        this.IsChargedPerDay = false;
+    }
 
-    public void DefineRateType(ERateType rateType) => this.RateType = rateType;
+    public void DefineRateType(ERateType rateType)
+    {
+        this.RateType = rateType;
+    }
 
     public override void Update(RateService updatedEntity)
     {

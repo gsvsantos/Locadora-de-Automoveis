@@ -61,19 +61,40 @@ public class Rental : BaseEntity<Rental>
         this.BaseRentalPrice = Math.Max(0, planPrice);
     }
 
-    public void AddMultiplyRateService(List<RateService> rateServices) => this.RateServices.AddRange(rateServices);
+    public void AddMultiplyRateService(List<RateService> rateServices)
+    {
+        this.RateServices.AddRange(rateServices);
+    }
 
-    public void AddRentalService(RateService service) => this.RateServices.Add(service);
+    public void AddRentalService(RateService service)
+    {
+        this.RateServices.Add(service);
+    }
 
-    public void RemoveRentalService(RateService service) => this.RateServices.Remove(service);
+    public void RemoveRentalService(RateService service)
+    {
+        this.RateServices.Remove(service);
+    }
 
-    public void SetEstimatedKilometers(decimal estimatedKilometers) => this.EstimatedKilometers = estimatedKilometers;
+    public void SetEstimatedKilometers(decimal estimatedKilometers)
+    {
+        this.EstimatedKilometers = estimatedKilometers;
+    }
 
-    public void SetStatus(ERentalStatus status) => this.Status = status;
+    public void SetStatus(ERentalStatus status)
+    {
+        this.Status = status;
+    }
 
-    public void SetPricingPlanType(EPricingPlanType selectedPlanType) => this.SelectedPlanType = selectedPlanType;
+    public void SetPricingPlanType(EPricingPlanType selectedPlanType)
+    {
+        this.SelectedPlanType = selectedPlanType;
+    }
 
-    public void SetFinalPrice(decimal finalPrice) => this.FinalPrice = finalPrice;
+    public void SetFinalPrice(decimal finalPrice)
+    {
+        this.FinalPrice = finalPrice;
+    }
 
     public void AssociateEmployee(Employee employee)
     {

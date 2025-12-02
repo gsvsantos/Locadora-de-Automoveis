@@ -71,7 +71,10 @@ public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvi
         base.OnModelCreating(modelBuilder);
     }
 
-    public async Task CommitAsync() => await SaveChangesAsync();
+    public async Task CommitAsync()
+    {
+        await SaveChangesAsync();
+    }
 
     public async Task RollbackAsync()
     {
