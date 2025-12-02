@@ -35,6 +35,10 @@ public class RentalReturnMapper : IEntityTypeConfiguration<RentalReturn>
             .HasColumnType("decimal(18,2)")
             .IsRequired();
 
+        builder.Property(r => r.DiscountTotal)
+            .HasColumnType("decimal(18,2)")
+            .IsRequired();
+
         builder.Property(r => r.FinalPrice)
             .HasColumnType("decimal(18,2)")
             .IsRequired();
@@ -44,8 +48,7 @@ public class RentalReturnMapper : IEntityTypeConfiguration<RentalReturn>
             .IsRequired();
 
         builder.HasOne(r => r.Rental)
-            .WithMany()
-            .HasForeignKey(r => r.RentalId)
+            .WithOne()
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(r => r.Tenant)
@@ -59,5 +62,7 @@ public class RentalReturnMapper : IEntityTypeConfiguration<RentalReturn>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(r => new { r.TenantId, r.UserId, r.IsActive });
+
+        builder.HasIndex(r => r.RentalId).IsUnique();
     }
 }

@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
@@ -23,6 +24,7 @@ public class UpdateRentalRequestHandler(
     IRepositoryClient repositoryClient,
     IRepositoryDriver repositoryDriver,
     IRepositoryVehicle repositoryVehicle,
+    IRepositoryCoupon repositoryCoupon,
     IRepositoryPricingPlan repositoryPricingPlan,
     IRepositoryRateService repositoryRateService,
     IUserContext userContext,
@@ -38,6 +40,11 @@ public class UpdateRentalRequestHandler(
         if (selectedRental is null)
         {
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
+        }
+
+        if (selectedRental.Status == ERentalStatus.Completed)
+        {
+            return Result.Fail(ErrorResults.BadRequestError("Cannot edit a completed rental."));
         }
 
         Employee? employee = null;
@@ -79,6 +86,38 @@ public class UpdateRentalRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(vehicle.GroupId));
         }
 
+        Coupon? coupon = null;
+        if (request.CouponId.HasValue && request.CouponId != Guid.Empty)
+        {
+            if (selectedRental.CouponId != request.CouponId)
+            {
+                coupon = await repositoryCoupon.GetByIdAsync(request.CouponId.Value);
+                if (coupon is null)
+                {
+                    return Result.Fail(ErrorResults.NotFoundError(request.CouponId.Value));
+                }
+
+                if (coupon.IsExpired())
+                {
+                    return Result.Fail(ErrorResults.BadRequestError("The coupon is expired."));
+                }
+
+                bool alreadyUsed = await repositoryRental.HasClientUsedCoupon(client.Id, coupon.Id);
+                if (alreadyUsed)
+                {
+                    return Result.Fail(ErrorResults.BadRequestError("This client has already used this coupon."));
+                }
+            }
+            else
+            {
+                coupon = selectedRental.Coupon;
+            }
+        }
+        else
+        {
+            coupon = selectedRental.Coupon;
+        }
+
         Rental updatedRental = new(
             request.StartDate,
             request.ExpectedReturnDate,
@@ -91,10 +130,22 @@ public class UpdateRentalRequestHandler(
             updatedRental.AssociateEmployee(employee);
         }
 
+        if (coupon is not null)
+        {
+            updatedRental.AssociateCoupon(coupon);
+        }
+
         updatedRental.AssociateClient(client);
         updatedRental.AssociateDriver(driver);
         updatedRental.AssociateVehicle(vehicle);
         updatedRental.AssociatePricingPlan(pricingPlan);
+        updatedRental.SetPricingPlanType(request.SelectedPlanType);
+
+        if (request.SelectedPlanType.Equals(EPricingPlanType.Controlled)
+            && request.EstimatedKilometers.HasValue)
+        {
+            updatedRental.SetEstimatedKilometers(request.EstimatedKilometers.Value);
+        }
 
         try
         {
@@ -116,8 +167,9 @@ public class UpdateRentalRequestHandler(
                 updatedRental.AddRangeRateServices(rateServices);
             }
 
-            updatedRental.CalculateBasePrice();
-            updatedRental.SetStatus(ERentalStatus.Open);
+            decimal basePrice = RentalCalculator.CalculateBasePrice(updatedRental);
+
+            updatedRental.SetBasePrice(basePrice);
 
             await repositoryRental.UpdateAsync(selectedRental.Id, updatedRental);
 

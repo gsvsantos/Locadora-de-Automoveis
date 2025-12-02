@@ -10,6 +10,7 @@ public class RentalReturn : BaseEntity<RentalReturn>
     public decimal ServicesTotal { get; set; }
     public decimal FuelPenalty { get; set; }
     public decimal PenaltyTotal { get; set; }
+    public decimal DiscountTotal { get; set; }
     public decimal FinalPrice { get; set; }
     public EFuelLevel FuelLevelAtReturn { get; set; }
     public Guid RentalId { get; set; }
@@ -42,6 +43,11 @@ public class RentalReturn : BaseEntity<RentalReturn>
     public void SetPenaltyTotal(decimal penaltyTotal)
     {
         this.PenaltyTotal = penaltyTotal;
+    }
+
+    public void SetDiscountTotal(decimal discount)
+    {
+        this.DiscountTotal = discount;
     }
 
     public void SetFinalPrice(decimal finalPrice)

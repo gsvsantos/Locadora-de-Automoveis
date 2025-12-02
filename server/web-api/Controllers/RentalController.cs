@@ -72,7 +72,9 @@ public class RentalController(IMediator mediator) : ControllerBase
             partialRequest.ClientId,
             partialRequest.DriverId,
             partialRequest.VehicleId,
+            partialRequest.CouponId,
             partialRequest.SelectedPlanType,
+            partialRequest.EstimatedKilometers,
             partialRequest.RentalRateServicesIds
         );
 

@@ -43,24 +43,6 @@ public class Rental : BaseEntity<Rental>
         this.StartKm = startKm;
     }
 
-    public void CalculateBasePrice()
-    {
-        decimal planPrice = this.SelectedPlanType switch
-        {
-            EPricingPlanType.Daily => this.PricingPlan.DailyPlan.DailyRate + this.PricingPlan.DailyPlan.PricePerKm,
-            EPricingPlanType.Controlled => this.PricingPlan.ControlledPlan.DailyRate + this.PricingPlan.ControlledPlan.PricePerKmExtrapolated,
-            EPricingPlanType.Free => this.PricingPlan.FreePlan.FixedRate,
-            _ => 0
-        };
-
-        if (this.Coupon is not null)
-        {
-            planPrice -= this.Coupon.DiscountValue;
-        }
-
-        this.BaseRentalPrice = Math.Max(0, planPrice);
-    }
-
     public void AddRangeRateServices(List<RateService> rateServices)
     {
         this.RateServices.AddRange(rateServices);
@@ -74,6 +56,11 @@ public class Rental : BaseEntity<Rental>
     public void RemoveRentalService(RateService service)
     {
         this.RateServices.Remove(service);
+    }
+
+    public void SetBasePrice(decimal basePrice)
+    {
+        this.BaseRentalPrice = basePrice;
     }
 
     public void SetEstimatedKilometers(decimal estimatedKilometers)
@@ -140,17 +127,27 @@ public class Rental : BaseEntity<Rental>
 
         if (updatedEntity.Employee is not null)
         {
-            this.Employee = updatedEntity.Employee;
-            this.EmployeeId = updatedEntity.Employee.Id;
+            AssociateEmployee(updatedEntity.Employee);
         }
 
-        this.Client = updatedEntity.Client;
-        this.ClientId = updatedEntity.Client.Id;
-        this.Driver = updatedEntity.Driver;
-        this.DriverId = updatedEntity.Driver.Id;
-        this.PricingPlan = updatedEntity.PricingPlan;
-        this.PricingPlanId = updatedEntity.PricingPlan.Id;
-        this.RateServices = updatedEntity.RateServices;
+        if (updatedEntity.Coupon is not null)
+        {
+            AssociateCoupon(updatedEntity.Coupon);
+        }
+
+        AssociateClient(updatedEntity.Client);
+        AssociateDriver(updatedEntity.Driver);
+        AssociateVehicle(updatedEntity.Vehicle);
+        AssociatePricingPlan(updatedEntity.PricingPlan);
+
+        SetPricingPlanType(updatedEntity.SelectedPlanType);
+
+        AddRangeRateServices(updatedEntity.RateServices);
+
+        if (updatedEntity.EstimatedKilometers.HasValue)
+        {
+            SetEstimatedKilometers(updatedEntity.EstimatedKilometers.Value);
+        }
     }
 }
 

@@ -26,6 +26,7 @@ public sealed class IdentityTenantProvider(IHttpContextAccessor contextAccessor)
             return TryParseGuid(claimId.Value);
         }
     }
+
     public Guid? UserId
     {
         get

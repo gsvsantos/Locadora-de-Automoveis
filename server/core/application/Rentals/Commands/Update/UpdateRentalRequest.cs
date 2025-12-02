@@ -12,7 +12,9 @@ public record UpdateRentalRequestPartial(
     Guid ClientId,
     Guid DriverId,
     Guid VehicleId,
+    Guid? CouponId,
     EPricingPlanType SelectedPlanType,
+    decimal? EstimatedKilometers,
     List<Guid> RentalRateServicesIds
 );
 
@@ -25,6 +27,8 @@ public record UpdateRentalRequest(
     Guid ClientId,
     Guid DriverId,
     Guid VehicleId,
+    Guid? CouponId,
     EPricingPlanType SelectedPlanType,
+    decimal? EstimatedKilometers,
     List<Guid> RentalRateServicesIds
 ) : IRequest<Result<UpdateRentalResponse>>;

@@ -2,7 +2,6 @@
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Configurations;
-using LocadoraDeAutomoveis.Application.Rentals.Services;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Configurations;
@@ -87,47 +86,23 @@ public class ReturnRentalRequestHandler(
                 return Result.Fail(ErrorResults.BadRequestError(errors));
             }
 
-            decimal servicesCost = RentalCalculator.CalculateServicesCost(selectedRental.RateServices, daysUsed);
-            rentalReturn.SetServicesTotal(servicesCost);
-
-            decimal planCost = RentalCalculator.CalculateRentalPlansCost(
+            CalculationResult calculationResult = RentalCalculator.CalculateFinalPrice(
                 selectedRental,
-                daysUsed,
-                kmDriven,
-                selectedRental.EstimatedKilometers
-            );
-
-            decimal fuelPenalty = RentalCalculator.CalculateFuelPenalty(
+                returnDate,
+                request.EndKm,
                 rentalReturn.FuelLevelAtReturn,
-                selectedRental.Vehicle,
                 configuration
             );
 
-            rentalReturn.SetFuelPenalty(fuelPenalty);
-
-            bool isLateReturn = returnDate.Date > selectedRental.ExpectedReturnDate.Date;
-            decimal delayPenalty = 0;
-
-            if (isLateReturn)
-            {
-                delayPenalty = planCost * 0.10m;
-            }
-
-            decimal totalPenalties = delayPenalty + rentalReturn.FuelPenalty;
-
-            rentalReturn.SetPenaltyTotal(totalPenalties);
-
-            decimal discount = selectedRental.Coupon?.DiscountValue ?? 0;
-
-            decimal finalPrice = RentalCalculator.CalculateFinalPrice(
-                planCost, servicesCost, totalPenalties, discount
-            );
+            rentalReturn.SetServicesTotal(calculationResult.ServicesTotal);
+            rentalReturn.SetFuelPenalty(calculationResult.FuelPenalty);
+            rentalReturn.SetPenaltyTotal(calculationResult.PenaltiesTotal);
+            rentalReturn.SetDiscountTotal(calculationResult.DiscountTotal);
+            rentalReturn.SetFinalPrice(calculationResult.FinalPrice);
 
             selectedRental.SetStatus(ERentalStatus.Completed);
             selectedRental.ReturnDate = returnDate;
-            selectedRental.SetFinalPrice(finalPrice);
-
-            rentalReturn.SetFinalPrice(finalPrice);
+            selectedRental.SetFinalPrice(calculationResult.FinalPrice);
 
             rentalReturn.AssociateTenant(tenantId);
             rentalReturn.AssociateUser(user);

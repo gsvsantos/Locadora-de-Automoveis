@@ -153,8 +153,9 @@ public class CreateRentalRequestHandler(
                 rental.AddRangeRateServices(rateServices);
             }
 
-            rental.CalculateBasePrice();
-            rental.SetStatus(ERentalStatus.Open);
+            decimal basePrice = RentalCalculator.CalculateBasePrice(rental);
+
+            rental.SetBasePrice(basePrice);
 
             rental.AssociateTenant(tenantProvider.GetTenantId());
             rental.AssociateUser(user);
