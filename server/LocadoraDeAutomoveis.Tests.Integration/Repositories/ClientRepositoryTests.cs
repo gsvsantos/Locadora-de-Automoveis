@@ -8,8 +8,6 @@ namespace LocadoraDeAutomoveis.Tests.Integration.Repositories;
 [TestCategory("ClientRepository Infrastructure - Integration Tests")]
 public sealed class ClientRepositoryTests : TestFixture
 {
-    private readonly RandomGenerator random = new();
-
     [TestMethod]
     public async Task Should_GetAllAsync_ReturnsClients_Successfully()
     {
