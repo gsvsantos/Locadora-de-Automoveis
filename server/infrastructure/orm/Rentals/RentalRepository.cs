@@ -65,6 +65,20 @@ public class RentalRepository(AppDbContext context)
             r.Status != ERentalStatus.Open);
     }
 
+    public async Task<bool> HasActiveRentalsByDriver(Guid driverId)
+    {
+        return await this.records.AnyAsync(r =>
+            r.DriverId.Equals(driverId) &&
+            r.Status == ERentalStatus.Open);
+    }
+
+    public async Task<bool> HasRentalHistoryByDriver(Guid driverId)
+    {
+        return await this.records.AnyAsync(r =>
+            r.DriverId.Equals(driverId) &&
+            r.Status != ERentalStatus.Open);
+    }
+
     public async Task<bool> HasClientUsedCoupon(Guid clientId, Guid couponId)
     {
         return await this.records

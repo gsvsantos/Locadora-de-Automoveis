@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Drivers;
+using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -10,6 +11,7 @@ namespace LocadoraDeAutomoveis.Application.Drivers.Commands.Delete;
 public class DeleteDriverRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryDriver repositoryDriver,
+    IRepositoryRental repositoryRental,
     ILogger<DeleteDriverRequestHandler> logger
 ) : IRequestHandler<DeleteDriverRequest, Result<DeleteDriverResponse>>
 {
@@ -23,9 +25,38 @@ public class DeleteDriverRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
         }
 
+        bool hasActiveRentals = await repositoryRental.HasActiveRentalsByDriver(request.Id);
+        if (hasActiveRentals)
+        {
+            return Result.Fail(ErrorResults.BadRequestError("Cannot remove a driver associated with active rentals."));
+        }
+
         try
         {
-            await repositoryDriver.DeleteAsync(request.Id);
+            bool hasHistory = await repositoryRental.HasRentalHistoryByDriver(request.Id);
+
+            if (hasHistory)
+            {
+                selectedDriver.Deactivate();
+
+                await repositoryDriver.UpdateAsync(selectedDriver.Id, selectedDriver);
+
+                logger.LogInformation(
+                    "Driver '{@Name}' ({@Id}) was deactivated to preserve rental history.",
+                    selectedDriver.FullName,
+                    request.Id
+                );
+            }
+            else
+            {
+                await repositoryDriver.DeleteAsync(request.Id);
+
+                logger.LogInformation(
+                    "Driver '{@Name}' ({@Id}) was permanently deleted.",
+                    selectedDriver.FullName,
+                    request.Id
+                );
+            }
 
             await unitOfWork.CommitAsync();
 

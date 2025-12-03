@@ -15,5 +15,5 @@ public record DriverDto(
     string Document,
     string LicenseNumber,
     DateTimeOffset LicenseValidity,
-    string ClientCPFName
+    string ClientName
 );
