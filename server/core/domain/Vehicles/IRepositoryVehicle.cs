@@ -2,4 +2,7 @@
 
 namespace LocadoraDeAutomoveis.Domain.Vehicles;
 
-public interface IRepositoryVehicle : IRepository<Vehicle>;
+public interface IRepositoryVehicle : IRepository<Vehicle>
+{
+    Task<bool> ExistsByGroupId(Guid groupId);
+}

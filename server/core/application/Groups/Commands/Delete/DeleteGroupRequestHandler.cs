@@ -1,7 +1,9 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Groups;
+using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -10,6 +12,8 @@ namespace LocadoraDeAutomoveis.Application.Groups.Commands.Delete;
 public class DeleteGroupRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryGroup repositoryGroup,
+    IRepositoryVehicle repositoryVehicle,
+    IRepositoryPricingPlan repositoryPricingPlan,
     ILogger<DeleteGroupRequestHandler> logger
 ) : IRequestHandler<DeleteGroupRequest, Result<DeleteGroupResponse>>
 {
@@ -23,9 +27,29 @@ public class DeleteGroupRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
         }
 
+        bool hasVehicles = await repositoryVehicle.ExistsByGroupId(request.Id);
+        bool hasPricingPlans = await repositoryPricingPlan.ExistsByGroupId(request.Id);
+
+        bool isInUse = hasVehicles || hasPricingPlans;
+
         try
         {
-            await repositoryGroup.DeleteAsync(request.Id);
+            if (isInUse)
+            {
+
+                selectedGroup.Deactivate();
+
+                await repositoryGroup.UpdateAsync(selectedGroup.Id, selectedGroup);
+
+                logger.LogInformation(
+                    "Group {GroupId} was deactivated instead of deleted because it is in use.",
+                    request.Id
+                );
+            }
+            else
+            {
+                await repositoryGroup.DeleteAsync(request.Id);
+            }
 
             await unitOfWork.CommitAsync();
 

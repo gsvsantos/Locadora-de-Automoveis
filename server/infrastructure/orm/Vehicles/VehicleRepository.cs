@@ -7,6 +7,12 @@ namespace LocadoraDeAutomoveis.Infrastructure.Vehicles;
 public class VehicleRepository(AppDbContext context)
     : BaseRepository<Vehicle>(context), IRepositoryVehicle
 {
+    public async Task<bool> ExistsByGroupId(Guid groupId)
+    {
+        return await this.records
+            .AnyAsync(x => x.GroupId.Equals(groupId));
+    }
+
     public override async Task<List<Vehicle>> GetAllAsync()
     {
         return await this.records

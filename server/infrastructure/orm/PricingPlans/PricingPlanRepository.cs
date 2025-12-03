@@ -7,6 +7,12 @@ namespace LocadoraDeAutomoveis.Infrastructure.PricingPlans;
 public class PricingPlanRepository(AppDbContext context)
     : BaseRepository<PricingPlan>(context), IRepositoryPricingPlan
 {
+    public async Task<bool> ExistsByGroupId(Guid groupId)
+    {
+        return await this.records
+            .AnyAsync(x => x.GroupId.Equals(groupId));
+    }
+
     public override async Task<List<PricingPlan>> GetAllAsync()
     {
         return await this.records
