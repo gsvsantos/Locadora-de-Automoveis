@@ -3,6 +3,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ namespace LocadoraDeAutomoveis.Application.RateServices.Commands.Update;
 public class UpdateRateServiceRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryRateService repositoryRateService,
+    IRepositoryRental repositoryRental,
     IValidator<RateService> validator,
     ILogger<UpdateRateServiceRequestHandler> logger
 
@@ -25,6 +27,12 @@ public class UpdateRateServiceRequestHandler(
         if (selectedRateService is null)
         {
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
+        }
+
+        bool hasActiveRentals = await repositoryRental.HasActiveRentalsByRateService(request.Id);
+        if (hasActiveRentals)
+        {
+            return Result.Fail(ErrorResults.BadRequestError("Cannot edit a service currently in use by active rentals."));
         }
 
         RateService updatedRateService = new(
