@@ -13,6 +13,7 @@ namespace LocadoraDeAutomoveis.WebAPI.Controllers;
 
 [ApiController]
 [Route("api/auth")]
+[AllowAnonymous]
 public class AuthController(IMediator mediator, SignInManager<User> signInManager) : ControllerBase
 {
     [HttpPost("register")]
