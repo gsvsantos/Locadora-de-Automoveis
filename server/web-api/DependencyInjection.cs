@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Hangfire;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
-using LocadoraDeAutomoveis.Application.Employees.Commands.Create;
+using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Configurations;
 using LocadoraDeAutomoveis.Domain.Coupons;
@@ -206,16 +206,27 @@ public static class DependencyInjection
         this IServiceCollection services, IConfiguration configuration
     )
     {
-        Assembly assembly = typeof(DependencyInjection).Assembly;
+        Assembly applicationAssembly = typeof(ApplicationAssemblyReference).Assembly;
 
-        services.AddAutoMapper(assembly);
+        string? luckyPennySoftwareLicenseKey = configuration["LUCKYPENNYSOFTWARE_LICENSE_KEY"];
 
-        services.AddValidatorsFromAssemblyContaining<EmployeeValidators>();
+        if (string.IsNullOrWhiteSpace(luckyPennySoftwareLicenseKey))
+        {
+            throw new Exception("A variável LUCKYPENNYSOFTWARE_LICENSE_KEY não foi fornecida.");
+        }
 
         services.AddMediatR(config =>
         {
-            config.RegisterServicesFromAssemblyContaining<CreateEmployeeRequest>();
+            config.RegisterServicesFromAssembly(applicationAssembly);
+            config.LicenseKey = luckyPennySoftwareLicenseKey;
         });
+
+        services.AddAutoMapper(config =>
+            config.LicenseKey = luckyPennySoftwareLicenseKey,
+            applicationAssembly
+        );
+
+        services.AddValidatorsFromAssembly(applicationAssembly);
 
         services.ConfigureHangFire(configuration);
         services.ConfigureRedisCache(configuration);
