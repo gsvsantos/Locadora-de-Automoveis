@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -14,6 +15,7 @@ namespace LocadoraDeAutomoveis.Application.Employees.Commands.SelfUpdate;
 public class SelfUpdateEmployeeRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryEmployee repositoryEmployee,
     IValidator<Employee> validator,
     ILogger<SelfUpdateEmployeeRequestHandler> logger
@@ -36,12 +38,7 @@ public class SelfUpdateEmployeeRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
         }
 
-        Employee updatedEmployee = new(
-            request.FullName,
-            selectedEmployee.AdmissionDate,
-            selectedEmployee.Salary
-        )
-        { Id = selectedEmployee.Id };
+        Employee updatedEmployee = mapper.Map<Employee>((request, selectedEmployee));
 
         try
         {

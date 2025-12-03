@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -14,6 +15,7 @@ namespace LocadoraDeAutomoveis.Application.Employees.Commands.Create;
 public class CreateEmployeeRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryEmployee repositoryEmployee,
     ITenantProvider tenantProvider,
     IValidator<Employee> validator,
@@ -23,13 +25,7 @@ public class CreateEmployeeRequestHandler(
     public async Task<Result<CreateEmployeeResponse>> Handle(
         CreateEmployeeRequest request, CancellationToken cancellationToken)
     {
-        User user = new()
-        {
-            UserName = request.UserName,
-            FullName = request.FullName,
-            Email = request.Email,
-            PhoneNumber = request.PhoneNumber,
-        };
+        User user = mapper.Map<User>(request);
 
         try
         {
@@ -48,11 +44,7 @@ public class CreateEmployeeRequestHandler(
             }
             await userManager.AddToRoleAsync(user, "Employee");
 
-            Employee employee = new(
-                request.FullName,
-                request.AdmissionDate,
-                request.Salary
-            );
+            Employee employee = mapper.Map<Employee>(request);
 
             ValidationResult validationResult = await validator.ValidateAsync(employee, cancellationToken);
 

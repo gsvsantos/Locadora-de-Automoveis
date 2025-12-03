@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Employees.Commands.Create;
 using LocadoraDeAutomoveis.Application.Employees.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Employees.Commands.GetAll;
@@ -15,7 +16,10 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 
 [ApiController]
 [Route("api/employee")]
-public class EmployeeController(IMediator mediator) : ControllerBase
+public class EmployeeController(
+    IMediator mediator,
+    IMapper mapper
+) : ControllerBase
 {
     [HttpPost("create")]
     [Authorize("AdminPolicy")]
@@ -68,12 +72,7 @@ public class EmployeeController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateEmployeeRequestPartial partialRequest)
     {
 
-        UpdateEmployeeRequest request = new(
-            id,
-            partialRequest.FullName,
-            partialRequest.AdmissionDate,
-            partialRequest.Salary
-        );
+        UpdateEmployeeRequest request = mapper.Map<UpdateEmployeeRequest>((partialRequest, id));
 
         Result<UpdateEmployeeResponse> result = await mediator.Send(request);
 
@@ -92,10 +91,7 @@ public class EmployeeController(IMediator mediator) : ControllerBase
         [FromBody] SelfUpdateEmployeeRequestPartial partialRequest
     )
     {
-        SelfUpdateEmployeeRequest request = new(
-            userContext.GetUserId(),
-            partialRequest.FullName
-        );
+        SelfUpdateEmployeeRequest request = mapper.Map<SelfUpdateEmployeeRequest>((partialRequest, userContext.GetUserId()));
 
         Result<SelfUpdateEmployeeResponse> result = await mediator.Send(request);
 

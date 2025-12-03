@@ -1,13 +1,14 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Employees;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.Employees.Commands.GetAll;
 
 public class GetAllEmployeeRequestHandler(
+    IMapper mapper,
     IRepositoryEmployee repositoryEmployee,
     ILogger<GetAllEmployeeRequestHandler> logger
 ) : IRequestHandler<GetAllEmployeeRequest, Result<GetAllEmployeeResponse>>
@@ -17,20 +18,12 @@ public class GetAllEmployeeRequestHandler(
     {
         try
         {
-            IEnumerable<Employee> employees =
+            List<Employee> employees =
                 request.Quantity.HasValue && request.Quantity.Value > 0 ?
                 await repositoryEmployee.GetAllAsync(request.Quantity.Value) :
                 await repositoryEmployee.GetAllAsync();
 
-            GetAllEmployeeResponse response = new(
-                employees.Count(),
-                employees.Select(employee => new EmployeeDto(
-                    employee.Id,
-                    employee.FullName,
-                    employee.AdmissionDate,
-                    employee.Salary
-                )).ToImmutableList()
-            );
+            GetAllEmployeeResponse response = mapper.Map<GetAllEmployeeResponse>(employees);
 
             return Result.Ok(response);
         }

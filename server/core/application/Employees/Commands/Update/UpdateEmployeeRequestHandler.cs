@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -14,6 +15,7 @@ namespace LocadoraDeAutomoveis.Application.Employees.Commands.Update;
 public class UpdateEmployeeRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryEmployee repositoryEmployee,
     IValidator<Employee> validator,
     ILogger<UpdateEmployeeRequestHandler> logger
@@ -29,12 +31,7 @@ public class UpdateEmployeeRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
         }
 
-        Employee updatedEmployee = new(
-        request.FullName,
-        request.AdmissionDate,
-        request.Salary
-        )
-        { Id = selectedEmployee.Id };
+        Employee updatedEmployee = mapper.Map<Employee>(request);
 
         try
         {
@@ -58,7 +55,12 @@ public class UpdateEmployeeRequestHandler(
 
             await repositoryEmployee.UpdateAsync(request.Id, updatedEmployee);
 
-            selectedEmployee.User!.FullName = request.FullName;
+            if (selectedEmployee.User is null)
+            {
+                return Result.Fail(ErrorResults.NotFoundError("Something went wrong! The selected employee don't contains a user."));
+            }
+
+            selectedEmployee.User.FullName = request.FullName;
 
             await userManager.UpdateAsync(selectedEmployee.User);
 
