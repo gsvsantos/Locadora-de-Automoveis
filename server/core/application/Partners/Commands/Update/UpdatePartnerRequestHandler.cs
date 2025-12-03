@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -11,6 +12,7 @@ namespace LocadoraDeAutomoveis.Application.Partners.Commands.Update;
 
 public class UpdatePartnerRequestHandler(
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryPartner repositoryPartner,
     IValidator<Partner> validator,
     ILogger<UpdatePartnerRequestHandler> logger
@@ -26,10 +28,7 @@ public class UpdatePartnerRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
         }
 
-        Partner updatedPartner = new(
-            request.FullName
-        )
-        { Id = selectedPartner.Id };
+        Partner updatedPartner = mapper.Map<Partner>(request);
 
         try
         {

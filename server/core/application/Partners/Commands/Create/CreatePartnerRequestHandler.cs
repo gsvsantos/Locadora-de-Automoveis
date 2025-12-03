@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -14,6 +15,7 @@ namespace LocadoraDeAutomoveis.Application.Partners.Commands.Create;
 public class CreatePartnerRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryPartner repositoryPartner,
     ITenantProvider tenantProvider,
     IUserContext userContext,
@@ -31,9 +33,7 @@ public class CreatePartnerRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(userContext.GetUserId()));
         }
 
-        Partner partner = new(
-            request.FullName
-        );
+        Partner partner = mapper.Map<Partner>(request);
 
         try
         {

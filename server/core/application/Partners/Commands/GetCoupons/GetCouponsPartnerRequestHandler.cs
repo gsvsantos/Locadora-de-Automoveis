@@ -1,13 +1,14 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Partners;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.Partners.Commands.GetCoupons;
 
 public class GetCouponsPartnerRequestHandler(
+    IMapper mapper,
     IRepositoryPartner repositoryPartner,
     ILogger<GetCouponsPartnerRequestHandler> logger
 ) : IRequestHandler<GetCouponsPartnerRequest, Result<GetCouponsPartnerResponse>>
@@ -24,18 +25,7 @@ public class GetCouponsPartnerRequestHandler(
                 return Result.Fail(ErrorResults.NotFoundError(request.Id));
             }
 
-            GetCouponsPartnerResponse response = new(
-                new GetCouponsPartnerDto(
-                    selectedPartner.Id,
-                    selectedPartner.FullName,
-                    selectedPartner.Coupons.Select(coupon => new CouponDto(
-                        coupon.Id,
-                        coupon.Name,
-                        coupon.DiscountValue,
-                        coupon.ExpirationDate
-                    )).ToImmutableList()
-                )
-            );
+            GetCouponsPartnerResponse response = mapper.Map<GetCouponsPartnerResponse>(selectedPartner);
 
             return Result.Ok(response);
         }

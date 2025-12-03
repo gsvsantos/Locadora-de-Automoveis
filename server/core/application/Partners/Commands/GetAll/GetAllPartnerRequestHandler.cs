@@ -1,13 +1,14 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Partners;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.Partners.Commands.GetAll;
 
 public class GetAllPartnerRequestHandler(
+    IMapper mapper,
     IRepositoryPartner repositoryPartner,
     ILogger<GetAllPartnerRequestHandler> logger
 ) : IRequestHandler<GetAllPartnerRequest, Result<GetAllPartnerResponse>>
@@ -22,14 +23,7 @@ public class GetAllPartnerRequestHandler(
                 ? await repositoryPartner.GetAllAsync(request.Quantity.Value)
                 : await repositoryPartner.GetAllAsync();
 
-            GetAllPartnerResponse response = new(
-                partners.Count,
-                partners.Select(partner => new GetAllPartnerDto(
-                    partner.Id,
-                    partner.FullName,
-                    partner.Coupons.Count
-                )).ToImmutableList()
-            );
+            GetAllPartnerResponse response = mapper.Map<GetAllPartnerResponse>(partners);
 
             return Result.Ok(response);
         }

@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Partners.Commands.Create;
 using LocadoraDeAutomoveis.Application.Partners.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Partners.Commands.GetAll;
@@ -14,7 +15,10 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 [ApiController]
 [Route("api/partner")]
 [Authorize("AdminOrEmployeePolicy")]
-public class PartnerController(IMediator mediator) : ControllerBase
+public class PartnerController(
+    IMediator mediator,
+    IMapper mapper
+) : ControllerBase
 {
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreatePartnerRequest request)
@@ -62,10 +66,7 @@ public class PartnerController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdatePartnerRequestPartial partialRequest)
     {
 
-        UpdatePartnerRequest request = new(
-            id,
-            partialRequest.FullName
-        );
+        UpdatePartnerRequest request = mapper.Map<UpdatePartnerRequest>((partialRequest, id));
 
         Result<UpdatePartnerResponse> result = await mediator.Send(request);
 
