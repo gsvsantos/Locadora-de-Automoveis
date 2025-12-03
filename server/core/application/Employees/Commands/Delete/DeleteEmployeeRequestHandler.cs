@@ -44,9 +44,22 @@ public class DeleteEmployeeRequestHandler(
                 if (selectedEmployee.User is not null)
                 {
                     await userManager.SetLockoutEndDateAsync(selectedEmployee.User, DateTimeOffset.MaxValue);
+
+                    // todo: enviar email alertando a desativação da conta
+
+                    logger.LogInformation(
+                        "User account '{Email}' (ID: {UserId}) has been locked indefinitely due to employee deactivation.",
+                        selectedEmployee.User.Email,
+                        selectedEmployee.User.Id
+                    );
                 }
 
                 await repositoryEmployee.UpdateAsync(selectedEmployee.Id, selectedEmployee);
+
+                logger.LogInformation(
+                    "Employee {@EmployeeId} was deactivated (Soft Delete) instead of permanently deleted to preserve rental history.",
+                    request.Id
+                );
             }
             else
             {
