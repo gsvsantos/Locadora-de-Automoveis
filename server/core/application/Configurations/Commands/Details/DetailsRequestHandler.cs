@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Configurations;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace LocadoraDeAutomoveis.Application.Configurations.Commands.Details;
 
 public class DetailsRequestHandler(
+    IMapper mapper,
     IRepositoryConfiguration repositoryConfiguration,
     ITenantProvider tenantProvider,
     ILogger<DetailsRequestHandler> logger
@@ -26,15 +28,7 @@ public class DetailsRequestHandler(
                 return Result.Fail(ConfigurationErrorResults.NotFoundForTenant(tenantId));
             }
 
-            DetailsResponse response = new(
-                new ConfigurationDto(
-                    configuration.Id,
-                    configuration.GasolinePrice,
-                    configuration.GasPrice,
-                    configuration.DieselPrice,
-                    configuration.AlcoholPrice
-                )
-            );
+            DetailsResponse response = mapper.Map<DetailsResponse>(configuration);
 
             return Result.Ok(response);
         }

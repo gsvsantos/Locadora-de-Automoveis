@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -14,6 +15,7 @@ namespace LocadoraDeAutomoveis.Application.Configurations.Commands.Configure;
 public class ConfigureRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryConfiguration repositoryConfiguration,
     ITenantProvider tenantProvider,
     IUserContext userContext,
@@ -31,12 +33,7 @@ public class ConfigureRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(userContext.GetUserId()));
         }
 
-        Configuration tempConfig = new(
-            request.GasolinePrice,
-            request.GasPrice,
-            request.DieselPrice,
-            request.AlcoholPrice
-        );
+        Configuration tempConfig = mapper.Map<Configuration>(request);
 
         try
         {
