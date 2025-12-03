@@ -1,5 +1,6 @@
 ﻿using LocadoraDeAutomoveis.Application.Drivers.Commands.Delete;
 using LocadoraDeAutomoveis.Domain.Drivers;
+using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Drivers.Application;
@@ -12,6 +13,7 @@ public sealed class DeleteDriverRequestHandlerTests
 
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryDriver> repositoryDriverMock = null!;
+    private Mock<IRepositoryRental> repositoryRentalMock = null!;
     private Mock<ILogger<DeleteDriverRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
@@ -19,11 +21,13 @@ public sealed class DeleteDriverRequestHandlerTests
     {
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryDriverMock = new Mock<IRepositoryDriver>();
+        this.repositoryRentalMock = new Mock<IRepositoryRental>();
         this.loggerMock = new Mock<ILogger<DeleteDriverRequestHandler>>();
 
         this.handler = new DeleteDriverRequestHandler(
             this.unitOfWorkMock.Object,
             this.repositoryDriverMock.Object,
+            this.repositoryRentalMock.Object,
             this.loggerMock.Object
         );
     }

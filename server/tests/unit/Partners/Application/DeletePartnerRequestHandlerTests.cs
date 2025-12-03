@@ -1,4 +1,5 @@
 ﻿using LocadoraDeAutomoveis.Application.Partners.Commands.Delete;
+using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.Shared;
 
@@ -12,6 +13,7 @@ public sealed class DeletePartnerRequestHandlerTests
 
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryPartner> repositoryPartnerMock = null!;
+    private Mock<IRepositoryCoupon> repositoryCouponMock = null!;
     private Mock<ILogger<DeletePartnerRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
@@ -19,11 +21,13 @@ public sealed class DeletePartnerRequestHandlerTests
     {
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryPartnerMock = new Mock<IRepositoryPartner>();
+        this.repositoryCouponMock = new Mock<IRepositoryCoupon>();
         this.loggerMock = new Mock<ILogger<DeletePartnerRequestHandler>>();
 
         this.handler = new DeletePartnerRequestHandler(
             this.unitOfWorkMock.Object,
             this.repositoryPartnerMock.Object,
+            this.repositoryCouponMock.Object,
             this.loggerMock.Object
         );
     }

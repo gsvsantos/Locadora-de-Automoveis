@@ -1,5 +1,6 @@
 ﻿using LocadoraDeAutomoveis.Application.PricingPlans.Commands.Delete;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
+using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.PricingPlans.Application;
@@ -12,6 +13,7 @@ public class DeletePricingPlanRequestHandlerTests
 
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryPricingPlan> repositoryPricingPlanMock = null!;
+    private Mock<IRepositoryRental> repositoryRentalMock = null!;
     private Mock<ILogger<DeletePricingPlanRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
@@ -19,11 +21,13 @@ public class DeletePricingPlanRequestHandlerTests
     {
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryPricingPlanMock = new Mock<IRepositoryPricingPlan>();
+        this.repositoryRentalMock = new Mock<IRepositoryRental>();
         this.loggerMock = new Mock<ILogger<DeletePricingPlanRequestHandler>>();
 
         this.handler = new DeletePricingPlanRequestHandler(
             this.unitOfWorkMock.Object,
             this.repositoryPricingPlanMock.Object,
+            this.repositoryRentalMock.Object,
             this.loggerMock.Object
         );
     }

@@ -1,5 +1,6 @@
 ﻿using LocadoraDeAutomoveis.Application.RateServices.Commands.Update;
 using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.RateServices.Application;
@@ -12,6 +13,7 @@ public sealed class UpdateRateServiceRequestHandlerTests
 
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryRateService> repositoryRateServiceMock = null!;
+    private Mock<IRepositoryRental> repositoryRentalMock = null!;
     private Mock<IValidator<RateService>> validatorMock = null!;
     private Mock<ILogger<UpdateRateServiceRequestHandler>> loggerMock = null!;
 
@@ -20,12 +22,14 @@ public sealed class UpdateRateServiceRequestHandlerTests
     {
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryRateServiceMock = new Mock<IRepositoryRateService>();
+        this.repositoryRentalMock = new Mock<IRepositoryRental>();
         this.validatorMock = new Mock<IValidator<RateService>>();
         this.loggerMock = new Mock<ILogger<UpdateRateServiceRequestHandler>>();
 
         this.handler = new UpdateRateServiceRequestHandler(
             this.unitOfWorkMock.Object,
             this.repositoryRateServiceMock.Object,
+            this.repositoryRentalMock.Object,
             this.validatorMock.Object,
             this.loggerMock.Object
         );

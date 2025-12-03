@@ -1,6 +1,7 @@
 ﻿using LocadoraDeAutomoveis.Application.Employees.Commands.Delete;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Employees;
+using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Employees.Application;
@@ -19,6 +20,7 @@ public sealed class DeleteEmployeeRequestHandlerTests
     private Mock<UserManager<User>> userManagerMock = null!;
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryEmployee> repositoryEmployeeMock = null!;
+    private Mock<IRepositoryRental> repositoryRentalMock = null!;
     private Mock<ILogger<DeleteEmployeeRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
@@ -31,12 +33,14 @@ public sealed class DeleteEmployeeRequestHandlerTests
 
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryEmployeeMock = new Mock<IRepositoryEmployee>();
+        this.repositoryRentalMock = new Mock<IRepositoryRental>();
         this.loggerMock = new Mock<ILogger<DeleteEmployeeRequestHandler>>();
 
         this.handler = new DeleteEmployeeRequestHandler(
             this.userManagerMock.Object,
             this.unitOfWorkMock.Object,
             this.repositoryEmployeeMock.Object,
+            this.repositoryRentalMock.Object,
             this.loggerMock.Object
         );
     }

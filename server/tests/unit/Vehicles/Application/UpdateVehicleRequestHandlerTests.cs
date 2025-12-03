@@ -1,5 +1,6 @@
 ﻿using LocadoraDeAutomoveis.Application.Vehicles.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Groups;
+using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 
@@ -14,6 +15,7 @@ public sealed class UpdateVehicleRequestHandlerTests
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryVehicle> repositoryVehicleMock = null!;
     private Mock<IRepositoryGroup> repositoryGroupMock = null!;
+    private Mock<IRepositoryRental> repositoryRentalMock = null!;
     private Mock<IValidator<Vehicle>> validatorMock = null!;
     private Mock<ILogger<UpdateVehicleRequestHandler>> loggerMock = null!;
 
@@ -23,6 +25,7 @@ public sealed class UpdateVehicleRequestHandlerTests
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryVehicleMock = new Mock<IRepositoryVehicle>();
         this.repositoryGroupMock = new Mock<IRepositoryGroup>();
+        this.repositoryRentalMock = new Mock<IRepositoryRental>();
         this.validatorMock = new Mock<IValidator<Vehicle>>();
         this.loggerMock = new Mock<ILogger<UpdateVehicleRequestHandler>>();
 
@@ -30,6 +33,7 @@ public sealed class UpdateVehicleRequestHandlerTests
             this.unitOfWorkMock.Object,
             this.repositoryVehicleMock.Object,
             this.repositoryGroupMock.Object,
+            this.repositoryRentalMock.Object,
             this.validatorMock.Object,
             this.loggerMock.Object
         );

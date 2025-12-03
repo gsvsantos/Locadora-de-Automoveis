@@ -39,7 +39,7 @@ public sealed class GetAllVehicleRequestHandlerTests
             .Setup(r => r.GetAllAsync())
             .ReturnsAsync(vehicles);
 
-        GetAllVehicleRequest request = new(null);
+        GetAllVehicleRequest request = new(null, null);
 
         // Act
         Result<GetAllVehicleResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
@@ -84,7 +84,7 @@ public sealed class GetAllVehicleRequestHandlerTests
             .Setup(r => r.GetAllAsync(5))
             .ReturnsAsync([.. vehicles.Take(5)]);
 
-        GetAllVehicleRequest request = new(5);
+        GetAllVehicleRequest request = new(5, null);
 
         // Act
         Result<GetAllVehicleResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
