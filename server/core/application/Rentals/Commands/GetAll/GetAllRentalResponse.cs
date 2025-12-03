@@ -19,7 +19,8 @@ public record RentalDto(
     DateTimeOffset ExpectedReturnDate,
     DateTimeOffset? ReturnDate,
     decimal BaseRentalPrice,
-    decimal FinalPrice
+    decimal FinalPrice,
+    int RateServicesQuantity
 );
 
 public record RentalEmployeeDto(

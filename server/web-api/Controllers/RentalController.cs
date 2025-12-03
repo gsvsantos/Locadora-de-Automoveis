@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Create;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
@@ -15,7 +16,10 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 [ApiController]
 [Route("api/rental")]
 [Authorize("AdminOrEmployeePolicy")]
-public class RentalController(IMediator mediator) : ControllerBase
+public class RentalController(
+    IMediator mediator,
+    IMapper mapper
+) : ControllerBase
 {
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateRentalRequest request)
@@ -63,20 +67,7 @@ public class RentalController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateRentalRequestPartial partialRequest)
     {
 
-        UpdateRentalRequest request = new(
-            id,
-            partialRequest.StartDate,
-            partialRequest.ExpectedReturnDate,
-            partialRequest.StartKm,
-            partialRequest.EmployeeId,
-            partialRequest.ClientId,
-            partialRequest.DriverId,
-            partialRequest.VehicleId,
-            partialRequest.CouponId,
-            partialRequest.SelectedPlanType,
-            partialRequest.EstimatedKilometers,
-            partialRequest.RentalRateServicesIds
-        );
+        UpdateRentalRequest request = mapper.Map<UpdateRentalRequest>((partialRequest, id));
 
         Result<UpdateRentalResponse> result = await mediator.Send(request);
 

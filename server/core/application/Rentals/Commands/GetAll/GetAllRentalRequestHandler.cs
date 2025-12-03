@@ -1,13 +1,14 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
 
 public class GetAllRentalRequestHandler(
+    IMapper mapper,
     IRepositoryRental repositoryRental,
     ILogger<GetAllRentalRequestHandler> logger
 ) : IRequestHandler<GetAllRentalRequest, Result<GetAllRentalResponse>>
@@ -22,36 +23,7 @@ public class GetAllRentalRequestHandler(
                 ? await repositoryRental.GetAllAsync(request.Quantity.Value)
                 : await repositoryRental.GetAllAsync();
 
-            GetAllRentalResponse response = new(
-                rentals.Count,
-                rentals.Select(rental => new RentalDto(
-                    rental.Id,
-                    (rental.Employee is not null)
-                        ? new RentalEmployeeDto(
-                            rental.Employee.Id,
-                            rental.Employee.FullName
-                            )
-                        : null,
-                    new RentalClientDto(
-                        rental.ClientId,
-                        rental.Client.FullName
-                        ),
-                    new RentalDriverDto(
-                        rental.DriverId,
-                        rental.Driver.FullName
-                        ),
-                    new RentalVehicleDto(
-                        rental.VehicleId,
-                        rental.Vehicle.LicensePlate
-                        ),
-                    rental.SelectedPlanType,
-                    rental.StartDate,
-                    rental.ExpectedReturnDate,
-                    rental.ReturnDate,
-                    rental.BaseRentalPrice,
-                    rental.FinalPrice
-                )).ToImmutableList()
-            );
+            GetAllRentalResponse response = mapper.Map<GetAllRentalResponse>(rentals);
 
             return Result.Ok(response);
         }

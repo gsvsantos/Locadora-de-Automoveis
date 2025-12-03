@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -19,6 +20,7 @@ namespace LocadoraDeAutomoveis.Application.Rentals.Commands.Update;
 
 public class UpdateRentalRequestHandler(
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryRental repositoryRental,
     IRepositoryEmployee repositoryEmployee,
     IRepositoryClient repositoryClient,
@@ -132,12 +134,7 @@ public class UpdateRentalRequestHandler(
             coupon = selectedRental.Coupon;
         }
 
-        Rental updatedRental = new(
-            request.StartDate,
-            request.ExpectedReturnDate,
-            request.StartKm
-        )
-        { Id = selectedRental.Id };
+        Rental updatedRental = mapper.Map<Rental>(request);
 
         if (employee is not null)
         {

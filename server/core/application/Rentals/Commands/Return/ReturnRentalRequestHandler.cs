@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Configurations;
@@ -16,6 +17,7 @@ namespace LocadoraDeAutomoveis.Application.Rentals.Commands.Return;
 public class ReturnRentalRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryRentalReturn repositoryRentalReturn,
     IRepositoryRental repositoryRental,
     IRepositoryConfiguration repositoryConfiguration,
@@ -65,11 +67,8 @@ public class ReturnRentalRequestHandler(
             return Result.Fail(ErrorResults.BadRequestError("The final odometer reading cannot be less than the initial reading."));
         }
 
-        RentalReturn rentalReturn = new(
-            returnDate,
-            request.EndKm,
-            kmDriven
-        );
+        RentalReturn rentalReturn = mapper.Map<RentalReturn>((request, returnDate, kmDriven));
+
         rentalReturn.SetFuelLevel(request.FuelLevel);
         rentalReturn.AssociateRental(selectedRental);
 

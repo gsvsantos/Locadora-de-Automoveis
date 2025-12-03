@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -21,6 +22,7 @@ namespace LocadoraDeAutomoveis.Application.Rentals.Commands.Create;
 public class CreateRentalRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryRental repositoryRental,
     IRepositoryEmployee repositoryEmployee,
     IRepositoryClient repositoryClient,
@@ -105,11 +107,7 @@ public class CreateRentalRequestHandler(
             }
         }
 
-        Rental rental = new(
-            request.StartDate,
-            request.ExpectedReturnDate,
-            request.StartKm
-        );
+        Rental rental = mapper.Map<Rental>(request);
 
         if (employee is not null)
         {
