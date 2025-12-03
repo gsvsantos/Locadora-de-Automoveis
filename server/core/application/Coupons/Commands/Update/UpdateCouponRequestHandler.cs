@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -12,6 +13,7 @@ namespace LocadoraDeAutomoveis.Application.Coupons.Commands.Update;
 
 public class UpdateCouponRequestHandler(
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryCoupon repositoryCoupon,
     IRepositoryPartner repositoryPartner,
     IValidator<Coupon> validator,
@@ -35,11 +37,7 @@ public class UpdateCouponRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.PartnerId));
         }
 
-        Coupon updatedCoupon = new(
-            request.Name,
-            request.DiscountValue,
-            request.ExpirationDate
-        );
+        Coupon updatedCoupon = mapper.Map<Coupon>(request);
         updatedCoupon.AssociatePartner(selectedPartner);
 
         try

@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Create;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
@@ -13,7 +14,10 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 [ApiController]
 [Route("api/coupon")]
 [Authorize("AdminOrEmployeePolicy")]
-public class CouponController(IMediator mediator) : ControllerBase
+public class CouponController(
+    IMediator mediator,
+    IMapper mapper
+) : ControllerBase
 {
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateCouponRequest request)
@@ -48,13 +52,7 @@ public class CouponController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateCouponRequestPartial partialRequest)
     {
 
-        UpdateCouponRequest request = new(
-            id,
-            partialRequest.Name,
-            partialRequest.DiscountValue,
-            partialRequest.ExpirationDate,
-            partialRequest.PartnerId
-        );
+        UpdateCouponRequest request = mapper.Map<UpdateCouponRequest>((partialRequest, id));
 
         Result<UpdateCouponResponse> result = await mediator.Send(request);
 
