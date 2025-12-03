@@ -72,11 +72,25 @@ public class UpdateRentalRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.DriverId));
         }
 
+        if (driver.LicenseValidity < DateTimeOffset.UtcNow)
+        {
+            return Result.Fail(ErrorResults.BadRequestError("The driver's license is expired."));
+        }
+
         Vehicle? vehicle = await repositoryVehicle.GetByIdAsync(request.VehicleId);
 
         if (vehicle is null)
         {
             return Result.Fail(ErrorResults.NotFoundError(request.VehicleId));
+        }
+
+        if (selectedRental.VehicleId != request.VehicleId)
+        {
+            bool isVehicleRented = await repositoryRental.HasActiveRentalsByVehicle(request.VehicleId);
+            if (isVehicleRented)
+            {
+                return Result.Fail(ErrorResults.BadRequestError("The new selected vehicle is currently rented."));
+            }
         }
 
         PricingPlan? pricingPlan = await repositoryPricingPlan.GetByGroupId(vehicle.GroupId);

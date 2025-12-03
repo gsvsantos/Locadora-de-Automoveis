@@ -23,9 +23,21 @@ public class DeleteRentalRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
         }
 
+        if (selectedRental.Status == ERentalStatus.Open)
+        {
+            return Result.Fail(ErrorResults.BadRequestError("Cannot delete an open rental. Finish or cancel it first."));
+        }
+
         try
         {
-            await repositoryRental.DeleteAsync(request.Id);
+            selectedRental.Deactivate();
+
+            logger.LogInformation(
+                "Rental {@Id} was deactivated (Soft Delete) to preserve fiscal history.",
+                request.Id
+            );
+
+            await repositoryRental.UpdateAsync(selectedRental.Id, selectedRental);
 
             await unitOfWork.CommitAsync();
 
