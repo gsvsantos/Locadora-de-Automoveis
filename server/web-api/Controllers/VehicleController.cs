@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.Create;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAll;
@@ -14,7 +15,10 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 [ApiController]
 [Route("api/vehicle")]
 [Authorize("AdminOrEmployeePolicy")]
-public class VehicleController(IMediator mediator) : ControllerBase
+public class VehicleController(
+    IMediator mediator,
+    IMapper mapper
+) : ControllerBase
 {
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateVehicleRequest request)
@@ -62,18 +66,7 @@ public class VehicleController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateVehicleRequestPartial partialRequest)
     {
 
-        UpdateVehicleRequest request = new(
-            id,
-            partialRequest.LicensePlate,
-            partialRequest.Brand,
-            partialRequest.Color,
-            partialRequest.Model,
-            partialRequest.FuelType,
-            partialRequest.CapacityInLiters,
-            partialRequest.Year,
-            partialRequest.PhotoPath,
-            partialRequest.GroupId
-        );
+        UpdateVehicleRequest request = mapper.Map<UpdateVehicleRequest>((partialRequest, id));
 
         Result<UpdateVehicleResponse> result = await mediator.Send(request);
 

@@ -18,5 +18,10 @@ public record VehicleDto(
     int CapacityInLiters,
     int Year,
     string? PhotoPath,
-    Guid GroupId
+    VehicleGroupDto Group
+);
+
+public record VehicleGroupDto(
+    Guid Id,
+    string Name
 );

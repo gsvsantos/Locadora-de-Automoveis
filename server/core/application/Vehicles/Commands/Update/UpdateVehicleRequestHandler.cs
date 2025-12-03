@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -13,6 +14,7 @@ namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.Update;
 
 public class UpdateVehicleRequestHandler(
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryVehicle repositoryVehicle,
     IRepositoryGroup repositoryGroup,
     IRepositoryRental repositoryRental,
@@ -45,16 +47,7 @@ public class UpdateVehicleRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.GroupId));
         }
 
-        Vehicle updatedVehicle = new(
-            request.LicensePlate,
-            request.Brand,
-            request.Color,
-            request.Model,
-            request.CapacityInLiters,
-            request.Year,
-            request.PhotoPath ?? string.Empty
-        )
-        { Id = selectedVehicle.Id };
+        Vehicle updatedVehicle = mapper.Map<Vehicle>(request);
         updatedVehicle.SetFuelType(request.FuelType);
 
         try

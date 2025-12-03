@@ -10,7 +10,7 @@ public record CreateVehicleRequest(
     string Color,
     string Model,
     EFuelType FuelType,
-    int CapacityInLiters,
+    int FuelTankCapacity,
     int Year,
     string? PhotoPath,
     Guid GroupId

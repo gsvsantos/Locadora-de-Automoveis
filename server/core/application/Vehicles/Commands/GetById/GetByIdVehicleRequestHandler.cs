@@ -1,6 +1,6 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
-using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.GetById;
 
 public class GetByIdVehicleRequestHandler(
+    IMapper mapper,
     IRepositoryVehicle repositoryVehicle,
     ILogger<GetByIdVehicleRequestHandler> logger
 ) : IRequestHandler<GetByIdVehicleRequest, Result<GetByIdVehicleResponse>>
@@ -24,20 +25,7 @@ public class GetByIdVehicleRequestHandler(
                 return Result.Fail(ErrorResults.NotFoundError(request.Id));
             }
 
-            GetByIdVehicleResponse response = new(
-                new VehicleDto(
-                    selectedVehicle.Id,
-                    selectedVehicle.LicensePlate,
-                    selectedVehicle.Brand,
-                    selectedVehicle.Color,
-                    selectedVehicle.Model,
-                    selectedVehicle.FuelType,
-                    selectedVehicle.FuelTankCapacity,
-                    selectedVehicle.Year,
-                    selectedVehicle.PhotoPath,
-                    selectedVehicle.GroupId
-                )
-            );
+            GetByIdVehicleResponse response = mapper.Map<GetByIdVehicleResponse>(selectedVehicle);
 
             return Result.Ok(response);
         }
