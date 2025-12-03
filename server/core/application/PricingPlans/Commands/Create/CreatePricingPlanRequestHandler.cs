@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -15,6 +16,7 @@ namespace LocadoraDeAutomoveis.Application.PricingPlans.Commands.Create;
 public class CreatePricingPlanRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryPricingPlan repositoryPricingPlan,
     IRepositoryGroup repositoryGroup,
     ITenantProvider tenantProvider,
@@ -40,12 +42,7 @@ public class CreatePricingPlanRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.GroupId));
         }
 
-        PricingPlan pricingPlan = new(
-            $"{selectedGroup.Name} - Pricing Plans",
-            request.DailyPlan.ToProps(),
-            request.ControlledPlan.ToProps(),
-            request.FreePlan.ToProps()
-        );
+        PricingPlan pricingPlan = mapper.Map<PricingPlan>((request, selectedGroup));
         pricingPlan.AssociateGroup(selectedGroup);
 
         try

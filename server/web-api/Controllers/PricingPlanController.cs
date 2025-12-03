@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.PricingPlans.Commands.Create;
 using LocadoraDeAutomoveis.Application.PricingPlans.Commands.Delete;
 using LocadoraDeAutomoveis.Application.PricingPlans.Commands.GetAll;
@@ -14,7 +15,10 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 [ApiController]
 [Route("api/pricing-plan")]
 [Authorize("AdminOrEmployeePolicy")]
-public class PricingPlanController(IMediator mediator) : ControllerBase
+public class PricingPlanController(
+    IMediator mediator,
+    IMapper mapper
+) : ControllerBase
 {
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreatePricingPlanRequest request)
@@ -62,13 +66,7 @@ public class PricingPlanController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdatePricingPlanRequestPartial partialRequest)
     {
 
-        UpdatePricingPlanRequest request = new(
-            id,
-            partialRequest.GroupId,
-            new(partialRequest.DailyPlan.DailyRate, partialRequest.DailyPlan.PricePerKm),
-            new(partialRequest.ControlledPlan.DailyRate, partialRequest.ControlledPlan.PricePerKmExtrapolated),
-            new(partialRequest.FreePlan.FixedRate)
-        );
+        UpdatePricingPlanRequest request = mapper.Map<UpdatePricingPlanRequest>((partialRequest, id));
 
         Result<UpdatePricingPlanResponse> result = await mediator.Send(request);
 

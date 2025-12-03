@@ -1,13 +1,14 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.PricingPlans.Commands.GetAll;
 
 public class GetAllPricingPlanRequestHandler(
+    IMapper mapper,
     IRepositoryPricingPlan repositoryPricingPlan,
     ILogger<GetAllPricingPlanRequestHandler> logger
 ) : IRequestHandler<GetAllPricingPlanRequest, Result<GetAllPricingPlanResponse>>
@@ -22,17 +23,7 @@ public class GetAllPricingPlanRequestHandler(
                 ? await repositoryPricingPlan.GetAllAsync(request.Quantity.Value)
                 : await repositoryPricingPlan.GetAllAsync();
 
-            GetAllPricingPlanResponse response = new(
-                pricingPlans.Count,
-                pricingPlans.Select(pricingPlan => new PricingPlanDto(
-                    pricingPlan.Id,
-                    $"{pricingPlan.Group.Name} - Pricing Plans",
-                    new(pricingPlan.DailyPlan.DailyRate, pricingPlan.DailyPlan.PricePerKm),
-                    new(pricingPlan.ControlledPlan.DailyRate, pricingPlan.ControlledPlan.PricePerKmExtrapolated),
-                    new(pricingPlan.FreePlan.FixedRate),
-                    pricingPlan.GroupId
-                )).ToImmutableList()
-            );
+            GetAllPricingPlanResponse response = mapper.Map<GetAllPricingPlanResponse>(pricingPlans);
 
             return Result.Ok(response);
         }

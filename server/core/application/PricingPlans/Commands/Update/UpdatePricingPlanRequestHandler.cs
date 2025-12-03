@@ -1,7 +1,7 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
-using LocadoraDeAutomoveis.Application.PricingPlans.Commands.Create;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
@@ -13,6 +13,7 @@ namespace LocadoraDeAutomoveis.Application.PricingPlans.Commands.Update;
 
 public class UpdatePricingPlanRequestHandler(
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryPricingPlan repositoryPricingPlan,
     IRepositoryGroup repositoryGroup,
     IValidator<PricingPlan> validator,
@@ -38,13 +39,7 @@ public class UpdatePricingPlanRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.GroupId));
         }
 
-        PricingPlan updatedPricingPlan = new(
-            $"{selectedGroup.Name} - Pricing Plans",
-            request.DailyPlan.ToProps(),
-            request.ControlledPlan.ToProps(),
-            request.FreePlan.ToProps()
-        )
-        { Id = selectedPricingPlan.Id };
+        PricingPlan updatedPricingPlan = mapper.Map<PricingPlan>((request, selectedGroup));
 
         try
         {

@@ -1,5 +1,5 @@
-﻿using FluentResults;
-using LocadoraDeAutomoveis.Application.PricingPlans.Commands.GetAll;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
 using MediatR;
@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace LocadoraDeAutomoveis.Application.PricingPlans.Commands.GetById;
 
 public class GetByIdPricingPlanRequestHandler(
+    IMapper mapper,
     IRepositoryPricingPlan repositoryPricingPlan,
     ILogger<GetByIdPricingPlanRequestHandler> logger
 ) : IRequestHandler<GetByIdPricingPlanRequest, Result<GetByIdPricingPlanResponse>>
@@ -24,16 +25,7 @@ public class GetByIdPricingPlanRequestHandler(
                 return Result.Fail(ErrorResults.NotFoundError(request.Id));
             }
 
-            GetByIdPricingPlanResponse response = new(
-                new PricingPlanDto(
-                    selectedPricingPlan.Id,
-                    $"{selectedPricingPlan.Group.Name} - Pricing Plans",
-                    new(selectedPricingPlan.DailyPlan.DailyRate, selectedPricingPlan.DailyPlan.PricePerKm),
-                    new(selectedPricingPlan.ControlledPlan.DailyRate, selectedPricingPlan.ControlledPlan.PricePerKmExtrapolated),
-                    new(selectedPricingPlan.FreePlan.FixedRate),
-                    selectedPricingPlan.GroupId
-                )
-            );
+            GetByIdPricingPlanResponse response = mapper.Map<GetByIdPricingPlanResponse>(selectedPricingPlan);
 
             return Result.Ok(response);
         }
