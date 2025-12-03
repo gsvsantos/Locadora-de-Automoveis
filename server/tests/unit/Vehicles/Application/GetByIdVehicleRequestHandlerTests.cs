@@ -1,12 +1,13 @@
 ﻿using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetById;
 using LocadoraDeAutomoveis.Domain.Vehicles;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Vehicles.Application;
 
 [TestClass]
 [TestCategory("Vehicle Application - Unit Tests")]
-public sealed class GetByIdVehicleRequestHandlerTests
+public sealed class GetByIdVehicleRequestHandlerTests : UnitTestBase
 {
     private GetByIdVehicleRequestHandler handler = null!;
 
@@ -20,6 +21,7 @@ public sealed class GetByIdVehicleRequestHandlerTests
         this.loggerMock = new Mock<ILogger<GetByIdVehicleRequestHandler>>();
 
         this.handler = new GetByIdVehicleRequestHandler(
+            this.mapper,
             this.repositoryVehicleMock.Object,
             this.loggerMock.Object
         );

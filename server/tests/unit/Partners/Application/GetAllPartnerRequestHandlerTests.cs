@@ -1,12 +1,13 @@
 ﻿using FizzWare.NBuilder;
 using LocadoraDeAutomoveis.Application.Partners.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.Partners;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Partners.Application;
 
 [TestClass]
 [TestCategory("Partner Application - Unit Tests")]
-public sealed class GetAllPartnerRequestHandlerTests
+public sealed class GetAllPartnerRequestHandlerTests : UnitTestBase
 {
     private GetAllPartnerRequestHandler handler = null!;
 
@@ -20,6 +21,7 @@ public sealed class GetAllPartnerRequestHandlerTests
         this.loggerMock = new Mock<ILogger<GetAllPartnerRequestHandler>>();
 
         this.handler = new GetAllPartnerRequestHandler(
+            this.mapper,
             this.repositoryPartnerMock.Object,
             this.loggerMock.Object
         );

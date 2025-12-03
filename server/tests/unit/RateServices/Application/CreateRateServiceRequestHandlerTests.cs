@@ -2,12 +2,13 @@
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.RateServices.Application;
 
 [TestClass]
 [TestCategory("RateService Application - Unit Tests")]
-public sealed class CreateRateServiceRequestHandlerTests
+public sealed class CreateRateServiceRequestHandlerTests : UnitTestBase
 {
     private CreateRateServiceRequestHandler handler = null!;
 
@@ -42,6 +43,7 @@ public sealed class CreateRateServiceRequestHandlerTests
         this.handler = new CreateRateServiceRequestHandler(
             this.userManagerMock.Object,
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryRateServiceMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,

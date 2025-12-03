@@ -1,12 +1,13 @@
 ﻿using LocadoraDeAutomoveis.Application.Configurations.Commands.Details;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Configurations;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Configurations.Application;
 
 [TestClass]
 [TestCategory("Configuration Application - Unit Tests")]
-public sealed class DetailsRequestHandlerTests
+public sealed class DetailsRequestHandlerTests : UnitTestBase
 {
     private DetailsRequestHandler handler = null!;
 
@@ -22,6 +23,7 @@ public sealed class DetailsRequestHandlerTests
         this.loggerMock = new Mock<ILogger<DetailsRequestHandler>>();
 
         this.handler = new DetailsRequestHandler(
+            this.mapper,
             this.repositoryConfigurationMock.Object,
             this.tenantProviderMock.Object,
             this.loggerMock.Object

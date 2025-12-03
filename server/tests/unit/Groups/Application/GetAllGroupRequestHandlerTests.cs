@@ -1,12 +1,13 @@
 ﻿using FizzWare.NBuilder;
 using LocadoraDeAutomoveis.Application.Groups.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.Groups;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Groups.Application;
 
 [TestClass]
 [TestCategory("Group Application - Unit Tests")]
-public sealed class GetAllGroupRequestHandlerTests
+public sealed class GetAllGroupRequestHandlerTests : UnitTestBase
 {
     private GetAllGroupRequestHandler handler = null!;
 
@@ -20,6 +21,7 @@ public sealed class GetAllGroupRequestHandlerTests
         this.loggerMock = new Mock<ILogger<GetAllGroupRequestHandler>>();
 
         this.handler = new GetAllGroupRequestHandler(
+            this.mapper,
             this.repositoryGroupMock.Object,
             this.loggerMock.Object
         );

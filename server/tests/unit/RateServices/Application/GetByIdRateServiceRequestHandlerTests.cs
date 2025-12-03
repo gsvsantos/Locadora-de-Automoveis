@@ -1,12 +1,13 @@
 ﻿using LocadoraDeAutomoveis.Application.RateServices.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.RateServices.Commands.GetById;
 using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.RateServices.Application;
 
 [TestClass]
 [TestCategory("RateService Application - Unit Tests")]
-public sealed class GetByIdRateServiceRequestHandlerTests
+public sealed class GetByIdRateServiceRequestHandlerTests : UnitTestBase
 {
     private GetByIdRateServiceRequestHandler handler = null!;
 
@@ -20,6 +21,7 @@ public sealed class GetByIdRateServiceRequestHandlerTests
         this.loggerMock = new Mock<ILogger<GetByIdRateServiceRequestHandler>>();
 
         this.handler = new GetByIdRateServiceRequestHandler(
+            this.mapper,
             this.repositoryRateServiceMock.Object,
             this.loggerMock.Object
         );
@@ -56,7 +58,7 @@ public sealed class GetByIdRateServiceRequestHandlerTests
         Assert.AreEqual(rateService.Id, dto.Id);
         Assert.AreEqual(rateService.Name, dto.Name);
         Assert.AreEqual(rateService.Price, dto.Price);
-        Assert.AreEqual(rateService.IsChargedPerDay, dto.IsFixed);
+        Assert.AreEqual(rateService.IsChargedPerDay, dto.IsChargedPerDay);
     }
     #endregion
 }

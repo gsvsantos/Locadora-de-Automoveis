@@ -42,13 +42,14 @@ public sealed class DeleteRentalRequestHandlerTests
             0
         )
         { Id = rentalId };
+        rental.SetStatus(ERentalStatus.Completed);
 
         this.repositoryRentalMock
             .Setup(r => r.GetByIdAsync(rentalId))
             .ReturnsAsync(rental);
 
         this.repositoryRentalMock
-            .Setup(r => r.DeleteAsync(request.Id))
+            .Setup(r => r.UpdateAsync(rental.Id, rental))
             .Verifiable();
 
         this.unitOfWorkMock
@@ -64,7 +65,7 @@ public sealed class DeleteRentalRequestHandlerTests
             Times.Once);
 
         this.repositoryRentalMock
-            .Verify(r => r.DeleteAsync(request.Id),
+            .Verify(r => r.UpdateAsync(rental.Id, rental),
             Times.Once);
 
         this.unitOfWorkMock.Verify(c => c.CommitAsync(), Times.Once);

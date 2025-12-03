@@ -1,12 +1,13 @@
 ﻿using FizzWare.NBuilder;
 using LocadoraDeAutomoveis.Application.PricingPlans.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.PricingPlans.Application;
 
 [TestClass]
 [TestCategory("PricingPlan Application - Unit Tests")]
-public sealed class GetAllPricingPlanRequestHandlerTests
+public sealed class GetAllPricingPlanRequestHandlerTests : UnitTestBase
 {
     private GetAllPricingPlanRequestHandler handler = null!;
 
@@ -20,6 +21,7 @@ public sealed class GetAllPricingPlanRequestHandlerTests
         this.loggerMock = new Mock<ILogger<GetAllPricingPlanRequestHandler>>();
 
         this.handler = new GetAllPricingPlanRequestHandler(
+            this.mapper,
             this.repositoryPricingPlanMock.Object,
             this.loggerMock.Object
         );

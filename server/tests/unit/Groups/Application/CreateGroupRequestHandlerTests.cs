@@ -2,12 +2,13 @@
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Groups.Application;
 
 [TestClass]
 [TestCategory("Group Application - Unit Tests")]
-public sealed class CreateGroupRequestHandlerTests
+public sealed class CreateGroupRequestHandlerTests : UnitTestBase
 {
     private CreateGroupRequestHandler handler = null!;
 
@@ -42,6 +43,7 @@ public sealed class CreateGroupRequestHandlerTests
         this.handler = new CreateGroupRequestHandler(
             this.userManagerMock.Object,
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryGroupMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,

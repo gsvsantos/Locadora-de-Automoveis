@@ -1,12 +1,13 @@
 ﻿using LocadoraDeAutomoveis.Application.Groups.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Groups.Application;
 
 [TestClass]
 [TestCategory("Group Application - Unit Tests")]
-public sealed class UpdateGroupRequestHandlerTests
+public sealed class UpdateGroupRequestHandlerTests : UnitTestBase
 {
     private UpdateGroupRequestHandler handler = null!;
 
@@ -25,6 +26,7 @@ public sealed class UpdateGroupRequestHandlerTests
 
         this.handler = new UpdateGroupRequestHandler(
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryGroupMock.Object,
             this.validatorMock.Object,
             this.loggerMock.Object

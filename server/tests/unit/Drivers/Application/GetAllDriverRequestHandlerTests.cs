@@ -1,12 +1,13 @@
 ﻿using FizzWare.NBuilder;
 using LocadoraDeAutomoveis.Application.Drivers.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.Drivers;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Drivers.Application;
 
 [TestClass]
 [TestCategory("Driver Application - Unit Tests")]
-public sealed class GetAllDriverRequestHandlerTests
+public sealed class GetAllDriverRequestHandlerTests : UnitTestBase
 {
     private GetAllDriverRequestHandler handler = null!;
 
@@ -20,6 +21,7 @@ public sealed class GetAllDriverRequestHandlerTests
         this.loggerMock = new Mock<ILogger<GetAllDriverRequestHandler>>();
 
         this.handler = new GetAllDriverRequestHandler(
+            this.mapper,
             this.repositoryDriverMock.Object,
             this.loggerMock.Object
         );

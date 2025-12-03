@@ -10,12 +10,13 @@ using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Rentals.Application;
 
 [TestClass]
 [TestCategory("Rental Application - Unit Tests")]
-public sealed class CreateRentalRequestHandlerTests
+public sealed class CreateRentalRequestHandlerTests : UnitTestBase
 {
     private CreateRentalRequestHandler handler = null!;
 
@@ -64,6 +65,7 @@ public sealed class CreateRentalRequestHandlerTests
         this.handler = new CreateRentalRequestHandler(
             this.userManagerMock.Object,
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryRentalMock.Object,
             this.repositoryEmployeeMock.Object,
             this.repositoryClientMock.Object,

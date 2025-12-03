@@ -3,12 +3,13 @@ using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Drivers.Application;
 
 [TestClass]
 [TestCategory("Driver Application - Unit Tests")]
-public sealed class CreateDriverRequestHandlerTests
+public sealed class CreateDriverRequestHandlerTests : UnitTestBase
 {
     private CreateDriverRequestHandler handler = null!;
 
@@ -45,6 +46,7 @@ public sealed class CreateDriverRequestHandlerTests
         this.handler = new CreateDriverRequestHandler(
             this.userManagerMock.Object,
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryDriverMock.Object,
             this.repositoryClientMock.Object,
             this.tenantProviderMock.Object,

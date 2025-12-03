@@ -2,12 +2,13 @@
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Employees.Application;
 
 [TestClass]
 [TestCategory("Employee Application - Unit Tests")]
-public sealed class UpdateEmployeeRequestHandlerTests
+public sealed class UpdateEmployeeRequestHandlerTests : UnitTestBase
 {
     private UpdateEmployeeRequestHandler handler = null!;
 
@@ -38,6 +39,7 @@ public sealed class UpdateEmployeeRequestHandlerTests
         this.handler = new UpdateEmployeeRequestHandler(
             this.userManagerMock.Object,
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryEmployeeMock.Object,
             this.validatorMock.Object,
             this.loggerMock.Object

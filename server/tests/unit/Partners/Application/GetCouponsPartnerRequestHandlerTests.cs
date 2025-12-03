@@ -2,12 +2,13 @@
 using LocadoraDeAutomoveis.Application.Partners.Commands.GetCoupons;
 using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Partners;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Partners.Application;
 
 [TestClass]
 [TestCategory("Partner Application - Unit Tests")]
-public sealed class GetCouponsPartnerRequestHandlerTests
+public sealed class GetCouponsPartnerRequestHandlerTests : UnitTestBase
 {
     private GetCouponsPartnerRequestHandler handler = null!;
 
@@ -21,6 +22,7 @@ public sealed class GetCouponsPartnerRequestHandlerTests
         this.loggerMock = new Mock<ILogger<GetCouponsPartnerRequestHandler>>();
 
         this.handler = new GetCouponsPartnerRequestHandler(
+            this.mapper,
             this.repositoryPartnerMock.Object,
             this.loggerMock.Object
         );

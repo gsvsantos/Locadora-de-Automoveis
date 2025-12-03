@@ -3,12 +3,13 @@ using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Vehicles.Application;
 
 [TestClass]
 [TestCategory("Group Application - Unit Tests")]
-public sealed class UpdateVehicleRequestHandlerTests
+public sealed class UpdateVehicleRequestHandlerTests : UnitTestBase
 {
     private UpdateVehicleRequestHandler handler = null!;
 
@@ -31,6 +32,7 @@ public sealed class UpdateVehicleRequestHandlerTests
 
         this.handler = new UpdateVehicleRequestHandler(
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryVehicleMock.Object,
             this.repositoryGroupMock.Object,
             this.repositoryRentalMock.Object,
@@ -88,13 +90,13 @@ public sealed class UpdateVehicleRequestHandlerTests
             request.Brand,
             request.Color,
             request.Model,
-            request.CapacityInLiters,
+            request.FuelTankCapacity,
             request.Year,
             request.PhotoPath ?? string.Empty
         );
         updatedVehicle.SetFuelType(request.FuelType);
 
-        string expectedPhotoPath = request.PhotoPath ?? string.Empty;
+        string expectedPhotoPath = request.PhotoPath ?? "path not found";
         this.validatorMock
             .Setup(v => v.ValidateAsync(
                 It.Is<Vehicle>(v =>

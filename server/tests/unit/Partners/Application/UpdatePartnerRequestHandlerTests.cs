@@ -1,12 +1,13 @@
 ﻿using LocadoraDeAutomoveis.Application.Partners.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Partners.Application;
 
 [TestClass]
 [TestCategory("Partner Application - Unit Tests")]
-public sealed class UpdatePartnerRequestHandlerTests
+public sealed class UpdatePartnerRequestHandlerTests : UnitTestBase
 {
     private UpdatePartnerRequestHandler handler = null!;
 
@@ -25,6 +26,7 @@ public sealed class UpdatePartnerRequestHandlerTests
 
         this.handler = new UpdatePartnerRequestHandler(
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryPartnerMock.Object,
             this.validatorMock.Object,
             this.loggerMock.Object

@@ -2,12 +2,13 @@
 using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Coupons.Application;
 
 [TestClass]
 [TestCategory("Coupon Application - Unit Tests")]
-public sealed class UpdateCouponRequestHandlerTests
+public sealed class UpdateCouponRequestHandlerTests : UnitTestBase
 {
     private UpdateCouponRequestHandler handler = null!;
 
@@ -28,6 +29,7 @@ public sealed class UpdateCouponRequestHandlerTests
 
         this.handler = new UpdateCouponRequestHandler(
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryCouponMock.Object,
             this.repositoryPartnerMock.Object,
             this.validatorMock.Object,

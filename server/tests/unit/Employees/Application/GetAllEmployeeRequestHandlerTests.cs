@@ -1,12 +1,13 @@
 ﻿using FizzWare.NBuilder;
 using LocadoraDeAutomoveis.Application.Employees.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.Employees;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Employees.Application;
 
 [TestClass]
 [TestCategory("Employee Application - Unit Tests")]
-public sealed class GetAllEmployeeRequestHandlerTests
+public sealed class GetAllEmployeeRequestHandlerTests : UnitTestBase
 {
     private GetAllEmployeeRequestHandler handler = null!;
 
@@ -20,6 +21,7 @@ public sealed class GetAllEmployeeRequestHandlerTests
         this.loggerMock = new Mock<ILogger<GetAllEmployeeRequestHandler>>();
 
         this.handler = new GetAllEmployeeRequestHandler(
+            this.mapper,
             this.repositoryEmployeeMock.Object,
             this.loggerMock.Object);
     }

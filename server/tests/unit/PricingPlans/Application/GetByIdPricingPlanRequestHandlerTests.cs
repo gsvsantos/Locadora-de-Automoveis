@@ -2,12 +2,13 @@
 using LocadoraDeAutomoveis.Application.PricingPlans.Commands.GetById;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.PricingPlans.Application;
 
 [TestClass]
 [TestCategory("PricingPlan Application - Unit Tests")]
-public sealed class GetByIdPricingPlanRequestHandlerTests
+public sealed class GetByIdPricingPlanRequestHandlerTests : UnitTestBase
 {
     private GetByIdPricingPlanRequestHandler handler = null!;
 
@@ -21,6 +22,7 @@ public sealed class GetByIdPricingPlanRequestHandlerTests
         this.loggerMock = new Mock<ILogger<GetByIdPricingPlanRequestHandler>>();
 
         this.handler = new GetByIdPricingPlanRequestHandler(
+            this.mapper,
             this.repositoryPricingPlanMock.Object,
             this.loggerMock.Object
         );

@@ -4,12 +4,13 @@ using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Vehicles;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Rentals.Application;
 
 [TestClass]
 [TestCategory("Rental Application - Unit Tests")]
-public sealed class GetByIdRentalRequestHandlerTests
+public sealed class GetByIdRentalRequestHandlerTests : UnitTestBase
 {
     private GetByIdRentalRequestHandler handler = null!;
 
@@ -23,6 +24,7 @@ public sealed class GetByIdRentalRequestHandlerTests
         this.loggerMock = new Mock<ILogger<GetByIdRentalRequestHandler>>();
 
         this.handler = new GetByIdRentalRequestHandler(
+            this.mapper,
             this.repositoryRentalMock.Object,
             this.loggerMock.Object
         );

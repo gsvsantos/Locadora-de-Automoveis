@@ -1,12 +1,13 @@
 ﻿using FizzWare.NBuilder;
 using LocadoraDeAutomoveis.Application.RateServices.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.RateServices.Application;
 
 [TestClass]
 [TestCategory("RateService Application - Unit Tests")]
-public sealed class GetAllRateServiceRequestHandlerTests
+public sealed class GetAllRateServiceRequestHandlerTests : UnitTestBase
 {
     private GetAllRateServiceRequestHandler handler = null!;
 
@@ -20,6 +21,7 @@ public sealed class GetAllRateServiceRequestHandlerTests
         this.loggerMock = new Mock<ILogger<GetAllRateServiceRequestHandler>>();
 
         this.handler = new GetAllRateServiceRequestHandler(
+            this.mapper,
             this.repositoryRateServiceMock.Object,
             this.loggerMock.Object
         );

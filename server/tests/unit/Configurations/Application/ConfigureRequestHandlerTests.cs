@@ -2,12 +2,13 @@
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Configurations;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Configurations.Application;
 
 [TestClass]
 [TestCategory("Configuration Application - Unit Tests")]
-public sealed class ConfigureRequestHandlerTests
+public sealed class ConfigureRequestHandlerTests : UnitTestBase
 {
     private ConfigureRequestHandler handler = null!;
 
@@ -42,6 +43,7 @@ public sealed class ConfigureRequestHandlerTests
         this.handler = new ConfigureRequestHandler(
             this.userManagerMock.Object,
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryConfigurationMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,

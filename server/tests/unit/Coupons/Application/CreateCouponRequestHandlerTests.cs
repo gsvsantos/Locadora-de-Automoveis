@@ -3,12 +3,13 @@ using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Coupons.Application;
 
 [TestClass]
 [TestCategory("Coupon Application - Unit Tests")]
-public sealed class CreateCouponRequestHandlerTests
+public sealed class CreateCouponRequestHandlerTests : UnitTestBase
 {
     private CreateCouponRequestHandler handler = null!;
 
@@ -45,6 +46,7 @@ public sealed class CreateCouponRequestHandlerTests
         this.handler = new CreateCouponRequestHandler(
             this.userManagerMock.Object,
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryCouponMock.Object,
             this.repositoryPartnerMock.Object,
             this.tenantProviderMock.Object,

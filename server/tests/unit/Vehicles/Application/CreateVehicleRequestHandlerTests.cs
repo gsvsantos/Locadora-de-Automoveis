@@ -3,12 +3,13 @@ using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Vehicles.Application;
 
 [TestClass]
 [TestCategory("Vehicle Application - Unit Tests")]
-public sealed class CreateVehicleRequestHandlerTests
+public sealed class CreateVehicleRequestHandlerTests : UnitTestBase
 {
     private CreateVehicleRequestHandler handler = null!;
 
@@ -45,6 +46,7 @@ public sealed class CreateVehicleRequestHandlerTests
         this.handler = new CreateVehicleRequestHandler(
             this.userManagerMock.Object,
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryVehicleMock.Object,
             this.repositoryGroupMock.Object,
             this.tenantProviderMock.Object,
@@ -103,13 +105,13 @@ public sealed class CreateVehicleRequestHandlerTests
             .Setup(u => u.FindByIdAsync(this.userContextMock.Object.GetUserId().ToString()))
             .ReturnsAsync(user);
 
-        string expectedPhotoPath = request.PhotoPath ?? string.Empty;
+        string expectedPhotoPath = request.PhotoPath ?? "path not found";
         Vehicle vehicle = new(
             request.LicensePlate,
             request.Brand,
             request.Color,
             request.Model,
-            request.CapacityInLiters,
+            request.FuelTankCapacity,
             request.Year,
             request.PhotoPath ?? string.Empty
         );
@@ -122,7 +124,7 @@ public sealed class CreateVehicleRequestHandlerTests
                 It.Is<Vehicle>(v =>
                     v.LicensePlate == request.LicensePlate && v.Brand == request.Brand &&
                     v.Color == request.Color && v.Model == request.Model &&
-                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.CapacityInLiters &&
+                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.FuelTankCapacity &&
                     v.Year == request.Year && v.PhotoPath == expectedPhotoPath
                     ), CancellationToken.None
                 ))
@@ -137,7 +139,7 @@ public sealed class CreateVehicleRequestHandlerTests
                 It.Is<Vehicle>(v =>
                     v.LicensePlate == request.LicensePlate && v.Brand == request.Brand &&
                     v.Color == request.Color && v.Model == request.Model &&
-                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.CapacityInLiters &&
+                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.FuelTankCapacity &&
                     v.Year == request.Year && v.PhotoPath == expectedPhotoPath
                     ))
             ).Verifiable();
@@ -159,7 +161,7 @@ public sealed class CreateVehicleRequestHandlerTests
                 It.Is<Vehicle>(v =>
                     v.LicensePlate == request.LicensePlate && v.Brand == request.Brand &&
                     v.Color == request.Color && v.Model == request.Model &&
-                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.CapacityInLiters &&
+                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.FuelTankCapacity &&
                     v.Year == request.Year && v.PhotoPath == expectedPhotoPath
                     ), CancellationToken.None
                 ), Times.Once
@@ -173,7 +175,7 @@ public sealed class CreateVehicleRequestHandlerTests
                 It.Is<Vehicle>(v =>
                     v.LicensePlate == request.LicensePlate && v.Brand == request.Brand &&
                     v.Color == request.Color && v.Model == request.Model &&
-                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.CapacityInLiters &&
+                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.FuelTankCapacity &&
                     v.Year == request.Year && v.PhotoPath == expectedPhotoPath
                     )
                 ), Times.Once

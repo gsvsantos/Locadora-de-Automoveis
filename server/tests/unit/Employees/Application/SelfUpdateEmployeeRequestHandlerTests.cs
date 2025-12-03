@@ -2,19 +2,20 @@
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Employees.Application;
 
 [TestClass]
 [TestCategory("Employee Application - Unit Tests")]
-public sealed class SelfUpdateEmployeeRequestHandlerTests
+public sealed class SelfUpdateEmployeeRequestHandlerTests : UnitTestBase
 {
     private SelfUpdateEmployeeRequestHandler handler = null!;
 
-    private const string _userName = "employeeTesteDS";
-    private const string _fullName = "Employee Teste da Silva";
-    private const string _email = "employeeTesteDS@gmail.com";
-    private const string _phoneNumber = "(51) 90000-0001";
+    private const string _userName = "Clebinho";
+    private const string _fullName = "Clebinho Da Silva";
+    private const string _email = "cleber@dasilva.net";
+    private const string _phoneNumber = "(99) 99999-9999";
 
     private Mock<UserManager<User>> userManagerMock = null!;
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
@@ -38,6 +39,7 @@ public sealed class SelfUpdateEmployeeRequestHandlerTests
         this.handler = new SelfUpdateEmployeeRequestHandler(
             this.userManagerMock.Object,
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryEmployeeMock.Object,
             this.validatorMock.Object,
             this.loggerMock.Object
@@ -52,7 +54,7 @@ public sealed class SelfUpdateEmployeeRequestHandlerTests
         Guid userId = Guid.NewGuid();
         SelfUpdateEmployeeRequest request = new(
             userId,
-            "Employee Teste da Silva SelfUpdate"
+            "Clebinho Da Silva SelfUpdate"
         );
 
         User user = new()
@@ -100,7 +102,8 @@ public sealed class SelfUpdateEmployeeRequestHandlerTests
             .ReturnsAsync(new ValidationResult());
 
         this.repositoryEmployeeMock
-            .Setup(r => r.UpdateAsync(request.Id,
+            .Setup(r => r.UpdateAsync(
+                employee.Id,
                 It.Is<Employee>(emp =>
                     emp.FullName == updatedEmployee.FullName &&
                     emp.AdmissionDate == updatedEmployee.AdmissionDate &&
@@ -146,7 +149,7 @@ public sealed class SelfUpdateEmployeeRequestHandlerTests
 
         this.repositoryEmployeeMock
             .Verify(r => r.UpdateAsync(
-                request.Id,
+                employee.Id,
                 It.Is<Employee>(emp =>
                     emp.FullName == updatedEmployee.FullName &&
                     emp.AdmissionDate == updatedEmployee.AdmissionDate &&
@@ -163,7 +166,7 @@ public sealed class SelfUpdateEmployeeRequestHandlerTests
 
         Assert.IsTrue(result.IsSuccess);
         Assert.IsNotNull(result.Value);
-        Assert.AreEqual(request.Id, result.Value.Id);
+        Assert.AreEqual(employee.Id, result.Value.Id);
     }
     #endregion
 }

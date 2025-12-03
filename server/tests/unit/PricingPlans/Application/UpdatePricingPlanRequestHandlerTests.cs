@@ -3,12 +3,13 @@ using LocadoraDeAutomoveis.Application.PricingPlans.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.PricingPlans.Application;
 
 [TestClass]
 [TestCategory("PricingPlan Application - Unit Tests")]
-public sealed class UpdatePricingPlanRequestHandlerTests
+public sealed class UpdatePricingPlanRequestHandlerTests : UnitTestBase
 {
     private UpdatePricingPlanRequestHandler handler = null!;
 
@@ -29,6 +30,7 @@ public sealed class UpdatePricingPlanRequestHandlerTests
 
         this.handler = new UpdatePricingPlanRequestHandler(
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryPricingPlanMock.Object,
             this.repositoryGroupMock.Object,
             this.validatorMock.Object,

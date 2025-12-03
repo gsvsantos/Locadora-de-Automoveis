@@ -3,12 +3,13 @@ using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.PricingPlans.Application;
 
 [TestClass]
 [TestCategory("PricingPlan Application - Unit Tests")]
-public sealed class CreatePricingPlanRequestHandlerTests
+public sealed class CreatePricingPlanRequestHandlerTests : UnitTestBase
 {
     private CreatePricingPlanRequestHandler handler = null!;
 
@@ -45,6 +46,7 @@ public sealed class CreatePricingPlanRequestHandlerTests
         this.handler = new CreatePricingPlanRequestHandler(
             this.userManagerMock.Object,
             this.unitOfWorkMock.Object,
+            this.mapper,
             this.repositoryPricingPlanMock.Object,
             this.repositoryGroupMock.Object,
             this.tenantProviderMock.Object,

@@ -3,12 +3,13 @@ using LocadoraDeAutomoveis.Application.Drivers.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Drivers.Commands.GetById;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Drivers;
+using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Drivers.Application;
 
 [TestClass]
 [TestCategory("Driver Application - Unit Tests")]
-public sealed class GetByIdDriverRequestHandlerTests
+public sealed class GetByIdDriverRequestHandlerTests : UnitTestBase
 {
     private GetByIdDriverRequestHandler handler = null!;
 
@@ -22,6 +23,7 @@ public sealed class GetByIdDriverRequestHandlerTests
         this.loggerMock = new Mock<ILogger<GetByIdDriverRequestHandler>>();
 
         this.handler = new GetByIdDriverRequestHandler(
+            this.mapper,
             this.repositoryDriverMock.Object,
             this.loggerMock.Object
         );
