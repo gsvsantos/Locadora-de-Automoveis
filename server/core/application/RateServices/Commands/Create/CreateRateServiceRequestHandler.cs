@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -14,6 +15,7 @@ namespace LocadoraDeAutomoveis.Application.RateServices.Commands.Create;
 public class CreateRateServiceRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryRateService repositoryRateService,
     ITenantProvider tenantProvider,
     IUserContext userContext,
@@ -31,10 +33,7 @@ public class CreateRateServiceRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(userContext.GetUserId()));
         }
 
-        RateService rateService = new(
-            request.Name,
-            request.Price
-        );
+        RateService rateService = mapper.Map<RateService>(request);
         rateService.DefineRateType(request.RateType);
 
         try

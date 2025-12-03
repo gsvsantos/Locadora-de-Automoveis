@@ -1,5 +1,5 @@
-﻿using FluentResults;
-using LocadoraDeAutomoveis.Application.RateServices.Commands.GetAll;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.RateServices;
 using MediatR;
@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace LocadoraDeAutomoveis.Application.RateServices.Commands.GetById;
 
 public class GetByIdRateServiceRequestHandler(
+    IMapper mapper,
     IRepositoryRateService repositoryRateService,
     ILogger<GetByIdRateServiceRequestHandler> logger
 ) : IRequestHandler<GetByIdRateServiceRequest, Result<GetByIdRateServiceResponse>>
@@ -24,15 +25,7 @@ public class GetByIdRateServiceRequestHandler(
                 return Result.Fail(ErrorResults.NotFoundError(request.Id));
             }
 
-            GetByIdRateServiceResponse response = new(
-                new RateServiceDto(
-                    selectedRateService.Id,
-                    selectedRateService.Name,
-                    selectedRateService.Price,
-                    selectedRateService.IsChargedPerDay,
-                    selectedRateService.RateType.ToString()
-                )
-            );
+            GetByIdRateServiceResponse response = mapper.Map<GetByIdRateServiceResponse>(selectedRateService);
 
             return Result.Ok(response);
         }

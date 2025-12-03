@@ -1,13 +1,14 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.RateServices;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.RateServices.Commands.GetAll;
 
 public class GetAllRateServiceRequestHandler(
+    IMapper mapper,
     IRepositoryRateService repositoryRateService,
     ILogger<GetAllRateServiceRequestHandler> logger
 ) : IRequestHandler<GetAllRateServiceRequest, Result<GetAllRateServiceResponse>>
@@ -22,16 +23,7 @@ public class GetAllRateServiceRequestHandler(
                 ? await repositoryRateService.GetAllAsync(request.Quantity.Value)
                 : await repositoryRateService.GetAllAsync();
 
-            GetAllRateServiceResponse response = new(
-                rateServices.Count,
-                rateServices.Select(rateService => new RateServiceDto(
-                    rateService.Id,
-                    rateService.Name,
-                    rateService.Price,
-                    rateService.IsChargedPerDay,
-                    rateService.RateType.ToString()
-                )).ToImmutableList()
-            );
+            GetAllRateServiceResponse response = mapper.Map<GetAllRateServiceResponse>(rateServices);
 
             return Result.Ok(response);
         }

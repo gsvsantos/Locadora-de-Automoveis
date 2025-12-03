@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -12,6 +13,7 @@ namespace LocadoraDeAutomoveis.Application.RateServices.Commands.Update;
 
 public class UpdateRateServiceRequestHandler(
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryRateService repositoryRateService,
     IRepositoryRental repositoryRental,
     IValidator<RateService> validator,
@@ -35,11 +37,7 @@ public class UpdateRateServiceRequestHandler(
             return Result.Fail(ErrorResults.BadRequestError("Cannot edit a service currently in use by active rentals."));
         }
 
-        RateService updatedRateService = new(
-            request.Name,
-            request.Price
-        )
-        { Id = selectedRateService.Id };
+        RateService updatedRateService = mapper.Map<RateService>(request);
 
         try
         {

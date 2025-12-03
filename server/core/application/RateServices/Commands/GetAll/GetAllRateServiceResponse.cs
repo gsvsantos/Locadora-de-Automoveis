@@ -11,6 +11,6 @@ public record RateServiceDto(
     Guid Id,
     string Name,
     decimal Price,
-    bool IsFixed,
+    bool IsChargedPerDay,
     string RateType
 );
