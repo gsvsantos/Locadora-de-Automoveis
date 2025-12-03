@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
+using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
@@ -9,7 +10,7 @@ namespace LocadoraDeAutomoveis.Application.Partners.Commands.Delete;
 
 public class DeletePartnerRequestHandler(
     IUnitOfWork unitOfWork,
-    IRepositoryPartner repositoryPartner,
+    IRepositoryPartner repositoryPartner, IRepositoryCoupon repositoryCoupon,
     ILogger<DeletePartnerRequestHandler> logger
 ) : IRequestHandler<DeletePartnerRequest, Result<DeletePartnerResponse>>
 {
@@ -21,6 +22,12 @@ public class DeletePartnerRequestHandler(
         if (selectedPartner is null)
         {
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
+        }
+
+        bool hasCoupons = await repositoryCoupon.ExistsByPartnerId(request.Id);
+        if (hasCoupons)
+        {
+            return Result.Fail(ErrorResults.BadRequestError("Cannot delete a partner that has linked coupons."));
         }
 
         try

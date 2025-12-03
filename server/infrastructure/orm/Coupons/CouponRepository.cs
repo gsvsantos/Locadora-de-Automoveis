@@ -7,6 +7,19 @@ namespace LocadoraDeAutomoveis.Infrastructure.Coupons;
 public class CouponRepository(AppDbContext context)
     : BaseRepository<Coupon>(context), IRepositoryCoupon
 {
+    public async Task<bool> ExistsByPartnerId(Guid partnerId)
+    {
+        return await this.records.AnyAsync(c => c.PartnerId.Equals(partnerId));
+    }
+
+    public async Task<Coupon?> GetByNameAsync(string name)
+    {
+        return await this.records
+            .Include(x => x.User)
+            .Include(c => c.Partner)
+            .FirstOrDefaultAsync(c => c.Name.Equals(name));
+    }
+
     public override async Task<List<Coupon>> GetAllAsync()
     {
         return await this.records
@@ -30,13 +43,5 @@ public class CouponRepository(AppDbContext context)
             .Include(x => x.User)
             .Include(c => c.Partner)
             .FirstOrDefaultAsync(c => c.Id.Equals(id));
-    }
-
-    public async Task<Coupon?> GetByNameAsync(string name)
-    {
-        return await this.records
-            .Include(x => x.User)
-            .Include(c => c.Partner)
-            .FirstOrDefaultAsync(c => c.Name.Equals(name));
     }
 }
