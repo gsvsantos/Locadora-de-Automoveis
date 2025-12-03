@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -11,6 +12,7 @@ namespace LocadoraDeAutomoveis.Application.Groups.Commands.Update;
 
 public class UpdateGroupRequestHandler(
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryGroup repositoryGroup,
     IValidator<Group> validator,
     ILogger<UpdateGroupRequestHandler> logger
@@ -28,8 +30,7 @@ public class UpdateGroupRequestHandler(
 
         try
         {
-            Group updatedGroup = new(request.Name)
-            { Id = selectedGroup.Id };
+            Group updatedGroup = mapper.Map<Group>(request);
 
             ValidationResult validationResult = await validator.ValidateAsync(updatedGroup, cancellationToken);
 

@@ -1,5 +1,5 @@
-﻿using FluentResults;
-using LocadoraDeAutomoveis.Application.Groups.Commands.GetAll;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Groups;
 using MediatR;
@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace LocadoraDeAutomoveis.Application.Groups.Commands.GetById;
 
 public class GetByIdGroupRequestHandler(
+    IMapper mapper,
     IRepositoryGroup repositoryGroup,
     ILogger<GetByIdGroupRequestHandler> logger
 ) : IRequestHandler<GetByIdGroupRequest, Result<GetByIdGroupResponse>>
@@ -24,12 +25,7 @@ public class GetByIdGroupRequestHandler(
                 return Result.Fail(ErrorResults.NotFoundError(request.Id));
             }
 
-            GetByIdGroupResponse response = new(
-                 new GroupDto(
-                    selectedGroup.Id,
-                    selectedGroup.Name
-                )
-            );
+            GetByIdGroupResponse response = mapper.Map<GetByIdGroupResponse>(selectedGroup);
 
             return Result.Ok(response);
         }

@@ -1,13 +1,14 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Groups;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.Groups.Commands.GetAll;
 
 public class GetAllGroupRequestHandler(
+    IMapper mapper,
     IRepositoryGroup repositoryGroup,
     ILogger<GetAllGroupRequestHandler> logger
 ) : IRequestHandler<GetAllGroupRequest, Result<GetAllGroupResponse>>
@@ -22,13 +23,7 @@ public class GetAllGroupRequestHandler(
                 await repositoryGroup.GetAllAsync(request.Quantity.Value) :
                 await repositoryGroup.GetAllAsync();
 
-            GetAllGroupResponse response = new(
-                groups.Count,
-                groups.Select(group => new GroupDto(
-                    group.Id,
-                    group.Name
-                )).ToImmutableList()
-            );
+            GetAllGroupResponse response = mapper.Map<GetAllGroupResponse>(groups);
 
             return Result.Ok(response);
         }

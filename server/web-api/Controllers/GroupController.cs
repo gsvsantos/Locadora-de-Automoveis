@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Groups.Commands.Create;
 using LocadoraDeAutomoveis.Application.Groups.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Groups.Commands.GetAll;
@@ -14,7 +15,10 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 [ApiController]
 [Route("api/group")]
 [Authorize("AdminOrEmployeePolicy")]
-public class GroupController(IMediator mediator) : ControllerBase
+public class GroupController(
+    IMediator mediator,
+    IMapper mapper
+) : ControllerBase
 {
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateGroupRequest request)
@@ -62,10 +66,7 @@ public class GroupController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateGroupRequestPartial partialRequest)
     {
 
-        UpdateGroupRequest request = new(
-            id,
-            partialRequest.Name
-        );
+        UpdateGroupRequest request = mapper.Map<UpdateGroupRequest>((partialRequest, id));
 
         Result<UpdateGroupResponse> result = await mediator.Send(request);
 

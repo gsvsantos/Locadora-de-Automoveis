@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -14,6 +15,7 @@ namespace LocadoraDeAutomoveis.Application.Groups.Commands.Create;
 public class CreateGroupRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryGroup repositoryGroup,
     ITenantProvider tenantProvider,
     IUserContext userContext,
@@ -31,7 +33,7 @@ public class CreateGroupRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(userContext.GetUserId()));
         }
 
-        Group group = new(request.Name);
+        Group group = mapper.Map<Group>(request);
 
         try
         {
