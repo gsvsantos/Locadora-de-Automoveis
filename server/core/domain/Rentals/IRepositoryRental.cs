@@ -28,5 +28,11 @@ public interface IRepositoryRental : IRepository<Rental>
 
     Task<bool> HasRentalHistoryByRateService(Guid serviceId);
 
+    Task<bool> HasActiveRentalsByCoupon(Guid couponId);
+
+    Task<bool> HasRentalHistoryByCoupon(Guid couponId);
+
+    Task<List<CouponUsageDto>> GetMostUsedCouponsAsync();
+
     Task<bool> HasClientUsedCoupon(Guid clientId, Guid couponId);
 }

@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Coupons;
+using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -10,6 +11,7 @@ namespace LocadoraDeAutomoveis.Application.Coupons.Commands.Delete;
 public class DeleteCouponRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryCoupon repositoryCoupon,
+    IRepositoryRental repositoryRental,
     ILogger<DeleteCouponRequestHandler> logger
 ) : IRequestHandler<DeleteCouponRequest, Result<DeleteCouponResponse>>
 {
@@ -23,9 +25,34 @@ public class DeleteCouponRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
         }
 
+        bool hasActiveRentals = await repositoryRental.HasActiveRentalsByCoupon(request.Id);
+        if (hasActiveRentals)
+        {
+            return Result.Fail(ErrorResults.BadRequestError("Cannot remove a coupon associated with active rentals."));
+        }
+
         try
         {
-            await repositoryCoupon.DeleteAsync(request.Id);
+            bool hasHistory = await repositoryRental.HasRentalHistoryByCoupon(request.Id);
+
+            if (hasHistory)
+            {
+                selectedCoupon.Deactivate();
+
+                await repositoryCoupon.UpdateAsync(selectedCoupon.Id, selectedCoupon);
+
+                logger.LogInformation("Coupon '{@Name}' was deactivated to preserve rental history.",
+                    selectedCoupon.Name
+                );
+            }
+            else
+            {
+                await repositoryCoupon.DeleteAsync(request.Id);
+
+                logger.LogInformation("Coupon '{@Name}' was permanently deleted.",
+                    selectedCoupon.Name
+                );
+            }
 
             await unitOfWork.CommitAsync();
 
