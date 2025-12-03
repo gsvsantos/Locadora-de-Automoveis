@@ -30,9 +30,9 @@ public class VehicleController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllVehicleRequest? request)
+    public async Task<IActionResult> GetAll([FromQuery] int? quantity, [FromQuery] Guid? groupId)
     {
-        request = request ?? new GetAllVehicleRequest(null);
+        GetAllVehicleRequest request = new(quantity, groupId);
 
         Result<GetAllVehicleResponse> result = await mediator.Send(request);
 

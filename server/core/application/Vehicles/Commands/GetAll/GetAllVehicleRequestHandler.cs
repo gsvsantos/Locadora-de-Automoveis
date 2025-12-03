@@ -17,10 +17,20 @@ public class GetAllVehicleRequestHandler(
     {
         try
         {
-            List<Vehicle> vehicles =
-                request.Quantity.HasValue && request.Quantity.Value > 0
-                ? await repositoryVehicle.GetAllAsync(request.Quantity.Value)
-                : await repositoryVehicle.GetAllAsync();
+            List<Vehicle> vehicles;
+
+            if (request.GroupId.HasValue && request.GroupId != Guid.Empty)
+            {
+                vehicles = await repositoryVehicle.GetByGroupIdAsync(request.GroupId.Value);
+            }
+            else if (request.Quantity.HasValue && request.Quantity.Value > 0)
+            {
+                vehicles = await repositoryVehicle.GetAllAsync(request.Quantity.Value);
+            }
+            else
+            {
+                vehicles = await repositoryVehicle.GetAllAsync();
+            }
 
             GetAllVehicleResponse response = new(
                 vehicles.Count,

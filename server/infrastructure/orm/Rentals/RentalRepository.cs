@@ -37,6 +37,20 @@ public class RentalRepository(AppDbContext context)
             r.Status != ERentalStatus.Open);
     }
 
+    public async Task<bool> HasActiveRentalsByVehicle(Guid vehicleId)
+    {
+        return await this.records.AnyAsync(r =>
+            r.VehicleId.Equals(vehicleId) &&
+            r.Status == ERentalStatus.Open);
+    }
+
+    public async Task<bool> HasRentalHistoryByVehicle(Guid vehicleId)
+    {
+        return await this.records.AnyAsync(r =>
+            r.VehicleId.Equals(vehicleId) &&
+            r.Status != ERentalStatus.Open);
+    }
+
     public async Task<bool> HasClientUsedCoupon(Guid clientId, Guid couponId)
     {
         return await this.records

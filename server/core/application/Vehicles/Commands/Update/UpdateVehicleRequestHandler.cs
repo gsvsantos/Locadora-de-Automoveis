@@ -3,6 +3,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Groups;
+using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
@@ -14,6 +15,7 @@ public class UpdateVehicleRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryVehicle repositoryVehicle,
     IRepositoryGroup repositoryGroup,
+    IRepositoryRental repositoryRental,
     IValidator<Vehicle> validator,
     ILogger<UpdateVehicleRequestHandler> logger
 ) : IRequestHandler<UpdateVehicleRequest, Result<UpdateVehicleResponse>>
@@ -26,6 +28,12 @@ public class UpdateVehicleRequestHandler(
         if (selectedVehicle is null)
         {
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
+        }
+
+        bool hasActiveRentals = await repositoryRental.HasActiveRentalsByVehicle(request.Id);
+        if (hasActiveRentals)
+        {
+            return Result.Fail(ErrorResults.BadRequestError("Cannot edit a vehicle that is currently rented."));
         }
 
         Group? selectedGroup = (selectedVehicle.GroupId != request.GroupId)

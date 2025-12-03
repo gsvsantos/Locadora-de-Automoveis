@@ -13,6 +13,14 @@ public class VehicleRepository(AppDbContext context)
             .AnyAsync(x => x.GroupId.Equals(groupId));
     }
 
+    public async Task<List<Vehicle>> GetByGroupIdAsync(Guid groupId)
+    {
+        return await this.records
+            .Include(v => v.Group)
+            .Where(v => v.GroupId.Equals(groupId))
+            .ToListAsync();
+    }
+
     public override async Task<List<Vehicle>> GetAllAsync()
     {
         return await this.records
