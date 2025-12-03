@@ -16,5 +16,9 @@ public interface IRepositoryRental : IRepository<Rental>
 
     Task<bool> HasRentalHistoryByVehicle(Guid vehicleId);
 
+    Task<bool> HasActiveRentalsByClient(Guid clientId);
+
+    Task<bool> HasRentalHistoryByClient(Guid clientId);
+
     Task<bool> HasClientUsedCoupon(Guid clientId, Guid couponId);
 }
