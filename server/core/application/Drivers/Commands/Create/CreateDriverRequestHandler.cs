@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Clients;
@@ -16,6 +17,7 @@ namespace LocadoraDeAutomoveis.Application.Drivers.Commands.Create;
 public class CreateDriverRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryDriver repositoryDriver,
     IRepositoryClient repositoryClient,
     ITenantProvider tenantProvider,
@@ -41,14 +43,7 @@ public class CreateDriverRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.ClientId));
         }
 
-        Driver driver = new(
-            request.FullName,
-            request.Email,
-            request.PhoneNumber,
-            request.Document,
-            request.LicenseNumber,
-            request.LicenseValidity
-        );
+        Driver driver = mapper.Map<Driver>(request);
 
         try
         {
@@ -76,13 +71,7 @@ public class CreateDriverRequestHandler(
             {
                 Address addressCopy = selectedClient.Address with { };
 
-                Client newCLient = new(
-                    request.FullName,
-                    request.Email,
-                    request.PhoneNumber,
-                    request.Document,
-                    addressCopy
-                );
+                Client newCLient = mapper.Map<Client>((request, addressCopy));
 
                 newCLient.SetClientType(EClientType.Individual);
 

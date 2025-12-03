@@ -1,13 +1,14 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.Drivers.Commands.GetAll;
 
 public class GetAllDriverRequestHandler(
+    IMapper mapper,
     IRepositoryDriver repositoryDriver,
     ILogger<GetAllDriverRequestHandler> logger
 ) : IRequestHandler<GetAllDriverRequest, Result<GetAllDriverResponse>>
@@ -22,19 +23,7 @@ public class GetAllDriverRequestHandler(
                 ? await repositoryDriver.GetAllAsync(request.Quantity.Value)
                 : await repositoryDriver.GetAllAsync();
 
-            GetAllDriverResponse response = new(
-                drivers.Count,
-                drivers.Select(driver => new DriverDto(
-                    driver.Id,
-                    driver.FullName,
-                    driver.Email,
-                    driver.PhoneNumber,
-                    driver.Document,
-                    driver.LicenseNumber,
-                    driver.LicenseValidity,
-                    driver.Client.FullName
-                )).ToImmutableList()
-            );
+            GetAllDriverResponse response = mapper.Map<GetAllDriverResponse>(drivers);
 
             return Result.Ok(response);
         }
