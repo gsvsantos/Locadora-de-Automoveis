@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -11,6 +12,7 @@ namespace LocadoraDeAutomoveis.Application.Clients.Commands.Update;
 
 public class UpdateClientRequestHandler(
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryClient repositoryClient,
     IValidator<Client> validator,
     ILogger<UpdateClientRequestHandler> logger
@@ -26,22 +28,8 @@ public class UpdateClientRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
         }
 
-        Address address = new(
-            request.State,
-            request.City,
-            request.Neighborhood,
-            request.Street,
-            request.Number
-        );
-
-        Client updatedClient = new(
-            request.FullName,
-            request.Email,
-            request.PhoneNumber,
-            request.Document,
-            address
-        )
-        { Id = selectedClient.Id };
+        Address address = mapper.Map<Address>(request);
+        Client updatedClient = mapper.Map<Client>((request, address));
 
         try
         {

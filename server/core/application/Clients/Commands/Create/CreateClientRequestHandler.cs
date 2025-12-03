@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -15,6 +16,7 @@ namespace LocadoraDeAutomoveis.Application.Clients.Commands.Create;
 public class CreateClientRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryClient repositoryClient,
     ITenantProvider tenantProvider,
     IUserContext userContext,
@@ -32,21 +34,9 @@ public class CreateClientRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(userContext.GetUserId()));
         }
 
-        Address address = new(
-            request.State,
-            request.City,
-            request.Neighborhood,
-            request.Street,
-            request.Number
-        );
+        Address address = mapper.Map<Address>(request);
+        Client client = mapper.Map<Client>((request, address));
 
-        Client client = new(
-            request.FullName,
-            request.Email,
-            request.PhoneNumber,
-            request.Document,
-            address
-        );
         client.SetClientType(request.ClientType);
 
         try

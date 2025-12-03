@@ -1,5 +1,5 @@
-﻿using FluentResults;
-using LocadoraDeAutomoveis.Application.Clients.Commands.GetAll;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Clients;
 using MediatR;
@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace LocadoraDeAutomoveis.Application.Clients.Commands.GetById;
 
 public class GetByIdClientRequestHandler(
+    IMapper mapper,
     IRepositoryClient repositoryClient,
     ILogger<GetByIdClientRequestHandler> logger
 ) : IRequestHandler<GetByIdClientRequest, Result<GetByIdClientResponse>>
@@ -24,18 +25,7 @@ public class GetByIdClientRequestHandler(
                 return Result.Fail(ErrorResults.NotFoundError(request.Id));
             }
 
-            GetByIdClientResponse response = new(
-                new ClientDto(
-                    client.Id,
-                    client.FullName,
-                    client.Email,
-                    client.PhoneNumber,
-                    client.Document ?? string.Empty,
-                    client.Address,
-                    client.ClientType,
-                    client.LicenseNumber ?? string.Empty
-                )
-            );
+            GetByIdClientResponse response = mapper.Map<GetByIdClientResponse>(client);
 
             return Result.Ok(response);
         }

@@ -1,13 +1,14 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Clients;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.Clients.Commands.GetAll;
 
 public class GetAllClientRequestHandler(
+    IMapper mapper,
     IRepositoryClient repositoryClient,
     ILogger<GetAllClientRequestHandler> logger
 ) : IRequestHandler<GetAllClientRequest, Result<GetAllClientResponse>>
@@ -22,19 +23,7 @@ public class GetAllClientRequestHandler(
                 ? await repositoryClient.GetAllAsync(request.Quantity.Value)
                 : await repositoryClient.GetAllAsync();
 
-            GetAllClientResponse response = new(
-                clients.Count,
-                clients.Select(client => new ClientDto(
-                    client.Id,
-                    client.FullName,
-                    client.Email,
-                    client.PhoneNumber,
-                    client.Document ?? string.Empty,
-                    client.Address,
-                    client.ClientType,
-                    client.LicenseNumber ?? string.Empty
-                )).ToImmutableList()
-            );
+            GetAllClientResponse response = mapper.Map<GetAllClientResponse>(clients);
 
             return Result.Ok(response);
         }
