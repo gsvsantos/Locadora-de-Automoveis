@@ -113,21 +113,6 @@ public class RentalRepository(AppDbContext context)
         return await this.records.AnyAsync(r => r.CouponId == couponId);
     }
 
-    public async Task<List<CouponUsageDto>> GetMostUsedCouponsAsync()
-    {
-        return await this.records
-            .Where(r => r.CouponId != null)
-            .GroupBy(r => new { r.Coupon!.Name, PartnerName = r.Coupon.Partner.FullName })
-            .Select(g => new CouponUsageDto(
-                g.Key.Name,
-                g.Key.PartnerName,
-                g.Count(),
-                g.Sum(r => r.Coupon!.DiscountValue)
-            ))
-            .OrderByDescending(dto => dto.UsageCount)
-            .ToListAsync();
-    }
-
     public override async Task<List<Rental>> GetAllAsync()
     {
         return await WithIncludes().ToListAsync();

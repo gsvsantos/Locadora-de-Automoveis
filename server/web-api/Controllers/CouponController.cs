@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Create;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Delete;
+using LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Update;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
 using MediatR;
@@ -18,6 +19,22 @@ public class CouponController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Create([FromBody] CreateCouponRequest request)
     {
         Result<CreateCouponResponse> result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return this.MapFailure(result.ToResult());
+        }
+
+        return Ok(result.Value);
+    }
+
+    [HttpGet("most-used")]
+    [Authorize("AdminPolicy")]
+    public async Task<IActionResult> GetMostUsed()
+    {
+        GetMostUsedCouponsRequest request = new();
+
+        Result<GetMostUsedCouponsResponse> result = await mediator.Send(request);
 
         if (result.IsFailed)
         {

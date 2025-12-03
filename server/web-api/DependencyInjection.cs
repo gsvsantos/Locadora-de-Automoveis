@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Hangfire;
+using LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
 using LocadoraDeAutomoveis.Application.Employees.Commands.Create;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Configurations;
@@ -170,6 +171,11 @@ public static class DependencyInjection
         services.AddScoped<IRepositoryRentalReturn, RentalReturnRepository>();
         services.AddScoped<IRepositoryPartner, PartnerRepository>();
         services.AddScoped<IRepositoryCoupon, CouponRepository>();
+    }
+
+    public static void ConfigureServices(this IServiceCollection services)
+    {
+        services.AddScoped<ICouponQueryService, CouponQueryService>();
     }
 
     public static void ConfigureSerilog(this IServiceCollection services, ILoggingBuilder logging, IConfiguration configuration)
