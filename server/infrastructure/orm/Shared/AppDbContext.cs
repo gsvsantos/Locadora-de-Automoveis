@@ -18,9 +18,12 @@ using System.Reflection;
 
 namespace LocadoraDeAutomoveis.Infrastructure.Shared;
 
-public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvider = null)
-    : IdentityDbContext<User, Role, Guid>(options), IUnitOfWork
+public class AppDbContext(
+    DbContextOptions options,
+    ITenantProvider? tenantProvider = null
+) : IdentityDbContext<User, Role, Guid>(options), IUnitOfWork
 {
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Group> Groups { get; set; }
     public DbSet<Vehicle> Vehicles { get; set; }
