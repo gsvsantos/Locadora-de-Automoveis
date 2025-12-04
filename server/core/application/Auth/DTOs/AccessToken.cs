@@ -2,7 +2,7 @@
 
 namespace LocadoraDeAutomoveis.Application.Auth.DTOs;
 
-public class TokenResponse : IAccessToken
+public class AccessToken : IAccessToken
 {
     public required string Key { get; set; }
     public required DateTimeOffset Expiration { get; set; }

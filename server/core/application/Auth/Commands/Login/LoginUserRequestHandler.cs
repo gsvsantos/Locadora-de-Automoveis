@@ -13,11 +13,12 @@ public class LoginUserRequestHandler(
     SignInManager<User> signInManager,
     UserManager<User> userManager,
     ITokenProvider tokenProvider,
+    IRefreshTokenProvider refreshTokenProvider,
     IUnitOfWork unitOfWork,
     ILogger<LoginUserRequestHandler> logger
-) : IRequestHandler<LoginUserRequest, Result<TokenResponse>>
+) : IRequestHandler<LoginUserRequest, Result<(AccessToken, RefreshToken)>>
 {
-    public async Task<Result<TokenResponse>> Handle(
+    public async Task<Result<(AccessToken, RefreshToken)>> Handle(
         LoginUserRequest request, CancellationToken cancellationToken)
     {
         User? user = await userManager.FindByNameAsync(request.UserName);
@@ -67,22 +68,36 @@ public class LoginUserRequestHandler(
                 return Result.Fail(AuthErrorResults.IncorrectCredentialsError());
             }
 
-            TokenResponse? accessToken = await tokenProvider.GenerateAccessToken(user) as TokenResponse;
+            AccessToken? accessToken = await tokenProvider.GenerateAccessToken(user) as AccessToken;
 
-            if (accessToken == null)
+            if (accessToken is null)
             {
-                await unitOfWork.RollbackAsync();
-
-                return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token.")));
+                return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token. Try again!")));
             }
 
-            return Result.Ok(accessToken);
+            Result<RefreshToken> refreshTokenResult = await refreshTokenProvider.GenerateRefreshTokenAsync(user);
+
+            if (refreshTokenResult.IsFailed)
+            {
+                return Result.Fail(ErrorResults.InternalServerError(refreshTokenResult.Errors));
+            }
+
+            RefreshToken? refreshToken = refreshTokenResult.Value;
+
+            if (refreshToken is null)
+            {
+                return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token. Try again!")));
+            }
+
+            return Result.Ok((accessToken, refreshToken));
         }
         catch (Exception ex)
         {
+            await unitOfWork.RollbackAsync();
+
             logger.LogError(
                 ex,
-                "An error occurred during authentication. \n{@Request}.", request
+                "An error occurred during login. \n{@Request}.", request
             );
 
             return Result.Fail(ErrorResults.InternalServerError(ex));

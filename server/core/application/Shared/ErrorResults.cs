@@ -59,4 +59,11 @@ public abstract class ErrorResults
             .CausedBy(ex)
             .WithMetadata("ErrorType", "InternalServer");
     }
+
+    public static Error InternalServerError(IEnumerable<IError> errors)
+    {
+        return new Error("An internal server error occurred")
+            .CausedBy(errors)
+            .WithMetadata("ErrorType", "InternalServer");
+    }
 }

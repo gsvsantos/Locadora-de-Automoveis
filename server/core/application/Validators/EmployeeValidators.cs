@@ -16,6 +16,6 @@ public class EmployeeValidators : AbstractValidator<Employee>
 
         RuleFor(m => m.AdmissionDate)
             .NotEmpty().WithMessage("The {PropertyName} field is required")
-            .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("The {PropertyName} field cannot be a future date");
+            .LessThanOrEqualTo(DateTimeOffset.UtcNow).WithMessage("The {PropertyName} field cannot be a future date");
     }
 }

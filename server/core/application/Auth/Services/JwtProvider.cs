@@ -16,16 +16,16 @@ public class JwtProvider : ITokenProvider
     private readonly DateTime jwtExpiration;
     private readonly string? validAudience;
 
-    public JwtProvider(IConfiguration configutarion, UserManager<User> userManager)
+    public JwtProvider(IConfiguration configuration, UserManager<User> userManager)
     {
-        this.jwtKey = configutarion["JWT_GENERATION_KEY"];
+        this.jwtKey = configuration["JWT_GENERATION_KEY"];
 
         if (string.IsNullOrEmpty(this.jwtKey))
         {
             throw new ArgumentException("The environment variable \"JWT_GENERATION_KEY\" was not provided");
         }
 
-        this.validAudience = configutarion["JWT_AUDIENCE_DOMAIN"];
+        this.validAudience = configuration["JWT_AUDIENCE_DOMAIN"];
 
         if (string.IsNullOrEmpty(this.validAudience))
         {
@@ -39,8 +39,6 @@ public class JwtProvider : ITokenProvider
 
     public async Task<IAccessToken> GenerateAccessToken(User user)
     {
-        JwtSecurityTokenHandler tokenHandler = new();
-
         byte[] keyBytes = Encoding.ASCII.GetBytes(this.jwtKey!);
 
         IList<string> userRoles = await this.userManager.GetRolesAsync(user);
@@ -50,6 +48,7 @@ public class JwtProvider : ITokenProvider
             new Claim(JwtRegisteredClaimNames.Sub, user.TenantId.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email!),
             new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName!),
+            new Claim(JwtRegisteredClaimNames.Jti, user.AccessTokenVersionId.ToString()),
             new Claim("user_id", user.Id.ToString())
         ];
 
@@ -71,11 +70,11 @@ public class JwtProvider : ITokenProvider
             NotBefore = DateTime.UtcNow
         };
 
+        JwtSecurityTokenHandler tokenHandler = new();
         SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-
         string tokenString = tokenHandler.WriteToken(token);
 
-        return new TokenResponse()
+        return new AccessToken()
         {
             Key = tokenString,
             Expiration = this.jwtExpiration,
@@ -85,7 +84,8 @@ public class JwtProvider : ITokenProvider
                 FullName = user.FullName ?? string.Empty,
                 UserName = user.UserName ?? string.Empty,
                 Email = user.Email ?? string.Empty,
-                PhoneNumber = user.PhoneNumber ?? string.Empty
+                PhoneNumber = user.PhoneNumber ?? string.Empty,
+                Role = Enum.Parse<Roles>(userRoles.FirstOrDefault()!)
             }
         };
     }
