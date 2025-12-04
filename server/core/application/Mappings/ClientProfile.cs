@@ -25,6 +25,7 @@ public class ClientProfile : Profile
                 src.p.Neighborhood,
                 src.p.Street,
                 src.p.Number,
+                src.p.Type,
                 src.p.Document
             ));
 
@@ -37,7 +38,7 @@ public class ClientProfile : Profile
                 src.PhoneNumber,
                 src.Document ?? string.Empty,
                 src.Address,
-                src.ClientType,
+                src.Type,
                 src.LicenseNumber ?? string.Empty
             ));
 

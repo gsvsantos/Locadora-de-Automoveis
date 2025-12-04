@@ -44,7 +44,7 @@ public sealed class DriverRepositoryTests : TestFixture
         {
             client.AssociateTenant(tenant.Id);
             client.AssociateUser(userEmployee);
-            client.SetClientType(EClientType.Individual);
+            client.DefineType(EClientType.Individual);
         }
 
         await this.clientRepository.AddMultiplyAsync(existingCPFClients);
@@ -69,7 +69,7 @@ public sealed class DriverRepositoryTests : TestFixture
         {
             client.AssociateTenant(tenant.Id);
             client.AssociateUser(userEmployee);
-            client.SetClientType(EClientType.Business);
+            client.DefineType(EClientType.Business);
         }
 
         foreach (Client client in existingCPFClients.Concat(existingCNPJClients))
@@ -137,12 +137,12 @@ public sealed class DriverRepositoryTests : TestFixture
 
         // Assert
         Assert.AreEqual(8, drivers.Count);
-        Assert.AreEqual(8, drivers.Count(d => !d.Client.ClientType.Equals(EClientType.Business)));
+        Assert.AreEqual(8, drivers.Count(d => !d.Client.Type.Equals(EClientType.Business)));
 
         foreach (Driver driver in drivers)
         {
             Assert.AreEqual(driver.ClientId, driver.Client.Id);
-            Assert.IsFalse(driver.Client.ClientType == EClientType.Business);
+            Assert.IsFalse(driver.Client.Type == EClientType.Business);
         }
 
         Driver driver1 = drivers.First(d => d.Id == driversCPFClients[0].Id);
@@ -213,14 +213,14 @@ public sealed class DriverRepositoryTests : TestFixture
         {
             juridicalClient.AssociateTenant(tenant.Id);
             juridicalClient.AssociateUser(userEmployee);
-            juridicalClient.SetClientType(EClientType.Business);
+            juridicalClient.DefineType(EClientType.Business);
         }
 
         foreach (Client physicalClient in existingCPFClients)
         {
             physicalClient.AssociateTenant(tenant.Id);
             physicalClient.AssociateUser(userEmployee);
-            physicalClient.SetClientType(EClientType.Individual);
+            physicalClient.DefineType(EClientType.Individual);
         }
 
         List<Client> existingClients = existingCNPJClients
@@ -302,7 +302,7 @@ public sealed class DriverRepositoryTests : TestFixture
         foreach (Driver driver in drivers)
         {
             Assert.AreEqual(driver.ClientId, driver.Client.Id);
-            Assert.IsFalse(driver.Client.ClientType == EClientType.Business);
+            Assert.IsFalse(driver.Client.Type == EClientType.Business);
         }
     }
 
@@ -340,7 +340,7 @@ public sealed class DriverRepositoryTests : TestFixture
 
         existingCPFClient.AssociateTenant(tenant.Id);
         existingCPFClient.AssociateUser(userEmployee);
-        existingCPFClient.SetClientType(EClientType.Individual);
+        existingCPFClient.DefineType(EClientType.Individual);
 
         await this.clientRepository.AddAsync(existingCPFClient);
 
@@ -372,7 +372,7 @@ public sealed class DriverRepositoryTests : TestFixture
         Assert.IsNotNull(selectedDriver);
         Assert.AreEqual(existingCPFClient.Id, selectedDriver.Client.Id);
         Assert.AreEqual(existingCPFClient.FullName, selectedDriver.Client.FullName);
-        Assert.AreEqual(EClientType.Individual, selectedDriver.Client.ClientType);
+        Assert.AreEqual(EClientType.Individual, selectedDriver.Client.Type);
     }
 
     [TestMethod]
@@ -409,7 +409,7 @@ public sealed class DriverRepositoryTests : TestFixture
 
         existingCPFClient.AssociateTenant(tenant.Id);
         existingCPFClient.AssociateUser(userEmployee);
-        existingCPFClient.SetClientType(EClientType.Individual);
+        existingCPFClient.DefineType(EClientType.Individual);
 
         await this.clientRepository.AddAsync(existingCPFClient);
 
@@ -431,7 +431,7 @@ public sealed class DriverRepositoryTests : TestFixture
 
         existingClientCNPJ.AssociateTenant(tenant.Id);
         existingClientCNPJ.AssociateUser(userEmployee);
-        existingClientCNPJ.SetClientType(EClientType.Business);
+        existingClientCNPJ.DefineType(EClientType.Business);
 
         await this.clientRepository.AddAsync(existingClientCNPJ);
 
@@ -467,7 +467,7 @@ public sealed class DriverRepositoryTests : TestFixture
         Assert.IsNotNull(selectedDriver);
         Assert.AreEqual(existingCPFClient.Id, selectedDriver.Client.Id);
         Assert.AreEqual(existingCPFClient.FullName, selectedDriver.Client.FullName);
-        Assert.AreEqual(EClientType.Individual, selectedDriver.Client.ClientType);
+        Assert.AreEqual(EClientType.Individual, selectedDriver.Client.Type);
 
         Assert.IsNotNull(selectedDriver.Client.JuristicClient);
         Assert.AreEqual(existingClientCNPJ.Id, selectedDriver.Client.JuristicClient.Id);

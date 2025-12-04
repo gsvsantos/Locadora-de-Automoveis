@@ -104,17 +104,17 @@ public sealed class CreateBillingPlanRequestHandlerTests : UnitTestBase
 
         BillingPlan BillingPlan = new(
             "SUV Plan",
-            request.DailyPlan.ToProps(),
-            request.ControlledPlan.ToProps(),
-            request.FreePlan.ToProps()
+            request.DailyBilling.ToProps(),
+            request.ControlledBilling.ToProps(),
+            request.FreeBilling.ToProps()
         );
 
         this.validatorMock
             .Setup(v => v.ValidateAsync(
                 It.Is<BillingPlan>(p =>
-                    p.DailyPlan == request.DailyPlan.ToProps() &&
-                    p.ControlledPlan == request.ControlledPlan.ToProps() &&
-                    p.FreePlan == request.FreePlan.ToProps()
+                    p.Daily == request.DailyBilling.ToProps() &&
+                    p.Controlled == request.ControlledBilling.ToProps() &&
+                    p.Free == request.FreeBilling.ToProps()
                     ), CancellationToken.None
                 ))
             .ReturnsAsync(new ValidationResult());
@@ -130,9 +130,9 @@ public sealed class CreateBillingPlanRequestHandlerTests : UnitTestBase
         this.validatorMock
             .Verify(v => v.ValidateAsync(
                 It.Is<BillingPlan>(p =>
-                    p.DailyPlan == request.DailyPlan.ToProps() &&
-                    p.ControlledPlan == request.ControlledPlan.ToProps() &&
-                    p.FreePlan == request.FreePlan.ToProps()
+                    p.Daily == request.DailyBilling.ToProps() &&
+                    p.Controlled == request.ControlledBilling.ToProps() &&
+                    p.Free == request.FreeBilling.ToProps()
                     ), CancellationToken.None
                 ), Times.Once
             );
@@ -143,9 +143,9 @@ public sealed class CreateBillingPlanRequestHandlerTests : UnitTestBase
         this.repositoryBillingPlanMock
             .Verify(r => r.AddAsync(
                 It.Is<BillingPlan>(p =>
-                    p.DailyPlan == request.DailyPlan.ToProps() &&
-                    p.ControlledPlan == request.ControlledPlan.ToProps() &&
-                    p.FreePlan == request.FreePlan.ToProps()
+                    p.Daily == request.DailyBilling.ToProps() &&
+                    p.Controlled == request.ControlledBilling.ToProps() &&
+                    p.Free == request.FreeBilling.ToProps()
                     )), Times.Once
             );
 

@@ -6,19 +6,19 @@ namespace LocadoraDeAutomoveis.Domain.BillingPlans;
 public class BillingPlan : BaseEntity<BillingPlan>
 {
     public string Name { get; set; } = string.Empty;
-    public DailyPlanProps DailyPlan { get; set; } = null!;
-    public ControlledPlanProps ControlledPlan { get; set; } = null!;
-    public FreePlanProps FreePlan { get; set; } = null!;
+    public DailyBilling Daily { get; set; } = null!;
+    public ControlledBilling Controlled { get; set; } = null!;
+    public FreeBilling Free { get; set; } = null!;
     public Guid GroupId { get; set; } = Guid.Empty;
     public Group Group { get; set; } = null!;
 
     public BillingPlan() { }
-    public BillingPlan(string name, DailyPlanProps dailyPlanProps, ControlledPlanProps controlledPlanProps, FreePlanProps freePlanProps) : this()
+    public BillingPlan(string name, DailyBilling daily, ControlledBilling controlled, FreeBilling free) : this()
     {
         this.Name = name;
-        this.DailyPlan = dailyPlanProps;
-        this.ControlledPlan = controlledPlanProps;
-        this.FreePlan = freePlanProps;
+        this.Daily = daily;
+        this.Controlled = controlled;
+        this.Free = free;
     }
 
     public void AssociateGroup(Group group)
@@ -53,13 +53,13 @@ public class BillingPlan : BaseEntity<BillingPlan>
     public override void Update(BillingPlan updatedEntity)
     {
         this.Name = updatedEntity.Name;
-        this.DailyPlan = updatedEntity.DailyPlan;
-        this.ControlledPlan = updatedEntity.ControlledPlan;
-        this.FreePlan = updatedEntity.FreePlan;
+        this.Daily = updatedEntity.Daily;
+        this.Controlled = updatedEntity.Controlled;
+        this.Free = updatedEntity.Free;
     }
 }
 
-public abstract record AvailablePlan;
-public record DailyPlanProps(decimal DailyRate, decimal PricePerKm) : AvailablePlan;
-public record ControlledPlanProps(decimal DailyRate, decimal PricePerKmExtrapolated) : AvailablePlan;
-public record FreePlanProps(decimal FixedRate) : AvailablePlan;
+public abstract record BillingMode;
+public record DailyBilling(decimal DailyRate, decimal PricePerKm) : BillingMode;
+public record ControlledBilling(decimal DailyRate, decimal PricePerKmExtrapolated) : BillingMode;
+public record FreeBilling(decimal FixedRate) : BillingMode;

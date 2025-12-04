@@ -7,9 +7,9 @@ public class RentalReturn : BaseEntity<RentalReturn>
     public DateTimeOffset ReturnDate { get; set; }
     public decimal EndKm { get; set; }
     public decimal TotalMileage { get; set; }
-    public decimal ServicesTotal { get; set; }
+    public decimal ExtrasTotalCost { get; set; }
     public decimal FuelPenalty { get; set; }
-    public decimal PenaltyTotal { get; set; }
+    public decimal PenaltyTotalCost { get; set; }
     public decimal DiscountTotal { get; set; }
     public decimal FinalPrice { get; set; }
     public EFuelLevel FuelLevelAtReturn { get; set; }
@@ -30,9 +30,9 @@ public class RentalReturn : BaseEntity<RentalReturn>
         this.FuelLevelAtReturn = eFuelLevel;
     }
 
-    public void SetServicesTotal(decimal total)
+    public void SetExtrasTotalCost(decimal extrasTotal)
     {
-        this.ServicesTotal = total;
+        this.ExtrasTotalCost = extrasTotal;
     }
 
     public void SetFuelPenalty(decimal fuelPenality)
@@ -42,7 +42,7 @@ public class RentalReturn : BaseEntity<RentalReturn>
 
     public void SetPenaltyTotal(decimal penaltyTotal)
     {
-        this.PenaltyTotal = penaltyTotal;
+        this.PenaltyTotalCost = penaltyTotal;
     }
 
     public void SetDiscountTotal(decimal discount)

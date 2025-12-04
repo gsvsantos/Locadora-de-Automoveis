@@ -90,9 +90,9 @@ public sealed class ReturnRentalRequestHandlerTests : UnitTestBase
 
         BillingPlan billingPlan = new(
             "Plano Teste",
-            new DailyPlanProps(100m, 10m),
-            new ControlledPlanProps(80m, 20m),
-            new FreePlanProps(200m)
+            new DailyBilling(100m, 10m),
+            new ControlledBilling(80m, 20m),
+            new FreeBilling(200m)
         );
 
         Vehicle vehicle = new(
@@ -114,7 +114,7 @@ public sealed class ReturnRentalRequestHandlerTests : UnitTestBase
         {
             Id = rentalId,
             BillingPlan = billingPlan,
-            SelectedPlanType = EBillingPlanType.Daily,
+            BillingPlanType = EBillingPlanType.Daily,
             Vehicle = vehicle
         };
 

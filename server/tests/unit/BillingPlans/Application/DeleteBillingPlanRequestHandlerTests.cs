@@ -42,9 +42,9 @@ public class DeleteBillingPlanRequestHandlerTests
 
         BillingPlan BillingPlan = new(
             "SUV Plan",
-            new DailyPlanProps(90m, 1.5m),
-            new ControlledPlanProps(140m, 90),
-            new FreePlanProps(190m)
+            new DailyBilling(90m, 1.5m),
+            new ControlledBilling(140m, 90),
+            new FreeBilling(190m)
         )
         { Id = BillingPlanId };
 

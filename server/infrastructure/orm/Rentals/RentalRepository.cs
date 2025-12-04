@@ -79,17 +79,17 @@ public class RentalRepository(AppDbContext context)
             r.Status != ERentalStatus.Open);
     }
 
-    public async Task<bool> HasActiveRentalsByRateService(Guid serviceId)
+    public async Task<bool> HasActiveRentalsByRentalExtra(Guid extraId)
     {
         return await this.records.AnyAsync(r =>
             r.Status == ERentalStatus.Open &&
-            r.RateServices.Any(s => s.Id.Equals(serviceId)));
+            r.Extras.Any(s => s.Id.Equals(extraId)));
     }
 
-    public async Task<bool> HasRentalHistoryByRateService(Guid serviceId)
+    public async Task<bool> HasRentalHistoryByRentalExtra(Guid extraId)
     {
         return await this.records.AnyAsync(r =>
-            r.RateServices.Any(s => s.Id.Equals(serviceId)));
+            r.Extras.Any(s => s.Id.Equals(extraId)));
     }
 
     public async Task<bool> HasClientUsedCoupon(Guid clientId, Guid couponId)
@@ -140,6 +140,6 @@ public class RentalRepository(AppDbContext context)
             .Include(r => r.Coupon)
                 .ThenInclude(c => c!.Partner)
             .Include(r => r.BillingPlan)
-            .Include(r => r.RateServices);
+            .Include(r => r.Extras);
     }
 }

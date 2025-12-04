@@ -51,7 +51,7 @@ public sealed class GetByIdRentalRequestHandlerTests : UnitTestBase
             .With(r => r.Vehicle = Builder<Vehicle>
                 .CreateNew().With(v => v.LicensePlate = "ABC-1234").Build())
             .With(r => r.Employee = null)
-            .With(r => r.RateServices = [])
+            .With(r => r.Extras = [])
             .Build();
 
         this.repositoryRentalMock

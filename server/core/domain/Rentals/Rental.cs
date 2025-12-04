@@ -3,7 +3,7 @@ using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
-using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 
@@ -31,9 +31,9 @@ public class Rental : BaseEntity<Rental>
     public Coupon? Coupon { get; set; }
     public Guid BillingPlanId { get; set; }
     public BillingPlan BillingPlan { get; set; } = null!;
-    public EBillingPlanType SelectedPlanType { get; set; }
+    public EBillingPlanType BillingPlanType { get; set; }
     public decimal? EstimatedKilometers { get; set; }
-    public List<RateService> RateServices { get; set; } = [];
+    public List<RentalExtra> Extras { get; set; } = [];
 
     public Rental() { }
     public Rental(DateTimeOffset startDate, DateTimeOffset expectedReturnDate, decimal startKm) : this()
@@ -43,19 +43,19 @@ public class Rental : BaseEntity<Rental>
         this.StartKm = startKm;
     }
 
-    public void AddRangeRateServices(List<RateService> rateServices)
+    public void AddRangeExtras(List<RentalExtra> extras)
     {
-        this.RateServices.AddRange(rateServices);
+        this.Extras.AddRange(extras);
     }
 
-    public void AddRentalService(RateService service)
+    public void AddExtra(RentalExtra extra)
     {
-        this.RateServices.Add(service);
+        this.Extras.Add(extra);
     }
 
-    public void RemoveRentalService(RateService service)
+    public void RemoveExtra(RentalExtra extra)
     {
-        this.RateServices.Remove(service);
+        this.Extras.Remove(extra);
     }
 
     public void SetBasePrice(decimal basePrice)
@@ -75,7 +75,7 @@ public class Rental : BaseEntity<Rental>
 
     public void SetBillingPlanType(EBillingPlanType selectedPlanType)
     {
-        this.SelectedPlanType = selectedPlanType;
+        this.BillingPlanType = selectedPlanType;
     }
 
     public void SetFinalPrice(decimal finalPrice)
@@ -140,9 +140,9 @@ public class Rental : BaseEntity<Rental>
         AssociateVehicle(updatedEntity.Vehicle);
         AssociateBillingPlan(updatedEntity.BillingPlan);
 
-        SetBillingPlanType(updatedEntity.SelectedPlanType);
+        SetBillingPlanType(updatedEntity.BillingPlanType);
 
-        AddRangeRateServices(updatedEntity.RateServices);
+        AddRangeExtras(updatedEntity.Extras);
 
         if (updatedEntity.EstimatedKilometers.HasValue)
         {

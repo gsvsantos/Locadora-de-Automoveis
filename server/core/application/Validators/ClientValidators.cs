@@ -37,7 +37,7 @@ public class ClientValidators : AbstractValidator<Client>
         RuleFor(c => c.Address.Number)
             .GreaterThan(0).WithMessage("The Number must be greater than zero.");
 
-        When(c => c.ClientType == EClientType.Business, () =>
+        When(c => c.Type == EClientType.Business, () =>
         {
             RuleFor(c => c.Document)
                 .NotEmpty().WithMessage("The Business (Corporate Tax ID) is required for Legal Entities.")

@@ -23,7 +23,7 @@ public class RentalReturnMapper : IEntityTypeConfiguration<RentalReturn>
             .HasColumnType("decimal(18,2)")
             .IsRequired();
 
-        builder.Property(r => r.ServicesTotal)
+        builder.Property(r => r.ExtrasTotalCost)
             .HasColumnType("decimal(18,2)")
             .IsRequired();
 
@@ -31,7 +31,7 @@ public class RentalReturnMapper : IEntityTypeConfiguration<RentalReturn>
             .HasColumnType("decimal(18,2)")
             .IsRequired();
 
-        builder.Property(r => r.PenaltyTotal)
+        builder.Property(r => r.PenaltyTotalCost)
             .HasColumnType("decimal(18,2)")
             .IsRequired();
 

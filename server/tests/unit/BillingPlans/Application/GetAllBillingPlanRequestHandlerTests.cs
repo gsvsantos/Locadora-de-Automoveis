@@ -35,9 +35,9 @@ public sealed class GetAllBillingPlanRequestHandlerTests : UnitTestBase
         RandomGenerator random = new();
         List<BillingPlan> BillingPlans = Builder<BillingPlan>.CreateListOfSize(10).All()
             .Do(v => v.Name = random.NextString(1, 5))
-            .Do(v => v.DailyPlan = new(random.Decimal(), random.Decimal()))
-            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Int()))
-            .Do(v => v.FreePlan = new(random.Decimal()))
+            .Do(v => v.Daily = new(random.Decimal(), random.Decimal()))
+            .Do(v => v.Controlled = new(random.Decimal(), random.Int()))
+            .Do(v => v.Free = new(random.Decimal()))
             .Do(v => v.AssociateGroup(new($"group-{Guid.NewGuid()}")))
             .Build().ToList();
 
@@ -64,9 +64,9 @@ public sealed class GetAllBillingPlanRequestHandlerTests : UnitTestBase
                 if (BillingPlans[i].Id == BillingPlansDto[j].Id)
                 {
                     Assert.AreEqual(BillingPlans[i].Name, BillingPlans[j].Name);
-                    Assert.AreEqual(BillingPlans[i].DailyPlan, BillingPlans[j].DailyPlan);
-                    Assert.AreEqual(BillingPlans[i].ControlledPlan, BillingPlans[j].ControlledPlan);
-                    Assert.AreEqual(BillingPlans[i].FreePlan, BillingPlans[j].FreePlan);
+                    Assert.AreEqual(BillingPlans[i].Daily, BillingPlans[j].Daily);
+                    Assert.AreEqual(BillingPlans[i].Controlled, BillingPlans[j].Controlled);
+                    Assert.AreEqual(BillingPlans[i].Free, BillingPlans[j].Free);
                     Assert.AreEqual(BillingPlans[i].GroupId, BillingPlans[j].GroupId);
                 }
             }
@@ -80,9 +80,9 @@ public sealed class GetAllBillingPlanRequestHandlerTests : UnitTestBase
         RandomGenerator random = new();
         List<BillingPlan> BillingPlans = Builder<BillingPlan>.CreateListOfSize(10).All()
             .Do(v => v.Name = random.NextString(1, 5))
-            .Do(v => v.DailyPlan = new(random.Decimal(), random.Decimal()))
-            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Int()))
-            .Do(v => v.FreePlan = new(random.Decimal()))
+            .Do(v => v.Daily = new(random.Decimal(), random.Decimal()))
+            .Do(v => v.Controlled = new(random.Decimal(), random.Int()))
+            .Do(v => v.Free = new(random.Decimal()))
             .Do(v => v.AssociateGroup(new($"group-{Guid.NewGuid()}")))
             .Build().ToList();
 
@@ -110,9 +110,9 @@ public sealed class GetAllBillingPlanRequestHandlerTests : UnitTestBase
                 if (BillingPlans[i].Id == BillingPlansDto[j].Id)
                 {
                     Assert.AreEqual(BillingPlans[i].Name, BillingPlans[j].Name);
-                    Assert.AreEqual(BillingPlans[i].DailyPlan, BillingPlans[j].DailyPlan);
-                    Assert.AreEqual(BillingPlans[i].FreePlan, BillingPlans[j].FreePlan);
-                    Assert.AreEqual(BillingPlans[i].ControlledPlan, BillingPlans[j].ControlledPlan);
+                    Assert.AreEqual(BillingPlans[i].Daily, BillingPlans[j].Daily);
+                    Assert.AreEqual(BillingPlans[i].Free, BillingPlans[j].Free);
+                    Assert.AreEqual(BillingPlans[i].Controlled, BillingPlans[j].Controlled);
                     Assert.AreEqual(BillingPlans[i].GroupId, BillingPlans[j].GroupId);
                 }
             }

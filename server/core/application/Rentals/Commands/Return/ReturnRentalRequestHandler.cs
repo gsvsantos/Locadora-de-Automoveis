@@ -93,7 +93,7 @@ public class ReturnRentalRequestHandler(
                 configuration
             );
 
-            rentalReturn.SetServicesTotal(calculationResult.ServicesTotal);
+            rentalReturn.SetExtrasTotalCost(calculationResult.ServicesTotal);
             rentalReturn.SetFuelPenalty(calculationResult.FuelPenalty);
             rentalReturn.SetPenaltyTotal(calculationResult.PenaltiesTotal);
             rentalReturn.SetDiscountTotal(calculationResult.DiscountTotal);

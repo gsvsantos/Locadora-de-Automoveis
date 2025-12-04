@@ -6,9 +6,9 @@ namespace LocadoraDeAutomoveis.Application.BillingPlans.Commands.Create;
 
 public record CreateBillingPlanRequest(
     Guid GroupId,
-    DailyPlanDto DailyPlan,
-    ControlledPlanDto ControlledPlan,
-    FreePlanDto FreePlan
+    DailyPlanDto DailyBilling,
+    ControlledPlanDto ControlledBilling,
+    FreePlanDto FreeBilling
 ) : IRequest<Result<CreateBillingPlanResponse>>;
 
 public record DailyPlanDto(
@@ -27,17 +27,17 @@ public record FreePlanDto(
 
 public static class RecordExtensions
 {
-    public static DailyPlanProps ToProps(this DailyPlanDto dto)
+    public static DailyBilling ToProps(this DailyPlanDto dto)
     {
         return new(dto.DailyRate, dto.PricePerKm);
     }
 
-    public static ControlledPlanProps ToProps(this ControlledPlanDto dto)
+    public static ControlledBilling ToProps(this ControlledPlanDto dto)
     {
         return new(dto.DailyRate, dto.PricePerKmExtrapolated);
     }
 
-    public static FreePlanProps ToProps(this FreePlanDto dto)
+    public static FreeBilling ToProps(this FreePlanDto dto)
     {
         return new(dto.FixedRate);
     }

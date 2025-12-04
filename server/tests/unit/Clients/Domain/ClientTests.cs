@@ -19,7 +19,7 @@ public sealed class ClientTests
         Assert.AreEqual(string.Empty, client.FullName);
         Assert.AreEqual(string.Empty, client.Email);
         Assert.AreEqual(string.Empty, client.PhoneNumber);
-        Assert.IsTrue(client.ClientType == EClientType.Individual);
+        Assert.IsTrue(client.Type == EClientType.Individual);
         Assert.IsNull(client.Address);
         Assert.AreEqual(string.Empty, client.Document);
         Assert.IsNull(client.LicenseNumber);
@@ -50,7 +50,7 @@ public sealed class ClientTests
         Assert.AreEqual("Ricardo", client.FullName);
         Assert.AreEqual("ricardo@gmail.com", client.Email);
         Assert.AreEqual("(51) 90000-0001", client.PhoneNumber);
-        Assert.IsFalse(client.ClientType == EClientType.Business);
+        Assert.IsFalse(client.Type == EClientType.Business);
         Assert.AreEqual("RS", client.Address.State);
         Assert.AreEqual("Carazinho", client.Address.City);
         Assert.AreEqual("Marcondes", client.Address.Neighborhood);
@@ -102,7 +102,7 @@ public sealed class ClientTests
         Assert.AreEqual("Ricardo ED", client.FullName);
         Assert.AreEqual("ricardoED@gmail.com", client.Email);
         Assert.AreEqual("(51) 90000-0002", client.PhoneNumber);
-        Assert.IsFalse(client.ClientType == EClientType.Business);
+        Assert.IsFalse(client.Type == EClientType.Business);
         Assert.AreEqual("SA", client.Address.State);
         Assert.AreEqual("CarazinhoED", client.Address.City);
         Assert.AreEqual("MarcondesED", client.Address.Neighborhood);
@@ -119,10 +119,10 @@ public sealed class ClientTests
         Client client = Builder<Client>.CreateNew().Build();
 
         // Act
-        client.SetClientType(EClientType.Business);
+        client.DefineType(EClientType.Business);
 
         // Assert
-        Assert.IsTrue(client.ClientType == EClientType.Business);
+        Assert.IsTrue(client.Type == EClientType.Business);
     }
 
     [TestMethod]
@@ -132,10 +132,10 @@ public sealed class ClientTests
         Client client = Builder<Client>.CreateNew().Build();
 
         // Act
-        client.SetClientType(EClientType.Individual);
+        client.DefineType(EClientType.Individual);
 
         // Assert
-        Assert.IsTrue(client.ClientType == EClientType.Individual);
+        Assert.IsTrue(client.Type == EClientType.Individual);
     }
 
     [TestMethod]

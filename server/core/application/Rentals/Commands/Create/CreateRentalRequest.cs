@@ -15,5 +15,5 @@ public record CreateRentalRequest(
     Guid? CouponId,
     EBillingPlanType SelectedPlanType,
     decimal? EstimatedKilometers,
-    List<Guid> RentalRateServicesIds
+    List<Guid> RentalRentalExtrasIds
 ) : IRequest<Result<CreateRentalResponse>>;

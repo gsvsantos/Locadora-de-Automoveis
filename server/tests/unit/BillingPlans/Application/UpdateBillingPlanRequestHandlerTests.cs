@@ -50,9 +50,9 @@ public sealed class UpdateBillingPlanRequestHandlerTests : UnitTestBase
         Guid BillingPlanId = Guid.NewGuid();
         BillingPlan BillingPlan = new(
             "SuuuV Plan",
-            new DailyPlanProps(90m, 1.5m),
-            new ControlledPlanProps(140m, 90),
-            new FreePlanProps(190m)
+            new DailyBilling(90m, 1.5m),
+            new ControlledBilling(140m, 90),
+            new FreeBilling(190m)
         )
         { Id = BillingPlanId };
         BillingPlan.AssociateGroup(group);
@@ -87,9 +87,9 @@ public sealed class UpdateBillingPlanRequestHandlerTests : UnitTestBase
         this.validatorMock
             .Setup(v => v.ValidateAsync(
                 It.Is<BillingPlan>(p =>
-                    p.DailyPlan == updatedBillingPlan.DailyPlan &&
-                    p.ControlledPlan == updatedBillingPlan.ControlledPlan &&
-                    p.FreePlan == updatedBillingPlan.FreePlan
+                    p.Daily == updatedBillingPlan.Daily &&
+                    p.Controlled == updatedBillingPlan.Controlled &&
+                    p.Free == updatedBillingPlan.Free
                     ), CancellationToken.None
                 ))
             .ReturnsAsync(new ValidationResult());
@@ -105,9 +105,9 @@ public sealed class UpdateBillingPlanRequestHandlerTests : UnitTestBase
         this.validatorMock
             .Verify(v => v.ValidateAsync(
                 It.Is<BillingPlan>(p =>
-                    p.DailyPlan == updatedBillingPlan.DailyPlan &&
-                    p.ControlledPlan == updatedBillingPlan.ControlledPlan &&
-                    p.FreePlan == updatedBillingPlan.FreePlan
+                    p.Daily == updatedBillingPlan.Daily &&
+                    p.Controlled == updatedBillingPlan.Controlled &&
+                    p.Free == updatedBillingPlan.Free
                     ), CancellationToken.None
                 ), Times.Once
             );
@@ -119,9 +119,9 @@ public sealed class UpdateBillingPlanRequestHandlerTests : UnitTestBase
             .Verify(r => r.UpdateAsync(
                 BillingPlanId,
                 It.Is<BillingPlan>(p =>
-                    p.DailyPlan == updatedBillingPlan.DailyPlan &&
-                    p.ControlledPlan == updatedBillingPlan.ControlledPlan &&
-                    p.FreePlan == updatedBillingPlan.FreePlan
+                    p.Daily == updatedBillingPlan.Daily &&
+                    p.Controlled == updatedBillingPlan.Controlled &&
+                    p.Free == updatedBillingPlan.Free
                     )), Times.Once
             );
 

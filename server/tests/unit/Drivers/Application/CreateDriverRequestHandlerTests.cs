@@ -246,7 +246,7 @@ public sealed class CreateDriverRequestHandlerTests : UnitTestBase
             33)
         )
         { Id = clientId };
-        juridicalClient.SetClientType(EClientType.Business);
+        juridicalClient.DefineType(EClientType.Business);
 
         this.repositoryClientMock
             .Setup(r => r.GetByIdAsync(clientId))

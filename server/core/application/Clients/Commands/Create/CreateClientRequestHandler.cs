@@ -37,7 +37,7 @@ public class CreateClientRequestHandler(
         Address address = mapper.Map<Address>(request);
         Client client = mapper.Map<Client>((request, address));
 
-        client.SetClientType(request.ClientType);
+        client.DefineType(request.Type);
 
         try
         {

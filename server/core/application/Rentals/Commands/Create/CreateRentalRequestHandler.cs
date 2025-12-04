@@ -9,7 +9,7 @@ using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
-using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
@@ -30,7 +30,7 @@ public class CreateRentalRequestHandler(
     IRepositoryVehicle repositoryVehicle,
     IRepositoryCoupon repositoryCoupon,
     IRepositoryBillingPlan repositoryBillingPlan,
-    IRepositoryRateService repositoryRateService,
+    IRepositoryRentalExtra repositoryRentalExtra,
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<Rental> validator,
@@ -144,11 +144,11 @@ public class CreateRentalRequestHandler(
                 return Result.Fail(ErrorResults.BadRequestError(errors));
             }
 
-            List<RateService> rateServices = await repositoryRateService.GetManyByIds(request.RentalRateServicesIds);
+            List<RentalExtra> RentalExtras = await repositoryRentalExtra.GetManyByIds(request.RentalRentalExtrasIds);
 
-            if (rateServices.Count >= 1)
+            if (RentalExtras.Count >= 1)
             {
-                rental.AddRangeRateServices(rateServices);
+                rental.AddRangeExtras(RentalExtras);
             }
 
             decimal basePrice = RentalCalculator.CalculateBasePrice(rental);

@@ -41,9 +41,9 @@ public sealed class GetByIdBillingPlanRequestHandlerTests : UnitTestBase
         GetByIdBillingPlanRequest request = new(BillingPlanId);
         BillingPlan BillingPlan = new(
             $"{group.Name} - Billing Plans",
-            new DailyPlanProps(90m, 1.5m),
-            new ControlledPlanProps(140m, 90),
-            new FreePlanProps(190m)
+            new DailyBilling(90m, 1.5m),
+            new ControlledBilling(140m, 90),
+            new FreeBilling(190m)
         )
         { Id = BillingPlanId };
         BillingPlan.AssociateGroup(group);
@@ -61,11 +61,11 @@ public sealed class GetByIdBillingPlanRequestHandlerTests : UnitTestBase
         Assert.IsTrue(result.IsSuccess);
         Assert.AreEqual(BillingPlan.Id, dto.Id);
         Assert.AreEqual(BillingPlan.Name, dto.Name);
-        Assert.AreEqual(BillingPlan.DailyPlan.DailyRate, dto.DailyPlan.DailyRate);
-        Assert.AreEqual(BillingPlan.DailyPlan.PricePerKm, dto.DailyPlan.PricePerKm);
-        Assert.AreEqual(BillingPlan.ControlledPlan.DailyRate, dto.ControlledPlan.DailyRate);
-        Assert.AreEqual(BillingPlan.ControlledPlan.PricePerKmExtrapolated, dto.ControlledPlan.PricePerKmExtrapolated);
-        Assert.AreEqual(BillingPlan.FreePlan.FixedRate, dto.FreePlan.FixedRate);
+        Assert.AreEqual(BillingPlan.Daily.DailyRate, dto.DailyPlan.DailyRate);
+        Assert.AreEqual(BillingPlan.Daily.PricePerKm, dto.DailyPlan.PricePerKm);
+        Assert.AreEqual(BillingPlan.Controlled.DailyRate, dto.ControlledPlan.DailyRate);
+        Assert.AreEqual(BillingPlan.Controlled.PricePerKmExtrapolated, dto.ControlledPlan.PricePerKmExtrapolated);
+        Assert.AreEqual(BillingPlan.Free.FixedRate, dto.FreePlan.FixedRate);
         Assert.AreEqual(BillingPlan.GroupId, dto.GroupId);
     }
     #endregion

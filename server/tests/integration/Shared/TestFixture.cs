@@ -8,7 +8,7 @@ using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Partners;
-using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.BillingPlans;
@@ -19,7 +19,7 @@ using LocadoraDeAutomoveis.Infrastructure.Drivers;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Groups;
 using LocadoraDeAutomoveis.Infrastructure.Partners;
-using LocadoraDeAutomoveis.Infrastructure.RateServices;
+using LocadoraDeAutomoveis.Infrastructure.RentalExtras;
 using LocadoraDeAutomoveis.Infrastructure.Rentals;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using LocadoraDeAutomoveis.Infrastructure.Vehicles;
@@ -43,7 +43,7 @@ public abstract class TestFixture
     protected BillingPlanRepository BillingPlanRepository = null!;
     protected ClientRepository clientRepository = null!;
     protected DriverRepository driverRepository = null!;
-    protected RateServiceRepository rateServiceRepository = null!;
+    protected RentalExtraRepository rentalExtraRepository = null!;
     protected ConfigurationRepository configurationRepository = null!;
     protected RentalRepository rentalRepository = null!;
     protected RentalReturnRepository rentalReturnRepository = null!;
@@ -97,7 +97,7 @@ public abstract class TestFixture
         this.BillingPlanRepository = new(this.dbContext);
         this.clientRepository = new(this.dbContext);
         this.driverRepository = new(this.dbContext);
-        this.rateServiceRepository = new(this.dbContext);
+        this.rentalExtraRepository = new(this.dbContext);
         this.configurationRepository = new(this.dbContext);
         this.rentalRepository = new(this.dbContext);
         this.rentalReturnRepository = new(this.dbContext);
@@ -124,8 +124,8 @@ public abstract class TestFixture
         BuilderSetup.SetCreatePersistenceMethod<Driver>(d => this.driverRepository.AddAsync(d).GetAwaiter().GetResult());
         BuilderSetup.SetCreatePersistenceMethod<IList<Driver>>(d => this.driverRepository.AddMultiplyAsync(d).GetAwaiter().GetResult());
 
-        BuilderSetup.SetCreatePersistenceMethod<RateService>(rS => this.rateServiceRepository.AddAsync(rS).GetAwaiter().GetResult());
-        BuilderSetup.SetCreatePersistenceMethod<IList<RateService>>(rS => this.rateServiceRepository.AddMultiplyAsync(rS).GetAwaiter().GetResult());
+        BuilderSetup.SetCreatePersistenceMethod<RentalExtra>(rS => this.rentalExtraRepository.AddAsync(rS).GetAwaiter().GetResult());
+        BuilderSetup.SetCreatePersistenceMethod<IList<RentalExtra>>(rS => this.rentalExtraRepository.AddMultiplyAsync(rS).GetAwaiter().GetResult());
 
         BuilderSetup.SetCreatePersistenceMethod<Configuration>(c => this.configurationRepository.AddAsync(c).GetAwaiter().GetResult());
         BuilderSetup.SetCreatePersistenceMethod<IList<Configuration>>(c => this.configurationRepository.AddMultiplyAsync(c).GetAwaiter().GetResult());
@@ -211,7 +211,7 @@ public abstract class TestFixture
         dbContext.Employees.RemoveRange(dbContext.Employees);
         dbContext.Partners.RemoveRange(dbContext.Partners);
         dbContext.Groups.RemoveRange(dbContext.Groups);
-        dbContext.RateServices.RemoveRange(dbContext.RateServices);
+        dbContext.Extras.RemoveRange(dbContext.Extras);
         dbContext.TestEntities.RemoveRange(dbContext.TestEntities);
         dbContext.Configurations.RemoveRange(dbContext.Configurations);
         dbContext.Users.RemoveRange(dbContext.Users);

@@ -31,7 +31,7 @@ public class RentalValidator : AbstractValidator<Rental>
             .GreaterThanOrEqualTo(0)
             .WithMessage("The Start Km cannot be negative.");
 
-        When(r => r.SelectedPlanType == EBillingPlanType.Controlled, () =>
+        When(r => r.BillingPlanType == EBillingPlanType.Controlled, () =>
         {
             RuleFor(r => r.EstimatedKilometers)
                 .NotNull().WithMessage("For the Controlled Plan, the Estimated Kilometers is required.")

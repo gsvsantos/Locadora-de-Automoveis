@@ -7,21 +7,21 @@ public class BillingPlanValidators : AbstractValidator<BillingPlan>
 {
     public BillingPlanValidators()
     {
-        RuleFor(p => p.DailyPlan)
+        RuleFor(p => p.Daily)
             .NotNull().WithMessage("The Daily Plan configuration is required.")
             .SetValidator(new DailyPlanPropsValidator());
 
-        RuleFor(p => p.ControlledPlan)
+        RuleFor(p => p.Controlled)
             .NotNull().WithMessage("The Controlled Plan configuration is required.")
             .SetValidator(new ControlledPlanPropsValidator());
 
-        RuleFor(p => p.FreePlan)
+        RuleFor(p => p.Free)
             .NotNull().WithMessage("The Free Plan configuration is required.")
             .SetValidator(new FreePlanPropsValidator());
     }
 }
 
-public class DailyPlanPropsValidator : AbstractValidator<DailyPlanProps>
+public class DailyPlanPropsValidator : AbstractValidator<DailyBilling>
 {
     public DailyPlanPropsValidator()
     {
@@ -33,7 +33,7 @@ public class DailyPlanPropsValidator : AbstractValidator<DailyPlanProps>
     }
 }
 
-public class ControlledPlanPropsValidator : AbstractValidator<ControlledPlanProps>
+public class ControlledPlanPropsValidator : AbstractValidator<ControlledBilling>
 {
     public ControlledPlanPropsValidator()
     {
@@ -45,7 +45,7 @@ public class ControlledPlanPropsValidator : AbstractValidator<ControlledPlanProp
     }
 }
 
-public class FreePlanPropsValidator : AbstractValidator<FreePlanProps>
+public class FreePlanPropsValidator : AbstractValidator<FreeBilling>
 {
     public FreePlanPropsValidator()
     {

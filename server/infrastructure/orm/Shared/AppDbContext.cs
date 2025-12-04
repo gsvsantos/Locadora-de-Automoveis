@@ -7,7 +7,7 @@ using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Partners;
-using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
@@ -27,7 +27,7 @@ public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvi
     public DbSet<BillingPlan> BillingPlans { get; set; }
     public DbSet<Client> Clients { get; set; }
     public DbSet<Driver> Drivers { get; set; }
-    public DbSet<RateService> RateServices { get; set; }
+    public DbSet<RentalExtra> Extras { get; set; }
     public DbSet<Configuration> Configurations { get; set; }
     public DbSet<Rental> Rentals { get; set; }
     public DbSet<RentalReturn> RentalReturns { get; set; }
@@ -50,7 +50,7 @@ public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvi
                 .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
             modelBuilder.Entity<Driver>()
                 .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
-            modelBuilder.Entity<RateService>()
+            modelBuilder.Entity<RentalExtra>()
                 .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
             modelBuilder.Entity<Configuration>()
                 .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));

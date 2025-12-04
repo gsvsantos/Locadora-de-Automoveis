@@ -4,7 +4,7 @@ using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
-using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 
@@ -49,9 +49,9 @@ public sealed class RentalReturnRepositoryTests : TestFixture
 
         RandomGenerator random = new();
         BillingPlan billingPlan = Builder<BillingPlan>.CreateNew()
-            .Do(v => v.DailyPlan = new(random.Decimal(), random.Decimal()))
-            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Int()))
-            .Do(v => v.FreePlan = new(random.Decimal()))
+            .Do(v => v.Daily = new(random.Decimal(), random.Decimal()))
+            .Do(v => v.Controlled = new(random.Decimal(), random.Int()))
+            .Do(v => v.Free = new(random.Decimal()))
             .Build();
 
         billingPlan.AssociateTenant(tenant.Id);
@@ -86,7 +86,7 @@ public sealed class RentalReturnRepositoryTests : TestFixture
 
         client.AssociateTenant(tenant.Id);
         client.AssociateUser(userEmployee);
-        client.SetClientType(EClientType.Individual);
+        client.DefineType(EClientType.Individual);
 
         await this.clientRepository.AddAsync(client);
 
@@ -107,16 +107,16 @@ public sealed class RentalReturnRepositoryTests : TestFixture
 
         await this.driverRepository.AddAsync(driver);
 
-        List<RateService> services = Builder<RateService>.CreateListOfSize(2)
+        List<RentalExtra> extras = Builder<RentalExtra>.CreateListOfSize(2)
             .Build().ToList();
 
-        foreach (RateService service in services)
+        foreach (RentalExtra extra in extras)
         {
-            service.AssociateTenant(tenant.Id);
-            service.AssociateUser(userEmployee);
+            extra.AssociateTenant(tenant.Id);
+            extra.AssociateUser(userEmployee);
         }
 
-        await this.rateServiceRepository.AddMultiplyAsync(services);
+        await this.rentalExtraRepository.AddMultiplyAsync(extras);
 
         await this.dbContext.SaveChangesAsync();
 
@@ -138,7 +138,7 @@ public sealed class RentalReturnRepositoryTests : TestFixture
             rental.AssociateDriver(driver);
             rental.AssociateVehicle(vehicle);
             rental.AssociateBillingPlan(billingPlan);
-            rental.AddRangeRateServices(services);
+            rental.AddRangeExtras(extras);
 
             await this.rentalRepository.AddAsync(rental);
 
@@ -199,9 +199,9 @@ public sealed class RentalReturnRepositoryTests : TestFixture
         await this.groupRepository.AddAsync(group);
 
         BillingPlan BillingPlan = Builder<BillingPlan>.CreateNew()
-            .Do(v => v.DailyPlan = new(this.random.Decimal(), this.random.Decimal()))
-            .Do(v => v.ControlledPlan = new(this.random.Decimal(), this.random.Int()))
-            .Do(v => v.FreePlan = new(this.random.Decimal()))
+            .Do(v => v.Daily = new(this.random.Decimal(), this.random.Decimal()))
+            .Do(v => v.Controlled = new(this.random.Decimal(), this.random.Int()))
+            .Do(v => v.Free = new(this.random.Decimal()))
             .Build();
 
         BillingPlan.AssociateTenant(tenant.Id);
@@ -236,7 +236,7 @@ public sealed class RentalReturnRepositoryTests : TestFixture
 
         client.AssociateTenant(tenant.Id);
         client.AssociateUser(userEmployee);
-        client.SetClientType(EClientType.Individual);
+        client.DefineType(EClientType.Individual);
 
         await this.clientRepository.AddAsync(client);
 
@@ -248,16 +248,16 @@ public sealed class RentalReturnRepositoryTests : TestFixture
 
         await this.driverRepository.AddAsync(driver);
 
-        List<RateService> services = Builder<RateService>.CreateListOfSize(2)
+        List<RentalExtra> extras = Builder<RentalExtra>.CreateListOfSize(2)
             .Build().ToList();
 
-        foreach (RateService s in services)
+        foreach (RentalExtra extra in extras)
         {
-            s.AssociateTenant(tenant.Id);
-            s.AssociateUser(userEmployee);
+            extra.AssociateTenant(tenant.Id);
+            extra.AssociateUser(userEmployee);
         }
 
-        await this.rateServiceRepository.AddMultiplyAsync(services);
+        await this.rentalExtraRepository.AddMultiplyAsync(extras);
 
         await this.dbContext.SaveChangesAsync();
 
@@ -277,7 +277,7 @@ public sealed class RentalReturnRepositoryTests : TestFixture
             rental.AssociateDriver(driver);
             rental.AssociateVehicle(vehicle);
             rental.AssociateBillingPlan(BillingPlan);
-            rental.AddRangeRateServices(services);
+            rental.AddRangeExtras(extras);
 
             await this.rentalRepository.AddAsync(rental);
 
@@ -345,9 +345,9 @@ public sealed class RentalReturnRepositoryTests : TestFixture
         await this.groupRepository.AddAsync(group);
 
         BillingPlan BillingPlan = Builder<BillingPlan>.CreateNew()
-            .Do(v => v.DailyPlan = new(this.random.Decimal(), this.random.Decimal()))
-            .Do(v => v.ControlledPlan = new(this.random.Decimal(), this.random.Int()))
-            .Do(v => v.FreePlan = new(this.random.Decimal()))
+            .Do(v => v.Daily = new(this.random.Decimal(), this.random.Decimal()))
+            .Do(v => v.Controlled = new(this.random.Decimal(), this.random.Int()))
+            .Do(v => v.Free = new(this.random.Decimal()))
             .Build();
 
         BillingPlan.AssociateTenant(tenant.Id);
@@ -382,7 +382,7 @@ public sealed class RentalReturnRepositoryTests : TestFixture
 
         client.AssociateTenant(tenant.Id);
         client.AssociateUser(userEmployee);
-        client.SetClientType(EClientType.Individual);
+        client.DefineType(EClientType.Individual);
 
         await this.clientRepository.AddAsync(client);
 

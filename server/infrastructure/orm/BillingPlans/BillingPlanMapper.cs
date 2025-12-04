@@ -12,7 +12,7 @@ public class BillingPlanMapper : IEntityTypeConfiguration<BillingPlan>
 
         builder.HasKey(pp => pp.Id);
 
-        builder.OwnsOne(p => p.DailyPlan, daily =>
+        builder.OwnsOne(p => p.Daily, daily =>
         {
             daily.Property(d => d.DailyRate)
                 .HasColumnName("DailyPlan_Price")
@@ -25,7 +25,7 @@ public class BillingPlanMapper : IEntityTypeConfiguration<BillingPlan>
                 .IsRequired();
         });
 
-        builder.OwnsOne(p => p.ControlledPlan, controlled =>
+        builder.OwnsOne(p => p.Controlled, controlled =>
         {
             controlled.Property(c => c.DailyRate)
                 .HasColumnName("ControlledPlan_Price")
@@ -38,7 +38,7 @@ public class BillingPlanMapper : IEntityTypeConfiguration<BillingPlan>
                 .IsRequired();
         });
 
-        builder.OwnsOne(p => p.FreePlan, free =>
+        builder.OwnsOne(p => p.Free, free =>
         {
             free.Property(f => f.FixedRate)
                 .HasColumnName("FreePlan_FixedRate")

@@ -1,7 +1,7 @@
 ﻿using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Configurations;
 using LocadoraDeAutomoveis.Domain.Coupons;
-using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 
 namespace LocadoraDeAutomoveis.Domain.Rentals;
@@ -12,16 +12,16 @@ public static class RentalCalculator
     {
         int estimatedDays = CalculateDays(rental.StartDate, rental.ExpectedReturnDate);
 
-        decimal planTotal = CalculatePlanPrice(
-            rental.BillingPlan, rental.SelectedPlanType,
+        decimal planTotalCost = CalculatePlanPrice(
+            rental.BillingPlan, rental.BillingPlanType,
             estimatedDays, 0m, rental.EstimatedKilometers ?? 0m
         );
 
-        decimal servicesTotal = CalculateServicesPrice(rental.RateServices, estimatedDays);
+        decimal extrasTotalCost = CalculateExtrasCost(rental.Extras, estimatedDays);
 
-        decimal grossTotal = planTotal + servicesTotal;
+        decimal totalCost = planTotalCost + extrasTotalCost;
 
-        decimal totalWithDiscount = ApplyCouponDiscount(grossTotal, rental.Coupon);
+        decimal totalWithDiscount = ApplyCouponDiscount(totalCost, rental.Coupon);
 
         return Math.Max(0m, totalWithDiscount);
     }
@@ -37,30 +37,30 @@ public static class RentalCalculator
 
         decimal kilometersDriven = Math.Max(0m, endKm - rental.StartKm);
 
-        decimal planTotal = CalculatePlanPrice(
+        decimal planTotalCost = CalculatePlanPrice(
             rental.BillingPlan,
-            rental.SelectedPlanType,
+            rental.BillingPlanType,
             daysUsed,
             kilometersDriven,
             rental.EstimatedKilometers ?? 0m
         );
 
-        decimal servicesTotal = CalculateServicesPrice(rental.RateServices, daysUsed);
+        decimal extrasTotalCost = CalculateExtrasCost(rental.Extras, daysUsed);
 
         decimal fuelPenalty = CalculateFuelPenalty(fuelLevel, rental.Vehicle, config);
 
-        decimal delayPenalty = CalculateDelayPenalty(planTotal, rental.ExpectedReturnDate, returnDate);
+        decimal delayPenalty = CalculateDelayPenalty(planTotalCost, rental.ExpectedReturnDate, returnDate);
 
-        decimal penaltiesTotal = fuelPenalty + delayPenalty;
+        decimal penaltiesTotalCost = fuelPenalty + delayPenalty;
 
         decimal discountTotal = rental.Coupon?.DiscountValue ?? 0m;
 
-        decimal grossTotal = planTotal + servicesTotal + penaltiesTotal;
-        decimal finalPrice = Math.Max(0m, grossTotal - discountTotal);
+        decimal totalCost = planTotalCost + extrasTotalCost + penaltiesTotalCost;
+        decimal finalPrice = Math.Max(0m, totalCost - discountTotal);
 
         return new CalculationResult(
-            finalPrice, planTotal,
-            servicesTotal, penaltiesTotal,
+            finalPrice, planTotalCost,
+            extrasTotalCost, penaltiesTotalCost,
             discountTotal, fuelPenalty
         );
     }
@@ -81,20 +81,20 @@ public static class RentalCalculator
         return type switch
         {
             EBillingPlanType.Daily =>
-                plan.DailyPlan.DailyRate * days + plan.DailyPlan.PricePerKm * kmDriven,
+                plan.Daily.DailyRate * days + plan.Daily.PricePerKm * kmDriven,
 
             EBillingPlanType.Controlled =>
-                CalculateControlledPlan(plan.ControlledPlan, days, kmDriven, estimatedKm),
+                CalculateControlledPlan(plan.Controlled, days, kmDriven, estimatedKm),
 
             EBillingPlanType.Free =>
-                plan.FreePlan.FixedRate * days,
+                plan.Free.FixedRate * days,
 
             _ => 0m
         };
     }
 
     private static decimal CalculateControlledPlan(
-        ControlledPlanProps plan, int days,
+        ControlledBilling plan, int days,
         decimal kmDriven, decimal estimatedKm
     )
     {
@@ -104,15 +104,15 @@ public static class RentalCalculator
         return baseCost + extraKm * plan.PricePerKmExtrapolated;
     }
 
-    private static decimal CalculateServicesPrice(List<RateService> services, int days)
+    private static decimal CalculateExtrasCost(List<RentalExtra> extras, int days)
     {
-        if (services == null || services.Count == 0)
+        if (extras == null || extras.Count == 0)
         {
             return 0m;
         }
 
-        return services.Sum(service =>
-            service.IsChargedPerDay ? service.Price * days : service.Price);
+        return extras.Sum(extra =>
+            extra.IsDaily ? extra.Price * days : extra.Price);
     }
 
     public static decimal CalculateFuelPenalty(EFuelLevel fuelLevel, Vehicle vehicle, Configuration config)

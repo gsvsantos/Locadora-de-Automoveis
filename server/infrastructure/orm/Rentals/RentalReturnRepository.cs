@@ -36,7 +36,7 @@ public class RentalReturnRepository(AppDbContext context)
             .Include(rr => rr.Rental)
                 .ThenInclude(r => r.BillingPlan)
             .Include(rr => rr.Rental)
-                .ThenInclude(r => r.RateServices)
+                .ThenInclude(r => r.Extras)
             .Include(rr => rr.Rental)
                 .ThenInclude(r => r.Employee)
             .Include(rr => rr.User);

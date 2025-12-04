@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using LocadoraDeAutomoveis.Domain.Clients;
 using MediatR;
 
 namespace LocadoraDeAutomoveis.Application.Clients.Commands.Update;
@@ -12,6 +13,7 @@ public record UpdateClientRequestPartial(
     string Neighborhood,
     string Street,
     int Number,
+    EClientType Type,
     string Document
 );
 
@@ -25,5 +27,6 @@ public record UpdateClientRequest(
     string Neighborhood,
     string Street,
     int Number,
+    EClientType Type,
     string Document
 ) : IRequest<Result<UpdateClientResponse>>;

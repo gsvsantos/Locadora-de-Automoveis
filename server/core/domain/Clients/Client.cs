@@ -9,7 +9,7 @@ public class Client : BaseEntity<Client>
     public string PhoneNumber { get; set; } = string.Empty;
     public string Document { get; set; } = string.Empty;
     public Address Address { get; set; } = null!;
-    public EClientType ClientType { get; set; }
+    public EClientType Type { get; set; }
     public string? LicenseNumber { get; set; } = null;
     public DateTimeOffset? LicenseExpiry { get; set; }
     public Guid? JuristicClientId { get; set; }
@@ -27,9 +27,9 @@ public class Client : BaseEntity<Client>
         this.Address = address;
     }
 
-    public void SetClientType(EClientType clientType)
+    public void DefineType(EClientType clientType)
     {
-        this.ClientType = clientType;
+        this.Type = clientType;
     }
 
     public void SetLicenseNumber(string licenseNumber)
@@ -51,6 +51,7 @@ public class Client : BaseEntity<Client>
         this.Document = updatedEntity.Document;
         this.Address = updatedEntity.Address;
         this.LicenseNumber = updatedEntity.LicenseNumber;
+        DefineType(updatedEntity.Type);
     }
 }
 

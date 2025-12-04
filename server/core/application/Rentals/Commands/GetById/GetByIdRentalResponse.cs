@@ -18,8 +18,8 @@ public record ByIdRentalDto(
     DateTimeOffset? ReturnDate,
     decimal BaseRentalPrice,
     decimal FinalPrice,
-    int RateServicesQuantity,
-    ImmutableList<RentalRateServiceDto> RateServices
+    int RentalExtrasQuantity,
+    ImmutableList<RentalRentalExtraDto> RentalExtras
 ) : RentalDto(
     Id,
     Employee,
@@ -32,10 +32,10 @@ public record ByIdRentalDto(
     ReturnDate,
     BaseRentalPrice,
     FinalPrice,
-    RateServicesQuantity
+    RentalExtrasQuantity
 );
 
-public record RentalRateServiceDto(
+public record RentalRentalExtraDto(
     Guid Id,
     string Name
 );

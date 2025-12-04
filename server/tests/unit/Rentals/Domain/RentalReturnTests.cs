@@ -18,9 +18,9 @@ public sealed class RentalReturnTests
         Assert.IsTrue(rentalReturn.IsActive);
         Assert.AreEqual(0, rentalReturn.EndKm);
         Assert.AreEqual(0, rentalReturn.TotalMileage);
-        Assert.AreEqual(0, rentalReturn.ServicesTotal);
+        Assert.AreEqual(0, rentalReturn.ExtrasTotalCost);
         Assert.AreEqual(0, rentalReturn.FuelPenalty);
-        Assert.AreEqual(0, rentalReturn.PenaltyTotal);
+        Assert.AreEqual(0, rentalReturn.PenaltyTotalCost);
         Assert.AreEqual(0, rentalReturn.FinalPrice);
         Assert.AreEqual(DateTimeOffset.MinValue, rentalReturn.ReturnDate);
     }
@@ -65,10 +65,10 @@ public sealed class RentalReturnTests
         decimal servicesTotal = 250.50m;
 
         // Act
-        rentalReturn.SetServicesTotal(servicesTotal);
+        rentalReturn.SetExtrasTotalCost(servicesTotal);
 
         // Assert
-        Assert.AreEqual(servicesTotal, rentalReturn.ServicesTotal);
+        Assert.AreEqual(servicesTotal, rentalReturn.ExtrasTotalCost);
     }
 
     [TestMethod]
@@ -96,7 +96,7 @@ public sealed class RentalReturnTests
         rentalReturn.SetPenaltyTotal(penaltyTotal);
 
         // Assert
-        Assert.AreEqual(penaltyTotal, rentalReturn.PenaltyTotal);
+        Assert.AreEqual(penaltyTotal, rentalReturn.PenaltyTotalCost);
     }
 
     [TestMethod]

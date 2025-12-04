@@ -9,7 +9,7 @@ using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
-using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
@@ -28,7 +28,7 @@ public class UpdateRentalRequestHandler(
     IRepositoryVehicle repositoryVehicle,
     IRepositoryCoupon repositoryCoupon,
     IRepositoryBillingPlan repositoryBillingPlan,
-    IRepositoryRateService repositoryRateService,
+    IRepositoryRentalExtra repositoryRentalExtra,
     IUserContext userContext,
     IValidator<Rental> validator,
     ILogger<UpdateRentalRequestHandler> logger
@@ -150,9 +150,9 @@ public class UpdateRentalRequestHandler(
         updatedRental.AssociateDriver(driver);
         updatedRental.AssociateVehicle(vehicle);
         updatedRental.AssociateBillingPlan(BillingPlan);
-        updatedRental.SetBillingPlanType(request.SelectedPlanType);
+        updatedRental.SetBillingPlanType(request.BillingPlanType);
 
-        if (request.SelectedPlanType.Equals(EBillingPlanType.Controlled)
+        if (request.BillingPlanType.Equals(EBillingPlanType.Controlled)
             && request.EstimatedKilometers.HasValue)
         {
             updatedRental.SetEstimatedKilometers(request.EstimatedKilometers.Value);
@@ -171,11 +171,11 @@ public class UpdateRentalRequestHandler(
                 return Result.Fail(ErrorResults.BadRequestError(errors));
             }
 
-            List<RateService> rateServices = await repositoryRateService.GetManyByIds(request.RentalRateServicesIds);
+            List<RentalExtra> rentalExtras = await repositoryRentalExtra.GetManyByIds(request.RentalRentalExtrasIds);
 
-            if (rateServices.Count >= 1)
+            if (rentalExtras.Count >= 1)
             {
-                updatedRental.AddRangeRateServices(rateServices);
+                updatedRental.AddRangeExtras(rentalExtras);
             }
 
             decimal basePrice = RentalCalculator.CalculateBasePrice(updatedRental);

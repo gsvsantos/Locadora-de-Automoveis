@@ -29,9 +29,9 @@ public class BillingPlanProfile : Profile
             .ConvertUsing(src => new BillingPlanDto(
                 src.Id,
                 $"{src.Group.Name} - Billing Plans",
-                new(src.DailyPlan.DailyRate, src.DailyPlan.PricePerKm),
-                new(src.ControlledPlan.DailyRate, src.ControlledPlan.PricePerKmExtrapolated),
-                new(src.FreePlan.FixedRate),
+                new(src.Daily.DailyRate, src.Daily.PricePerKm),
+                new(src.Controlled.DailyRate, src.Controlled.PricePerKmExtrapolated),
+                new(src.Free.FixedRate),
                 src.GroupId
             ));
 
@@ -40,9 +40,9 @@ public class BillingPlanProfile : Profile
         CreateMap<(CreateBillingPlanRequest r, Group g), BillingPlan>()
             .ConvertUsing(src => new BillingPlan(
                 $"{src.g.Name} - Billing Plans",
-                src.r.DailyPlan.ToProps(),
-                src.r.ControlledPlan.ToProps(),
-                src.r.FreePlan.ToProps()
+                src.r.DailyBilling.ToProps(),
+                src.r.ControlledBilling.ToProps(),
+                src.r.FreeBilling.ToProps()
             ));
 
         // GetALl

@@ -67,7 +67,7 @@ public class RentalMapper : IEntityTypeConfiguration<Rental>
             .HasForeignKey(r => r.BillingPlanId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Property(r => r.SelectedPlanType)
+        builder.Property(r => r.BillingPlanType)
             .HasConversion<int>()
             .IsRequired();
 
@@ -75,9 +75,9 @@ public class RentalMapper : IEntityTypeConfiguration<Rental>
             .HasColumnType("decimal(18,2)")
             .IsRequired(false);
 
-        builder.HasMany(r => r.RateServices)
+        builder.HasMany(r => r.Extras)
             .WithMany()
-            .UsingEntity(j => j.ToTable("RentalRateServices"));
+            .UsingEntity(j => j.ToTable("RentalExtras"));
 
         builder.HasOne(t => t.Tenant)
             .WithMany()

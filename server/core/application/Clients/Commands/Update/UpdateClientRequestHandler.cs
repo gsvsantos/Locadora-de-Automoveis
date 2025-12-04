@@ -31,6 +31,8 @@ public class UpdateClientRequestHandler(
         Address address = mapper.Map<Address>(request);
         Client updatedClient = mapper.Map<Client>((request, address));
 
+        updatedClient.DefineType(request.Type);
+
         try
         {
             ValidationResult validationResult = await validator.ValidateAsync(updatedClient, cancellationToken);

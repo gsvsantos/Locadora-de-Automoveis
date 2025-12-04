@@ -71,6 +71,7 @@ public sealed class UpdateClientRequestHandlerTests : UnitTestBase
             "MarcondesED",
             "Edi MarcondesED",
             11,
+            0,
             "000.000.000-02"
         );
 

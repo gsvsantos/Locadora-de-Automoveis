@@ -44,7 +44,7 @@ public sealed class ClientRepositoryTests : TestFixture
         {
             client.AssociateTenant(tenant.Id);
             client.AssociateUser(userEmployee);
-            client.SetClientType(EClientType.Individual);
+            client.DefineType(EClientType.Individual);
         }
         await this.clientRepository.AddMultiplyAsync(existingCPFClients);
 
@@ -68,7 +68,7 @@ public sealed class ClientRepositoryTests : TestFixture
         {
             client.AssociateTenant(tenant.Id);
             client.AssociateUser(userEmployee);
-            client.SetClientType(EClientType.Business);
+            client.DefineType(EClientType.Business);
         }
         await this.clientRepository.AddMultiplyAsync(existingCNPJClients);
 
@@ -128,8 +128,8 @@ public sealed class ClientRepositoryTests : TestFixture
 
         // Assert
         Assert.AreEqual(12, clients.Count);
-        Assert.AreEqual(8, clients.Count(c => !c.ClientType.Equals(EClientType.Business)));
-        Assert.AreEqual(4, clients.Count(c => c.ClientType.Equals(EClientType.Business)));
+        Assert.AreEqual(8, clients.Count(c => !c.Type.Equals(EClientType.Business)));
+        Assert.AreEqual(4, clients.Count(c => c.Type.Equals(EClientType.Business)));
 
         List<Guid> expectedClientIds = existingCPFClients
             .Concat(existingCNPJClients)
@@ -147,10 +147,10 @@ public sealed class ClientRepositoryTests : TestFixture
         }
 
         Client cpfClient0 = clients.First(c => c.Id == existingCPFClients[0].Id);
-        Assert.IsFalse(cpfClient0.ClientType == EClientType.Business);
+        Assert.IsFalse(cpfClient0.Type == EClientType.Business);
 
         Client cnpjClient0 = clients.First(c => c.Id == existingCNPJClients[0].Id);
-        Assert.IsTrue(cnpjClient0.ClientType == EClientType.Business);
+        Assert.IsTrue(cnpjClient0.Type == EClientType.Business);
     }
 
     [TestMethod]
@@ -189,7 +189,7 @@ public sealed class ClientRepositoryTests : TestFixture
         {
             client.AssociateTenant(tenant.Id);
             client.AssociateUser(userEmployee);
-            client.SetClientType(EClientType.Individual);
+            client.DefineType(EClientType.Individual);
         }
         await this.clientRepository.AddMultiplyAsync(existingCPFClients);
 
@@ -213,7 +213,7 @@ public sealed class ClientRepositoryTests : TestFixture
         {
             client.AssociateTenant(tenant.Id);
             client.AssociateUser(userEmployee);
-            client.SetClientType(EClientType.Business);
+            client.DefineType(EClientType.Business);
         }
         await this.clientRepository.AddMultiplyAsync(existingCNPJClients);
 
@@ -320,7 +320,7 @@ public sealed class ClientRepositoryTests : TestFixture
 
         existingCPFClient.AssociateTenant(tenant.Id);
         existingCPFClient.AssociateUser(userEmployee);
-        existingCPFClient.SetClientType(EClientType.Individual);
+        existingCPFClient.DefineType(EClientType.Individual);
 
         await this.clientRepository.AddAsync(existingCPFClient);
         await this.dbContext.SaveChangesAsync();
@@ -331,7 +331,7 @@ public sealed class ClientRepositoryTests : TestFixture
         // Assert
         Assert.IsNotNull(selectedClient);
         Assert.AreEqual(existingCPFClient.Id, selectedClient.Id);
-        Assert.IsFalse(selectedClient.ClientType == EClientType.Business);
+        Assert.IsFalse(selectedClient.Type == EClientType.Business);
         Assert.AreEqual(existingCPFClient.Document, selectedClient.Document);
     }
 
@@ -369,7 +369,7 @@ public sealed class ClientRepositoryTests : TestFixture
 
         existingCNPJClient.AssociateTenant(tenant.Id);
         existingCNPJClient.AssociateUser(userEmployee);
-        existingCNPJClient.SetClientType(EClientType.Business);
+        existingCNPJClient.DefineType(EClientType.Business);
 
         await this.clientRepository.AddAsync(existingCNPJClient);
         await this.dbContext.SaveChangesAsync();
@@ -380,7 +380,7 @@ public sealed class ClientRepositoryTests : TestFixture
         // Assert
         Assert.IsNotNull(selectedClient);
         Assert.AreEqual(existingCNPJClient.Id, selectedClient.Id);
-        Assert.IsTrue(selectedClient.ClientType == EClientType.Business);
+        Assert.IsTrue(selectedClient.Type == EClientType.Business);
         Assert.AreEqual(existingCNPJClient.Document, selectedClient.Document);
     }
 }

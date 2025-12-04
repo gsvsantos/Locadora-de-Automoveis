@@ -4,7 +4,7 @@ using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
-using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 
@@ -47,9 +47,9 @@ public sealed class RentalRepositoryTests : TestFixture
         await this.groupRepository.AddAsync(group);
 
         BillingPlan billingPlan = Builder<BillingPlan>.CreateNew()
-            .Do(v => v.DailyPlan = new(this.random.Decimal(), this.random.Decimal()))
-            .Do(v => v.ControlledPlan = new(this.random.Decimal(), this.random.Int()))
-            .Do(v => v.FreePlan = new(this.random.Decimal()))
+            .Do(v => v.Daily = new(this.random.Decimal(), this.random.Decimal()))
+            .Do(v => v.Controlled = new(this.random.Decimal(), this.random.Int()))
+            .Do(v => v.Free = new(this.random.Decimal()))
             .Build();
 
         billingPlan.AssociateTenant(tenant.Id);
@@ -84,7 +84,7 @@ public sealed class RentalRepositoryTests : TestFixture
 
         client.AssociateTenant(tenant.Id);
         client.AssociateUser(userEmployee);
-        client.SetClientType(EClientType.Individual);
+        client.DefineType(EClientType.Individual);
 
         await this.clientRepository.AddAsync(client);
 
@@ -105,16 +105,16 @@ public sealed class RentalRepositoryTests : TestFixture
 
         await this.driverRepository.AddAsync(driver);
 
-        List<RateService> services = Builder<RateService>.CreateListOfSize(2)
+        List<RentalExtra> extras = Builder<RentalExtra>.CreateListOfSize(2)
             .Build().ToList();
 
-        foreach (RateService service in services)
+        foreach (RentalExtra extra in extras)
         {
-            service.AssociateTenant(tenant.Id);
-            service.AssociateUser(userEmployee);
+            extra.AssociateTenant(tenant.Id);
+            extra.AssociateUser(userEmployee);
         }
 
-        await this.rateServiceRepository.AddMultiplyAsync(services);
+        await this.rentalExtraRepository.AddMultiplyAsync(extras);
 
         await this.dbContext.SaveChangesAsync();
 
@@ -136,7 +136,7 @@ public sealed class RentalRepositoryTests : TestFixture
             rental.AssociateDriver(driver);
             rental.AssociateVehicle(vehicle);
             rental.AssociateBillingPlan(billingPlan);
-            rental.AddRangeRateServices(services);
+            rental.AddRangeExtras(extras);
             existingRentals.Add(rental);
         }
 
@@ -185,9 +185,9 @@ public sealed class RentalRepositoryTests : TestFixture
         await this.groupRepository.AddAsync(group);
 
         BillingPlan BillingPlan = Builder<BillingPlan>.CreateNew()
-            .Do(v => v.DailyPlan = new(this.random.Decimal(), this.random.Decimal()))
-            .Do(v => v.ControlledPlan = new(this.random.Decimal(), this.random.Int()))
-            .Do(v => v.FreePlan = new(this.random.Decimal()))
+            .Do(v => v.Daily = new(this.random.Decimal(), this.random.Decimal()))
+            .Do(v => v.Controlled = new(this.random.Decimal(), this.random.Int()))
+            .Do(v => v.Free = new(this.random.Decimal()))
             .Build();
 
         BillingPlan.AssociateTenant(tenant.Id);
@@ -222,7 +222,7 @@ public sealed class RentalRepositoryTests : TestFixture
 
         client.AssociateTenant(tenant.Id);
         client.AssociateUser(userEmployee);
-        client.SetClientType(EClientType.Individual);
+        client.DefineType(EClientType.Individual);
 
         await this.clientRepository.AddAsync(client);
 
@@ -304,9 +304,9 @@ public sealed class RentalRepositoryTests : TestFixture
         await this.groupRepository.AddAsync(group);
 
         BillingPlan BillingPlan = Builder<BillingPlan>.CreateNew()
-            .Do(v => v.DailyPlan = new(this.random.Decimal(), this.random.Decimal()))
-            .Do(v => v.ControlledPlan = new(this.random.Decimal(), this.random.Int()))
-            .Do(v => v.FreePlan = new(this.random.Decimal()))
+            .Do(v => v.Daily = new(this.random.Decimal(), this.random.Decimal()))
+            .Do(v => v.Controlled = new(this.random.Decimal(), this.random.Int()))
+            .Do(v => v.Free = new(this.random.Decimal()))
             .Build();
 
         BillingPlan.AssociateTenant(tenant.Id);
@@ -341,7 +341,7 @@ public sealed class RentalRepositoryTests : TestFixture
 
         client.AssociateTenant(tenant.Id);
         client.AssociateUser(userEmployee);
-        client.SetClientType(EClientType.Individual);
+        client.DefineType(EClientType.Individual);
 
         await this.clientRepository.AddAsync(client);
 

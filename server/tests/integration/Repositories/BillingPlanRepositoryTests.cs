@@ -37,9 +37,9 @@ public sealed class BillingPlanRepositoryTests : TestFixture
 
         RandomGenerator random = new();
         List<BillingPlan> existingBillingPlans = Builder<BillingPlan>.CreateListOfSize(10).All()
-            .Do(v => v.DailyPlan = new(random.Decimal(), random.Decimal()))
-            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Int()))
-            .Do(v => v.FreePlan = new(random.Decimal()))
+            .Do(v => v.Daily = new(random.Decimal(), random.Decimal()))
+            .Do(v => v.Controlled = new(random.Decimal(), random.Int()))
+            .Do(v => v.Free = new(random.Decimal()))
             .Build().ToList();
         foreach (BillingPlan billingPlan in existingBillingPlans)
         {
@@ -93,9 +93,9 @@ public sealed class BillingPlanRepositoryTests : TestFixture
 
         RandomGenerator random = new();
         List<BillingPlan> existingBillingPlans = Builder<BillingPlan>.CreateListOfSize(10).All()
-            .Do(v => v.DailyPlan = new(random.Decimal(), random.Decimal()))
-            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Int()))
-            .Do(v => v.FreePlan = new(random.Decimal()))
+            .Do(v => v.Daily = new(random.Decimal(), random.Decimal()))
+            .Do(v => v.Controlled = new(random.Decimal(), random.Int()))
+            .Do(v => v.Free = new(random.Decimal()))
             .Build().ToList();
         foreach (BillingPlan BillingPlan in existingBillingPlans)
         {
@@ -144,9 +144,9 @@ public sealed class BillingPlanRepositoryTests : TestFixture
 
         RandomGenerator random = new();
         BillingPlan BillingPlan = Builder<BillingPlan>.CreateNew()
-            .Do(v => v.DailyPlan = new(random.Decimal(), random.Decimal()))
-            .Do(v => v.ControlledPlan = new(random.Decimal(), random.Int()))
-            .Do(v => v.FreePlan = new(random.Decimal()))
+            .Do(v => v.Daily = new(random.Decimal(), random.Decimal()))
+            .Do(v => v.Controlled = new(random.Decimal(), random.Int()))
+            .Do(v => v.Free = new(random.Decimal()))
             .Build();
 
         BillingPlan.AssociateTenant(tenant.Id);

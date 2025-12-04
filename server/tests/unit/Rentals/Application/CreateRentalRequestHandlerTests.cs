@@ -6,7 +6,7 @@ using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
-using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
@@ -34,7 +34,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
     private Mock<IRepositoryVehicle> repositoryVehicleMock = null!;
     private Mock<IRepositoryCoupon> repositoryCouponMock = null!;
     private Mock<IRepositoryBillingPlan> repositoryBillingPlanMock = null!;
-    private Mock<IRepositoryRateService> repositoryRateServiceMock = null!;
+    private Mock<IRepositoryRentalExtra> repositoryRentalExtraMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IUserContext> userContextMock = null!;
     private Mock<IValidator<Rental>> validatorMock = null!;
@@ -56,7 +56,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
         this.repositoryVehicleMock = new Mock<IRepositoryVehicle>();
         this.repositoryCouponMock = new Mock<IRepositoryCoupon>();
         this.repositoryBillingPlanMock = new Mock<IRepositoryBillingPlan>();
-        this.repositoryRateServiceMock = new Mock<IRepositoryRateService>();
+        this.repositoryRentalExtraMock = new Mock<IRepositoryRentalExtra>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.userContextMock = new Mock<IUserContext>();
         this.validatorMock = new Mock<IValidator<Rental>>();
@@ -73,7 +73,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
             this.repositoryVehicleMock.Object,
             this.repositoryCouponMock.Object,
             this.repositoryBillingPlanMock.Object,
-            this.repositoryRateServiceMock.Object,
+            this.repositoryRentalExtraMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,
             this.validatorMock.Object,
@@ -167,9 +167,9 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
 
         BillingPlan BillingPlan = new(
             "Plano Teste",
-            new DailyPlanProps(100, 10),
-            new ControlledPlanProps(80, 20),
-            new FreePlanProps(200)
+            new DailyBilling(100, 10),
+            new ControlledBilling(80, 20),
+            new FreeBilling(200)
         );
         BillingPlan.AssociateGroup(group);
 
@@ -177,16 +177,16 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetByGroupId(groupId))
             .ReturnsAsync(BillingPlan);
 
-        List<Guid> serviceIds = [Guid.NewGuid(), Guid.NewGuid()];
-        List<RateService> services =
+        List<Guid> extrasIds = [Guid.NewGuid(), Guid.NewGuid()];
+        List<RentalExtra> extras =
         [
-            new RateService("GPS", 10) { IsChargedPerDay = true, RateType = ERateType.Generic },
-            new RateService("Cadeira", 20) { IsChargedPerDay = true, RateType = ERateType.Generic }
+            new RentalExtra("GPS", 10) { IsDaily = true, Type = EExtraType.Service },
+            new RentalExtra("Cadeira", 20) { IsDaily = true, Type = EExtraType.Equipment }
         ];
 
-        this.repositoryRateServiceMock
-            .Setup(r => r.GetManyByIds(serviceIds))
-            .ReturnsAsync(services);
+        this.repositoryRentalExtraMock
+            .Setup(r => r.GetManyByIds(extrasIds))
+            .ReturnsAsync(extras);
 
         CreateRentalRequest request = new(
             DateTimeOffset.Now,
@@ -199,7 +199,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
             null,
             EBillingPlanType.Daily,
             null,
-            serviceIds
+            extrasIds
         );
 
         this.validatorMock
@@ -236,8 +236,8 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
         this.repositoryBillingPlanMock
             .Verify(r => r.GetByGroupId(groupId), Times.Once);
 
-        this.repositoryRateServiceMock
-            .Verify(r => r.GetManyByIds(serviceIds), Times.Once);
+        this.repositoryRentalExtraMock
+            .Verify(r => r.GetManyByIds(extrasIds), Times.Once);
 
         this.validatorMock
             .Verify(v => v.ValidateAsync(
@@ -252,9 +252,9 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
                         rental.ClientId == clientId &&
                         rental.DriverId == driverId &&
                         rental.VehicleId == vehicleId &&
-                        rental.RateServices.Count == 2 &&
+                        rental.Extras.Count == 2 &&
                         rental.Status == ERentalStatus.Open &&
-                        rental.SelectedPlanType == EBillingPlanType.Daily
+                        rental.BillingPlanType == EBillingPlanType.Daily
                     )
                 ),
                 Times.Once

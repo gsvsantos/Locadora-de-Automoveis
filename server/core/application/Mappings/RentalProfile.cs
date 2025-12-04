@@ -7,7 +7,7 @@ using LocadoraDeAutomoveis.Application.Rentals.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
-using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using System.Collections.Immutable;
@@ -31,9 +31,9 @@ public class RentalProfile : Profile
                 src.p.DriverId,
                 src.p.VehicleId,
                 src.p.CouponId,
-                src.p.SelectedPlanType,
+                src.p.BillingPlanType,
                 src.p.EstimatedKilometers,
-                src.p.RentalRateServicesIds
+                src.p.RentalRentalExtrasIds
             ));
 
         // DTOs
@@ -68,17 +68,17 @@ public class RentalProfile : Profile
                 ctx.Mapper.Map<RentalClientDto>(src.Client),
                 ctx.Mapper.Map<RentalDriverDto>(src.Driver),
                 ctx.Mapper.Map<RentalVehicleDto>(src.Vehicle),
-                src.SelectedPlanType,
+                src.BillingPlanType,
                 src.StartDate,
                 src.ExpectedReturnDate,
                 src.ReturnDate,
                 src.BaseRentalPrice,
                 src.FinalPrice,
-                src.RateServices.Count
+                src.Extras.Count
             ));
 
-        CreateMap<RateService, RentalRateServiceDto>()
-            .ConvertUsing(src => new RentalRateServiceDto(
+        CreateMap<RentalExtra, RentalRentalExtraDto>()
+            .ConvertUsing(src => new RentalRentalExtraDto(
                 src.Id,
                 src.Name
             ));
@@ -90,15 +90,15 @@ public class RentalProfile : Profile
                 ctx.Mapper.Map<RentalClientDto>(src.Client),
                 ctx.Mapper.Map<RentalDriverDto>(src.Driver),
                 ctx.Mapper.Map<RentalVehicleDto>(src.Vehicle),
-                src.SelectedPlanType,
+                src.BillingPlanType,
                 src.StartDate,
                 src.ExpectedReturnDate,
                 src.ReturnDate,
                 src.BaseRentalPrice,
                 src.FinalPrice,
-                src.RateServices.Count,
-                src.RateServices.Select(r => ctx.Mapper.Map<RentalRateServiceDto>(r)).ToImmutableList()
-                ?? ImmutableList<RentalRateServiceDto>.Empty
+                src.Extras.Count,
+                src.Extras.Select(r => ctx.Mapper.Map<RentalRentalExtraDto>(r)).ToImmutableList()
+                ?? ImmutableList<RentalRentalExtraDto>.Empty
             ));
 
         // HANDLERS

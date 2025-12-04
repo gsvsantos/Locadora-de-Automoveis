@@ -3,7 +3,7 @@ using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
-using LocadoraDeAutomoveis.Domain.RateServices;
+using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 
@@ -26,8 +26,8 @@ public sealed class RentalTests
         Assert.AreEqual(0, rental.BaseRentalPrice);
         Assert.AreEqual(1000, rental.GuaranteeValue);
         Assert.AreEqual(0, rental.FinalPrice);
-        Assert.IsNotNull(rental.RateServices);
-        Assert.AreEqual(0, rental.RateServices.Count);
+        Assert.IsNotNull(rental.Extras);
+        Assert.AreEqual(0, rental.Extras.Count);
     }
 
     [TestMethod]
@@ -124,47 +124,47 @@ public sealed class RentalTests
     }
 
     [TestMethod]
-    public void RentalMethod_AddRentalService_ShouldAddToList()
+    public void RentalMethod_AddExtra_ShouldAddToList()
     {
         // Arrange
         Rental rental = new();
-        RateService service = Builder<RateService>.CreateNew().Build();
+        RentalExtra extra = Builder<RentalExtra>.CreateNew().Build();
 
         // Act
-        rental.AddRentalService(service);
+        rental.AddExtra(extra);
 
         // Assert
-        Assert.AreEqual(1, rental.RateServices.Count);
-        Assert.IsTrue(rental.RateServices.Contains(service));
+        Assert.AreEqual(1, rental.Extras.Count);
+        Assert.IsTrue(rental.Extras.Contains(extra));
     }
 
     [TestMethod]
-    public void RentalMethod_AddMultiplyRateService_ShouldAddRangeToList()
+    public void RentalMethod_AddRangeExtras_ShouldAddRangeToList()
     {
         // Arrange
         Rental rental = new();
-        List<RateService> services = Builder<RateService>.CreateListOfSize(3).Build().ToList();
+        List<RentalExtra> extras = Builder<RentalExtra>.CreateListOfSize(3).Build().ToList();
 
         // Act
-        rental.AddRangeRateServices(services);
+        rental.AddRangeExtras(extras);
 
         // Assert
-        Assert.AreEqual(3, rental.RateServices.Count);
+        Assert.AreEqual(3, rental.Extras.Count);
     }
 
     [TestMethod]
-    public void RentalMethod_RemoveRentalService_ShouldRemoveFromList()
+    public void RentalMethod_RemoveExtra_ShouldRemoveFromList()
     {
         // Arrange
         Rental rental = new();
-        RateService service = Builder<RateService>.CreateNew().Build();
-        rental.AddRentalService(service);
+        RentalExtra extra = Builder<RentalExtra>.CreateNew().Build();
+        rental.AddExtra(extra);
 
         // Act
-        rental.RemoveRentalService(service);
+        rental.RemoveExtra(extra);
 
         // Assert
-        Assert.AreEqual(0, rental.RateServices.Count);
+        Assert.AreEqual(0, rental.Extras.Count);
     }
 
     [TestMethod]
@@ -209,14 +209,14 @@ public sealed class RentalTests
         Driver newDriver = Builder<Driver>.CreateNew().Build();
         Vehicle newVehicle = Builder<Vehicle>.CreateNew().Build();
         BillingPlan newPlan = Builder<BillingPlan>.CreateNew().Build();
-        List<RateService> newServices = Builder<RateService>.CreateListOfSize(2).Build().ToList();
+        List<RentalExtra> newExtras = Builder<RentalExtra>.CreateListOfSize(2).Build().ToList();
 
         updatedData.AssociateEmployee(newEmployee);
         updatedData.AssociateClient(newClient);
         updatedData.AssociateDriver(newDriver);
         updatedData.AssociateVehicle(newVehicle);
         updatedData.AssociateBillingPlan(newPlan);
-        updatedData.AddRangeRateServices(newServices);
+        updatedData.AddRangeExtras(newExtras);
 
         // Act
         rental.Update(updatedData);
@@ -229,6 +229,6 @@ public sealed class RentalTests
         Assert.AreEqual(newClient.Id, rental.ClientId);
         Assert.AreEqual(newDriver.Id, rental.DriverId);
         Assert.AreEqual(newPlan.Id, rental.BillingPlanId);
-        Assert.AreEqual(2, rental.RateServices.Count);
+        Assert.AreEqual(2, rental.Extras.Count);
     }
 }
