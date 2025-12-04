@@ -32,8 +32,10 @@ public class Program
         builder.Services.ConfigureServices(builder.Configuration);
 
         // Auth [env JWT_GENERATION_KEY, JWT_AUDIENCE_DOMAIN]
-        builder.Services.ConfigureIdentityProviders();
-        builder.Services.ConfigureJwtAuthentication(builder.Configuration);
+        builder.Services
+            .ConfigureIdentityProviders()
+            .ConfigureJwtAuthentication(builder.Configuration)
+            .ConfigureRefreshTokenOptions(builder.Configuration);
 
         // Controllers
         builder.Services.ConfigureControllers();

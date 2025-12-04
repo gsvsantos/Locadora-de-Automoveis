@@ -2,6 +2,7 @@
 using Hangfire;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
 using LocadoraDeAutomoveis.Application.Shared;
+using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Configurations;
@@ -14,6 +15,7 @@ using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
+using LocadoraDeAutomoveis.Infrastructure.Auth;
 using LocadoraDeAutomoveis.Infrastructure.BillingPlans;
 using LocadoraDeAutomoveis.Infrastructure.Clients;
 using LocadoraDeAutomoveis.Infrastructure.Configurations;
@@ -159,6 +161,7 @@ public static class DependencyInjection
 
     public static void ConfigureRepositories(this IServiceCollection services)
     {
+        services.AddScoped<IRepositoryRefreshToken, RepositoryRefreshToken>();
         services.AddScoped<IRepositoryEmployee, EmployeeRepository>();
         services.AddScoped<IRepositoryGroup, GroupRepository>();
         services.AddScoped<IRepositoryVehicle, VehicleRepository>();
@@ -202,9 +205,7 @@ public static class DependencyInjection
         services.AddLogging(builder => builder.AddSerilog(dispose: true));
     }
 
-    public static void ConfigureServices(
-        this IServiceCollection services, IConfiguration configuration
-    )
+    public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
     {
         Assembly applicationAssembly = typeof(ApplicationAssemblyReference).Assembly;
 
