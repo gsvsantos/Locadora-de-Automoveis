@@ -4,11 +4,11 @@ using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
-using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
@@ -29,7 +29,7 @@ public class CreateRentalRequestHandler(
     IRepositoryDriver repositoryDriver,
     IRepositoryVehicle repositoryVehicle,
     IRepositoryCoupon repositoryCoupon,
-    IRepositoryPricingPlan repositoryPricingPlan,
+    IRepositoryBillingPlan repositoryBillingPlan,
     IRepositoryRateService repositoryRateService,
     ITenantProvider tenantProvider,
     IUserContext userContext,
@@ -79,9 +79,9 @@ public class CreateRentalRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.VehicleId));
         }
 
-        PricingPlan? pricingPlan = await repositoryPricingPlan.GetByGroupId(vehicle.GroupId);
+        BillingPlan? BillingPlan = await repositoryBillingPlan.GetByGroupId(vehicle.GroupId);
 
-        if (pricingPlan is null)
+        if (BillingPlan is null)
         {
             return Result.Fail(ErrorResults.NotFoundError(vehicle.GroupId));
         }
@@ -122,10 +122,10 @@ public class CreateRentalRequestHandler(
         rental.AssociateClient(client);
         rental.AssociateDriver(driver);
         rental.AssociateVehicle(vehicle);
-        rental.AssociatePricingPlan(pricingPlan);
-        rental.SetPricingPlanType(request.SelectedPlanType);
+        rental.AssociateBillingPlan(BillingPlan);
+        rental.SetBillingPlanType(request.SelectedPlanType);
 
-        if (request.SelectedPlanType.Equals(EPricingPlanType.Controlled)
+        if (request.SelectedPlanType.Equals(EBillingPlanType.Controlled)
             && request.EstimatedKilometers.HasValue)
         {
             rental.SetEstimatedKilometers(request.EstimatedKilometers.Value);

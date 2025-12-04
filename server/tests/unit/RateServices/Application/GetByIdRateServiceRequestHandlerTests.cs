@@ -29,7 +29,7 @@ public sealed class GetByIdRateServiceRequestHandlerTests : UnitTestBase
 
     #region GetRateServiceById Tests (Happy Path)
     [TestMethod]
-    public void Handler_ShouldGetPricingPlansById_Successfuly()
+    public void Handler_ShouldGetBillingPlansById_Successfuly()
     {
         // Arrange
         Guid rateServiceId = Guid.NewGuid();

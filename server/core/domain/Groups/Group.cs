@@ -1,4 +1,4 @@
-﻿using LocadoraDeAutomoveis.Domain.PricingPlans;
+﻿using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 
@@ -8,7 +8,7 @@ public class Group : BaseEntity<Group>
 {
     public string Name { get; set; } = string.Empty;
     public List<Vehicle> Vehicles { get; set; } = [];
-    public List<PricingPlan> PricingPlans { get; set; } = [];
+    public List<BillingPlan> BillingPlans { get; set; } = [];
 
     public Group() { }
     public Group(string name) : this()
@@ -26,14 +26,14 @@ public class Group : BaseEntity<Group>
         this.Vehicles.Remove(vehicle);
     }
 
-    public void AddPricingPlan(PricingPlan pricingPlan)
+    public void AddBillingPlan(BillingPlan BillingPlan)
     {
-        this.PricingPlans.Add(pricingPlan);
+        this.BillingPlans.Add(BillingPlan);
     }
 
-    public void RemovePricingPlan(PricingPlan pricingPlan)
+    public void RemoveBillingPlan(BillingPlan BillingPlan)
     {
-        this.PricingPlans.Remove(pricingPlan);
+        this.BillingPlans.Remove(BillingPlan);
     }
 
     public override void Update(Group updatedEntity)

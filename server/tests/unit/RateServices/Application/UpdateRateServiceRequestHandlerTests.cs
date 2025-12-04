@@ -37,9 +37,9 @@ public sealed class UpdateRateServiceRequestHandlerTests : UnitTestBase
         );
     }
 
-    #region UpdatePricingPlan Tests (Happy Path)
+    #region UpdateBillingPlan Tests (Happy Path)
     [TestMethod]
-    public void Handler_ShouldUpdatePricingPlan_Successfully()
+    public void Handler_ShouldUpdateBillingPlan_Successfully()
     {
         // Arrange
         Guid rateServiceId = Guid.NewGuid();

@@ -16,8 +16,8 @@ public class RentalValidator : AbstractValidator<Rental>
         RuleFor(r => r.VehicleId)
             .NotEmpty().WithMessage("The Vehicle is required.");
 
-        RuleFor(r => r.PricingPlanId)
-            .NotEmpty().WithMessage("The Pricing Plan is required.");
+        RuleFor(r => r.BillingPlanId)
+            .NotEmpty().WithMessage("The Billing Plan is required.");
 
         RuleFor(r => r.StartDate)
             .NotEmpty().WithMessage("The Start Date is required.");
@@ -31,7 +31,7 @@ public class RentalValidator : AbstractValidator<Rental>
             .GreaterThanOrEqualTo(0)
             .WithMessage("The Start Km cannot be negative.");
 
-        When(r => r.SelectedPlanType == EPricingPlanType.Controlled, () =>
+        When(r => r.SelectedPlanType == EBillingPlanType.Controlled, () =>
         {
             RuleFor(r => r.EstimatedKilometers)
                 .NotNull().WithMessage("For the Controlled Plan, the Estimated Kilometers is required.")

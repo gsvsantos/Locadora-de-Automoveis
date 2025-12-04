@@ -1,6 +1,6 @@
-﻿using LocadoraDeAutomoveis.Domain.Configurations;
+﻿using LocadoraDeAutomoveis.Domain.BillingPlans;
+using LocadoraDeAutomoveis.Domain.Configurations;
 using LocadoraDeAutomoveis.Domain.Coupons;
-using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 
@@ -13,7 +13,7 @@ public static class RentalCalculator
         int estimatedDays = CalculateDays(rental.StartDate, rental.ExpectedReturnDate);
 
         decimal planTotal = CalculatePlanPrice(
-            rental.PricingPlan, rental.SelectedPlanType,
+            rental.BillingPlan, rental.SelectedPlanType,
             estimatedDays, 0m, rental.EstimatedKilometers ?? 0m
         );
 
@@ -38,7 +38,7 @@ public static class RentalCalculator
         decimal kilometersDriven = Math.Max(0m, endKm - rental.StartKm);
 
         decimal planTotal = CalculatePlanPrice(
-            rental.PricingPlan,
+            rental.BillingPlan,
             rental.SelectedPlanType,
             daysUsed,
             kilometersDriven,
@@ -72,21 +72,21 @@ public static class RentalCalculator
     }
 
     private static decimal CalculatePlanPrice(
-        PricingPlan plan,
-        EPricingPlanType type,
+        BillingPlan plan,
+        EBillingPlanType type,
         int days,
         decimal kmDriven,
         decimal estimatedKm)
     {
         return type switch
         {
-            EPricingPlanType.Daily =>
+            EBillingPlanType.Daily =>
                 plan.DailyPlan.DailyRate * days + plan.DailyPlan.PricePerKm * kmDriven,
 
-            EPricingPlanType.Controlled =>
+            EBillingPlanType.Controlled =>
                 CalculateControlledPlan(plan.ControlledPlan, days, kmDriven, estimatedKm),
 
-            EPricingPlanType.Free =>
+            EBillingPlanType.Free =>
                 plan.FreePlan.FixedRate * days,
 
             _ => 0m

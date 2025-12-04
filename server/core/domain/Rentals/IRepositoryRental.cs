@@ -8,9 +8,9 @@ public interface IRepositoryRental : IRepository<Rental>
 
     Task<bool> HasRentalHistoryByEmployee(Guid employeeId);
 
-    Task<bool> HasActiveRentalsByPricingPlan(Guid pricingPlanId);
+    Task<bool> HasActiveRentalsByBillingPlan(Guid BillingPlanId);
 
-    Task<bool> HasRentalHistoryByPricingPlan(Guid pricingPlanId);
+    Task<bool> HasRentalHistoryByBillingPlan(Guid BillingPlanId);
 
     Task<bool> HasActiveRentalsByVehicle(Guid vehicleId);
 

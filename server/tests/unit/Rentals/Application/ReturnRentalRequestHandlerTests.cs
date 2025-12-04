@@ -1,7 +1,7 @@
 ﻿using LocadoraDeAutomoveis.Application.Rentals.Commands.Return;
 using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Configurations;
-using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
@@ -88,7 +88,7 @@ public sealed class ReturnRentalRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetByTenantId(tenantId))
             .ReturnsAsync(config);
 
-        PricingPlan pricingPlan = new(
+        BillingPlan billingPlan = new(
             "Plano Teste",
             new DailyPlanProps(100m, 10m),
             new ControlledPlanProps(80m, 20m),
@@ -113,8 +113,8 @@ public sealed class ReturnRentalRequestHandlerTests : UnitTestBase
         )
         {
             Id = rentalId,
-            PricingPlan = pricingPlan,
-            SelectedPlanType = EPricingPlanType.Daily,
+            BillingPlan = billingPlan,
+            SelectedPlanType = EBillingPlanType.Daily,
             Vehicle = vehicle
         };
 

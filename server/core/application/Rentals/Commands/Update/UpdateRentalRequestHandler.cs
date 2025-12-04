@@ -4,11 +4,11 @@ using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
-using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
@@ -27,7 +27,7 @@ public class UpdateRentalRequestHandler(
     IRepositoryDriver repositoryDriver,
     IRepositoryVehicle repositoryVehicle,
     IRepositoryCoupon repositoryCoupon,
-    IRepositoryPricingPlan repositoryPricingPlan,
+    IRepositoryBillingPlan repositoryBillingPlan,
     IRepositoryRateService repositoryRateService,
     IUserContext userContext,
     IValidator<Rental> validator,
@@ -95,9 +95,9 @@ public class UpdateRentalRequestHandler(
             }
         }
 
-        PricingPlan? pricingPlan = await repositoryPricingPlan.GetByGroupId(vehicle.GroupId);
+        BillingPlan? BillingPlan = await repositoryBillingPlan.GetByGroupId(vehicle.GroupId);
 
-        if (pricingPlan is null)
+        if (BillingPlan is null)
         {
             return Result.Fail(ErrorResults.NotFoundError(vehicle.GroupId));
         }
@@ -149,10 +149,10 @@ public class UpdateRentalRequestHandler(
         updatedRental.AssociateClient(client);
         updatedRental.AssociateDriver(driver);
         updatedRental.AssociateVehicle(vehicle);
-        updatedRental.AssociatePricingPlan(pricingPlan);
-        updatedRental.SetPricingPlanType(request.SelectedPlanType);
+        updatedRental.AssociateBillingPlan(BillingPlan);
+        updatedRental.SetBillingPlanType(request.SelectedPlanType);
 
-        if (request.SelectedPlanType.Equals(EPricingPlanType.Controlled)
+        if (request.SelectedPlanType.Equals(EBillingPlanType.Controlled)
             && request.EstimatedKilometers.HasValue)
         {
             updatedRental.SetEstimatedKilometers(request.EstimatedKilometers.Value);

@@ -14,7 +14,7 @@ public record RentalDto(
     RentalClientDto Client,
     RentalDriverDto Driver,
     RentalVehicleDto Vehicle,
-    EPricingPlanType SelectedPlanType,
+    EBillingPlanType SelectedPlanType,
     DateTimeOffset StartDate,
     DateTimeOffset ExpectedReturnDate,
     DateTimeOffset? ReturnDate,

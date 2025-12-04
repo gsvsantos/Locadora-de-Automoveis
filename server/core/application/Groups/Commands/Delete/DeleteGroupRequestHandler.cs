@@ -1,7 +1,7 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
+using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Groups;
-using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
@@ -13,7 +13,7 @@ public class DeleteGroupRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryGroup repositoryGroup,
     IRepositoryVehicle repositoryVehicle,
-    IRepositoryPricingPlan repositoryPricingPlan,
+    IRepositoryBillingPlan repositoryBillingPlan,
     ILogger<DeleteGroupRequestHandler> logger
 ) : IRequestHandler<DeleteGroupRequest, Result<DeleteGroupResponse>>
 {
@@ -28,9 +28,9 @@ public class DeleteGroupRequestHandler(
         }
 
         bool hasVehicles = await repositoryVehicle.ExistsByGroupId(request.Id);
-        bool hasPricingPlans = await repositoryPricingPlan.ExistsByGroupId(request.Id);
+        bool hasBillingPlans = await repositoryBillingPlan.ExistsByGroupId(request.Id);
 
-        bool isInUse = hasVehicles || hasPricingPlans;
+        bool isInUse = hasVehicles || hasBillingPlans;
 
         try
         {

@@ -9,7 +9,13 @@ public sealed class TestAppDbContext : AppDbContext
 {
     public TestAppDbContext(DbContextOptions options) : base(options) { }
 
-    public DbSet<TestEntity> TestEntities => Set<TestEntity>();
+    public DbSet<TestEntity> TestEntities
+    {
+        get
+        {
+            return Set<TestEntity>();
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

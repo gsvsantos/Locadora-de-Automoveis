@@ -1,5 +1,6 @@
 ﻿using DotNet.Testcontainers.Containers;
 using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Configurations;
 using LocadoraDeAutomoveis.Domain.Coupons;
@@ -7,10 +8,10 @@ using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Partners;
-using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Vehicles;
+using LocadoraDeAutomoveis.Infrastructure.BillingPlans;
 using LocadoraDeAutomoveis.Infrastructure.Clients;
 using LocadoraDeAutomoveis.Infrastructure.Configurations;
 using LocadoraDeAutomoveis.Infrastructure.Coupons;
@@ -18,7 +19,6 @@ using LocadoraDeAutomoveis.Infrastructure.Drivers;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Groups;
 using LocadoraDeAutomoveis.Infrastructure.Partners;
-using LocadoraDeAutomoveis.Infrastructure.PricingPlans;
 using LocadoraDeAutomoveis.Infrastructure.RateServices;
 using LocadoraDeAutomoveis.Infrastructure.Rentals;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
@@ -40,7 +40,7 @@ public abstract class TestFixture
     protected EmployeeRepository employeeRepository = null!;
     protected GroupRepository groupRepository = null!;
     protected VehicleRepository vehicleRepository = null!;
-    protected PricingPlanRepository pricingPlanRepository = null!;
+    protected BillingPlanRepository BillingPlanRepository = null!;
     protected ClientRepository clientRepository = null!;
     protected DriverRepository driverRepository = null!;
     protected RateServiceRepository rateServiceRepository = null!;
@@ -94,7 +94,7 @@ public abstract class TestFixture
         this.employeeRepository = new(this.dbContext);
         this.groupRepository = new(this.dbContext);
         this.vehicleRepository = new(this.dbContext);
-        this.pricingPlanRepository = new(this.dbContext);
+        this.BillingPlanRepository = new(this.dbContext);
         this.clientRepository = new(this.dbContext);
         this.driverRepository = new(this.dbContext);
         this.rateServiceRepository = new(this.dbContext);
@@ -115,8 +115,8 @@ public abstract class TestFixture
         BuilderSetup.SetCreatePersistenceMethod<Vehicle>(v => this.vehicleRepository.AddAsync(v).GetAwaiter().GetResult());
         BuilderSetup.SetCreatePersistenceMethod<IList<Vehicle>>(v => this.vehicleRepository.AddMultiplyAsync(v).GetAwaiter().GetResult());
 
-        BuilderSetup.SetCreatePersistenceMethod<PricingPlan>(pP => this.pricingPlanRepository.AddAsync(pP).GetAwaiter().GetResult());
-        BuilderSetup.SetCreatePersistenceMethod<IList<PricingPlan>>(pp => this.pricingPlanRepository.AddMultiplyAsync(pp).GetAwaiter().GetResult());
+        BuilderSetup.SetCreatePersistenceMethod<BillingPlan>(pP => this.BillingPlanRepository.AddAsync(pP).GetAwaiter().GetResult());
+        BuilderSetup.SetCreatePersistenceMethod<IList<BillingPlan>>(pp => this.BillingPlanRepository.AddMultiplyAsync(pp).GetAwaiter().GetResult());
 
         BuilderSetup.SetCreatePersistenceMethod<Client>(c => this.clientRepository.AddAsync(c).GetAwaiter().GetResult());
         BuilderSetup.SetCreatePersistenceMethod<IList<Client>>(c => this.clientRepository.AddMultiplyAsync(c).GetAwaiter().GetResult());
@@ -206,7 +206,7 @@ public abstract class TestFixture
         dbContext.Coupons.RemoveRange(dbContext.Coupons);
         dbContext.Drivers.RemoveRange(dbContext.Drivers);
         dbContext.Vehicles.RemoveRange(dbContext.Vehicles);
-        dbContext.PricingPlans.RemoveRange(dbContext.PricingPlans);
+        dbContext.BillingPlans.RemoveRange(dbContext.BillingPlans);
         dbContext.Clients.RemoveRange(dbContext.Clients);
         dbContext.Employees.RemoveRange(dbContext.Employees);
         dbContext.Partners.RemoveRange(dbContext.Partners);

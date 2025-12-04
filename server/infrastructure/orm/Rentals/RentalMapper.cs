@@ -62,9 +62,9 @@ public class RentalMapper : IEntityTypeConfiguration<Rental>
             .HasForeignKey(r => r.VehicleId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(r => r.PricingPlan)
+        builder.HasOne(r => r.BillingPlan)
             .WithMany()
-            .HasForeignKey(r => r.PricingPlanId)
+            .HasForeignKey(r => r.BillingPlanId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.Property(r => r.SelectedPlanType)

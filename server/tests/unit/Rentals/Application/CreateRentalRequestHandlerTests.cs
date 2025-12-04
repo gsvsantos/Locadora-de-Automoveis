@@ -1,11 +1,11 @@
 ﻿using LocadoraDeAutomoveis.Application.Rentals.Commands.Create;
 using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
-using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
@@ -33,7 +33,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
     private Mock<IRepositoryDriver> repositoryDriverMock = null!;
     private Mock<IRepositoryVehicle> repositoryVehicleMock = null!;
     private Mock<IRepositoryCoupon> repositoryCouponMock = null!;
-    private Mock<IRepositoryPricingPlan> repositoryPricingPlanMock = null!;
+    private Mock<IRepositoryBillingPlan> repositoryBillingPlanMock = null!;
     private Mock<IRepositoryRateService> repositoryRateServiceMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IUserContext> userContextMock = null!;
@@ -55,7 +55,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
         this.repositoryDriverMock = new Mock<IRepositoryDriver>();
         this.repositoryVehicleMock = new Mock<IRepositoryVehicle>();
         this.repositoryCouponMock = new Mock<IRepositoryCoupon>();
-        this.repositoryPricingPlanMock = new Mock<IRepositoryPricingPlan>();
+        this.repositoryBillingPlanMock = new Mock<IRepositoryBillingPlan>();
         this.repositoryRateServiceMock = new Mock<IRepositoryRateService>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.userContextMock = new Mock<IUserContext>();
@@ -72,7 +72,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
             this.repositoryDriverMock.Object,
             this.repositoryVehicleMock.Object,
             this.repositoryCouponMock.Object,
-            this.repositoryPricingPlanMock.Object,
+            this.repositoryBillingPlanMock.Object,
             this.repositoryRateServiceMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,
@@ -165,17 +165,17 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetByIdAsync(vehicleId))
             .ReturnsAsync(vehicle);
 
-        PricingPlan pricingPlan = new(
+        BillingPlan BillingPlan = new(
             "Plano Teste",
             new DailyPlanProps(100, 10),
             new ControlledPlanProps(80, 20),
             new FreePlanProps(200)
         );
-        pricingPlan.AssociateGroup(group);
+        BillingPlan.AssociateGroup(group);
 
-        this.repositoryPricingPlanMock
+        this.repositoryBillingPlanMock
             .Setup(r => r.GetByGroupId(groupId))
-            .ReturnsAsync(pricingPlan);
+            .ReturnsAsync(BillingPlan);
 
         List<Guid> serviceIds = [Guid.NewGuid(), Guid.NewGuid()];
         List<RateService> services =
@@ -197,7 +197,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
             driverId,
             vehicleId,
             null,
-            EPricingPlanType.Daily,
+            EBillingPlanType.Daily,
             null,
             serviceIds
         );
@@ -233,7 +233,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
         this.repositoryVehicleMock
             .Verify(r => r.GetByIdAsync(vehicleId), Times.Once);
 
-        this.repositoryPricingPlanMock
+        this.repositoryBillingPlanMock
             .Verify(r => r.GetByGroupId(groupId), Times.Once);
 
         this.repositoryRateServiceMock
@@ -254,7 +254,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
                         rental.VehicleId == vehicleId &&
                         rental.RateServices.Count == 2 &&
                         rental.Status == ERentalStatus.Open &&
-                        rental.SelectedPlanType == EPricingPlanType.Daily
+                        rental.SelectedPlanType == EBillingPlanType.Daily
                     )
                 ),
                 Times.Once

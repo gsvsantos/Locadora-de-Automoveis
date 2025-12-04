@@ -29,7 +29,7 @@ public sealed class GetAllRateServiceRequestHandlerTests : UnitTestBase
 
     #region GetAllRateServices Tests (Happy Path)
     [TestMethod]
-    public void Handler_ShouldGetAllPricingPlans_Successfully()
+    public void Handler_ShouldGetAllBillingPlans_Successfully()
     {
         // Arrange
         RandomGenerator random = new();
@@ -69,7 +69,7 @@ public sealed class GetAllRateServiceRequestHandlerTests : UnitTestBase
     }
 
     [TestMethod]
-    public void Handler_ShouldGetFivePricingPlan_Successfully()
+    public void Handler_ShouldGetFiveBillingPlan_Successfully()
     {
         // Arrange
         RandomGenerator random = new();

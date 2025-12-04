@@ -1,8 +1,8 @@
-﻿using LocadoraDeAutomoveis.Domain.Clients;
+﻿using LocadoraDeAutomoveis.Domain.BillingPlans;
+using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
-using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
@@ -29,9 +29,9 @@ public class Rental : BaseEntity<Rental>
     public Vehicle Vehicle { get; set; } = null!;
     public Guid? CouponId { get; set; }
     public Coupon? Coupon { get; set; }
-    public Guid PricingPlanId { get; set; }
-    public PricingPlan PricingPlan { get; set; } = null!;
-    public EPricingPlanType SelectedPlanType { get; set; }
+    public Guid BillingPlanId { get; set; }
+    public BillingPlan BillingPlan { get; set; } = null!;
+    public EBillingPlanType SelectedPlanType { get; set; }
     public decimal? EstimatedKilometers { get; set; }
     public List<RateService> RateServices { get; set; } = [];
 
@@ -73,7 +73,7 @@ public class Rental : BaseEntity<Rental>
         this.Status = status;
     }
 
-    public void SetPricingPlanType(EPricingPlanType selectedPlanType)
+    public void SetBillingPlanType(EBillingPlanType selectedPlanType)
     {
         this.SelectedPlanType = selectedPlanType;
     }
@@ -113,10 +113,10 @@ public class Rental : BaseEntity<Rental>
         this.CouponId = coupon.Id;
     }
 
-    public void AssociatePricingPlan(PricingPlan PricingPlan)
+    public void AssociateBillingPlan(BillingPlan BillingPlan)
     {
-        this.PricingPlan = PricingPlan;
-        this.PricingPlanId = PricingPlan.Id;
+        this.BillingPlan = BillingPlan;
+        this.BillingPlanId = BillingPlan.Id;
     }
 
     public override void Update(Rental updatedEntity)
@@ -138,9 +138,9 @@ public class Rental : BaseEntity<Rental>
         AssociateClient(updatedEntity.Client);
         AssociateDriver(updatedEntity.Driver);
         AssociateVehicle(updatedEntity.Vehicle);
-        AssociatePricingPlan(updatedEntity.PricingPlan);
+        AssociateBillingPlan(updatedEntity.BillingPlan);
 
-        SetPricingPlanType(updatedEntity.SelectedPlanType);
+        SetBillingPlanType(updatedEntity.SelectedPlanType);
 
         AddRangeRateServices(updatedEntity.RateServices);
 
@@ -158,7 +158,7 @@ public enum ERentalStatus
     Canceled
 }
 
-public enum EPricingPlanType
+public enum EBillingPlanType
 {
     Daily,
     Controlled,

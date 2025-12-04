@@ -33,9 +33,9 @@ public class GetCouponsPartnerRequestHandler(
         {
             logger.LogError(
                 ex,
-                "Error retrieving Pricing Plan by ID {PricingPlanId}", request.Id);
+                "Error retrieving Billing Plan by ID {BillingPlanId}", request.Id);
 
-            return Result.Fail(new Error("An error occurred while retrieving the pricing plan."));
+            return Result.Fail(new Error("An error occurred while retrieving the billing plan."));
         }
     }
 }

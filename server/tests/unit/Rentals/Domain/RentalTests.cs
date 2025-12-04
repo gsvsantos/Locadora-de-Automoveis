@@ -1,8 +1,8 @@
 ﻿using FizzWare.NBuilder;
+using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
-using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Vehicles;
@@ -109,18 +109,18 @@ public sealed class RentalTests
     }
 
     [TestMethod]
-    public void RentalMethod_AssociatePricingPlan_ShouldWorks()
+    public void RentalMethod_AssociateBillingPlan_ShouldWorks()
     {
         // Arrange
         Rental rental = new();
-        PricingPlan plan = Builder<PricingPlan>.CreateNew().Build();
+        BillingPlan plan = Builder<BillingPlan>.CreateNew().Build();
 
         // Act
-        rental.AssociatePricingPlan(plan);
+        rental.AssociateBillingPlan(plan);
 
         // Assert
-        Assert.AreEqual(plan.Id, rental.PricingPlanId);
-        Assert.AreEqual(plan, rental.PricingPlan);
+        Assert.AreEqual(plan.Id, rental.BillingPlanId);
+        Assert.AreEqual(plan, rental.BillingPlan);
     }
 
     [TestMethod]
@@ -196,7 +196,7 @@ public sealed class RentalTests
 
         rental.AssociateClient(Builder<Client>.CreateNew().Build());
         rental.AssociateDriver(Builder<Driver>.CreateNew().Build());
-        rental.AssociatePricingPlan(Builder<PricingPlan>.CreateNew().Build());
+        rental.AssociateBillingPlan(Builder<BillingPlan>.CreateNew().Build());
 
         Rental updatedData = new(
             DateTimeOffset.Now.AddDays(2),
@@ -208,14 +208,14 @@ public sealed class RentalTests
         Client newClient = Builder<Client>.CreateNew().Build();
         Driver newDriver = Builder<Driver>.CreateNew().Build();
         Vehicle newVehicle = Builder<Vehicle>.CreateNew().Build();
-        PricingPlan newPlan = Builder<PricingPlan>.CreateNew().Build();
+        BillingPlan newPlan = Builder<BillingPlan>.CreateNew().Build();
         List<RateService> newServices = Builder<RateService>.CreateListOfSize(2).Build().ToList();
 
         updatedData.AssociateEmployee(newEmployee);
         updatedData.AssociateClient(newClient);
         updatedData.AssociateDriver(newDriver);
         updatedData.AssociateVehicle(newVehicle);
-        updatedData.AssociatePricingPlan(newPlan);
+        updatedData.AssociateBillingPlan(newPlan);
         updatedData.AddRangeRateServices(newServices);
 
         // Act
@@ -228,7 +228,7 @@ public sealed class RentalTests
         Assert.AreEqual(newEmployee.Id, rental.EmployeeId);
         Assert.AreEqual(newClient.Id, rental.ClientId);
         Assert.AreEqual(newDriver.Id, rental.DriverId);
-        Assert.AreEqual(newPlan.Id, rental.PricingPlanId);
+        Assert.AreEqual(newPlan.Id, rental.BillingPlanId);
         Assert.AreEqual(2, rental.RateServices.Count);
     }
 }

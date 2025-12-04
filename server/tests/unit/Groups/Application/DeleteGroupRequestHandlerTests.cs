@@ -1,6 +1,6 @@
 ﻿using LocadoraDeAutomoveis.Application.Groups.Commands.Delete;
+using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Groups;
-using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 
@@ -15,7 +15,7 @@ public sealed class DeleteGroupRequestHandlerTests
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryGroup> repositoryGroupMock = null!;
     private Mock<IRepositoryVehicle> repositoryVehicleMock = null!;
-    private Mock<IRepositoryPricingPlan> repositoryPricingPlanMock = null!;
+    private Mock<IRepositoryBillingPlan> repositoryBillingPlanMock = null!;
     private Mock<ILogger<DeleteGroupRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
@@ -24,14 +24,14 @@ public sealed class DeleteGroupRequestHandlerTests
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryGroupMock = new Mock<IRepositoryGroup>();
         this.repositoryVehicleMock = new Mock<IRepositoryVehicle>();
-        this.repositoryPricingPlanMock = new Mock<IRepositoryPricingPlan>();
+        this.repositoryBillingPlanMock = new Mock<IRepositoryBillingPlan>();
         this.loggerMock = new Mock<ILogger<DeleteGroupRequestHandler>>();
 
         this.handler = new DeleteGroupRequestHandler(
             this.unitOfWorkMock.Object,
             this.repositoryGroupMock.Object,
             this.repositoryVehicleMock.Object,
-            this.repositoryPricingPlanMock.Object,
+            this.repositoryBillingPlanMock.Object,
             this.loggerMock.Object
         );
     }

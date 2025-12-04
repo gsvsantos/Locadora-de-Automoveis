@@ -1,9 +1,9 @@
 ﻿using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Groups;
-using LocadoraDeAutomoveis.Domain.PricingPlans;
 using LocadoraDeAutomoveis.Domain.RateServices;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Vehicles;
@@ -48,17 +48,17 @@ public sealed class RentalReturnRepositoryTests : TestFixture
         await this.groupRepository.AddAsync(group);
 
         RandomGenerator random = new();
-        PricingPlan pricingPlan = Builder<PricingPlan>.CreateNew()
+        BillingPlan billingPlan = Builder<BillingPlan>.CreateNew()
             .Do(v => v.DailyPlan = new(random.Decimal(), random.Decimal()))
             .Do(v => v.ControlledPlan = new(random.Decimal(), random.Int()))
             .Do(v => v.FreePlan = new(random.Decimal()))
             .Build();
 
-        pricingPlan.AssociateTenant(tenant.Id);
-        pricingPlan.AssociateUser(userEmployee);
-        pricingPlan.AssociateGroup(group);
+        billingPlan.AssociateTenant(tenant.Id);
+        billingPlan.AssociateUser(userEmployee);
+        billingPlan.AssociateGroup(group);
 
-        await this.pricingPlanRepository.AddAsync(pricingPlan);
+        await this.BillingPlanRepository.AddAsync(billingPlan);
 
         Vehicle vehicle = Builder<Vehicle>.CreateNew().Build();
 
@@ -137,7 +137,7 @@ public sealed class RentalReturnRepositoryTests : TestFixture
             rental.AssociateClient(client);
             rental.AssociateDriver(driver);
             rental.AssociateVehicle(vehicle);
-            rental.AssociatePricingPlan(pricingPlan);
+            rental.AssociateBillingPlan(billingPlan);
             rental.AddRangeRateServices(services);
 
             await this.rentalRepository.AddAsync(rental);
@@ -198,17 +198,17 @@ public sealed class RentalReturnRepositoryTests : TestFixture
 
         await this.groupRepository.AddAsync(group);
 
-        PricingPlan pricingPlan = Builder<PricingPlan>.CreateNew()
+        BillingPlan BillingPlan = Builder<BillingPlan>.CreateNew()
             .Do(v => v.DailyPlan = new(this.random.Decimal(), this.random.Decimal()))
             .Do(v => v.ControlledPlan = new(this.random.Decimal(), this.random.Int()))
             .Do(v => v.FreePlan = new(this.random.Decimal()))
             .Build();
 
-        pricingPlan.AssociateTenant(tenant.Id);
-        pricingPlan.AssociateUser(userEmployee);
-        pricingPlan.AssociateGroup(group);
+        BillingPlan.AssociateTenant(tenant.Id);
+        BillingPlan.AssociateUser(userEmployee);
+        BillingPlan.AssociateGroup(group);
 
-        await this.pricingPlanRepository.AddAsync(pricingPlan);
+        await this.BillingPlanRepository.AddAsync(BillingPlan);
 
         Vehicle vehicle = Builder<Vehicle>.CreateNew().Build();
 
@@ -276,7 +276,7 @@ public sealed class RentalReturnRepositoryTests : TestFixture
             rental.AssociateClient(client);
             rental.AssociateDriver(driver);
             rental.AssociateVehicle(vehicle);
-            rental.AssociatePricingPlan(pricingPlan);
+            rental.AssociateBillingPlan(BillingPlan);
             rental.AddRangeRateServices(services);
 
             await this.rentalRepository.AddAsync(rental);
@@ -344,17 +344,17 @@ public sealed class RentalReturnRepositoryTests : TestFixture
 
         await this.groupRepository.AddAsync(group);
 
-        PricingPlan pricingPlan = Builder<PricingPlan>.CreateNew()
+        BillingPlan BillingPlan = Builder<BillingPlan>.CreateNew()
             .Do(v => v.DailyPlan = new(this.random.Decimal(), this.random.Decimal()))
             .Do(v => v.ControlledPlan = new(this.random.Decimal(), this.random.Int()))
             .Do(v => v.FreePlan = new(this.random.Decimal()))
             .Build();
 
-        pricingPlan.AssociateTenant(tenant.Id);
-        pricingPlan.AssociateUser(userEmployee);
-        pricingPlan.AssociateGroup(group);
+        BillingPlan.AssociateTenant(tenant.Id);
+        BillingPlan.AssociateUser(userEmployee);
+        BillingPlan.AssociateGroup(group);
 
-        await this.pricingPlanRepository.AddAsync(pricingPlan);
+        await this.BillingPlanRepository.AddAsync(BillingPlan);
 
         Vehicle vehicle = Builder<Vehicle>.CreateNew().Build();
 
@@ -408,7 +408,7 @@ public sealed class RentalReturnRepositoryTests : TestFixture
         rental.AssociateClient(client);
         rental.AssociateDriver(driver);
         rental.AssociateVehicle(vehicle);
-        rental.AssociatePricingPlan(pricingPlan);
+        rental.AssociateBillingPlan(BillingPlan);
 
         await this.rentalRepository.AddAsync(rental);
 
