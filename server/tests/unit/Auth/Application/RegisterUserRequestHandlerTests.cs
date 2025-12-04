@@ -19,6 +19,7 @@ public sealed class RegisterUserRequestHandlerTests
 
     private Mock<UserManager<User>> userManagerMock = null!;
     private Mock<ITokenProvider> tokenProviderMock = null!;
+    private Mock<IRefreshTokenProvider> refreshTokenMock = null!;
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<ILogger<RegisterUserRequestHandler>> loggerMock = null!;
 
@@ -31,12 +32,14 @@ public sealed class RegisterUserRequestHandlerTests
         );
 
         this.tokenProviderMock = new Mock<ITokenProvider>();
+        this.refreshTokenMock = new Mock<IRefreshTokenProvider>();
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.loggerMock = new Mock<ILogger<RegisterUserRequestHandler>>();
 
         this.handler = new RegisterUserRequestHandler(
             this.userManagerMock.Object,
             this.tokenProviderMock.Object,
+            this.refreshTokenMock.Object,
             this.unitOfWorkMock.Object,
             this.loggerMock.Object
         );
@@ -91,13 +94,14 @@ public sealed class RegisterUserRequestHandlerTests
             FullName = user.FullName,
             UserName = user.UserName,
             Email = user.Email,
-            PhoneNumber = user.PhoneNumber
+            PhoneNumber = user.PhoneNumber,
+            Role = Roles.Admin
         };
 
-        TokenResponse accessToken = new()
+        AccessToken accessToken = new()
         {
             Key = "accessToken-simulation",
-            Expiration = DateTime.UtcNow.AddMinutes(30),
+            Expiration = DateTimeOffset.UtcNow.AddMinutes(30),
             User = authenticatedUser
         };
 
@@ -112,8 +116,32 @@ public sealed class RegisterUserRequestHandlerTests
                 ))
             .ReturnsAsync(accessToken);
 
+        DateTimeOffset now = DateTimeOffset.UtcNow;
+        RefreshToken refreshToken = new()
+        {
+            UserAuthenticatedId = user.Id,
+            TokenHash = "hash",
+            CreatedDateUtc = now,
+            ExpirationDateUtc = now.AddMinutes(5),
+            CreationIp = string.Empty,
+            UserAgent = string.Empty,
+        };
+        refreshToken.AssociateTenant(user.TenantId);
+        refreshToken.AssociateUser(user);
+
+        this.refreshTokenMock
+            .Setup(t => t.GenerateRefreshTokenAsync(
+                It.Is<User>(usr =>
+                    usr.UserName == request.UserName &&
+                    usr.FullName == request.FullName &&
+                    usr.Email == request.Email &&
+                    usr.PhoneNumber == request.PhoneNumber
+                    )
+                ))
+            .ReturnsAsync(refreshToken);
+
         // Act
-        Result<TokenResponse> result = await this.handler.Handle(request, CancellationToken.None);
+        Result<(AccessToken, RefreshToken)> result = await this.handler.Handle(request, CancellationToken.None);
 
         // Assert
         this.userManagerMock.Verify(u =>
@@ -144,11 +172,11 @@ public sealed class RegisterUserRequestHandlerTests
 
         Assert.IsNotNull(result);
         Assert.IsTrue(result.IsSuccess);
-        Assert.AreEqual(accessToken.Key, result.Value.Key);
-        Assert.AreEqual(accessToken.Expiration, result.Value.Expiration);
-        Assert.AreEqual(accessToken.User.Id, result.Value.User.Id);
-        Assert.AreEqual(accessToken.User.FullName, result.Value.User.FullName);
-        Assert.AreEqual(accessToken.User.Email, result.Value.User.Email);
+        Assert.AreEqual(accessToken.Key, result.Value.Item1.Key);
+        Assert.AreEqual(accessToken.Expiration, result.Value.Item1.Expiration);
+        Assert.AreEqual(accessToken.User.Id, result.Value.Item1.User.Id);
+        Assert.AreEqual(accessToken.User.FullName, result.Value.Item1.User.FullName);
+        Assert.AreEqual(accessToken.User.Email, result.Value.Item1.User.Email);
     }
     #endregion
 }
