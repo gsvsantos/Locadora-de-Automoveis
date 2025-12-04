@@ -16,12 +16,12 @@ public abstract class BaseEntity<T>
         this.Id = Guid.NewGuid();
     }
 
-    public void Deactivate()
+    public virtual void Deactivate()
     {
         this.IsActive = false;
     }
 
-    public void AssociateUser(User user)
+    public virtual void AssociateUser(User user)
     {
         if (user is null)
         {
@@ -32,7 +32,7 @@ public abstract class BaseEntity<T>
         this.UserId = user.Id;
     }
 
-    public void AssociateTenant(User tenant)
+    public virtual void AssociateTenant(User tenant)
     {
         if (tenant is null)
         {
@@ -48,7 +48,7 @@ public abstract class BaseEntity<T>
         this.TenantId = tenant.Id;
     }
 
-    public void AssociateTenant(Guid tenantId)
+    public virtual void AssociateTenant(Guid tenantId)
     {
         if (tenantId == Guid.Empty)
         {
