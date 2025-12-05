@@ -1,0 +1,57 @@
+@use 'sass:color';
+
+:root {
+  --clr-primary: #7f56d9;
+  --clr-primary-active: #6941c6;
+  --clr-primary-light: #997dbb;
+  --clr-background: #f9f5ff;
+  --clr-surface: #ffffff;
+  --clr-surface-alt: #f4ebff;
+  --clr-border: #e9d7fe;
+  --clr-text-main: #2e243b;
+  --clr-text-muted: #667085;
+  --clr-text-inv: #ffffff;
+  --shadow-rgb: 127, 86, 217;
+}
+
+[data-theme='dark'] {
+  --clr-primary: #9e77ed;
+  --clr-primary-active: #7f56d9;
+  --clr-primary-light: #2d2438;
+  --clr-background: #100c18;
+  --clr-surface: #1d1626;
+  --clr-surface-alt: #2a2136;
+  --clr-border: #42307d;
+  --clr-text-main: #f4ebff;
+  --clr-text-muted: #98a2b3;
+  --clr-text-inv: #100c18;
+  --shadow-rgb: 0, 0, 0;
+}
+
+$primaria: var(--clr-primary);
+$primaria-active: var(--clr-primary-active);
+$primaria-light: var(--clr-primary-light);
+
+$fundo: var(--clr-background);
+$superficie: var(--clr-surface);
+$superficie-destaque: var(--clr-surface-alt);
+$borda: var(--clr-border);
+
+$texto-principal: var(--clr-text-main);
+$texto-suave: var(--clr-text-muted);
+$texto-invertido: var(--clr-text-inv);
+
+$perigo: #f04438;
+$sucesso: #12b76a;
+$aviso: #f79009;
+
+$shadow-1: 0px 4px 20px rgba(var(--shadow-rgb), 0.25);
+$shadow-2: 0px 1px 10px rgba(var(--shadow-rgb), 0.25);
+$borda-radius: 12px;
+
+$transicao-rapida: 0.2s ease;
+$transicao: 0.25s ease;
+$transicao-lenta: 0.5s ease-in-out;
+
+$gradient-sidebar: linear-gradient(180deg, var(--clr-surface) 0%, var(--clr-background) 100%);
+$gradient-primary: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-active) 100%);
