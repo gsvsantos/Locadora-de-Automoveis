@@ -1,12 +1,29 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
+import { ShellComponent } from './components/shared/shell/shell.component';
+import { PartialObserver } from 'rxjs';
+import { AuthService } from './services/auth.service';
+import { NotificationService } from './services/notification.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ShellComponent, AsyncPipe],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = signal('locadora-de-automoveis');
+  private readonly authService = inject(AuthService);
+  protected readonly notificationService = inject(NotificationService);
+  protected readonly router = inject(Router);
+  protected readonly accessToken$ = this.authService.accessToken$;
+
+  public logout(): void {
+    const sairObserver: PartialObserver<null> = {
+      error: (err: string) => this.notificationService.error(err),
+      complete: () => void this.router.navigate(['/auth', 'login']),
+    };
+
+    this.authService.logout().subscribe(sairObserver);
+  }
 }

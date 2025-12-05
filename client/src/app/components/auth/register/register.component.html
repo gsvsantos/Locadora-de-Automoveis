@@ -1,0 +1,83 @@
+<section class="register-section" *transloco="let t; prefix: 'auth.register'">
+  <div class="main-content">
+    <div class="card">
+      <form [formGroup]="formGroup">
+        <h2>{{ t('card.title') }}</h2>
+        <hr />
+        <div class="card-content">
+          <div class="social-container">
+            <a href="#" class="social" aria-label="Register with Google">
+              <i class="fab fa-google" aria-hidden="true"></i>
+            </a>
+          </div>
+          <span>{{ t('card.subtitle') }}</span>
+
+          <div class="form-field">
+            <input
+              class="form-input"
+              formControlName="userName"
+              type="text"
+              placeholder="UserName"
+              autocomplete="username"
+            />
+          </div>
+
+          <div class="form-field">
+            <input
+              class="form-input"
+              formControlName="fullName"
+              type="text"
+              placeholder="Full name"
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="form-field">
+            <input
+              class="form-input"
+              formControlName="email"
+              type="email"
+              placeholder="E-mail"
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="form-field">
+            <input
+              class="form-input"
+              formControlName="phoneNumber"
+              type="tel"
+              placeholder="Phone number"
+              autocomplete="tel"
+            />
+          </div>
+
+          <div class="form-field">
+            <input
+              class="form-input"
+              formControlName="password"
+              type="password"
+              placeholder="Password"
+              autocomplete="new-password"
+            />
+          </div>
+        </div>
+        <div class="button">
+          <gs-buttons
+            [buttonType]="buttonType.Link"
+            [text]="t('card.buttons.login')"
+            type="submit"
+            routerLink="/auth/login"
+          ></gs-buttons>
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('card.buttons.confirm')"
+            type="submit"
+            [disabled]="formGroup.invalid"
+            (click)="register()"
+          ></gs-buttons>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

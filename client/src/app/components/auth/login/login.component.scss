@@ -1,0 +1,101 @@
+@use '../../../../styles/variables' as *;
+
+.login-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 4rem 0;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 50px;
+  padding: 2rem 0;
+  background-color: $superficie;
+  border-radius: 20px;
+  box-shadow: $shadow-1, $shadow-2;
+}
+
+.card {
+  padding: 0.5rem;
+}
+
+.social-container {
+  margin: 0 0 20px 0;
+}
+
+.social {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  margin: 0 5px;
+  color: $primaria;
+  border: 1px solid $borda;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: $transicao-rapida;
+
+  &:hover {
+    color: $primaria-active;
+    border: 1px solid $primaria-active;
+  }
+}
+
+.form-field {
+  width: 100%;
+}
+
+.form-input {
+  color: $primaria;
+  background-color: $superficie-destaque;
+  border: 1px solid $borda;
+  border-radius: 20px;
+  box-sizing: border-box;
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
+
+  &:hover {
+    color: $primaria-active;
+    border: 1px solid $primaria-light;
+  }
+  &:focus {
+    color: $primaria-active;
+    border: 1px solid $primaria-active;
+    outline: none;
+  }
+  &::placeholder {
+    color: $primaria-light;
+  }
+}
+
+.button {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-self: center;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    width: 91.666667%;
+  }
+}
+
+@media (min-width: 992px) {
+  .main-content {
+    width: 33.333333%;
+    padding-inline: 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  .main-content {
+    width: 25%;
+  }
+}
