@@ -26,7 +26,7 @@ public class CouponController(
 
         if (result.IsFailed)
         {
-            return this.MapFailure(result.ToResult());
+            return result.ToHttpResponse();
         }
 
         return Ok(result.Value);
@@ -42,7 +42,7 @@ public class CouponController(
 
         if (result.IsFailed)
         {
-            return this.MapFailure(result.ToResult());
+            return result.ToHttpResponse();
         }
 
         return Ok(result.Value);
@@ -58,7 +58,7 @@ public class CouponController(
 
         if (result.IsFailed)
         {
-            return this.MapFailure(result.ToResult());
+            return result.ToHttpResponse();
         }
 
         return Ok(result.Value);
@@ -73,7 +73,7 @@ public class CouponController(
 
         if (result.IsFailed)
         {
-            return this.MapFailure(result.ToResult());
+            return result.ToHttpResponse();
         }
 
         return Ok(result.Value);

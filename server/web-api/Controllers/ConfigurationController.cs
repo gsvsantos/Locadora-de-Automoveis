@@ -20,7 +20,7 @@ public class ConfigurationController(IMediator mediator) : ControllerBase
 
         if (result.IsFailed)
         {
-            return this.MapFailure(result.ToResult());
+            return result.ToHttpResponse();
         }
 
         return Ok(result.Value);
@@ -33,7 +33,7 @@ public class ConfigurationController(IMediator mediator) : ControllerBase
 
         if (result.IsFailed)
         {
-            return this.MapFailure(result.ToResult());
+            return result.ToHttpResponse();
         }
         return Ok(result.Value);
     }

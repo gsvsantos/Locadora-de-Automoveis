@@ -28,6 +28,8 @@ using LocadoraDeAutomoveis.Infrastructure.RentalExtras;
 using LocadoraDeAutomoveis.Infrastructure.Rentals;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using LocadoraDeAutomoveis.Infrastructure.Vehicles;
+using LocadoraDeAutomoveis.WebApi.Filters;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -116,7 +118,7 @@ public static class DependencyInjection
 
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Locadora de Veículos API", Version = "v1" });
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Locadora de Automoveis API", Version = "v1" });
 
             options.MapType<TimeSpan>(() => new OpenApiSchema
             {
@@ -195,7 +197,7 @@ public static class DependencyInjection
             .WriteTo.Console()
             .WriteTo.NewRelicLogs(
                 endpointUrl: "https://log-api.newrelic.com/log/v1",
-                applicationName: "locadora-de-veiculos-api",
+                applicationName: "locadora-de-automoveis-api",
                 licenseKey: licenseKey
             )
             .CreateLogger();
@@ -213,7 +215,7 @@ public static class DependencyInjection
 
         if (string.IsNullOrWhiteSpace(luckyPennySoftwareLicenseKey))
         {
-            throw new Exception("A variável LUCKYPENNYSOFTWARE_LICENSE_KEY não foi fornecida.");
+            throw new Exception("The environment variable LUCKYPENNYSOFTWARE_LICENSE_KEY was not provided.");
         }
 
         services.AddMediatR(config =>
@@ -235,9 +237,27 @@ public static class DependencyInjection
 
     public static void ConfigureControllers(this IServiceCollection services)
     {
-        services.AddControllers()
-            .AddJsonOptions(options =>
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+        services.AddControllers(options =>
+        {
+            options.Filters.Add<ResponseWrapperFilter>();
+        }
+        ).AddJsonOptions(options =>
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
+        ).ConfigureApiBehaviorOptions(options =>
+            options.InvalidModelStateResponseFactory = context =>
+            {
+                string[] errorMessages = context.ModelState
+                .Where(entry => entry.Value is { Errors.Count: > 0 })
+                .SelectMany(entry => entry.Value!.Errors)
+                .Select(error => error.ErrorMessage)
+                .ToArray();
+
+                return new JsonResult(errorMessages)
+                {
+                    StatusCode = StatusCodes.Status400BadRequest
+                };
+            }
+        );
     }
 
     private static void ConfigureHangFire(this IServiceCollection services, IConfiguration configuration)

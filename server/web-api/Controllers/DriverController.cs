@@ -22,7 +22,7 @@ public class DriverController(IMediator mediator) : ControllerBase
 
         if (result.IsFailed)
         {
-            return this.MapFailure(result.ToResult());
+            return result.ToHttpResponse();
         }
 
         return Ok(result.Value);
@@ -37,7 +37,7 @@ public class DriverController(IMediator mediator) : ControllerBase
 
         if (result.IsFailed)
         {
-            return this.MapFailure(result.ToResult());
+            return result.ToHttpResponse();
         }
         return Ok(result.Value);
     }
@@ -51,7 +51,7 @@ public class DriverController(IMediator mediator) : ControllerBase
 
         if (result.IsFailed)
         {
-            return this.MapFailure(result.ToResult());
+            return result.ToHttpResponse();
         }
 
         return Ok(result.Value);
@@ -66,7 +66,7 @@ public class DriverController(IMediator mediator) : ControllerBase
 
         if (result.IsFailed)
         {
-            return this.MapFailure(result.ToResult());
+            return result.ToHttpResponse();
         }
 
         return Ok(result.Value);

@@ -29,7 +29,7 @@ public class AuthController(
 
         if (result.IsFailed)
         {
-            return this.MapFailure(result.ToResult());
+            return result.ToHttpResponse();
         }
 
         return ResultWithNewCookie(result.Value);
@@ -42,7 +42,7 @@ public class AuthController(
 
         if (result.IsFailed)
         {
-            return this.MapFailure(result.ToResult());
+            return result.ToHttpResponse();
         }
 
         return ResultWithNewCookie(result.Value);
@@ -65,7 +65,7 @@ public class AuthController(
 
         if (result.IsFailed)
         {
-            return this.MapFailure(result.ToResult());
+            return result.ToHttpResponse();
         }
 
         return ResultWithNewCookie(result.Value);
@@ -87,7 +87,7 @@ public class AuthController(
 
         if (result.IsFailed)
         {
-            return this.MapFailure(result);
+            return result.ToHttpResponse();
         }
 
         await signInManager.SignOutAsync();
