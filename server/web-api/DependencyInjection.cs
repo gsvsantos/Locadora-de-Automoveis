@@ -75,40 +75,27 @@ public static class DependencyInjection
     {
         services.AddCors(options =>
         {
-            if (environment.IsDevelopment())
+            string? corsAllowedString = configuration["CORS_ALLOWED_ORIGINS"];
+
+            if (string.IsNullOrWhiteSpace(corsAllowedString))
             {
-                options.AddDefaultPolicy(policy =>
-                {
-                    policy
-                        .AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
+                throw new Exception("The environment variable \"CORS_ALLOWED_ORIGINS\" was not provided.");
             }
-            else
+
+            string[] corsAllowed = corsAllowedString
+                .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Select(x => x.TrimEnd('/'))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+
+            options.AddDefaultPolicy(policy =>
             {
-                string? corsAllowedString = configuration["CORS_ALLOWED_ORIGINS"];
-
-                if (string.IsNullOrWhiteSpace(corsAllowedString))
-                {
-                    throw new Exception("The environment variable \"CORS_ALLOWED_ORIGINS\" was not provided.");
-                }
-
-                string[] corsAllowed = corsAllowedString
-                    .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                    .Select(x => x.TrimEnd('/'))
-                    .Distinct(StringComparer.OrdinalIgnoreCase)
-                    .ToArray();
-
-                options.AddDefaultPolicy(policy =>
-                {
-                    policy
-                        .WithOrigins(corsAllowed)
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                });
-            }
+                policy
+                    .WithOrigins(corsAllowed)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
         });
     }
 
