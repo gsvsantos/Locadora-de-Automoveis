@@ -1,0 +1,46 @@
+{
+  "auth": {
+    "register": {
+      "card": {
+        "title": "Create Account",
+        "subtitle": "or use your email for registration",
+        "labels": {
+          "username": "Username",
+          "email": "Email",
+          "password": "Password"
+        },
+        "errors": {
+          "usernameRequired": "Username is required.",
+          "usernameLength": "Username must be at least 3 characters long.",
+          "emailRequired": "Email is required.",
+          "emailLength": "Must be a valid email (e.g., name@provider.com).",
+          "passwordRequired": "Password is required.",
+          "passwordLength": "Password must be at least 6 characters long."
+        },
+        "buttons": {
+          "login": "Already have an account?",
+          "confirm": "Confirm"
+        }
+      }
+    },
+    "login": {
+      "card": {
+        "title": "Sign in",
+        "subtitle": "or use your account",
+        "labels": {
+          "username": "Username",
+          "password": "Password"
+        },
+        "errors": {
+          "usernameRequired": "Username is required.",
+          "passwordRequired": "Password is required.",
+          "passwordLength": "Password must be at least 6 characters long."
+        },
+        "buttons": {
+          "register": "Don't have an account yet?",
+          "confirm": "Confirm"
+        }
+      }
+    }
+  }
+}
