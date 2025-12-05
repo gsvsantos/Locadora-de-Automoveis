@@ -36,7 +36,7 @@ export class RegisterComponent {
       [
         Validators.required.bind(this),
         Validators.minLength(3),
-        Validators.pattern(/^[a-zA-ZÄäÖöÜüÀàÈèÌìÒòÙùÁáÉéÍíÓóÚúÝýÂâÊêÎîÔôÛûÃãÑñÇç'\\-\\s]+$/),
+        Validators.pattern(/^[a-zA-ZÄäÖöÜüÀàÈèÌìÒòÙùÁáÉéÍíÓóÚúÝýÂâÊêÎîÔôÛûÃãÑñÇç'\-\s]+$/),
       ],
     ],
     email: ['', [Validators.required.bind(this), Validators.email.bind(this)]],

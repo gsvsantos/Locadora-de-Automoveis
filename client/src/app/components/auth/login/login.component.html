@@ -1,9 +1,9 @@
 <section class="login-section" *transloco="let t; prefix: 'auth.login'">
   <div class="main-content">
     <div class="card">
-      <form [formGroup]="formGroup">
+      <form [formGroup]="formGroup" class="form">
         <h2>{{ t('card.title') }}</h2>
-        <hr />
+        <hr class="bar" />
         <div class="card-content">
           <div class="social-container">
             <a href="#" class="social" aria-label="Sign in with Google">
@@ -18,8 +18,14 @@
               formControlName="userName"
               type="text"
               placeholder="UserName"
-              autocomplete="username"
+              autocomplete="name"
             />
+            @if (userName?.errors?.['required'] && userName?.dirty) {
+              <span>{{ t('card.errors.usernameRequired') }}</span>
+            }
+            @if (userName?.errors?.['minlength'] && userName?.dirty) {
+              <span>{{ t('card.errors.usernameLength') }}</span>
+            }
           </div>
 
           <div class="form-field">
@@ -28,11 +34,17 @@
               formControlName="password"
               type="password"
               placeholder="Password"
-              autocomplete="new-password"
+              autocomplete="current-password"
             />
+            @if (password?.errors?.['required'] && password?.dirty) {
+              <span>{{ t('card.errors.passwordRequired') }}</span>
+            }
+            @if (password?.errors?.['minlength'] && password?.dirty) {
+              <span>{{ t('card.errors.passwordLength') }}</span>
+            }
           </div>
         </div>
-        <div class="button">
+        <div class="buttons">
           <gs-buttons
             [buttonType]="buttonType.Link"
             [text]="t('card.buttons.register')"
