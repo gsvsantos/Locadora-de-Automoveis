@@ -16,7 +16,7 @@ export class App {
   private readonly authService = inject(AuthService);
   protected readonly notificationService = inject(NotificationService);
   protected readonly router = inject(Router);
-  protected readonly accessToken$ = this.authService.accessToken$;
+  protected readonly accessToken$ = this.authService.getAccessToken();
 
   public logout(): void {
     const sairObserver: PartialObserver<null> = {

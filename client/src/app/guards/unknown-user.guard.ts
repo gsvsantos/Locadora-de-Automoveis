@@ -7,8 +7,8 @@ export const unknownUserGuard: CanActivateFn = (): Observable<true | UrlTree> =>
   const authService = inject(AuthService);
   const router: Router = inject(Router);
 
-  return authService.accessToken$.pipe(
+  return authService.getAccessToken().pipe(
     take(1),
-    map((token) => (!token ? true : router.createUrlTree(['/auth/register']))),
+    map((token) => (!token ? true : router.createUrlTree(['/home']))),
   );
 };

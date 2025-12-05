@@ -1,11 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { HttpRequest, HttpHandlerFn, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, Observable } from 'rxjs';
+import { catchError, Observable, switchMap, take, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { NotificationService } from '../services/notification.service';
-import { LocalStorageService } from '../services/local-storage.service';
-import { mapApiErroResponse } from '../utils/map-api-response';
 
 export const authInterceptor = (
   req: HttpRequest<unknown>,
@@ -13,33 +12,47 @@ export const authInterceptor = (
 ): Observable<HttpEvent<unknown>> => {
   const authService = inject(AuthService);
   const notificationService = inject(NotificationService);
-  const localStorageService = inject(LocalStorageService);
   const router = inject(Router);
 
-  const accessToken = authService.accessTokenSubject$.getValue();
-  const bearer = accessToken?.key ?? localStorageService.getAccessToken()?.key;
+  const whitelist = ['/auth/register', '/auth/logn', '/auth/refresh', '/auth/logout'];
 
-  if (bearer) {
-    const requisicaoClonada = req.clone({
-      headers: req.headers.set('Authorization', `Bearer ${bearer}`),
-    });
+  if (whitelist.some((url) => req.url.includes(url)))
+    return next(req.clone({ withCredentials: true }));
 
-    return next(requisicaoClonada).pipe(
-      catchError((err: HttpErrorResponse) => {
-        if (err.status === 401) {
-          notificationService.error('Session expired. Please log in again');
-          authService.accessTokenSubject$.next(undefined);
-          void router.navigate(['/auth', 'login']);
-        }
+  return authService.getAccessToken().pipe(
+    take(1),
+    switchMap((accessToken) => {
+      if (!accessToken) return next(req.clone({ withCredentials: true }));
 
-        return mapApiErroResponse(err) as Observable<HttpEvent<unknown>>;
-      }),
-    );
-  }
+      const request = req.clone({
+        headers: req.headers.set('Authorization', `Bearer ${accessToken.key}`),
+        withCredentials: true,
+      });
 
-  return next(req).pipe(
-    catchError(
-      (err: HttpErrorResponse) => mapApiErroResponse(err) as Observable<HttpEvent<unknown>>,
-    ),
+      return next(request).pipe(
+        catchError((err) => {
+          if ((err as HttpErrorResponse).status !== 401) return throwError(() => err);
+
+          return authService.refresh().pipe(
+            switchMap((newAccessToken) => {
+              const newRequest = req.clone({
+                headers: req.headers.set('Authorization', `Bearer ${newAccessToken.key}`),
+                withCredentials: true,
+              });
+              return next(newRequest);
+            }),
+            catchError((refreshError) => {
+              notificationService.error('Your session has expired. Please, log-in again.');
+
+              authService.revokeAccessToken();
+
+              void router.navigate(['/auth', 'login']);
+
+              return throwError(() => refreshError);
+            }),
+          );
+        }),
+      );
+    }),
   );
 };

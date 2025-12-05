@@ -50,7 +50,7 @@
 }
 
 .form-input {
-  color: $primaria;
+  color: $primaria-active;
   background-color: $superficie-destaque;
   border: 1px solid $borda;
   border-radius: 20px;
@@ -60,11 +60,10 @@
   width: 100%;
 
   &:hover {
-    color: $primaria-active;
     border: 1px solid $primaria-light;
   }
   &:focus {
-    color: $primaria-active;
+    color: $primaria;
     border: 1px solid $primaria-active;
     outline: none;
   }

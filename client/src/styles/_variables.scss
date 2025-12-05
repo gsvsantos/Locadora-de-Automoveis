@@ -17,7 +17,7 @@
 [data-theme='dark'] {
   --clr-primary: #9e77ed;
   --clr-primary-active: #7f56d9;
-  --clr-primary-light: #2d2438;
+  --clr-primary-light: #584075;
   --clr-background: #100c18;
   --clr-surface: #1d1626;
   --clr-surface-alt: #2a2136;
@@ -55,3 +55,13 @@ $transicao-lenta: 0.5s ease-in-out;
 
 $gradient-sidebar: linear-gradient(180deg, var(--clr-surface) 0%, var(--clr-background) 100%);
 $gradient-primary: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-active) 100%);
+
+@function mask-gradient($dir, $leftpx, $rightpx) {
+  @return linear-gradient(
+    to $dir,
+    transparent,
+    #000 $leftpx,
+    #000 calc(100% - $rightpx),
+    transparent
+  );
+}
