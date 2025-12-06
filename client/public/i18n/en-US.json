@@ -42,5 +42,48 @@
         }
       }
     }
+  },
+  "employee": {
+    "create": {
+      "card": {
+        "title": "New Employee Registration",
+        "subtitle": "Please fill in the employee's details below.",
+        "section": {
+          "personalData": "Personal and Contact Information",
+          "accountData": "Account Credentials",
+          "professionalData": "Professional Data"
+        },
+        "placeholder": {
+          "fullName": "Full Name",
+          "email": "Email",
+          "phoneNumber": "Phone Number (e.g., (99) 99999-9999)",
+          "userName": "Username",
+          "password": "Password",
+          "salary": "Salary (e.g., 3500.00)"
+        },
+        "label": {
+          "admissionDate": "Admission Date"
+        },
+        "errors": {
+          "fullNameRequired": "The full name is required.",
+          "fullNameLength": "The name must be at least 3 characters long.",
+          "emailRequired": "The email is required.",
+          "emailInvalid": "Invalid email format.",
+          "phoneNumberRequired": "The phone number is required.",
+          "phoneNumberInvalid": "Invalid phone number format.",
+          "usernameRequired": "The username is required.",
+          "usernameLength": "The username must be at least 5 characters long.",
+          "passwordRequired": "The password is required.",
+          "passwordLength": "The password must be at least 8 characters long.",
+          "admissionDateRequired": "The admission date is required.",
+          "salaryRequired": "The salary is required.",
+          "salaryMin": "The salary must be greater than $100.00."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register"
+        }
+      }
+    }
   }
 }
