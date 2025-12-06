@@ -1,5 +1,12 @@
 @use '../../../../styles/variables' as *;
 
+.borda-svg {
+  position: absolute;
+  top: 0;
+  fill: var(--clr-surface-alt);
+  transition: $transition-slow;
+}
+
 .shell {
   display: flex;
   flex-direction: column;
@@ -16,6 +23,11 @@
   position: sticky;
   top: 0;
   z-index: 20;
+}
+
+.navbar__logo {
+  display: flex;
+  gap: 10px;
 }
 
 .navbar__menu-button {
@@ -102,10 +114,15 @@
 }
 
 .shell__content {
-  max-width: 1400px;
+  padding: 1.5rem 0;
 }
 
 @media (max-width: 959px) {
+  .borda-svg {
+    display: none;
+    fill: var(--clr-background);
+  }
+
   .navbar {
     justify-content: flex-start;
   }
