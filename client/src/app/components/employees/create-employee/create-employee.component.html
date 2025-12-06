@@ -1,0 +1,142 @@
+<section class="login-section" *transloco="let t; prefix: 'employee.create'">
+  <div class="main-content">
+    <div class="card">
+      <form [formGroup]="formGroup" class="form" (ngSubmit)="register()">
+        <h2>{{ t('card.title') }}</h2>
+        <hr class="bar" />
+        <div class="card-content">
+          <span>{{ t('card.subtitle') }}</span>
+
+          <h3>{{ t('card.section.personalData') }}</h3>
+
+          <div class="form-field">
+            <input
+              class="form-input"
+              formControlName="fullName"
+              type="text"
+              [placeholder]="t('card.placeholder.fullName')"
+              autocomplete="name"
+            />
+            @if (fullName?.errors?.['required'] && fullName?.dirty) {
+              <span class="error-message">{{ t('card.errors.fullNameRequired') }}</span>
+            }
+            @if (fullName?.errors?.['minlength'] && fullName?.dirty) {
+              <span class="error-message">{{ t('card.errors.fullNameLength') }}</span>
+            }
+          </div>
+
+          <div class="form-field">
+            <input
+              class="form-input"
+              formControlName="email"
+              type="email"
+              [placeholder]="t('card.placeholder.email')"
+              autocomplete="email"
+            />
+            @if (email?.errors?.['required'] && email?.dirty) {
+              <span class="error-message">{{ t('card.errors.emailRequired') }}</span>
+            }
+            @if (email?.errors?.['email'] && email?.dirty) {
+              <span class="error-message">{{ t('card.errors.emailInvalid') }}</span>
+            }
+          </div>
+
+          <div class="form-field">
+            <input
+              class="form-input"
+              formControlName="phoneNumber"
+              type="tel"
+              [placeholder]="t('card.placeholder.phoneNumber')"
+            />
+            @if (phoneNumber?.errors?.['required'] && phoneNumber?.dirty) {
+              <span class="error-message">{{ t('card.errors.phoneNumberRequired') }}</span>
+            }
+            @if (phoneNumber?.errors?.['pattern'] && phoneNumber?.dirty) {
+              <span class="error-message">{{ t('card.errors.phoneNumberInvalid') }}</span>
+            }
+          </div>
+
+          <hr />
+
+          <h3>{{ t('card.section.accountData') }}</h3>
+
+          <div class="form-field">
+            <input
+              class="form-input"
+              formControlName="userName"
+              type="text"
+              [placeholder]="t('card.placeholder.userName')"
+              autocomplete="username"
+            />
+            @if (userName?.errors?.['required'] && userName?.dirty) {
+              <span class="error-message">{{ t('card.errors.usernameRequired') }}</span>
+            }
+            @if (userName?.errors?.['minlength'] && userName?.dirty) {
+              <span class="error-message">{{ t('card.errors.usernameLength') }}</span>
+            }
+          </div>
+
+          <div class="form-field">
+            <input
+              class="form-input"
+              formControlName="password"
+              type="password"
+              [placeholder]="t('card.placeholder.password')"
+              autocomplete="new-password"
+            />
+            @if (password?.errors?.['required'] && password?.dirty) {
+              <span class="error-message">{{ t('card.errors.passwordRequired') }}</span>
+            }
+            @if (password?.errors?.['minlength'] && password?.dirty) {
+              <span class="error-message">{{ t('card.errors.passwordLength') }}</span>
+            }
+          </div>
+
+          <hr />
+
+          <h3>{{ t('card.section.professionalData') }}</h3>
+
+          <div class="form-field">
+            <label>{{ t('card.label.admissionDate') }}</label>
+            <input class="form-input" formControlName="admissionDate" type="date" />
+            @if (admissionDate?.errors?.['required'] && admissionDate?.dirty) {
+              <span class="error-message">{{ t('card.errors.admissionDateRequired') }}</span>
+            }
+          </div>
+
+          <div class="form-field">
+            <input
+              class="form-input"
+              formControlName="salary"
+              type="number"
+              step="0.01"
+              [placeholder]="t('card.placeholder.salary')"
+            />
+            @if (salary?.errors?.['required'] && salary?.dirty) {
+              <span class="error-message">{{ t('card.errors.salaryRequired') }}</span>
+            }
+            @if (salary?.errors?.['min'] && salary?.dirty) {
+              <span class="error-message">{{ t('card.errors.salaryMin') }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="buttons">
+          <gs-buttons
+            [buttonType]="buttonType.Link"
+            [text]="t('card.buttons.back')"
+            routerLink="/employees"
+          ></gs-buttons>
+
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('card.buttons.confirm')"
+            type="submit"
+            [disabled]="formGroup.invalid"
+            (click)="register()"
+          ></gs-buttons>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

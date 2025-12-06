@@ -1,11 +1,11 @@
 <section class="list-section">
   <div class="main-content">
-    <h2>Patients</h2>
+    <h2>Employees</h2>
 
     <div class="items-container">
       <gs-buttons
         [buttonType]="buttonType.Link"
-        [text]="'Register New Patient'"
+        [text]="'Register New Employee'"
         bootstrapIcon="bi-chevron-double-left"
         [target]="targetType.SameTab"
         [variant]="variantType.Outline"
@@ -26,10 +26,10 @@
             <div class="card__content">
               <div class="info-row">
                 <span class="material-icons">badge</span>
-                <span>{{ employee.admissionDate | date: 'dd/MM/yyyy HH:mm'}}</span>
+                <span>{{ employee.admissionDate | date: 'dd/MM/yyyy HH:mm' }}</span>
               </div>
               <div class="info-row">
-                <span class="material-icons">email</span>
+                <span class="material-icons">attach_money</span>
                 <span>{{ employee.salary }}</span>
               </div>
             </div>

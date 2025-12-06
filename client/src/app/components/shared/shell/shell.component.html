@@ -56,6 +56,17 @@
             </span>
           </a>
         }
+        @if (user?.role === 'Admin') {
+          <a
+            class="sidebar__item-link"
+            routerLink="/employees"
+            routerLinkActive="sidebar__item-link--active"
+            (click)="closeSidebar()"
+          >
+            <span class="material-icons sidebar__item-icon"> person </span>
+            <span class="sidebar__item-label"> Employees </span>
+          </a>
+        }
       </div>
 
       <div class="sidebar__profile">

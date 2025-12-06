@@ -30,7 +30,7 @@ export class RegisterComponent {
   protected readonly variantType = gsVariant;
 
   protected formGroup: FormGroup = this.formBuilder.group({
-    userName: ['', [Validators.required.bind(this), Validators.minLength(3)]],
+    userName: ['', [Validators.required.bind(this), Validators.minLength(5)]],
     fullName: [
       '',
       [
