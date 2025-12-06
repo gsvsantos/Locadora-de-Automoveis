@@ -20,26 +20,17 @@ public class DriverController(IMediator mediator) : ControllerBase
     {
         Result<CreateDriverResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllDriverRequest? request)
+    public async Task<IActionResult> GetAll([FromQuery] int? quantity)
     {
-        request = request ?? new GetAllDriverRequest(null);
+        GetAllDriverRequest request = new(quantity);
 
         Result<GetAllDriverResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpGet("get/{id:guid}")]
@@ -49,12 +40,7 @@ public class DriverController(IMediator mediator) : ControllerBase
 
         Result<GetByIdDriverResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpDelete("delete/{id:guid}")]
@@ -64,11 +50,6 @@ public class DriverController(IMediator mediator) : ControllerBase
 
         Result<DeleteDriverResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 }

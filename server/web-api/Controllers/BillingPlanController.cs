@@ -25,26 +25,17 @@ public class BillingPlanController(
     {
         Result<CreateBillingPlanResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllBillingPlanRequest? request)
+    public async Task<IActionResult> GetAll([FromQuery] int? quantity)
     {
-        request = request ?? new GetAllBillingPlanRequest(null);
+        GetAllBillingPlanRequest request = new(quantity);
 
         Result<GetAllBillingPlanResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpGet("get/{id:guid}")]
@@ -54,12 +45,7 @@ public class BillingPlanController(
 
         Result<GetByIdBillingPlanResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpPut("update/{id:guid}")]
@@ -70,12 +56,7 @@ public class BillingPlanController(
 
         Result<UpdateBillingPlanResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpDelete("delete/{id:guid}")]
@@ -85,11 +66,6 @@ public class BillingPlanController(
 
         Result<DeleteBillingPlanResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 }

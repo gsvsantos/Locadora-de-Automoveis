@@ -18,12 +18,7 @@ public class ConfigurationController(IMediator mediator) : ControllerBase
     {
         Result<ConfigureResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpGet("details")]
@@ -31,10 +26,6 @@ public class ConfigurationController(IMediator mediator) : ControllerBase
     {
         Result<DetailsResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 }

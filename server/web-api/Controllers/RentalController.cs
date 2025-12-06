@@ -26,26 +26,17 @@ public class RentalController(
     {
         Result<CreateRentalResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllRentalRequest? request)
+    public async Task<IActionResult> GetAll([FromQuery] int? quantity)
     {
-        request = request ?? new GetAllRentalRequest(null);
+        GetAllRentalRequest request = new(quantity);
 
         Result<GetAllRentalResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpGet("get/{id:guid}")]
@@ -55,12 +46,7 @@ public class RentalController(
 
         Result<GetByIdRentalResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpPut("update/{id:guid}")]
@@ -71,12 +57,7 @@ public class RentalController(
 
         Result<UpdateRentalResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpDelete("delete/{id:guid}")]
@@ -86,30 +67,16 @@ public class RentalController(
 
         Result<DeleteRentalResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpPost("return/{id:guid}")]
-    public async Task<IActionResult> Return(Guid id, ReturnRentalRequestPartial requestPartial)
+    public async Task<IActionResult> Return(Guid id, ReturnRentalRequestPartial partialRequest)
     {
-        ReturnRentalRequest request = new(
-            id,
-            requestPartial.EndKm,
-            requestPartial.FuelLevel
-        );
+        ReturnRentalRequest request = mapper.Map<ReturnRentalRequest>((partialRequest, id));
 
         Result<ReturnRentalResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 }

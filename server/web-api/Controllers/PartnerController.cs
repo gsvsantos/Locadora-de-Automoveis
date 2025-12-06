@@ -25,26 +25,17 @@ public class PartnerController(
     {
         Result<CreatePartnerResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllPartnerRequest? request)
+    public async Task<IActionResult> GetAll([FromQuery] int? quantity)
     {
-        request = request ?? new GetAllPartnerRequest(null);
+        GetAllPartnerRequest request = new(quantity);
 
         Result<GetAllPartnerResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpGet("get/{id:guid}")]
@@ -54,12 +45,7 @@ public class PartnerController(
 
         Result<GetCouponsPartnerResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpPut("update/{id:guid}")]
@@ -70,12 +56,7 @@ public class PartnerController(
 
         Result<UpdatePartnerResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpDelete("delete/{id:guid}")]
@@ -85,11 +66,6 @@ public class PartnerController(
 
         Result<DeletePartnerResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 }

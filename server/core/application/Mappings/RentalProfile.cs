@@ -36,6 +36,14 @@ public class RentalProfile : Profile
                 src.p.RentalRentalExtrasIds
             ));
 
+        // Return
+        CreateMap<(ReturnRentalRequestPartial p, Guid id), ReturnRentalRequest>()
+            .ConvertUsing(src => new ReturnRentalRequest(
+                src.id,
+                src.p.EndKm,
+                src.p.FuelLevel
+            ));
+
         // DTOs
         CreateMap<Employee, RentalEmployeeDto>()
             .ConvertUsing(src => new RentalEmployeeDto(

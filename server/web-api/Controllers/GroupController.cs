@@ -25,26 +25,17 @@ public class GroupController(
     {
         Result<CreateGroupResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllGroupRequest? request)
+    public async Task<IActionResult> GetAll([FromQuery] int? quantity)
     {
-        request = request ?? new GetAllGroupRequest(null);
+        GetAllGroupRequest request = new(quantity);
 
         Result<GetAllGroupResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpGet("get/{id:guid}")]
@@ -54,12 +45,7 @@ public class GroupController(
 
         Result<GetByIdGroupResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpPut("update/{id:guid}")]
@@ -70,12 +56,7 @@ public class GroupController(
 
         Result<UpdateGroupResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpDelete("delete/{id:guid}")]
@@ -85,11 +66,6 @@ public class GroupController(
 
         Result<DeleteGroupResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 }

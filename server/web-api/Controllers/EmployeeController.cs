@@ -27,28 +27,18 @@ public class EmployeeController(
     {
         Result<CreateEmployeeResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpGet("get-all")]
     [Authorize("AdminPolicy")]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllEmployeeRequest? request)
+    public async Task<IActionResult> GetAll([FromQuery] int? quantity)
     {
-        request = request ?? new GetAllEmployeeRequest(null);
+        GetAllEmployeeRequest request = new(quantity);
 
         Result<GetAllEmployeeResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpGet("get/{id:guid}")]
@@ -59,12 +49,7 @@ public class EmployeeController(
 
         Result<GetByIdEmployeeResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpPut("update/{id:guid}")]
@@ -76,12 +61,7 @@ public class EmployeeController(
 
         Result<UpdateEmployeeResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpPut("self-update")]
@@ -95,12 +75,7 @@ public class EmployeeController(
 
         Result<SelfUpdateEmployeeResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpDelete("delete/{id:guid}")]
@@ -111,11 +86,6 @@ public class EmployeeController(
 
         Result<DeleteEmployeeResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 }
