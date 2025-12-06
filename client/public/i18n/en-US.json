@@ -129,7 +129,7 @@
     },
     "selfUpdate": {
       "card": {
-        "title": "Edit Your Profile",
+        "title": "Edit My Profile",
         "subtitle": "Update your personal and contact information.",
         "section": {
           "personalData": "Personal and Contact Information",
@@ -156,6 +156,25 @@
         "buttons": {
           "back": "Back",
           "confirm": "Save Changes"
+        }
+      }
+    }
+  },
+  "group": {
+    "create": {
+      "card": {
+        "title": "Register Vehicle Group",
+        "subtitle": "Enter the details for the new vehicle group.",
+        "placeholder": {
+          "name": "Group Name (e.g., Economy, SUV, Luxury)"
+        },
+        "errors": {
+          "nameRequired": "The group name is required.",
+          "nameLength": "The name must be at least 3 characters long."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Confirm Registration"
         }
       }
     }

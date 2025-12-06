@@ -50,7 +50,7 @@ export class ShellComponent {
     },
     {
       title: 'Groups',
-      icon: '#',
+      icon: 'bookmarks',
       link: 'groups',
     },
     {
