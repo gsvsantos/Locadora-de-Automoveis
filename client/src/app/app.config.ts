@@ -45,16 +45,6 @@ export const appConfig: ApplicationConfig = {
   ],
 };
 
-function getDeepestSnapshot(routeSnapshot: ActivatedRouteSnapshot): ActivatedRouteSnapshot {
-  let currentSnapshot: ActivatedRouteSnapshot = routeSnapshot;
-
-  while (currentSnapshot.firstChild) {
-    currentSnapshot = currentSnapshot.firstChild;
-  }
-
-  return currentSnapshot;
-}
-
 function routeHasViewTransitionEnabled(routeSnapshot: ActivatedRouteSnapshot): boolean {
   const deepestSnapshot = getDeepestSnapshot(routeSnapshot);
 
@@ -67,4 +57,14 @@ function routeHasViewTransitionEnabled(routeSnapshot: ActivatedRouteSnapshot): b
   const shouldAnimate: boolean = !hasCustomFlagDefined || isFlagTrue;
 
   return shouldAnimate;
+}
+
+function getDeepestSnapshot(routeSnapshot: ActivatedRouteSnapshot): ActivatedRouteSnapshot {
+  let currentSnapshot: ActivatedRouteSnapshot = routeSnapshot;
+
+  while (currentSnapshot.firstChild) {
+    currentSnapshot = currentSnapshot.firstChild;
+  }
+
+  return currentSnapshot;
 }

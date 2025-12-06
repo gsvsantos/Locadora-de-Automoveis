@@ -35,6 +35,7 @@
     "@angular/router": "^20.3.0",
     "@danielmoncada/angular-datetime-picker": "^20.0.0",
     "@jsverse/transloco": "^8.1.0",
+    "@material/web": "^2.4.1",
     "bootstrap": "^5.3.8",
     "dayjs": "^1.11.19",
     "fontawesome-free": "^1.0.4",

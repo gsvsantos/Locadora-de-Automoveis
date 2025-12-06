@@ -1,0 +1,61 @@
+<nav class="navbar" aria-label="Menu">
+  <button class="open-sidebar-button" type="button" (click)="openSidebar()" aria-label="Open Menu">
+    <span class="material-icons">menu</span>
+  </button>
+
+  <div
+    class="overlay"
+    [class.is-open]="isSidebarOpen"
+    (click)="closeSidebar()"
+    aria-hidden="true"
+  ></div>
+
+  <div class="links-container" [class.is-open]="isSidebarOpen">
+    @if (isHandset$ | async) {
+      <button
+        class="close-sidebar-button"
+        type="button"
+        (click)="closeSidebar()"
+        aria-label="Close Menu"
+      >
+        <span class="material-icons">close</span>
+      </button>
+    }
+
+    <div class="items">
+      @for (item of navbarItems; track $index) {
+        <a
+          class="item-link"
+          [routerLink]="item.link"
+          routerLinkActive="item-link--active"
+          (click)="closeSidebar()"
+        >
+          <span class="material-icons item-link__icon">
+            {{ item.icon }}
+          </span>
+          <span class="item-link__label">
+            {{ item.title }}
+          </span>
+        </a>
+      }
+    </div>
+
+    <div class="profile">
+      <span class="material-icons profile__icon">account_circle</span>
+      <div>
+        <span>{{ user?.userName }}</span>
+      </div>
+    </div>
+    <div class="options">
+      <gs-buttons
+        [buttonType]="buttonType.Default"
+        text="Logout"
+        (click)="logoutEvent.emit()"
+      ></gs-buttons>
+      <app-slide-toggle
+        [checked]="isDarkMode"
+        (toggleChange)="themeEvent.emit($event)"
+      ></app-slide-toggle>
+    </div>
+  </div>
+</nav>

@@ -1,57 +1,61 @@
 @use 'sass:color';
 
-:root {
-  --clr-primary: #7f56d9;
-  --clr-primary-active: #6941c6;
-  --clr-primary-light: #997dbb;
-  --clr-background: #f9f5ff;
+:root,
+[data-theme='light'] {
+  --clr-primary: #00b894;
+  --clr-primary-active: #008f72;
+  --clr-primary-light: #e0f7f3;
+  --clr-background: #f0fdf9;
   --clr-surface: #ffffff;
-  --clr-surface-alt: #f4ebff;
-  --clr-border: #e9d7fe;
-  --clr-text-main: #2e243b;
-  --clr-text-muted: #667085;
+  --clr-surface-alt: #c7f5ec;
+  --clr-border: #144d43;
+  --clr-text-main: #0d2e28;
+  --clr-text-muted: #5c7c76;
   --clr-text-inv: #ffffff;
-  --shadow-rgb: 127, 86, 217;
+  --shadow-rgb: 0, 184, 148;
+  --toggle-off-bg: #cbd5e1;
 }
 
 [data-theme='dark'] {
-  --clr-primary: #9e77ed;
-  --clr-primary-active: #7f56d9;
-  --clr-primary-light: #584075;
-  --clr-background: #100c18;
-  --clr-surface: #1d1626;
-  --clr-surface-alt: #2a2136;
-  --clr-border: #42307d;
-  --clr-text-main: #f4ebff;
-  --clr-text-muted: #98a2b3;
-  --clr-text-inv: #100c18;
+  --clr-primary: #55efc4;
+  --clr-primary-active: #00b894;
+  --clr-primary-light: #08332d;
+  --clr-background: #051815;
+  --clr-surface: #0b2622;
+  --clr-surface-alt: #123630;
+  --clr-border: #1d4f45;
+  --clr-text-main: #e0f7f3;
+  --clr-text-muted: #8fa3a0;
+  --clr-text-inv: #051815;
   --shadow-rgb: 0, 0, 0;
+  --toggle-off-bg: #475569;
 }
 
-$primaria: var(--clr-primary);
-$primaria-active: var(--clr-primary-active);
-$primaria-light: var(--clr-primary-light);
+$primary: var(--clr-primary);
+$primary-active: var(--clr-primary-active);
+$primary-light: var(--clr-primary-light);
 
-$fundo: var(--clr-background);
-$superficie: var(--clr-surface);
-$superficie-destaque: var(--clr-surface-alt);
-$borda: var(--clr-border);
+$background: var(--clr-background);
+$surface: var(--clr-surface);
+$surface-alt: var(--clr-surface-alt);
+$border: var(--clr-border);
+$toggle-off: var(--toggle-off-bg);
 
-$texto-principal: var(--clr-text-main);
-$texto-suave: var(--clr-text-muted);
-$texto-invertido: var(--clr-text-inv);
+$text-main: var(--clr-text-main);
+$text-muted: var(--clr-text-muted);
+$text-inverse: var(--clr-text-inv);
 
-$perigo: #f04438;
-$sucesso: #12b76a;
-$aviso: #f79009;
+$danger: #ff7675;
+$success: #00b894;
+$warning: #fdcb6e;
 
-$shadow-1: 0px 4px 20px rgba(var(--shadow-rgb), 0.25);
-$shadow-2: 0px 1px 10px rgba(var(--shadow-rgb), 0.25);
-$borda-radius: 12px;
+$shadow-1: 0px 4px 20px rgba(var(--shadow-rgb), 0.2);
+$shadow-2: 0px 1px 10px rgba(var(--shadow-rgb), 0.2);
+$border-radius: 12px;
 
-$transicao-rapida: 0.2s ease;
-$transicao: 0.25s ease;
-$transicao-lenta: 0.5s ease-in-out;
+$transition-fast: 0.2s ease;
+$transition-normal: 0.25s ease;
+$transition-slow: 0.5s ease-in-out;
 
 $gradient-sidebar: linear-gradient(180deg, var(--clr-surface) 0%, var(--clr-background) 100%);
 $gradient-primary: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-active) 100%);
@@ -64,4 +68,16 @@ $gradient-primary: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-prim
     #000 calc(100% - $rightpx),
     transparent
   );
+}
+
+gs-buttons {
+  --gs-btn-bg: var(--clr-primary);
+  --gs-btn-fg: #ffffff;
+  --gs-btn-hover-bg: color-mix(in srgb, var(--clr-primary), black 10%);
+  --gs-btn-active-bg: color-mix(in srgb, var(--clr-primary), black 20%);
+  --gs-btn-focus: #fff;
+  --gs-btn-transition-props: color, background-color, border-color, box-shadow;
+  --gs-btn-transition-dur: 0.15s;
+  --gs-btn-transition-ease: ease-in-out;
+  --gs-btn-transition-delay: 0s;
 }

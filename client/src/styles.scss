@@ -49,11 +49,11 @@ body {
 }
 
 .btn-danger {
-  background-color: $perigo;
+  background-color: $danger;
   color: #fff;
 
   &:hover:not(:disabled) {
-    background-color: darken($perigo, 10%);
+    background-color: darken($danger, 10%);
   }
 }
 
@@ -81,13 +81,13 @@ body {
   animation: slideIn 0.3s ease-out forwards;
 
   &.success {
-    border-left-color: var(--sucesso, #20bf6b);
+    border-left-color: $success;
   }
   &.warning {
-    border-left-color: var(--aviso, #f7b731);
+    border-left-color: $warning;
   }
   &.error {
-    border-left-color: var(--perigo, #ff6b6b);
+    border-left-color: $danger;
   }
 }
 
@@ -110,9 +110,10 @@ textarea {
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0px 1000px var(--clr-surface-alt) inset;
+    -webkit-box-shadow: 0 0 0 1000px var(--clr-surface-alt) inset;
     -webkit-text-fill-color: var(--clr-text-main);
     transition: background-color 5000s ease-in-out 0s;
+    background-clip: content-box;
   }
 }
 

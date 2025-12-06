@@ -1,5 +1,9 @@
 @if (accessToken$ | async; as accessToken) {
-  <app-shell [authenticatedUser]="accessToken.user" (logoutEvent)="logout()">
+  <app-shell
+    [user]="accessToken.user"
+    (logoutEvent)="logout()"
+    (themeEvent)="onThemeChange($event)"
+  >
     <router-outlet />
   </app-shell>
 } @else {
