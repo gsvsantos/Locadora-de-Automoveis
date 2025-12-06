@@ -1,0 +1,50 @@
+<section class="list-section">
+  <div class="main-content">
+    <h2>Patients</h2>
+
+    <div class="items-container">
+      <gs-buttons
+        [buttonType]="buttonType.Link"
+        [text]="'Register New Patient'"
+        bootstrapIcon="bi-chevron-double-left"
+        [target]="targetType.SameTab"
+        [variant]="variantType.Outline"
+        routerLink="register"
+      ></gs-buttons>
+    </div>
+
+    <hr />
+
+    <div class="list">
+      @for (employee of employees$ | async; track employee.id) {
+        <div class="item">
+          <div class="card" tabindex="0">
+            <div class="card__header">
+              <div class="card_title">{{ employee.fullName | titlecase }}</div>
+            </div>
+
+            <div class="card__content">
+              <div class="info-row">
+                <span class="material-icons">badge</span>
+                <span>{{ employee.admissionDate | date: 'dd/MM/yyyy HH:mm'}}</span>
+              </div>
+              <div class="info-row">
+                <span class="material-icons">email</span>
+                <span>{{ employee.salary }}</span>
+              </div>
+            </div>
+
+            <div class="card__actions" align="end">
+              <a [routerLink]="['edit', employee.id]">
+                <span class="material-icons">edit</span>
+              </a>
+              <a class="button button__danger" [routerLink]="['delete', employee.id]">
+                <span class="material-icons">delete</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
