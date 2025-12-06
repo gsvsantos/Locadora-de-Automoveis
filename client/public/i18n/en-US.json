@@ -119,7 +119,13 @@
         "title": "Delete Employee",
         "subtitle": "Are you sure you want to permanently delete this employee's record?",
         "section": {
+          "details": "Employee Information",
           "warning": "This action cannot be undone. All associated data will be lost."
+        },
+        "label": {
+          "fullName": "Full Name",
+          "admissionDate": "Admission Date",
+          "salary": "Salary"
         },
         "buttons": {
           "back": "Cancel",
@@ -195,6 +201,23 @@
         "buttons": {
           "back": "Back",
           "confirm": "Update Group"
+        }
+      }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Vehicle Group",
+        "subtitle": "Review the details before proceeding with the deletion.",
+        "section": {
+          "details": "Group Information",
+          "warning": "This action cannot be undone. All vehicles associated with this group may lose categorization."
+        },
+        "label": {
+          "name": "Name"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Group"
         }
       }
     }
