@@ -32,12 +32,12 @@ export const listGroupsResolver: ResolveFn<Group[]> = (
   return groupService.getAll(quantityFilter, isActiveFilter);
 };
 
-// export const groupDetailsResolver: ResolveFn<Group> = (route: ActivatedRouteSnapshot) => {
-//   const groupService = inject(GroupService);
+export const groupDetailsResolver: ResolveFn<Group> = (route: ActivatedRouteSnapshot) => {
+  const groupService = inject(GroupService);
 
-//   if (!route.paramMap.has('id')) throw new Error('Missing "ID" parameter.');
+  if (!route.paramMap.has('id')) throw new Error('Missing "ID" parameter.');
 
-//   const id: string = route.paramMap.get('id');
+  const id: string = route.paramMap.get('id')!;
 
-//   return groupService.getById(id);
-// };
+  return groupService.getById(id);
+};

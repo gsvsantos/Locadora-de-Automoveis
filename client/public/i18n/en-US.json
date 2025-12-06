@@ -177,6 +177,26 @@
           "confirm": "Confirm Registration"
         }
       }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Vehicle Group",
+        "subtitle": "Modify the name of the vehicle group.",
+        "section": {
+          "groupData": "Group Details"
+        },
+        "placeholder": {
+          "name": "Group Name"
+        },
+        "errors": {
+          "nameRequired": "The group name is required.",
+          "nameLength": "The name must be at least 3 characters long."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update Group"
+        }
+      }
     }
   }
 }

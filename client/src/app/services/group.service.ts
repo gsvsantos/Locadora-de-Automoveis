@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Group, GroupDto, ListGroupsDto } from '../models/group.models';
+import { Group, GroupDetailsApiDto, GroupDto, ListGroupsDto } from '../models/group.models';
 import { Observable, map } from 'rxjs';
 import { ApiResponseDto, IdApiResponse } from '../models/api.models';
 import { mapApiResponse } from '../utils/map-api-response';
@@ -17,6 +17,21 @@ export class GroupService {
     const url = `${this.apiUrl}/create`;
 
     return this.http.post<IdApiResponse>(url, registerModel);
+  }
+
+  public update(id: string, updateModel: GroupDto): Observable<IdApiResponse> {
+    const url = `${this.apiUrl}/update/${id}`;
+
+    return this.http.put<IdApiResponse>(url, updateModel);
+  }
+
+  public getById(id: string): Observable<Group> {
+    const url: string = `${this.apiUrl}/get/${id}`;
+
+    return this.http.get<ApiResponseDto>(url).pipe(
+      map(mapApiResponse<GroupDetailsApiDto>),
+      map((apiDto: GroupDetailsApiDto) => this.mapGroupFromApi(apiDto.group)),
+    );
   }
 
   public getAll(quantity?: number, isActive?: boolean): Observable<Group[]> {
@@ -35,5 +50,13 @@ export class GroupService {
       map(mapApiResponse<ListGroupsDto>),
       map((res) => res.groups),
     );
+  }
+
+  private mapGroupFromApi(apiGroup: GroupDetailsApiDto['group']): Group {
+    return {
+      id: apiGroup.id,
+      name: apiGroup.name,
+      isActive: apiGroup.isActive,
+    };
   }
 }

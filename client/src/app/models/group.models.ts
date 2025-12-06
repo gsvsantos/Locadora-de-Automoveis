@@ -13,7 +13,7 @@ export interface ListGroupsDto {
 }
 
 export interface GroupDetailsApiDto {
-  employee: {
+  group: {
     id: string;
     name: string;
     isActive: boolean;

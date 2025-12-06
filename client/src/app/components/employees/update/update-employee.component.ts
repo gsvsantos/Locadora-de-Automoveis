@@ -50,15 +50,11 @@ export class UpdateEmployeeComponent {
     filter((data) => data['employee'] as boolean),
     map((data) => data['employee'] as Employee),
     tap((employee: Employee) => {
-      console.log('employee do resolver', employee);
-
       this.formGroup.patchValue({
         fullName: employee.fullName,
         admissionDate: dateToInputDateString(employee.admissionDate),
         salary: employee.salary,
       });
-
-      console.log('form depois do patch', this.formGroup.value);
     }),
     shareReplay({ bufferSize: 1, refCount: true }),
   );
