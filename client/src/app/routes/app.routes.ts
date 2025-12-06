@@ -15,4 +15,9 @@ export const routes: Routes = [
       import('../components/home/home.component').then((component) => component.Home),
     canActivate: [authenticatedUserGuard],
   },
+  {
+    path: 'employees',
+    loadChildren: () => import('../routes/employee.routes').then((route) => route.employeeRoutes),
+    canActivate: [authenticatedUserGuard],
+  },
 ];

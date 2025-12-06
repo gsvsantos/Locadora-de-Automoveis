@@ -27,7 +27,7 @@ export function mapApiErroResponse(res: HttpErrorResponse): Observable<never> {
   }
 
   if (payload && typeof payload === 'object' && 'success' in payload) {
-    const apiError = payload as Partial<ApiResponseDto<unknown>>;
+    const apiError = payload as Partial<ApiResponseDto>;
 
     if (apiError.success === false && Array.isArray(apiError.errors)) {
       return throwError(() => apiError.errors?.join('\n'));

@@ -16,8 +16,8 @@ import { AuthApiResponse, LoginAuthDto, RegisterAuthDto } from '../models/auth.m
 
 @Injectable()
 export class AuthService {
-  private readonly http = inject(HttpClient);
-  private readonly apiUrl = environment.apiUrl + '/auth';
+  private readonly http: HttpClient = inject(HttpClient);
+  private readonly apiUrl: string = environment.apiUrl + '/auth';
 
   private readonly accessTokenSubject$ = new BehaviorSubject<AuthApiResponse | undefined>(
     undefined,

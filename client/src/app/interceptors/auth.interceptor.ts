@@ -16,8 +16,13 @@ export const authInterceptor = (
 
   const whitelist = ['/auth/register', '/auth/login', '/auth/refresh', '/auth/logout'];
 
-  if (whitelist.some((url) => req.url.includes(url)))
-    return next(req.clone({ withCredentials: true }));
+  if (whitelist.some((url) => req.url.includes(url))) {
+    return next(req.clone({ withCredentials: true })).pipe(
+      catchError(
+        (err: HttpErrorResponse) => mapApiErroResponse(err) as Observable<HttpEvent<unknown>>,
+      ),
+    );
+  }
 
   return authService.getAccessToken().pipe(
     take(1),
