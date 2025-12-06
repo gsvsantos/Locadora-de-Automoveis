@@ -12,5 +12,9 @@ public interface IRepository<T> where T : BaseEntity<T>
 
     Task<List<T>> GetAllAsync(int quantity);
 
+    Task<List<T>> GetAllAsync(bool isActive);
+
+    Task<List<T>> GetAllAsync(int quantity, bool isActive);
+
     Task<T?> GetByIdAsync(Guid id);
 }

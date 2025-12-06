@@ -18,10 +18,33 @@ public class GetAllEmployeeRequestHandler(
     {
         try
         {
-            List<Employee> employees =
-                request.Quantity.HasValue && request.Quantity.Value > 0 ?
-                await repositoryEmployee.GetAllAsync(request.Quantity.Value) :
-                await repositoryEmployee.GetAllAsync();
+            List<Employee> employees = [];
+            bool quantityProvided = request.Quantity.HasValue && request.Quantity.Value > 0;
+            bool inactiveProvided = request.IsActive.HasValue;
+
+            if (quantityProvided && inactiveProvided)
+            {
+                int quantity = request.Quantity!.Value;
+                bool isActive = request.IsActive!.Value;
+
+                employees = await repositoryEmployee.GetAllAsync(quantity, isActive);
+            }
+            else if (inactiveProvided)
+            {
+                bool isActive = request.IsActive!.Value;
+
+                employees = await repositoryEmployee.GetAllAsync(isActive);
+            }
+            else if (quantityProvided)
+            {
+                int quantity = request.Quantity!.Value;
+
+                employees = await repositoryEmployee.GetAllAsync(quantity);
+            }
+            else
+            {
+                employees = await repositoryEmployee.GetAllAsync(true);
+            }
 
             GetAllEmployeeResponse response = mapper.Map<GetAllEmployeeResponse>(employees);
 

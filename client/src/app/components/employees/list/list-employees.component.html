@@ -11,6 +11,15 @@
         [variant]="variantType.Outline"
         routerLink="register"
       ></gs-buttons>
+      <div class="header-actions">
+        @if (showingInactive$ | async; as state) {
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="state.isInactive ? 'Ver Ativos' : 'Ver Inativos'"
+            (click)="toggleFilter(state.isInactive)"
+          ></gs-buttons>
+        }
+      </div>
     </div>
 
     <hr />
@@ -34,14 +43,16 @@
               </div>
             </div>
 
-            <div class="card__actions" align="end">
-              <a [routerLink]="['edit', employee.id]">
-                <span class="material-icons">edit</span>
-              </a>
-              <a class="button button__danger" [routerLink]="['delete', employee.id]">
-                <span class="material-icons">delete</span>
-              </a>
-            </div>
+            @if (employee.isActive) {
+              <div class="card__actions" align="end">
+                <a [routerLink]="['edit', employee.id]">
+                  <span class="material-icons">edit</span>
+                </a>
+                <a class="button button__danger" [routerLink]="['delete', employee.id]">
+                  <span class="material-icons">delete</span>
+                </a>
+              </div>
+            }
           </div>
         </div>
       }

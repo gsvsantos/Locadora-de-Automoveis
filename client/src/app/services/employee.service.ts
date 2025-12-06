@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import {
   Employee,
   EmployeeDetailsApiDto,
@@ -45,10 +45,19 @@ export class EmployeeService {
     );
   }
 
-  public getAll(): Observable<Employee[]> {
+  public getAll(quantity?: number, isActive?: boolean): Observable<Employee[]> {
     const url = `${this.apiUrl}/get-all`;
+    let params = new HttpParams();
 
-    return this.http.get<ApiResponseDto>(url).pipe(
+    if (quantity !== undefined && quantity > 0) {
+      params = params.set('Quantity', quantity.toString());
+    }
+
+    if (isActive !== undefined) {
+      params = params.set('IsActive', isActive.toString());
+    }
+
+    return this.http.get<ApiResponseDto>(url, { params: params }).pipe(
       map(mapApiResponse<ListEmployeesDto>),
       map((res) => res.employees),
     );
@@ -60,6 +69,7 @@ export class EmployeeService {
       fullName: apiEmployee.fullName,
       admissionDate: new Date(apiEmployee.admissionDate),
       salary: apiEmployee.salary,
+      isActive: apiEmployee.isActive
     };
   }
 }

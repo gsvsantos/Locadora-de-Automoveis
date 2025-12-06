@@ -11,5 +11,6 @@ public record EmployeeDto(
     Guid Id,
     string FullName,
     DateTimeOffset AdmissionDate,
-    decimal Salary
+    decimal Salary,
+    bool IsActive
 );

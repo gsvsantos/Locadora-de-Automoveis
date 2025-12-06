@@ -32,9 +32,9 @@ public class EmployeeController(
 
     [HttpGet("get-all")]
     [Authorize("AdminPolicy")]
-    public async Task<IActionResult> GetAll([FromQuery] int? quantity)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllEmployeeRequestPartial partialRequest)
     {
-        GetAllEmployeeRequest request = new(quantity);
+        GetAllEmployeeRequest request = mapper.Map<GetAllEmployeeRequest>(partialRequest);
 
         Result<GetAllEmployeeResponse> result = await mediator.Send(request);
 

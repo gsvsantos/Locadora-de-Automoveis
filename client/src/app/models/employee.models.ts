@@ -13,6 +13,7 @@ export interface CreateEmployeeDto extends EmployeeDto {
 
 export interface Employee extends EmployeeDto {
   id: string;
+  isActive: boolean;
 }
 
 export interface ListEmployeesDto {
@@ -26,6 +27,7 @@ export interface EmployeeDetailsApiDto {
     fullName: string;
     admissionDate: string;
     salary: number;
+    isActive: boolean;
   };
 }
 

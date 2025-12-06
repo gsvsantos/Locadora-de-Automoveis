@@ -10,6 +10,7 @@ export const employeeRoutes: Routes = [
     path: '',
     component: ListEmployeesComponent,
     resolve: { employees: listEmployeesResolver },
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange',
   },
   { path: 'register', component: CreateEmployeeComponent },
   {

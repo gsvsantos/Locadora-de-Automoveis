@@ -15,11 +15,18 @@ public class EmployeeProfile : Profile
     public EmployeeProfile()
     {
         // CONTROLLER
-        // SelfUpdate
+        // GetAll
         CreateMap<(SelfUpdateEmployeeRequestPartial p, Guid id), SelfUpdateEmployeeRequest>()
             .ConvertUsing(src => new SelfUpdateEmployeeRequest(
                 src.id,
                 src.p.FullName
+            ));
+
+        // SelfUpdate
+        CreateMap<GetAllEmployeeRequestPartial, GetAllEmployeeRequest>()
+            .ConvertUsing(src => new GetAllEmployeeRequest(
+                src.Quantity,
+                src.IsActive
             ));
 
         // Update
@@ -37,7 +44,8 @@ public class EmployeeProfile : Profile
                 src.Id,
                 src.FullName,
                 src.AdmissionDate,
-                src.Salary
+                src.Salary,
+                src.IsActive
             ));
 
         // HANDLERS
