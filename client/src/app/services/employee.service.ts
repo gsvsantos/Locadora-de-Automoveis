@@ -8,7 +8,7 @@ import {
   ListEmployeesDto,
 } from '../models/employee.models';
 import { ApiResponseDto, IdApiResponse } from '../models/api.models';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { mapApiResponse } from '../utils/map-api-response';
 
 @Injectable({
@@ -28,6 +28,12 @@ export class EmployeeService {
     const url = `${this.apiUrl}/update/${id}`;
 
     return this.http.put<IdApiResponse>(url, updateModel);
+  }
+
+  public delete(id: string): Observable<null> {
+    const url = `${this.apiUrl}/delete/${id}`;
+
+    return this.http.delete<null>(url);
   }
 
   public getById(id: string): Observable<Employee> {

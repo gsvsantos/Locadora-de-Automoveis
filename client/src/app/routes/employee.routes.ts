@@ -3,6 +3,7 @@ import { ListEmployeesComponent } from '../components/employees/list/list-employ
 import { employeeDetailsResolver, listEmployeesResolver } from '../resolvers/employee.resolvers';
 import { CreateEmployeeComponent } from '../components/employees/create/create-employee.component';
 import { UpdateEmployeeComponent } from '../components/employees/update/update-employee.component';
+import { DeleteEmployeeComponent } from '../components/employees/delete/delete-employee.component';
 
 export const employeeRoutes: Routes = [
   {
@@ -14,6 +15,11 @@ export const employeeRoutes: Routes = [
   {
     path: 'edit/:id',
     component: UpdateEmployeeComponent,
+    resolve: { employee: employeeDetailsResolver },
+  },
+  {
+    path: 'delete/:id',
+    component: DeleteEmployeeComponent,
     resolve: { employee: employeeDetailsResolver },
   },
 ];

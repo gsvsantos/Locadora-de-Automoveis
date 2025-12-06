@@ -1,0 +1,31 @@
+<section class="delete-section" *transloco="let t; prefix: 'employee.delete'">
+  <div class="main-content">
+    <div class="card">
+      <form class="form" (ngSubmit)="delete()">
+        <h2>{{ t('card.title') }}</h2>
+        <hr class="bar" />
+        <div class="card-content">
+          <span>{{ t('card.subtitle') }}</span>
+
+          <h3 class="warning-text">{{ t('card.section.warning') }}</h3>
+        </div>
+        <div class="buttons">
+          <gs-buttons
+            [buttonType]="buttonType.Link"
+            [text]="t('card.buttons.back')"
+            routerLink="/employees"
+          ></gs-buttons>
+
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('card.buttons.confirm')"
+            type="submit"
+            color="#ff7675"
+            hoverColor="#e45757"
+            (click)="delete()"
+          ></gs-buttons>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

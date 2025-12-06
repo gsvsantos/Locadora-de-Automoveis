@@ -102,6 +102,11 @@ body {
   }
 }
 
+.warning-text {
+  color: $danger;
+  font-size: 0.95em;
+}
+
 input,
 select,
 textarea {
