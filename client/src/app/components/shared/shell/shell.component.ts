@@ -33,7 +33,7 @@ export class ShellComponent {
   public isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Handset])
     .pipe(
-      map((result) => result.matches),
+      map((mediaQueryResult) => mediaQueryResult.matches),
       tap((isHandset) => {
         if (!isHandset) {
           this.isSidebarOpen = false;
@@ -47,6 +47,46 @@ export class ShellComponent {
       title: 'Home',
       icon: 'home',
       link: 'home',
+    },
+    {
+      title: 'Example',
+      icon: '#',
+      link: '#',
+    },
+    {
+      title: 'Example',
+      icon: '#',
+      link: '#',
+    },
+    {
+      title: 'Example',
+      icon: '#',
+      link: '#',
+    },
+    {
+      title: 'Example',
+      icon: '#',
+      link: '#',
+    },
+    {
+      title: 'Example',
+      icon: '#',
+      link: '#',
+    },
+    {
+      title: 'Example',
+      icon: '#',
+      link: '#',
+    },
+    {
+      title: 'Example',
+      icon: '#',
+      link: '#',
+    },
+    {
+      title: 'Example',
+      icon: '#',
+      link: '#',
     },
     {
       title: 'Example',

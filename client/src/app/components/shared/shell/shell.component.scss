@@ -1,9 +1,15 @@
 @use '../../../../styles/variables' as *;
 
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .navbar {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   height: 60px;
   padding-inline: 1.5rem;
   background-color: $surface-alt;
@@ -12,37 +18,61 @@
   z-index: 20;
 }
 
-.navbar .links-container {
-  height: 100%;
-  width: 100%;
+.navbar__menu-button {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: inherit;
+
+  .material-icons {
+    font-size: 2rem;
+  }
+}
+
+.navbar__spacer {
+  flex: 1;
+}
+
+.navbar__options {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 0.5rem;
-  transition: none;
-  transform: none;
+  gap: 15px;
 }
 
-.navbar .items {
-  height: 100%;
+.shell__layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  position: relative;
 }
 
-.navbar .item-link {
-  display: inline-flex;
+.sidebar {
+  background-color: $surface-alt;
+  border-right: 1px solid rgba($text-muted, 0.3);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  z-index: 11;
+}
+
+.sidebar__items {
+  flex: 1;
+}
+
+.sidebar__item-link {
+  display: flex;
   align-items: center;
   gap: 0.5rem;
-  height: 100%;
-  padding-inline: 1.25rem;
+  padding: 0.75rem 1.5rem;
   text-decoration: none;
   color: $text-main;
-  transition: $transition-fast;
   font-weight: 500;
-  border-bottom: 2px solid transparent;
   cursor: pointer;
-
-  &:first-of-type {
-    margin-right: 10rem;
-  }
+  transition: $transition-fast;
 
   &:hover {
     color: $text-inverse;
@@ -53,144 +83,70 @@
     outline: 2px solid $text-muted;
     outline-offset: 2px;
   }
-
-  &__icon {
-    font-size: 1.2rem;
-  }
 }
 
-.navbar .item-link--active {
+.sidebar__item-link--active {
   color: $text-inverse;
   background-color: rgba($text-muted, 0.25);
-  border-bottom-color: $text-muted;
 }
 
-.open-sidebar-button,
-.close-sidebar-button,
-.overlay {
+.sidebar__profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+}
+
+.shell__overlay {
   display: none;
 }
 
-.options {
-  display: flex;
-  align-items: center;
-  margin-left: 2rem;
-  gap: 15px;
+.shell__content {
+  max-width: 1400px;
 }
 
-.profile {
-  display: inline-flex;
-  height: 100%;
-  align-items: center;
-  margin-left: auto;
-  gap: 15px;
-
-  &__icon {
-    font-size: 1.8rem;
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 959px) {
   .navbar {
     justify-content: flex-start;
   }
 
-  .sidebar-active {
-    display: none;
-  }
-
-  .open-sidebar-button,
-  .close-sidebar-button {
+  .navbar__menu-button {
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.25rem;
-    cursor: pointer;
-    background: none;
-    border: none;
-    color: inherit;
-
-    .material-icons {
-      font-size: 2rem;
-    }
-  }
-
-  .open-sidebar-button {
     margin-right: 0.5rem;
   }
 
-  .navbar .links-container {
-    flex-direction: column;
-    align-items: flex-start;
+  .shell__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
     position: fixed;
-    top: 0;
+    top: 60px;
     left: 0;
-    height: 100vh;
-    width: min(280px, 100vw);
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    background-color: $surface-alt;
+    height: calc(100vh - 90px);
+    width: min(240px, 100vw);
     box-shadow: $shadow-2, $shadow-1;
-    transition: transform $transition-slow;
     transform: translateX(-120%);
-    z-index: 11;
-
-    &.is-open {
-      transform: translateX(0);
-    }
-
-    .close-sidebar-button {
-      align-self: flex-end;
-      margin-right: 0.75rem;
-      margin-bottom: 1rem;
-    }
+    transition: transform $transition-slow;
   }
 
-  .navbar .item-link {
-    box-sizing: border-box;
-    width: 100%;
-    height: auto;
-    padding: 0.75rem 1.5rem;
-    justify-content: flex-start;
-    margin-right: 0;
-    border-bottom: 1px solid rgba($text-muted, 0.3);
-
-    &:last-of-type {
-      border-bottom: none;
-    }
+  .sidebar.sidebar--open {
+    transform: translateX(0);
   }
 
-  .overlay {
+  .shell__overlay {
     display: block;
     position: fixed;
-    inset: 0;
+    inset: 60px 0 0 0;
     background-color: rgba(0, 0, 0, 0.4);
     opacity: 0;
     pointer-events: none;
     transition: opacity $transition-slow;
     z-index: 10;
-
-    &.is-open {
-      opacity: 1;
-      pointer-events: auto;
-    }
   }
 
-  .options {
-    justify-content: center;
-    width: 100%;
-    margin-left: inherit;
-    margin-bottom: 1.5rem;
-  }
-
-  .profile {
-    display: flex;
-    justify-content: center;
-    height: 10%;
-    width: 100%;
-
-    &__icon {
-      font-size: 1.8rem;
-    }
+  .shell__overlay.shell__overlay--visible {
+    opacity: 1;
+    pointer-events: auto;
   }
 }
