@@ -49,9 +49,9 @@ export class ShellComponent {
       link: 'home',
     },
     {
-      title: 'Example',
+      title: 'Groups',
       icon: '#',
-      link: '#',
+      link: 'groups',
     },
     {
       title: 'Example',

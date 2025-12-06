@@ -10,6 +10,7 @@ public class GroupRepository(AppDbContext context)
     public override async Task<List<Group>> GetAllAsync()
     {
         return await this.records
+            .Include(g => g.User)
             .Include(g => g.Vehicles)
             .ToListAsync();
     }
@@ -17,13 +18,34 @@ public class GroupRepository(AppDbContext context)
     public override async Task<List<Group>> GetAllAsync(int quantity)
     {
         return await this.records
+            .Include(g => g.User)
             .Include(g => g.Vehicles)
             .Take(quantity).ToListAsync();
+    }
+
+    public override async Task<List<Group>> GetAllAsync(bool isActive)
+    {
+        return await this.records
+            .Include(g => g.User)
+            .Include(g => g.Vehicles)
+            .Where(e => e.IsActive == isActive)
+            .ToListAsync();
+    }
+
+    public override async Task<List<Group>> GetAllAsync(int quantity, bool isActive)
+    {
+        return await this.records
+            .Include(g => g.User)
+            .Include(g => g.Vehicles)
+            .Take(quantity)
+            .Where(e => e.IsActive == isActive)
+            .ToListAsync();
     }
 
     public override async Task<Group?> GetByIdAsync(Guid entityId)
     {
         return await this.records
+            .Include(g => g.User)
             .Include(g => g.Vehicles)
             .FirstOrDefaultAsync(d => d.Id.Equals(entityId));
     }

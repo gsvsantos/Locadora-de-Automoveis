@@ -16,17 +16,17 @@ public class EmployeeProfile : Profile
     {
         // CONTROLLER
         // GetAll
-        CreateMap<(SelfUpdateEmployeeRequestPartial p, Guid id), SelfUpdateEmployeeRequest>()
-            .ConvertUsing(src => new SelfUpdateEmployeeRequest(
-                src.id,
-                src.p.FullName
-            ));
-
-        // SelfUpdate
         CreateMap<GetAllEmployeeRequestPartial, GetAllEmployeeRequest>()
             .ConvertUsing(src => new GetAllEmployeeRequest(
                 src.Quantity,
                 src.IsActive
+            ));
+
+        // SelfUpdate
+        CreateMap<(SelfUpdateEmployeeRequestPartial p, Guid id), SelfUpdateEmployeeRequest>()
+            .ConvertUsing(src => new SelfUpdateEmployeeRequest(
+                src.id,
+                src.p.FullName
             ));
 
         // Update

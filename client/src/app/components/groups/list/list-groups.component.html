@@ -1,11 +1,11 @@
 <section class="list-section">
   <div class="main-content">
-    <h2>Employees</h2>
+    <h2>Groups</h2>
 
     <div class="items-container">
       <gs-buttons
         [buttonType]="buttonType.Link"
-        [text]="'Register New Employee'"
+        [text]="'Register New Group'"
         bootstrapIcon="bi-chevron-double-left"
         [target]="targetType.SameTab"
         [variant]="variantType.Outline"
@@ -25,30 +25,19 @@
     <hr />
 
     <div class="list">
-      @for (employee of employees$ | async; track employee.id) {
+      @for (group of groups$ | async; track group.id) {
         <div class="item">
           <div class="card" tabindex="0">
             <div class="card__header">
-              <div class="card_title">{{ employee.fullName | titlecase }}</div>
+              <div class="card_title">{{ group.name | titlecase }}</div>
             </div>
 
-            <div class="card__content">
-              <div class="info-row">
-                <span class="material-icons">badge</span>
-                <span>{{ employee.admissionDate | date: 'dd/MM/yyyy' }}</span>
-              </div>
-              <div class="info-row">
-                <span class="material-icons">attach_money</span>
-                <span>{{ employee.salary }}</span>
-              </div>
-            </div>
-
-            @if (employee.isActive) {
+            @if (group.isActive) {
               <div class="card__actions" align="end">
-                <a [routerLink]="['edit', employee.id]">
+                <a [routerLink]="['edit', group.id]">
                   <span class="material-icons">edit</span>
                 </a>
-                <a class="button button__danger" [routerLink]="['delete', employee.id]">
+                <a class="button button__danger" [routerLink]="['delete', group.id]">
                   <span class="material-icons">delete</span>
                 </a>
               </div>

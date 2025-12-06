@@ -13,6 +13,13 @@ public class GroupProfile : Profile
     public GroupProfile()
     {
         // CONTROLLER
+        // GetAll
+        CreateMap<GetAllGroupRequestPartial, GetAllGroupRequest>()
+            .ConvertUsing(src => new GetAllGroupRequest(
+                src.Quantity,
+                src.IsActive
+            ));
+
         // Update
         CreateMap<(UpdateGroupRequestPartial p, Guid id), UpdateGroupRequest>()
             .ConvertUsing(src => new UpdateGroupRequest(
@@ -24,7 +31,8 @@ public class GroupProfile : Profile
         CreateMap<Group, GroupDto>()
             .ConvertUsing(src => new GroupDto(
                 src.Id,
-                src.Name
+                src.Name,
+                src.IsActive
             ));
 
         // HANDLERS

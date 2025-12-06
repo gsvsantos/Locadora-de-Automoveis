@@ -20,4 +20,9 @@ export const routes: Routes = [
     loadChildren: () => import('../routes/employee.routes').then((route) => route.employeeRoutes),
     canActivate: [authenticatedUserGuard],
   },
+  {
+    path: 'groups',
+    loadChildren: () => import('../routes/group.routes').then((route) => route.groupRoutes),
+    canActivate: [authenticatedUserGuard],
+  },
 ];

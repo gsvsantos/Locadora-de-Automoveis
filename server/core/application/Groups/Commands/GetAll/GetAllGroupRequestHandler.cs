@@ -18,10 +18,33 @@ public class GetAllGroupRequestHandler(
     {
         try
         {
-            List<Group> groups =
-                request.Quantity.HasValue && request.Quantity.Value > 0 ?
-                await repositoryGroup.GetAllAsync(request.Quantity.Value) :
-                await repositoryGroup.GetAllAsync();
+            List<Group> groups = [];
+            bool quantityProvided = request.Quantity.HasValue && request.Quantity.Value > 0;
+            bool inactiveProvided = request.IsActive.HasValue;
+
+            if (quantityProvided && inactiveProvided)
+            {
+                int quantity = request.Quantity!.Value;
+                bool isActive = request.IsActive!.Value;
+
+                groups = await repositoryGroup.GetAllAsync(quantity, isActive);
+            }
+            else if (inactiveProvided)
+            {
+                bool isActive = request.IsActive!.Value;
+
+                groups = await repositoryGroup.GetAllAsync(isActive);
+            }
+            else if (quantityProvided)
+            {
+                int quantity = request.Quantity!.Value;
+
+                groups = await repositoryGroup.GetAllAsync(quantity);
+            }
+            else
+            {
+                groups = await repositoryGroup.GetAllAsync(true);
+            }
 
             GetAllGroupResponse response = mapper.Map<GetAllGroupResponse>(groups);
 

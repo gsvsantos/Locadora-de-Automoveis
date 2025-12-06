@@ -9,5 +9,6 @@ public record GetAllGroupResponse(
 
 public record GroupDto(
     Guid Id,
-    string Name
+    string Name,
+    bool IsActive
 );

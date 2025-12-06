@@ -29,9 +29,9 @@ public class GroupController(
     }
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll([FromQuery] int? quantity)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllGroupRequestPartial partialRequest)
     {
-        GetAllGroupRequest request = new(quantity);
+        GetAllGroupRequest request = mapper.Map<GetAllGroupRequest>(partialRequest);
 
         Result<GetAllGroupResponse> result = await mediator.Send(request);
 
