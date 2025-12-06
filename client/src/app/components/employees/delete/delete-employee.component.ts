@@ -7,10 +7,19 @@ import { NotificationService } from '../../../services/notification.service';
 import { TranslocoModule } from '@jsverse/transloco';
 import { filter, map, Observer, shareReplay, switchMap, take } from 'rxjs';
 import { Employee } from '../../../models/employee.models';
+import { AsyncPipe, CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-delete-employee.component',
-  imports: [RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
+  imports: [
+    AsyncPipe,
+    CurrencyPipe,
+    DatePipe,
+    RouterLink,
+    ReactiveFormsModule,
+    TranslocoModule,
+    GsButtons,
+  ],
   templateUrl: './delete-employee.component.html',
   styleUrl: './delete-employee.component.scss',
 })

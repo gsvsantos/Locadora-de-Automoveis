@@ -8,7 +8,28 @@
           <span>{{ t('card.subtitle') }}</span>
 
           <h3 class="warning-text">{{ t('card.section.warning') }}</h3>
-        </div>
+
+          @if (employee$ | async; as employee) {
+            <div class="details-section">
+              <h4>{{ t('card.section.details') }}</h4>
+              
+              <p>
+                <strong>{{ t('card.label.fullName') }}:</strong> 
+                <span>{{ employee.fullName }}</span>
+              </p>
+              
+              <p>
+                <strong>{{ t('card.label.admissionDate') }}:</strong> 
+                <span>{{ employee.admissionDate | date: 'dd/MM/yyyy' }}</span>
+              </p>
+              
+              <p>
+                <strong>{{ t('card.label.salary') }}:</strong> 
+                <span>{{ employee.salary | currency: 'BRL':'symbol':'1.2-2' }}</span>
+              </p>
+            </div>
+          }
+          </div>
         <div class="buttons">
           <gs-buttons
             [buttonType]="buttonType.Link"

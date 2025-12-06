@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { Employee } from '../../../models/employee.models';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { filter, map } from 'rxjs';
-import { AsyncPipe, DatePipe, TitleCasePipe } from '@angular/common';
+import { AsyncPipe, CurrencyPipe, DatePipe, TitleCasePipe } from '@angular/common';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 
 @Component({
   selector: 'app-list-employees.component',
-  imports: [AsyncPipe, TitleCasePipe, DatePipe, RouterLink, GsButtons],
+  imports: [AsyncPipe, CurrencyPipe, DatePipe, TitleCasePipe, RouterLink, GsButtons],
   templateUrl: './list-employees.component.html',
   styleUrl: './list-employees.component.scss',
 })

@@ -39,7 +39,7 @@
               </div>
               <div class="info-row">
                 <span class="material-icons">attach_money</span>
-                <span>{{ employee.salary }}</span>
+                <span>{{ employee.salary | currency: 'BRL':'symbol':'1.2-2' }}</span>
               </div>
             </div>
 
