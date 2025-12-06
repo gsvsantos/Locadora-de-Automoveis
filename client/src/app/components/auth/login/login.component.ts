@@ -46,9 +46,9 @@ export class LoginComponent {
     if (this.formGroup.invalid) return;
 
     const loginModel: LoginAuthDto = this.formGroup.value as LoginAuthDto;
-    console.log(loginModel);
+
     const loginObserver: PartialObserver<AuthApiResponse> = {
-      error: (err: string) => (console.log(err), this.notificationService.error(err)),
+      error: (err: string) => this.notificationService.error(err),
       complete: () => void this.router.navigate(['/home']),
     };
 

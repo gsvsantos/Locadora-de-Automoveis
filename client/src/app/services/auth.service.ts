@@ -19,13 +19,15 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = environment.apiUrl + '/auth';
 
-  private readonly accessTokenSubject$ = new BehaviorSubject<AuthApiResponse | null>(null);
+  private readonly accessTokenSubject$ = new BehaviorSubject<AuthApiResponse | undefined>(
+    undefined,
+  );
 
-  private readonly init$ = defer(() => this.refresh().pipe(catchError(() => of(null)))).pipe(
+  private readonly init$ = defer(() => this.refresh().pipe(catchError((err) => of(err)))).pipe(
     shareReplay({ bufferSize: 1, refCount: true }),
   );
 
-  public getAccessToken(): Observable<AuthApiResponse | null> {
+  public getAccessToken(): Observable<AuthApiResponse | undefined> {
     return this.init$.pipe(
       switchMap(() => this.accessTokenSubject$.asObservable()),
       distinctUntilChanged((first, second) => first?.key === second?.key),
@@ -63,20 +65,6 @@ export class AuthService {
   }
 
   public revokeAccessToken(): void {
-    return this.accessTokenSubject$.next(null);
-  }
-
-  private mapAccessToken(response: AuthApiResponse): AuthApiResponse {
-    if (!response.key || !response.expiration || !response.user) {
-      throw new Error('Something went wrong');
-    }
-
-    const { key, expiration, user: authenticatedUser } = response;
-
-    return {
-      key: key,
-      expiration: new Date(expiration),
-      user: authenticatedUser,
-    };
+    return this.accessTokenSubject$.next(undefined);
   }
 }

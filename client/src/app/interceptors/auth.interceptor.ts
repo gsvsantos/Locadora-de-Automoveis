@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { HttpRequest, HttpHandlerFn, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, Observable, switchMap, take, throwError } from 'rxjs';
+import { catchError, Observable, switchMap, take } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { NotificationService } from '../services/notification.service';
+import { mapApiErroResponse } from '../utils/map-api-response';
 
 export const authInterceptor = (
   req: HttpRequest<unknown>,
@@ -14,7 +14,7 @@ export const authInterceptor = (
   const notificationService = inject(NotificationService);
   const router = inject(Router);
 
-  const whitelist = ['/auth/register', '/auth/logn', '/auth/refresh', '/auth/logout'];
+  const whitelist = ['/auth/register', '/auth/login', '/auth/refresh', '/auth/logout'];
 
   if (whitelist.some((url) => req.url.includes(url)))
     return next(req.clone({ withCredentials: true }));
@@ -30,8 +30,8 @@ export const authInterceptor = (
       });
 
       return next(request).pipe(
-        catchError((err) => {
-          if ((err as HttpErrorResponse).status !== 401) return throwError(() => err);
+        catchError((err: HttpErrorResponse) => {
+          if (err.status !== 401) return mapApiErroResponse(err) as Observable<HttpEvent<unknown>>;
 
           return authService.refresh().pipe(
             switchMap((newAccessToken) => {
@@ -39,16 +39,17 @@ export const authInterceptor = (
                 headers: req.headers.set('Authorization', `Bearer ${newAccessToken.key}`),
                 withCredentials: true,
               });
+
               return next(newRequest);
             }),
-            catchError((refreshError) => {
+            catchError((refreshError: HttpErrorResponse) => {
               notificationService.error('Your session has expired. Please, log-in again.');
 
               authService.revokeAccessToken();
 
               void router.navigate(['/auth', 'login']);
 
-              return throwError(() => refreshError);
+              return mapApiErroResponse(refreshError) as Observable<HttpEvent<unknown>>;
             }),
           );
         }),

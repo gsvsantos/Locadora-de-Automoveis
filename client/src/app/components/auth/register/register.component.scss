@@ -14,10 +14,11 @@
   align-items: center;
   min-width: 350px;
   max-width: fit-content;
-  padding: 0 50px;
-  background-color: $superficie;
-  border-radius: 20px;
-  box-shadow: $shadow-1, $shadow-2;
+  padding: 2rem 50px;
+  background-color: $surface;
+  border-radius: $border-radius;
+  box-shadow: $shadow-1;
+  border: 1px solid $border;
 }
 
 .card {
@@ -27,7 +28,7 @@
 .bar {
   border: none;
   height: 1px;
-  background-color: $primaria-light;
+  background-color: $border;
 }
 
 .card-content {
@@ -45,14 +46,17 @@
   height: 40px;
   width: 40px;
   margin: 0 5px;
-  color: $primaria;
-  border: 1px solid $borda;
+
+  color: $primary;
+  border: 1px solid $border;
   border-radius: 50%;
   text-decoration: none;
+  transition: $transition-fast;
 
   &:hover {
-    color: $primaria-active;
-    border: 1px solid $primaria-active;
+    color: $primary-active;
+    border-color: $primary-active;
+    background-color: $surface-alt;
   }
 }
 
@@ -60,45 +64,55 @@
   width: 100%;
   position: relative;
   margin-bottom: 20px;
-}
-.form-field span {
-  display: inline-flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  bottom: -20px;
-  left: 0;
-  font-size: 12px;
-  color: $perigo;
+
+  span {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    font-size: 12px;
+    color: $danger;
+  }
+
+  .ng-invalid.ng-dirty {
+    border-color: $danger;
+    color: $danger;
+
+    &::placeholder {
+      color: rgba($danger, 0.7);
+    }
+  }
 }
 
 .form-input {
-  color: $primaria-active;
-  background-color: $superficie-destaque;
-  border: 1px solid $borda;
+  color: $text-main;
+  background-color: $surface-alt;
+  border: 1px solid $border;
   border-radius: 20px;
   box-sizing: border-box;
   padding: 12px 15px;
   margin: 8px 0 0;
   width: 100%;
+  transition: $transition-fast;
 
   &:hover {
-    border: 1px solid $primaria-light;
+    border-color: $primary;
   }
+
   &:focus {
-    color: $primaria;
-    border: 1px solid $primaria-active;
+    color: $text-main;
+    background-color: $surface;
+    border-color: $primary-active;
+    box-shadow: 0 0 0 4px rgba(var(--shadow-rgb), 0.1);
     outline: none;
   }
-  &::placeholder {
-    color: $primaria-light;
-  }
-}
 
-.form-field .ng-invalid.ng-dirty {
-  color: $perigo;
-  border: 1px solid $perigo;
+  &::placeholder {
+    color: $text-muted;
+  }
 }
 
 .buttons {
