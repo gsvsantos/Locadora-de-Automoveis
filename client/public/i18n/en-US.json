@@ -126,6 +126,38 @@
           "confirm": "Delete"
         }
       }
+    },
+    "selfUpdate": {
+      "card": {
+        "title": "Edit Your Profile",
+        "subtitle": "Update your personal and contact information.",
+        "section": {
+          "personalData": "Personal and Contact Information",
+          "accountData": "Account Credentials (Username, Password)"
+        },
+        "placeholder": {
+          "fullName": "Full Name",
+          "email": "Email",
+          "phoneNumber": "Phone Number (e.g., (99) 99999-9999)",
+          "userName": "Username",
+          "password": "New Password (Leave blank to keep current)"
+        },
+        "errors": {
+          "fullNameRequired": "Your full name is required.",
+          "fullNameLength": "Your name must be at least 3 characters long.",
+          "emailRequired": "Email is required.",
+          "emailInvalid": "Invalid email format.",
+          "phoneNumberRequired": "Phone number is required.",
+          "phoneNumberInvalid": "Invalid phone number format.",
+          "userNameRequired": "Username is required.",
+          "userNameLength": "Username must be at least 5 characters long.",
+          "passwordLength": "New password must be at least 8 characters long."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Save Changes"
+        }
+      }
     }
   }
 }

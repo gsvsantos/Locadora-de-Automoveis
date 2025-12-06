@@ -69,12 +69,31 @@
         }
       </div>
 
-      <div class="sidebar__profile">
-        <span class="material-icons sidebar__profile-icon">account_circle</span>
-        <div>
-          <span>{{ user?.userName }}</span>
+      @if (user?.role !== 'Admin') {
+        <div class="sidebar__profile">
+          <a
+            class="sidebar__profile-link"
+            [routerLink]="['employees', 'options', user?.id]"
+            (click)="closeSidebar()"
+          >
+            <span class="material-icons sidebar__profile-icon">account_circle</span>
+
+            <div>
+              <span>{{ user?.userName }}</span>
+            </div>
+          </a>
         </div>
-      </div>
+      } @else {
+        <div class="sidebar__profile-admin">
+          <div class="sidebar__profile-link-admin">
+            <span class="material-icons sidebar__profile-icon-admin">account_circle</span>
+
+            <div>
+              <span>{{ user?.userName }}</span>
+            </div>
+          </div>
+        </div>
+      }
     </aside>
 
     <div class="shell__content">

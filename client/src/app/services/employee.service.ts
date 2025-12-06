@@ -30,6 +30,12 @@ export class EmployeeService {
     return this.http.put<IdApiResponse>(url, updateModel);
   }
 
+  public selfUpdate(updateModel: EmployeeDto): Observable<IdApiResponse> {
+    const url = `${this.apiUrl}/self-update`;
+
+    return this.http.put<IdApiResponse>(url, updateModel);
+  }
+
   public delete(id: string): Observable<null> {
     const url = `${this.apiUrl}/delete/${id}`;
 
@@ -69,7 +75,7 @@ export class EmployeeService {
       fullName: apiEmployee.fullName,
       admissionDate: new Date(apiEmployee.admissionDate),
       salary: apiEmployee.salary,
-      isActive: apiEmployee.isActive
+      isActive: apiEmployee.isActive,
     };
   }
 }

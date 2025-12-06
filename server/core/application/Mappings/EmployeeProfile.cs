@@ -86,7 +86,7 @@ public class EmployeeProfile : Profile
                 src.e.AdmissionDate,
                 src.e.Salary
             )
-            { Id = src.r.Id });
+            { Id = src.e.Id });
 
         // Update
         CreateMap<UpdateEmployeeRequest, Employee>()
