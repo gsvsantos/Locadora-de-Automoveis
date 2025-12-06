@@ -20,4 +20,13 @@ export interface ListEmployeesDto {
   employees: Employee[];
 }
 
+export interface EmployeeDetailsApiDto {
+  employee: {
+    id: string;
+    fullName: string;
+    admissionDate: string;
+    salary: number;
+  };
+}
+
 export type EmployeeDataPayload = ListEmployeesDto;

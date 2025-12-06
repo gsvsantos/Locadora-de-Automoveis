@@ -1,5 +1,5 @@
-import { EmployeeService } from './../../../services/employee.service';
-import { Component, inject, Input } from '@angular/core';
+import { EmployeeService } from '../../../services/employee.service';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -11,7 +11,6 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observer } from 'rxjs';
 import { IdApiResponse } from '../../../models/api.models';
 import { NotificationService } from '../../../services/notification.service';
-import { AuthenticatedUserModel } from '../../../models/auth.models';
 import { EmployeeDto } from '../../../models/employee.models';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -31,8 +30,6 @@ export class CreateEmployeeComponent {
   protected readonly buttonType = gsButtonTypeEnum;
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
-
-  @Input({ required: true }) public user?: AuthenticatedUserModel;
 
   protected formGroup: FormGroup = this.formBuilder.group({
     fullName: [
@@ -92,7 +89,7 @@ export class CreateEmployeeComponent {
     const registerObserver: Observer<IdApiResponse> = {
       next: () =>
         this.notificationService.success(
-          `Patient "${registerModel.fullName}" registered successfully!`,
+          `Employee "${registerModel.fullName}" registered successfully!`,
         ),
       error: (err: string) => this.notificationService.error(err),
       complete: () => void this.router.navigate(['/employees']),

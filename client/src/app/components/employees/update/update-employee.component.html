@@ -1,0 +1,79 @@
+<section class="update-section" *transloco="let t; prefix: 'employee.update'">
+  <div class="main-content">
+    <h2>Edit Patient</h2>
+    <hr />
+    @if (employee$ | async) {
+      <div class="card">
+        <form [formGroup]="formGroup" class="form" (ngSubmit)="update()">
+          <h2>{{ t('card.title') }}</h2>
+          <hr class="bar" />
+          <div class="card-content">
+            <span>{{ t('card.subtitle') }}</span>
+
+            <h3>{{ t('card.section.personalData') }}</h3>
+
+            <div class="form-field">
+              <input
+                class="form-input"
+                formControlName="fullName"
+                type="text"
+                [placeholder]="t('card.placeholder.fullName')"
+                autocomplete="name"
+              />
+              @if (fullName?.errors?.['required'] && fullName?.dirty) {
+                <span class="error-message">{{ t('card.errors.fullNameRequired') }}</span>
+              }
+              @if (fullName?.errors?.['minlength'] && fullName?.dirty) {
+                <span class="error-message">{{ t('card.errors.fullNameLength') }}</span>
+              }
+            </div>
+
+            <hr />
+
+            <h3>{{ t('card.section.professionalData') }}</h3>
+
+            <div class="form-field">
+              <label>{{ t('card.label.admissionDate') }}</label>
+              <input class="form-input" formControlName="admissionDate" type="date" />
+              @if (admissionDate?.errors?.['required'] && admissionDate?.dirty) {
+                <span class="error-message">{{ t('card.errors.admissionDateRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <input
+                class="form-input"
+                formControlName="salary"
+                type="number"
+                step="0.01"
+                [placeholder]="t('card.placeholder.salary')"
+              />
+              @if (salary?.errors?.['required'] && salary?.dirty) {
+                <span class="error-message">{{ t('card.errors.salaryRequired') }}</span>
+              }
+              @if (salary?.errors?.['min'] && salary?.dirty) {
+                <span class="error-message">{{ t('card.errors.salaryMin') }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="buttons">
+            <gs-buttons
+              [buttonType]="buttonType.Link"
+              [text]="t('card.buttons.back')"
+              routerLink="/employees"
+            ></gs-buttons>
+
+            <gs-buttons
+              [buttonType]="buttonType.Default"
+              [text]="t('card.buttons.confirm')"
+              type="submit"
+              [disabled]="formGroup.invalid"
+              (click)="update()"
+            ></gs-buttons>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+</section>

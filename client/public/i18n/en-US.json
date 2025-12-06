@@ -84,6 +84,35 @@
           "confirm": "Register"
         }
       }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Employee Details",
+        "subtitle": "Update the employee's information.",
+        "section": {
+          "personalData": "Personal and Contact Information",
+          "accountData": "Account Credentials",
+          "professionalData": "Professional Data"
+        },
+        "placeholder": {
+          "fullName": "Full Name",
+          "salary": "Salary (e.g., 3500.00)"
+        },
+        "label": {
+          "admissionDate": "Admission Date"
+        },
+        "errors": {
+          "fullNameRequired": "The full name is required.",
+          "fullNameLength": "The name must be at least 3 characters long.",
+          "admissionDateRequired": "The admission date is required.",
+          "salaryRequired": "The salary is required.",
+          "salaryMin": "The salary must be greater than $100.00."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update"
+        }
+      }
     }
   }
 }

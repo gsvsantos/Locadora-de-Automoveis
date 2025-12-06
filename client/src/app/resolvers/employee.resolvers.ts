@@ -14,6 +14,6 @@ export const employeeDetailsResolver: ResolveFn<Employee> = (route: ActivatedRou
   if (!route.paramMap.has('id')) throw new Error('Missing "ID" parameter.');
 
   const id: string = route.paramMap.get('id')!;
-
+  console.log('id no resolver', id);
   return employeeService.getById(id);
 };
