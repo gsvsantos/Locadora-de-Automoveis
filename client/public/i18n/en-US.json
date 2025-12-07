@@ -221,5 +221,28 @@
         }
       }
     }
+  },
+  "billingPlans": {
+    "list": {
+      "header": {
+        "title": "Billing Plans"
+      },
+      "buttons": {
+        "register": "Register New Plan",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives"
+      },
+      "type": {
+        "daily": "Daily Billing",
+        "controlled": "Controlled Billing",
+        "free": "Free Billing"
+      },
+      "label": {
+        "dailyRate": "Daily Rate",
+        "pricePerKm": "Price per Km",
+        "pricePerKmExtrapolated": "Price per Km (Extra)",
+        "fixedRate": "Fixed Rate"
+      }
+    }
   }
 }

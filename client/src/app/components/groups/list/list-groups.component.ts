@@ -32,8 +32,6 @@ export class ListGroupsComponent {
   public toggleFilter(filter: boolean): void {
     const newFilter = filter;
 
-    console.log(newFilter);
-
     void this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { isActive: newFilter },

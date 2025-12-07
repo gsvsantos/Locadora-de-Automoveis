@@ -54,9 +54,9 @@ export class ShellComponent {
       link: 'groups',
     },
     {
-      title: 'Example',
-      icon: '#',
-      link: '#',
+      title: 'Billing Plans',
+      icon: 'card_membership',
+      link: 'billing-plans',
     },
     {
       title: 'Example',

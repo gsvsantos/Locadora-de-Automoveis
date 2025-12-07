@@ -1,17 +1,18 @@
 import { Component, inject } from '@angular/core';
-import { Employee } from '../../../models/employee.models';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { filter, map } from 'rxjs';
-import { AsyncPipe, CurrencyPipe, DatePipe, TitleCasePipe } from '@angular/common';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
+import { map, filter } from 'rxjs';
+import { BillingPlan } from '../../../models/billing-plan.models';
+import { AsyncPipe, CurrencyPipe, TitleCasePipe } from '@angular/common';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-list-employees.component',
-  imports: [AsyncPipe, CurrencyPipe, DatePipe, TitleCasePipe, RouterLink, GsButtons],
-  templateUrl: './list-employees.component.html',
-  styleUrl: './list-employees.component.scss',
+  selector: 'app-list-billing-plans.component',
+  imports: [AsyncPipe, CurrencyPipe, TitleCasePipe, TranslocoModule, RouterLink, GsButtons],
+  templateUrl: './list-billing-plans.component.html',
+  styleUrl: './list-billing-plans.component.scss',
 })
-export class ListEmployeesComponent {
+export class ListBillingPlansComponent {
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
   protected readonly buttonType = gsButtonTypeEnum;
@@ -24,9 +25,9 @@ export class ListEmployeesComponent {
     })),
   );
 
-  protected readonly employees$ = this.route.data.pipe(
-    filter((data) => data['employees'] as boolean),
-    map((data) => data['employees'] as Employee[]),
+  protected readonly billingPlans$ = this.route.data.pipe(
+    filter((data) => data['billingPlans'] as boolean),
+    map((data) => data['billingPlans'] as BillingPlan[]),
   );
 
   public toggleFilter(filter: boolean): void {
