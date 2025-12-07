@@ -58,7 +58,7 @@ public class UpdateBillingPlanRequestHandler(
 
             List<BillingPlan> existingBillingPlans = await repositoryBillingPlan.GetAllAsync();
 
-            if (GroupAlreadyHaveBillingPlan(updatedBillingPlan, existingBillingPlans))
+            if (GroupAlreadyHaveBillingPlan(selectedBillingPlan, existingBillingPlans))
             {
                 return Result.Fail(BillingPlanErrorResults.GroupAlreadyHaveBillingPlanError(selectedGroup.Name));
             }
@@ -82,14 +82,14 @@ public class UpdateBillingPlanRequestHandler(
         }
     }
 
-    private static bool GroupAlreadyHaveBillingPlan(BillingPlan BillingPlan, List<BillingPlan> existingBillingPlans)
+    private static bool GroupAlreadyHaveBillingPlan(BillingPlan billingPlan, List<BillingPlan> existingBillingPlans)
     {
         return existingBillingPlans
             .Any(entity =>
-            entity.Id != BillingPlan.Id &&
+            entity.Id != billingPlan.Id &&
             string.Equals(
                 entity.Group.Name,
-                BillingPlan.Group.Name,
+                billingPlan.Group.Name,
                 StringComparison.CurrentCultureIgnoreCase)
             );
     }
