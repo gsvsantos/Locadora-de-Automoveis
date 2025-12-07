@@ -7,6 +7,12 @@ namespace LocadoraDeAutomoveis.Infrastructure.Drivers;
 public class DriverRepository(AppDbContext context)
     : BaseRepository<Driver>(context), IRepositoryDriver
 {
+    public async Task<bool> HasDriversByClient(Guid clientId)
+    {
+        return await this.records.AnyAsync(r =>
+            r.ClientId.Equals(clientId));
+    }
+
     public override async Task<List<Driver>> GetAllAsync()
     {
         return await this.records

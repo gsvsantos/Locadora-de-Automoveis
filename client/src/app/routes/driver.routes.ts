@@ -1,8 +1,9 @@
 import { Routes } from '@angular/router';
 import { ListDriversComponent } from '../components/drivers/list/list-drivers.component';
-import { listDriversResolver } from '../resolvers/driver.resolvers';
+import { driverDetailsResolver, listDriversResolver } from '../resolvers/driver.resolvers';
 import { CreateDriverComponent } from '../components/drivers/create/create-driver.component';
 import { listClientsResolver } from '../resolvers/client.resolvers';
+import { DeleteDriverComponent } from '../components/drivers/delete/delete-driver.component';
 
 export const driverRoutes: Routes = [
   {
@@ -16,14 +17,9 @@ export const driverRoutes: Routes = [
     component: CreateDriverComponent,
     resolve: { clients: listClientsResolver },
   },
-  //   {
-  //     path: 'edit/:id',
-  //     component: UpdateDriverComponent,
-  //     resolve: { driver: driverDetailsResolver },
-  //   },
-  //   {
-  //     path: 'delete/:id',
-  //     component: DeleteDriverComponent,
-  //     resolve: { driver: driverDetailsResolver },
-  //   },
+  {
+    path: 'delete/:id',
+    component: DeleteDriverComponent,
+    resolve: { driver: driverDetailsResolver },
+  },
 ];

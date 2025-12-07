@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
@@ -11,6 +12,7 @@ namespace LocadoraDeAutomoveis.Application.Clients.Commands.Delete;
 public class DeleteClientRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryClient repositoryClient,
+    IRepositoryDriver repositoryDriver,
     IRepositoryRental repositoryRental,
     ILogger<DeleteClientRequestHandler> logger
 ) : IRequestHandler<DeleteClientRequest, Result<DeleteClientResponse>>
@@ -34,8 +36,9 @@ public class DeleteClientRequestHandler(
         try
         {
             bool hasHistory = await repositoryRental.HasRentalHistoryByClient(request.Id);
+            bool hasAssociatedDrivers = await repositoryDriver.HasDriversByClient(request.Id);
 
-            if (hasHistory)
+            if (hasHistory || hasAssociatedDrivers)
             {
                 selectedClient.Deactivate();
 

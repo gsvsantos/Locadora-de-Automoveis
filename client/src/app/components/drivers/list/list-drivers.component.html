@@ -61,9 +61,6 @@
 
             @if (driver.isActive) {
               <div class="card__actions" align="end">
-                <a [routerLink]="['edit', driver.id]">
-                  <span class="material-icons">edit</span>
-                </a>
                 <a class="button button__danger" [routerLink]="['delete', driver.id]">
                   <span class="material-icons">delete</span>
                 </a>

@@ -675,6 +675,32 @@
           "confirm": "Register Driver"
         }
       }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Driver",
+        "subtitle": "Confirm permanent deletion of the driver's record.",
+        "section": {
+          "details": "Driver Identification",
+          "contact": "Contact Information",
+          "licenseData": "License Details (CNH)",
+          "associatedClient": "Associated Client",
+          "warning": "This action cannot be undone. All rental history linked to this driver will be affected."
+        },
+        "label": {
+          "fullName": "Full Name",
+          "document": "Document",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "licenseNumber": "License Number",
+          "licenseValidity": "License Validity",
+          "clientName": "Client Name"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Driver"
+        }
+      }
     }
   }
 }
