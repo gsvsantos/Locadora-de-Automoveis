@@ -1,3 +1,4 @@
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,23 +8,22 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
-import { filter, map, Observer } from 'rxjs';
+import { filter, map, tap, Observer, take, switchMap, shareReplay } from 'rxjs';
 import { IdApiResponse } from '../../../models/api.models';
-import { VehicleDto } from '../../../models/vehicles.models';
+import { Group } from '../../../models/group.models';
 import { NotificationService } from '../../../services/notification.service';
-import { VehicleService } from './../../../services/vehicle.service';
-import { Component, inject } from '@angular/core';
+import { VehicleService } from '../../../services/vehicle.service';
+import { Vehicle, VehicleDto } from '../../../models/vehicles.models';
 import { AsyncPipe } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
-import { Group } from '../../../models/group.models';
 
 @Component({
-  selector: 'app-create-vehicle.component',
+  selector: 'app-update-vehicle.component',
   imports: [AsyncPipe, RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
-  templateUrl: './create-vehicle.component.html',
-  styleUrl: './create-vehicle.component.scss',
+  templateUrl: './update-vehicle.component.html',
+  styleUrl: './update-vehicle.component.scss',
 })
-export class CreateVehicleComponent {
+export class UpdateVehicleComponent {
   protected readonly formBuilder = inject(FormBuilder);
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
@@ -36,6 +36,18 @@ export class CreateVehicleComponent {
   protected readonly groups$ = this.route.data.pipe(
     filter((data) => data['groups'] as boolean),
     map((data) => data['groups'] as Group[]),
+  );
+
+  protected readonly vehicle$ = this.route.data.pipe(
+    filter((data) => data['vehicle'] as boolean),
+    map((data) => data['vehicle'] as Vehicle),
+    tap(
+      (vehicle: Vehicle) => (
+        console.log('vehicle:', vehicle),
+        this.formGroup.patchValue({ ...vehicle, groupId: vehicle.group.id })
+      ),
+    ),
+    shareReplay({ bufferSize: 1, refCount: true }),
   );
 
   protected formGroup: FormGroup = this.formBuilder.group({
@@ -99,20 +111,22 @@ export class CreateVehicleComponent {
     return this.formGroup.get('photoPath');
   }
 
-  public register(): void {
+  public update(): void {
     if (this.formGroup.invalid) return;
 
-    const registerModel: VehicleDto = this.formGroup.value as VehicleDto;
-    console.log(registerModel);
-    const registerObserver: Observer<IdApiResponse> = {
-      next: () =>
-        this.notificationService.success(
-          `Vehicles ${registerModel.licensePlate} registered successfully!`,
-        ),
+    const updateModel: VehicleDto = this.formGroup.value as VehicleDto;
+
+    const updateObserve: Observer<IdApiResponse> = {
+      next: () => this.notificationService.success(`Billing Plan updated successfully!`),
       error: (err: string) => this.notificationService.error(err),
       complete: () => void this.router.navigate(['/vehicles']),
     };
 
-    this.vehicleService.register(registerModel).subscribe(registerObserver);
+    this.vehicle$
+      .pipe(
+        take(1),
+        switchMap((vehicle) => this.vehicleService.update(vehicle.id, updateModel)),
+      )
+      .subscribe(updateObserve);
   }
 }

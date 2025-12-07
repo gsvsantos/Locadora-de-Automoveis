@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
-import { filter, map, Observer, tap } from 'rxjs';
+import { filter, map, Observer } from 'rxjs';
 import { IdApiResponse } from '../../../models/api.models';
 import { NotificationService } from '../../../services/notification.service';
 import { BillingPlanService } from './../../../services/billing-plan.service';
@@ -36,7 +36,6 @@ export class CreateBillingPlanComponent {
   protected readonly groups$ = this.route.data.pipe(
     filter((data) => data['groups'] as boolean),
     map((data) => data['groups'] as Group[]),
-    tap((groups) => console.log(groups)),
   );
 
   protected formGroup: FormGroup = this.formBuilder.group({

@@ -1,0 +1,166 @@
+<section class="update-section" *transloco="let t; prefix: 'vehicles.update'">
+  <div class="main-content">
+    @if (vehicle$ | async) {
+      <div class="card">
+        <form [formGroup]="formGroup" class="form" (ngSubmit)="update()">
+          <h2>{{ t('card.title') }}</h2>
+
+          <hr class="bar" />
+
+          <div class="card-content">
+            <span>{{ t('card.subtitle') }}</span>
+
+            <h3>{{ t('card.section.identification') }}</h3>
+
+            <div class="form-field">
+              <label>{{ t('card.label.licensePlate') }}</label>
+              <input
+                class="form-input"
+                formControlName="licensePlate"
+                type="text"
+                [placeholder]="t('card.placeholder.licensePlate')"
+              />
+              @if (licensePlate?.errors?.['required'] && licensePlate?.dirty) {
+                <span class="error-message">{{ t('card.errors.licensePlateRequired') }}</span>
+              }
+              @if (licensePlate?.errors?.['pattern'] && licensePlate?.dirty) {
+                <span class="error-message">{{ t('card.errors.licensePlatePattern') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.group') }}</label>
+              <select class="form-input" formControlName="groupId">
+                <option value="">{{ t('card.placeholder.groupId') }}</option>
+                @for (group of groups$ | async; track group.id) {
+                  <option [value]="group.id">{{ group.name }}</option>
+                }
+              </select>
+              @if (groupId?.errors?.['required'] && groupId?.dirty) {
+                <span class="error-message">{{ t('card.errors.groupIdRequired') }}</span>
+              }
+            </div>
+
+            <hr />
+
+            <h3>{{ t('card.section.details') }}</h3>
+
+            <div class="form-field">
+              <input
+                class="form-input"
+                formControlName="brand"
+                type="text"
+                [placeholder]="t('card.placeholder.brand')"
+              />
+              @if (brand?.errors?.['required'] && brand?.dirty) {
+                <span class="error-message">{{ t('card.errors.brandRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <input
+                class="form-input"
+                formControlName="model"
+                type="text"
+                [placeholder]="t('card.placeholder.model')"
+              />
+              @if (model?.errors?.['required'] && model?.dirty) {
+                <span class="error-message">{{ t('card.errors.modelRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <input
+                class="form-input"
+                formControlName="color"
+                type="text"
+                [placeholder]="t('card.placeholder.color')"
+              />
+              @if (color?.errors?.['required'] && color?.dirty) {
+                <span class="error-message">{{ t('card.errors.colorRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <input
+                class="form-input"
+                formControlName="year"
+                type="number"
+                [placeholder]="t('card.placeholder.year')"
+                min="1900"
+                max="2100"
+              />
+              @if (year?.errors?.['required'] && year?.dirty) {
+                <span class="error-message">{{ t('card.errors.yearRequired') }}</span>
+              }
+            </div>
+
+            <hr />
+
+            <h3>{{ t('card.section.fuelAndCapacity') }}</h3>
+
+            <div class="form-field">
+              <label>{{ t('card.label.fuelType') }}</label>
+              <select class="form-input" formControlName="fuelType">
+                <option value="">{{ t('card.placeholder.fuelType') }}</option>
+                <option value="Gasoline">{{ t('card.fuel.gasoline') }}</option>
+                <option value="Gas">{{ t('card.fuel.gas') }}</option>
+                <option value="Diesel">{{ t('card.fuel.diesel') }}</option>
+                <option value="Alcohol">{{ t('card.fuel.alcohol') }}</option>
+                <option value="Ethanol">{{ t('card.fuel.ethanol') }}</option>
+              </select>
+              @if (fuelType?.errors?.['required'] && fuelType?.dirty) {
+                <span class="error-message">{{ t('card.errors.fuelTypeRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <input
+                class="form-input"
+                formControlName="fuelTankCapacity"
+                type="number"
+                step="1"
+                min="1"
+                [placeholder]="t('card.placeholder.fuelTankCapacity')"
+              />
+              @if (fuelTankCapacity?.errors?.['required'] && fuelTankCapacity?.dirty) {
+                <span class="error-message">{{ t('card.errors.fuelTankCapacityRequired') }}</span>
+              }
+            </div>
+
+            <hr />
+
+            <h3>{{ t('card.section.photo') }}</h3>
+            <div class="form-field">
+              <input
+                class="form-input"
+                formControlName="photoPath"
+                type="text"
+                [placeholder]="t('card.placeholder.photoPath')"
+              />
+              @if (photoPath?.errors?.['required'] && photoPath?.dirty) {
+                <span class="error-message">{{ t('card.errors.photoPathRequired') }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="buttons">
+            <gs-buttons
+              [buttonType]="buttonType.Link"
+              [text]="t('card.buttons.back')"
+              routerLink="/vehicles"
+            ></gs-buttons>
+
+            <gs-buttons
+              [buttonType]="buttonType.Default"
+              [text]="t('card.buttons.confirm')"
+              type="submit"
+              [disabled]="formGroup.invalid"
+              (click)="update()"
+            ></gs-buttons>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+</section>
