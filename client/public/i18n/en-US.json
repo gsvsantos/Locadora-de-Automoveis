@@ -509,6 +509,7 @@
         },
         "errors": {
           "fullNameRequired": "The full name is required.",
+          "fullNameLength": "The name must be at least 3 characters long.",
           "fullNameInvalid": "Something is wrong it that name.",
           "typeRequired": "Client type is required.",
           "documentRequired": "The document is required.",
@@ -516,7 +517,6 @@
           "emailRequired": "The email is required.",
           "phoneNumberRequired": "The phone number is required.",
           "phoneNumberInvalid": "Invalid phone number format.",
-          "licenseNumberRequired": "The license number is required.",
           "stateRequired": "State is required.",
           "cityRequired": "City is required.",
           "neighborhoodRequired": "Neighborhood is required.",
@@ -526,6 +526,57 @@
         "buttons": {
           "back": "Back",
           "confirm": "Register Client"
+        }
+      }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Client Details",
+        "subtitle": "Update the client's information and address.",
+        "section": {
+          "personalData": "Personal and Contact Information",
+          "addressData": "Address"
+        },
+        "placeholder": {
+          "fullName": "Full Name",
+          "type": "Select Client Type...",
+          "document": "Document (CPF/CNPJ)",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "licenseNumber": "License Number",
+          "state": "State",
+          "city": "City",
+          "neighborhood": "Neighborhood",
+          "street": "Street",
+          "number": "Number"
+        },
+        "label": {
+          "type": "Client Type",
+          "state": "State"
+        },
+        "type": {
+          "individual": "Individual (PF)",
+          "corporate": "Corporate (PJ)"
+        },
+        "errors": {
+          "fullNameRequired": "The full name is required.",
+          "fullNameLength": "Name must be valid.",
+          "fullNameInvalid": "Invalid name format.",
+          "typeRequired": "Client type is required.",
+          "documentRequired": "The document is required.",
+          "documentInvalid": "Invalid document format.",
+          "emailRequired": "The email is required.",
+          "phoneNumberRequired": "The phone number is required.",
+          "phoneNumberInvalid": "Invalid phone number format.",
+          "stateRequired": "State is required.",
+          "cityRequired": "City is required.",
+          "neighborhoodRequired": "Neighborhood is required.",
+          "streetRequired": "Street is required.",
+          "numberRequired": "Number is required."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update Client"
         }
       }
     }

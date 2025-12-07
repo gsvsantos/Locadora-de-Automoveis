@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 import { ListClientsComponent } from '../components/clients/list/list-clients.component';
-import { listClientsResolver } from '../resolvers/client.resolvers';
+import { clientDetailsResolver, listClientsResolver } from '../resolvers/client.resolvers';
 import { CreateClientComponent } from '../components/clients/create/create-client.component';
+import { UpdateClientComponent } from '../components/clients/update/update-client.component';
 
 export const clientRoutes: Routes = [
   {
@@ -14,11 +15,11 @@ export const clientRoutes: Routes = [
     path: 'register',
     component: CreateClientComponent,
   },
-  //   {
-  //     path: 'edit/:id',
-  //     component: UpdateClientComponent,
-  //     resolve: { client: clientDetailsResolver },
-  //   },
+  {
+    path: 'edit/:id',
+    component: UpdateClientComponent,
+    resolve: { client: clientDetailsResolver },
+  },
   //   {
   //     path: 'delete/:id',
   //     component: DeleteClientComponent,

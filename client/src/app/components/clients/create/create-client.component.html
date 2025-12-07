@@ -85,18 +85,6 @@
             }
           </div>
 
-          <div class="form-field">
-            <input
-              class="form-input"
-              formControlName="licenseNumber"
-              type="text"
-              [placeholder]="t('card.placeholder.licenseNumber')"
-            />
-            @if (licenseNumber?.errors?.['required'] && licenseNumber?.dirty) {
-              <span class="error-message">{{ t('card.errors.licenseNumberRequired') }}</span>
-            }
-          </div>
-
           <hr />
 
           <h3>{{ t('card.section.addressData') }}</h3>

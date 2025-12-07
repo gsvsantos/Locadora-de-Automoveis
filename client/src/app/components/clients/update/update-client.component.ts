@@ -1,4 +1,6 @@
+import { AsyncPipe } from '@angular/common';
 /* eslint-disable no-useless-escape */
+import { Component, inject } from '@angular/core';
 import {
   ReactiveFormsModule,
   FormBuilder,
@@ -9,20 +11,19 @@ import {
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
-import { NotificationService } from '../../../services/notification.service';
-import { ClientService } from './../../../services/client.service';
-import { Component, inject } from '@angular/core';
-import { CreateClientDto } from '../../../models/client.models';
-import { Observer } from 'rxjs';
+import { Observer, take, switchMap, filter, map, shareReplay, tap } from 'rxjs';
 import { IdApiResponse } from '../../../models/api.models';
+import { ClientService } from '../../../services/client.service';
+import { NotificationService } from '../../../services/notification.service';
+import { Client, ClientDto } from '../../../models/client.models';
 
 @Component({
-  selector: 'app-create-client.component',
-  imports: [RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
-  templateUrl: './create-client.component.html',
-  styleUrl: './create-client.component.scss',
+  selector: 'app-update-client.component',
+  imports: [AsyncPipe, RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
+  templateUrl: './update-client.component.html',
+  styleUrl: './update-client.component.scss',
 })
-export class CreateClientComponent {
+export class UpdateClientComponent {
   protected readonly formBuilder = inject(FormBuilder);
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
@@ -31,6 +32,22 @@ export class CreateClientComponent {
   protected readonly buttonType = gsButtonTypeEnum;
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
+
+  protected readonly client$ = this.route.data.pipe(
+    filter((data) => data['client'] as boolean),
+    map((data) => data['client'] as Client),
+    tap((client: Client) =>
+      this.formGroup.patchValue({
+        ...client,
+        state: client.address.state,
+        city: client.address.city,
+        neighborhood: client.address.neighborhood,
+        street: client.address.street,
+        number: client.address.number,
+      }),
+    ),
+    shareReplay({ bufferSize: 1, refCount: true }),
+  );
 
   protected formGroup: FormGroup = this.formBuilder.group({
     fullName: [
@@ -106,17 +123,22 @@ export class CreateClientComponent {
     return this.formGroup.get('number');
   }
 
-  public register(): void {
+  public update(): void {
     if (this.formGroup.invalid) return;
 
-    const registerModel: CreateClientDto = this.formGroup.value as CreateClientDto;
+    const updateModel: ClientDto = this.formGroup.value as ClientDto;
 
-    const registerObserver: Observer<IdApiResponse> = {
-      next: () => this.notificationService.success(`Client registered successfully!`),
+    const updateObserve: Observer<IdApiResponse> = {
+      next: () => this.notificationService.success(`Client updated successfully!`),
       error: (err: string) => this.notificationService.error(err),
       complete: () => void this.router.navigate(['/clients']),
     };
 
-    this.clientService.register(registerModel).subscribe(registerObserver);
+    this.client$
+      .pipe(
+        take(1),
+        switchMap((client) => this.clientService.update(client.id, updateModel)),
+      )
+      .subscribe(updateObserve);
   }
 }
