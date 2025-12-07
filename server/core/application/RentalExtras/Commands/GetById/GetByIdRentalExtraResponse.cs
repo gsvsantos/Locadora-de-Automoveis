@@ -2,4 +2,4 @@
 
 namespace LocadoraDeAutomoveis.Application.RentalExtras.Commands.GetById;
 
-public record GetByIdRentalExtraResponse(RentalExtraDto RentalExtra);
+public record GetByIdRentalExtraResponse(RentalExtraDto Extra);

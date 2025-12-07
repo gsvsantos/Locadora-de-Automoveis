@@ -51,7 +51,6 @@ public class RentalExtraController(
     [HttpPut("update/{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateRentalExtraRequestPartial partialRequest)
     {
-
         UpdateRentalExtraRequest request = mapper.Map<UpdateRentalExtraRequest>((partialRequest, id));
 
         Result<UpdateRentalExtraResponse> result = await mediator.Send(request);

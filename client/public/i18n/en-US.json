@@ -763,6 +763,45 @@
           "confirm": "Register Extra"
         }
       }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Extra Details",
+        "subtitle": "Update the service details and pricing.",
+        "section": {
+          "details": "Extra Details and Pricing"
+        },
+        "placeholder": {
+          "name": "Service Name (e.g., Baby Seat, Full Insurance, Airport Fee)",
+          "type": "Select Type...",
+          "price": "Price (e.g., 50.00)"
+        },
+        "label": {
+          "name": "Name",
+          "type": "Type",
+          "price": "Price (R$)",
+          "isDaily": "Daily Charge"
+        },
+        "type": {
+          "equipment": "Equipment",
+          "service": "Service",
+          "fee": "Fee"
+        },
+        "info": {
+          "isDaily": "Check if the price should be charged per day of rental."
+        },
+        "errors": {
+          "nameRequired": "The name is required.",
+          "nameLength": "The name must be at least 3 characters long.",
+          "typeRequired": "The type selection is mandatory.",
+          "priceRequired": "The price is required.",
+          "priceMin": "The price must be greater than zero."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update Extra"
+        }
+      }
     }
   }
 }

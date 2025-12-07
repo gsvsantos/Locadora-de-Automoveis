@@ -1,0 +1,88 @@
+<section class="update-section" *transloco="let t; prefix: 'extras.update'">
+  <div class="main-content">
+    @if (extra$ | async; as extra) {
+      <div class="card">
+        <form [formGroup]="formGroup" class="form" (ngSubmit)="update()">
+          <h2>{{ t('card.title') }}</h2>
+
+          <hr class="bar" />
+
+          <div class="card-content">
+            <span>{{ t('card.subtitle') }}</span>
+
+            <h3>{{ t('card.section.details') }}</h3>
+
+            <div class="form-field">
+              <label>{{ t('card.label.name') }}</label>
+              <input
+                class="form-input"
+                formControlName="name"
+                type="text"
+                [placeholder]="t('card.placeholder.name')"
+              />
+              @if (name?.errors?.['required'] && name?.dirty) {
+                <span class="error-message">{{ t('card.errors.nameRequired') }}</span>
+              }
+              @if (name?.errors?.['minlength'] && name?.dirty) {
+                <span class="error-message">{{ t('card.errors.nameLength') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.type') }}</label>
+              <select class="form-input" formControlName="type">
+                <option value="">{{ t('card.placeholder.type') }}</option>
+                <option value="Equipment">{{ t('card.type.equipment') }}</option>
+                <option value="Service">{{ t('card.type.service') }}</option>
+                <option value="Fee">{{ t('card.type.fee') }}</option>
+              </select>
+              @if (type?.errors?.['required'] && type?.dirty) {
+                <span class="error-message">{{ t('card.errors.typeRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.price') }}</label>
+              <input
+                class="form-input"
+                formControlName="price"
+                type="number"
+                step="0.01"
+                min="0.01"
+                [placeholder]="t('card.placeholder.price')"
+              />
+              @if (price?.errors?.['required'] && price?.dirty) {
+                <span class="error-message">{{ t('card.errors.priceRequired') }}</span>
+              }
+              @if (price?.errors?.['min'] && price?.dirty) {
+                <span class="error-message">{{ t('card.errors.priceMin') }}</span>
+              }
+            </div>
+
+            <div class="form-field checkbox-field">
+              <input formControlName="isDaily" type="checkbox" id="isDailyCheckbox" />
+              <label for="isDailyCheckbox">{{ t('card.label.isDaily') }}</label>
+              <span class="small-info">{{ t('card.info.isDaily') }}</span>
+            </div>
+          </div>
+
+          <div class="buttons">
+            <gs-buttons
+              [buttonType]="buttonType.Link"
+              [text]="t('card.buttons.back')"
+              routerLink="/extras"
+            ></gs-buttons>
+
+            <gs-buttons
+              [buttonType]="buttonType.Default"
+              [text]="t('card.buttons.confirm')"
+              type="submit"
+              [disabled]="formGroup.invalid"
+              (click)="update()"
+            ></gs-buttons>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+</section>

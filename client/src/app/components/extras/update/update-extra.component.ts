@@ -1,27 +1,29 @@
+import { Extra } from './../../../models/extra.models';
+import { Component, inject } from '@angular/core';
+import { ExtraDto } from '../../../models/extra.models';
 import {
-  ReactiveFormsModule,
   FormBuilder,
   FormGroup,
   Validators,
   AbstractControl,
+  ReactiveFormsModule,
 } from '@angular/forms';
-import { RouterLink, ActivatedRoute, Router } from '@angular/router';
-import { TranslocoModule } from '@jsverse/transloco';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
-import { Observer } from 'rxjs';
+import { filter, map, tap, shareReplay, Observer, take, switchMap } from 'rxjs';
 import { IdApiResponse } from '../../../models/api.models';
-import { ExtraDto } from '../../../models/extra.models';
+import { ExtraService } from '../../../services/extra.service';
 import { NotificationService } from '../../../services/notification.service';
-import { ExtraService } from './../../../services/extra.service';
-import { Component, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-create-extra.component',
-  imports: [RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
-  templateUrl: './create-extra.component.html',
-  styleUrl: './create-extra.component.scss',
+  selector: 'app-update-extra.component',
+  imports: [AsyncPipe, RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
+  templateUrl: './update-extra.component.html',
+  styleUrl: './update-extra.component.scss',
 })
-export class CreateExtraComponent {
+export class UpdateExtraComponent {
   protected readonly formBuilder = inject(FormBuilder);
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
@@ -30,6 +32,13 @@ export class CreateExtraComponent {
   protected readonly buttonType = gsButtonTypeEnum;
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
+
+  protected readonly extra$ = this.route.data.pipe(
+    filter((data) => data['extra'] as boolean),
+    map((data) => data['extra'] as Extra),
+    tap((extra: Extra) => this.formGroup.patchValue(extra)),
+    shareReplay({ bufferSize: 1, refCount: true }),
+  );
 
   protected formGroup: FormGroup = this.formBuilder.group({
     name: ['', [Validators.required.bind(this), Validators.minLength(3)]],
@@ -54,17 +63,22 @@ export class CreateExtraComponent {
     return this.formGroup.get('type');
   }
 
-  public register(): void {
+  public update(): void {
     if (this.formGroup.invalid) return;
 
-    const registerModel: ExtraDto = this.formGroup.value as ExtraDto;
+    const updateModel: ExtraDto = this.formGroup.value as ExtraDto;
 
-    const registerObserver: Observer<IdApiResponse> = {
-      next: () => this.notificationService.success(`Extra registered successfully!`),
+    const updateObserve: Observer<IdApiResponse> = {
+      next: () => this.notificationService.success(`Extra updated successfully!`),
       error: (err: string) => this.notificationService.error(err),
       complete: () => void this.router.navigate(['/extras']),
     };
 
-    this.extraService.register(registerModel).subscribe(registerObserver);
+    this.extra$
+      .pipe(
+        take(1),
+        switchMap((extra) => this.extraService.update(extra.id, updateModel)),
+      )
+      .subscribe(updateObserve);
   }
 }

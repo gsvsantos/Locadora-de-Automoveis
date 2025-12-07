@@ -60,7 +60,7 @@ public class UpdateRentalExtraRequestHandler(
                 return Result.Fail(RentalExtraErrorResults.DuplicateNameError(request.Name));
             }
 
-            if (request.IsFixed)
+            if (request.IsDaily)
             {
                 updatedRentalExtra.MarkAsFixed();
             }

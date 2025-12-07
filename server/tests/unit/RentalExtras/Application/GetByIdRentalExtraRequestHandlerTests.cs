@@ -6,7 +6,7 @@ using LocadoraDeAutomoveis.Tests.Unit.Shared;
 namespace LocadoraDeAutomoveis.Tests.Unit.RentalExtras.Application;
 
 [TestClass]
-[TestCategory("RentalExtra Application - Unit Tests")]
+[TestCategory("Extra Application - Unit Tests")]
 public sealed class GetByIdRentalExtraRequestHandlerTests : UnitTestBase
 {
     private GetByIdRentalExtraRequestHandler handler = null!;
@@ -51,7 +51,7 @@ public sealed class GetByIdRentalExtraRequestHandlerTests : UnitTestBase
         // Act
         Result<GetByIdRentalExtraResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
 
-        RentalExtraDto dto = result.Value.RentalExtra;
+        RentalExtraDto dto = result.Value.Extra;
 
         // Assert
         Assert.IsTrue(result.IsSuccess);

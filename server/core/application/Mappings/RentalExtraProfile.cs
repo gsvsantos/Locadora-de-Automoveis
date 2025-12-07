@@ -20,6 +20,16 @@ public class RentalExtraProfile : Profile
                 src.IsActive
             ));
 
+        // Update
+        CreateMap<(UpdateRentalExtraRequestPartial p, Guid id), UpdateRentalExtraRequest>()
+            .ConvertUsing(src => new UpdateRentalExtraRequest(
+                src.id,
+                src.p.Name,
+                src.p.Price,
+                src.p.IsDaily,
+                src.p.Type
+            ));
+
         // DTOs
         CreateMap<RentalExtra, RentalExtraDto>()
             .ConvertUsing(src => new RentalExtraDto(
