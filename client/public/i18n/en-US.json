@@ -299,6 +299,30 @@
           "confirm": "Update Plan"
         }
       }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Billing Plan",
+        "subtitle": "Confirm permanent deletion of the following billing plan.",
+        "section": {
+          "details": "Plan Details",
+          "daily": "Daily Billing Rates",
+          "controlled": "Controlled Billing Rates",
+          "free": "Free Billing Rates",
+          "warning": "This action cannot be undone. Any future rental linked to this plan will require manual adjustment."
+        },
+        "label": {
+          "name": "Plan Name",
+          "dailyRate": "Daily Rate",
+          "pricePerKm": "Price per Km",
+          "pricePerKmExtrapolated": "Price per Km (Extra)",
+          "fixedRate": "Fixed Rate"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Plan"
+        }
+      }
     }
   }
 }

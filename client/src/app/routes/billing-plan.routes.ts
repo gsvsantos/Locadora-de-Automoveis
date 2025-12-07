@@ -7,6 +7,7 @@ import {
 import { CreateBillingPlanComponent } from '../components/billing-plans/create/create-billing-plan.component';
 import { listGroupsResolver } from '../resolvers/group.resolvers';
 import { UpdateBillingPlanComponent } from '../components/billing-plans/update/update-billing-plan.component';
+import { DeleteBillingPlanComponent } from '../components/billing-plans/delete/delete-billing-plan.component';
 
 export const billingPlanRoutes: Routes = [
   {
@@ -25,9 +26,9 @@ export const billingPlanRoutes: Routes = [
     component: UpdateBillingPlanComponent,
     resolve: { billingPlan: billingPlanDetailsResolver, groups: listGroupsResolver },
   },
-  //   {
-  //     path: 'delete/:id',
-  //     component: DeleteBillingPlanComponent,
-  //     resolve: { billingPlan: billingPlanDetailsResolver },
-  //   },
+  {
+    path: 'delete/:id',
+    component: DeleteBillingPlanComponent,
+    resolve: { billingPlan: billingPlanDetailsResolver },
+  },
 ];
