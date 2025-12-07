@@ -68,8 +68,7 @@ export class BillingPlanService {
   ): BillingPlan {
     return {
       id: apiBillingPlan.id,
-      groupId: apiBillingPlan.groupId,
-      name: apiBillingPlan.name,
+      group: apiBillingPlan.group,
       dailyBilling: apiBillingPlan.dailyBilling,
       controlledBilling: apiBillingPlan.controlledBilling,
       freeBilling: apiBillingPlan.freeBilling,

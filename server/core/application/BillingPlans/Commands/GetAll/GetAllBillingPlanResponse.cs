@@ -10,10 +10,14 @@ public record GetAllBillingPlanResponse(
 
 public record BillingPlanDto(
     Guid Id,
-    Guid GroupId,
-    string Name,
+    BillingPlanGroupDto Group,
     DailyBillingDto DailyBilling,
     ControlledBillingDto ControlledBilling,
     FreeBillingDto FreeBilling,
     bool IsActive
+);
+
+public record BillingPlanGroupDto(
+    Guid Id,
+    string Name
 );

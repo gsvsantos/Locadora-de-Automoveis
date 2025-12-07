@@ -1,13 +1,16 @@
 export interface BillingPlanDto {
-  groupId: string;
   dailyBilling: DailyBillingDto;
   controlledBilling: ControlledBillingDto;
   freeBilling: FreeBillingDto;
 }
 
+export interface CreateBillingPlanDto extends BillingPlanDto {
+  groupId: string;
+}
+
 export interface BillingPlan extends BillingPlanDto {
   id: string;
-  name: string;
+  group: BillingPlanGroupDto;
   isActive: boolean;
 }
 
@@ -19,8 +22,7 @@ export interface ListBillingPlansDto {
 export interface BillingPlanDetailsApiDto {
   billingPlan: {
     id: string;
-    groupId: string;
-    name: string;
+    group: BillingPlanGroupDto;
     dailyBilling: DailyBillingDto;
     controlledBilling: ControlledBillingDto;
     freeBilling: FreeBillingDto;
@@ -29,6 +31,11 @@ export interface BillingPlanDetailsApiDto {
 }
 
 export type BillingPlanDataPayload = ListBillingPlansDto;
+
+export interface BillingPlanGroupDto {
+  id: string;
+  name: string;
+}
 
 export interface DailyBillingDto {
   dailyRate: number;

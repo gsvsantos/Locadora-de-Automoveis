@@ -32,11 +32,16 @@ public class BillingPlanProfile : Profile
             ));
 
         // DTOs
-        CreateMap<BillingPlan, BillingPlanDto>()
-            .ConvertUsing(src => new BillingPlanDto(
+        CreateMap<Group, BillingPlanGroupDto>()
+            .ConvertUsing(src => new BillingPlanGroupDto(
                 src.Id,
-                src.GroupId,
-                $"{src.Group.Name} - Billing Plans",
+                src.Name
+            ));
+
+        CreateMap<BillingPlan, BillingPlanDto>()
+            .ConvertUsing((src, dest, ctx) => new BillingPlanDto(
+                src.Id,
+                ctx.Mapper.Map<BillingPlanGroupDto>(src.Group),
                 new(src.Daily.DailyRate, src.Daily.PricePerKm),
                 new(src.Controlled.DailyRate, src.Controlled.PricePerKmExtrapolated),
                 new(src.Free.FixedRate),

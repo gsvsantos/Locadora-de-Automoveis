@@ -228,6 +228,9 @@
       "header": {
         "title": "Billing Plans"
       },
+      "card": {
+        "groupName": "Group Name"
+      },
       "buttons": {
         "register": "Register New Plan",
         "seeActives": "See Actives",

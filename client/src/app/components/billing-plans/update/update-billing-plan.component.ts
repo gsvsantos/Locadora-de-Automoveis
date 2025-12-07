@@ -42,7 +42,7 @@ export class UpdateBillingPlanComponent {
     filter((data) => data['billingPlan'] as boolean),
     map((data) => data['billingPlan'] as BillingPlan),
     tap((billingPlan: BillingPlan) =>
-      this.formGroup.patchValue({ ...billingPlan, groupId: billingPlan.groupId }),
+      this.formGroup.patchValue({ ...billingPlan, groupId: billingPlan.group.id }),
     ),
     shareReplay({ bufferSize: 1, refCount: true }),
   );
