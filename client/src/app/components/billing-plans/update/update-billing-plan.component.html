@@ -1,0 +1,131 @@
+<section class="update-section" *transloco="let t; prefix: 'billingPlans.update'">
+  <div class="main-content">
+    @if (billingPlan$ | async; as plan) {
+      <div class="card">
+        <form [formGroup]="formGroup" class="form" (ngSubmit)="update()">
+          <h2>{{ t('card.title') }}</h2>
+          <hr class="bar" />
+          <div class="card-content">
+            <span>{{ t('card.subtitle') }}</span>
+
+            <h3>{{ t('card.section.groupSelection') }}</h3>
+
+            <div class="form-field">
+              <label>{{ t('card.label.groupId') }}</label>
+
+              <select class="form-input" formControlName="groupId">
+                <option value="">{{ t('card.placeholder.groupIdSelect') }}</option>
+                @for (group of groups$ | async; track group.id) {
+                  <option [value]="group.id">{{ group.name }}</option>
+                }
+              </select>
+
+              @if (groupId?.errors?.['required'] && groupId?.dirty) {
+                <span class="error-message">{{ t('card.errors.groupIdRequired') }}</span>
+              }
+            </div>
+
+            <hr />
+
+            <div formGroupName="dailyBilling">
+              <h3>{{ t('card.section.dailyBilling') }}</h3>
+
+              <div class="form-field">
+                <input
+                  class="form-input"
+                  formControlName="dailyRate"
+                  type="number"
+                  step="0.01"
+                  [placeholder]="t('card.placeholder.dailyRate')"
+                />
+                @if (dailyRateDaily?.errors?.['min'] && dailyRateDaily?.dirty) {
+                  <span class="error-message">{{ t('card.errors.rateMin') }}</span>
+                }
+              </div>
+
+              <div class="form-field">
+                <input
+                  class="form-input"
+                  formControlName="pricePerKm"
+                  type="number"
+                  step="0.01"
+                  [placeholder]="t('card.placeholder.pricePerKm')"
+                />
+                @if (pricePerKm?.errors?.['min'] && pricePerKm?.dirty) {
+                  <span class="error-message">{{ t('card.errors.rateMin') }}</span>
+                }
+              </div>
+            </div>
+
+            <hr />
+
+            <div formGroupName="controlledBilling">
+              <h3>{{ t('card.section.controlledBilling') }}</h3>
+
+              <div class="form-field">
+                <input
+                  class="form-input"
+                  formControlName="dailyRate"
+                  type="number"
+                  step="0.01"
+                  [placeholder]="t('card.placeholder.dailyRate')"
+                />
+                @if (dailyRateControlled?.errors?.['min'] && dailyRateControlled?.dirty) {
+                  <span class="error-message">{{ t('card.errors.rateMin') }}</span>
+                }
+              </div>
+
+              <div class="form-field">
+                <input
+                  class="form-input"
+                  formControlName="pricePerKmExtrapolated"
+                  type="number"
+                  step="0.01"
+                  [placeholder]="t('card.placeholder.pricePerKmExtrapolated')"
+                />
+                @if (pricePerKmExtrapolated?.errors?.['min'] && pricePerKmExtrapolated?.dirty) {
+                  <span class="error-message">{{ t('card.errors.rateMin') }}</span>
+                }
+              </div>
+            </div>
+
+            <hr />
+
+            <div formGroupName="freeBilling">
+              <h3>{{ t('card.section.freeBilling') }}</h3>
+
+              <div class="form-field">
+                <input
+                  class="form-input"
+                  formControlName="fixedRate"
+                  type="number"
+                  step="0.01"
+                  [placeholder]="t('card.placeholder.fixedRate')"
+                />
+                @if (fixedRate?.errors?.['min'] && fixedRate?.dirty) {
+                  <span class="error-message">{{ t('card.errors.rateMin') }}</span>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="buttons">
+            <gs-buttons
+              [buttonType]="buttonType.Link"
+              [text]="t('card.buttons.back')"
+              routerLink="/billing-plans"
+            ></gs-buttons>
+
+            <gs-buttons
+              [buttonType]="buttonType.Default"
+              [text]="t('card.buttons.confirm')"
+              type="submit"
+              [disabled]="formGroup.invalid"
+              (click)="update()"
+            ></gs-buttons>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+</section>

@@ -270,6 +270,35 @@
           "confirm": "Register Plan"
         }
       }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Billing Plan",
+        "subtitle": "Review and update the plan rates and associated group.",
+        "section": {
+          "groupSelection": "Assigned Vehicle Group",
+          "dailyBilling": "1. Daily Billing (Mileage Included)",
+          "controlledBilling": "2. Controlled Billing (Mileage Limit)",
+          "freeBilling": "3. Free Billing (Fixed Rate)"
+        },
+        "placeholder": {
+          "groupIdSelect": "Select or Change Group...",
+          "dailyRate": "Daily Rate (R$)",
+          "pricePerKm": "Price per Km (R$)",
+          "pricePerKmExtrapolated": "Price per Km Extrapolated (R$)",
+          "fixedRate": "Fixed Rate (R$)"
+        },
+        "label": {
+          "groupId": "Vehicle Group"
+        },
+        "errors": {
+          "rateMin": "The rate must be greater than zero."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update Plan"
+        }
+      }
     }
   }
 }

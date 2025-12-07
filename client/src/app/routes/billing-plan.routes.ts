@@ -1,8 +1,12 @@
 import { Routes } from '@angular/router';
 import { ListBillingPlansComponent } from '../components/billing-plans/list/list-billing-plans.component';
-import { listBillingPlansResolver } from '../resolvers/billing-plan.resolvers';
+import {
+  billingPlanDetailsResolver,
+  listBillingPlansResolver,
+} from '../resolvers/billing-plan.resolvers';
 import { CreateBillingPlanComponent } from '../components/billing-plans/create/create-billing-plan.component';
 import { listGroupsResolver } from '../resolvers/group.resolvers';
+import { UpdateBillingPlanComponent } from '../components/billing-plans/update/update-billing-plan.component';
 
 export const billingPlanRoutes: Routes = [
   {
@@ -16,11 +20,11 @@ export const billingPlanRoutes: Routes = [
     component: CreateBillingPlanComponent,
     resolve: { groups: listGroupsResolver },
   },
-  //   {
-  //     path: 'edit/:id',
-  //     component: UpdateBillingPlanComponent,
-  //     resolve: { billingPlan: billingPlanDetailsResolver },
-  //   },
+  {
+    path: 'edit/:id',
+    component: UpdateBillingPlanComponent,
+    resolve: { billingPlan: billingPlanDetailsResolver, groups: listGroupsResolver },
+  },
   //   {
   //     path: 'delete/:id',
   //     component: DeleteBillingPlanComponent,
