@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { ListExtrasComponent } from '../components/extras/list/list-extras.component';
 import { listExtrasResolver } from '../resolvers/extra.resolvers';
+import { CreateExtraComponent } from '../components/extras/create/create-extra.component';
 
 export const extraRoutes: Routes = [
   {
@@ -9,10 +10,10 @@ export const extraRoutes: Routes = [
     resolve: { extras: listExtrasResolver },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange',
   },
-  //   {
-  //     path: 'register',
-  //     component: CreateExtraComponent,
-  //   },
+  {
+    path: 'register',
+    component: CreateExtraComponent,
+  },
   //   {
   //     path: 'edit/:id',
   //     component: UpdateExtraComponent,
