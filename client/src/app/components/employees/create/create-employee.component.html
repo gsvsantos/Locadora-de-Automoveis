@@ -23,6 +23,9 @@
             @if (fullName?.errors?.['minlength'] && fullName?.dirty) {
               <span class="error-message">{{ t('card.errors.fullNameLength') }}</span>
             }
+            @if (fullName?.errors?.['pattern'] && fullName?.dirty) {
+              <span class="error-message">{{ t('card.errors.fullNameInvalid') }}</span>
+            }
           </div>
 
           <div class="form-field">
