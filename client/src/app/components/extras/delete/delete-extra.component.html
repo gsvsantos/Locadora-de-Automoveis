@@ -1,0 +1,57 @@
+<section class="delete-section" *transloco="let t; prefix: 'extras.delete'">
+  <div class="main-content">
+    <div class="card">
+      <form class="form" (ngSubmit)="delete()">
+        <h2>{{ t('card.title') }}</h2>
+        <hr class="bar" />
+        <div class="card-content">
+          <span>{{ t('card.subtitle') }}</span>
+
+          <h3 class="warning-text">{{ t('card.section.warning') }}</h3>
+
+          @if (extra$ | async; as extra) {
+            <div class="details-section">
+              <h4>{{ t('card.section.details') }}</h4>
+
+              <p>
+                <strong>{{ t('card.label.name') }}:</strong>
+                <span>{{ extra.name }}</span>
+              </p>
+
+              <p>
+                <strong>{{ t('card.label.type') }}:</strong>
+                <span>{{ t('card.type.' + extra.type | lowercase) }}</span>
+              </p>
+
+              <p>
+                <strong>{{ t('card.label.price') }}:</strong>
+                <span>{{ extra.price | currency: 'BRL' : 'symbol' : '1.2-2' }}</span>
+              </p>
+
+              <p>
+                <strong>{{ t('card.label.chargeType') }}:</strong>
+                <span>{{ extra.isDaily ? t('card.label.daily') : t('card.label.fixed') }}</span>
+              </p>
+            </div>
+          }
+        </div>
+        <div class="buttons">
+          <gs-buttons
+            [buttonType]="buttonType.Link"
+            [text]="t('card.buttons.back')"
+            routerLink="/extras"
+          ></gs-buttons>
+
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('card.buttons.confirm')"
+            type="submit"
+            color="#ff7675"
+            hoverColor="#e45757"
+            (click)="delete()"
+          ></gs-buttons>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

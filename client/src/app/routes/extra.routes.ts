@@ -3,6 +3,7 @@ import { ListExtrasComponent } from '../components/extras/list/list-extras.compo
 import { extraDetailsResolver, listExtrasResolver } from '../resolvers/extra.resolvers';
 import { CreateExtraComponent } from '../components/extras/create/create-extra.component';
 import { UpdateExtraComponent } from '../components/extras/update/update-extra.component';
+import { DeleteExtraComponent } from '../components/extras/delete/delete-extra.component';
 
 export const extraRoutes: Routes = [
   {
@@ -20,9 +21,9 @@ export const extraRoutes: Routes = [
     component: UpdateExtraComponent,
     resolve: { extra: extraDetailsResolver },
   },
-  //   {
-  //     path: 'delete/:id',
-  //     component: DeleteExtraComponent,
-  //     resolve: { extra: extraDetailsResolver },
-  //   },
+  {
+    path: 'delete/:id',
+    component: DeleteExtraComponent,
+    resolve: { extra: extraDetailsResolver },
+  },
 ];

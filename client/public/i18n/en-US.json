@@ -802,6 +802,32 @@
           "confirm": "Update Extra"
         }
       }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Additional Service",
+        "section": {
+          "details": "Item Details",
+          "warning": "This action cannot be undone. Any future rental linked to this extra will require manual adjustment."
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Extra"
+        },
+        "type": {
+          "equipment": "Equipment",
+          "service": "Service",
+          "fee": "Fee"
+        },
+        "label": {
+          "name": "Name",
+          "type": "Type",
+          "price": "Price",
+          "chargeType": "Charge Type",
+          "daily": "Daily",
+          "fixed": "Fixed"
+        }
+      }
     }
   }
 }
