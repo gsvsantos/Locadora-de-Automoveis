@@ -69,9 +69,9 @@ export class ShellComponent {
       link: 'clients',
     },
     {
-      title: 'Example',
-      icon: '#',
-      link: '#',
+      title: 'Drivers',
+      icon: 'local_taxi',
+      link: 'drivers',
     },
     {
       title: 'Example',

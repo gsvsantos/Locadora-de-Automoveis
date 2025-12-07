@@ -603,5 +603,23 @@
         }
       }
     }
+  },
+  "drivers": {
+    "list": {
+      "header": {
+        "title": "Drivers Registration"
+      },
+      "buttons": {
+        "register": "Register New Driver",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives"
+      },
+      "label": {
+        "document": "Document",
+        "licenseNumber": "License Number",
+        "licenseValidity": "License Validity",
+        "client": "Associated Client"
+      }
+    }
   }
 }

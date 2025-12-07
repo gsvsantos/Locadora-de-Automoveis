@@ -18,10 +18,33 @@ public class GetAllDriverRequestHandler(
     {
         try
         {
-            List<Driver> drivers =
-                request.Quantity.HasValue && request.Quantity.Value > 0
-                ? await repositoryDriver.GetAllAsync(request.Quantity.Value)
-                : await repositoryDriver.GetAllAsync();
+            List<Driver> drivers = [];
+            bool quantityProvided = request.Quantity.HasValue && request.Quantity.Value > 0;
+            bool inactiveProvided = request.IsActive.HasValue;
+
+            if (quantityProvided && inactiveProvided)
+            {
+                int quantity = request.Quantity!.Value;
+                bool isActive = request.IsActive!.Value;
+
+                drivers = await repositoryDriver.GetAllAsync(quantity, isActive);
+            }
+            else if (inactiveProvided)
+            {
+                bool isActive = request.IsActive!.Value;
+
+                drivers = await repositoryDriver.GetAllAsync(isActive);
+            }
+            else if (quantityProvided)
+            {
+                int quantity = request.Quantity!.Value;
+
+                drivers = await repositoryDriver.GetAllAsync(quantity);
+            }
+            else
+            {
+                drivers = await repositoryDriver.GetAllAsync(true);
+            }
 
             GetAllDriverResponse response = mapper.Map<GetAllDriverResponse>(drivers);
 

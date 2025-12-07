@@ -12,9 +12,24 @@ public class DriverProfile : Profile
 {
     public DriverProfile()
     {
+        // CONTROLLER
+        // GetAll
+        CreateMap<GetAllDriverRequestPartial, GetAllDriverRequest>()
+            .ConvertUsing(src => new GetAllDriverRequest(
+                src.Quantity,
+                src.IsActive
+            ));
+
         // DTOs
+        CreateMap<Client, DriverClientDto>()
+            .ConvertUsing(src => new DriverClientDto(
+                src.Id,
+                src.FullName,
+                src.Type
+            ));
+
         CreateMap<Driver, DriverDto>()
-            .ConvertUsing(src => new DriverDto(
+            .ConvertUsing((src, dest, ctx) => new DriverDto(
                 src.Id,
                 src.FullName,
                 src.Email,
@@ -22,7 +37,8 @@ public class DriverProfile : Profile
                 src.Document,
                 src.LicenseNumber,
                 src.LicenseValidity,
-                src.Client.FullName
+                ctx.Mapper.Map<DriverClientDto>(src.Client),
+                src.IsActive
             ));
 
         // HANDLERS

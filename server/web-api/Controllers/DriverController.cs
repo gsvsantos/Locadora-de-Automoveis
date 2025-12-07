@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using LocadoraDeAutomoveis.Application.Drivers.Commands.Create;
 using LocadoraDeAutomoveis.Application.Drivers.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Drivers.Commands.GetAll;
@@ -13,7 +14,10 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 [ApiController]
 [Route("api/driver")]
 [Authorize("AdminOrEmployeePolicy")]
-public class DriverController(IMediator mediator) : ControllerBase
+public class DriverController(
+    IMediator mediator,
+    IMapper mapper
+) : ControllerBase
 {
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateDriverRequest request)
@@ -24,9 +28,9 @@ public class DriverController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll([FromQuery] int? quantity)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllDriverRequestPartial partialRequest)
     {
-        GetAllDriverRequest request = new(quantity);
+        GetAllDriverRequest request = mapper.Map<GetAllDriverRequest>(partialRequest);
 
         Result<GetAllDriverResponse> result = await mediator.Send(request);
 

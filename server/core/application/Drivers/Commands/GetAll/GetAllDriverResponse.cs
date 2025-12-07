@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using LocadoraDeAutomoveis.Domain.Clients;
+using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.Drivers.Commands.GetAll;
 
@@ -15,5 +16,12 @@ public record DriverDto(
     string Document,
     string LicenseNumber,
     DateTimeOffset LicenseValidity,
-    string ClientName
+    DriverClientDto Client,
+    bool IsActive
+);
+
+public record DriverClientDto(
+    Guid Id,
+    string FullName,
+    EClientType Type
 );
