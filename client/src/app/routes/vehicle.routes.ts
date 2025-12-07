@@ -4,6 +4,7 @@ import { listVehiclesResolver, vehicleDetailsResolver } from '../resolvers/vehic
 import { CreateVehicleComponent } from '../components/vehicles/create/create-vehicle.component';
 import { listGroupsResolver } from '../resolvers/group.resolvers';
 import { UpdateVehicleComponent } from '../components/vehicles/update/update-vehicle.component';
+import { DeleteVehicleComponent } from '../components/vehicles/delete/delete-vehicle.component';
 
 export const vehicleRoutes: Routes = [
   {
@@ -22,9 +23,9 @@ export const vehicleRoutes: Routes = [
     component: UpdateVehicleComponent,
     resolve: { groups: listGroupsResolver, vehicle: vehicleDetailsResolver },
   },
-  //   {
-  //     path: 'delete/:id',
-  //     component: Delete, groups: listGroupsResolverComponent,
-  //     resolve: { vehicle: vehicleDetailsResolver },
-  //   },
+  {
+    path: 'delete/:id',
+    component: DeleteVehicleComponent,
+    resolve: { vehicle: vehicleDetailsResolver },
+  },
 ];

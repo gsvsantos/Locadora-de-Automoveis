@@ -440,6 +440,27 @@
           "confirm": "Update Vehicle"
         }
       }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Vehicle",
+        "subtitle": "Confirm permanent deletion of the following vehicle from the system.",
+        "section": {
+          "details": "Vehicle Summary",
+          "warning": "This action cannot be undone. Any rental history or reservation linked to this vehicle will be affected."
+        },
+        "label": {
+          "licensePlate": "License Plate",
+          "brandAndModel": "Brand / Model",
+          "year": "Year",
+          "group": "Group",
+          "color": "Color"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Vehicle"
+        }
+      }
     }
   }
 }

@@ -1,0 +1,62 @@
+<section class="delete-section" *transloco="let t; prefix: 'vehicles.delete'">
+  <div class="main-content">
+    <div class="card">
+      <form class="form" (ngSubmit)="delete()">
+        <h2>{{ t('card.title') }}</h2>
+        <hr class="bar" />
+        <div class="card-content">
+          <span>{{ t('card.subtitle') }}</span>
+
+          <h3 class="warning-text">{{ t('card.section.warning') }}</h3>
+
+          @if (vehicle$ | async; as vehicle) {
+            <div class="details-section">
+              <h4>{{ t('card.section.details') }}</h4>
+
+              <p>
+                <strong>{{ t('card.label.licensePlate') }}:</strong>
+                <span>{{ vehicle.licensePlate }}</span>
+              </p>
+
+              <p>
+                <strong>{{ t('card.label.brandAndModel') }}:</strong>
+                <span>{{ vehicle.brand | titlecase }} / {{ vehicle.model }}</span>
+              </p>
+
+              <p>
+                <strong>{{ t('card.label.year') }}:</strong>
+                <span>{{ vehicle.year }}</span>
+              </p>
+
+              <p>
+                <strong>{{ t('card.label.group') }}:</strong>
+                <span>{{ vehicle.group.name }}</span>
+              </p>
+
+              <p>
+                <strong>{{ t('card.label.color') }}:</strong>
+                <span>{{ vehicle.color }}</span>
+              </p>
+            </div>
+          }
+        </div>
+        <div class="buttons">
+          <gs-buttons
+            [buttonType]="buttonType.Link"
+            [text]="t('card.buttons.back')"
+            routerLink="/vehicles"
+          ></gs-buttons>
+
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('card.buttons.confirm')"
+            type="submit"
+            color="#ff7675"
+            hoverColor="#e45757"
+            (click)="delete()"
+          ></gs-buttons>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
