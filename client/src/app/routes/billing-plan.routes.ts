@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { ListBillingPlansComponent } from '../components/billing-plans/list/list-billing-plans.component';
 import { listBillingPlansResolver } from '../resolvers/billing-plan.resolvers';
+import { CreateBillingPlanComponent } from '../components/billing-plans/create/create-billing-plan.component';
+import { listGroupsResolver } from '../resolvers/group.resolvers';
 
 export const billingPlanRoutes: Routes = [
   {
@@ -9,7 +11,11 @@ export const billingPlanRoutes: Routes = [
     resolve: { billingPlans: listBillingPlansResolver },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange',
   },
-  //   { path: 'register', component: CreateBillingPlanComponent },
+  {
+    path: 'register',
+    component: CreateBillingPlanComponent,
+    resolve: { groups: listGroupsResolver },
+  },
   //   {
   //     path: 'edit/:id',
   //     component: UpdateBillingPlanComponent,

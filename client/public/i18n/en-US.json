@@ -243,6 +243,33 @@
         "pricePerKmExtrapolated": "Price per Km (Extra)",
         "fixedRate": "Fixed Rate"
       }
+    },
+    "create": {
+      "card": {
+        "title": "Register Billing Plan",
+        "subtitle": "Define rates for the new vehicle group.",
+        "section": {
+          "groupSelection": "Select Vehicle Group",
+          "dailyBilling": "1. Daily Billing (Mileage Included)",
+          "controlledBilling": "2. Controlled Billing (Mileage Limit)",
+          "freeBilling": "3. Free Billing (Fixed Rate)"
+        },
+        "placeholder": {
+          "groupId": "Select Group...",
+          "dailyRate": "Daily Rate (R$)",
+          "pricePerKm": "Price per Km (R$)",
+          "pricePerKmExtrapolated": "Price per Km Extrapolated (R$)",
+          "fixedRate": "Fixed Rate (R$)"
+        },
+        "errors": {
+          "groupIdRequired": "Vehicle group selection is mandatory.",
+          "rateMin": "The rate must be greater than zero."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register Plan"
+        }
+      }
     }
   }
 }
