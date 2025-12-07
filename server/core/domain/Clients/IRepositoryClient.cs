@@ -2,4 +2,8 @@
 
 namespace LocadoraDeAutomoveis.Domain.Clients;
 
-public interface IRepositoryClient : IRepository<Client>;
+public interface IRepositoryClient : IRepository<Client>
+{
+    Task<bool> BusinessClientHasIndividuals(Guid id);
+    Task<List<Client>> GetIndividualClientsFromBusinessId(Guid id, CancellationToken ct = default);
+}

@@ -5,6 +5,7 @@ using LocadoraDeAutomoveis.Application.Clients.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Clients.Commands.Update;
+using LocadoraDeAutomoveis.Application.Clients.GetIndividuals;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -44,6 +45,16 @@ public class ClientController(
         GetByIdClientRequest request = new(id);
 
         Result<GetByIdClientResponse> result = await mediator.Send(request);
+
+        return result.ToHttpResponse();
+    }
+
+    [HttpGet("business/{id:guid}/individuals")]
+    public async Task<IActionResult> GetIndividualClients(Guid id)
+    {
+        GetIndividualsRequest request = new(id);
+
+        Result<GetIndividualsResponse> result = await mediator.Send(request);
 
         return result.ToHttpResponse();
     }

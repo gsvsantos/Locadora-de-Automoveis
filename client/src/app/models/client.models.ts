@@ -30,6 +30,20 @@ export interface ClientDetailsApiDto {
   client: Client;
 }
 
+export interface DriverDto {
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  document: string;
+  licenseNumber: string;
+  licenseValidity: Date;
+}
+
+export interface CreateDriverDto extends DriverDto {
+  clientId: string;
+  individualClientId: string | null;
+}
+
 export type ClientDataPayload = ListClientsDto;
 
 export interface Address {

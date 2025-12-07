@@ -62,30 +62,46 @@ public class CreateDriverRequestHandler(
 
             List<Driver> existingDrivers = await repositoryDriver.GetAllAsync();
 
-            if (selectedClient.Type == EClientType.Business && DocumentAlreadyRegistred(selectedClient, existingClients))
+            if (DriverDocumentAlreadyRegistred(request.Document, existingDrivers))
             {
-                return Result.Fail(ClientErrorResults.DocumentAlreadyRegistredError(request.Document));
+                return Result.Fail(DriverErrorResults.DocumentAlreadyRegistredError(request.Document));
             }
 
             if (selectedClient.Type == EClientType.Business)
             {
-                Address addressCopy = selectedClient.Address with { };
+                Client? newCLient = null!;
 
-                Client newCLient = mapper.Map<Client>((request, addressCopy));
+                bool businessClientHasIndividuals = await repositoryClient.BusinessClientHasIndividuals(selectedClient.Id);
 
-                newCLient.DefineType(EClientType.Individual);
+                if (businessClientHasIndividuals)
+                {
+                    if (!request.IndividualClientId.HasValue)
+                    {
+                        return Result.Fail(DriverErrorResults.IndividualClientIdError());
+                    }
+                    else
+                    {
+                        newCLient = await repositoryClient.GetByIdAsync(request.IndividualClientId.Value);
 
-                newCLient.AssociateTenant(tenantProvider.GetTenantId());
+                        if (newCLient is null)
+                        {
+                            return Result.Fail(ErrorResults.NotFoundError(request.IndividualClientId.Value));
+                        }
+                    }
+                }
+                else
+                {
+                    if (ClientDocumentAlreadyRegistred(request.Document, existingClients))
+                    {
+                        return Result.Fail(ClientErrorResults.DocumentAlreadyRegistredError(request.Document));
+                    }
 
-                newCLient.AssociateUser(user);
+                    newCLient = CreateNewClient(request, user, selectedClient);
 
-                newCLient.AssociateJuristicClient(selectedClient);
-
-                newCLient.SetLicenseNumber(request.LicenseNumber);
+                    await repositoryClient.AddAsync(newCLient);
+                }
 
                 driver.AssociateClient(newCLient);
-
-                await repositoryClient.AddAsync(newCLient);
             }
             else
             {
@@ -117,15 +133,27 @@ public class CreateDriverRequestHandler(
         }
     }
 
-    private static bool DocumentAlreadyRegistred(Client client, List<Client> existingClients)
+    private Client CreateNewClient(CreateDriverRequest request, User user, Client selectedClient)
     {
-        return existingClients
-            .Any(entity =>
-            entity.Id != client.Id &&
-            string.Equals(
-                entity.Document,
-                client.Document,
-                StringComparison.CurrentCultureIgnoreCase)
-            );
+        Address addressCopy = selectedClient.Address with { };
+        Client newCLient = mapper.Map<Client>((request, addressCopy));
+        newCLient.DefineType(EClientType.Individual);
+        newCLient.AssociateTenant(tenantProvider.GetTenantId());
+        newCLient.AssociateUser(user);
+        newCLient.AssociateJuristicClient(selectedClient);
+        newCLient.SetLicenseNumber(request.LicenseNumber);
+        return newCLient;
+    }
+
+    private static bool ClientDocumentAlreadyRegistred(string document, List<Client> existingClients)
+    {
+        return existingClients.Any(entity =>
+            string.Equals(entity.Document, document, StringComparison.CurrentCultureIgnoreCase));
+    }
+
+    private static bool DriverDocumentAlreadyRegistred(string document, List<Driver> existingDrivers)
+    {
+        return existingDrivers.Any(entity =>
+            string.Equals(entity.Document, document, StringComparison.CurrentCultureIgnoreCase));
     }
 }

@@ -1,4 +1,5 @@
-﻿using LocadoraDeAutomoveis.Domain.Clients;
+﻿using LocadoraDeAutomoveis.Application.Clients.GetIndividuals;
+using LocadoraDeAutomoveis.Domain.Clients;
 using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.Clients.Commands.GetAll;
@@ -17,6 +18,7 @@ public record ClientDto(
     Address Address,
     EClientType Type,
     string? LicenseNumber,
+    DateTimeOffset? LicenseExpiry,
+    DriverIndividualClientDto? BusinessClient,
     bool IsActive
 );
-

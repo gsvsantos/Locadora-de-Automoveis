@@ -3,6 +3,7 @@ using LocadoraDeAutomoveis.Application.Clients.Commands.Create;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Clients.Commands.Update;
+using LocadoraDeAutomoveis.Application.Clients.GetIndividuals;
 using LocadoraDeAutomoveis.Domain.Clients;
 using System.Collections.Immutable;
 
@@ -37,8 +38,19 @@ public class ClientProfile : Profile
             ));
 
         // DTOs
+        CreateMap<Client, DriverIndividualClientDto>()
+            .ConvertUsing((src, dest, ctx) => new DriverIndividualClientDto(
+                src.Id,
+                src.FullName,
+                src.Email,
+                src.PhoneNumber,
+                src.Document,
+                src.LicenseNumber ?? string.Empty,
+                src.LicenseExpiry ?? null
+            ));
+
         CreateMap<Client, ClientDto>()
-            .ConvertUsing(src => new ClientDto(
+            .ConvertUsing((src, dest, ctx) => new ClientDto(
                 src.Id,
                 src.FullName,
                 src.Email,
@@ -47,6 +59,8 @@ public class ClientProfile : Profile
                 src.Address,
                 src.Type,
                 src.LicenseNumber ?? string.Empty,
+                src.LicenseExpiry ?? null,
+                (src.JuristicClient is not null) ? ctx.Mapper.Map<DriverIndividualClientDto>(src.JuristicClient) : null,
                 src.IsActive
             ));
 
@@ -81,6 +95,13 @@ public class ClientProfile : Profile
         CreateMap<Client, GetByIdClientResponse>()
             .ConvertUsing((src, dest, ctx) => new GetByIdClientResponse(
                ctx.Mapper.Map<ClientDto>(src)
+            ));
+
+        CreateMap<List<Client>, GetIndividualsResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetIndividualsResponse(
+                src.Count,
+                src.Select(c => ctx.Mapper.Map<DriverIndividualClientDto>(c)).ToImmutableList()
+                    ?? ImmutableList<DriverIndividualClientDto>.Empty
             ));
 
         // Update

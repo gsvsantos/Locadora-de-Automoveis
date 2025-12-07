@@ -623,6 +623,58 @@
         "licenseValidity": "License Validity",
         "client": "Associated Client"
       }
+    },
+    "create": {
+      "card": {
+        "title": "Register New Driver",
+        "subtitle": "Fill in the driver's details and associate them with a client.",
+        "section": {
+          "identification": "Client Association",
+          "personalData": "Driver's Personal Data",
+          "licenseData": "Driver's License Details (CNH)",
+          "associatedDrivers": "Select Existing Driver (Corporate)"
+        },
+        "placeholder": {
+          "client": "Select Associated Client...",
+          "selectDriver": "Select driver associated with the company...",
+          "fullName": "Full Name",
+          "document": "Document (CPF)",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "licenseNumber": "License Number",
+          "licenseValidity": "License Validity Date"
+        },
+        "label": {
+          "client": "Client",
+          "selectDriver": "Associated Driver",
+          "fullName": "Full Name",
+          "document": "Document (CPF)",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "licenseNumber": "License Number",
+          "licenseValidity": "License Validity"
+        },
+        "info": {
+          "clientDetailsPrepopulated": "Client details have been pre-filled and disabled for editing. Please only provide the license information.",
+          "registerNewDriverForCorporate": "Fill in the details below to register a new individual driver associated with the corporate client."
+        },
+        "errors": {
+          "clientRequired": "Client association is mandatory.",
+          "selectedDriverRequired": "Selecting an associated driver is mandatory.",
+          "fullNameRequired": "The full name is required.",
+          "fullNameLength": "The name must be at least 3 characters long.",
+          "documentRequired": "The document is required.",
+          "emailRequired": "The email is required.",
+          "phoneNumberRequired": "The phone number is required.",
+          "licenseNumberRequired": "The license number is required.",
+          "licenseLength": "The license number must be 11 digits long.",
+          "licenseValidityRequired": "The license validity date is required."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register Driver"
+        }
+      }
     }
   }
 }

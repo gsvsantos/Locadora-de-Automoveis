@@ -9,6 +9,7 @@ export interface DriverDto {
 
 export interface CreateDriverDto extends DriverDto {
   clientId: string;
+  individualClientId: string | null;
 }
 
 export interface Driver extends DriverDto {
@@ -32,4 +33,19 @@ export interface DriverClientDto {
   id: string;
   fullName: string;
   type: string;
+}
+
+export interface ListDriverIndividualClientsDto {
+  quantity: number;
+  clients: DriverIndividualClientDto[];
+}
+
+export interface DriverIndividualClientDto {
+  id: string;
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  document: string;
+  licenseNumber: string;
+  licenseValidity: Date;
 }

@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { IdApiResponse, ApiResponseDto } from '../models/api.models';
 import { ClientDto, Client, ClientDetailsApiDto, ListClientsDto } from '../models/client.models';
 import { mapApiResponse } from '../utils/map-api-response';
+import { DriverIndividualClientDto, ListDriverIndividualClientsDto } from '../models/driver.models';
 
 @Injectable({
   providedIn: 'root',
@@ -54,6 +55,15 @@ export class ClientService {
 
     return this.http.get<ApiResponseDto>(url, { params: params }).pipe(
       map(mapApiResponse<ListClientsDto>),
+      map((res) => res.clients),
+    );
+  }
+
+  public getIndividuals(id: string): Observable<DriverIndividualClientDto[]> {
+    const url = `${this.apiUrl}/business/${id}/individuals`;
+
+    return this.http.get<ApiResponseDto>(url).pipe(
+      map(mapApiResponse<ListDriverIndividualClientsDto>),
       map((res) => res.clients),
     );
   }

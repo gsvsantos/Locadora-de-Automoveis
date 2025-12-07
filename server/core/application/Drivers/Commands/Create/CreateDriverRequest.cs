@@ -10,5 +10,6 @@ public record CreateDriverRequest(
     string PhoneNumber,
     string Document,
     string LicenseNumber,
-    DateTimeOffset LicenseValidity
+    DateTimeOffset LicenseValidity,
+    Guid? IndividualClientId
 ) : IRequest<Result<CreateDriverResponse>>;
