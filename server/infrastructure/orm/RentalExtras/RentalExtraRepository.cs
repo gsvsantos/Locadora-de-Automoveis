@@ -10,8 +10,8 @@ public class RentalExtraRepository(AppDbContext context)
     public async Task<List<RentalExtra>> GetManyByIds(List<Guid> ids)
     {
         return await this.records
-            .Include(x => x.User)
-            .Where(rs => ids.Contains(rs.Id))
+            .Include(re => re.User)
+            .Where(re => ids.Contains(re.Id))
             .ToListAsync();
     }
 }

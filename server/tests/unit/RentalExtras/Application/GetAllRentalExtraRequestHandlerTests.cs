@@ -47,7 +47,7 @@ public sealed class GetAllRentalExtraRequestHandlerTests : UnitTestBase
         // Act
         Result<GetAllRentalExtraResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
 
-        List<RentalExtraDto> rentalExtrasDto = [.. result.Value.RentalExtras];
+        List<RentalExtraDto> rentalExtrasDto = [.. result.Value.Extras];
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
@@ -87,7 +87,7 @@ public sealed class GetAllRentalExtraRequestHandlerTests : UnitTestBase
         // Act
         Result<GetAllRentalExtraResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
 
-        List<RentalExtraDto> rentalExtrasDto = [.. result.Value.RentalExtras];
+        List<RentalExtraDto> rentalExtrasDto = [.. result.Value.Extras];
 
         // Assert
         Assert.IsTrue(result.IsSuccess);

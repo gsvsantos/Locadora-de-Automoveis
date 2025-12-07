@@ -4,13 +4,14 @@ namespace LocadoraDeAutomoveis.Application.RentalExtras.Commands.GetAll;
 
 public record GetAllRentalExtraResponse(
     int Quantity,
-    ImmutableList<RentalExtraDto> RentalExtras
+    ImmutableList<RentalExtraDto> Extras
 );
 
 public record RentalExtraDto(
     Guid Id,
     string Name,
     decimal Price,
-    bool IsChargedPerDay,
-    string Type
+    bool IsDaily,
+    string Type,
+    bool IsActive
 );

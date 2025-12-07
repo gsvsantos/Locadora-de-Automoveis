@@ -58,7 +58,7 @@ public sealed class GetByIdRentalExtraRequestHandlerTests : UnitTestBase
         Assert.AreEqual(rentalExtra.Id, dto.Id);
         Assert.AreEqual(rentalExtra.Name, dto.Name);
         Assert.AreEqual(rentalExtra.Price, dto.Price);
-        Assert.AreEqual(rentalExtra.IsDaily, dto.IsChargedPerDay);
+        Assert.AreEqual(rentalExtra.IsDaily, dto.IsDaily);
     }
     #endregion
 }

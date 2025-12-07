@@ -12,6 +12,14 @@ public class RentalExtraProfile : Profile
 {
     public RentalExtraProfile()
     {
+        // CONTROLLER
+        // GetAll
+        CreateMap<GetAllRentalExtraRequestPartial, GetAllRentalExtraRequest>()
+            .ConvertUsing(src => new GetAllRentalExtraRequest(
+                src.Quantity,
+                src.IsActive
+            ));
+
         // DTOs
         CreateMap<RentalExtra, RentalExtraDto>()
             .ConvertUsing(src => new RentalExtraDto(
@@ -19,7 +27,8 @@ public class RentalExtraProfile : Profile
                 src.Name,
                 src.Price,
                 src.IsDaily,
-                src.Type.ToString()
+                src.Type.ToString(),
+                src.IsActive
             ));
 
         // HANDLERS

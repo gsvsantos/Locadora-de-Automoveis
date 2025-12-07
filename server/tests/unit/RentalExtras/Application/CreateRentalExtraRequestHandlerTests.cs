@@ -128,7 +128,7 @@ public sealed class CreateRentalExtraRequestHandlerTests : UnitTestBase
                 It.Is<RentalExtra>(rS =>
                 rS.Name == request.Name &&
                 rS.Price == request.Price &&
-                rS.IsDaily == request.IsFixed
+                rS.IsDaily == request.IsDaily
                 )), Times.Once
             );
 

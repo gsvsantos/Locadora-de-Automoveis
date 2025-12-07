@@ -7,6 +7,6 @@ namespace LocadoraDeAutomoveis.Application.RentalExtras.Commands.Create;
 public record CreateRentalExtraRequest(
     string Name,
     decimal Price,
-    bool IsFixed,
+    bool IsDaily,
     EExtraType Type
 ) : IRequest<Result<CreateRentalExtraResponse>>;

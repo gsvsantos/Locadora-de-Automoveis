@@ -18,12 +18,35 @@ public class GetAllRentalExtraRequestHandler(
     {
         try
         {
-            List<RentalExtra> RentalExtras =
-                request.Quantity.HasValue && request.Quantity.Value > 0
-                ? await repositoryRentalExtra.GetAllAsync(request.Quantity.Value)
-                : await repositoryRentalExtra.GetAllAsync();
+            List<RentalExtra> rentalExtras = [];
+            bool quantityProvided = request.Quantity.HasValue && request.Quantity.Value > 0;
+            bool inactiveProvided = request.IsActive.HasValue;
 
-            GetAllRentalExtraResponse response = mapper.Map<GetAllRentalExtraResponse>(RentalExtras);
+            if (quantityProvided && inactiveProvided)
+            {
+                int quantity = request.Quantity!.Value;
+                bool isActive = request.IsActive!.Value;
+
+                rentalExtras = await repositoryRentalExtra.GetAllAsync(quantity, isActive);
+            }
+            else if (inactiveProvided)
+            {
+                bool isActive = request.IsActive!.Value;
+
+                rentalExtras = await repositoryRentalExtra.GetAllAsync(isActive);
+            }
+            else if (quantityProvided)
+            {
+                int quantity = request.Quantity!.Value;
+
+                rentalExtras = await repositoryRentalExtra.GetAllAsync(quantity);
+            }
+            else
+            {
+                rentalExtras = await repositoryRentalExtra.GetAllAsync(true);
+            }
+
+            GetAllRentalExtraResponse response = mapper.Map<GetAllRentalExtraResponse>(rentalExtras);
 
             return Result.Ok(response);
         }

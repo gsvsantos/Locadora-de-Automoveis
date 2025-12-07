@@ -702,5 +702,29 @@
         }
       }
     }
+  },
+  "extras": {
+    "list": {
+      "header": {
+        "title": "Additional Services and Fees"
+      },
+      "buttons": {
+        "register": "Register New Extra",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives"
+      },
+      "label": {
+        "type": "Type",
+        "price": "Price",
+        "daily": "Daily",
+        "fixed": "Fixed"
+      },
+      "type": {
+        "insurance": "Insurance",
+        "accessory": "Accessory",
+        "service": "Service",
+        "fee": "Fee"
+      }
+    }
   }
 }

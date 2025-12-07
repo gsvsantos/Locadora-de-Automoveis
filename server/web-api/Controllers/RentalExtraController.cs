@@ -29,9 +29,9 @@ public class RentalExtraController(
     }
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll([FromQuery] int? quantity)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllRentalExtraRequestPartial partialRequest)
     {
-        GetAllRentalExtraRequest request = new(quantity);
+        GetAllRentalExtraRequest request = mapper.Map<GetAllRentalExtraRequest>(partialRequest);
 
         Result<GetAllRentalExtraResponse> result = await mediator.Send(request);
 

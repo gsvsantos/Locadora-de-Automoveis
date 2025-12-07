@@ -74,9 +74,9 @@ export class ShellComponent {
       link: 'drivers',
     },
     {
-      title: 'Example',
-      icon: '#',
-      link: '#',
+      title: 'Extras',
+      icon: 'currency_exchange',
+      link: 'extras',
     },
     {
       title: 'Example',

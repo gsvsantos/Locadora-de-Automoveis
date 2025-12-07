@@ -1,0 +1,67 @@
+<section class="list-section" *transloco="let t; prefix: 'extras.list'">
+  <div class="main-content">
+    <h2>{{ t('header.title') }}</h2>
+
+    <div class="items-container">
+      <gs-buttons
+        [buttonType]="buttonType.Link"
+        [text]="t('buttons.register')"
+        bootstrapIcon="bi-plus-circle"
+        [target]="targetType.SameTab"
+        [variant]="variantType.Outline"
+        routerLink="register"
+      ></gs-buttons>
+      <div class="header-actions">
+        @if (showingInactive$ | async; as state) {
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="state.isInactive ? t('buttons.seeActives') : t('buttons.seeInactives')"
+            (click)="toggleFilter(state.isInactive)"
+          ></gs-buttons>
+        }
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="list">
+      @for (extra of extras$ | async; track extra.id) {
+        <div class="item">
+          <div class="card" tabindex="0">
+            <div class="card__header">
+              <div class="card_title">{{ extra.name | titlecase }}</div>
+            </div>
+
+            <div class="card__content">
+              <div class="info-row">
+                <span class="material-icons">category</span>
+                <span>{{ t('label.type') }}: {{ t('type.' + extra.type | lowercase) }}</span>
+              </div>
+
+              <div class="info-row">
+                <span class="material-icons">attach_money</span>
+                <span>
+                  {{ t('label.price') }}:
+                  {{ extra.price | currency: 'BRL' : 'symbol' : '1.2-2' }} ({{
+                    extra.isDaily ? t('label.daily') : t('label.fixed')
+                  }})
+                </span>
+              </div>
+            </div>
+
+            @if (extra.isActive) {
+              <div class="card__actions" align="end">
+                <a [routerLink]="['edit', extra.id]">
+                  <span class="material-icons">edit</span>
+                </a>
+                <a class="button button__danger" [routerLink]="['delete', extra.id]">
+                  <span class="material-icons">delete</span>
+                </a>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

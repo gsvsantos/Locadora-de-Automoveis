@@ -60,7 +60,7 @@ public class CreateRentalExtraRequestHandler(
 
             rentalExtra.AssociateUser(user);
 
-            if (request.IsFixed)
+            if (request.IsDaily)
             {
                 rentalExtra.MarkAsFixed();
             }
