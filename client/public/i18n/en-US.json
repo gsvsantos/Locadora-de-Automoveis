@@ -462,5 +462,20 @@
         }
       }
     }
+  },
+  "clients": {
+    "list": {
+      "header": {
+        "title": "Clients Registration"
+      },
+      "buttons": {
+        "register": "Register New Client",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives"
+      },
+      "label": {
+        "type": "Type"
+      }
+    }
   }
 }

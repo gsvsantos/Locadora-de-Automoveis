@@ -15,7 +15,8 @@ public record ClientDto(
     string PhoneNumber,
     string? Document,
     Address Address,
-    EClientType ClientType,
-    string? LicenseNumber
+    EClientType Type,
+    string? LicenseNumber,
+    bool IsActive
 );
 

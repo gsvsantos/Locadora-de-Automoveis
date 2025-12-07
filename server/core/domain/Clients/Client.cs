@@ -27,9 +27,9 @@ public class Client : BaseEntity<Client>
         this.Address = address;
     }
 
-    public void DefineType(EClientType clientType)
+    public void DefineType(EClientType type)
     {
-        this.Type = clientType;
+        this.Type = type;
     }
 
     public void SetLicenseNumber(string licenseNumber)

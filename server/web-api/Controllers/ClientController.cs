@@ -29,9 +29,9 @@ public class ClientController(
     }
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll([FromQuery] int? quantity)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllClientRequestPartial partialRequest)
     {
-        GetAllClientRequest request = new(quantity);
+        GetAllClientRequest request = mapper.Map<GetAllClientRequest>(partialRequest);
 
         Result<GetAllClientResponse> result = await mediator.Send(request);
 

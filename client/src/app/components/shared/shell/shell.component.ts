@@ -64,9 +64,9 @@ export class ShellComponent {
       link: 'vehicles',
     },
     {
-      title: 'Example',
-      icon: '#',
-      link: '#',
+      title: 'Clients',
+      icon: 'person',
+      link: 'clients',
     },
     {
       title: 'Example',

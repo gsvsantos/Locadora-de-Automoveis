@@ -13,6 +13,13 @@ public class ClientProfile : Profile
     public ClientProfile()
     {
         // CONTROLLER
+        // GetAll
+        CreateMap<GetAllClientRequestPartial, GetAllClientRequest>()
+            .ConvertUsing(src => new GetAllClientRequest(
+                src.Quantity,
+                src.IsActive
+            ));
+
         // Update
         CreateMap<(UpdateClientRequestPartial p, Guid id), UpdateClientRequest>()
             .ConvertUsing(src => new UpdateClientRequest(
@@ -39,7 +46,8 @@ public class ClientProfile : Profile
                 src.Document ?? string.Empty,
                 src.Address,
                 src.Type,
-                src.LicenseNumber ?? string.Empty
+                src.LicenseNumber ?? string.Empty,
+                src.IsActive
             ));
 
         // HANDLERS 

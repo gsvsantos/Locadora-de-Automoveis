@@ -36,4 +36,9 @@ export const routes: Routes = [
     loadChildren: () => import('../routes/vehicle.routes').then((route) => route.vehicleRoutes),
     canActivate: [authenticatedUserGuard],
   },
+  {
+    path: 'clients',
+    loadChildren: () => import('../routes/client.routes').then((route) => route.clientRoutes),
+    canActivate: [authenticatedUserGuard],
+  },
 ];

@@ -18,10 +18,33 @@ public class GetAllClientRequestHandler(
     {
         try
         {
-            List<Client> clients =
-                request.Quantity.HasValue && request.Quantity.Value > 0
-                ? await repositoryClient.GetAllAsync(request.Quantity.Value)
-                : await repositoryClient.GetAllAsync();
+            List<Client> clients = [];
+            bool quantityProvided = request.Quantity.HasValue && request.Quantity.Value > 0;
+            bool inactiveProvided = request.IsActive.HasValue;
+
+            if (quantityProvided && inactiveProvided)
+            {
+                int quantity = request.Quantity!.Value;
+                bool isActive = request.IsActive!.Value;
+
+                clients = await repositoryClient.GetAllAsync(quantity, isActive);
+            }
+            else if (inactiveProvided)
+            {
+                bool isActive = request.IsActive!.Value;
+
+                clients = await repositoryClient.GetAllAsync(isActive);
+            }
+            else if (quantityProvided)
+            {
+                int quantity = request.Quantity!.Value;
+
+                clients = await repositoryClient.GetAllAsync(quantity);
+            }
+            else
+            {
+                clients = await repositoryClient.GetAllAsync(true);
+            }
 
             GetAllClientResponse response = mapper.Map<GetAllClientResponse>(clients);
 
