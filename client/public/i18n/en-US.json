@@ -340,6 +340,56 @@
         "color": "Color",
         "fuelCapacityUnit": "L capacity"
       }
+    },
+    "create": {
+      "card": {
+        "title": "Register New Vehicle",
+        "subtitle": "Enter the details and specifications of the vehicle.",
+        "section": {
+          "identification": "Group and Identification",
+          "details": "Technical and Visual Details",
+          "fuelAndCapacity": "Fuel and Capacity",
+          "photo": "Photo URL"
+        },
+        "placeholder": {
+          "licensePlate": "License Plate (e.g., ABC-1234)",
+          "groupId": "Select Vehicle Group...",
+          "brand": "Brand (e.g., Chevrolet, Ford)",
+          "model": "Model (e.g., Onix, Ka)",
+          "color": "Color",
+          "year": "Year (e.g., 2023)",
+          "fuelType": "Select Fuel Type...",
+          "fuelTankCapacity": "Fuel Tank Capacity (in Liters)",
+          "photoPath": "Photo URL"
+        },
+        "label": {
+          "licensePlate": "License Plate",
+          "fuelType": "Fuel Type",
+          "group": "Group"
+        },
+        "fuel": {
+          "gasoline": "Gasoline",
+          "gas": "Gas",
+          "diesel": "Diesel",
+          "alcohol": "Alcohol",
+          "ethanol": "Ethanol"
+        },
+        "errors": {
+          "licensePlateRequired": "License plate is required.",
+          "licensePlatePattern": "License Plate must follow the pattern: ABC-1234 or ABC-1D23",
+          "groupIdRequired": "Vehicle group selection is mandatory.",
+          "brandRequired": "Brand is required.",
+          "modelRequired": "Model is required.",
+          "colorRequired": "Color is required.",
+          "yearRequired": "Year is required.",
+          "fuelTypeRequired": "Fuel type is required.",
+          "fuelTankCapacityRequired": "Fuel tank capacity is required."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register Vehicle"
+        }
+      }
     }
   }
 }
