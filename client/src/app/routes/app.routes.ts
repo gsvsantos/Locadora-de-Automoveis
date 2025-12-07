@@ -31,4 +31,9 @@ export const routes: Routes = [
       import('../routes/billing-plan.routes').then((route) => route.billingPlanRoutes),
     canActivate: [authenticatedUserGuard],
   },
+  {
+    path: 'vehicles',
+    loadChildren: () => import('../routes/vehicle.routes').then((route) => route.vehicleRoutes),
+    canActivate: [authenticatedUserGuard],
+  },
 ];

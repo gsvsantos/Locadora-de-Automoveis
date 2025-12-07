@@ -59,9 +59,9 @@ export class ShellComponent {
       link: 'billing-plans',
     },
     {
-      title: 'Example',
-      icon: '#',
-      link: '#',
+      title: 'Vehicles',
+      icon: 'garage',
+      link: 'vehicles',
     },
     {
       title: 'Example',

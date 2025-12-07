@@ -15,13 +15,15 @@ public record VehicleDto(
     string Color,
     string Model,
     EFuelType FuelType,
-    int CapacityInLiters,
+    int FuelTankCapacity,
     int Year,
     string? PhotoPath,
-    VehicleGroupDto Group
+    VehicleGroupDto Group,
+    bool IsActive
 );
 
 public record VehicleGroupDto(
     Guid Id,
-    string Name
+    string Name,
+    bool IsActive
 );

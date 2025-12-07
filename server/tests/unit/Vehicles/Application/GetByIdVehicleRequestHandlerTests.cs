@@ -67,7 +67,7 @@ public sealed class GetByIdVehicleRequestHandlerTests : UnitTestBase
         Assert.AreEqual(vehicle.Color, dto.Color);
         Assert.AreEqual(vehicle.Model, dto.Model);
         Assert.AreEqual(vehicle.FuelType, dto.FuelType);
-        Assert.AreEqual(vehicle.FuelTankCapacity, dto.CapacityInLiters);
+        Assert.AreEqual(vehicle.FuelTankCapacity, dto.FuelTankCapacity);
         Assert.AreEqual(vehicle.Year, dto.Year);
         Assert.AreEqual(vehicle.PhotoPath, dto.PhotoPath);
     }

@@ -324,5 +324,22 @@
         }
       }
     }
+  },
+  "vehicles": {
+    "list": {
+      "header": {
+        "title": "Vehicles Catalog"
+      },
+      "buttons": {
+        "register": "Register New Vehicle",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives"
+      },
+      "label": {
+        "group": "Group",
+        "color": "Color",
+        "fuelCapacityUnit": "L capacity"
+      }
+    }
   }
 }

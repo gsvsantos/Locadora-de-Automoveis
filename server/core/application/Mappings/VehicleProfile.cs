@@ -14,6 +14,14 @@ public class VehicleProfile : Profile
     public VehicleProfile()
     {
         // CONTROLLER
+        // GetAll
+        CreateMap<GetAllVehicleRequestPartial, GetAllVehicleRequest>()
+            .ConvertUsing(src => new GetAllVehicleRequest(
+                src.Quantity,
+                src.GroupId,
+                src.IsActive
+            ));
+
         // Update
         CreateMap<(UpdateVehicleRequestPartial p, Guid id), UpdateVehicleRequest>()
             .ConvertUsing(src => new UpdateVehicleRequest(
@@ -33,7 +41,8 @@ public class VehicleProfile : Profile
         CreateMap<Group, VehicleGroupDto>()
             .ConvertUsing(src => new VehicleGroupDto(
                 src.Id,
-                src.Name
+                src.Name,
+                src.IsActive
             ));
 
         CreateMap<Vehicle, VehicleDto>()
@@ -47,7 +56,8 @@ public class VehicleProfile : Profile
                 src.FuelTankCapacity,
                 src.Year,
                 src.PhotoPath ?? "path not found",
-                ctx.Mapper.Map<VehicleGroupDto>(src.Group)
+                ctx.Mapper.Map<VehicleGroupDto>(src.Group),
+                src.IsActive
             ));
 
         // HANDLERS

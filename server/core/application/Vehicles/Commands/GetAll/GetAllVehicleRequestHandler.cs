@@ -18,19 +18,32 @@ public class GetAllVehicleRequestHandler(
     {
         try
         {
-            List<Vehicle> vehicles;
+            List<Vehicle> vehicles = [];
+            bool quantityProvided = request.Quantity.HasValue && request.Quantity.Value > 0;
+            bool inactiveProvided = request.IsActive.HasValue;
 
-            if (request.GroupId.HasValue && request.GroupId != Guid.Empty)
+            if (quantityProvided && inactiveProvided)
             {
-                vehicles = await repositoryVehicle.GetByGroupIdAsync(request.GroupId.Value);
+                int quantity = request.Quantity!.Value;
+                bool isActive = request.IsActive!.Value;
+
+                vehicles = await repositoryVehicle.GetAllAsync(quantity, isActive);
             }
-            else if (request.Quantity.HasValue && request.Quantity.Value > 0)
+            else if (inactiveProvided)
             {
-                vehicles = await repositoryVehicle.GetAllAsync(request.Quantity.Value);
+                bool isActive = request.IsActive!.Value;
+
+                vehicles = await repositoryVehicle.GetAllAsync(isActive);
+            }
+            else if (quantityProvided)
+            {
+                int quantity = request.Quantity!.Value;
+
+                vehicles = await repositoryVehicle.GetAllAsync(quantity);
             }
             else
             {
-                vehicles = await repositoryVehicle.GetAllAsync();
+                vehicles = await repositoryVehicle.GetAllAsync(true);
             }
 
             GetAllVehicleResponse response = mapper.Map<GetAllVehicleResponse>(vehicles);

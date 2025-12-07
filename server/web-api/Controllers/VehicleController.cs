@@ -29,9 +29,9 @@ public class VehicleController(
     }
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll([FromQuery] int? quantity, [FromQuery] Guid? groupId)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllVehicleRequestPartial partialRequest)
     {
-        GetAllVehicleRequest request = new(quantity, groupId);
+        GetAllVehicleRequest request = mapper.Map<GetAllVehicleRequest>(partialRequest);
 
         Result<GetAllVehicleResponse> result = await mediator.Send(request);
 
