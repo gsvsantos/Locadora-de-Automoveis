@@ -89,9 +89,9 @@ public sealed class CreateBillingPlanRequestHandlerTests : UnitTestBase
 
         CreateBillingPlanRequest request = new(
             groupId,
-            new DailyPlanDto(100m, 2m),
-            new ControlledPlanDto(150m, 100),
-            new FreePlanDto(200m)
+            new DailyBillingDto(100m, 2m),
+            new ControlledBillingDto(150m, 100),
+            new FreeBillingDto(200m)
         );
 
         this.userContextMock

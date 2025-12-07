@@ -6,15 +6,15 @@ namespace LocadoraDeAutomoveis.Application.BillingPlans.Commands.Update;
 
 public record UpdateBillingPlanRequestPartial(
     Guid GroupId,
-    DailyPlanDto DailyPlan,
-    ControlledPlanDto ControlledPlan,
-    FreePlanDto FreePlan
+    DailyBillingDto DailyBilling,
+    ControlledBillingDto ControlledBilling,
+    FreeBillingDto FreeBilling
 );
 
 public record UpdateBillingPlanRequest(
     Guid Id,
     Guid GroupId,
-    DailyPlanDto DailyPlan,
-    ControlledPlanDto ControlledPlan,
-    FreePlanDto FreePlan
+    DailyBillingDto DailyBilling,
+    ControlledBillingDto ControlledBilling,
+    FreeBillingDto FreeBilling
 ) : IRequest<Result<UpdateBillingPlanResponse>>;

@@ -14,25 +14,33 @@ public class BillingPlanProfile : Profile
     public BillingPlanProfile()
     {
         // CONTROLLER
+        // GetAll
+        CreateMap<GetAllBillingPlanRequestPartial, GetAllBillingPlanRequest>()
+            .ConvertUsing(src => new GetAllBillingPlanRequest(
+                src.Quantity,
+                src.IsActive
+            ));
+
         // Update
         CreateMap<(UpdateBillingPlanRequestPartial p, Guid id), UpdateBillingPlanRequest>()
             .ConvertUsing(src => new UpdateBillingPlanRequest(
                 src.id,
                 src.p.GroupId,
-                new(src.p.DailyPlan.DailyRate, src.p.DailyPlan.PricePerKm),
-                new(src.p.ControlledPlan.DailyRate, src.p.ControlledPlan.PricePerKmExtrapolated),
-                new(src.p.FreePlan.FixedRate)
+                new(src.p.DailyBilling.DailyRate, src.p.DailyBilling.PricePerKm),
+                new(src.p.ControlledBilling.DailyRate, src.p.ControlledBilling.PricePerKmExtrapolated),
+                new(src.p.FreeBilling.FixedRate)
             ));
 
         // DTOs
         CreateMap<BillingPlan, BillingPlanDto>()
             .ConvertUsing(src => new BillingPlanDto(
                 src.Id,
+                src.GroupId,
                 $"{src.Group.Name} - Billing Plans",
                 new(src.Daily.DailyRate, src.Daily.PricePerKm),
                 new(src.Controlled.DailyRate, src.Controlled.PricePerKmExtrapolated),
                 new(src.Free.FixedRate),
-                src.GroupId
+                src.IsActive
             ));
 
         // HANDLERS
@@ -63,9 +71,9 @@ public class BillingPlanProfile : Profile
         CreateMap<(UpdateBillingPlanRequest r, Group g), BillingPlan>()
             .ConvertUsing(src => new BillingPlan(
                 $"{src.g.Name} - Billing Plans",
-                src.r.DailyPlan.ToProps(),
-                src.r.ControlledPlan.ToProps(),
-                src.r.FreePlan.ToProps()
+                src.r.DailyBilling.ToProps(),
+                src.r.ControlledBilling.ToProps(),
+                src.r.FreeBilling.ToProps()
             )
             { Id = src.r.Id });
     }

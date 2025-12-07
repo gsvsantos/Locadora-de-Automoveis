@@ -71,16 +71,16 @@ public sealed class UpdateBillingPlanRequestHandlerTests : UnitTestBase
         UpdateBillingPlanRequest request = new(
             BillingPlanId,
             group2Id,
-            new DailyPlanDto(100m, 2m),
-            new ControlledPlanDto(150m, 100),
-            new FreePlanDto(200m)
+            new DailyBillingDto(100m, 2m),
+            new ControlledBillingDto(150m, 100),
+            new FreeBillingDto(200m)
         );
 
         BillingPlan updatedBillingPlan = new(
             "SUV Plan",
-            request.DailyPlan.ToProps(),
-            request.ControlledPlan.ToProps(),
-            request.FreePlan.ToProps()
+            request.DailyBilling.ToProps(),
+            request.ControlledBilling.ToProps(),
+            request.FreeBilling.ToProps()
         );
         updatedBillingPlan.AssociateGroup(group2);
 

@@ -29,9 +29,9 @@ public class BillingPlanController(
     }
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll([FromQuery] int? quantity)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllBillingPlanRequestPartial partialRequest)
     {
-        GetAllBillingPlanRequest request = new(quantity);
+        GetAllBillingPlanRequest request = mapper.Map<GetAllBillingPlanRequest>(partialRequest);
 
         Result<GetAllBillingPlanResponse> result = await mediator.Send(request);
 

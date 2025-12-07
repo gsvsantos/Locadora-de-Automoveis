@@ -28,7 +28,7 @@ public class GroupRepository(AppDbContext context)
         return await this.records
             .Include(g => g.User)
             .Include(g => g.Vehicles)
-            .Where(e => e.IsActive == isActive)
+            .Where(g => g.IsActive == isActive)
             .ToListAsync();
     }
 
@@ -38,7 +38,7 @@ public class GroupRepository(AppDbContext context)
             .Include(g => g.User)
             .Include(g => g.Vehicles)
             .Take(quantity)
-            .Where(e => e.IsActive == isActive)
+            .Where(g => g.IsActive == isActive)
             .ToListAsync();
     }
 
@@ -47,6 +47,6 @@ public class GroupRepository(AppDbContext context)
         return await this.records
             .Include(g => g.User)
             .Include(g => g.Vehicles)
-            .FirstOrDefaultAsync(d => d.Id.Equals(entityId));
+            .FirstOrDefaultAsync(g => g.Id.Equals(entityId));
     }
 }

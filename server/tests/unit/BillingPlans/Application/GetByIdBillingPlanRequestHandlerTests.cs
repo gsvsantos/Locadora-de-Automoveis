@@ -61,11 +61,11 @@ public sealed class GetByIdBillingPlanRequestHandlerTests : UnitTestBase
         Assert.IsTrue(result.IsSuccess);
         Assert.AreEqual(BillingPlan.Id, dto.Id);
         Assert.AreEqual(BillingPlan.Name, dto.Name);
-        Assert.AreEqual(BillingPlan.Daily.DailyRate, dto.DailyPlan.DailyRate);
-        Assert.AreEqual(BillingPlan.Daily.PricePerKm, dto.DailyPlan.PricePerKm);
-        Assert.AreEqual(BillingPlan.Controlled.DailyRate, dto.ControlledPlan.DailyRate);
-        Assert.AreEqual(BillingPlan.Controlled.PricePerKmExtrapolated, dto.ControlledPlan.PricePerKmExtrapolated);
-        Assert.AreEqual(BillingPlan.Free.FixedRate, dto.FreePlan.FixedRate);
+        Assert.AreEqual(BillingPlan.Daily.DailyRate, dto.DailyBilling.DailyRate);
+        Assert.AreEqual(BillingPlan.Daily.PricePerKm, dto.DailyBilling.PricePerKm);
+        Assert.AreEqual(BillingPlan.Controlled.DailyRate, dto.ControlledBilling.DailyRate);
+        Assert.AreEqual(BillingPlan.Controlled.PricePerKmExtrapolated, dto.ControlledBilling.PricePerKmExtrapolated);
+        Assert.AreEqual(BillingPlan.Free.FixedRate, dto.FreeBilling.FixedRate);
         Assert.AreEqual(BillingPlan.GroupId, dto.GroupId);
     }
     #endregion

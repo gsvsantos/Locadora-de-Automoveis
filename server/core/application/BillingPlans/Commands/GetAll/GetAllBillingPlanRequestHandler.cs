@@ -18,12 +18,35 @@ public class GetAllBillingPlanRequestHandler(
     {
         try
         {
-            List<BillingPlan> BillingPlans =
-                request.Quantity.HasValue && request.Quantity.Value > 0
-                ? await repositoryBillingPlan.GetAllAsync(request.Quantity.Value)
-                : await repositoryBillingPlan.GetAllAsync();
+            List<BillingPlan> billingPlans = [];
+            bool quantityProvided = request.Quantity.HasValue && request.Quantity.Value > 0;
+            bool inactiveProvided = request.IsActive.HasValue;
 
-            GetAllBillingPlanResponse response = mapper.Map<GetAllBillingPlanResponse>(BillingPlans);
+            if (quantityProvided && inactiveProvided)
+            {
+                int quantity = request.Quantity!.Value;
+                bool isActive = request.IsActive!.Value;
+
+                billingPlans = await repositoryBillingPlan.GetAllAsync(quantity, isActive);
+            }
+            else if (inactiveProvided)
+            {
+                bool isActive = request.IsActive!.Value;
+
+                billingPlans = await repositoryBillingPlan.GetAllAsync(isActive);
+            }
+            else if (quantityProvided)
+            {
+                int quantity = request.Quantity!.Value;
+
+                billingPlans = await repositoryBillingPlan.GetAllAsync(quantity);
+            }
+            else
+            {
+                billingPlans = await repositoryBillingPlan.GetAllAsync(true);
+            }
+
+            GetAllBillingPlanResponse response = mapper.Map<GetAllBillingPlanResponse>(billingPlans);
 
             return Result.Ok(response);
         }
