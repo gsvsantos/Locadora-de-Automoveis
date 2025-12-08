@@ -972,6 +972,46 @@
           "confirm": "Delete Rental"
         }
       }
+    },
+    "return": {
+      "card": {
+        "title": "Vehicle Return",
+        "subtitle": "Register the final kilometer reading and fuel level to close the rental contract.",
+        "section": {
+          "summary": "Rental Summary (Fixed)",
+          "returnData": "Return Details",
+          "finalCalculation": "Final Calculation"
+        },
+        "placeholder": {
+          "endKm": "Final Kilometers",
+          "fuelLevel": "Select Fuel Level..."
+        },
+        "label": {
+          "client": "Client",
+          "vehicle": "Vehicle",
+          "startDate": "Start Date",
+          "startKm": "Starting KM",
+          "endKm": "Final KM Readout",
+          "fuelLevel": "Fuel Level",
+          "totalValue": "Total Value"
+        },
+        "fuel": {
+          "empty": "Empty (0%)",
+          "quarter": "1/4 Full (25%)",
+          "half": "1/2 Full (50%)",
+          "threeQuarters": "3/4 Full (75%)",
+          "full": "Full (100%)"
+        },
+        "errors": {
+          "endKmRequired": "Final KM reading is mandatory.",
+          "endKmMin": "Final KM must be greater than or equal to the Starting KM.",
+          "fuelLevelRequired": "Fuel level selection is mandatory."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Confirm Return"
+        }
+      }
     }
   }
 }

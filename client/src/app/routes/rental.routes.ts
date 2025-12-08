@@ -9,6 +9,7 @@ import { listVehiclesResolver } from '../resolvers/vehicle.resolvers';
 import { listExtrasResolver } from '../resolvers/extra.resolvers';
 import { UpdateRentalComponent } from '../components/rentals/update/update-rental.component';
 import { DeleteRentalComponent } from '../components/rentals/delete/delete-rental.component';
+import { ReturnRentalComponent } from '../components/rentals/return/return-rental.component';
 
 export const rentalRoutes: Routes = [
   {
@@ -45,6 +46,11 @@ export const rentalRoutes: Routes = [
   {
     path: 'delete/:id',
     component: DeleteRentalComponent,
+    resolve: { rental: rentalDetailsResolver },
+  },
+  {
+    path: 'return/:id',
+    component: ReturnRentalComponent,
     resolve: { rental: rentalDetailsResolver },
   },
 ];

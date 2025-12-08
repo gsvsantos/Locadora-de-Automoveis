@@ -42,6 +42,11 @@ export interface RentalDetailsApiDto {
   rental: RentalDetailsDto;
 }
 
+export interface ReturnRentalDto {
+  endKm: number;
+  fuelLevel: string;
+}
+
 export type RentalDataPayload = ListRentalsDto;
 
 export interface RentalExtra {

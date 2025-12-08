@@ -137,9 +137,9 @@ export class CreateRentalComponent {
     console.log(registerModel);
 
     const registerObserver: Observer<IdApiResponse> = {
-      next: () => this.notificationService.success(`Driver registered successfully!`),
+      next: () => this.notificationService.success(`Rental registered successfully!`),
       error: (err: string) => this.notificationService.error(err),
-      complete: () => void this.router.navigate(['/drivers']),
+      complete: () => void this.router.navigate(['/rentals']),
     };
 
     this.rentalService.register(registerModel).subscribe(registerObserver);

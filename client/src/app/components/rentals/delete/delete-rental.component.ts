@@ -43,7 +43,7 @@ export class DeleteRentalComponent {
     const deleteObserver: Observer<null> = {
       next: () => this.notificationService.success(`Record deleted successfully!`),
       error: (err: string) => this.notificationService.error(err),
-      complete: () => void this.router.navigate(['/drivers']),
+      complete: () => void this.router.navigate(['/rentals']),
     };
 
     this.rental$

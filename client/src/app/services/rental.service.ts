@@ -9,6 +9,7 @@ import {
   ListRentalsDto,
   CreateRentalDto,
   RentalDetailsDto,
+  ReturnRentalDto,
 } from '../models/rental.models';
 import { mapApiResponse } from '../utils/map-api-response';
 
@@ -35,6 +36,11 @@ export class RentalService {
     const url = `${this.apiUrl}/delete/${id}`;
 
     return this.http.delete<null>(url);
+  }
+  public return(id: string, returnModel: ReturnRentalDto): Observable<IdApiResponse> {
+    const url = `${this.apiUrl}/return/${id}`;
+
+    return this.http.post<IdApiResponse>(url, returnModel);
   }
 
   public getById(id: string): Observable<RentalDetailsDto> {

@@ -52,6 +52,11 @@ public class ReturnRentalRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
         }
 
+        if (selectedRental.ReturnDate.HasValue)
+        {
+            return Result.Fail(RentalErrorResults.RentalAlreadyBeenReturned(selectedRental.ReturnDate.Value));
+        }
+
         DateTimeOffset returnDate = DateTimeOffset.UtcNow;
 
         int daysUsed = (int)Math.Ceiling((returnDate.Date - selectedRental.StartDate.Date).TotalDays);

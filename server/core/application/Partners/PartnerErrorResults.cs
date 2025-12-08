@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 
 namespace LocadoraDeAutomoveis.Application.Partners;
+
 public abstract class PartnerErrorResults
 {
     public static Error DuplicateNameError(string name)

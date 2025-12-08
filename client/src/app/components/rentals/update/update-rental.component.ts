@@ -143,9 +143,9 @@ export class UpdateRentalComponent {
     const updateModel: CreateRentalDto = this.formGroup.value as CreateRentalDto;
 
     const updateObserve: Observer<IdApiResponse> = {
-      next: () => this.notificationService.success(`Billing Plan updated successfully!`),
+      next: () => this.notificationService.success(`Rental updated successfully!`),
       error: (err: string) => this.notificationService.error(err),
-      complete: () => void this.router.navigate(['/vehicles']),
+      complete: () => void this.router.navigate(['/rentals']),
     };
 
     this.rental$
