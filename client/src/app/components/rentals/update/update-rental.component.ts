@@ -21,6 +21,7 @@ import { NotificationService } from '../../../services/notification.service';
 import { RentalService } from '../../../services/rental.service';
 import { CreateRentalDto, RentalDetailsDto } from '../../../models/rental.models';
 import { dateToInputDateString } from '../../../utils/date.utils';
+import { Coupon } from '../../../models/coupon.models';
 
 @Component({
   selector: 'app-update-rental.component',
@@ -43,10 +44,10 @@ export class UpdateRentalComponent {
     map((data) => data['clients'] as Client[]),
   );
 
-  // protected readonly coupons$ = this.route.data.pipe(
-  //   filter((data) => data['coupons'] as boolean),
-  //   map((data) => data['coupons'] as Coupon[]),
-  // );
+  protected readonly coupons$ = this.route.data.pipe(
+    filter((data) => data['coupons'] as boolean),
+    map((data) => data['coupons'] as Coupon[]),
+  );
 
   protected readonly employees$ = this.route.data.pipe(
     filter((data) => data['employees'] as boolean),
@@ -86,7 +87,7 @@ export class UpdateRentalComponent {
     employeeId: ['', [Validators.required.bind(this)]],
     driverId: ['', [Validators.required.bind(this)]],
     vehicleId: ['', [Validators.required.bind(this)]],
-    // couponId: ['', [Validators.required.bind(this)]],
+    couponId: ['', [Validators.required.bind(this)]],
     billingPlanType: ['', [Validators.required.bind(this)]],
     estimatedKilometers: [''],
     rentalRentalExtrasIds: [''],
@@ -120,9 +121,9 @@ export class UpdateRentalComponent {
     return this.formGroup.get('vehicleId');
   }
 
-  // public get couponId(): AbstractControl | null {
-  //   return this.formGroup.get('couponId');
-  // }
+  public get couponId(): AbstractControl | null {
+    return this.formGroup.get('couponId');
+  }
 
   public get billingPlanType(): AbstractControl | null {
     return this.formGroup.get('billingPlanType');

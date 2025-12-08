@@ -6,6 +6,8 @@ import {
   mostUsedCouponsResolver,
 } from '../resolvers/coupon.resolvers';
 import { ListCouponsComponent } from '../components/coupons/list/list-coupons.component';
+import { CreateCouponComponent } from '../components/coupons/create/create-coupon.component';
+import { listPartnersResolver } from '../resolvers/partner.resolvers';
 
 export const couponRoutes: Routes = [
   {
@@ -20,7 +22,11 @@ export const couponRoutes: Routes = [
     resolve: { coupons: listCouponsResolver },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange',
   },
-  //   { path: 'register', component: CreateCouponComponent },
+  {
+    path: 'register',
+    component: CreateCouponComponent,
+    resolve: { partners: listPartnersResolver },
+  },
   //   {
   //     path: 'edit/:id',
   //     component: UpdateCouponComponent,

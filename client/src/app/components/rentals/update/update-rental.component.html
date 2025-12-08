@@ -73,6 +73,16 @@
                   </option>
                 }
               </select>
+
+              <div class="form-field">
+                <label>{{ t('card.label.coupon') }}</label>
+                <select class="form-input" formControlName="couponId">
+                  <option [ngValue]="null">{{ t('card.placeholder.coupon') }}</option>
+                  @for (coupon of coupons$ | async; track coupon.id) {
+                    <option [ngValue]="coupon.id">{{ coupon.name }}</option>
+                  }
+                </select>
+              </div>
               <span class="small-info">{{ t('card.info.extrasHint') }}</span>
             </div>
 

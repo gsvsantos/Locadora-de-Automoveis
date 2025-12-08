@@ -31,7 +31,7 @@ public class EmployeeController(
     }
 
     [HttpGet("get-all")]
-    [Authorize("AdminPolicy")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> GetAll([FromQuery] GetAllEmployeeRequestPartial partialRequest)
     {
         GetAllEmployeeRequest request = mapper.Map<GetAllEmployeeRequest>(partialRequest);

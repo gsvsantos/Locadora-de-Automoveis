@@ -10,6 +10,7 @@ import { listExtrasResolver } from '../resolvers/extra.resolvers';
 import { UpdateRentalComponent } from '../components/rentals/update/update-rental.component';
 import { DeleteRentalComponent } from '../components/rentals/delete/delete-rental.component';
 import { ReturnRentalComponent } from '../components/rentals/return/return-rental.component';
+import { listCouponsResolver } from '../resolvers/coupon.resolvers';
 
 export const rentalRoutes: Routes = [
   {
@@ -23,7 +24,7 @@ export const rentalRoutes: Routes = [
     component: CreateRentalComponent,
     resolve: {
       clients: listClientsResolver,
-      //   coupons: listCouponsResolver, <- descomentar quando implementar & aprimorar html/component
+      coupons: listCouponsResolver,
       employees: listEmployeesResolver,
       drivers: listDriversResolver,
       vehicles: listVehiclesResolver,
@@ -36,7 +37,7 @@ export const rentalRoutes: Routes = [
     resolve: {
       rental: rentalDetailsResolver,
       clients: listClientsResolver,
-      //   coupons: listCouponsResolver, <- descomentar quando implementar & aprimorar html/component
+      coupons: listCouponsResolver,
       employees: listEmployeesResolver,
       drivers: listDriversResolver,
       vehicles: listVehiclesResolver,

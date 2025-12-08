@@ -5,6 +5,14 @@
     <div class="items-container">
       <gs-buttons
         [buttonType]="buttonType.Link"
+        [text]="t('buttons.register')"
+        bootstrapIcon="bi-plus-circle"
+        [target]="targetType.SameTab"
+        [variant]="variantType.Outline"
+        routerLink="/coupons/register"
+      ></gs-buttons>
+      <gs-buttons
+        [buttonType]="buttonType.Link"
         [text]="t('buttons.seeAll')"
         bootstrapIcon="bi-list"
         [target]="targetType.SameTab"

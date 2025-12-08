@@ -21,6 +21,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { Extra } from '../../../models/extra.models';
 import { CreateRentalDto } from '../../../models/rental.models';
 import { IdApiResponse } from '../../../models/api.models';
+import { Coupon } from '../../../models/coupon.models';
 
 @Component({
   selector: 'app-create-rental.component',
@@ -43,10 +44,10 @@ export class CreateRentalComponent {
     map((data) => data['clients'] as Client[]),
   );
 
-  // protected readonly coupons$ = this.route.data.pipe(
-  //   filter((data) => data['coupons'] as boolean),
-  //   map((data) => data['coupons'] as Coupon[]),
-  // );
+  protected readonly coupons$ = this.route.data.pipe(
+    filter((data) => data['coupons'] as boolean),
+    map((data) => data['coupons'] as Coupon[]),
+  );
 
   protected readonly employees$ = this.route.data.pipe(
     filter((data) => data['employees'] as boolean),
@@ -77,7 +78,7 @@ export class CreateRentalComponent {
       employeeId: [null, [Validators.required.bind(this)]],
       driverId: [null, [Validators.required.bind(this)]],
       vehicleId: [null, [Validators.required.bind(this)]],
-      // couponId: [null, [Validators.required.bind(this)]],
+      couponId: [null, [Validators.required.bind(this)]],
       billingPlanType: ['', [Validators.required.bind(this)]],
       estimatedKilometers: [null],
       rentalRentalExtrasIds: [null],
@@ -113,9 +114,9 @@ export class CreateRentalComponent {
     return this.formGroup.get('vehicleId');
   }
 
-  // public get couponId(): AbstractControl | null {
-  //   return this.formGroup.get('couponId');
-  // }
+  public get couponId(): AbstractControl | null {
+    return this.formGroup.get('couponId');
+  }
 
   public get billingPlanType(): AbstractControl | null {
     return this.formGroup.get('billingPlanType');
@@ -133,8 +134,6 @@ export class CreateRentalComponent {
     if (this.formGroup.invalid) return;
 
     const registerModel: CreateRentalDto = this.formGroup.getRawValue() as CreateRentalDto;
-
-    console.log(registerModel);
 
     const registerObserver: Observer<IdApiResponse> = {
       next: () => this.notificationService.success(`Rental registered successfully!`),

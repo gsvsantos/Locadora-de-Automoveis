@@ -920,7 +920,8 @@
           "pricing": "Current Pricing"
         },
         "placeholder": {
-          "estimatedKilometers": "Estimated Kilometers"
+          "estimatedKilometers": "Estimated Kilometers",
+          "coupon": "Select Coupon (Optional)"
         },
         "label": {
           "client": "Client",
@@ -932,7 +933,8 @@
           "extras": "Selected Extras",
           "billingPlanType": "Billing Plan Type",
           "baseRentalPrice": "Base Price",
-          "finalPrice": "Total Price"
+          "finalPrice": "Total Price",
+          "coupon": "Coupon"
         },
         "info": {
           "startDateFixed": "The rental start date cannot be modified.",
@@ -1183,12 +1185,46 @@
         "title": "Most Used Coupons (Statistics)"
       },
       "buttons": {
+        "register": "Register New Coupon",
         "seeAll": "See All Coupons"
       },
       "label": {
         "partner": "Partner",
         "usageCount": "Usage Count",
         "totalDiscountGiven": "Total Discount Given"
+      }
+    },
+    "create": {
+      "card": {
+        "title": "Register New Coupon",
+        "subtitle": "Define the coupon details and associate it with a partner.",
+        "section": {
+          "details": "Coupon Details",
+          "partner": "Partner Association"
+        },
+        "placeholder": {
+          "name": "Coupon Code (e.g., BLACKFRIDAY25)",
+          "discountValue": "Discount Value (R$)",
+          "partnerId": "Select Partner..."
+        },
+        "label": {
+          "name": "Coupon Code",
+          "discountValue": "Discount Value",
+          "expirationDate": "Expiration Date",
+          "partnerId": "Associated Partner"
+        },
+        "errors": {
+          "nameRequired": "The coupon code is mandatory.",
+          "nameLength": "The code must be at least 3 characters long.",
+          "discountValueRequired": "Discount value is mandatory.",
+          "discountValueMin": "Discount value must be greater than zero.",
+          "expirationDateRequired": "Expiration date is mandatory.",
+          "partnerIdRequired": "Partner association is mandatory."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register Coupon"
+        }
       }
     }
   }
