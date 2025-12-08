@@ -43,6 +43,37 @@
       }
     }
   },
+  "home": {
+    "dashboard": {
+      "card": {
+        "quickActions": {
+          "title": "Quick Actions",
+          "newRental": "Start New Rental",
+          "newClient": "Register New Client",
+          "newDriver": "Register New Driver",
+          "viewAllRentals": "View All Rentals"
+        },
+        "stats": {
+          "title": "System Summary",
+          "totalVehicles": "Total Vehicles",
+          "activeRentals": "Active Rentals",
+          "activeClients": "Active Clients",
+          "viewAllVehicles": "View All Vehicles"
+        },
+        "pendingReturns": {
+          "title": "Pending Returns (Upcoming)",
+          "noReturns": "No immediate returns scheduled.",
+          "viewAll": "View All Rentals"
+        },
+        "topCoupons": {
+          "title": "Top Used Coupons",
+          "usageCount": "{{count}} uses",
+          "noCoupons": "No usage data available.",
+          "viewUsageStats": "View Usage Statistics"
+        }
+      }
+    }
+  },
   "employee": {
     "create": {
       "card": {

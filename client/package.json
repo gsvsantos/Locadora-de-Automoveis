@@ -38,6 +38,7 @@
     "@material/web": "^2.4.1",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
+    "date-fns": "^4.1.0",
     "dayjs": "^1.11.19",
     "fontawesome-free": "^1.0.4",
     "gs-buttons": "^3.0.1",

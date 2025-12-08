@@ -8,7 +8,6 @@ export const listRentalsResolver: ResolveFn<Rental[]> = (
   route: ActivatedRouteSnapshot,
 ): Observable<Rental[]> => {
   const rentalService: RentalService = inject(RentalService);
-
   const rawQuantity: string | null = route.queryParamMap.get('quantity');
   const rawIsActive: string | null = route.queryParamMap.get('isActive');
 

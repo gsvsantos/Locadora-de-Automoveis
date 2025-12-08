@@ -1,9 +1,17 @@
 import { Routes } from '@angular/router';
 import { unknownUserGuard } from '../guards/unknown-user.guard';
 import { authenticatedUserGuard } from '../guards/authenticated-user.guard';
+import { listVehiclesResolver } from '../resolvers/vehicle.resolvers';
+import { listRentalsResolver } from '../resolvers/rental.resolvers';
+import { listClientsResolver } from '../resolvers/client.resolvers';
+import { mostUsedCouponsResolver } from '../resolvers/coupon.resolvers';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
+  {
+    path: '',
+    redirectTo: 'auth/login',
+    pathMatch: 'full',
+  },
   {
     path: 'auth',
     loadChildren: () => import('../routes/auth.routes').then((route) => route.authRoutes),
@@ -14,6 +22,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('../components/home/home.component').then((component) => component.Home),
     canActivate: [authenticatedUserGuard],
+    resolve: {
+      clients: listClientsResolver,
+      coupons: mostUsedCouponsResolver,
+      rentals: listRentalsResolver,
+      vehicles: listVehiclesResolver,
+    },
   },
   {
     path: 'employees',
