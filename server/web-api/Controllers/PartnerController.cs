@@ -29,9 +29,9 @@ public class PartnerController(
     }
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll([FromQuery] int? quantity)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllPartnerRequestPartial partialRequest)
     {
-        GetAllPartnerRequest request = new(quantity);
+        GetAllPartnerRequest request = mapper.Map<GetAllPartnerRequest>(partialRequest);
 
         Result<GetAllPartnerResponse> result = await mediator.Send(request);
 
@@ -51,7 +51,6 @@ public class PartnerController(
     [HttpPut("update/{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdatePartnerRequestPartial partialRequest)
     {
-
         UpdatePartnerRequest request = mapper.Map<UpdatePartnerRequest>((partialRequest, id));
 
         Result<UpdatePartnerResponse> result = await mediator.Send(request);

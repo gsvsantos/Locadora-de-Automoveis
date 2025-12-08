@@ -10,15 +10,18 @@ public record GetCouponsPartnerResponse(
 public record GetCouponsPartnerDto(
     Guid Id,
     string FullName,
+    bool IsActive,
     ImmutableList<CouponDto> Coupons
 ) : PartnerDto(
     Id,
-    FullName
+    FullName,
+    IsActive
 );
 
 public record CouponDto(
     Guid Id,
     string Name,
     decimal DiscountValue,
-    DateTimeOffset ExpirationDate
+    DateTimeOffset ExpirationDate,
+    bool IsActive
 );

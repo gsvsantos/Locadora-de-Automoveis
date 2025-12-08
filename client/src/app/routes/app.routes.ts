@@ -62,4 +62,9 @@ export const routes: Routes = [
       import('../routes/configuration.routes').then((route) => route.configurationRoutes),
     canActivate: [authenticatedUserGuard],
   },
+  {
+    path: 'partners',
+    loadChildren: () => import('../routes/partner.routes').then((route) => route.partnerRoutes),
+    canActivate: [authenticatedUserGuard],
+  },
 ];

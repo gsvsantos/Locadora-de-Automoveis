@@ -18,10 +18,33 @@ public class GetAllPartnerRequestHandler(
     {
         try
         {
-            List<Partner> partners =
-                request.Quantity.HasValue && request.Quantity.Value > 0
-                ? await repositoryPartner.GetAllAsync(request.Quantity.Value)
-                : await repositoryPartner.GetAllAsync();
+            List<Partner> partners = [];
+            bool quantityProvided = request.Quantity.HasValue && request.Quantity.Value > 0;
+            bool inactiveProvided = request.IsActive.HasValue;
+
+            if (quantityProvided && inactiveProvided)
+            {
+                int quantity = request.Quantity!.Value;
+                bool isActive = request.IsActive!.Value;
+
+                partners = await repositoryPartner.GetAllAsync(quantity, isActive);
+            }
+            else if (inactiveProvided)
+            {
+                bool isActive = request.IsActive!.Value;
+
+                partners = await repositoryPartner.GetAllAsync(isActive);
+            }
+            else if (quantityProvided)
+            {
+                int quantity = request.Quantity!.Value;
+
+                partners = await repositoryPartner.GetAllAsync(quantity);
+            }
+            else
+            {
+                partners = await repositoryPartner.GetAllAsync(true);
+            }
 
             GetAllPartnerResponse response = mapper.Map<GetAllPartnerResponse>(partners);
 

@@ -1048,5 +1048,84 @@
         }
       }
     }
+  },
+  "partners": {
+    "list": {
+      "header": {
+        "title": "Partnerships"
+      },
+      "buttons": {
+        "register": "Register New Partner",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives"
+      },
+      "label": {
+        "couponsQuantity": "Coupons Quantity"
+      }
+    },
+    "create": {
+      "card": {
+        "title": "Register New Partner",
+        "subtitle": "Provide the full name of the new partner.",
+        "section": {
+          "identification": "Partner Identification"
+        },
+        "placeholder": {
+          "fullName": "Full Name or Company Name"
+        },
+        "label": {
+          "fullName": "Full Name"
+        },
+        "errors": {
+          "fullNameRequired": "The partner name is required.",
+          "fullNameLength": "The name must be at least 3 characters long."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register Partner"
+        }
+      }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Partner Details",
+        "subtitle": "Update the full name of the partner.",
+        "section": {
+          "identification": "Partner Identification"
+        },
+        "placeholder": {
+          "fullName": "Full Name or Company Name"
+        },
+        "label": {
+          "fullName": "Full Name"
+        },
+        "errors": {
+          "fullNameRequired": "The partner name is required.",
+          "fullNameLength": "The name must be at least 3 characters long."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update Partner"
+        }
+      }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Partner",
+        "subtitle": "Confirm permanent deletion of the partner and all associated data.",
+        "section": {
+          "details": "Partner Details",
+          "warning": "This action cannot be undone. All associated coupons will become invalid."
+        },
+        "label": {
+          "fullName": "Full Name",
+          "couponsQuantity": "Associated Coupons"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Partner"
+        }
+      }
+    }
   }
 }

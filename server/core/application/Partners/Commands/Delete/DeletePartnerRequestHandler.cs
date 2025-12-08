@@ -25,14 +25,24 @@ public class DeletePartnerRequestHandler(
         }
 
         bool hasCoupons = await repositoryCoupon.ExistsByPartnerId(request.Id);
-        if (hasCoupons)
-        {
-            return Result.Fail(ErrorResults.BadRequestError("Cannot delete a partner that has linked coupons."));
-        }
 
         try
         {
-            await repositoryPartner.DeleteAsync(request.Id);
+            if (hasCoupons)
+            {
+                selectedPartner.Deactivate();
+
+                await repositoryPartner.UpdateAsync(selectedPartner.Id, selectedPartner);
+
+                logger.LogInformation(
+                    "Partner {PartnerId} was deactivated instead of deleted because it is in use.",
+                    request.Id
+                );
+            }
+            else
+            {
+                await repositoryPartner.DeleteAsync(request.Id);
+            }
 
             await unitOfWork.CommitAsync();
 

@@ -23,6 +23,25 @@ public class PartnerRepository(AppDbContext context)
             .Take(quantity).ToListAsync();
     }
 
+    public override async Task<List<Partner>> GetAllAsync(bool isActive)
+    {
+        return await this.records
+            .Include(p => p.User)
+            .Include(p => p.Coupons)
+            .Where(p => p.IsActive == isActive)
+            .ToListAsync();
+    }
+
+    public override async Task<List<Partner>> GetAllAsync(int quantity, bool isActive)
+    {
+        return await this.records
+            .Include(p => p.User)
+            .Include(p => p.Coupons)
+            .Take(quantity)
+            .Where(p => p.IsActive == isActive)
+            .ToListAsync();
+    }
+
     public override async Task<Partner?> GetByIdAsync(Guid entityId)
     {
         return await this.records

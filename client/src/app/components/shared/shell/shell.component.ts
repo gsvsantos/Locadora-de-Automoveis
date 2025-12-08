@@ -84,9 +84,9 @@ export class ShellComponent {
       link: 'rentals',
     },
     {
-      title: 'Example',
+      title: 'Partners',
       icon: '#',
-      link: '#',
+      link: 'partners',
     },
     {
       title: 'Example',

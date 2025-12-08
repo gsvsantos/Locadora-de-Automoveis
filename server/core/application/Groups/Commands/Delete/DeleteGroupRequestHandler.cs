@@ -36,7 +36,6 @@ public class DeleteGroupRequestHandler(
         {
             if (isInUse)
             {
-
                 selectedGroup.Deactivate();
 
                 await repositoryGroup.UpdateAsync(selectedGroup.Id, selectedGroup);

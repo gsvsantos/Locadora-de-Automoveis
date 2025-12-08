@@ -27,7 +27,8 @@ public class CouponProfile : Profile
                 src.Id,
                 src.Name,
                 src.DiscountValue,
-                src.ExpirationDate
+                src.ExpirationDate,
+                src.IsActive
             ));
 
         // HANDLERS

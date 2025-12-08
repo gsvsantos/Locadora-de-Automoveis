@@ -9,14 +9,17 @@ public record GetAllPartnerResponse(
 
 public record PartnerDto(
     Guid Id,
-    string FullName
+    string FullName,
+    bool IsActive
 );
 
 public record GetAllPartnerDto(
     Guid Id,
     string FullName,
+    bool IsActive,
     int CouponsQuantity
 ) : PartnerDto(
     Id,
-    FullName
+    FullName,
+    IsActive
 );

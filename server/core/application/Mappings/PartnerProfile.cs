@@ -13,6 +13,13 @@ public class PartnerProfile : Profile
     public PartnerProfile()
     {
         // CONTROLLER
+        // GetAll
+        CreateMap<GetAllPartnerRequestPartial, GetAllPartnerRequest>()
+            .ConvertUsing(src => new GetAllPartnerRequest(
+                src.Quantity,
+                src.IsActive
+            ));
+
         // Update
         CreateMap<(UpdatePartnerRequestPartial p, Guid id), UpdatePartnerRequest>()
             .ConvertUsing(src => new UpdatePartnerRequest(
@@ -24,13 +31,15 @@ public class PartnerProfile : Profile
         CreateMap<Partner, PartnerDto>()
             .ConvertUsing(src => new PartnerDto(
                 src.Id,
-                src.FullName
+                src.FullName,
+                src.IsActive
             ));
 
         CreateMap<Partner, GetAllPartnerDto>()
             .ConvertUsing(src => new GetAllPartnerDto(
                 src.Id,
                 src.FullName,
+                src.IsActive,
                 src.Coupons.Count
             ));
 
@@ -38,6 +47,7 @@ public class PartnerProfile : Profile
             .ConvertUsing((src, dest, ctx) => new GetCouponsPartnerDto(
                 src.Id,
                 src.FullName,
+                src.IsActive,
                 src.Coupons.Select(c => ctx.Mapper.Map<CouponDto>(c)).ToImmutableList()
                 ?? ImmutableList<CouponDto>.Empty
             ));

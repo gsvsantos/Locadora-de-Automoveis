@@ -1,46 +1,46 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
+  ReactiveFormsModule,
   FormBuilder,
   FormGroup,
   Validators,
   AbstractControl,
-  ReactiveFormsModule,
 } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute, Router } from '@angular/router';
+import { TranslocoModule } from '@jsverse/transloco';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { filter, map, tap, shareReplay, Observer, take, switchMap } from 'rxjs';
 import { IdApiResponse } from '../../../models/api.models';
-import { GroupService } from '../../../services/group.service';
+import { PartnerDetailsDto, PartnerDto } from '../../../models/partner.models';
 import { NotificationService } from '../../../services/notification.service';
-import { Group, GroupDto } from '../../../models/group.models';
-import { AsyncPipe } from '@angular/common';
-import { TranslocoModule } from '@jsverse/transloco';
+import { PartnerService } from '../../../services/partner.service';
 
 @Component({
-  selector: 'app-update-group.component',
+  selector: 'app-update-partner.component',
   imports: [AsyncPipe, RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
-  templateUrl: './update-group.component.html',
-  styleUrl: './update-group.component.scss',
+  templateUrl: './update-partner.component.html',
+  styleUrl: './update-partner.component.scss',
 })
-export class UpdateGroupComponent {
+export class UpdatePartnerComponent {
   protected readonly formBuilder = inject(FormBuilder);
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
-  protected readonly groupService = inject(GroupService);
+  protected readonly partnerService = inject(PartnerService);
   protected readonly notificationService = inject(NotificationService);
   protected readonly buttonType = gsButtonTypeEnum;
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
 
-  protected readonly group$ = this.route.data.pipe(
-    filter((data) => data['group'] as boolean),
-    map((data) => data['group'] as Group),
-    tap((group: Group) => this.formGroup.patchValue(group)),
+  protected readonly partner$ = this.route.data.pipe(
+    filter((data) => data['partner'] as boolean),
+    map((data) => data['partner'] as PartnerDetailsDto),
+    tap((group: PartnerDetailsDto) => this.formGroup.patchValue(group)),
     shareReplay({ bufferSize: 1, refCount: true }),
   );
 
   protected formGroup: FormGroup = this.formBuilder.group({
-    name: [
+    fullName: [
       '',
       [
         Validators.required.bind(this),
@@ -50,26 +50,26 @@ export class UpdateGroupComponent {
     ],
   });
 
-  public get name(): AbstractControl | null {
-    return this.formGroup.get('name');
+  public get fullName(): AbstractControl | null {
+    return this.formGroup.get('fullName');
   }
 
   public update(): void {
     if (this.formGroup.invalid) return;
 
-    const updateModel: GroupDto = this.formGroup.value as GroupDto;
+    const updateModel: PartnerDto = this.formGroup.value as PartnerDto;
 
     const updateObserve: Observer<IdApiResponse> = {
       next: () =>
-        this.notificationService.success(`Group "${updateModel.name}" updated successfully!`),
+        this.notificationService.success(`Partner "${updateModel.fullName}" updated successfully!`),
       error: (err: string) => this.notificationService.error(err),
-      complete: () => void this.router.navigate(['/groups']),
+      complete: () => void this.router.navigate(['/partners']),
     };
 
-    this.group$
+    this.partner$
       .pipe(
         take(1),
-        switchMap((group) => this.groupService.update(group.id, updateModel)),
+        switchMap((partner) => this.partnerService.update(partner.id, updateModel)),
       )
       .subscribe(updateObserve);
   }

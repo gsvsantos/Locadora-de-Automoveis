@@ -51,7 +51,6 @@ public class GroupController(
     [HttpPut("update/{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateGroupRequestPartial partialRequest)
     {
-
         UpdateGroupRequest request = mapper.Map<UpdateGroupRequest>((partialRequest, id));
 
         Result<UpdateGroupResponse> result = await mediator.Send(request);
