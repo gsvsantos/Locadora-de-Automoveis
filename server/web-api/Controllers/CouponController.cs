@@ -2,6 +2,8 @@
 using FluentResults;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Create;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Delete;
+using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.Coupons.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Update;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
@@ -27,13 +29,32 @@ public class CouponController(
         return result.ToHttpResponse();
     }
 
+    [HttpGet("get/{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        GetByIdCouponRequest request = new(id);
+
+        Result<GetByIdCouponResponse> result = await mediator.Send(request);
+
+        return result.ToHttpResponse();
+    }
+
+    [HttpGet("get-all")]
+    public async Task<IActionResult> GetAll([FromQuery] GetAllCouponRequestPartial partialRequest)
+    {
+        GetAllCouponRequest request = mapper.Map<GetAllCouponRequest>(partialRequest);
+
+        Result<GetAllCouponResponse> result = await mediator.Send(request);
+
+        return result.ToHttpResponse();
+    }
+
     [HttpGet("most-used")]
-    [Authorize("AdminPolicy")]
     public async Task<IActionResult> GetMostUsed()
     {
-        GetMostUsedCouponsRequest request = new();
+        GetMostUsedCouponRequest request = new();
 
-        Result<GetMostUsedCouponsResponse> result = await mediator.Send(request);
+        Result<GetMostUsedCouponResponse> result = await mediator.Send(request);
 
         return result.ToHttpResponse();
     }

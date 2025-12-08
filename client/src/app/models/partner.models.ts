@@ -1,3 +1,5 @@
+import { Coupon } from './coupon.models';
+
 export interface PartnerDto {
   fullName: string;
 }
@@ -25,11 +27,3 @@ export interface PartnerDetailsApiDto {
 }
 
 export type PartnerDataPayload = ListPartnersDto;
-
-export interface Coupon {
-  id: string;
-  name: string;
-  discountValue: number;
-  expirationDate: Date;
-  isActive: boolean;
-}

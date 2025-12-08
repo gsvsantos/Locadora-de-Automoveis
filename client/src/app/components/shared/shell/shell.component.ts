@@ -85,23 +85,13 @@ export class ShellComponent {
     },
     {
       title: 'Partners',
-      icon: '#',
+      icon: 'handshake',
       link: 'partners',
     },
     {
-      title: 'Example',
-      icon: '#',
-      link: '#',
-    },
-    {
-      title: 'Example',
-      icon: '#',
-      link: '#',
-    },
-    {
-      title: 'Example',
-      icon: '#',
-      link: '#',
+      title: 'Coupons',
+      icon: 'local_activity',
+      link: 'coupons',
     },
   ];
 

@@ -1,0 +1,56 @@
+<section class="list-section" *transloco="let t; prefix: 'coupons.usage'">
+  <div class="main-content">
+    <h2>{{ t('header.title') }}</h2>
+
+    <div class="items-container">
+      <gs-buttons
+        [buttonType]="buttonType.Link"
+        [text]="t('buttons.seeAll')"
+        bootstrapIcon="bi-list"
+        [target]="targetType.SameTab"
+        [variant]="variantType.Outline"
+        routerLink="/coupons/list"
+      ></gs-buttons>
+    </div>
+
+    <hr />
+
+    <div class="list">
+      @for (coupon of coupons$ | async; track coupon.id) {
+        <div class="item">
+          <div class="card" tabindex="0">
+            <div class="card__header">
+              <div class="card_title">{{ coupon.name | titlecase }}</div>
+            </div>
+
+            <div class="card__content">
+              <div class="info-row">
+                <span class="material-icons">handshake</span>
+                <span>{{ t('label.partner') }}: {{ coupon.partnerName }}</span>
+              </div>
+
+              <div class="info-row">
+                <span class="material-icons">trending_up</span>
+                <span>{{ t('label.usageCount') }}: {{ coupon.usageCount }}</span>
+              </div>
+
+              <div class="info-row">
+                <span class="material-icons">payments</span>
+                <span
+                  >{{ t('label.totalDiscountGiven') }}:
+                  {{ coupon.totalDiscountGiven | currency: 'BRL' : 'symbol' : '1.2-2' }}</span
+                >
+              </div>
+            </div>
+
+            <div class="card__actions" align="end">
+              <a [routerLink]="['/coupons/details', coupon.id]">
+                <span class="material-icons">visibility</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

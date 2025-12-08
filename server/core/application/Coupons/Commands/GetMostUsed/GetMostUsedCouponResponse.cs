@@ -2,9 +2,13 @@
 
 namespace LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
 
-public record GetMostUsedCouponsResponse(ImmutableList<CouponUsageDto> Data);
+public record GetMostUsedCouponResponse(
+    int Quantity,
+    ImmutableList<CouponUsageDto> Coupons
+);
 
 public record CouponUsageDto(
+    Guid Id,
     string Name,
     string PartnerName,
     int UsageCount,

@@ -3,5 +3,5 @@ using MediatR;
 
 namespace LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
 
-public record GetMostUsedCouponsRequest()
-    : IRequest<Result<GetMostUsedCouponsResponse>>;
+public record GetMostUsedCouponRequest()
+    : IRequest<Result<GetMostUsedCouponResponse>>;

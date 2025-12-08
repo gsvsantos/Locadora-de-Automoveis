@@ -1155,5 +1155,41 @@
         }
       }
     }
+  },
+  "coupons": {
+    "list": {
+      "header": {
+        "title": "Coupon Catalog"
+      },
+      "buttons": {
+        "register": "Register New Coupon",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives",
+        "seeMostUsed": "See Most Used"
+      },
+      "label": {
+        "partner": "Partner",
+        "discountValue": "Discount Value",
+        "expirationDate": "Expiration Date",
+        "status": "Status"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      }
+    },
+    "usage": {
+      "header": {
+        "title": "Most Used Coupons (Statistics)"
+      },
+      "buttons": {
+        "seeAll": "See All Coupons"
+      },
+      "label": {
+        "partner": "Partner",
+        "usageCount": "Usage Count",
+        "totalDiscountGiven": "Total Discount Given"
+      }
+    }
   }
 }

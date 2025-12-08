@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Create;
+using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.Coupons.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Update;
 using LocadoraDeAutomoveis.Application.Partners.Commands.GetCoupons;
 using LocadoraDeAutomoveis.Domain.Coupons;
+using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.Mappings;
 
@@ -11,6 +14,13 @@ public class CouponProfile : Profile
     public CouponProfile()
     {
         // CONTROLLER
+        // GetAll
+        CreateMap<GetAllCouponRequestPartial, GetAllCouponRequest>()
+            .ConvertUsing(src => new GetAllCouponRequest(
+                src.Quantity,
+                src.IsActive
+            ));
+
         // Update
         CreateMap<(UpdateCouponRequestPartial p, Guid id), UpdateCouponRequest>()
             .ConvertUsing(src => new UpdateCouponRequest(
@@ -38,6 +48,20 @@ public class CouponProfile : Profile
                 src.Name,
                 src.DiscountValue,
                 src.ExpirationDate
+            ));
+
+        // GetALl
+        CreateMap<List<Coupon>, GetAllCouponResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetAllCouponResponse(
+                src.Count,
+                src.Select(c => ctx.Mapper.Map<CouponDto>(c)).ToImmutableList()
+                    ?? ImmutableList<CouponDto>.Empty
+            ));
+
+        // GetById
+        CreateMap<Coupon, GetByIdCouponResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetByIdCouponResponse(
+               ctx.Mapper.Map<CouponDto>(src)
             ));
 
         // Update

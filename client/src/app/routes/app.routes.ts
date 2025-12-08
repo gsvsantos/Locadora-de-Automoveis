@@ -67,4 +67,9 @@ export const routes: Routes = [
     loadChildren: () => import('../routes/partner.routes').then((route) => route.partnerRoutes),
     canActivate: [authenticatedUserGuard],
   },
+  {
+    path: 'coupons',
+    loadChildren: () => import('../routes/coupon.routes').then((route) => route.couponRoutes),
+    canActivate: [authenticatedUserGuard],
+  },
 ];

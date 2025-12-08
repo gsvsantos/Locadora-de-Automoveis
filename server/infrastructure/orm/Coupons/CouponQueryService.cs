@@ -22,6 +22,7 @@ public class CouponQueryService(AppDbContext context) : ICouponQueryService
                 Rental rental = group.First();
 
                 return new CouponUsageDto(
+                    rental.CouponId!.Value,
                     rental.Coupon!.Name,
                     rental.Coupon.Partner.FullName,
                     group.Count(),
