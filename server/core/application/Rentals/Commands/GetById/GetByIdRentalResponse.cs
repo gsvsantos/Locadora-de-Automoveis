@@ -12,27 +12,35 @@ public record ByIdRentalDto(
     RentalClientDto Client,
     RentalDriverDto Driver,
     RentalVehicleDto Vehicle,
-    EBillingPlanType SelectedPlanType,
+    RentalCouponDto Coupon,
     DateTimeOffset StartDate,
     DateTimeOffset ExpectedReturnDate,
+    decimal StartKm,
+    EBillingPlanType BillingPlanType,
     DateTimeOffset? ReturnDate,
     decimal BaseRentalPrice,
     decimal FinalPrice,
+    decimal? EstimatedKilometers,
     int RentalExtrasQuantity,
-    ImmutableList<RentalRentalExtraDto> RentalExtras
+    ImmutableList<RentalRentalExtraDto> RentalExtras,
+    bool IsActive
 ) : RentalDto(
     Id,
     Employee,
     Client,
     Driver,
     Vehicle,
-    SelectedPlanType,
+    Coupon,
     StartDate,
     ExpectedReturnDate,
+    StartKm,
+    BillingPlanType,
     ReturnDate,
     BaseRentalPrice,
     FinalPrice,
-    RentalExtrasQuantity
+    EstimatedKilometers,
+    RentalExtrasQuantity,
+    IsActive
 );
 
 public record RentalRentalExtraDto(

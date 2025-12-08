@@ -13,7 +13,7 @@ public record CreateRentalRequest(
     Guid DriverId,
     Guid VehicleId,
     Guid? CouponId,
-    EBillingPlanType SelectedPlanType,
+    EBillingPlanType BillingPlanType,
     decimal? EstimatedKilometers,
     List<Guid> RentalRentalExtrasIds
 ) : IRequest<Result<CreateRentalResponse>>;

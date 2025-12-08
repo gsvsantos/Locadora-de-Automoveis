@@ -123,9 +123,9 @@ public class CreateRentalRequestHandler(
         rental.AssociateDriver(driver);
         rental.AssociateVehicle(vehicle);
         rental.AssociateBillingPlan(BillingPlan);
-        rental.SetBillingPlanType(request.SelectedPlanType);
+        rental.SetBillingPlanType(request.BillingPlanType);
 
-        if (request.SelectedPlanType.Equals(EBillingPlanType.Controlled)
+        if (request.BillingPlanType.Equals(EBillingPlanType.Controlled)
             && request.EstimatedKilometers.HasValue)
         {
             rental.SetEstimatedKilometers(request.EstimatedKilometers.Value);

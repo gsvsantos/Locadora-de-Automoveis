@@ -1,4 +1,5 @@
-﻿using LocadoraDeAutomoveis.Domain.Rentals;
+﻿using LocadoraDeAutomoveis.Application.Partners.Commands.GetAll;
+using LocadoraDeAutomoveis.Domain.Rentals;
 using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
@@ -14,31 +15,46 @@ public record RentalDto(
     RentalClientDto Client,
     RentalDriverDto Driver,
     RentalVehicleDto Vehicle,
-    EBillingPlanType SelectedPlanType,
+    RentalCouponDto Coupon,
     DateTimeOffset StartDate,
     DateTimeOffset ExpectedReturnDate,
+    decimal StartKm,
+    EBillingPlanType BillingPlanType,
     DateTimeOffset? ReturnDate,
     decimal BaseRentalPrice,
     decimal FinalPrice,
-    int RentalExtrasQuantity
+    decimal? EstimatedKilometers,
+    int RentalExtrasQuantity,
+    bool IsActive
 );
 
 public record RentalEmployeeDto(
     Guid Id,
-    string FullName
+    string FullName,
+    bool IsActive
 );
 
 public record RentalClientDto(
     Guid Id,
-    string FullName
+    string FullName,
+    bool IsActive
 );
 
 public record RentalDriverDto(
     Guid Id,
-    string FullName
+    string FullName,
+    bool IsActive
 );
 
 public record RentalVehicleDto(
     Guid Id,
-    string LicensePlate
+    string LicensePlate,
+    bool IsActive
+);
+
+public record RentalCouponDto(
+    Guid Id,
+    string Name,
+    PartnerDto Partner,
+    bool IsActive
 );

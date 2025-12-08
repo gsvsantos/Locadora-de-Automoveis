@@ -829,5 +829,27 @@
         }
       }
     }
+  },
+  "rentals": {
+    "list": {
+      "header": {
+        "title": "Rental Catalog"
+      },
+      "buttons": {
+        "register": "Start New Rental",
+        "seeActives": "See Active Rentals",
+        "seeInactives": "See Inactives Rentals"
+      },
+      "label": {
+        "startDate": "Start Date",
+        "expectedReturnDate": "Expected Return Date",
+        "startKm": "Start Kilometers",
+        "driver": "Driver",
+        "basePrice": "Base Price",
+        "finalPrice": "Total Value (Estimated)",
+        "billingPlan": "Billing Plan",
+        "extras": "Extras"
+      }
+    }
   }
 }

@@ -123,9 +123,24 @@ public class RentalRepository(AppDbContext context)
         return await WithIncludes().Take(quantity).ToListAsync();
     }
 
+    public override async Task<List<Rental>> GetAllAsync(bool isActive)
+    {
+        return await WithIncludes()
+            .Where(d => d.IsActive == isActive)
+            .ToListAsync();
+    }
+
+    public override async Task<List<Rental>> GetAllAsync(int quantity, bool isActive)
+    {
+        return await WithIncludes()
+            .Take(quantity)
+            .Where(d => d.IsActive == isActive)
+            .ToListAsync();
+    }
+
     public override async Task<Rental?> GetByIdAsync(Guid entityId)
     {
-        return await WithIncludes().FirstOrDefaultAsync(r => r.Id == entityId);
+        return await WithIncludes().FirstOrDefaultAsync(r => r.Id.Equals(entityId));
     }
 
     private IQueryable<Rental> WithIncludes()

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using LocadoraDeAutomoveis.Application.Partners.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Create;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Return;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.RentalExtras;
@@ -19,6 +21,13 @@ public class RentalProfile : Profile
     public RentalProfile()
     {
         // CONTROLLER
+        // GetAll
+        CreateMap<GetAllRentalRequestPartial, GetAllRentalRequest>()
+            .ConvertUsing(src => new GetAllRentalRequest(
+                src.Quantity,
+                src.IsActive
+            ));
+
         // Update
         CreateMap<(UpdateRentalRequestPartial p, Guid id), UpdateRentalRequest>()
             .ConvertUsing(src => new UpdateRentalRequest(
@@ -48,25 +57,37 @@ public class RentalProfile : Profile
         CreateMap<Employee, RentalEmployeeDto>()
             .ConvertUsing(src => new RentalEmployeeDto(
                 src.Id,
-                src.FullName
+                src.FullName,
+                src.IsActive
             ));
 
         CreateMap<Client, RentalClientDto>()
             .ConvertUsing(src => new RentalClientDto(
                 src.Id,
-                src.FullName
+                src.FullName,
+                src.IsActive
             ));
 
         CreateMap<Driver, RentalDriverDto>()
             .ConvertUsing(src => new RentalDriverDto(
                 src.Id,
-                src.FullName
+                src.FullName,
+                src.IsActive
             ));
 
         CreateMap<Vehicle, RentalVehicleDto>()
             .ConvertUsing(src => new RentalVehicleDto(
                 src.Id,
-                src.LicensePlate
+                src.LicensePlate,
+                src.IsActive
+            ));
+
+        CreateMap<Coupon, RentalCouponDto>()
+            .ConvertUsing((src, dest, ctx) => new RentalCouponDto(
+                src.Id,
+                src.Name,
+                ctx.Mapper.Map<PartnerDto>(src.Partner),
+                src.IsActive
             ));
 
         CreateMap<Rental, RentalDto>()
@@ -76,13 +97,17 @@ public class RentalProfile : Profile
                 ctx.Mapper.Map<RentalClientDto>(src.Client),
                 ctx.Mapper.Map<RentalDriverDto>(src.Driver),
                 ctx.Mapper.Map<RentalVehicleDto>(src.Vehicle),
-                src.BillingPlanType,
+                ctx.Mapper.Map<RentalCouponDto>(src.Coupon),
                 src.StartDate,
                 src.ExpectedReturnDate,
+                src.StartKm,
+                src.BillingPlanType,
                 src.ReturnDate,
                 src.BaseRentalPrice,
                 src.FinalPrice,
-                src.Extras.Count
+                src.EstimatedKilometers,
+                src.Extras.Count,
+                src.IsActive
             ));
 
         CreateMap<RentalExtra, RentalRentalExtraDto>()
@@ -98,15 +123,19 @@ public class RentalProfile : Profile
                 ctx.Mapper.Map<RentalClientDto>(src.Client),
                 ctx.Mapper.Map<RentalDriverDto>(src.Driver),
                 ctx.Mapper.Map<RentalVehicleDto>(src.Vehicle),
-                src.BillingPlanType,
+                ctx.Mapper.Map<RentalCouponDto>(src.Coupon),
                 src.StartDate,
                 src.ExpectedReturnDate,
+                src.StartKm,
+                src.BillingPlanType,
                 src.ReturnDate,
                 src.BaseRentalPrice,
                 src.FinalPrice,
+                src.EstimatedKilometers,
                 src.Extras.Count,
                 src.Extras.Select(r => ctx.Mapper.Map<RentalRentalExtraDto>(r)).ToImmutableList()
-                ?? ImmutableList<RentalRentalExtraDto>.Empty
+                ?? ImmutableList<RentalRentalExtraDto>.Empty,
+                src.IsActive
             ));
 
         // HANDLERS

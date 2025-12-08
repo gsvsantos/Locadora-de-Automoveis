@@ -21,6 +21,12 @@ public class PartnerProfile : Profile
             ));
 
         // DTOs
+        CreateMap<Partner, PartnerDto>()
+            .ConvertUsing(src => new PartnerDto(
+                src.Id,
+                src.FullName
+            ));
+
         CreateMap<Partner, GetAllPartnerDto>()
             .ConvertUsing(src => new GetAllPartnerDto(
                 src.Id,

@@ -30,9 +30,9 @@ public class RentalController(
     }
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll([FromQuery] int? quantity)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllRentalRequestPartial partialRequest)
     {
-        GetAllRentalRequest request = new(quantity);
+        GetAllRentalRequest request = mapper.Map<GetAllRentalRequest>(partialRequest);
 
         Result<GetAllRentalResponse> result = await mediator.Send(request);
 
@@ -52,7 +52,6 @@ public class RentalController(
     [HttpPut("update/{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateRentalRequestPartial partialRequest)
     {
-
         UpdateRentalRequest request = mapper.Map<UpdateRentalRequest>((partialRequest, id));
 
         Result<UpdateRentalResponse> result = await mediator.Send(request);
