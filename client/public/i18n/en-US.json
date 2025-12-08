@@ -850,6 +850,62 @@
         "billingPlan": "Billing Plan",
         "extras": "Extras"
       }
+    },
+    "create": {
+      "card": {
+        "title": "New Rental Registration",
+        "subtitle": "Define the client, vehicle, timeline, and pricing structure for the rental.",
+        "section": {
+          "association": "Client, Driver, and Employee Association",
+          "vehicleAndDates": "Vehicle and Timeline",
+          "billing": "Billing and Estimated Kilometers",
+          "extrasAndCoupon": "Extras and Discounts"
+        },
+        "placeholder": {
+          "client": "Select Client...",
+          "driver": "Select Driver...",
+          "employee": "Select Employee...",
+          "vehicle": "Select Vehicle...",
+          "startKm": "Starting Kilometers",
+          "billingPlanType": "Select Billing Plan Type...",
+          "estimatedKilometers": "Estimated Kilometers",
+          "coupon": "Select Coupon (Optional)"
+        },
+        "label": {
+          "client": "Client",
+          "driver": "Driver",
+          "employee": "Employee",
+          "vehicle": "Vehicle",
+          "startDate": "Start Date",
+          "expectedReturnDate": "Expected Return Date",
+          "startKm": "Starting KM",
+          "billingPlanType": "Billing Plan Type",
+          "estimatedKilometers": "Estimated KM",
+          "extras": "Additional Services/Extras",
+          "coupon": "Coupon"
+        },
+        "plan": {
+          "daily": "Daily Billing",
+          "controlled": "Controlled Billing",
+          "free": "Free Billing"
+        },
+        "errors": {
+          "clientRequired": "Client selection is mandatory.",
+          "driverRequired": "Driver selection is mandatory.",
+          "employeeRequired": "Employee selection is mandatory.",
+          "vehicleRequired": "Vehicle selection is mandatory.",
+          "startDateRequired": "Start date is mandatory.",
+          "expectedReturnDateRequired": "Expected return date is mandatory.",
+          "startKmRequired": "Starting KM is mandatory.",
+          "startKmMin": "Starting KM must be greater than zero.",
+          "billingPlanTypeRequired": "Billing plan type is mandatory.",
+          "estimatedKilometersRequired": "Estimated KM is mandatory."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register Rental"
+        }
+      }
     }
   }
 }
