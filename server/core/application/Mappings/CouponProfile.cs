@@ -70,6 +70,7 @@ public class CouponProfile : Profile
                 src.Name,
                 src.DiscountValue,
                 src.ExpirationDate
-            ));
+            )
+            { Id = src.Id });
     }
 }

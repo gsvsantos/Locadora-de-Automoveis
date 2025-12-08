@@ -8,18 +8,19 @@ import {
 import { ListCouponsComponent } from '../components/coupons/list/list-coupons.component';
 import { CreateCouponComponent } from '../components/coupons/create/create-coupon.component';
 import { listPartnersResolver } from '../resolvers/partner.resolvers';
+import { UpdateCouponComponent } from '../components/coupons/update/update-coupon.component';
 
 export const couponRoutes: Routes = [
   {
     path: '',
-    component: MostUsedCouponsComponent,
-    resolve: { coupons: mostUsedCouponsResolver },
+    component: ListCouponsComponent,
+    resolve: { coupons: listCouponsResolver },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange',
   },
   {
-    path: 'list',
-    component: ListCouponsComponent,
-    resolve: { coupons: listCouponsResolver },
+    path: 'most-used',
+    component: MostUsedCouponsComponent,
+    resolve: { coupons: mostUsedCouponsResolver },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange',
   },
   {
@@ -27,11 +28,11 @@ export const couponRoutes: Routes = [
     component: CreateCouponComponent,
     resolve: { partners: listPartnersResolver },
   },
-  //   {
-  //     path: 'edit/:id',
-  //     component: UpdateCouponComponent,
-  //     resolve: { coupon: couponDetailsResolver },
-  //   },
+  {
+    path: 'edit/:id',
+    component: UpdateCouponComponent,
+    resolve: { coupon: couponDetailsResolver, partners: listPartnersResolver },
+  },
   //   {
   //     path: 'delete/:id',
   //     component: DeleteCouponComponent,

@@ -38,7 +38,6 @@ public class UpdateCouponRequestHandler(
         }
 
         Coupon updatedCoupon = mapper.Map<Coupon>(request);
-        updatedCoupon.AssociatePartner(selectedPartner);
 
         try
         {
@@ -52,6 +51,8 @@ public class UpdateCouponRequestHandler(
 
                 return Result.Fail(ErrorResults.BadRequestError(errors));
             }
+
+            selectedCoupon.AssociatePartner(selectedPartner);
 
             List<Coupon> existingCoupons = await repositoryCoupon.GetAllAsync();
 

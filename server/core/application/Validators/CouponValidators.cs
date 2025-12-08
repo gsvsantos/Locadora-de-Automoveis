@@ -18,8 +18,5 @@ public class CouponValidator : AbstractValidator<Coupon>
         RuleFor(c => c.ExpirationDate)
             .GreaterThan(DateTimeOffset.UtcNow)
             .WithMessage("Expiration date must be in the future.");
-
-        RuleFor(c => c.PartnerId)
-            .NotEmpty().WithMessage("Partner is required.");
     }
 }

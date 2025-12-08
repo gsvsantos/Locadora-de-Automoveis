@@ -1,7 +1,4 @@
-import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { CouponService } from '../../../services/coupon.service';
-import { CouponDto } from '../../../models/coupon.models';
 import {
   FormBuilder,
   FormGroup,
@@ -11,19 +8,22 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
-import { filter, map, Observer } from 'rxjs';
+import { filter, map, tap, shareReplay, Observer, take, switchMap } from 'rxjs';
 import { IdApiResponse } from '../../../models/api.models';
-import { NotificationService } from '../../../services/notification.service';
-import { TranslocoModule } from '@jsverse/transloco';
+import { Coupon, CouponDto } from '../../../models/coupon.models';
 import { ListPartnerDto } from '../../../models/partner.models';
+import { CouponService } from '../../../services/coupon.service';
+import { NotificationService } from '../../../services/notification.service';
+import { AsyncPipe } from '@angular/common';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-create-coupon.component',
+  selector: 'app-update-coupon.component',
   imports: [AsyncPipe, RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
-  templateUrl: './create-coupon.component.html',
-  styleUrl: './create-coupon.component.scss',
+  templateUrl: './update-coupon.component.html',
+  styleUrl: './update-coupon.component.scss',
 })
-export class CreateCouponComponent {
+export class UpdateCouponComponent {
   protected readonly formBuilder = inject(FormBuilder);
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
@@ -36,6 +36,13 @@ export class CreateCouponComponent {
   protected readonly partners$ = this.route.data.pipe(
     filter((data) => data['partners'] as boolean),
     map((data) => data['partners'] as ListPartnerDto[]),
+  );
+
+  protected readonly coupon$ = this.route.data.pipe(
+    filter((data) => data['coupon'] as boolean),
+    map((data) => data['coupon'] as Coupon),
+    tap((coupon: Coupon) => this.formGroup.patchValue(coupon)),
+    shareReplay({ bufferSize: 1, refCount: true }),
   );
 
   protected formGroup: FormGroup = this.formBuilder.group({
@@ -61,18 +68,23 @@ export class CreateCouponComponent {
     return this.formGroup.get('partnerId');
   }
 
-  public register(): void {
+  public update(): void {
     if (this.formGroup.invalid) return;
 
-    const registerModel: CouponDto = this.formGroup.value as CouponDto;
-
-    const registerObserver: Observer<IdApiResponse> = {
+    const updateModel: CouponDto = this.formGroup.value as CouponDto;
+    console.log(updateModel);
+    const updateObserve: Observer<IdApiResponse> = {
       next: () =>
-        this.notificationService.success(`Coupon "${registerModel.name}" registered successfully!`),
+        this.notificationService.success(`Group "${updateModel.name}" updated successfully!`),
       error: (err: string) => this.notificationService.error(err),
       complete: () => void this.router.navigate(['/coupons']),
     };
 
-    this.couponService.register(registerModel).subscribe(registerObserver);
+    this.coupon$
+      .pipe(
+        take(1),
+        switchMap((coupon) => this.couponService.update(coupon.id, updateModel)),
+      )
+      .subscribe(updateObserve);
   }
 }
