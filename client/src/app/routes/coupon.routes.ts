@@ -9,6 +9,7 @@ import { ListCouponsComponent } from '../components/coupons/list/list-coupons.co
 import { CreateCouponComponent } from '../components/coupons/create/create-coupon.component';
 import { listPartnersResolver } from '../resolvers/partner.resolvers';
 import { UpdateCouponComponent } from '../components/coupons/update/update-coupon.component';
+import { DeleteCouponComponent } from '../components/coupons/delete/delete-coupon.component';
 
 export const couponRoutes: Routes = [
   {
@@ -33,9 +34,9 @@ export const couponRoutes: Routes = [
     component: UpdateCouponComponent,
     resolve: { coupon: couponDetailsResolver, partners: listPartnersResolver },
   },
-  //   {
-  //     path: 'delete/:id',
-  //     component: DeleteCouponComponent,
-  //     resolve: { coupon: couponDetailsResolver },
-  //   },
+  {
+    path: 'delete/:id',
+    component: DeleteCouponComponent,
+    resolve: { coupon: couponDetailsResolver },
+  },
 ];

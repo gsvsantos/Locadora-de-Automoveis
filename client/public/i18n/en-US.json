@@ -1259,6 +1259,26 @@
           "confirm": "Update Coupon"
         }
       }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Coupon",
+        "subtitle": "Confirm permanent deletion of the discount coupon.",
+        "section": {
+          "details": "Coupon Details",
+          "warning": "This action cannot be undone. The coupon will no longer be valid for use in rentals."
+        },
+        "label": {
+          "name": "Coupon Code",
+          "partner": "Partner",
+          "discountValue": "Discount Value",
+          "expirationDate": "Expiration Date"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Coupon"
+        }
+      }
     }
   }
 }
