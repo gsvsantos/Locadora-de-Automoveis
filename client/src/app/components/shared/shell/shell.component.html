@@ -14,7 +14,9 @@
       <span class="material-icons"> directions_car </span>Locadora de Automóveis
     </div>
     <div class="navbar__spacer"></div>
-    <app-multi-search></app-multi-search>
+    @if (!(isHandset$ | async)) {
+      <app-multi-search></app-multi-search>
+    }
     <div class="navbar__spacer"></div>
 
     <div class="navbar__options">

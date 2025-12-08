@@ -54,6 +54,16 @@
   gap: 15px;
 }
 
+.navbar app-multi-search {
+  display: flex;
+  flex: 0 1 480px;
+}
+
+.navbar app-multi-search .search-container {
+  width: 100%;
+  max-width: 480px;
+}
+
 .shell__layout {
   flex: 1;
   display: grid;
@@ -172,6 +182,15 @@
 
   .navbar {
     justify-content: flex-start;
+    gap: 0.5rem;
+  }
+
+  .navbar__logo {
+    flex: 0 0 auto;
+  }
+
+  .navbar__options {
+    flex: 0 0 auto;
   }
 
   .navbar__menu-button {
