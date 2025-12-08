@@ -946,6 +946,32 @@
           "confirm": "Update Rental"
         }
       }
+    },
+    "delete": {
+      "card": {
+        "title": "Cancel/Delete Rental",
+        "subtitle": "Confirm permanent cancellation of the rental contract.",
+        "section": {
+          "details": "Rental Summary",
+          "vehicleAndDates": "Vehicle and Timeline",
+          "pricing": "Pricing Details",
+          "warning": "This action cannot be undone. All associated financial records will be affected."
+        },
+        "label": {
+          "client": "Client",
+          "driver": "Driver",
+          "vehicle": "Vehicle",
+          "startDate": "Start Date",
+          "expectedReturnDate": "Expected Return Date",
+          "billingPlanType": "Billing Plan Type",
+          "finalPrice": "Total Price (Estimated)",
+          "extrasQuantity": "Number of Extras"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Rental"
+        }
+      }
     }
   }
 }
