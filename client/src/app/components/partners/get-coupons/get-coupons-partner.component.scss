@@ -1,0 +1,157 @@
+@use '../../../../styles/variables' as *;
+
+.details-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 4rem 0;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 350px;
+  max-width: fit-content;
+  padding: 2rem 50px;
+  background-color: $surface;
+  border-radius: $border-radius;
+  box-shadow: $shadow-1;
+  border: 1px solid $border;
+}
+
+.card {
+  padding: 0.5rem;
+
+  h2 {
+    color: $primary;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.bar {
+  border: none;
+  height: 1px;
+  background-color: $border;
+  margin: 1.5rem 0;
+}
+
+.card-content {
+  width: 100%;
+
+  span {
+    color: $text-muted;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: $text-main;
+  }
+}
+
+.details-section {
+  h4 {
+    margin-top: 0.5rem;
+    color: $text-main;
+    font-size: 1.1rem;
+  }
+
+  p {
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+
+    strong {
+      margin-right: 8px;
+      color: $primary-active;
+    }
+  }
+
+  .active-status {
+    color: $success;
+    font-weight: 600;
+  }
+
+  .inactive-status {
+    color: $danger;
+    font-weight: 600;
+  }
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.coupon-card {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  background-color: $surface-alt;
+  border: 1px solid $border;
+  border-radius: $border-radius;
+  transition: $transition-fast;
+
+  &:hover {
+    border-color: $primary;
+    box-shadow: $shadow-1;
+  }
+
+  .card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed $border;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+
+  .card_title {
+    font-weight: 700;
+    color: $primary-active;
+  }
+
+  .card__content {
+    p {
+      margin: 4px 0;
+      font-size: 0.9rem;
+    }
+  }
+
+  .card__actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 10px;
+
+    a {
+      color: $text-muted;
+      transition: $transition-fast;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+}
+
+.no-data-message {
+  color: $text-muted;
+  text-align: center;
+  padding: 20px;
+  border: 1px dashed $border;
+  border-radius: $border-radius;
+  margin-top: 1.5rem;
+}
+
+.buttons {
+  margin: 3rem 0 1rem 0;
+  display: flex;
+  justify-self: center;
+  gap: 20px;
+}

@@ -4,6 +4,7 @@ import { listPartnersResolver, partnerDetailsResolver } from '../resolvers/partn
 import { CreatePartnerComponent } from '../components/partners/create/create-partner.component';
 import { DeletePartnerComponent } from '../components/partners/delete/delete-partner.component';
 import { UpdatePartnerComponent } from '../components/partners/update/update-partner.component';
+import { GetCouponsPartnerComponent } from '../components/partners/get-coupons/get-coupons-partner.component';
 
 export const partnerRoutes: Routes = [
   {
@@ -21,6 +22,11 @@ export const partnerRoutes: Routes = [
   {
     path: 'delete/:id',
     component: DeletePartnerComponent,
+    resolve: { partner: partnerDetailsResolver },
+  },
+  {
+    path: 'partner/:id/coupons',
+    component: GetCouponsPartnerComponent,
     resolve: { partner: partnerDetailsResolver },
   },
 ];

@@ -1126,6 +1126,34 @@
           "confirm": "Delete Partner"
         }
       }
+    },
+    "details": {
+      "card": {
+        "title": "Partner Details",
+        "subtitle": "Overview of the partner and associated discount coupons.",
+        "section": {
+          "partnerDetails": "Partner Information",
+          "couponsList": "Associated Coupons"
+        },
+        "label": {
+          "fullName": "Full Name",
+          "id": "ID",
+          "status": "Status",
+          "discountValue": "Discount Value",
+          "expirationDate": "Expiration Date"
+        },
+        "status": {
+          "active": "Active",
+          "inactive": "Inactive"
+        },
+        "info": {
+          "noCoupons": "This partner does not have any active coupons."
+        },
+        "buttons": {
+          "back": "Back to List",
+          "editPartner": "Edit Partner"
+        }
+      }
     }
   }
 }

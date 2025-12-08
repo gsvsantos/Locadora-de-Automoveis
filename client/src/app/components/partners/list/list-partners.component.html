@@ -39,16 +39,19 @@
               </div>
             </div>
 
-            @if (partner.isActive) {
-              <div class="card__actions" align="end">
+            <div class="card__actions" align="end">
+              <a [routerLink]="['partner', partner.id, 'coupons']">
+                <span class="material-icons">visibility</span>
+              </a>
+              @if (partner.isActive) {
                 <a [routerLink]="['edit', partner.id]">
                   <span class="material-icons">edit</span>
                 </a>
                 <a class="button button__danger" [routerLink]="['delete', partner.id]">
                   <span class="material-icons">delete</span>
                 </a>
-              </div>
-            }
+              }
+            </div>
           </div>
         </div>
       }
