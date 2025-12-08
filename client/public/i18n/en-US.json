@@ -843,6 +843,7 @@
       "label": {
         "startDate": "Start Date",
         "expectedReturnDate": "Expected Return Date",
+        "returnDate": "Return Date",
         "estimatedKilometers": "Estimated KM",
         "startKm": "Start Kilometers",
         "driver": "Driver",
@@ -1010,6 +1011,40 @@
         "buttons": {
           "back": "Back",
           "confirm": "Confirm Return"
+        }
+      }
+    }
+  },
+  "configuration": {
+    "update": {
+      "card": {
+        "title": "System Configuration",
+        "subtitle": "Set the base prices for reference calculation.",
+        "section": {
+          "fuelPrices": "Fuel Prices"
+        },
+        "placeholder": {
+          "gasolinePrice": "Price per liter of Gasoline (R$)",
+          "gasPrice": "Price per liter of Gas (R$)",
+          "dieselPrice": "Price per liter of Diesel (R$)",
+          "alcoholPrice": "Price per liter of Alcohol (R$)"
+        },
+        "label": {
+          "gasolinePrice": "Gasoline Price",
+          "gasPrice": "Gas Price (Natural Gas)",
+          "dieselPrice": "Diesel Price",
+          "alcoholPrice": "Alcohol/Ethanol Price"
+        },
+        "errors": {
+          "gasolinePriceRequired": "Gasoline price is mandatory.",
+          "gasPriceRequired": "Gas price is mandatory.",
+          "dieselPriceRequired": "Diesel price is mandatory.",
+          "alcoholPriceRequired": "Alcohol/Ethanol price is mandatory.",
+          "priceMin": "The price must be greater than zero."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Save Configuration"
         }
       }
     }

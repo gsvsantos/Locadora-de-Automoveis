@@ -1,0 +1,109 @@
+<section class="configure-section" *transloco="let t; prefix: 'configuration.update'">
+  <div class="main-content">
+    @if (configuration$ | async) {
+      <div class="card">
+        <form [formGroup]="formGroup" class="form" (ngSubmit)="submit()">
+          <h2>{{ t('card.title') }}</h2>
+          <hr class="bar" />
+          <div class="card-content">
+            <span>{{ t('card.subtitle') }}</span>
+
+            <h3>{{ t('card.section.fuelPrices') }}</h3>
+
+            <div class="form-field">
+              <label>{{ t('card.label.gasolinePrice') }}</label>
+              <input
+                class="form-input"
+                formControlName="gasolinePrice"
+                type="number"
+                step="0.01"
+                min="0.01"
+                [placeholder]="t('card.placeholder.gasolinePrice')"
+                autocomplete="off"
+              />
+              @if (gasolinePrice?.errors?.['required'] && gasolinePrice?.dirty) {
+                <span class="error-message">{{ t('card.errors.gasolinePriceRequired') }}</span>
+              }
+              @if (gasolinePrice?.errors?.['min'] && gasolinePrice?.dirty) {
+                <span class="error-message">{{ t('card.errors.priceMin') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.gasPrice') }}</label>
+              <input
+                class="form-input"
+                formControlName="gasPrice"
+                type="number"
+                step="0.01"
+                min="0.01"
+                [placeholder]="t('card.placeholder.gasPrice')"
+                autocomplete="off"
+              />
+              @if (gasPrice?.errors?.['required'] && gasPrice?.dirty) {
+                <span class="error-message">{{ t('card.errors.gasPriceRequired') }}</span>
+              }
+              @if (gasPrice?.errors?.['min'] && gasPrice?.dirty) {
+                <span class="error-message">{{ t('card.errors.priceMin') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.dieselPrice') }}</label>
+              <input
+                class="form-input"
+                formControlName="dieselPrice"
+                type="number"
+                step="0.01"
+                min="0.01"
+                [placeholder]="t('card.placeholder.dieselPrice')"
+                autocomplete="off"
+              />
+              @if (dieselPrice?.errors?.['required'] && dieselPrice?.dirty) {
+                <span class="error-message">{{ t('card.errors.dieselPriceRequired') }}</span>
+              }
+              @if (dieselPrice?.errors?.['min'] && dieselPrice?.dirty) {
+                <span class="error-message">{{ t('card.errors.priceMin') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.alcoholPrice') }}</label>
+              <input
+                class="form-input"
+                formControlName="alcoholPrice"
+                type="number"
+                step="0.01"
+                min="0.01"
+                [placeholder]="t('card.placeholder.alcoholPrice')"
+                autocomplete="off"
+              />
+              @if (alcoholPrice?.errors?.['required'] && alcoholPrice?.dirty) {
+                <span class="error-message">{{ t('card.errors.alcoholPriceRequired') }}</span>
+              }
+              @if (alcoholPrice?.errors?.['min'] && alcoholPrice?.dirty) {
+                <span class="error-message">{{ t('card.errors.priceMin') }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="buttons">
+            <gs-buttons
+              [buttonType]="buttonType.Link"
+              [text]="t('card.buttons.back')"
+              routerLink="/home"
+            ></gs-buttons>
+
+            <gs-buttons
+              [buttonType]="buttonType.Default"
+              [text]="t('card.buttons.confirm')"
+              type="submit"
+              [disabled]="formGroup.invalid"
+              (click)="submit()"
+            ></gs-buttons>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+</section>

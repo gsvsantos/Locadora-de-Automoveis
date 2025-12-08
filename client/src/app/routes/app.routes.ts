@@ -56,4 +56,10 @@ export const routes: Routes = [
     loadChildren: () => import('../routes/rental.routes').then((route) => route.rentalRoutes),
     canActivate: [authenticatedUserGuard],
   },
+  {
+    path: 'configuration',
+    loadChildren: () =>
+      import('../routes/configuration.routes').then((route) => route.configurationRoutes),
+    canActivate: [authenticatedUserGuard],
+  },
 ];

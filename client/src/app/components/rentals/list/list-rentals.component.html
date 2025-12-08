@@ -58,6 +58,15 @@
                   {{ rental.expectedReturnDate | date: 'dd/MM/yyyy' }}
                 </span>
               </div>
+              @if (rental.returnDate) {
+                <div class="info-row">
+                  <span class="material-icons">calendar_today</span>
+                  <span>
+                    {{ t('label.returnDate') }}:
+                    {{ rental.returnDate | date: 'dd/MM/yyyy' }}
+                  </span>
+                </div>
+              }
               <div class="info-row">
                 <span class="material-icons">speed</span>
                 <span>{{ t('label.startKm') }}: {{ rental.startKm }} km</span>
@@ -83,7 +92,7 @@
               </div>
 
               <div class="card__actions" align="end">
-                @if (rental.isActive && rental.returnDate) {
+                @if (rental.isActive && !rental.returnDate) {
                   <a [routerLink]="['return', rental.id]">
                     <span class="material-icons">check_circle</span>
                   </a>

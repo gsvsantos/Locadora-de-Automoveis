@@ -28,6 +28,26 @@
         [checked]="isDarkMode"
         (toggleChange)="themeEvent.emit($event)"
       ></app-slide-toggle>
+
+      @if (user?.role !== 'Admin') {
+        <a
+          class="navbar__item-link"
+          routerLink="configuration/details"
+          routerLinkActive="navbar__item-link--active"
+          (click)="closeSidebar()"
+        >
+          <span class="material-icons navbar__item-icon"> settings </span>
+        </a>
+      } @else {
+        <a
+          class="navbar__item-link"
+          routerLink="configuration/configure"
+          routerLinkActive="navbar__item-link--active"
+          (click)="closeSidebar()"
+        >
+          <span class="material-icons navbar__item-icon"> settings </span>
+        </a>
+      }
     </div>
   </nav>
 
