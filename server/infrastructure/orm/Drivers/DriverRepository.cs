@@ -13,6 +13,18 @@ public class DriverRepository(AppDbContext context)
             r.ClientId.Equals(clientId));
     }
 
+    public async Task<List<Driver>> SearchAsync(string term, CancellationToken ct)
+    {
+        return await this.records
+            .AsNoTracking()
+            .Where(d =>
+                d.FullName.ToLower().Contains(term) ||
+                d.Document.ToLower().Contains(term)
+            )
+            .Take(5)
+            .ToListAsync(ct);
+    }
+
     public override async Task<List<Driver>> GetAllAsync()
     {
         return await this.records

@@ -74,6 +74,12 @@
       }
     }
   },
+  "search": {
+    "placeholder": "Search",
+    "messages": {
+      "notFound": "teste"
+    }
+  },
   "employee": {
     "create": {
       "card": {

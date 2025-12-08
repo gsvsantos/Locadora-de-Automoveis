@@ -7,6 +7,17 @@ namespace LocadoraDeAutomoveis.Infrastructure.Groups;
 public class GroupRepository(AppDbContext context)
     : BaseRepository<Group>(context), IRepositoryGroup
 {
+    public async Task<List<Group>> SearchAsync(string term, CancellationToken ct)
+    {
+        return await this.records
+            .AsNoTracking()
+            .Where(g =>
+                g.Name.ToLower().Contains(term)
+            )
+            .Take(5)
+            .ToListAsync(ct);
+    }
+
     public override async Task<List<Group>> GetAllAsync()
     {
         return await this.records

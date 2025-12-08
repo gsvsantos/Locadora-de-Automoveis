@@ -13,6 +13,19 @@ public class ClientRepository(AppDbContext context)
             .AnyAsync(x => x.JuristicClientId.Equals(id));
     }
 
+    public async Task<List<Client>> SearchAsync(string term, CancellationToken ct)
+    {
+        return await this.records
+            .AsNoTracking()
+            .Where(c =>
+                c.FullName.ToLower().Contains(term) ||
+                c.Email.ToLower().Contains(term) ||
+                (c.Document != null && c.Document.ToLower().Contains(term))
+            )
+            .Take(5)
+            .ToListAsync(ct);
+    }
+
     public async Task<List<Client>> GetIndividualClientsFromBusinessId(Guid id, CancellationToken ct = default)
     {
         return await this.records

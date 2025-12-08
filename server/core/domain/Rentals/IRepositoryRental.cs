@@ -33,4 +33,6 @@ public interface IRepositoryRental : IRepository<Rental>
     Task<bool> HasRentalHistoryByCoupon(Guid couponId);
 
     Task<bool> HasClientUsedCoupon(Guid clientId, Guid couponId);
+
+    Task<List<Rental>> SearchAsync(string term, CancellationToken ct = default);
 }

@@ -7,4 +7,6 @@ public interface IRepositoryCoupon : IRepository<Coupon>
     Task<bool> ExistsByPartnerId(Guid partnerId);
 
     Task<Coupon?> GetByNameAsync(string name);
+
+    Task<List<Coupon>> SearchAsync(string term, CancellationToken ct = default);
 }

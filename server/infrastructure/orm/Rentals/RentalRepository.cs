@@ -113,6 +113,24 @@ public class RentalRepository(AppDbContext context)
         return await this.records.AnyAsync(r => r.CouponId == couponId);
     }
 
+    public async Task<List<Rental>> SearchAsync(string term, CancellationToken ct)
+    {
+        return await this.records
+            .AsNoTracking()
+            .Include(r => r.Client)
+            .Include(r => r.Vehicle)
+            .Include(r => r.Driver)
+            .Where(r =>
+                r.Client.FullName.ToLower().Contains(term) ||
+                r.Driver.FullName.ToLower().Contains(term) ||
+                r.Vehicle.Model.ToLower().Contains(term) ||
+                r.Vehicle.LicensePlate.ToLower().Contains(term)
+            )
+            .OrderByDescending(r => r.StartDate)
+            .Take(5)
+            .ToListAsync(ct);
+    }
+
     public override async Task<List<Rental>> GetAllAsync()
     {
         return await WithIncludes().ToListAsync();

@@ -22,6 +22,18 @@ public class VehicleRepository(AppDbContext context)
             .ToListAsync();
     }
 
+    public async Task<List<Vehicle>> SearchAsync(string term, CancellationToken ct)
+    {
+        return await this.records
+            .AsNoTracking()
+            .Where(v =>
+                v.Model.ToLower().Contains(term) ||
+                v.Brand.ToLower().Contains(term) ||
+                v.LicensePlate.ToLower().Contains(term))
+            .Take(5)
+            .ToListAsync(ct);
+    }
+
     public override async Task<List<Vehicle>> GetAllAsync()
     {
         return await this.records

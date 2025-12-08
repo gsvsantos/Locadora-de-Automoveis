@@ -1,0 +1,48 @@
+<div class="search-container" #searchContainer *transloco="let t; prefix: 'search'">
+  <div class="input-group" [ngClass]="{ active: showResults$ | async }">
+    <span class="material-icons search-icon">search</span>
+
+    <input
+      type="text"
+      [formControl]="searchControl"
+      [placeholder]="t('placeholder')"
+      autocomplete="off"
+    />
+
+    @if (isLoading$ | async) {
+      <div class="spinner"></div>
+    } @else if (searchControl.value) {
+      <span class="material-icons close-icon" (click)="searchControl.setValue('')"> close </span>
+    }
+  </div>
+
+  @if (showResults$ | async) {
+    <div class="results-dropdown">
+      @if (results$ | async; as results) {
+        @if (results.length > 0) {
+          @for (item of results; track item.id) {
+            <div class="result-item" (click)="onSelectResult(item.route)">
+              <div class="icon-box">
+                <span class="material-icons">{{ getIcon(item.type) }}</span>
+              </div>
+
+              <div class="info">
+                <span class="title">{{ item.title }}</span>
+                <span class="desc">{{ item.description }}</span>
+              </div>
+
+              <div class="type-badge">{{ item.type }}</div>
+            </div>
+          }
+        } @else {
+          @if (!(isLoading$ | async)) {
+            <div class="no-results">
+              <span class="material-icons">search_off</span>
+              <span>{{ t('messages.notFound') }}</span>
+            </div>
+          }
+        }
+      }
+    </div>
+  }
+</div>

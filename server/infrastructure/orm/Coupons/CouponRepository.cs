@@ -20,6 +20,19 @@ public class CouponRepository(AppDbContext context)
             .FirstOrDefaultAsync(c => c.Name.Equals(name));
     }
 
+    public async Task<List<Coupon>> SearchAsync(string term, CancellationToken ct)
+    {
+        return await this.records
+            .AsNoTracking()
+            .Include(c => c.Partner)
+            .Where(c =>
+                c.Name.ToLower().Contains(term) ||
+                c.Partner.FullName.ToLower().Contains(term)
+            )
+            .Take(5)
+            .ToListAsync(ct);
+    }
+
     public override async Task<List<Coupon>> GetAllAsync()
     {
         return await this.records

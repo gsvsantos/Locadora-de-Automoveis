@@ -8,12 +8,13 @@ import { RouterLink } from '@angular/router';
 import { SlideToggleComponent } from '../slide-toggle/slide-toggle.component';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { LocalStorageService } from '../../../services/local-storage.service';
+import { MultiSearchComponent } from "../../search/multi/multi-search.component";
 
 @Component({
   selector: 'app-shell',
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
-  imports: [AsyncPipe, RouterLink, SlideToggleComponent, GsButtons],
+  imports: [AsyncPipe, RouterLink, SlideToggleComponent, GsButtons, MultiSearchComponent],
 })
 export class ShellComponent {
   private breakpointObserver = inject(BreakpointObserver);
