@@ -39,6 +39,14 @@
                 <span class="material-icons">local_offer</span>
                 <span>{{ t('label.billingPlan') }}: {{ rental.billingPlanType }}</span>
               </div>
+              @if (rental.estimatedKilometers) {
+                <div class="info-row">
+                  <span class="material-icons">local_offer</span>
+                  <span
+                    >{{ t('label.estimatedKilometers') }}: {{ rental.estimatedKilometers }}</span
+                  >
+                </div>
+              }
               <div class="info-row">
                 <span class="material-icons">event_note</span>
                 <span>{{ t('label.startDate') }}: {{ rental.startDate | date: 'dd/MM/yyyy' }}</span>

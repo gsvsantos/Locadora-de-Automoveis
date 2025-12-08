@@ -25,6 +25,12 @@ export class RentalService {
     return this.http.post<IdApiResponse>(url, registerModel);
   }
 
+  public update(id: string, updateModel: CreateRentalDto): Observable<IdApiResponse> {
+    const url = `${this.apiUrl}/update/${id}`;
+
+    return this.http.put<IdApiResponse>(url, updateModel);
+  }
+
   public delete(id: string): Observable<null> {
     const url = `${this.apiUrl}/delete/${id}`;
 

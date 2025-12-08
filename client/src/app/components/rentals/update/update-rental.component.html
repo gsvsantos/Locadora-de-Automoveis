@@ -1,0 +1,118 @@
+<section class="update-section" *transloco="let t; prefix: 'rentals.update'">
+  <div class="main-content">
+    @if (rental$ | async; as rental) {
+      <div class="card">
+        <form [formGroup]="formGroup" class="form" (ngSubmit)="update()">
+          <h2>{{ t('card.title') }}</h2>
+
+          <hr class="bar" />
+
+          <div class="card-content">
+            <span>{{ t('card.subtitle') }}</span>
+
+            <h3>{{ t('card.section.association') }}</h3>
+
+            <div class="form-field">
+              <label>{{ t('card.label.client') }}</label>
+              <input class="form-input" [value]="rental.client.fullName" disabled />
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.driver') }}</label>
+              <input class="form-input" [value]="rental.driver.fullName" disabled />
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.vehicle') }}</label>
+              <input class="form-input" [value]="rental.vehicle.licensePlate" disabled />
+            </div>
+
+            <hr />
+
+            <h3>{{ t('card.section.timelineAndEstimates') }}</h3>
+
+            <div class="form-field">
+              <label>{{ t('card.label.startDate') }}</label>
+              <input class="form-input" formControlName="startDate" type="date" />
+              <span class="small-info">{{ t('card.info.startDateFixed') }}</span>
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.expectedReturnDate') }}</label>
+              <input class="form-input" formControlName="expectedReturnDate" type="date" />
+              @if (expectedReturnDate?.errors?.['required'] && expectedReturnDate?.dirty) {
+                <span class="error-message">{{ t('card.errors.expectedReturnDateRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.estimatedKilometers') }}</label>
+              <input
+                class="form-input"
+                formControlName="estimatedKilometers"
+                type="number"
+                [placeholder]="t('card.placeholder.estimatedKilometers')"
+              />
+              @if (estimatedKilometers?.errors?.['required'] && estimatedKilometers?.dirty) {
+                <span class="error-message">{{
+                  t('card.errors.estimatedKilometersRequired')
+                }}</span>
+              }
+            </div>
+
+            <hr />
+
+            <h3>{{ t('card.section.extras') }}</h3>
+
+            <div class="form-field">
+              <label>{{ t('card.label.extras') }}</label>
+              <select class="form-input" formControlName="rentalRentalExtrasIds" multiple>
+                @for (extra of extras$ | async; track extra.id) {
+                  <option [value]="extra.id">
+                    {{ extra.name }} ({{ extra.price | currency: 'BRL' : 'symbol' : '1.2-2' }})
+                  </option>
+                }
+              </select>
+              <span class="small-info">{{ t('card.info.extrasHint') }}</span>
+            </div>
+
+            <hr />
+
+            <h3>{{ t('card.section.pricing') }}</h3>
+
+            <p>
+              <strong>{{ t('card.label.billingPlanType') }}:</strong>
+              <span>{{ rental.billingPlanType }}</span>
+            </p>
+
+            <p>
+              <strong>{{ t('card.label.baseRentalPrice') }}:</strong>
+              <span>{{ rental.baseRentalPrice | currency: 'BRL' : 'symbol' : '1.2-2' }}</span>
+            </p>
+
+            <p>
+              <strong>{{ t('card.label.finalPrice') }}:</strong>
+              <span>{{ rental.finalPrice | currency: 'BRL' : 'symbol' : '1.2-2' }}</span>
+            </p>
+          </div>
+
+          <div class="buttons">
+            <gs-buttons
+              [buttonType]="buttonType.Link"
+              [text]="t('card.buttons.back')"
+              routerLink="/rentals"
+            ></gs-buttons>
+
+            <gs-buttons
+              [buttonType]="buttonType.Default"
+              [text]="t('card.buttons.confirm')"
+              type="submit"
+              [disabled]="formGroup.invalid"
+              (click)="update()"
+            ></gs-buttons>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+</section>

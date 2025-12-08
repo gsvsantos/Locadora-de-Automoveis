@@ -843,6 +843,7 @@
       "label": {
         "startDate": "Start Date",
         "expectedReturnDate": "Expected Return Date",
+        "estimatedKilometers": "Estimated KM",
         "startKm": "Start Kilometers",
         "driver": "Driver",
         "basePrice": "Base Price",
@@ -904,6 +905,45 @@
         "buttons": {
           "back": "Back",
           "confirm": "Register Rental"
+        }
+      }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Rental Details",
+        "subtitle": "Update the rental timeline and optional services.",
+        "section": {
+          "association": "Client, Driver, and Vehicle (Fixed)",
+          "timelineAndEstimates": "Timeline and Estimates",
+          "extras": "Additional Services/Extras",
+          "pricing": "Current Pricing"
+        },
+        "placeholder": {
+          "estimatedKilometers": "Estimated Kilometers"
+        },
+        "label": {
+          "client": "Client",
+          "driver": "Driver",
+          "vehicle": "Vehicle",
+          "startDate": "Start Date",
+          "expectedReturnDate": "Expected Return Date",
+          "estimatedKilometers": "Estimated KM",
+          "extras": "Selected Extras",
+          "billingPlanType": "Billing Plan Type",
+          "baseRentalPrice": "Base Price",
+          "finalPrice": "Total Price"
+        },
+        "info": {
+          "startDateFixed": "The rental start date cannot be modified.",
+          "extrasHint": "Select or deselect items to modify the list of optional extras."
+        },
+        "errors": {
+          "expectedReturnDateRequired": "Expected return date is mandatory.",
+          "estimatedKilometersRequired": "Estimated KM is mandatory."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update Rental"
         }
       }
     }

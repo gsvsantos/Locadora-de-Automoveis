@@ -41,12 +41,7 @@ export class UpdateVehicleComponent {
   protected readonly vehicle$ = this.route.data.pipe(
     filter((data) => data['vehicle'] as boolean),
     map((data) => data['vehicle'] as Vehicle),
-    tap(
-      (vehicle: Vehicle) => (
-        console.log('vehicle:', vehicle),
-        this.formGroup.patchValue({ ...vehicle, groupId: vehicle.group.id })
-      ),
-    ),
+    tap((vehicle: Vehicle) => this.formGroup.patchValue({ ...vehicle, groupId: vehicle.group.id })),
     shareReplay({ bufferSize: 1, refCount: true }),
   );
 
