@@ -175,7 +175,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     Address_Number = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     LicenseNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LicenseExpiry = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LicenseValidity = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     JuristicClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),

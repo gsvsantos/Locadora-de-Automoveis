@@ -111,7 +111,8 @@ public sealed class CreateDriverRequestHandlerTests : UnitTestBase
             "(51) 90009-9999",
             "111.111.111-11",
             "12345",
-            DateTimeOffset.Now
+            DateTimeOffset.Now,
+             null
         );
 
         this.validatorMock
@@ -259,7 +260,8 @@ public sealed class CreateDriverRequestHandlerTests : UnitTestBase
             "(51) 99999-9999",
             "222.222.222-22",
             "12345",
-            DateTimeOffset.Now
+            DateTimeOffset.Now,
+            null
         );
 
         this.validatorMock

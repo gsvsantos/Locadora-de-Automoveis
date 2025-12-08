@@ -78,6 +78,7 @@ export class ClientService {
       address: apiClient.address,
       type: apiClient.type,
       licenseNumber: apiClient.licenseNumber,
+      licenseValidity: apiClient.licenseValidity,
       isActive: apiClient.isActive,
     };
   }

@@ -38,7 +38,7 @@ public sealed class GetAllGroupRequestHandlerTests : UnitTestBase
             .Setup(repo => repo.GetAllAsync())
             .ReturnsAsync(groups);
 
-        GetAllGroupRequest request = new(null);
+        GetAllGroupRequest request = new(null, null);
 
         // Act
         Result<GetAllGroupResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
@@ -72,7 +72,7 @@ public sealed class GetAllGroupRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetAllAsync(5))
             .ReturnsAsync([.. groups.Take(5)]);
 
-        GetAllGroupRequest request = new(5);
+        GetAllGroupRequest request = new(5, null);
 
         // Act
         Result<GetAllGroupResponse> result = this.handler.Handle(request, CancellationToken.None).Result;

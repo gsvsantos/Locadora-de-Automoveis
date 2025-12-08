@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 
-namespace LocadoraDeAutomoveis.Application.Clients.GetIndividuals;
+namespace LocadoraDeAutomoveis.Application.Clients.Commands.GetIndividuals;
 
 public record GetIndividualsResponse(
     int Quantity,
@@ -14,5 +14,5 @@ public record DriverIndividualClientDto(
     string PhoneNumber,
     string? Document,
     string? LicenseNumber,
-    DateTimeOffset? LicenseExpiry
+    DateTimeOffset? LicenseValidity
 );

@@ -37,7 +37,7 @@ public sealed class GetAllEmployeeRequestHandlerTests : UnitTestBase
             .Setup(repo => repo.GetAllAsync())
             .ReturnsAsync(employees);
 
-        GetAllEmployeeRequest request = new(null);
+        GetAllEmployeeRequest request = new(null, null);
 
         // Act
         Result<GetAllEmployeeResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
@@ -73,7 +73,7 @@ public sealed class GetAllEmployeeRequestHandlerTests : UnitTestBase
             .Setup(repo => repo.GetAllAsync(5))
             .ReturnsAsync(employees.Take(5).ToList());
 
-        GetAllEmployeeRequest request = new(5);
+        GetAllEmployeeRequest request = new(5, null);
 
         // Act
         Result<GetAllEmployeeResponse> result = this.handler.Handle(request, CancellationToken.None).Result;

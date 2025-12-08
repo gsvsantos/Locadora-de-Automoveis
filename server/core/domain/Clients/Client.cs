@@ -11,7 +11,7 @@ public class Client : BaseEntity<Client>
     public Address Address { get; set; } = null!;
     public EClientType Type { get; set; }
     public string? LicenseNumber { get; set; } = null;
-    public DateTimeOffset? LicenseExpiry { get; set; }
+    public DateTimeOffset? LicenseValidity { get; set; }
     public Guid? JuristicClientId { get; set; }
     public Client? JuristicClient { get; set; }
 
@@ -35,6 +35,11 @@ public class Client : BaseEntity<Client>
     public void SetLicenseNumber(string licenseNumber)
     {
         this.LicenseNumber = licenseNumber;
+    }
+
+    public void SetLicenseValidity(DateTimeOffset licenseValidity)
+    {
+        this.LicenseValidity = licenseValidity;
     }
 
     public void AssociateJuristicClient(Client juristiClient)

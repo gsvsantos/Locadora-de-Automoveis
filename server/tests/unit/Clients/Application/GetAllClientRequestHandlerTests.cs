@@ -47,7 +47,7 @@ public sealed class GetAllClientRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetAllAsync())
             .ReturnsAsync(clients);
 
-        GetAllClientRequest request = new(null);
+        GetAllClientRequest request = new(null, null);
 
         // Act
         Result<GetAllClientResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
@@ -98,7 +98,7 @@ public sealed class GetAllClientRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetAllAsync(5))
             .ReturnsAsync([.. clients.Take(5)]);
 
-        GetAllClientRequest request = new(5);
+        GetAllClientRequest request = new(5, null);
 
         // Act
         Result<GetAllClientResponse> result = this.handler.Handle(request, CancellationToken.None).Result;

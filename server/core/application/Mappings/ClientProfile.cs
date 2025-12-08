@@ -2,8 +2,8 @@
 using LocadoraDeAutomoveis.Application.Clients.Commands.Create;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetById;
+using LocadoraDeAutomoveis.Application.Clients.Commands.GetIndividuals;
 using LocadoraDeAutomoveis.Application.Clients.Commands.Update;
-using LocadoraDeAutomoveis.Application.Clients.GetIndividuals;
 using LocadoraDeAutomoveis.Domain.Clients;
 using System.Collections.Immutable;
 
@@ -46,7 +46,7 @@ public class ClientProfile : Profile
                 src.PhoneNumber,
                 src.Document,
                 src.LicenseNumber ?? string.Empty,
-                src.LicenseExpiry ?? null
+                src.LicenseValidity ?? null
             ));
 
         CreateMap<Client, ClientDto>()
@@ -59,7 +59,7 @@ public class ClientProfile : Profile
                 src.Address,
                 src.Type,
                 src.LicenseNumber ?? string.Empty,
-                src.LicenseExpiry ?? null,
+                src.LicenseValidity ?? null,
                 (src.JuristicClient is not null) ? ctx.Mapper.Map<DriverIndividualClientDto>(src.JuristicClient) : null,
                 src.IsActive
             ));

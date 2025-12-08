@@ -18,6 +18,7 @@ export interface Client extends ClientDto {
   id: string;
   address: Address;
   licenseNumber: string;
+  licenseValidity: Date;
   isActive: boolean;
 }
 

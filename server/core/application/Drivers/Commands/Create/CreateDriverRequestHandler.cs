@@ -106,6 +106,7 @@ public class CreateDriverRequestHandler(
             else
             {
                 selectedClient.SetLicenseNumber(request.LicenseNumber);
+                selectedClient.SetLicenseValidity(request.LicenseValidity);
 
                 driver.AssociateClient(selectedClient);
             }
@@ -142,6 +143,7 @@ public class CreateDriverRequestHandler(
         newCLient.AssociateUser(user);
         newCLient.AssociateJuristicClient(selectedClient);
         newCLient.SetLicenseNumber(request.LicenseNumber);
+        newCLient.SetLicenseValidity(request.LicenseValidity);
         return newCLient;
     }
 

@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using LocadoraDeAutomoveis.Application.Clients.Commands.GetIndividuals;
 using MediatR;
 
 namespace LocadoraDeAutomoveis.Application.Clients.GetIndividuals;

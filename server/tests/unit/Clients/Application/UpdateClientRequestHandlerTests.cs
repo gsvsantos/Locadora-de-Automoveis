@@ -1,5 +1,6 @@
 ﻿using LocadoraDeAutomoveis.Application.Clients.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
@@ -13,6 +14,7 @@ public sealed class UpdateClientRequestHandlerTests : UnitTestBase
 
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryClient> repositoryClientMock = null!;
+    private Mock<IRepositoryDriver> repositoryDriverMock = null!;
     private Mock<IValidator<Client>> validatorMock = null!;
     private Mock<ILogger<UpdateClientRequestHandler>> loggerMock = null!;
 
@@ -21,6 +23,7 @@ public sealed class UpdateClientRequestHandlerTests : UnitTestBase
     {
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryClientMock = new Mock<IRepositoryClient>();
+        this.repositoryDriverMock = new Mock<IRepositoryDriver>();
         this.validatorMock = new Mock<IValidator<Client>>();
         this.loggerMock = new Mock<ILogger<UpdateClientRequestHandler>>();
 
@@ -28,6 +31,7 @@ public sealed class UpdateClientRequestHandlerTests : UnitTestBase
             this.unitOfWorkMock.Object,
             this.mapper,
             this.repositoryClientMock.Object,
+            this.repositoryDriverMock.Object,
             this.validatorMock.Object,
             this.loggerMock.Object
         );

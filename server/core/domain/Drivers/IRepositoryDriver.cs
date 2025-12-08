@@ -6,5 +6,7 @@ public interface IRepositoryDriver : IRepository<Driver>
 {
     Task<bool> HasDriversByClient(Guid clientId);
 
+    Task<Driver?> GetDriverByClientId(Guid clientId);
+
     Task<List<Driver>> SearchAsync(string term, CancellationToken ct = default);
 }

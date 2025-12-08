@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251204171842_Initial_Config")]
+    [Migration("20251208203226_Initial_Config")]
     partial class Initial_Config
     {
         /// <inheritdoc />
@@ -240,11 +240,11 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<Guid?>("JuristicClientId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTimeOffset?>("LicenseExpiry")
-                        .HasColumnType("datetimeoffset");
-
                     b.Property<string>("LicenseNumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("LicenseValidity")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()

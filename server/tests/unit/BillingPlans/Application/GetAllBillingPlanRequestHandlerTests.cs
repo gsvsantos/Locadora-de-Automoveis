@@ -45,7 +45,7 @@ public sealed class GetAllBillingPlanRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetAllAsync())
             .ReturnsAsync(BillingPlans);
 
-        GetAllBillingPlanRequest request = new(null);
+        GetAllBillingPlanRequest request = new(null, null);
 
         // Act
         Result<GetAllBillingPlanResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
@@ -90,7 +90,7 @@ public sealed class GetAllBillingPlanRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetAllAsync(5))
             .ReturnsAsync([.. BillingPlans.Take(5)]);
 
-        GetAllBillingPlanRequest request = new(5);
+        GetAllBillingPlanRequest request = new(5, null);
 
         // Act
         Result<GetAllBillingPlanResponse> result = this.handler.Handle(request, CancellationToken.None).Result;

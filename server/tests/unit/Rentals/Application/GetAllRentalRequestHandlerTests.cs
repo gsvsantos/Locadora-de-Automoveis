@@ -50,7 +50,7 @@ public sealed class GetAllRentalRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetAllAsync())
             .ReturnsAsync(rentals);
 
-        GetAllRentalRequest request = new(null);
+        GetAllRentalRequest request = new(null, null);
 
         // Act
         Result<GetAllRentalResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
@@ -96,7 +96,7 @@ public sealed class GetAllRentalRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetAllAsync(5))
             .ReturnsAsync(rentals.Take(5).ToList());
 
-        GetAllRentalRequest request = new(5);
+        GetAllRentalRequest request = new(5, null);
 
         // Act
         Result<GetAllRentalResponse> result = this.handler.Handle(request, CancellationToken.None).Result;

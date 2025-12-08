@@ -50,6 +50,8 @@ public class ClientMapper : IEntityTypeConfiguration<Client>
 
         builder.Property(c => c.LicenseNumber);
 
+        builder.Property(d => d.LicenseValidity);
+
         builder.HasOne(d => d.JuristicClient)
             .WithMany()
             .HasForeignKey(d => d.JuristicClientId)

@@ -40,7 +40,7 @@ public sealed class GetAllDriverRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetAllAsync())
             .ReturnsAsync(drivers);
 
-        GetAllDriverRequest request = new(null);
+        GetAllDriverRequest request = new(null, null);
 
         // Act
         Result<GetAllDriverResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
@@ -80,7 +80,7 @@ public sealed class GetAllDriverRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetAllAsync(5))
             .ReturnsAsync([.. drivers.Take(5)]);
 
-        GetAllDriverRequest request = new(5);
+        GetAllDriverRequest request = new(5, null);
 
         // Act
         Result<GetAllDriverResponse> result = this.handler.Handle(request, CancellationToken.None).Result;

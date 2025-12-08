@@ -38,7 +38,7 @@ public sealed class GetAllPartnerRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetAllAsync())
             .ReturnsAsync(partners);
 
-        GetAllPartnerRequest request = new(null);
+        GetAllPartnerRequest request = new(null, null);
 
         // Act
         Result<GetAllPartnerResponse> result = this.handler.Handle(request, CancellationToken.None).Result;

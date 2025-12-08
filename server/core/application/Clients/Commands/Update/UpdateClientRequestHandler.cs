@@ -4,6 +4,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,7 @@ public class UpdateClientRequestHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper,
     IRepositoryClient repositoryClient,
+    IRepositoryDriver repositoryDriver,
     IValidator<Client> validator,
     ILogger<UpdateClientRequestHandler> logger
 ) : IRequestHandler<UpdateClientRequest, Result<UpdateClientResponse>>
@@ -53,6 +55,15 @@ public class UpdateClientRequestHandler(
                 return Result.Fail(ClientErrorResults.DocumentAlreadyRegistredError(request.Document));
             }
 
+            bool driverFound = await repositoryDriver.HasDriversByClient(selectedClient.Id);
+
+            if (driverFound)
+            {
+                Driver? driver = await repositoryDriver.GetDriverByClientId(selectedClient.Id);
+
+                driver!.FullName = request.FullName;
+            }
+
             await repositoryClient.UpdateAsync(selectedClient.Id, updatedClient);
 
             await unitOfWork.CommitAsync();
@@ -76,6 +87,7 @@ public class UpdateClientRequestHandler(
     {
         return existingClients
             .Any(entity =>
+            entity.Id != client.Id &&
             string.Equals(
                 entity.Document,
                 client.Document,

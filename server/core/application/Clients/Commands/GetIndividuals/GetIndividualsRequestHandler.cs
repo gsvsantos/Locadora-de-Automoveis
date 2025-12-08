@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentResults;
+using LocadoraDeAutomoveis.Application.Clients.Commands.GetIndividuals;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Clients;
 using MediatR;

@@ -15,9 +15,11 @@ import {
   defer,
   filter,
   map,
+  merge,
   Observable,
   Observer,
   of,
+  shareReplay,
   startWith,
   switchMap,
   tap,
@@ -31,6 +33,7 @@ import { Component, inject } from '@angular/core';
 import { Client } from '../../../models/client.models';
 import { ClientService } from '../../../services/client.service';
 import { needsIndividual } from '../../../validators/driver.validators';
+import { dateToInputDateString } from '../../../utils/date.utils';
 
 @Component({
   selector: 'app-create-driver.component',
@@ -54,12 +57,12 @@ export class CreateDriverComponent {
     map((data) => data['clients'] as Client[]),
   );
 
-  protected readonly individualCLientsSubject = new BehaviorSubject<DriverIndividualClientDto[]>(
+  protected readonly individualClientsSubject = new BehaviorSubject<DriverIndividualClientDto[]>(
     [],
   );
 
   protected readonly individualClients$: Observable<DriverIndividualClientDto[]> =
-    this.individualCLientsSubject.asObservable();
+    this.individualClientsSubject.asObservable();
 
   protected readonly selectedIndividualClient$: Observable<DriverIndividualClientDto | null> =
     defer(() => {
@@ -122,24 +125,41 @@ export class CreateDriverComponent {
         }
 
         if (isBusinessClient && selectedId != null) {
-          return this.clientService.getIndividuals(String(selectedId)).pipe(
-            tap((individualClients) => {
-              this.individualCLientsSubject.next(individualClients);
-              const hasExistingIndividuals = individualClients.length > 0;
+          const individualClientsLoaded$: Observable<boolean> = this.clientService
+            .getIndividuals(String(selectedId))
+            .pipe(
+              tap((individualClients) => {
+                this.individualClientsSubject.next(individualClients);
 
-              if (hasExistingIndividuals) {
-                this.toggleIndividualClientId(true);
-                this.toggleManualFields(false);
-                this.toggleLicenseFields(false);
-              } else {
-                this.toggleIndividualClientId(false);
-                this.toggleManualFields(true);
-                this.toggleLicenseFields(true);
+                const hasExistingIndividuals: boolean = individualClients.length > 0;
+
+                if (hasExistingIndividuals) {
+                  this.toggleIndividualClientId(true);
+                  this.toggleManualFields(true);
+                  this.toggleLicenseFields(true);
+                } else {
+                  this.toggleIndividualClientId(false);
+                  this.toggleManualFields(true);
+                  this.toggleLicenseFields(true);
+                }
+
+                this.formGroup.updateValueAndValidity();
+              }),
+              map(() => true),
+            );
+
+          const selectedClientLogged$: Observable<boolean> = this.selectedIndividualClient$.pipe(
+            tap((selected) => {
+              if (selected) {
+                this.fillDriverFieldsFromIndividual(selected);
+                this.formGroup.updateValueAndValidity();
               }
-
-              this.formGroup.updateValueAndValidity();
             }),
             map(() => true),
+          );
+
+          return merge(individualClientsLoaded$, selectedClientLogged$).pipe(
+            shareReplay({ bufferSize: 1, refCount: true }),
           );
         }
 
@@ -266,7 +286,7 @@ export class CreateDriverComponent {
       email: individualClient.email,
       phoneNumber: individualClient.phoneNumber,
       licenseNumber: individualClient.licenseNumber,
-      licenseValidity: individualClient.licenseValidity,
+      licenseValidity: dateToInputDateString(individualClient.licenseValidity),
     });
   }
 
@@ -308,7 +328,7 @@ export class CreateDriverComponent {
   private toggleIndividualClientId(enable: boolean): void {
     const control = this.individualClientId;
 
-    const hasExistingIndividuals = this.individualCLientsSubject.value.length > 0;
+    const hasExistingIndividuals = this.individualClientsSubject.value.length > 0;
 
     if (enable) {
       if (hasExistingIndividuals) {

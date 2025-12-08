@@ -1,5 +1,6 @@
 ﻿using LocadoraDeAutomoveis.Application.Clients.Commands.Delete;
 using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 
@@ -13,6 +14,7 @@ public sealed class DeleteClientRequestHandlerTests
 
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryClient> repositoryClientMock = null!;
+    private Mock<IRepositoryDriver> repositoryDriverMock = null!;
     private Mock<IRepositoryRental> repositoryRentalMock = null!;
     private Mock<ILogger<DeleteClientRequestHandler>> loggerMock = null!;
 
@@ -21,12 +23,14 @@ public sealed class DeleteClientRequestHandlerTests
     {
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryClientMock = new Mock<IRepositoryClient>();
+        this.repositoryDriverMock = new Mock<IRepositoryDriver>();
         this.repositoryRentalMock = new Mock<IRepositoryRental>();
         this.loggerMock = new Mock<ILogger<DeleteClientRequestHandler>>();
 
         this.handler = new DeleteClientRequestHandler(
             this.unitOfWorkMock.Object,
             this.repositoryClientMock.Object,
+            this.repositoryDriverMock.Object,
             this.repositoryRentalMock.Object,
             this.loggerMock.Object
         );
