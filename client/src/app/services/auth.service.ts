@@ -4,13 +4,10 @@ import { environment } from '../../environments/environment';
 import {
   BehaviorSubject,
   catchError,
-  defer,
-  distinctUntilChanged,
-  finalize,
+  firstValueFrom,
   from,
   Observable,
   of,
-  shareReplay,
   switchMap,
   tap,
 } from 'rxjs';
@@ -19,7 +16,9 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { googleAuthConfig } from '../core/auth.google.config';
 import { Router } from '@angular/router';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
   private oauthService = inject(OAuthService);
   private readonly http: HttpClient = inject(HttpClient);
@@ -35,51 +34,36 @@ export class AuthService {
     this.oauthService.setupAutomaticSilentRefresh();
   }
 
-  private readonly init$ = defer(() =>
-    from(this.oauthService.tryLogin()).pipe(
-      switchMap(() => {
-        const hasValidToken = this.oauthService.hasValidIdToken();
+  public async initialize(): Promise<void> {
+    try {
+      await firstValueFrom(
+        from(this.oauthService.tryLogin()).pipe(
+          switchMap(() => {
+            if (this.oauthService.hasValidIdToken()) {
+              const googleIdToken = this.oauthService.getIdToken();
+              return this.loginWithGoogleBackend(googleIdToken);
+            }
 
-        if (hasValidToken) {
-          const googleIdToken = this.oauthService.getIdToken();
-          return this.loginWithGoogleBackend(googleIdToken).pipe(
-            finalize(() => void this.router.navigate(['/home'])),
-            catchError(() => of(undefined)),
-          );
-        }
-
-        return this.refresh().pipe(
-          finalize(() => void this.router.navigate(['/home'])),
-          catchError(() => of(undefined)),
-        );
-      }),
-      tap((token) => {
-        this.accessTokenSubject$.next(token);
-      }),
-      catchError(() => of(undefined)),
-    ),
-  ).pipe(shareReplay({ bufferSize: 1, refCount: true }));
+            return this.refresh();
+          }),
+          tap((token) => {
+            if (token) {
+              this.accessTokenSubject$.next(token);
+            }
+          }),
+          catchError((err) => {
+            console.debug('No active session found during init:', err);
+            return of(undefined);
+          }),
+        ),
+      );
+    } catch (err) {
+      console.debug('Auth init failed silently', err);
+    }
+  }
 
   public getAccessToken(): Observable<AuthApiResponse | undefined> {
-    this.init$.subscribe();
-
-    return this.accessTokenSubject$
-      .asObservable()
-      .pipe(distinctUntilChanged((first, second) => first?.key === second?.key));
-  }
-
-  private loginWithGoogleBackend(idToken: string): Observable<AuthApiResponse> {
-    const url = `${this.apiUrl}/google-login`;
-
-    return this.http.post<AuthApiResponse>(url, { idToken }).pipe(
-      tap((token) => {
-        this.accessTokenSubject$.next(token);
-      }),
-    );
-  }
-
-  public loginWithGoogle(): void {
-    this.oauthService.initLoginFlow();
+    return this.accessTokenSubject$.asObservable();
   }
 
   public register(model: RegisterAuthDto): Observable<AuthApiResponse> {
@@ -101,11 +85,8 @@ export class AuthService {
   public refresh(): Observable<AuthApiResponse> {
     const url = `${this.apiUrl}/refresh`;
 
-    return this.http
-      .post<AuthApiResponse>(url, {})
-      .pipe(tap((token) => this.accessTokenSubject$.next(token)));
+    return this.http.post<AuthApiResponse>(url, {});
   }
-
   public logout(): Observable<null> {
     const urlCompleto = `${this.apiUrl}/logout`;
 
@@ -116,5 +97,15 @@ export class AuthService {
 
   public revokeAccessToken(): void {
     return this.accessTokenSubject$.next(undefined);
+  }
+
+  public loginWithGoogle(): void {
+    this.oauthService.initLoginFlow();
+  }
+
+  private loginWithGoogleBackend(idToken: string): Observable<AuthApiResponse> {
+    const url = `${this.apiUrl}/google-login`;
+
+    return this.http.post<AuthApiResponse>(url, { idToken });
   }
 }

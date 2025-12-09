@@ -1,4 +1,5 @@
 import {
+  APP_INITIALIZER,
   ApplicationConfig,
   isDevMode,
   provideBrowserGlobalErrorListeners,
@@ -12,6 +13,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { TranslocoHttpLoader } from './transloco-loader';
 import { routes } from './routes/app.routes';
 import { provideOAuthClient } from 'angular-oauth2-oidc';
+import { AuthService } from './services/auth.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -43,9 +45,19 @@ export const appConfig: ApplicationConfig = {
     }),
     provideAuth(),
     provideOAuthClient(),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: authInitializer,
+      deps: [AuthService],
+      multi: true,
+    },
     provideAnimationsAsync(),
   ],
 };
+
+function authInitializer(authService: AuthService): object {
+  return () => authService.initialize();
+}
 
 function routeHasViewTransitionEnabled(routeSnapshot: ActivatedRouteSnapshot): boolean {
   const deepestSnapshot = getDeepestSnapshot(routeSnapshot);
