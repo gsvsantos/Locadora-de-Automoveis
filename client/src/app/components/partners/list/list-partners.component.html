@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <hr />
+    <hr class="bar" />
 
     <div class="list">
       @for (partner of partners$ | async; track partner.id) {
@@ -40,7 +40,7 @@
             </div>
 
             <div class="card__actions" align="end">
-              <a [routerLink]="['partner', partner.id, 'coupons']">
+              <a class="view-action" [routerLink]="['partner', partner.id, 'coupons']">
                 <span class="material-icons">visibility</span>
               </a>
               @if (partner.isActive) {

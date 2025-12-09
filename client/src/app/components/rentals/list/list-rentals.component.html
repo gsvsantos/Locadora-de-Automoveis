@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <hr />
+    <hr class="bar" />
 
     <div class="list">
       @for (rental of rentals$ | async; track rental.id) {
@@ -76,7 +76,8 @@
                 <span>{{ t('label.driver') }}: {{ rental.driver.fullName }}</span>
               </div>
 
-              <hr />
+              <hr class="bar" />
+
               @if (rental.rentalExtrasQuantity > 0) {
                 <div class="info-row">
                   <span class="material-icons">add_circle_outline</span>
@@ -93,17 +94,16 @@
 
               <div class="card__actions" align="end">
                 @if (rental.isActive && !rental.returnDate) {
-                  <a [routerLink]="['return', rental.id]">
+                  <a [routerLink]="['return', rental.id]" title="Registrar Devolução">
                     <span class="material-icons">check_circle</span>
                   </a>
-                  <div class="card__actions" align="end">
-                    <a [routerLink]="['edit', rental.id]">
-                      <span class="material-icons">edit</span>
-                    </a>
-                    <a class="button button__danger" [routerLink]="['delete', rental.id]">
-                      <span class="material-icons">delete</span>
-                    </a>
-                  </div>
+
+                  <a [routerLink]="['edit', rental.id]">
+                    <span class="material-icons">edit</span>
+                  </a>
+                  <a class="button button__danger" [routerLink]="['delete', rental.id]">
+                    <span class="material-icons">delete</span>
+                  </a>
                 }
               </div>
             </div>

@@ -1,71 +1,35 @@
 @use '../../../../styles/variables' as *;
 
-.list-section {
-  display: flex;
-  justify-content: center;
-  padding: 2rem 2.5rem;
-  box-sizing: border-box;
-}
-
-.main-content {
-  width: 100%;
-  max-width: 1200px;
-}
-
-.items-container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-  padding-top: 1rem;
-}
-
-.item .card {
+.card__content {
   display: flex;
   flex-direction: column;
-  background-color: $surface;
-  border-radius: $border-radius;
-  border: 1px solid $border;
-  box-shadow: $shadow-1;
-  padding: 1.5rem;
-  transition: all 0.2s ease-in-out;
-
-  &:hover,
-  &:focus-visible {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    outline: none;
-  }
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba($border, 0.6);
 }
 
-.card__header {
-  margin-bottom: 0.75rem;
-}
-
-.card__actions {
+.info-row {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 0.75rem;
-}
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: $text-main;
 
-.button__danger {
-  color: #dc3545;
-  margin-left: 0.25rem;
-}
-
-@media (max-width: 600px) {
-  .items-container {
-    justify-content: stretch;
+  .material-icons {
+    font-size: 1.2rem;
+    color: $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background-color: $surface-alt;
+    border-radius: 50%;
   }
 
-  .button {
-    width: 100%;
+  span:last-child {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
   }
 }

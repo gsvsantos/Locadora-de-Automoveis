@@ -1,86 +1,87 @@
 @use '../../../../styles/variables' as *;
 
-.list-section {
-  display: flex;
-  justify-content: center;
-  padding: 2rem 2.5rem;
-  box-sizing: border-box;
-}
-
-.main-content {
-  width: 100%;
-  max-width: 1200px;
-}
-
-.items-container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-  padding-top: 1rem;
-}
-
-.item .card {
-  display: flex;
-  flex-direction: column;
-  background-color: $surface;
-  border-radius: $border-radius;
-  border: 1px solid $border;
-  box-shadow: $shadow-1;
-  padding: 1.5rem;
-  transition: all 0.2s ease-in-out;
-
-  &:hover,
-  &:focus-visible {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    outline: none;
+:host ::ng-deep .card__header {
+  h4 {
+    margin-bottom: 10px;
+  }
+  .card_title {
+    margin-left: 10px;
+    font-weight: 500;
+    color: $text-main;
   }
 }
 
-.card__header {
-  margin-bottom: 0.75rem;
+.card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba($border, 0.6);
 }
 
-.card__content {
-  flex: 1;
+.info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  h4 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $text-muted;
+    margin: 0 0 0.25rem 0;
+  }
 }
 
 .info-row {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: $text-main;
+  line-height: 1.4;
 
   .material-icons {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    color: $primary;
+    opacity: 0.9;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-color: $surface-alt;
+    border-radius: 50%;
+  }
+
+  span:last-child {
+    font-weight: 500;
   }
 }
 
-.card__actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 0.75rem;
-}
-
-.button__danger {
-  color: #dc3545;
-  margin-left: 0.25rem;
-}
-
-@media (max-width: 600px) {
-  .items-container {
-    justify-content: stretch;
+@media (min-width: 450px) {
+  .card__content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    align-items: start;
   }
 
-  .button {
-    width: 100%;
+  .info-group:not(:last-child) {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: -0.5rem;
+      top: 10%;
+      height: 80%;
+      width: 1px;
+      background-color: $border;
+      display: none;
+    }
   }
 }

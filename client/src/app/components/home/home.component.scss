@@ -3,87 +3,98 @@
 
 .dashboard-section {
   width: 100%;
+  min-height: 100%;
   background-color: $background;
+  padding-bottom: 2rem;
 }
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
   padding: 24px;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 .dashboard-card {
   display: flex;
   flex-direction: column;
   background-color: $surface;
-  border-radius: $border-radius;
-  box-shadow: $shadow-1;
-  border: 1px solid $border;
+  border-radius: 16px;
+  box-shadow: $shadow-2;
+  border: 1px solid rgba($border, 0.5);
   padding: 24px;
+  transition:
+    transform $transition-fast,
+    box-shadow $transition-fast;
+
+  &:hover {
+    box-shadow: $shadow-1;
+    border-color: rgba($primary, 0.3);
+  }
 
   h3 {
-    margin-bottom: 16px;
-    color: $primary-active;
-    font-size: 1.3rem;
+    margin: 0 0 20px 0;
+    color: $text-main;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: $border;
+      margin-left: 12px;
+      opacity: 0.6;
+    }
   }
 
   .quick-actions {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-top: 16px;
-
-    gs-buttons {
-      width: 100%;
-      justify-content: flex-start;
-      --gs-btn-padding: 12px 16px;
-      --gs-btn-font-size: 1rem;
-
-      .icon,
-      i {
-        margin-right: 12px;
-        font-size: 1.2rem;
-        color: $primary;
-        transition: color $transition-fast;
-      }
-
-      &:hover {
-        background-color: $surface-alt;
-        transform: translateX(4px);
-
-        i,
-        .icon {
-          color: $primary-active;
-        }
-      }
-    }
   }
 
   .stats-summary {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
     margin-bottom: 20px;
 
     .stat-item {
       display: flex;
-      align-items: center;
-      flex-basis: 45%;
-      padding: 10px;
-      border-radius: $border-radius;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px;
+      border-radius: 12px;
       background-color: $surface-alt;
+      border: 1px solid transparent;
+      transition: all $transition-fast;
 
       .info-icon {
-        font-size: 2rem;
-        margin-right: 15px;
+        font-size: 1.8rem;
+        margin-bottom: 12px;
         color: $primary;
+        background: rgba($primary, 0.1);
+        padding: 8px;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         &.active-rental-icon {
           color: $warning;
+          background: rgba($warning, 0.1);
         }
         &.active-client-icon {
           color: $success;
+          background: rgba($success, 0.1);
         }
       }
 
@@ -92,15 +103,27 @@
         flex-direction: column;
 
         .stat-value {
-          font-size: 1.5rem;
-          font-weight: 700;
+          font-size: 1.75rem;
+          font-weight: 800;
           color: $text-main;
+          line-height: 1;
+          margin-bottom: 4px;
         }
 
         .stat-label {
-          font-size: 0.85rem;
+          font-size: 0.8rem;
+          font-weight: 500;
           color: $text-muted;
+          text-transform: uppercase;
+          letter-spacing: 0.03em;
         }
+      }
+
+      &:hover {
+        background-color: $surface;
+        border-color: $border;
+        box-shadow: $shadow-2;
+        transform: translateY(-2px);
       }
     }
   }
@@ -108,79 +131,116 @@
   .item-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 10px;
+    gap: 0;
+    margin-bottom: 16px;
 
     .list-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid $border;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba($border, 0.6);
       font-size: 0.95rem;
 
+      &:first-child {
+        padding-top: 0;
+      }
       &:last-child {
         border-bottom: none;
       }
 
       strong {
         color: $text-main;
+        font-weight: 600;
       }
 
       span {
         color: $text-muted;
+        font-size: 0.9rem;
       }
 
       .return-action-link {
-        color: $warning;
+        color: $text-muted;
         transition: $transition-fast;
+        padding: 4px;
+        border-radius: 50%;
 
         &:hover {
-          color: $primary-active;
+          background-color: rgba($warning, 0.1);
+          color: $warning;
         }
       }
 
-      .coupon-usage-count {
-        font-weight: 600;
-        color: $success;
+      &.coupon-item {
+        .coupon-usage-count {
+          background-color: rgba($success, 0.1);
+          color: $success;
+          padding: 2px 8px;
+          border-radius: 12px;
+          font-size: 0.8rem;
+          font-weight: 700;
+        }
       }
     }
   }
 
   .no-data-message {
-    padding: 10px;
+    padding: 20px;
     text-align: center;
     color: $text-muted;
-    border: 1px dashed $border;
-    border-radius: $border-radius;
+    font-size: 0.9rem;
+    font-style: italic;
+    background-color: $surface-alt;
+    border-radius: 8px;
+    margin-bottom: 16px;
   }
 
   .view-all-link {
-    display: inline-block;
     margin-top: auto;
-    padding-top: 16px;
-    color: $text-muted;
-    font-size: 0.875rem;
-    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: $primary;
+    font-size: 0.9rem;
+    font-weight: 600;
     text-decoration: none;
-    cursor: pointer;
-    transition: color $transition-fast;
+    padding-top: 12px;
+    border-top: 1px solid transparent;
+    transition: all $transition-fast;
 
     &::after {
-      content: ' →';
-      opacity: 0;
-      transition:
-        opacity $transition-fast,
-        transform $transition-fast;
+      content: 'arrow_forward';
+      font-family: 'Material Icons';
+      font-size: 1.1rem;
+      transition: transform $transition-fast;
     }
 
     &:hover {
-      color: $primary;
-      text-decoration: none;
+      color: $primary-active;
 
       &::after {
-        opacity: 1;
         transform: translateX(4px);
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-grid {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .dashboard-card {
+    padding: 16px;
+
+    .stats-summary .stat-item {
+      flex-direction: row;
+      align-items: center;
+
+      .info-icon {
+        margin-bottom: 0;
+        margin-right: 16px;
       }
     }
   }
