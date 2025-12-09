@@ -30,11 +30,11 @@ public class RegisterUserRequestHandler(
             PhoneNumber = request.PhoneNumber
         };
 
-        IdentityResult usuarioResult = await userManager.CreateAsync(user, request.Password);
+        IdentityResult userResult = await userManager.CreateAsync(user, request.Password);
 
-        if (!usuarioResult.Succeeded)
+        if (!userResult.Succeeded)
         {
-            IEnumerable<string> erros = usuarioResult
+            IEnumerable<string> erros = userResult
                 .Errors
                 .Select(failure => failure.Description)
                 .ToList();

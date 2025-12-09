@@ -54,4 +54,8 @@ export class LoginComponent {
 
     this.authService.login(loginModel).subscribe(loginObserver);
   }
+
+  public googleLogin(): void {
+    this.authService.loginWithGoogle();
+  }
 }

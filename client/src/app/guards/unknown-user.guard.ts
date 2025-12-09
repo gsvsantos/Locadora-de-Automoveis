@@ -9,6 +9,11 @@ export const unknownUserGuard: CanActivateFn = (): Observable<true | UrlTree> =>
 
   return authService.getAccessToken().pipe(
     take(1),
-    map((token) => (!token ? true : router.createUrlTree(['/home']))),
+    map(
+      (token) => (
+        console.log('unknownUserGuard', token),
+        !token ? true : router.createUrlTree(['/home'])
+      ),
+    ),
   );
 };

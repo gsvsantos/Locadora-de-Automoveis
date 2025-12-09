@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Login;
+using LocadoraDeAutomoveis.Application.Auth.Commands.LoginGoogle;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Logout;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Refresh;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Register;
@@ -37,6 +38,19 @@ public class AuthController(
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserRequest request)
+    {
+        Result<(AccessToken AccessToken, RefreshToken RefreshToken)> result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return result.ToHttpResponse();
+        }
+
+        return ResultWithNewCookie(result.Value);
+    }
+
+    [HttpPost("google-login")]
+    public async Task<IActionResult> GoogleLogin([FromBody] LoginWithGoogleRequest request)
     {
         Result<(AccessToken AccessToken, RefreshToken RefreshToken)> result = await mediator.Send(request);
 

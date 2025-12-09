@@ -80,4 +80,28 @@ export class ConfigureComponent {
       )
       .subscribe(updateObserve);
   }
+
+  public getPrices(): void {
+    console.log(this.formGroup.value);
+    const teste = this.configurationService.getPrices();
+
+    teste
+      .pipe(
+        tap(
+          (res) => (
+            console.log(res),
+            console.log(res.gasolina.rs),
+            console.log(res.diesel.rs),
+            this.formGroup.patchValue({
+              gasolinePrice: res.gasolina.rs,
+              dieselPrice: res.diesel.rs,
+            })
+          ),
+        ),
+      )
+      .subscribe();
+
+    this.formGroup.updateValueAndValidity();
+    console.log(this.formGroup.value);
+  }
 }

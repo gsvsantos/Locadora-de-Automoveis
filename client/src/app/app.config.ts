@@ -11,6 +11,7 @@ import { provideAuth } from './providers/auth.provider';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { routes } from './routes/app.routes';
+import { provideOAuthClient } from 'angular-oauth2-oidc';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,6 +42,7 @@ export const appConfig: ApplicationConfig = {
       loader: TranslocoHttpLoader,
     }),
     provideAuth(),
+    provideOAuthClient(),
     provideAnimationsAsync(),
   ],
 };

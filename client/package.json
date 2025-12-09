@@ -36,6 +36,7 @@
     "@danielmoncada/angular-datetime-picker": "^20.0.0",
     "@jsverse/transloco": "^8.1.0",
     "@material/web": "^2.4.1",
+    "angular-oauth2-oidc": "^20.0.2",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "date-fns": "^4.1.0",
