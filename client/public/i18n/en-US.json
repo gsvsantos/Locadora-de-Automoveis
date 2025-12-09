@@ -96,10 +96,16 @@
           "phoneNumber": "Phone Number (e.g., (99) 99999-9999)",
           "userName": "Username",
           "password": "Password",
-          "salary": "Salary (e.g., 3500.00)"
+          "salary": "Salary (e.g., 3500)"
         },
         "label": {
-          "admissionDate": "Admission Date"
+          "fullName": "Full Name",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "userName": "Username",
+          "password": "Password",
+          "admissionDate": "Admission Date",
+          "salary": "Salary"
         },
         "errors": {
           "fullNameRequired": "The full name is required.",
@@ -211,6 +217,12 @@
         "subtitle": "Enter the details for the new vehicle group.",
         "placeholder": {
           "name": "Group Name (e.g., Economy, SUV, Luxury)"
+        },
+        "section": {
+          "identification": "Group Identification"
+        },
+        "label": {
+          "name": "Group Name"
         },
         "errors": {
           "nameRequired": "The group name is required.",
@@ -405,8 +417,13 @@
         },
         "label": {
           "licensePlate": "License Plate",
+          "group": "Group",
+          "brand": "Brand",
+          "model": "Model",
+          "color": "Color",
+          "year": "Year",
           "fuelType": "Fuel Type",
-          "group": "Group"
+          "fuelTankCapacity": "Tank Capacity"
         },
         "fuel": {
           "gasoline": "Gasoline",
@@ -540,8 +557,16 @@
           "number": "Number"
         },
         "label": {
+          "fullName": "Full Name",
           "type": "Client Type",
-          "state": "State"
+          "document": "Document",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "state": "State",
+          "city": "City",
+          "neighborhood": "Neighborhood",
+          "street": "Street",
+          "number": "Number"
         },
         "type": {
           "individual": "Individual (PF)",
@@ -1252,7 +1277,7 @@
         },
         "errors": {
           "nameRequired": "The coupon code is mandatory.",
-          "nameLength": "The code must be at least 3 characters long.",
+          "nameLength": "The code must be at least 4 characters long.",
           "discountValueRequired": "Discount value is mandatory.",
           "discountValueMin": "Discount value must be greater than zero.",
           "expirationDateRequired": "Expiration date is mandatory.",

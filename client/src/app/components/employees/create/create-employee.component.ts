@@ -51,7 +51,7 @@ export class CreateEmployeeComponent {
     userName: ['', [Validators.required.bind(this), Validators.minLength(5)]],
     password: ['', [Validators.required.bind(this), Validators.minLength(6)]],
     admissionDate: ['', [Validators.required.bind(this)]],
-    salary: [0, [Validators.required.bind(this), Validators.min(100)]],
+    salary: [null, [Validators.required.bind(this), Validators.min(100)]],
   });
 
   public get fullName(): AbstractControl | null {

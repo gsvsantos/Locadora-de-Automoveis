@@ -3,13 +3,15 @@
     <div class="card">
       <form [formGroup]="formGroup" class="form" (ngSubmit)="register()">
         <h2>{{ t('card.title') }}</h2>
+
         <hr class="bar" />
+
         <div class="card-content">
-          <span>{{ t('card.subtitle') }}</span>
+          <span class="full-width">{{ t('card.subtitle') }}</span>
 
-          <h3>{{ t('card.section.personalData') }}</h3>
-
-          <div class="form-field">
+          <h3 class="full-width">{{ t('card.section.personalData') }}</h3>
+          <div class="form-field full-width">
+            <label>{{ t('card.label.fullName') }}</label>
             <input
               class="form-input"
               formControlName="fullName"
@@ -28,7 +30,8 @@
             }
           </div>
 
-          <div class="form-field">
+          <div class="form-field full-width">
+            <label>{{ t('card.label.email') }}</label>
             <input
               class="form-input"
               formControlName="email"
@@ -44,7 +47,8 @@
             }
           </div>
 
-          <div class="form-field">
+          <div class="form-field full-width">
+            <label>{{ t('card.label.phoneNumber') }}</label>
             <input
               class="form-input"
               formControlName="phoneNumber"
@@ -59,11 +63,9 @@
             }
           </div>
 
-          <hr />
-
-          <h3>{{ t('card.section.accountData') }}</h3>
-
+          <h3 class="full-width">{{ t('card.section.accountData') }}</h3>
           <div class="form-field">
+            <label>{{ t('card.label.userName') }}</label>
             <input
               class="form-input"
               formControlName="userName"
@@ -80,6 +82,7 @@
           </div>
 
           <div class="form-field">
+            <label>{{ t('card.label.password') }}</label>
             <input
               class="form-input"
               formControlName="password"
@@ -95,10 +98,7 @@
             }
           </div>
 
-          <hr />
-
-          <h3>{{ t('card.section.professionalData') }}</h3>
-
+          <h3 class="full-width">{{ t('card.section.professionalData') }}</h3>
           <div class="form-field">
             <label>{{ t('card.label.admissionDate') }}</label>
             <input class="form-input" formControlName="admissionDate" type="date" />
@@ -108,6 +108,7 @@
           </div>
 
           <div class="form-field">
+            <label>{{ t('card.label.salary') }}</label>
             <input
               class="form-input"
               formControlName="salary"

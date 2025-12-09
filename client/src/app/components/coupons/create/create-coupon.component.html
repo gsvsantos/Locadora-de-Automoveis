@@ -3,13 +3,14 @@
     <div class="card">
       <form [formGroup]="formGroup" class="form" (ngSubmit)="register()">
         <h2>{{ t('card.title') }}</h2>
+
         <hr class="bar" />
+
         <div class="card-content">
-          <span>{{ t('card.subtitle') }}</span>
+          <span class="full-width">{{ t('card.subtitle') }}</span>
 
-          <h3>{{ t('card.section.details') }}</h3>
-
-          <div class="form-field">
+          <h3 class="full-width">{{ t('card.section.details') }}</h3>
+          <div class="form-field full-width">
             <label>{{ t('card.label.name') }}</label>
             <input
               class="form-input"
@@ -52,11 +53,8 @@
             }
           </div>
 
-          <hr />
-
-          <h3>{{ t('card.section.partner') }}</h3>
-
-          <div class="form-field">
+          <h3 class="full-width">{{ t('card.section.partner') }}</h3>
+          <div class="form-field full-width">
             <label>{{ t('card.label.partnerId') }}</label>
             <select class="form-input" formControlName="partnerId">
               <option value="">{{ t('card.placeholder.partnerId') }}</option>

@@ -31,6 +31,11 @@
     box-shadow: 0 0 0 4px rgba(var(--shadow-rgb), 0.1);
   }
 
+  &:hover {
+    border-color: $primary;
+    background-color: rgba($primary, 0.05);
+  }
+
   input {
     flex: 1;
     border: none;
@@ -59,10 +64,9 @@
   }
 }
 
-// Dropdown Flutuante
 .results-dropdown {
   position: absolute;
-  top: 100%; // Logo abaixo do input
+  top: 100%;
   left: 0;
   right: 0;
   background-color: $surface;

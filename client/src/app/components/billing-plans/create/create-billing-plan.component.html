@@ -7,10 +7,9 @@
         <hr class="bar" />
 
         <div class="card-content">
-          <span>{{ t('card.subtitle') }}</span>
+          <span class="full-width">{{ t('card.subtitle') }}</span>
 
-          <h3>{{ t('card.section.groupSelection') }}</h3>
-
+          <h3 class="full-width">{{ t('card.section.groupSelection') }}</h3>
           <div class="form-field">
             <select class="form-input" formControlName="groupId">
               <option value="">{{ t('card.placeholder.groupId') }}</option>
@@ -24,11 +23,8 @@
             }
           </div>
 
-          <hr />
-
           <div formGroupName="dailyBilling">
-            <h3>{{ t('card.section.dailyBilling') }}</h3>
-
+            <h3 class="full-width">{{ t('card.section.dailyBilling') }}</h3>
             <div class="form-field">
               <input
                 class="form-input"
@@ -56,11 +52,8 @@
             </div>
           </div>
 
-          <hr />
-
           <div formGroupName="controlledBilling">
-            <h3>{{ t('card.section.controlledBilling') }}</h3>
-
+            <h3 class="full-width">{{ t('card.section.controlledBilling') }}</h3>
             <div class="form-field">
               <input
                 class="form-input"
@@ -88,11 +81,8 @@
             </div>
           </div>
 
-          <hr />
-
           <div formGroupName="freeBilling">
-            <h3>{{ t('card.section.freeBilling') }}</h3>
-
+            <h3 class="full-width">{{ t('card.section.freeBilling') }}</h3>
             <div class="form-field">
               <input
                 class="form-input"

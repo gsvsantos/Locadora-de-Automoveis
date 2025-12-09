@@ -7,10 +7,10 @@
         <hr class="bar" />
 
         <div class="card-content">
-          <span>{{ t('card.subtitle') }}</span>
+          <span class="full-width">{{ t('card.subtitle') }}</span>
 
-          <h3>{{ t('card.section.identification') }}</h3>
-          <div class="form-field">
+          <h3 class="full-width">{{ t('card.section.identification') }}</h3>
+          <div class="form-field full-width">
             <label>{{ t('card.label.client') }}</label>
             <select class="form-input" formControlName="clientId">
               <option [ngValue]="null">
@@ -24,13 +24,10 @@
           </div>
 
           @if (clientId?.value) {
-            <hr />
-
             @if (clientTypeIsBusiness$ | async) {
               @if ((individualClients$ | async)?.length) {
-                <h3>{{ t('card.section.associatedDrivers') }}</h3>
-
-                <div class="form-field">
+                <h3 class="full-width">{{ t('card.section.associatedDrivers') }}</h3>
+                <div class="form-field full-width">
                   <label>{{ t('card.label.selectDriver') }}</label>
                   <select class="form-input" formControlName="individualClientId">
                     <option [ngValue]="null">{{ t('card.placeholder.selectDriver') }}</option>
@@ -52,16 +49,19 @@
                   }
                 </div>
               } @else {
-                <h3>{{ t('card.section.personalData') }}</h3>
-                <p class="small-info">{{ t('card.info.registerNewDriverForCorporate') }}</p>
+                <h3 class="full-width">{{ t('card.section.personalData') }}</h3>
+                <p class="small-info full-width">
+                  {{ t('card.info.registerNewDriverForCorporate') }}
+                </p>
               }
             } @else if (clientId?.value) {
-              <h3>{{ t('card.section.personalData') }}</h3>
-              <p class="small-info">{{ t('card.info.clientDetailsPrepopulated') }}</p>
+              <h3 class="full-width">{{ t('card.section.personalData') }}</h3>
+              <p class="small-info full-width">{{ t('card.info.clientDetailsPrepopulated') }}</p>
             }
 
             @if (!((clientTypeIsBusiness$ | async) && (individualClients$ | async)?.length)) {
               <div class="form-field">
+                <label>{{ t('card.label.fullName') }}</label>
                 <input
                   class="form-input"
                   formControlName="fullName"
@@ -78,6 +78,7 @@
               </div>
 
               <div class="form-field">
+                <label>{{ t('card.label.document') }}</label>
                 <input
                   class="form-input"
                   formControlName="document"
@@ -90,6 +91,7 @@
               </div>
 
               <div class="form-field">
+                <label>{{ t('card.label.email') }}</label>
                 <input
                   class="form-input"
                   formControlName="email"
@@ -103,6 +105,7 @@
               </div>
 
               <div class="form-field">
+                <label>{{ t('card.label.phoneNumber') }}</label>
                 <input
                   class="form-input"
                   formControlName="phoneNumber"
@@ -114,10 +117,9 @@
                 }
               </div>
 
-              <hr />
-
-              <h3>{{ t('card.section.licenseData') }}</h3>
+              <h3 class="full-width">{{ t('card.section.licenseData') }}</h3>
               <div class="form-field">
+                <label>{{ t('card.label.licenseNumber') }}</label>
                 <input
                   class="form-input"
                   formControlName="licenseNumber"

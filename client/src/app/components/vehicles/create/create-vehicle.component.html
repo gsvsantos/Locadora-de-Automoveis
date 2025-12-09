@@ -7,10 +7,9 @@
         <hr class="bar" />
 
         <div class="card-content">
-          <span>{{ t('card.subtitle') }}</span>
+          <span class="full-width">{{ t('card.subtitle') }}</span>
 
-          <h3>{{ t('card.section.identification') }}</h3>
-
+          <h3 class="full-width">{{ t('card.section.identification') }}</h3>
           <div class="form-field">
             <label>{{ t('card.label.licensePlate') }}</label>
             <input
@@ -40,11 +39,9 @@
             }
           </div>
 
-          <hr />
-
-          <h3>{{ t('card.section.details') }}</h3>
-
+          <h3 class="full-width">{{ t('card.section.details') }}</h3>
           <div class="form-field">
+            <label>{{ t('card.label.brand') }}</label>
             <input
               class="form-input"
               formControlName="brand"
@@ -57,6 +54,7 @@
           </div>
 
           <div class="form-field">
+            <label>{{ t('card.label.model') }}</label>
             <input
               class="form-input"
               formControlName="model"
@@ -69,6 +67,7 @@
           </div>
 
           <div class="form-field">
+            <label>{{ t('card.label.color') }}</label>
             <input
               class="form-input"
               formControlName="color"
@@ -81,6 +80,7 @@
           </div>
 
           <div class="form-field">
+            <label>{{ t('card.label.year') }}</label>
             <input
               class="form-input"
               formControlName="year"
@@ -94,10 +94,7 @@
             }
           </div>
 
-          <hr />
-
-          <h3>{{ t('card.section.fuelAndCapacity') }}</h3>
-
+          <h3 class="full-width">{{ t('card.section.fuelAndCapacity') }}</h3>
           <div class="form-field">
             <label>{{ t('card.label.fuelType') }}</label>
             <select class="form-input" formControlName="fuelType">
@@ -114,6 +111,7 @@
           </div>
 
           <div class="form-field">
+            <label>{{ t('card.label.fuelTankCapacity') }}</label>
             <input
               class="form-input"
               formControlName="fuelTankCapacity"
@@ -127,10 +125,8 @@
             }
           </div>
 
-          <hr />
-
-          <h3>{{ t('card.section.photo') }}</h3>
-          <div class="form-field">
+          <h3 class="full-width">{{ t('card.section.photo') }}</h3>
+          <div class="form-field full-width">
             <input
               class="form-input"
               formControlName="photoPath"

@@ -7,11 +7,10 @@
         <hr class="bar" />
 
         <div class="card-content">
-          <span>{{ t('card.subtitle') }}</span>
+          <span class="full-width">{{ t('card.subtitle') }}</span>
 
-          <h3>{{ t('card.section.association') }}</h3>
-          
-          <div class="form-field">
+          <h3 class="full-width">{{ t('card.section.association') }}</h3>
+          <div class="form-field full-width">
             <label>{{ t('card.label.client') }}</label>
             <select class="form-input" formControlName="clientId">
               <option [ngValue]="null">{{ t('card.placeholder.client') }}</option>
@@ -28,7 +27,7 @@
             <label>{{ t('card.label.driver') }}</label>
             <select class="form-input" formControlName="driverId">
               <option [ngValue]="null">{{ t('card.placeholder.driver') }}</option>
-              @for (driver of drivers$ | async; track driver.id) { 
+              @for (driver of drivers$ | async; track driver.id) {
                 <option [ngValue]="driver.id">{{ driver.fullName }}</option>
               }
             </select>
@@ -36,7 +35,7 @@
               <span class="error-message">{{ t('card.errors.driverRequired') }}</span>
             }
           </div>
-          
+
           <div class="form-field">
             <label>{{ t('card.label.employee') }}</label>
             <select class="form-input" formControlName="employeeId">
@@ -45,21 +44,20 @@
                 <option [ngValue]="employee.id">{{ employee.fullName }}</option>
               }
             </select>
-             @if (employeeId?.errors?.['required'] && employeeId?.dirty) {
+            @if (employeeId?.errors?.['required'] && employeeId?.dirty) {
               <span class="error-message">{{ t('card.errors.employeeRequired') }}</span>
             }
           </div>
 
-          <hr />
-
-          <h3>{{ t('card.section.vehicleAndDates') }}</h3>
-
-          <div class="form-field">
+          <h3 class="full-width">{{ t('card.section.vehicleAndDates') }}</h3>
+          <div class="form-field full-width">
             <label>{{ t('card.label.vehicle') }}</label>
             <select class="form-input" formControlName="vehicleId">
               <option [ngValue]="null">{{ t('card.placeholder.vehicle') }}</option>
               @for (vehicle of vehicles$ | async; track vehicle.id) {
-                <option [ngValue]="vehicle.id">{{ vehicle.licensePlate }} ({{ vehicle.model }})</option>
+                <option [ngValue]="vehicle.id">
+                  {{ vehicle.licensePlate }} ({{ vehicle.model }})
+                </option>
               }
             </select>
             @if (vehicleId?.errors?.['required'] && vehicleId?.dirty) {
@@ -82,10 +80,15 @@
               <span class="error-message">{{ t('card.errors.expectedReturnDateRequired') }}</span>
             }
           </div>
-          
-          <div class="form-field">
+
+          <div class="form-field full-width">
             <label>{{ t('card.label.startKm') }}</label>
-            <input class="form-input" formControlName="startKm" type="number" [placeholder]="t('card.placeholder.startKm')" />
+            <input
+              class="form-input"
+              formControlName="startKm"
+              type="number"
+              [placeholder]="t('card.placeholder.startKm')"
+            />
             @if (startKm?.errors?.['required'] && startKm?.dirty) {
               <span class="error-message">{{ t('card.errors.startKmRequired') }}</span>
             }
@@ -94,11 +97,7 @@
             }
           </div>
 
-
-          <hr />
-
-          <h3>{{ t('card.section.billing') }}</h3>
-
+          <h3 class="full-width">{{ t('card.section.billing') }}</h3>
           <div class="form-field">
             <label>{{ t('card.label.billingPlanType') }}</label>
             <select class="form-input" formControlName="billingPlanType">
@@ -107,33 +106,37 @@
               <option value="Controlled">{{ t('card.plan.controlled') }}</option>
               <option value="Free">{{ t('card.plan.free') }}</option>
             </select>
-             @if (billingPlanType?.errors?.['required'] && billingPlanType?.dirty) {
+            @if (billingPlanType?.errors?.['required'] && billingPlanType?.dirty) {
               <span class="error-message">{{ t('card.errors.billingPlanTypeRequired') }}</span>
             }
           </div>
 
           <div class="form-field">
             <label>{{ t('card.label.estimatedKilometers') }}</label>
-            <input class="form-input" formControlName="estimatedKilometers" type="number" [placeholder]="t('card.placeholder.estimatedKilometers')" />
-             @if (estimatedKilometers?.errors?.['required'] && estimatedKilometers?.dirty) {
+            <input
+              class="form-input"
+              formControlName="estimatedKilometers"
+              type="number"
+              [placeholder]="t('card.placeholder.estimatedKilometers')"
+            />
+            @if (estimatedKilometers?.errors?.['required'] && estimatedKilometers?.dirty) {
               <span class="error-message">{{ t('card.errors.estimatedKilometersRequired') }}</span>
             }
           </div>
-          
-          <hr />
-          
-          <h3>{{ t('card.section.extrasAndCoupon') }}</h3>
-          
-          <div class="form-field">
+
+          <h3 class="full-width">{{ t('card.section.extrasAndCoupon') }}</h3>
+          <div class="form-field full-width">
             <label>{{ t('card.label.extras') }}</label>
             <select class="form-input" formControlName="rentalRentalExtrasIds" multiple>
               @for (extra of extras$ | async; track extra.id) {
-                <option [value]="extra.id">{{ extra.name }} ({{ extra.price | currency: 'BRL':'symbol':'1.2-2' }})</option>
+                <option [value]="extra.id">
+                  {{ extra.name }} ({{ extra.price | currency: 'BRL' : 'symbol' : '1.2-2' }})
+                </option>
               }
             </select>
           </div>
 
-          <div class="form-field">
+          <div class="form-field full-width">
             <label>{{ t('card.label.coupon') }}</label>
             <select class="form-input" formControlName="couponId">
               <option [ngValue]="null">{{ t('card.placeholder.coupon') }}</option>
@@ -142,7 +145,6 @@
               }
             </select>
           </div>
-
         </div>
 
         <div class="buttons">

@@ -7,11 +7,10 @@
         <hr class="bar" />
 
         <div class="card-content">
-          <span>{{ t('card.subtitle') }}</span>
+          <span class="full-width">{{ t('card.subtitle') }}</span>
 
-          <h3>{{ t('card.section.identification') }}</h3>
-
-          <div class="form-field">
+          <h3 class="full-width">{{ t('card.section.identification') }}</h3>
+          <div class="form-field full-width">
             <label>{{ t('card.label.fullName') }}</label>
             <input
               class="form-input"
@@ -27,7 +26,6 @@
               <span class="error-message">{{ t('card.errors.fullNameLength') }}</span>
             }
           </div>
-          
         </div>
 
         <div class="buttons">
