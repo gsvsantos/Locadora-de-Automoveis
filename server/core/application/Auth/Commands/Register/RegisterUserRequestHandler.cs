@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Application.Auth.DTOs;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Configurations;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +12,7 @@ namespace LocadoraDeAutomoveis.Application.Auth.Commands.Register;
 
 public class RegisterUserRequestHandler(
     UserManager<User> userManager,
+    IRepositoryConfiguration repositoryConfiguration,
     ITokenProvider tokenProvider,
     IRefreshTokenProvider refreshTokenProvider,
     IUnitOfWork unitOfWork,
@@ -49,6 +51,11 @@ public class RegisterUserRequestHandler(
             await userManager.AddToRoleAsync(user, "Admin");
 
             await userManager.UpdateAsync(user);
+
+            Configuration configutarion = new();
+            configutarion.AssociateTenant(user.Id);
+            configutarion.AssociateUser(user);
+            await repositoryConfiguration.AddAsync(configutarion);
 
             AccessToken? accessToken = await tokenProvider.GenerateAccessToken(user) as AccessToken;
 
