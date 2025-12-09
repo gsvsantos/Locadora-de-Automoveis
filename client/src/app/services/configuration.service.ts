@@ -19,12 +19,6 @@ export class ConfigurationService {
   private readonly apiUrl: string = environment.apiUrl + '/configuration';
   private readonly http: HttpClient = inject(HttpClient);
 
-  public getPrices(): Observable<Prices> {
-    const url = 'https://combustivelapi.com.br/api/precos/';
-
-    return this.http.get<CombustivelApiDto>('/api/precos/').pipe(map((res) => res.precos));
-  }
-
   public configure(registerModel: ConfigurationDto): Observable<IdApiResponse> {
     const url = `${this.apiUrl}/configure`;
 
