@@ -9,11 +9,6 @@ export const authenticatedUserGuard: CanActivateFn = (): Observable<true | UrlTr
 
   return authService.getAccessToken().pipe(
     take(1),
-    map(
-      (token) => (
-        console.log('authenticatedUserGuard', token),
-        token ? true : router.createUrlTree(['/auth/login'])
-      ),
-    ),
+    map((token) => (token ? true : router.createUrlTree(['/auth/login']))),
   );
 };

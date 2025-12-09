@@ -31,6 +31,8 @@
         (toggleChange)="themeEvent.emit($event)"
       ></app-slide-toggle>
 
+      <app-language-selector></app-language-selector>
+
       @if (user?.role !== 'Admin') {
         <a
           class="navbar__item-link"
@@ -74,7 +76,7 @@
               {{ item.icon }}
             </span>
             <span class="sidebar__item-label">
-              {{ item.title }}
+              {{ item.titleKey | transloco }}
             </span>
           </a>
         }

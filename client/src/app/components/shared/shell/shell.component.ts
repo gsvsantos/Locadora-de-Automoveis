@@ -9,6 +9,9 @@ import { SlideToggleComponent } from '../slide-toggle/slide-toggle.component';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { MultiSearchComponent } from '../../search/multi/multi-search.component';
+import { LanguageSelector } from '../language-selector/language-selector';
+import { NavbarItem } from '../../../models/navbar-item.model';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-shell',
@@ -21,6 +24,8 @@ import { MultiSearchComponent } from '../../search/multi/multi-search.component'
     SlideToggleComponent,
     GsButtons,
     MultiSearchComponent,
+    TranslocoModule,
+    LanguageSelector,
   ],
 })
 export class ShellComponent {
@@ -50,54 +55,54 @@ export class ShellComponent {
       shareReplay(),
     );
 
-  public navbarItems = [
+  public navbarItems: NavbarItem[] = [
     {
-      title: 'Home',
+      titleKey: 'navbar.home',
       icon: 'home',
       link: 'home',
     },
     {
-      title: 'Groups',
+      titleKey: 'navbar.groups',
       icon: 'bookmarks',
       link: 'groups',
     },
     {
-      title: 'Billing Plans',
+      titleKey: 'navbar.billingPlans',
       icon: 'card_membership',
       link: 'billing-plans',
     },
     {
-      title: 'Vehicles',
+      titleKey: 'navbar.vehicles',
       icon: 'garage',
       link: 'vehicles',
     },
     {
-      title: 'Clients',
+      titleKey: 'navbar.clients',
       icon: 'person',
       link: 'clients',
     },
     {
-      title: 'Drivers',
+      titleKey: 'navbar.drivers',
       icon: 'local_taxi',
       link: 'drivers',
     },
     {
-      title: 'Extras',
+      titleKey: 'navbar.extras',
       icon: 'currency_exchange',
       link: 'extras',
     },
     {
-      title: 'Rentals',
+      titleKey: 'navbar.rentals',
       icon: 'car_rental',
       link: 'rentals',
     },
     {
-      title: 'Partners',
+      titleKey: 'navbar.partners',
       icon: 'handshake',
       link: 'partners',
     },
     {
-      title: 'Coupons',
+      titleKey: 'navbar.coupons',
       icon: 'local_activity',
       link: 'coupons',
     },

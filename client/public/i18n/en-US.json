@@ -43,6 +43,18 @@
       }
     }
   },
+  "navbar": {
+    "home": "Home",
+    "groups": "Groups",
+    "billingPlans": "Billing Plans",
+    "vehicles": "Vehicles",
+    "clients": "Clients",
+    "drivers": "Drivers",
+    "extras": "Extras",
+    "rentals": "Rentals",
+    "partners": "Partners",
+    "coupons": "Coupons"
+  },
   "home": {
     "dashboard": {
       "card": {

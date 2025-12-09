@@ -33,7 +33,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideTransloco({
       config: {
-        availableLangs: ['en-US'],
+        availableLangs: ['en-US', 'pt-BR', 'es-ES'],
         defaultLang: 'en-US',
         fallbackLang: 'en-US',
         reRenderOnLangChange: true,
