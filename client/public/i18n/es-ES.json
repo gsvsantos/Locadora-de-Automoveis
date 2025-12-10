@@ -146,7 +146,7 @@
         "title": "Editar datos del empleado",
         "subtitle": "Actualiza la información del empleado.",
         "section": {
-          "personalData": "Información personal y de contacto",
+          "personalData": "Información personal",
           "accountData": "Credenciales de la cuenta",
           "professionalData": "Datos profesionales"
         },
@@ -155,7 +155,9 @@
           "salary": "Salario (p. ej., 3500,00)"
         },
         "label": {
-          "admissionDate": "Fecha de ingreso"
+          "fullName": "Nombre completo",
+          "admissionDate": "Fecha de ingreso",
+          "salary": "Salario"
         },
         "errors": {
           "fullNameRequired": "El nombre completo es obligatorio.",
@@ -173,7 +175,7 @@
     "delete": {
       "card": {
         "title": "Eliminar empleado",
-        "subtitle": "¿Estás seguro de que quieres eliminar de forma permanente el registro de este empleado?",
+        "subtitle": "¿Seguro que deseas eliminar de forma permanente el registro de este empleado?",
         "section": {
           "details": "Información del empleado",
           "warning": "Esta acción no se puede deshacer. Todos los datos asociados se perderán."
@@ -215,6 +217,9 @@
           "userNameLength": "El nombre de usuario debe tener al menos 5 caracteres.",
           "passwordLength": "La nueva contraseña debe tener al menos 8 caracteres."
         },
+        "label": {
+          "fullName": "Nombre completo"
+        },
         "buttons": {
           "back": "Volver",
           "confirm": "Guardar cambios"
@@ -251,9 +256,12 @@
         "title": "Editar grupo de vehículos",
         "subtitle": "Modifica el nombre del grupo de vehículos.",
         "section": {
-          "groupData": "Datos del grupo"
+          "groupData": "Detalles del grupo"
         },
         "placeholder": {
+          "name": "Nombre del grupo"
+        },
+        "label": {
           "name": "Nombre del grupo"
         },
         "errors": {
@@ -304,8 +312,8 @@
       },
       "label": {
         "dailyRate": "Tarifa diaria",
-        "pricePerKm": "Precio por km",
-        "pricePerKmExtrapolated": "Precio por km (extra)",
+        "pricePerKm": "Precio por Km",
+        "pricePerKmExtrapolated": "Precio por Km (extra)",
         "fixedRate": "Tarifa fija"
       }
     },
@@ -322,9 +330,12 @@
         "placeholder": {
           "groupId": "Selecciona el grupo...",
           "dailyRate": "Tarifa diaria (R$)",
-          "pricePerKm": "Precio por km (R$)",
-          "pricePerKmExtrapolated": "Precio por km extrapolado (R$)",
+          "pricePerKm": "Precio por Km (R$)",
+          "pricePerKmExtrapolated": "Precio por Km extrapolado (R$)",
           "fixedRate": "Tarifa fija (R$)"
+        },
+        "label": {
+          "groupId": "Grupo de vehículos"
         },
         "errors": {
           "groupIdRequired": "La selección del grupo de vehículos es obligatoria.",
@@ -349,8 +360,8 @@
         "placeholder": {
           "groupIdSelect": "Seleccionar o cambiar grupo...",
           "dailyRate": "Tarifa diaria (R$)",
-          "pricePerKm": "Precio por km (R$)",
-          "pricePerKmExtrapolated": "Precio por km extrapolado (R$)",
+          "pricePerKm": "Precio por Km (R$)",
+          "pricePerKmExtrapolated": "Precio por Km extrapolado (R$)",
           "fixedRate": "Tarifa fija (R$)"
         },
         "label": {
@@ -379,8 +390,8 @@
         "label": {
           "name": "Nombre del plan",
           "dailyRate": "Tarifa diaria",
-          "pricePerKm": "Precio por km",
-          "pricePerKmExtrapolated": "Precio por km (extra)",
+          "pricePerKm": "Precio por Km",
+          "pricePerKmExtrapolated": "Precio por Km (extra)",
           "fixedRate": "Tarifa fija"
         },
         "buttons": {
@@ -403,7 +414,7 @@
       "label": {
         "group": "Grupo",
         "color": "Color",
-        "fuelCapacityUnit": "Capacidad en L"
+        "fuelCapacityUnit": "Capacidad (L)"
       }
     },
     "create": {
@@ -484,8 +495,13 @@
         },
         "label": {
           "licensePlate": "Matrícula",
+          "group": "Grupo",
+          "brand": "Marca",
+          "model": "Modelo",
+          "color": "Color",
+          "year": "Año",
           "fuelType": "Tipo de combustible",
-          "group": "Grupo de vehículos"
+          "fuelTankCapacity": "Capacidad del depósito"
         },
         "fuel": {
           "gasoline": "Gasolina",
@@ -628,8 +644,16 @@
           "number": "Número"
         },
         "label": {
+          "fullName": "Nombre completo",
           "type": "Tipo de cliente",
-          "state": "Estado"
+          "document": "Documento",
+          "email": "Correo electrónico",
+          "phoneNumber": "Teléfono",
+          "state": "Estado",
+          "city": "Ciudad",
+          "neighborhood": "Barrio",
+          "street": "Calle",
+          "number": "Número"
         },
         "type": {
           "individual": "Persona física (PF)",
@@ -672,6 +696,8 @@
           "email": "Correo electrónico",
           "phoneNumber": "Teléfono",
           "street": "Calle",
+          "neighborhood": "Barrio",
+          "number": "Número",
           "cityState": "Ciudad/Estado"
         },
         "buttons": {
@@ -880,6 +906,7 @@
     "delete": {
       "card": {
         "title": "Eliminar servicio adicional",
+        "subtitle": "Confirma la eliminación permanente del servicio.",
         "section": {
           "details": "Detalles del ítem",
           "warning": "Esta acción no se puede deshacer. Cualquier alquiler futuro vinculado a este extra requerirá un ajuste manual."
@@ -994,12 +1021,19 @@
           "pricing": "Precios actuales"
         },
         "placeholder": {
+          "client": "Selecciona el cliente...",
+          "driver": "Selecciona el conductor...",
+          "employee": "Selecciona el empleado...",
+          "vehicle": "Selecciona el vehículo...",
+          "startKm": "KM inicial",
+          "billingPlanType": "Selecciona el tipo de plan de cobro...",
           "estimatedKilometers": "Kilómetros estimados",
           "coupon": "Selecciona el cupón (opcional)"
         },
         "label": {
           "client": "Cliente",
           "driver": "Conductor",
+          "employee": "Empleado",
           "vehicle": "Vehículo",
           "startDate": "Fecha de inicio",
           "expectedReturnDate": "Fecha prevista de devolución",
@@ -1013,6 +1047,11 @@
         "info": {
           "startDateFixed": "La fecha de inicio del alquiler no puede modificarse.",
           "extrasHint": "Selecciona o desmarca ítems para modificar la lista de extras opcionales."
+        },
+        "plan": {
+          "daily": "Cobro diario",
+          "controlled": "Cobro controlado",
+          "free": "Cobro libre"
         },
         "errors": {
           "expectedReturnDateRequired": "La fecha prevista de devolución es obligatoria.",
@@ -1264,7 +1303,7 @@
       },
       "label": {
         "partner": "Socio",
-        "usageCount": "Número de usos",
+        "usageCount": "Cantidad de usos",
         "totalDiscountGiven": "Descuento total concedido"
       }
     },
