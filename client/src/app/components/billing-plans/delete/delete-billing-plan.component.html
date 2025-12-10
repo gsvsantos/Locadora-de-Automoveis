@@ -11,10 +11,9 @@
 
           @if (billingPlan$ | async; as plan) {
             <div class="details-section">
-              <h4>{{ t('card.section.details') }}</h4>
-
+              <h3>{{ t('card.section.details') }}</h3>
               <p>
-                <strong>{{ t('card.label.name') }}:</strong>
+                <strong>{{ t('card.label.name') }}: </strong>
                 <span>{{ plan.group.name }}</span>
               </p>
 
@@ -22,13 +21,13 @@
                 <div class="info-group">
                   <h5>{{ t('card.section.daily') }}</h5>
                   <p>
-                    <strong>{{ t('card.label.dailyRate') }}:</strong>
+                    <strong>{{ t('card.label.dailyRate') }}: </strong>
                     <span>{{
                       plan.dailyBilling.dailyRate | currency: 'BRL' : 'symbol' : '1.2-2'
                     }}</span>
                   </p>
                   <p>
-                    <strong>{{ t('card.label.pricePerKm') }}:</strong>
+                    <strong>{{ t('card.label.pricePerKm') }}: </strong>
                     <span
                       >{{
                         plan.dailyBilling.pricePerKm | currency: 'BRL' : 'symbol' : '1.2-2'
@@ -42,13 +41,13 @@
                 <div class="info-group">
                   <h5>{{ t('card.section.controlled') }}</h5>
                   <p>
-                    <strong>{{ t('card.label.dailyRate') }}:</strong>
+                    <strong>{{ t('card.label.dailyRate') }}: </strong>
                     <span>{{
                       plan.controlledBilling.dailyRate | currency: 'BRL' : 'symbol' : '1.2-2'
                     }}</span>
                   </p>
                   <p>
-                    <strong>{{ t('card.label.pricePerKmExtrapolated') }}:</strong>
+                    <strong>{{ t('card.label.pricePerKmExtrapolated') }}: </strong>
                     <span
                       >{{
                         plan.controlledBilling.pricePerKmExtrapolated
@@ -63,7 +62,7 @@
                 <div class="info-group">
                   <h5>{{ t('card.section.free') }}</h5>
                   <p>
-                    <strong>{{ t('card.label.fixedRate') }}:</strong>
+                    <strong>{{ t('card.label.fixedRate') }}: </strong>
                     <span>{{
                       plan.freeBilling.fixedRate | currency: 'BRL' : 'symbol' : '1.2-2'
                     }}</span>
@@ -77,7 +76,7 @@
           <gs-buttons
             [buttonType]="buttonType.Link"
             [text]="t('card.buttons.back')"
-            routerLink="/billingplans"
+            routerLink="/billing-plans"
           ></gs-buttons>
 
           <gs-buttons

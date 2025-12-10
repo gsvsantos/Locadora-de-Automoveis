@@ -22,10 +22,6 @@ h3 {
   }
 }
 
-hr:not(.bar) {
-  display: none;
-}
-
 .card-content {
   display: grid;
   grid-template-columns: 1fr;

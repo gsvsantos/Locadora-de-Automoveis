@@ -1,14 +1,13 @@
-<section class="details-section" *transloco="let t; prefix: 'configuration.update'">
+<section class="configuration-details-section" *transloco="let t; prefix: 'configuration.update'">
   <div class="main-content">
     @if (configuration$ | async; as configuration) {
       <div class="card">
         <h2>{{ t('card.title') }}</h2>
         <hr class="bar" />
         <div class="card-content">
-          <span>{{ t('card.subtitle') }}</span>
+          <span class="full-width">{{ t('card.subtitle') }}</span>
 
-          <h3>{{ t('card.section.fuelPrices') }}</h3>
-
+          <h3 class="full-width">{{ t('card.section.fuelPrices') }}</h3>
           <div class="form-field">
             <label>{{ t('card.label.gasolinePrice') }}</label>
             <span>{{ configuration.gasolinePrice }}</span>

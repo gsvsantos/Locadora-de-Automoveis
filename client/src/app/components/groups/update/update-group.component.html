@@ -4,13 +4,15 @@
       <div class="card">
         <form [formGroup]="formGroup" class="form" (ngSubmit)="update()">
           <h2>{{ t('card.title') }}</h2>
+
           <hr class="bar" />
+
           <div class="card-content">
-            <span>{{ t('card.subtitle') }}</span>
+            <span class="full-width">{{ t('card.subtitle') }}</span>
 
-            <h3>{{ t('card.section.groupData') }}</h3>
-
+            <h3 class="full-width">{{ t('card.section.groupData') }}</h3>
             <div class="form-field">
+              <label>{{ t('card.label.name') }}</label>
               <input
                 class="form-input"
                 formControlName="name"

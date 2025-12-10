@@ -8,11 +8,23 @@
           <hr class="bar" />
 
           <div class="card-content">
-            <span>{{ t('card.subtitle') }}</span>
+            <span class="full-width">{{ t('card.subtitle') }}</span>
 
-            <h3>{{ t('card.section.personalData') }}</h3>
+            <h3 class="full-width">{{ t('card.section.personalData') }}</h3>
+            <div class="form-field full-width">
+              <label>{{ t('card.label.type') }}</label>
+              <select class="form-input" formControlName="type">
+                <option value="">{{ t('card.placeholder.type') }}</option>
+                <option value="Individual">{{ t('card.type.individual') }}</option>
+                <option value="Business">{{ t('card.type.corporate') }}</option>
+              </select>
+              @if (type?.errors?.['required'] && type?.dirty) {
+                <span class="error-message">{{ t('card.errors.typeRequired') }}</span>
+              }
+            </div>
 
             <div class="form-field">
+              <label>{{ t('card.label.fullName') }}</label>
               <input
                 class="form-input"
                 formControlName="fullName"
@@ -32,18 +44,7 @@
             </div>
 
             <div class="form-field">
-              <label>{{ t('card.label.type') }}</label>
-              <select class="form-input" formControlName="type">
-                <option value="">{{ t('card.placeholder.type') }}</option>
-                <option value="Individual">{{ t('card.type.individual') }}</option>
-                <option value="Business">{{ t('card.type.corporate') }}</option>
-              </select>
-              @if (type?.errors?.['required'] && type?.dirty) {
-                <span class="error-message">{{ t('card.errors.typeRequired') }}</span>
-              }
-            </div>
-
-            <div class="form-field">
+              <label>{{ t('card.label.document') }}</label>
               <input
                 class="form-input"
                 formControlName="document"
@@ -59,6 +60,7 @@
             </div>
 
             <div class="form-field">
+              <label>{{ t('card.label.email') }}</label>
               <input
                 class="form-input"
                 formControlName="email"
@@ -72,6 +74,7 @@
             </div>
 
             <div class="form-field">
+              <label>{{ t('card.label.phoneNumber') }}</label>
               <input
                 class="form-input"
                 formControlName="phoneNumber"
@@ -86,11 +89,9 @@
               }
             </div>
 
-            <hr />
-
-            <h3>{{ t('card.section.addressData') }}</h3>
-
+            <h3 class="full-width">{{ t('card.section.addressData') }}</h3>
             <div class="form-field">
+              <label>{{ t('card.label.state') }}</label>
               <input
                 class="form-input"
                 formControlName="state"
@@ -103,6 +104,7 @@
             </div>
 
             <div class="form-field">
+              <label>{{ t('card.label.city') }}</label>
               <input
                 class="form-input"
                 formControlName="city"
@@ -115,6 +117,7 @@
             </div>
 
             <div class="form-field">
+              <label>{{ t('card.label.neighborhood') }}</label>
               <input
                 class="form-input"
                 formControlName="neighborhood"
@@ -127,18 +130,7 @@
             </div>
 
             <div class="form-field">
-              <input
-                class="form-input"
-                formControlName="street"
-                type="text"
-                [placeholder]="t('card.placeholder.street')"
-              />
-              @if (street?.errors?.['required'] && street?.dirty) {
-                <span class="error-message">{{ t('card.errors.streetRequired') }}</span>
-              }
-            </div>
-
-            <div class="form-field">
+              <label>{{ t('card.label.number') }}</label>
               <input
                 class="form-input"
                 formControlName="number"
@@ -147,6 +139,19 @@
               />
               @if (street?.errors?.['required'] && street?.dirty) {
                 <span class="error-message">{{ t('card.errors.numberRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field full-width">
+              <label>{{ t('card.label.street') }}</label>
+              <input
+                class="form-input"
+                formControlName="street"
+                type="text"
+                [placeholder]="t('card.placeholder.street')"
+              />
+              @if (street?.errors?.['required'] && street?.dirty) {
+                <span class="error-message">{{ t('card.errors.streetRequired') }}</span>
               }
             </div>
           </div>

@@ -1,12 +1,6 @@
 @use '../../../../styles/variables' as *;
 @use '../../../../styles/form-layout' as *;
 
-// Largura contida, já que são poucos campos
-:host ::ng-deep .main-content {
-  max-width: 600px;
-}
-
-// Estilo de Títulos (Consistente)
 h3 {
   font-size: 1rem;
   font-weight: 600;
@@ -26,10 +20,6 @@ h3 {
     border-radius: 2px;
     display: inline-block;
   }
-}
-
-hr:not(.bar) {
-  display: none;
 }
 
 .card-content {
@@ -52,6 +42,7 @@ hr:not(.bar) {
   border-radius: 12px;
   border: 1px solid transparent;
   transition: all $transition-fast;
+  width: fit-content;
 
   &:hover {
     border-color: $primary;

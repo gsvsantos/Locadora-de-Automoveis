@@ -8,23 +8,20 @@
           <span>{{ t('card.subtitle') }}</span>
 
           <h3 class="warning-text">{{ t('card.section.warning') }}</h3>
-
           @if (coupon$ | async; as coupon) {
-            <div class="details-section">
-              <h4>{{ t('card.section.details') }}</h4>
-
+            <div>
+              <h3>{{ t('card.section.details') }}</h3>
               <p>
-                <strong>{{ t('card.label.name') }}:</strong>
+                <strong>{{ t('card.label.name') }}: </strong>
                 <span>{{ coupon.name }}</span>
               </p>
-
               <p>
-                <strong>{{ t('card.label.discountValue') }}:</strong>
+                <strong>{{ t('card.label.discountValue') }}: </strong>
                 <span>{{ coupon.discountValue | currency: 'BRL' : 'symbol' : '1.2-2' }}</span>
               </p>
 
               <p>
-                <strong>{{ t('card.label.expirationDate') }}:</strong>
+                <strong>{{ t('card.label.expirationDate') }}: </strong>
                 <span>{{ coupon.expirationDate | date: 'dd/MM/yyyy' }}</span>
               </p>
             </div>

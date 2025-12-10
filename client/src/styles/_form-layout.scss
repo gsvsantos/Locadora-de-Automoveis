@@ -1,6 +1,10 @@
 @use 'variables' as *;
 
-.create-section {
+.create-section,
+.update-section,
+.delete-section,
+.configure-section,
+.configuration-details-section {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

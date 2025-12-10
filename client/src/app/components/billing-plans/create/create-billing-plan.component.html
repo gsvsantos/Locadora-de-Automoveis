@@ -11,6 +11,7 @@
 
           <h3 class="full-width">{{ t('card.section.groupSelection') }}</h3>
           <div class="form-field">
+            <label>{{ t('card.label.groupId') }}</label>
             <select class="form-input" formControlName="groupId">
               <option value="">{{ t('card.placeholder.groupId') }}</option>
               @for (group of groups$ | async; track group.id) {
@@ -106,7 +107,7 @@
           <gs-buttons
             [buttonType]="buttonType.Link"
             [text]="t('card.buttons.back')"
-            routerLink="/billingplans"
+            routerLink="/billing-plans"
           ></gs-buttons>
 
           <gs-buttons

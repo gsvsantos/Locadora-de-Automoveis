@@ -21,8 +21,6 @@
       ></gs-buttons>
     </div>
 
-    <hr />
-
     <div class="list">
       @for (coupon of coupons$ | async; track coupon.id) {
         <div class="item">
@@ -49,12 +47,6 @@
                   {{ coupon.totalDiscountGiven | currency: 'BRL' : 'symbol' : '1.2-2' }}</span
                 >
               </div>
-            </div>
-
-            <div class="card__actions" align="end">
-              <a [routerLink]="['/coupons/details', coupon.id]">
-                <span class="material-icons">visibility</span>
-              </a>
             </div>
           </div>
         </div>

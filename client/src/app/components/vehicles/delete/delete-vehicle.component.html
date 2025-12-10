@@ -11,30 +11,30 @@
 
           @if (vehicle$ | async; as vehicle) {
             <div class="details-section">
-              <h4>{{ t('card.section.details') }}</h4>
+              <h3>{{ t('card.section.details') }}</h3>
 
               <p>
-                <strong>{{ t('card.label.licensePlate') }}:</strong>
+                <strong>{{ t('card.label.licensePlate') }}: </strong>
                 <span>{{ vehicle.licensePlate }}</span>
               </p>
 
               <p>
-                <strong>{{ t('card.label.brandAndModel') }}:</strong>
+                <strong>{{ t('card.label.brandAndModel') }}: </strong>
                 <span>{{ vehicle.brand | titlecase }} / {{ vehicle.model }}</span>
               </p>
 
               <p>
-                <strong>{{ t('card.label.year') }}:</strong>
+                <strong>{{ t('card.label.year') }}: </strong>
                 <span>{{ vehicle.year }}</span>
               </p>
 
               <p>
-                <strong>{{ t('card.label.group') }}:</strong>
+                <strong>{{ t('card.label.group') }}: </strong>
                 <span>{{ vehicle.group.name }}</span>
               </p>
 
               <p>
-                <strong>{{ t('card.label.color') }}:</strong>
+                <strong>{{ t('card.label.color') }}: </strong>
                 <span>{{ vehicle.color }}</span>
               </p>
             </div>

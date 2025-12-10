@@ -11,39 +11,49 @@
 
           @if (client$ | async; as client) {
             <div class="details-section">
-              <h4>{{ t('card.section.details') }}</h4>
+              <h3>{{ t('card.section.details') }}</h3>
 
               <p>
-                <strong>{{ t('card.label.fullName') }}:</strong>
+                <strong>{{ t('card.label.fullName') }}: </strong>
                 <span>{{ client.fullName }}</span>
               </p>
 
               <p>
-                <strong>{{ t('card.label.document') }}:</strong>
+                <strong>{{ t('card.label.document') }}: </strong>
                 <span>{{ client.document }} ({{ client.type }})</span>
               </p>
 
               <p>
-                <strong>{{ t('card.label.email') }}:</strong>
+                <strong>{{ t('card.label.email') }}: </strong>
                 <span>{{ client.email }}</span>
               </p>
 
               <p>
-                <strong>{{ t('card.label.phoneNumber') }}:</strong>
+                <strong>{{ t('card.label.phoneNumber') }}: </strong>
                 <span>{{ client.phoneNumber }}</span>
               </p>
 
               <hr />
 
-              <h4>{{ t('card.section.addressSummary') }}</h4>
+              <h3>{{ t('card.section.addressSummary') }}</h3>
 
               <p>
-                <strong>{{ t('card.label.street') }}:</strong>
-                <span>{{ client.address.street }}, {{ client.address.number }}</span>
+                <strong>{{ t('card.label.street') }}: </strong>
+                <span>{{ client.address.street }}</span>
               </p>
 
               <p>
-                <strong>{{ t('card.label.cityState') }}:</strong>
+                <strong>{{ t('card.label.neighborhood') }}: </strong>
+                <span>{{ client.address.neighborhood }}</span>
+              </p>
+
+              <p>
+                <strong>{{ t('card.label.number') }}: </strong>
+                <span>{{ client.address.number }}</span>
+              </p>
+
+              <p>
+                <strong>{{ t('card.label.cityState') }}: </strong>
                 <span>{{ client.address.city }} / {{ client.address.state }}</span>
               </p>
             </div>

@@ -11,35 +11,35 @@
 
           @if (driver$ | async; as driver) {
             <div class="details-section">
-              <h4>{{ t('card.section.details') }}</h4>
+              <h3>{{ t('card.section.details') }}</h3>
 
               <p>
-                <strong>{{ t('card.label.fullName') }}:</strong>
+                <strong>{{ t('card.label.fullName') }}: </strong>
                 <span>{{ driver.fullName }}</span>
               </p>
 
               <p>
-                <strong>{{ t('card.label.document') }}:</strong>
+                <strong>{{ t('card.label.document') }}: </strong>
                 <span>{{ driver.document }}</span>
               </p>
 
               <hr />
 
-              <h4>{{ t('card.section.contact') }}</h4>
+              <h3>{{ t('card.section.contact') }}</h3>
 
               <p>
-                <strong>{{ t('card.label.email') }}:</strong>
+                <strong>{{ t('card.label.email') }}: </strong>
                 <span>{{ driver.email }}</span>
               </p>
 
               <p>
-                <strong>{{ t('card.label.phoneNumber') }}:</strong>
+                <strong>{{ t('card.label.phoneNumber') }}: </strong>
                 <span>{{ driver.phoneNumber }}</span>
               </p>
 
               <hr />
 
-              <h4>{{ t('card.section.licenseData') }}</h4>
+              <h3>{{ t('card.section.licenseData') }}</h3>
 
               <p>
                 <strong>{{ t('card.label.licenseNumber') }}:</strong>
@@ -47,16 +47,16 @@
               </p>
 
               <p>
-                <strong>{{ t('card.label.licenseValidity') }}:</strong>
+                <strong>{{ t('card.label.licenseValidity') }}: </strong>
                 <span>{{ driver.licenseValidity | date: 'dd/MM/yyyy' }}</span>
               </p>
 
               <hr />
 
-              <h4>{{ t('card.section.associatedClient') }}</h4>
+              <h3>{{ t('card.section.associatedClient') }}</h3>
 
               <p>
-                <strong>{{ t('card.label.clientName') }}:</strong>
+                <strong>{{ t('card.label.clientName') }}: </strong>
                 <span>{{ driver.client.fullName }}</span>
               </p>
             </div>

@@ -146,7 +146,7 @@
         "title": "Edit Employee Details",
         "subtitle": "Update the employee's information.",
         "section": {
-          "personalData": "Personal and Contact Information",
+          "personalData": "Personal Information",
           "accountData": "Account Credentials",
           "professionalData": "Professional Data"
         },
@@ -155,7 +155,9 @@
           "salary": "Salary (e.g., 3500.00)"
         },
         "label": {
-          "admissionDate": "Admission Date"
+          "fullName": "Full Name",
+          "admissionDate": "Admission Date",
+          "salary": "Salary"
         },
         "errors": {
           "fullNameRequired": "The full name is required.",
@@ -215,6 +217,9 @@
           "userNameLength": "Username must be at least 5 characters long.",
           "passwordLength": "New password must be at least 8 characters long."
         },
+        "label": {
+          "fullName": "Full Name"
+        },
         "buttons": {
           "back": "Back",
           "confirm": "Save Changes"
@@ -254,6 +259,9 @@
           "groupData": "Group Details"
         },
         "placeholder": {
+          "name": "Group Name"
+        },
+        "label": {
           "name": "Group Name"
         },
         "errors": {
@@ -325,6 +333,9 @@
           "pricePerKm": "Price per Km (R$)",
           "pricePerKmExtrapolated": "Price per Km Extrapolated (R$)",
           "fixedRate": "Fixed Rate (R$)"
+        },
+        "label": {
+          "groupId": "Vehicle Group"
         },
         "errors": {
           "groupIdRequired": "Vehicle group selection is mandatory.",
@@ -484,8 +495,13 @@
         },
         "label": {
           "licensePlate": "License Plate",
+          "group": "Group",
+          "brand": "Brand",
+          "model": "Model",
+          "color": "Color",
+          "year": "Year",
           "fuelType": "Fuel Type",
-          "group": "Vehicle Group"
+          "fuelTankCapacity": "Tank Capacity"
         },
         "fuel": {
           "gasoline": "Gasoline",
@@ -628,8 +644,16 @@
           "number": "Number"
         },
         "label": {
+          "fullName": "Full Name",
           "type": "Client Type",
-          "state": "State"
+          "document": "Document",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "state": "State",
+          "city": "City",
+          "neighborhood": "Neighborhood",
+          "street": "Street",
+          "number": "Number"
         },
         "type": {
           "individual": "Individual (PF)",
@@ -672,6 +696,8 @@
           "email": "Email",
           "phoneNumber": "Phone Number",
           "street": "Street",
+          "neighborhood": "Neighborhood",
+          "number": "Number",
           "cityState": "City/State"
         },
         "buttons": {
@@ -880,6 +906,7 @@
     "delete": {
       "card": {
         "title": "Delete Additional Service",
+        "subtitle": "Confirm permanent deletion of the service.",
         "section": {
           "details": "Item Details",
           "warning": "This action cannot be undone. Any future rental linked to this extra will require manual adjustment."
@@ -994,12 +1021,19 @@
           "pricing": "Current Pricing"
         },
         "placeholder": {
+          "client": "Select Client...",
+          "driver": "Select Driver...",
+          "employee": "Select Employee...",
+          "vehicle": "Select Vehicle...",
+          "startKm": "Starting Kilometers",
+          "billingPlanType": "Select Billing Plan Type...",
           "estimatedKilometers": "Estimated Kilometers",
           "coupon": "Select Coupon (Optional)"
         },
         "label": {
           "client": "Client",
           "driver": "Driver",
+          "employee": "Employee",
           "vehicle": "Vehicle",
           "startDate": "Start Date",
           "expectedReturnDate": "Expected Return Date",
@@ -1013,6 +1047,11 @@
         "info": {
           "startDateFixed": "The rental start date cannot be modified.",
           "extrasHint": "Select or deselect items to modify the list of optional extras."
+        },
+        "plan": {
+          "daily": "Daily Billing",
+          "controlled": "Controlled Billing",
+          "free": "Free Billing"
         },
         "errors": {
           "expectedReturnDateRequired": "Expected return date is mandatory.",

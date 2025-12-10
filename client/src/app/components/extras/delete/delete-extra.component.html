@@ -11,25 +11,25 @@
 
           @if (extra$ | async; as extra) {
             <div class="details-section">
-              <h4>{{ t('card.section.details') }}</h4>
+              <h3>{{ t('card.section.details') }}</h3>
 
               <p>
-                <strong>{{ t('card.label.name') }}:</strong>
+                <strong>{{ t('card.label.name') }}: </strong>
                 <span>{{ extra.name }}</span>
               </p>
 
               <p>
-                <strong>{{ t('card.label.type') }}:</strong>
+                <strong>{{ t('card.label.type') }}: </strong>
                 <span>{{ t('card.type.' + extra.type | lowercase) }}</span>
               </p>
 
               <p>
-                <strong>{{ t('card.label.price') }}:</strong>
+                <strong>{{ t('card.label.price') }}: </strong>
                 <span>{{ extra.price | currency: 'BRL' : 'symbol' : '1.2-2' }}</span>
               </p>
 
               <p>
-                <strong>{{ t('card.label.chargeType') }}:</strong>
+                <strong>{{ t('card.label.chargeType') }}: </strong>
                 <span>{{ extra.isDaily ? t('card.label.daily') : t('card.label.fixed') }}</span>
               </p>
             </div>

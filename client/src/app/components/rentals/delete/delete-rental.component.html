@@ -8,57 +8,45 @@
           <span>{{ t('card.subtitle') }}</span>
 
           <h3 class="warning-text">{{ t('card.section.warning') }}</h3>
-
           @if (rental$ | async; as rental) {
             <div class="details-section">
               <h4>{{ t('card.section.details') }}</h4>
-
               <p>
-                <strong>{{ t('card.label.client') }}:</strong>
+                <strong>{{ t('card.label.client') }}: </strong>
                 <span>{{ rental.client.fullName }}</span>
               </p>
-
               <p>
-                <strong>{{ t('card.label.driver') }}:</strong>
+                <strong>{{ t('card.label.driver') }}: </strong>
                 <span>{{ rental.driver.fullName }}</span>
               </p>
 
-              <hr />
-
               <h4>{{ t('card.section.vehicleAndDates') }}</h4>
-
               <p>
-                <strong>{{ t('card.label.vehicle') }}:</strong>
+                <strong>{{ t('card.label.vehicle') }}: </strong>
                 <span>{{ rental.vehicle.licensePlate }}</span>
               </p>
-
               <p>
-                <strong>{{ t('card.label.startDate') }}:</strong>
+                <strong>{{ t('card.label.startDate') }}: </strong>
                 <span>{{ rental.startDate | date: 'dd/MM/yyyy' }}</span>
               </p>
-
               <p>
-                <strong>{{ t('card.label.expectedReturnDate') }}:</strong>
+                <strong>{{ t('card.label.expectedReturnDate') }}: </strong>
                 <span>{{ rental.expectedReturnDate | date: 'dd/MM/yyyy' }}</span>
               </p>
 
-              <hr />
-
               <h4>{{ t('card.section.pricing') }}</h4>
-
               <p>
-                <strong>{{ t('card.label.billingPlanType') }}:</strong>
+                <strong>{{ t('card.label.billingPlanType') }}: </strong>
                 <span>{{ rental.billingPlanType }}</span>
               </p>
-
               <p>
-                <strong>{{ t('card.label.finalPrice') }}:</strong>
+                <strong>{{ t('card.label.finalPrice') }}: </strong>
                 <span>{{ rental.finalPrice | currency: 'BRL' : 'symbol' : '1.2-2' }}</span>
               </p>
 
               @if (rental.rentalExtrasQuantity > 0) {
                 <p>
-                  <strong>{{ t('card.label.extrasQuantity') }}:</strong>
+                  <strong>{{ t('card.label.extrasQuantity') }}: </strong>
                   <span>{{ rental.rentalExtrasQuantity }}</span>
                 </p>
               }

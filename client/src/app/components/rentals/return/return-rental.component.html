@@ -8,15 +8,14 @@
           <hr class="bar" />
 
           <div class="card-content">
-            <span>{{ t('card.subtitle') }}</span>
-            
-            <h3>{{ t('card.section.summary') }}</h3>
+            <span class="full-width">{{ t('card.subtitle') }}</span>
 
+            <h3 class="full-width">{{ t('card.section.summary') }}</h3>
             <div class="form-field">
               <label>{{ t('card.label.client') }}</label>
               <input class="form-input" [value]="rental.client.fullName" disabled />
             </div>
-            
+
             <div class="form-field">
               <label>{{ t('card.label.vehicle') }}</label>
               <input class="form-input" [value]="rental.vehicle.licensePlate" disabled />
@@ -26,22 +25,19 @@
               <label>{{ t('card.label.startDate') }}</label>
               <input class="form-input" [value]="rental.startDate | date: 'dd/MM/yyyy'" disabled />
             </div>
-            
+
             <div class="form-field">
               <label>{{ t('card.label.startKm') }}</label>
               <input class="form-input" [value]="rental.startKm" disabled />
             </div>
 
-            <hr />
-
-            <h3>{{ t('card.section.returnData') }}</h3>
-
+            <h3 class="full-width">{{ t('card.section.returnData') }}</h3>
             <div class="form-field">
               <label>{{ t('card.label.endKm') }}</label>
-              <input 
-                class="form-input" 
-                formControlName="endKm" 
-                type="number" 
+              <input
+                class="form-input"
+                formControlName="endKm"
+                type="number"
                 min="{{ rental.startKm }}"
                 [placeholder]="t('card.placeholder.endKm')"
               />
@@ -49,10 +45,10 @@
                 <span class="error-message">{{ t('card.errors.endKmRequired') }}</span>
               }
               @if (endKm?.errors?.['min'] && endKm?.dirty) {
-                <span class="error-message">{{ t('card.errors.endKmMin') }}</span> 
+                <span class="error-message">{{ t('card.errors.endKmMin') }}</span>
               }
             </div>
-            
+
             <div class="form-field">
               <label>{{ t('card.label.fuelLevel') }}</label>
               <select class="form-input" formControlName="fuelLevel">
@@ -67,16 +63,12 @@
                 <span class="error-message">{{ t('card.errors.fuelLevelRequired') }}</span>
               }
             </div>
-            
-            <hr />
 
-            <h3>{{ t('card.section.finalCalculation') }}</h3>
-            
+            <h3 class="full-width">{{ t('card.section.finalCalculation') }}</h3>
             <div class="final-price-box">
-                <p>{{ t('card.label.totalValue') }}:</p>
-                <p class="final-price">R$ 0,00</p> 
+              <p>{{ t('card.label.totalValue') }}:</p>
+              <p class="final-price">R$ 0,00</p>
             </div>
-
           </div>
 
           <div class="buttons">

@@ -4,10 +4,12 @@
       <div class="card">
         <form [formGroup]="formGroup" class="form" (ngSubmit)="submit()">
           <h2>{{ t('card.title') }}</h2>
+
           <hr class="bar" />
+
           <div class="card-content">
-            <span>{{ t('card.subtitle') }}</span>
-            <h3>{{ t('card.section.fuelPrices') }}</h3>
+            <span class="full-width">{{ t('card.subtitle') }}</span>
+            <h3 class="full-width">{{ t('card.section.fuelPrices') }}</h3>
 
             <div class="form-field">
               <label>{{ t('card.label.gasolinePrice') }}</label>

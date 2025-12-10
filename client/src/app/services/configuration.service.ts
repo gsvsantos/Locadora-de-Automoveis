@@ -7,8 +7,6 @@ import {
   ConfigurationDto,
   Configuration,
   ConfigutarionDetailsDto,
-  CombustivelApiDto,
-  Prices,
 } from '../models/configuration.models';
 import { mapApiResponse } from '../utils/map-api-response';
 

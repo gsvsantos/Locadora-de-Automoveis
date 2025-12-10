@@ -8,12 +8,11 @@
           <span>{{ t('card.subtitle') }}</span>
 
           <h3 class="warning-text">{{ t('card.section.warning') }}</h3>
-
           @if (group$ | async; as group) {
             <div class="details-section">
-              <h4>{{ t('card.section.details') }}</h4>
+              <h3>{{ t('card.section.details') }}</h3>
               <p>
-                <strong>{{ t('card.label.name') }}:</strong>
+                <strong>{{ t('card.label.name') }}: </strong>
                 <span>{{ group.name }}</span>
               </p>
             </div>

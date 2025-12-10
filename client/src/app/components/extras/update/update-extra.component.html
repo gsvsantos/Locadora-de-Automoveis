@@ -8,9 +8,9 @@
           <hr class="bar" />
 
           <div class="card-content">
-            <span>{{ t('card.subtitle') }}</span>
+            <span class="full-width">{{ t('card.subtitle') }}</span>
 
-            <h3>{{ t('card.section.details') }}</h3>
+            <h3 class="full-width">{{ t('card.section.details') }}</h3>
 
             <div class="form-field">
               <label>{{ t('card.label.name') }}</label>
@@ -25,19 +25,6 @@
               }
               @if (name?.errors?.['minlength'] && name?.dirty) {
                 <span class="error-message">{{ t('card.errors.nameLength') }}</span>
-              }
-            </div>
-
-            <div class="form-field">
-              <label>{{ t('card.label.type') }}</label>
-              <select class="form-input" formControlName="type">
-                <option value="">{{ t('card.placeholder.type') }}</option>
-                <option value="Equipment">{{ t('card.type.equipment') }}</option>
-                <option value="Service">{{ t('card.type.service') }}</option>
-                <option value="Fee">{{ t('card.type.fee') }}</option>
-              </select>
-              @if (type?.errors?.['required'] && type?.dirty) {
-                <span class="error-message">{{ t('card.errors.typeRequired') }}</span>
               }
             </div>
 
@@ -59,10 +46,25 @@
               }
             </div>
 
-            <div class="form-field checkbox-field">
-              <input formControlName="isDaily" type="checkbox" id="isDailyCheckbox" />
-              <label for="isDailyCheckbox">{{ t('card.label.isDaily') }}</label>
-              <span class="small-info">{{ t('card.info.isDaily') }}</span>
+            <div class="form-field full-width">
+              <label>{{ t('card.label.type') }}</label>
+              <select class="form-input" formControlName="type">
+                <option value="">{{ t('card.placeholder.type') }}</option>
+                <option value="Equipment">{{ t('card.type.equipment') }}</option>
+                <option value="Service">{{ t('card.type.service') }}</option>
+                <option value="Fee">{{ t('card.type.fee') }}</option>
+              </select>
+              @if (type?.errors?.['required'] && type?.dirty) {
+                <span class="error-message">{{ t('card.errors.typeRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field full-width">
+              <div class="checkbox-field">
+                <input formControlName="isDaily" type="checkbox" id="isDailyCheckbox" />
+                <label for="isDailyCheckbox">{{ t('card.label.isDaily') }}</label>
+                <span class="small-info">{{ t('card.info.isDaily') }}</span>
+              </div>
             </div>
           </div>
 

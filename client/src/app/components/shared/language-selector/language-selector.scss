@@ -2,54 +2,39 @@
 @use '../../../../styles/variables' as *;
 
 .language-select {
-  // 1. Resetar estilo nativo
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-
-  // 2. Dimensões e Espaçamento
   display: inline-block;
   width: auto;
-  min-width: 140px; // Tamanho mínimo confortável
-  padding: 10px 40px 10px 16px; // Espaço extra na direita para a seta
+  min-width: 140px;
+  padding: 10px 40px 10px 16px;
   font-family: inherit;
   font-size: 0.9rem;
   font-weight: 500;
   line-height: 1.5;
   cursor: pointer;
-
-  // 3. Cores e Bordas (Tema Eco-Drive)
   color: $text-main;
-  background-color: $surface; // Fundo branco/escuro do tema
+  background-color: $surface;
   border: 1px solid $border;
-  border-radius: 20px; // Estilo "Pílula" (Pill Shape) fica muito elegante para seletores
-
-  // 4. A Seta Personalizada (SVG encoded para ser leve e na cor certa)
-  // Esse SVG é um "Chevron Down" simples na cor do seu $text-muted ou $primary
+  border-radius: 20px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235c7c76' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   background-size: 16px;
-
   transition: all 0.2s ease-in-out;
 
-  // 5. Estado de Hover
   &:hover {
-    border-color: $primary; // Borda fica verde/teal
-    background-color: $surface-alt; // Fundo levemente destacado
+    border-color: $primary;
+    background-color: $surface-alt;
   }
 
-  // 6. Estado de Foco (Igual aos inputs do formulário)
   &:focus {
     outline: none;
     border-color: $primary-active;
-    box-shadow: 0 0 0 4px rgba($primary, 0.15); // O Glow característico
-
-    // Opcional: Girar a seta quando aberto (funciona em alguns browsers)
-    // Nota: Select nativo é difícil de animar o ícone interno com perfeição
+    box-shadow: 0 0 0 4px rgba($primary, 0.15);
   }
 
-  // 7. Estilo das Opções (Limitado pelo SO, mas podemos sugerir cores)
   option {
     color: $text-main;
     background-color: $surface;
@@ -57,11 +42,7 @@
   }
 }
 
-// Ajuste para Dark Mode (se necessário trocar a cor da seta do SVG)
-// Como o SVG está "hardcoded" na URL, se a cor do ícone precisar mudar drasticamente
-// no dark mode, você pode redefinir o background-image aqui.
 [data-theme='dark'] .language-select {
-  // Seta mais clara para fundo escuro (stroke=%23e0f7f3 -> cor clara)
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e0f7f3' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-color: $surface-alt; // Fundo um pouco mais claro que o base no dark
+  background-color: $surface-alt;
 }

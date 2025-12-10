@@ -11,21 +11,18 @@
 
           @if (partner$ | async; as partner) {
             <div class="details-section">
-              <h4>{{ t('card.section.details') }}</h4>
-              
+              <h3>{{ t('card.section.details') }}</h3>
               <p>
-                <strong>{{ t('card.label.fullName') }}:</strong>
+                <strong>{{ t('card.label.fullName') }}: </strong>
                 <span>{{ partner.fullName }}</span>
               </p>
-              
               <p>
-                <strong>{{ t('card.label.couponsQuantity') }}:</strong>
+                <strong>{{ t('card.label.couponsQuantity') }}: </strong>
                 <span>{{ partner.coupons.length }}</span>
               </p>
-              
             </div>
           }
-          </div>
+        </div>
         <div class="buttons">
           <gs-buttons
             [buttonType]="buttonType.Link"
