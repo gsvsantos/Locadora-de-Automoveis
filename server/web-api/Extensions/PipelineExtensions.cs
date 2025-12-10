@@ -8,12 +8,13 @@ public static class PipelineExtensions
     public static async Task<WebApplication> UseWebApiPipelineDefaults(this WebApplication app)
     {
         app.AutoMigrateDatabase();
+        app.StartRefreshTokenCleanupJob();
 
         await app.IdentitySeederAsync();
 
         app.UseGlobalExceptionHandler();
 
-        app.UseHangfireDashboard();
+        app.UseHangfireDashboard(); ;
 
         app.UseSwagger();
         app.UseSwaggerUI();

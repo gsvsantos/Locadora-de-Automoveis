@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -14,6 +15,7 @@ namespace LocadoraDeAutomoveis.Application.Employees.Commands.Update;
 public class UpdateEmployeeRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryEmployee repositoryEmployee,
     IValidator<Employee> validator,
     ILogger<UpdateEmployeeRequestHandler> logger
@@ -29,15 +31,11 @@ public class UpdateEmployeeRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
         }
 
+        Employee updatedEmployee = mapper.Map<Employee>(request);
+
         try
         {
-            Employee updatedEmployee = new(
-            request.FullName,
-            request.AdmissionDate,
-            request.Salary
-            );
-
-            ValidationResult validationResult = await validator.ValidateAsync(selectedEmployee, cancellationToken);
+            ValidationResult validationResult = await validator.ValidateAsync(updatedEmployee, cancellationToken);
 
             if (!validationResult.IsValid)
             {
@@ -55,9 +53,12 @@ public class UpdateEmployeeRequestHandler(
                 return Result.Fail(EmployeeErrorResults.DuplicateNameError(request.FullName));
             }
 
-            selectedEmployee.Update(updatedEmployee);
+            await repositoryEmployee.UpdateAsync(request.Id, updatedEmployee);
 
-            await repositoryEmployee.UpdateAsync(request.Id, selectedEmployee);
+            if (selectedEmployee.User is null)
+            {
+                return Result.Fail(ErrorResults.NotFoundError("Something went wrong! The selected employee don't contains a user."));
+            }
 
             selectedEmployee.User.FullName = request.FullName;
 
@@ -83,7 +84,9 @@ public class UpdateEmployeeRequestHandler(
     private static bool DuplicateName(Employee employee, List<Employee> existingEmployees)
     {
         return existingEmployees
-            .Any(entity => string.Equals(
+            .Any(entity =>
+            entity.Id != employee.Id &&
+            string.Equals(
                 entity.FullName,
                 employee.FullName,
                 StringComparison.CurrentCultureIgnoreCase)

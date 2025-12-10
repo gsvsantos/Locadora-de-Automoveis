@@ -1,0 +1,169 @@
+<section class="create-section" *transloco="let t; prefix: 'drivers.create'">
+  <div class="main-content">
+    <div class="card">
+      <form [formGroup]="formGroup" class="form" (ngSubmit)="register()">
+        <h2>{{ t('card.title') }}</h2>
+
+        <hr class="bar" />
+
+        <div class="card-content">
+          <span class="full-width">{{ t('card.subtitle') }}</span>
+
+          <h3 class="full-width">{{ t('card.section.identification') }}</h3>
+          <div class="form-field full-width">
+            <label>{{ t('card.label.client') }}</label>
+            <select class="form-input" formControlName="clientId">
+              <option [ngValue]="null">
+                {{ t('card.placeholder.client') }}
+              </option>
+
+              @for (client of clients$ | async; track client.id) {
+                <option [ngValue]="client.id">{{ client.fullName }} ({{ client.document }})</option>
+              }
+            </select>
+          </div>
+
+          @if (clientId?.value) {
+            @if (clientTypeIsBusiness$ | async) {
+              @if ((individualClients$ | async)?.length) {
+                <h3 class="full-width">{{ t('card.section.associatedDrivers') }}</h3>
+                <div class="form-field full-width">
+                  <label>{{ t('card.label.selectDriver') }}</label>
+                  <select class="form-input" formControlName="individualClientId">
+                    <option [ngValue]="null">{{ t('card.placeholder.selectDriver') }}</option>
+                    @for (
+                      individualClient of individualClients$ | async;
+                      track individualClient.id
+                    ) {
+                      <option [ngValue]="individualClient.id">
+                        {{ individualClient.fullName }} ({{ individualClient.document }})
+                      </option>
+                    }
+                  </select>
+                  @if (
+                    formGroup.errors?.['needsIndividual'] &&
+                    individualClientId?.enabled &&
+                    clientId?.dirty
+                  ) {
+                    <span class="error-message">{{ t('card.errors.selectedDriverRequired') }}</span>
+                  }
+                </div>
+              } @else {
+                <h3 class="full-width">{{ t('card.section.personalData') }}</h3>
+                <p class="small-info full-width">
+                  {{ t('card.info.registerNewDriverForCorporate') }}
+                </p>
+              }
+            } @else if (clientId?.value) {
+              <h3 class="full-width">{{ t('card.section.personalData') }}</h3>
+              <p class="small-info full-width">{{ t('card.info.clientDetailsPrepopulated') }}</p>
+            }
+
+            @if (!((clientTypeIsBusiness$ | async) && (individualClients$ | async)?.length)) {
+              <div class="form-field">
+                <label>{{ t('card.label.fullName') }}</label>
+                <input
+                  class="form-input"
+                  formControlName="fullName"
+                  type="text"
+                  [placeholder]="t('card.placeholder.fullName')"
+                  autocomplete="name"
+                />
+                @if (fullName?.errors?.['required'] && fullName?.dirty) {
+                  <span class="error-message">{{ t('card.errors.fullNameRequired') }}</span>
+                }
+                @if (fullName?.errors?.['minlength'] && fullName?.dirty) {
+                  <span class="error-message">{{ t('card.errors.fullNameLength') }}</span>
+                }
+              </div>
+
+              <div class="form-field">
+                <label>{{ t('card.label.document') }}</label>
+                <input
+                  class="form-input"
+                  formControlName="document"
+                  type="text"
+                  [placeholder]="t('card.placeholder.document')"
+                />
+                @if (document?.errors?.['required'] && document?.dirty) {
+                  <span class="error-message">{{ t('card.errors.documentRequired') }}</span>
+                }
+              </div>
+
+              <div class="form-field">
+                <label>{{ t('card.label.email') }}</label>
+                <input
+                  class="form-input"
+                  formControlName="email"
+                  type="email"
+                  [placeholder]="t('card.placeholder.email')"
+                  autocomplete="email"
+                />
+                @if (email?.errors?.['required'] && email?.dirty) {
+                  <span class="error-message">{{ t('card.errors.emailRequired') }}</span>
+                }
+              </div>
+
+              <div class="form-field">
+                <label>{{ t('card.label.phoneNumber') }}</label>
+                <input
+                  class="form-input"
+                  formControlName="phoneNumber"
+                  type="tel"
+                  [placeholder]="t('card.placeholder.phoneNumber')"
+                />
+                @if (phoneNumber?.errors?.['required'] && phoneNumber?.dirty) {
+                  <span class="error-message">{{ t('card.errors.phoneNumberRequired') }}</span>
+                }
+              </div>
+
+              <h3 class="full-width">{{ t('card.section.licenseData') }}</h3>
+              <div class="form-field">
+                <label>{{ t('card.label.licenseNumber') }}</label>
+                <input
+                  class="form-input"
+                  formControlName="licenseNumber"
+                  type="text"
+                  [placeholder]="t('card.placeholder.licenseNumber')"
+                />
+                @if (licenseNumber?.errors?.['required'] && licenseNumber?.dirty) {
+                  <span class="error-message">{{ t('card.errors.licenseNumberRequired') }}</span>
+                }
+                @if (
+                  (licenseNumber?.errors?.['minlength'] || licenseNumber?.errors?.['maxlength']) &&
+                  licenseNumber?.dirty
+                ) {
+                  <span class="error-message">{{ t('card.errors.licenseLength') }}</span>
+                }
+              </div>
+
+              <div class="form-field">
+                <label>{{ t('card.label.licenseValidity') }}</label>
+                <input class="form-input" formControlName="licenseValidity" type="date" />
+                @if (licenseValidity?.errors?.['required'] && licenseValidity?.dirty) {
+                  <span class="error-message">{{ t('card.errors.licenseValidityRequired') }}</span>
+                }
+              </div>
+            }
+          }
+        </div>
+
+        <div class="buttons">
+          <gs-buttons
+            [buttonType]="buttonType.Link"
+            [text]="t('card.buttons.back')"
+            routerLink="/drivers"
+          ></gs-buttons>
+
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('card.buttons.confirm')"
+            type="submit"
+            [disabled]="formGroup.invalid"
+            (click)="register()"
+          ></gs-buttons>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

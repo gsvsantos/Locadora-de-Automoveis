@@ -1,0 +1,60 @@
+<section class="list-section" *transloco="let t; prefix: 'partners.list'">
+  <div class="main-content">
+    <h2>{{ t('header.title') }}</h2>
+
+    <div class="items-container">
+      <gs-buttons
+        [buttonType]="buttonType.Link"
+        [text]="t('buttons.register')"
+        bootstrapIcon="bi-plus-circle"
+        [target]="targetType.SameTab"
+        [variant]="variantType.Outline"
+        routerLink="register"
+      ></gs-buttons>
+      <div class="header-actions">
+        @if (showingInactive$ | async; as state) {
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="state.isInactive ? t('buttons.seeActives') : t('buttons.seeInactives')"
+            (click)="toggleFilter(state.isInactive)"
+          ></gs-buttons>
+        }
+      </div>
+    </div>
+
+    <hr class="bar" />
+
+    <div class="list">
+      @for (partner of partners$ | async; track partner.id) {
+        <div class="item">
+          <div class="card" tabindex="0">
+            <div class="card__header">
+              <div class="card_title">{{ partner.fullName | titlecase }}</div>
+            </div>
+
+            <div class="card__content">
+              <div class="info-row">
+                <span class="material-icons">redeem</span>
+                <span>{{ t('label.couponsQuantity') }}: {{ partner.couponsQuantity }}</span>
+              </div>
+            </div>
+
+            <div class="card__actions" align="end">
+              <a class="view-action" [routerLink]="['partner', partner.id, 'coupons']">
+                <span class="material-icons">visibility</span>
+              </a>
+              @if (partner.isActive) {
+                <a [routerLink]="['edit', partner.id]">
+                  <span class="material-icons">edit</span>
+                </a>
+                <a class="button button__danger" [routerLink]="['delete', partner.id]">
+                  <span class="material-icons">delete</span>
+                </a>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

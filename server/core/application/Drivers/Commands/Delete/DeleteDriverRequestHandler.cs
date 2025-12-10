@@ -1,0 +1,77 @@
+﻿using FluentResults;
+using LocadoraDeAutomoveis.Application.Shared;
+using LocadoraDeAutomoveis.Domain.Drivers;
+using LocadoraDeAutomoveis.Domain.Rentals;
+using LocadoraDeAutomoveis.Domain.Shared;
+using MediatR;
+using Microsoft.Extensions.Logging;
+
+namespace LocadoraDeAutomoveis.Application.Drivers.Commands.Delete;
+
+public class DeleteDriverRequestHandler(
+    IUnitOfWork unitOfWork,
+    IRepositoryDriver repositoryDriver,
+    IRepositoryRental repositoryRental,
+    ILogger<DeleteDriverRequestHandler> logger
+) : IRequestHandler<DeleteDriverRequest, Result<DeleteDriverResponse>>
+{
+    public async Task<Result<DeleteDriverResponse>> Handle(
+        DeleteDriverRequest request, CancellationToken cancellationToken)
+    {
+        Driver? selectedDriver = await repositoryDriver.GetByIdAsync(request.Id);
+
+        if (selectedDriver is null)
+        {
+            return Result.Fail(ErrorResults.NotFoundError(request.Id));
+        }
+
+        bool hasActiveRentals = await repositoryRental.HasActiveRentalsByDriver(request.Id);
+        if (hasActiveRentals)
+        {
+            return Result.Fail(ErrorResults.BadRequestError("Cannot remove a driver associated with active rentals."));
+        }
+
+        try
+        {
+            bool hasHistory = await repositoryRental.HasRentalHistoryByDriver(request.Id);
+
+            if (hasHistory)
+            {
+                selectedDriver.Deactivate();
+
+                await repositoryDriver.UpdateAsync(selectedDriver.Id, selectedDriver);
+
+                logger.LogInformation(
+                    "Driver '{@Name}' ({@Id}) was deactivated to preserve rental history.",
+                    selectedDriver.FullName,
+                    request.Id
+                );
+            }
+            else
+            {
+                await repositoryDriver.DeleteAsync(request.Id);
+
+                logger.LogInformation(
+                    "Driver '{@Name}' ({@Id}) was permanently deleted.",
+                    selectedDriver.FullName,
+                    request.Id
+                );
+            }
+
+            await unitOfWork.CommitAsync();
+
+            return Result.Ok(new DeleteDriverResponse());
+        }
+        catch (Exception ex)
+        {
+            await unitOfWork.RollbackAsync();
+
+            logger.LogError(
+                ex,
+                "An error occurred during the request. \n{@Request}.", request
+            );
+
+            return Result.Fail(ErrorResults.InternalServerError(ex));
+        }
+    }
+}

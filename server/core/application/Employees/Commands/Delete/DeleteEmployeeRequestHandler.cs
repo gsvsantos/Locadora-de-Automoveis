@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Employees;
+using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ public class DeleteEmployeeRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
     IRepositoryEmployee repositoryEmployee,
+    IRepositoryRental repositoryRental,
     ILogger<DeleteEmployeeRequestHandler> logger
 ) : IRequestHandler<DeleteEmployeeRequest, Result<DeleteEmployeeResponse>>
 {
@@ -26,16 +28,48 @@ public class DeleteEmployeeRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.Id));
         }
 
+        bool hasActiveRentals = await repositoryRental.HasActiveRentalsByEmployee(request.Id);
+        if (hasActiveRentals)
+        {
+            return Result.Fail(ErrorResults.BadRequestError("Cannot remove employee associated with active rentals."));
+        }
+
         try
         {
-            // todo: verificação de relações -> tem relações ?? desativa : delete
-            //selectedEmployee.Deactivate();
-            //await repositoryEmployee.UpdateAsync(request.Id, selectedEmployee);
-            //await userManager.UpdateAsync(selectedEmployee.User);
+            bool hasHistory = await repositoryRental.HasRentalHistoryByEmployee(request.Id);
+            if (hasHistory)
+            {
+                selectedEmployee.Deactivate();
 
-            await repositoryEmployee.DeleteAsync(request.Id);
+                if (selectedEmployee.User is not null)
+                {
+                    await userManager.SetLockoutEndDateAsync(selectedEmployee.User, DateTimeOffset.MaxValue);
 
-            await userManager.DeleteAsync(selectedEmployee.User);
+                    // todo: enviar email alertando a desativação da conta
+
+                    logger.LogInformation(
+                        "User account '{Email}' (ID: {UserId}) has been locked indefinitely due to employee deactivation.",
+                        selectedEmployee.User.Email,
+                        selectedEmployee.User.Id
+                    );
+                }
+
+                await repositoryEmployee.UpdateAsync(selectedEmployee.Id, selectedEmployee);
+
+                logger.LogInformation(
+                    "Employee {@EmployeeId} was deactivated (Soft Delete) instead of permanently deleted to preserve rental history.",
+                    request.Id
+                );
+            }
+            else
+            {
+                await repositoryEmployee.DeleteAsync(request.Id);
+
+                if (selectedEmployee.User is not null)
+                {
+                    await userManager.DeleteAsync(selectedEmployee.User);
+                }
+            }
 
             await unitOfWork.CommitAsync();
 

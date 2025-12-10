@@ -1,0 +1,40 @@
+<section class="delete-section" *transloco="let t; prefix: 'group.delete'">
+  <div class="main-content">
+    <div class="card">
+      <form class="form" (ngSubmit)="delete()">
+        <h2>{{ t('card.title') }}</h2>
+        <hr class="bar" />
+        <div class="card-content">
+          <span>{{ t('card.subtitle') }}</span>
+
+          <h3 class="warning-text">{{ t('card.section.warning') }}</h3>
+          @if (group$ | async; as group) {
+            <div class="details-section">
+              <h3>{{ t('card.section.details') }}</h3>
+              <p>
+                <strong>{{ t('card.label.name') }}: </strong>
+                <span>{{ group.name }}</span>
+              </p>
+            </div>
+          }
+        </div>
+        <div class="buttons">
+          <gs-buttons
+            [buttonType]="buttonType.Link"
+            [text]="t('card.buttons.back')"
+            routerLink="/groups"
+          ></gs-buttons>
+
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('card.buttons.confirm')"
+            type="submit"
+            color="#ff7675"
+            hoverColor="#e45757"
+            (click)="delete()"
+          ></gs-buttons>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

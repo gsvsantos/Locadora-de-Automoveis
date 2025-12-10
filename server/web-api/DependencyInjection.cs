@@ -1,10 +1,35 @@
 ﻿using FluentValidation;
 using Hangfire;
-using LocadoraDeAutomoveis.Application.Employees.Commands.Create;
+using LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
+using LocadoraDeAutomoveis.Application.Shared;
+using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.BillingPlans;
+using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Configurations;
+using LocadoraDeAutomoveis.Domain.Coupons;
+using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
+using LocadoraDeAutomoveis.Domain.Groups;
+using LocadoraDeAutomoveis.Domain.Partners;
+using LocadoraDeAutomoveis.Domain.RentalExtras;
+using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Domain.Vehicles;
+using LocadoraDeAutomoveis.Infrastructure.Auth;
+using LocadoraDeAutomoveis.Infrastructure.BillingPlans;
+using LocadoraDeAutomoveis.Infrastructure.Clients;
+using LocadoraDeAutomoveis.Infrastructure.Configurations;
+using LocadoraDeAutomoveis.Infrastructure.Coupons;
+using LocadoraDeAutomoveis.Infrastructure.Drivers;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
+using LocadoraDeAutomoveis.Infrastructure.Groups;
+using LocadoraDeAutomoveis.Infrastructure.Partners;
+using LocadoraDeAutomoveis.Infrastructure.RentalExtras;
+using LocadoraDeAutomoveis.Infrastructure.Rentals;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
+using LocadoraDeAutomoveis.Infrastructure.Vehicles;
+using LocadoraDeAutomoveis.WebApi.Filters;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -50,40 +75,27 @@ public static class DependencyInjection
     {
         services.AddCors(options =>
         {
-            if (environment.IsDevelopment())
+            string? corsAllowedString = configuration["CORS_ALLOWED_ORIGINS"];
+
+            if (string.IsNullOrWhiteSpace(corsAllowedString))
             {
-                options.AddDefaultPolicy(policy =>
-                {
-                    policy
-                        .AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
+                throw new Exception("The environment variable \"CORS_ALLOWED_ORIGINS\" was not provided.");
             }
-            else
+
+            string[] corsAllowed = corsAllowedString
+                .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Select(x => x.TrimEnd('/'))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+
+            options.AddDefaultPolicy(policy =>
             {
-                string? corsAllowedString = configuration["CORS_ALLOWED_ORIGINS"];
-
-                if (string.IsNullOrWhiteSpace(corsAllowedString))
-                {
-                    throw new Exception("The environment variable \"CORS_ALLOWED_ORIGINS\" was not provided.");
-                }
-
-                string[] corsAllowed = corsAllowedString
-                    .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                    .Select(x => x.TrimEnd('/'))
-                    .Distinct(StringComparer.OrdinalIgnoreCase)
-                    .ToArray();
-
-                options.AddDefaultPolicy(policy =>
-                {
-                    policy
-                        .WithOrigins(corsAllowed)
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                });
-            }
+                policy
+                    .WithOrigins(corsAllowed)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
         });
     }
 
@@ -93,7 +105,7 @@ public static class DependencyInjection
 
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Locadora de Automóveis API", Version = "v1" });
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Locadora de Automoveis API", Version = "v1" });
 
             options.MapType<TimeSpan>(() => new OpenApiSchema
             {
@@ -136,7 +148,27 @@ public static class DependencyInjection
         });
     }
 
-    public static void ConfigureRepositories(this IServiceCollection services) => services.AddScoped<IRepositoryEmployee, EmployeeRepository>();
+    public static void ConfigureRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<IRepositoryRefreshToken, RepositoryRefreshToken>();
+        services.AddScoped<IRepositoryEmployee, EmployeeRepository>();
+        services.AddScoped<IRepositoryGroup, GroupRepository>();
+        services.AddScoped<IRepositoryVehicle, VehicleRepository>();
+        services.AddScoped<IRepositoryBillingPlan, BillingPlanRepository>();
+        services.AddScoped<IRepositoryClient, ClientRepository>();
+        services.AddScoped<IRepositoryDriver, DriverRepository>();
+        services.AddScoped<IRepositoryRentalExtra, RentalExtraRepository>();
+        services.AddScoped<IRepositoryConfiguration, ConfigurationRepository>();
+        services.AddScoped<IRepositoryRental, RentalRepository>();
+        services.AddScoped<IRepositoryRentalReturn, RentalReturnRepository>();
+        services.AddScoped<IRepositoryPartner, PartnerRepository>();
+        services.AddScoped<IRepositoryCoupon, CouponRepository>();
+    }
+
+    public static void ConfigureServices(this IServiceCollection services)
+    {
+        services.AddScoped<ICouponQueryService, CouponQueryService>();
+    }
 
     public static void ConfigureSerilog(this IServiceCollection services, ILoggingBuilder logging, IConfiguration configuration)
     {
@@ -162,20 +194,29 @@ public static class DependencyInjection
         services.AddLogging(builder => builder.AddSerilog(dispose: true));
     }
 
-    public static void ConfigureServices(
-        this IServiceCollection services, IConfiguration configuration
-    )
+    public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        Assembly assembly = typeof(DependencyInjection).Assembly;
+        Assembly applicationAssembly = typeof(ApplicationAssemblyReference).Assembly;
 
-        services.AddAutoMapper(assembly);
+        string? luckyPennySoftwareLicenseKey = configuration["LUCKYPENNYSOFTWARE_LICENSE_KEY"];
 
-        services.AddValidatorsFromAssemblyContaining<EmployeeValidators>();
+        if (string.IsNullOrWhiteSpace(luckyPennySoftwareLicenseKey))
+        {
+            throw new Exception("The environment variable LUCKYPENNYSOFTWARE_LICENSE_KEY was not provided.");
+        }
 
         services.AddMediatR(config =>
         {
-            config.RegisterServicesFromAssemblyContaining<CreateEmployeeRequest>();
+            config.RegisterServicesFromAssembly(applicationAssembly);
+            config.LicenseKey = luckyPennySoftwareLicenseKey;
         });
+
+        services.AddAutoMapper(config =>
+            config.LicenseKey = luckyPennySoftwareLicenseKey,
+            applicationAssembly
+        );
+
+        services.AddValidatorsFromAssembly(applicationAssembly);
 
         services.ConfigureHangFire(configuration);
         services.ConfigureRedisCache(configuration);
@@ -183,9 +224,27 @@ public static class DependencyInjection
 
     public static void ConfigureControllers(this IServiceCollection services)
     {
-        services.AddControllers()
-            .AddJsonOptions(options =>
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+        services.AddControllers(options =>
+        {
+            options.Filters.Add<ResponseWrapperFilter>();
+        }
+        ).AddJsonOptions(options =>
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
+        ).ConfigureApiBehaviorOptions(options =>
+            options.InvalidModelStateResponseFactory = context =>
+            {
+                string[] errorMessages = context.ModelState
+                .Where(entry => entry.Value is { Errors.Count: > 0 })
+                .SelectMany(entry => entry.Value!.Errors)
+                .Select(error => error.ErrorMessage)
+                .ToArray();
+
+                return new JsonResult(errorMessages)
+                {
+                    StatusCode = StatusCodes.Status400BadRequest
+                };
+            }
+        );
     }
 
     private static void ConfigureHangFire(this IServiceCollection services, IConfiguration configuration)

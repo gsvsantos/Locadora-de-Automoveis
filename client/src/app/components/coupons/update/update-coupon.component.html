@@ -1,0 +1,91 @@
+<section class="update-section" *transloco="let t; prefix: 'coupons.update'">
+  <div class="main-content">
+    @if (coupon$ | async) {
+      <div class="card">
+        <form [formGroup]="formGroup" class="form" (ngSubmit)="update()">
+          <h2>{{ t('card.title') }}</h2>
+
+          <hr class="bar" />
+
+          <div class="card-content">
+            <span class="full-width">{{ t('card.subtitle') }}</span>
+
+            <h3 class="full-width">{{ t('card.section.details') }}</h3>
+            <div class="form-field full-width">
+              <label>{{ t('card.label.name') }}</label>
+              <input
+                class="form-input"
+                formControlName="name"
+                type="text"
+                [placeholder]="t('card.placeholder.name')"
+                autocomplete="off"
+              />
+              @if (name?.errors?.['required'] && name?.dirty) {
+                <span class="error-message">{{ t('card.errors.nameRequired') }}</span>
+              }
+              @if (name?.errors?.['minlength'] && name?.dirty) {
+                <span class="error-message">{{ t('card.errors.nameLength') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.discountValue') }}</label>
+              <input
+                class="form-input"
+                formControlName="discountValue"
+                type="number"
+                step="0.01"
+                min="0.01"
+                [placeholder]="t('card.placeholder.discountValue')"
+              />
+              @if (discountValue?.errors?.['required'] && discountValue?.dirty) {
+                <span class="error-message">{{ t('card.errors.discountValueRequired') }}</span>
+              }
+              @if (discountValue?.errors?.['min'] && discountValue?.dirty) {
+                <span class="error-message">{{ t('card.errors.discountValueMin') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.expirationDate') }}</label>
+              <input class="form-input" formControlName="expirationDate" type="date" />
+              @if (expirationDate?.errors?.['required'] && expirationDate?.dirty) {
+                <span class="error-message">{{ t('card.errors.expirationDateRequired') }}</span>
+              }
+            </div>
+
+            <h3 class="full-width">{{ t('card.section.partner') }}</h3>
+            <div class="form-field full-width">
+              <label>{{ t('card.label.partnerId') }}</label>
+              <select class="form-input" formControlName="partnerId">
+                <option value="">{{ t('card.placeholder.partnerId') }}</option>
+                @for (partner of partners$ | async; track partner.id) {
+                  <option [value]="partner.id">{{ partner.fullName }}</option>
+                }
+              </select>
+              @if (partnerId?.errors?.['required'] && partnerId?.dirty) {
+                <span class="error-message">{{ t('card.errors.partnerIdRequired') }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="buttons">
+            <gs-buttons
+              [buttonType]="buttonType.Link"
+              [text]="t('card.buttons.back')"
+              routerLink="/coupons"
+            ></gs-buttons>
+
+            <gs-buttons
+              [buttonType]="buttonType.Default"
+              [text]="t('card.buttons.confirm')"
+              type="submit"
+              [disabled]="formGroup.invalid"
+              (click)="update()"
+            ></gs-buttons>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+</section>

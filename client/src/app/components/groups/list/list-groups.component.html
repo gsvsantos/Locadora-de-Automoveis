@@ -1,0 +1,50 @@
+<section class="list-section">
+  <div class="main-content">
+    <h2>Groups</h2>
+
+    <div class="items-container">
+      <gs-buttons
+        [buttonType]="buttonType.Link"
+        [text]="'Register New Group'"
+        bootstrapIcon="bi-chevron-double-left"
+        [target]="targetType.SameTab"
+        [variant]="variantType.Outline"
+        routerLink="register"
+      ></gs-buttons>
+      <div class="header-actions">
+        @if (showingInactive$ | async; as state) {
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="state.isInactive ? 'See Actives' : 'See Inactives'"
+            (click)="toggleFilter(state.isInactive)"
+          ></gs-buttons>
+        }
+      </div>
+    </div>
+
+    <hr class="bar" />
+
+    <div class="list">
+      @for (group of groups$ | async; track group.id) {
+        <div class="item">
+          <div class="card" tabindex="0">
+            <div class="card__header">
+              <div class="card_title">{{ group.name | titlecase }}</div>
+            </div>
+
+            @if (group.isActive) {
+              <div class="card__actions" align="end">
+                <a [routerLink]="['edit', group.id]">
+                  <span class="material-icons">edit</span>
+                </a>
+                <a class="button button__danger" [routerLink]="['delete', group.id]">
+                  <span class="material-icons">delete</span>
+                </a>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

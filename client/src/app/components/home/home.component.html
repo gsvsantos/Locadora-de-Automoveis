@@ -1,0 +1,97 @@
+<section class="dashboard-section" *transloco="let t; prefix: 'home.dashboard'">
+  <div class="dashboard-grid">
+    <div class="dashboard-card action-card">
+      <h3>{{ t('card.quickActions.title') }}</h3>
+      <div class="quick-actions">
+        <gs-buttons
+          [buttonType]="buttonType.Default"
+          [text]="t('card.quickActions.newRental')"
+          bootstrapIcon="bi-box-arrow-in-right"
+          routerLink="/rentals/register"
+        ></gs-buttons>
+        <gs-buttons
+          [buttonType]="buttonType.Default"
+          [text]="t('card.quickActions.newClient')"
+          bootstrapIcon="bi-person-plus"
+          routerLink="/clients/register"
+        ></gs-buttons>
+        <gs-buttons
+          [buttonType]="buttonType.Default"
+          [text]="t('card.quickActions.newDriver')"
+          bootstrapIcon="bi-person-badge"
+          routerLink="/drivers/register"
+        ></gs-buttons>
+      </div>
+      <a class="view-all-link" routerLink="/rentals">{{ t('card.quickActions.viewAllRentals') }}</a>
+    </div>
+
+    <div class="dashboard-card stats-card">
+      <h3>{{ t('card.stats.title') }}</h3>
+      <div class="stats-summary">
+        <div class="stat-item">
+          <span class="material-icons info-icon">directions_car</span>
+          <div class="value-group">
+            <span class="stat-value">{{ totalVehicles$ | async }}</span>
+            <span class="stat-label">{{ t('card.stats.totalVehicles') }}</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <span class="material-icons info-icon active-rental-icon">receipt</span>
+          <div class="value-group">
+            <span class="stat-value">{{ activeRentals$ | async }}</span>
+            <span class="stat-label">{{ t('card.stats.activeRentals') }}</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <span class="material-icons info-icon active-client-icon">people</span>
+          <div class="value-group">
+            <span class="stat-value">{{ activeClients$ | async }}</span>
+            <span class="stat-label">{{ t('card.stats.activeClients') }}</span>
+          </div>
+        </div>
+      </div>
+      <a class="view-all-link" routerLink="/vehicles">{{ t('card.stats.viewAllVehicles') }}</a>
+    </div>
+
+    <div class="dashboard-card list-card">
+      <h3>{{ t('card.pendingReturns.title') }}</h3>
+      @if ((pendingReturns$ | async)?.length; as returns) {
+        <div class="item-list">
+          @for (rental of pendingReturns$ | async; track rental.id) {
+            <div class="list-item">
+              <strong>{{ rental.vehicle.licensePlate }}</strong> -
+              <span>{{ rental.client.fullName }}</span>
+              <a [routerLink]="['/rentals/return', rental.id]" class="return-action-link">
+                <span class="material-icons">keyboard_return</span>
+              </a>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="no-data-message">{{ t('card.pendingReturns.noReturns') }}</p>
+      }
+      <a class="view-all-link" routerLink="/rentals">{{ t('card.pendingReturns.viewAll') }}</a>
+    </div>
+
+    <div class="dashboard-card list-card">
+      <h3>{{ t('card.topCoupons.title') }}</h3>
+      @if ((topCoupons$ | async)?.length) {
+        <div class="item-list">
+          @for (coupon of topCoupons$ | async; track coupon.id) {
+            <div class="list-item coupon-item">
+              <strong>{{ coupon.name }}</strong>
+              <span class="coupon-usage-count">{{
+                t('card.topCoupons.usageCount', { count: coupon.usageCount })
+              }}</span>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="no-data-message">{{ t('card.topCoupons.noCoupons') }}</p>
+      }
+      <a class="view-all-link" routerLink="/coupons/most-used">{{
+        t('card.topCoupons.viewUsageStats')
+      }}</a>
+    </div>
+  </div>
+</section>

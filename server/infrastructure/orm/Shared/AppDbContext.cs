@@ -1,6 +1,16 @@
 using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.BillingPlans;
+using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Configurations;
+using LocadoraDeAutomoveis.Domain.Coupons;
+using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
+using LocadoraDeAutomoveis.Domain.Groups;
+using LocadoraDeAutomoveis.Domain.Partners;
+using LocadoraDeAutomoveis.Domain.RentalExtras;
+using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Domain.Vehicles;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -8,15 +18,52 @@ using System.Reflection;
 
 namespace LocadoraDeAutomoveis.Infrastructure.Shared;
 
-public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvider = null)
-    : IdentityDbContext<User, Role, Guid>(options), IUnitOfWork
+public class AppDbContext(
+    DbContextOptions options,
+    ITenantProvider? tenantProvider = null
+) : IdentityDbContext<User, Role, Guid>(options), IUnitOfWork
 {
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
+    public DbSet<Employee> Employees { get; set; }
+    public DbSet<Group> Groups { get; set; }
+    public DbSet<Vehicle> Vehicles { get; set; }
+    public DbSet<BillingPlan> BillingPlans { get; set; }
+    public DbSet<Client> Clients { get; set; }
+    public DbSet<Driver> Drivers { get; set; }
+    public DbSet<RentalExtra> Extras { get; set; }
+    public DbSet<Configuration> Configurations { get; set; }
+    public DbSet<Rental> Rentals { get; set; }
+    public DbSet<RentalReturn> RentalReturns { get; set; }
+    public DbSet<Partner> Partners { get; set; }
+    public DbSet<Coupon> Coupons { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         if (tenantProvider is not null)
         {
             modelBuilder.Entity<Employee>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<Group>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<Vehicle>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<BillingPlan>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<Client>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<Driver>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<RentalExtra>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<Configuration>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<Rental>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<RentalReturn>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<Partner>()
+                .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
+            modelBuilder.Entity<Coupon>()
                 .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
         }
 
@@ -27,7 +74,10 @@ public class AppDbContext(DbContextOptions options, ITenantProvider? tenantProvi
         base.OnModelCreating(modelBuilder);
     }
 
-    public async Task CommitAsync() => await SaveChangesAsync();
+    public async Task CommitAsync()
+    {
+        await SaveChangesAsync();
+    }
 
     public async Task RollbackAsync()
     {

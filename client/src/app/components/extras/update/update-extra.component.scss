@@ -1,0 +1,74 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/form-layout' as *;
+
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $primary;
+  margin: 1.5rem 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background-color: $primary;
+    border-radius: 2px;
+    display: inline-block;
+  }
+}
+
+.card-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  @media (min-width: 600px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background-color: $surface-alt;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: all $transition-fast;
+
+  &:hover {
+    border-color: $primary;
+    background-color: rgba($primary, 0.05);
+  }
+
+  input[type='checkbox'] {
+    width: 20px;
+    height: 20px;
+    accent-color: $primary;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  label {
+    margin: 0;
+    font-weight: 600;
+    color: $text-main;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  .small-info {
+    width: 100%;
+    font-size: 0.85rem;
+    color: $text-muted;
+    margin-top: 4px;
+    padding-left: 32px;
+  }
+}

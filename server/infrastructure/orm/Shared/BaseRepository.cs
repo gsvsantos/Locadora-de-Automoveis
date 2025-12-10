@@ -7,9 +7,15 @@ public class BaseRepository<T>(AppDbContext context) where T : BaseEntity<T>
 {
     protected readonly DbSet<T> records = context.Set<T>();
 
-    public async Task AddAsync(T newEntity) => await this.records.AddAsync(newEntity);
+    public async Task AddAsync(T newEntity)
+    {
+        await this.records.AddAsync(newEntity);
+    }
 
-    public async Task AddMultiplyAsync(IList<T> entities) => await this.records.AddRangeAsync(entities);
+    public async Task AddMultiplyAsync(IList<T> entities)
+    {
+        await this.records.AddRangeAsync(entities);
+    }
 
     public async Task<bool> UpdateAsync(Guid entityId, T updatedEntity)
     {
@@ -39,9 +45,28 @@ public class BaseRepository<T>(AppDbContext context) where T : BaseEntity<T>
         return true;
     }
 
-    public virtual async Task<List<T>> GetAllAsync() => await this.records.ToListAsync();
+    public virtual async Task<List<T>> GetAllAsync()
+    {
+        return await this.records.Include(x => x.User).ToListAsync();
+    }
 
-    public virtual async Task<List<T>> GetAllAsync(int quantity) => await this.records.Take(quantity).ToListAsync();
+    public virtual async Task<List<T>> GetAllAsync(int quantity)
+    {
+        return await this.records.Include(x => x.User).Take(quantity).ToListAsync();
+    }
 
-    public virtual async Task<T?> GetByIdAsync(Guid entityId) => await this.records.FirstOrDefaultAsync(x => x.Id.Equals(entityId));
+    public virtual async Task<List<T>> GetAllAsync(bool isActive)
+    {
+        return await this.records.Include(x => x.User).Where(e => e.IsActive == isActive).ToListAsync();
+    }
+
+    public virtual async Task<List<T>> GetAllAsync(int quantity, bool isActive)
+    {
+        return await this.records.Include(x => x.User).Take(quantity).Where(e => e.IsActive == isActive).ToListAsync();
+    }
+
+    public virtual async Task<T?> GetByIdAsync(Guid entityId)
+    {
+        return await this.records.Include(x => x.User).FirstOrDefaultAsync(x => x.Id.Equals(entityId));
+    }
 }

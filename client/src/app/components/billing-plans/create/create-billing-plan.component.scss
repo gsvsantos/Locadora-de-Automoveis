@@ -1,0 +1,49 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/form-layout' as *;
+
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $primary;
+  margin: 1.5rem 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background-color: $primary;
+    border-radius: 2px;
+    display: inline-block;
+  }
+}
+
+div[formGroupName] {
+  background-color: $surface-alt;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba($border, 0.5);
+  margin-bottom: 1.5rem;
+
+  h3 {
+    margin-top: 0;
+  }
+}
+
+div[formGroupName] {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  @media (min-width: 600px) {
+    grid-template-columns: 1fr 1fr;
+
+    .form-field:only-of-type {
+      grid-column: 1 / 2;
+    }
+  }
+}

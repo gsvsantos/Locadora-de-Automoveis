@@ -1,0 +1,94 @@
+<section class="delete-section" *transloco="let t; prefix: 'billingPlans.delete'">
+  <div class="main-content">
+    <div class="card">
+      <form class="form" (ngSubmit)="delete()">
+        <h2>{{ t('card.title') }}</h2>
+        <hr class="bar" />
+        <div class="card-content">
+          <span>{{ t('card.subtitle') }}</span>
+
+          <h3 class="warning-text">{{ t('card.section.warning') }}</h3>
+
+          @if (billingPlan$ | async; as plan) {
+            <div class="details-section">
+              <h3>{{ t('card.section.details') }}</h3>
+              <p>
+                <strong>{{ t('card.label.name') }}: </strong>
+                <span>{{ plan.group.name }}</span>
+              </p>
+
+              @if (plan.dailyBilling) {
+                <div class="info-group">
+                  <h5>{{ t('card.section.daily') }}</h5>
+                  <p>
+                    <strong>{{ t('card.label.dailyRate') }}: </strong>
+                    <span>{{
+                      plan.dailyBilling.dailyRate | currency: 'BRL' : 'symbol' : '1.2-2'
+                    }}</span>
+                  </p>
+                  <p>
+                    <strong>{{ t('card.label.pricePerKm') }}: </strong>
+                    <span
+                      >{{
+                        plan.dailyBilling.pricePerKm | currency: 'BRL' : 'symbol' : '1.2-2'
+                      }}/km</span
+                    >
+                  </p>
+                </div>
+              }
+
+              @if (plan.controlledBilling) {
+                <div class="info-group">
+                  <h5>{{ t('card.section.controlled') }}</h5>
+                  <p>
+                    <strong>{{ t('card.label.dailyRate') }}: </strong>
+                    <span>{{
+                      plan.controlledBilling.dailyRate | currency: 'BRL' : 'symbol' : '1.2-2'
+                    }}</span>
+                  </p>
+                  <p>
+                    <strong>{{ t('card.label.pricePerKmExtrapolated') }}: </strong>
+                    <span
+                      >{{
+                        plan.controlledBilling.pricePerKmExtrapolated
+                          | currency: 'BRL' : 'symbol' : '1.2-2'
+                      }}/km</span
+                    >
+                  </p>
+                </div>
+              }
+
+              @if (plan.freeBilling) {
+                <div class="info-group">
+                  <h5>{{ t('card.section.free') }}</h5>
+                  <p>
+                    <strong>{{ t('card.label.fixedRate') }}: </strong>
+                    <span>{{
+                      plan.freeBilling.fixedRate | currency: 'BRL' : 'symbol' : '1.2-2'
+                    }}</span>
+                  </p>
+                </div>
+              }
+            </div>
+          }
+        </div>
+        <div class="buttons">
+          <gs-buttons
+            [buttonType]="buttonType.Link"
+            [text]="t('card.buttons.back')"
+            routerLink="/billing-plans"
+          ></gs-buttons>
+
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('card.buttons.confirm')"
+            type="submit"
+            color="#ff7675"
+            hoverColor="#e45757"
+            (click)="delete()"
+          ></gs-buttons>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

@@ -13,24 +13,25 @@ public class EmployeeMapper : IEntityTypeConfiguration<Employee>
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.FullName)
+            .HasMaxLength(255)
             .IsRequired();
 
         builder.Property(e => e.AdmissionDate)
             .IsRequired();
 
         builder.Property(e => e.Salary)
-               .HasPrecision(18, 2);
+            .HasPrecision(18, 2);
 
         builder.HasOne(t => t.Tenant)
-               .WithMany()
-               .HasForeignKey(t => t.TenantId)
-               .OnDelete(DeleteBehavior.Restrict);
+            .WithMany()
+            .HasForeignKey(t => t.TenantId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(u => u.User)
-               .WithOne()
-               .HasForeignKey<Employee>(e => e.UserId)
-               .OnDelete(DeleteBehavior.Restrict);
+            .WithMany()
+            .HasForeignKey(e => e.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasIndex(f => new { f.UserId, f.IsActive });
+        builder.HasIndex(f => new { f.TenantId, f.UserId, f.IsActive });
     }
 }

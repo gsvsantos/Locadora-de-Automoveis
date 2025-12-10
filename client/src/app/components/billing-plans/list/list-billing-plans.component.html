@@ -1,0 +1,113 @@
+<section class="list-section" *transloco="let t; prefix: 'billingPlans.list'">
+  <div class="main-content">
+    <h2>{{ t('header.title') }}</h2>
+
+    <div class="items-container">
+      <gs-buttons
+        [buttonType]="buttonType.Link"
+        [text]="t('buttons.register')"
+        bootstrapIcon="bi-plus-circle"
+        [target]="targetType.SameTab"
+        [variant]="variantType.Outline"
+        routerLink="register"
+      ></gs-buttons>
+      <div class="header-actions">
+        @if (showingInactive$ | async; as state) {
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="state.isInactive ? t('buttons.seeActives') : t('buttons.seeInactives')"
+            (click)="toggleFilter(state.isInactive)"
+          ></gs-buttons>
+        }
+      </div>
+    </div>
+
+    <hr class="bar" />
+
+    <div class="list">
+      @for (plan of billingPlans$ | async; track plan.id) {
+        <div class="item">
+          <div class="card" tabindex="0">
+            <div class="card__header">
+              <h4>{{ t('card.groupName') }}</h4>
+              <div class="card_title">{{ plan.group.name | titlecase }}</div>
+            </div>
+
+            <div class="card__content">
+              @if (plan.dailyBilling) {
+                <div class="info-group">
+                  <h4>{{ t('type.daily') }}</h4>
+                  <div class="info-row">
+                    <span class="material-icons">attach_money</span>
+                    <span
+                      >{{ t('label.dailyRate') }}:
+                      {{ plan.dailyBilling.dailyRate | currency: 'BRL' : 'symbol' : '1.2-2' }}</span
+                    >
+                  </div>
+                  <div class="info-row">
+                    <span class="material-icons">speed</span>
+                    <span
+                      >{{ t('label.pricePerKm') }}:
+                      {{
+                        plan.dailyBilling.pricePerKm | currency: 'BRL' : 'symbol' : '1.2-2'
+                      }}/km</span
+                    >
+                  </div>
+                </div>
+              }
+
+              @if (plan.controlledBilling) {
+                <div class="info-group">
+                  <h4>{{ t('type.controlled') }}</h4>
+                  <div class="info-row">
+                    <span class="material-icons">attach_money</span>
+                    <span
+                      >{{ t('label.dailyRate') }}:
+                      {{
+                        plan.controlledBilling.dailyRate | currency: 'BRL' : 'symbol' : '1.2-2'
+                      }}</span
+                    >
+                  </div>
+                  <div class="info-row">
+                    <span class="material-icons">directions_run</span>
+                    <span
+                      >{{ t('label.pricePerKmExtrapolated') }}:
+                      {{
+                        plan.controlledBilling.pricePerKmExtrapolated
+                          | currency: 'BRL' : 'symbol' : '1.2-2'
+                      }}/km</span
+                    >
+                  </div>
+                </div>
+              }
+
+              @if (plan.freeBilling) {
+                <div class="info-group">
+                  <h4>{{ t('type.free') }}</h4>
+                  <div class="info-row">
+                    <span class="material-icons">lock_open</span>
+                    <span
+                      >{{ t('label.fixedRate') }}:
+                      {{ plan.freeBilling.fixedRate | currency: 'BRL' : 'symbol' : '1.2-2' }}</span
+                    >
+                  </div>
+                </div>
+              }
+            </div>
+
+            @if (plan.isActive) {
+              <div class="card__actions" align="end">
+                <a [routerLink]="['edit', plan.id]">
+                  <span class="material-icons">edit</span>
+                </a>
+                <a class="button button__danger" [routerLink]="['delete', plan.id]">
+                  <span class="material-icons">delete</span>
+                </a>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

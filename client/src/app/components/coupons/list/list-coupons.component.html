@@ -1,0 +1,86 @@
+<section class="list-section" *transloco="let t; prefix: 'coupons.list'">
+  <div class="main-content">
+    <h2>{{ t('header.title') }}</h2>
+
+    <div class="items-container">
+      <gs-buttons
+        [buttonType]="buttonType.Link"
+        [text]="t('buttons.register')"
+        bootstrapIcon="bi-plus-circle"
+        [target]="targetType.SameTab"
+        [variant]="variantType.Outline"
+        routerLink="/coupons/register"
+      ></gs-buttons>
+      <div class="header-actions">
+        @if (showingInactive$ | async; as state) {
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="state.isInactive ? t('buttons.seeActives') : t('buttons.seeInactives')"
+            (click)="toggleFilter(state.isInactive)"
+          ></gs-buttons>
+        }
+      </div>
+      <gs-buttons
+        [buttonType]="buttonType.Link"
+        [text]="t('buttons.seeMostUsed')"
+        bootstrapIcon="bi-list"
+        [target]="targetType.SameTab"
+        [variant]="variantType.Outline"
+        routerLink="most-used"
+      ></gs-buttons>
+    </div>
+
+    <hr class="bar" />
+
+    <div class="list">
+      @for (coupon of coupons$ | async; track coupon.id) {
+        <div class="item">
+          <div class="card" tabindex="0">
+            <div class="card__header">
+              <div class="card_title">{{ coupon.name | titlecase }}</div>
+            </div>
+
+            <div class="card__content">
+              <div class="info-row">
+                <span class="material-icons">discount</span>
+                <span
+                  >{{ t('label.discountValue') }}:
+                  {{ coupon.discountValue | currency: 'BRL' : 'symbol' : '1.2-2' }}</span
+                >
+              </div>
+
+              <div class="info-row">
+                <span class="material-icons">event_busy</span>
+                <span
+                  >{{ t('label.expirationDate') }}:
+                  {{ coupon.expirationDate | date: 'dd/MM/yyyy' }}</span
+                >
+              </div>
+
+              <div class="info-row">
+                <span class="material-icons">{{
+                  coupon.isActive ? 'check_circle' : 'cancel'
+                }}</span>
+                <span
+                  >{{ t('label.status') }}:
+                  {{ coupon.isActive ? t('status.active') : t('status.inactive') }}</span
+                >
+              </div>
+            </div>
+
+            @if (coupon.isActive) {
+              <div class="card__actions" align="end">
+                <a [routerLink]="['edit', coupon.id]">
+                  <span class="material-icons">edit</span>
+                </a>
+                <a class="button button__danger" [routerLink]="['delete', coupon.id]">
+                  <span class="material-icons">delete</span>
+                </a>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

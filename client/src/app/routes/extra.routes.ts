@@ -1,0 +1,29 @@
+import { Routes } from '@angular/router';
+import { ListExtrasComponent } from '../components/extras/list/list-extras.component';
+import { extraDetailsResolver, listExtrasResolver } from '../resolvers/extra.resolvers';
+import { CreateExtraComponent } from '../components/extras/create/create-extra.component';
+import { UpdateExtraComponent } from '../components/extras/update/update-extra.component';
+import { DeleteExtraComponent } from '../components/extras/delete/delete-extra.component';
+
+export const extraRoutes: Routes = [
+  {
+    path: '',
+    component: ListExtrasComponent,
+    resolve: { extras: listExtrasResolver },
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+  },
+  {
+    path: 'register',
+    component: CreateExtraComponent,
+  },
+  {
+    path: 'edit/:id',
+    component: UpdateExtraComponent,
+    resolve: { extra: extraDetailsResolver },
+  },
+  {
+    path: 'delete/:id',
+    component: DeleteExtraComponent,
+    resolve: { extra: extraDetailsResolver },
+  },
+];

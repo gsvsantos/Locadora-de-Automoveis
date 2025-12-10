@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Application.Auth.DTOs;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Configurations;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -11,12 +12,14 @@ namespace LocadoraDeAutomoveis.Application.Auth.Commands.Register;
 
 public class RegisterUserRequestHandler(
     UserManager<User> userManager,
+    IRepositoryConfiguration repositoryConfiguration,
     ITokenProvider tokenProvider,
+    IRefreshTokenProvider refreshTokenProvider,
     IUnitOfWork unitOfWork,
     ILogger<RegisterUserRequestHandler> logger
-) : IRequestHandler<RegisterUserRequest, Result<TokenResponse>>
+) : IRequestHandler<RegisterUserRequest, Result<(AccessToken, RefreshToken)>>
 {
-    public async Task<Result<TokenResponse>> Handle(
+    public async Task<Result<(AccessToken, RefreshToken)>> Handle(
         RegisterUserRequest request, CancellationToken cancellationToken)
     {
         User user = new()
@@ -27,11 +30,11 @@ public class RegisterUserRequestHandler(
             PhoneNumber = request.PhoneNumber
         };
 
-        IdentityResult usuarioResult = await userManager.CreateAsync(user, request.Password);
+        IdentityResult userResult = await userManager.CreateAsync(user, request.Password);
 
-        if (!usuarioResult.Succeeded)
+        if (!userResult.Succeeded)
         {
-            IEnumerable<string> erros = usuarioResult
+            IEnumerable<string> erros = userResult
                 .Errors
                 .Select(failure => failure.Description)
                 .ToList();
@@ -43,18 +46,39 @@ public class RegisterUserRequestHandler(
 
         try
         {
+            user.AssociateTenant(user.Id);
+
             await userManager.AddToRoleAsync(user, "Admin");
 
-            TokenResponse? accessToken = await tokenProvider.GenerateAccessToken(user) as TokenResponse;
+            await userManager.UpdateAsync(user);
 
-            if (accessToken == null)
+            Configuration configutarion = new();
+            configutarion.AssociateTenant(user.Id);
+            configutarion.AssociateUser(user);
+            await repositoryConfiguration.AddAsync(configutarion);
+
+            AccessToken? accessToken = await tokenProvider.GenerateAccessToken(user) as AccessToken;
+
+            if (accessToken is null)
             {
-                await unitOfWork.RollbackAsync();
-
-                return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token.")));
+                return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token. Try again!")));
             }
 
-            return Result.Ok(accessToken);
+            Result<RefreshToken> refreshTokenResult = await refreshTokenProvider.GenerateRefreshTokenAsync(user);
+
+            if (refreshTokenResult.IsFailed)
+            {
+                return Result.Fail(ErrorResults.InternalServerError(refreshTokenResult.Errors));
+            }
+
+            RefreshToken? refreshToken = refreshTokenResult.Value;
+
+            if (refreshToken is null)
+            {
+                return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token. Try again!")));
+            }
+
+            return Result.Ok((accessToken, refreshToken));
         }
         catch (Exception ex)
         {

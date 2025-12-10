@@ -1,0 +1,49 @@
+<section class="create-section" *transloco="let t; prefix: 'group.create'">
+  <div class="main-content">
+    <div class="card">
+      <form [formGroup]="formGroup" class="form" (ngSubmit)="register()">
+        <h2>{{ t('card.title') }}</h2>
+
+        <hr class="bar" />
+
+        <div class="card-content">
+          <span class="full-width">{{ t('card.subtitle') }}</span>
+
+          <h3 class="full-width">{{ t('card.section.identification') }}</h3>
+          <div class="form-field full-width">
+            <label>{{ t('card.label.name') }}</label>
+            <input
+              class="form-input"
+              formControlName="name"
+              type="text"
+              [placeholder]="t('card.placeholder.name')"
+              autocomplete="off"
+            />
+            @if (name?.errors?.['required'] && name?.dirty) {
+              <span class="error-message">{{ t('card.errors.nameRequired') }}</span>
+            }
+            @if (name?.errors?.['minlength'] && name?.dirty) {
+              <span class="error-message">{{ t('card.errors.nameLength') }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="buttons">
+          <gs-buttons
+            [buttonType]="buttonType.Link"
+            [text]="t('card.buttons.back')"
+            routerLink="/groups"
+          ></gs-buttons>
+
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('card.buttons.confirm')"
+            type="submit"
+            [disabled]="formGroup.invalid"
+            (click)="register()"
+          ></gs-buttons>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

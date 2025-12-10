@@ -1,0 +1,8 @@
+﻿using LocadoraDeAutomoveis.Domain.Shared;
+
+namespace LocadoraDeAutomoveis.Domain.Configurations;
+
+public interface IRepositoryConfiguration : IRepository<Configuration>
+{
+    Task<Configuration?> GetByTenantId(Guid tenantId);
+}

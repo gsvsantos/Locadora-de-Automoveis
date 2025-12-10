@@ -1,0 +1,51 @@
+<section class="update-section" *transloco="let t; prefix: 'partners.update'">
+  <div class="main-content">
+    @if (partner$ | async) {
+      <div class="card">
+        <form [formGroup]="formGroup" class="form" (ngSubmit)="update()">
+          <h2>{{ t('card.title') }}</h2>
+
+          <hr class="bar" />
+
+          <div class="card-content">
+            <span class="full-width">{{ t('card.subtitle') }}</span>
+
+            <h3 class="full-width">{{ t('card.section.identification') }}</h3>
+            <div class="form-field full-width">
+              <label>{{ t('card.label.fullName') }}</label>
+              <input
+                class="form-input"
+                formControlName="fullName"
+                type="text"
+                [placeholder]="t('card.placeholder.fullName')"
+                autocomplete="name"
+              />
+              @if (fullName?.errors?.['required'] && fullName?.dirty) {
+                <span class="error-message">{{ t('card.errors.fullNameRequired') }}</span>
+              }
+              @if (fullName?.errors?.['minlength'] && fullName?.dirty) {
+                <span class="error-message">{{ t('card.errors.fullNameLength') }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="buttons">
+            <gs-buttons
+              [buttonType]="buttonType.Link"
+              [text]="t('card.buttons.back')"
+              routerLink="/partners"
+            ></gs-buttons>
+
+            <gs-buttons
+              [buttonType]="buttonType.Default"
+              [text]="t('card.buttons.confirm')"
+              type="submit"
+              [disabled]="formGroup.invalid"
+              (click)="update()"
+            ></gs-buttons>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+</section>

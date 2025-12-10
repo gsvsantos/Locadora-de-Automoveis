@@ -1,6 +1,8 @@
 ﻿using LocadoraDeAutomoveis.Application.Auth.Services;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
+using LocadoraDeAutomoveis.WebApi.Jobs;
+using LocadoraDeAutomoveis.WebApi.Services;
 using LocadoraDeAutomoveis.WebAPI.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -12,12 +14,16 @@ namespace LocadoraDeAutomoveis.WebAPI;
 
 public static class AuthDependencyInjection
 {
-    public static void ConfigureIdentityProviders(this IServiceCollection services)
+    public static IServiceCollection ConfigureIdentityProviders(this IServiceCollection services)
     {
         services.AddHttpContextAccessor();
 
         services.AddScoped<ITenantProvider, IdentityTenantProvider>();
+        services.AddScoped<IUserContext, IdentityTenantProvider>();
         services.AddScoped<ITokenProvider, JwtProvider>();
+        services.AddScoped<IRefreshTokenProvider, RefreshTokenProvider>();
+        services.AddScoped<IRefreshTokenCookieService, RefreshTokenCookieService>();
+        services.AddScoped<RefreshTokenCleanupJob>();
 
         services.AddIdentity<User, Role>(options =>
             {
@@ -31,9 +37,11 @@ public static class AuthDependencyInjection
         )
         .AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
+
+        return services;
     }
 
-    public static void ConfigureJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         string? chaveAssinaturaJwt = configuration["JWT_GENERATION_KEY"]
             ?? throw new ArgumentException("The environment variable \"JWT_GENERATION_KEY\" was not provided.");
@@ -94,5 +102,16 @@ public static class AuthDependencyInjection
             .AddPolicy("AdminPolicy", p => p.RequireRole("Admin"))
             .AddPolicy("EmployeePolicy", p => p.RequireRole("Employee"))
             .AddPolicy("AdminOrEmployeePolicy", p => p.RequireRole("Admin", "Employee"));
+
+        return services;
+    }
+
+    public static IServiceCollection ConfigureRefreshTokenOptions(this IServiceCollection services, IConfiguration configuration)
+    {
+        RefreshTokenOptions refreshTokenOptions = new();
+        configuration.GetSection("RefreshTokenOptions").Bind(refreshTokenOptions);
+        services.AddSingleton(refreshTokenOptions);
+
+        return services;
     }
 }

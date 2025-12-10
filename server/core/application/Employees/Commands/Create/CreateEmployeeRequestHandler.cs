@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
@@ -14,6 +15,7 @@ namespace LocadoraDeAutomoveis.Application.Employees.Commands.Create;
 public class CreateEmployeeRequestHandler(
     UserManager<User> userManager,
     IUnitOfWork unitOfWork,
+    IMapper mapper,
     IRepositoryEmployee repositoryEmployee,
     ITenantProvider tenantProvider,
     IValidator<Employee> validator,
@@ -23,13 +25,7 @@ public class CreateEmployeeRequestHandler(
     public async Task<Result<CreateEmployeeResponse>> Handle(
         CreateEmployeeRequest request, CancellationToken cancellationToken)
     {
-        User user = new()
-        {
-            UserName = request.UserName,
-            FullName = request.FullName,
-            Email = request.Email,
-            PhoneNumber = request.PhoneNumber
-        };
+        User user = mapper.Map<User>(request);
 
         try
         {
@@ -48,13 +44,7 @@ public class CreateEmployeeRequestHandler(
             }
             await userManager.AddToRoleAsync(user, "Employee");
 
-            Employee employee = new()
-            {
-                Id = user.Id,
-                FullName = request.FullName,
-                AdmissionDate = request.AdmissionDate,
-                Salary = request.Salary
-            };
+            Employee employee = mapper.Map<Employee>(request);
 
             ValidationResult validationResult = await validator.ValidateAsync(employee, cancellationToken);
 
@@ -73,6 +63,9 @@ public class CreateEmployeeRequestHandler(
             {
                 return Result.Fail(EmployeeErrorResults.DuplicateNameError(request.FullName));
             }
+
+            user.AssociateTenant(tenantProvider.GetTenantId());
+
             employee.AssociateUser(user);
 
             employee.AssociateTenant(tenantProvider.GetTenantId());

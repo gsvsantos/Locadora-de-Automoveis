@@ -3,5 +3,8 @@
 public interface ITenantProvider
 {
     Guid? TenantId { get; }
-    Guid GetTenantId() => this.TenantId.GetValueOrDefault();
+    Guid GetTenantId()
+    {
+        return this.TenantId.GetValueOrDefault();
+    }
 }
