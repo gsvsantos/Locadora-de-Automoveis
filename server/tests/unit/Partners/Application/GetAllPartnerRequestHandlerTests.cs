@@ -35,7 +35,7 @@ public sealed class GetAllPartnerRequestHandlerTests : UnitTestBase
         List<Partner> partners = Builder<Partner>.CreateListOfSize(10).Build().ToList();
 
         this.repositoryPartnerMock
-            .Setup(r => r.GetAllAsync())
+            .Setup(r => r.GetAllAsync(true))
             .ReturnsAsync(partners);
 
         GetAllPartnerRequest request = new(null, null);

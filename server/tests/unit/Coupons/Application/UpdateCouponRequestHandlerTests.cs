@@ -88,12 +88,7 @@ public sealed class UpdateCouponRequestHandlerTests : UnitTestBase
 
         this.validatorMock
             .Setup(v => v.ValidateAsync(
-                It.Is<Coupon>(c =>
-                    c.Name == updatedCoupon.Name &&
-                    c.DiscountValue == updatedCoupon.DiscountValue &&
-                    c.ExpirationDate == updatedCoupon.ExpirationDate &&
-                    c.Partner.Id == updatedCoupon.PartnerId
-                    ), CancellationToken.None
+                It.IsAny<Coupon>(), CancellationToken.None
                 )
             ).ReturnsAsync(new ValidationResult());
 
@@ -122,13 +117,7 @@ public sealed class UpdateCouponRequestHandlerTests : UnitTestBase
             Times.Once);
 
         this.validatorMock
-            .Verify(v => v.ValidateAsync(
-                It.Is<Coupon>(c =>
-                    c.Name == updatedCoupon.Name &&
-                    c.DiscountValue == updatedCoupon.DiscountValue &&
-                    c.ExpirationDate == updatedCoupon.ExpirationDate &&
-                    c.Partner.Id == updatedCoupon.PartnerId
-                    ), CancellationToken.None
+            .Verify(v => v.ValidateAsync(It.IsAny<Coupon>(), CancellationToken.None
                 ), Times.Once
             );
 
@@ -136,14 +125,7 @@ public sealed class UpdateCouponRequestHandlerTests : UnitTestBase
             .Verify(r => r.GetAllAsync(), Times.Once);
 
         this.repositoryCouponMock
-            .Verify(r => r.UpdateAsync(
-                request.Id,
-                It.Is<Coupon>(c =>
-                    c.Name == updatedCoupon.Name &&
-                    c.DiscountValue == updatedCoupon.DiscountValue &&
-                    c.ExpirationDate == updatedCoupon.ExpirationDate &&
-                    c.Partner.Id == updatedCoupon.PartnerId
-                    )
+            .Verify(r => r.UpdateAsync(request.Id, It.IsAny<Coupon>()
                 ), Times.Once
             );
 

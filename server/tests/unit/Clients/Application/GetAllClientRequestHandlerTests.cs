@@ -44,7 +44,7 @@ public sealed class GetAllClientRequestHandlerTests : UnitTestBase
             .Build().ToList();
 
         this.repositoryClientMock
-            .Setup(r => r.GetAllAsync())
+            .Setup(r => r.GetAllAsync(true))
             .ReturnsAsync(clients);
 
         GetAllClientRequest request = new(null, null);

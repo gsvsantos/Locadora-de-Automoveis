@@ -39,7 +39,7 @@ public sealed class GetAllRentalExtraRequestHandlerTests : UnitTestBase
             .Build().ToList();
 
         this.repositoryRentalExtraMock
-            .Setup(r => r.GetAllAsync())
+            .Setup(r => r.GetAllAsync(true))
             .ReturnsAsync(rentalExtras);
 
         GetAllRentalExtraRequest request = new(null, null);
