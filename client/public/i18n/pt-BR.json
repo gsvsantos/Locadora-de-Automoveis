@@ -12,6 +12,9 @@
         "errors": {
           "usernameRequired": "O nome de usuário é obrigatório.",
           "usernameLength": "O nome de usuário deve ter pelo menos 3 caracteres.",
+          "fullnameRequired": "Nome completo é obrigatório.",
+          "fullnameLength": "Nome completo deve ter no mínimo 3 caracteres.",
+          "fullnamePattern": "Nome completo contém caracteres inválidos.",
           "emailRequired": "O e-mail é obrigatório.",
           "emailLength": "Deve ser um e-mail válido (ex.: nome@provedor.com).",
           "phonenumberRequired": "O número de telefone é obrigatório.",
