@@ -50,7 +50,7 @@ public class CouponProfile : Profile
                 src.ExpirationDate
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<Coupon>, GetAllCouponResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllCouponResponse(
                 src.Count,

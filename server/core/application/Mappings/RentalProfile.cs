@@ -147,7 +147,7 @@ public class RentalProfile : Profile
                 src.StartKm
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<Rental>, GetAllRentalResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllRentalResponse(
                 src.Count,

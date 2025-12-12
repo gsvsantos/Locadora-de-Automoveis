@@ -83,7 +83,7 @@ public class ClientProfile : Profile
                 src.a
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<Client>, GetAllClientResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllClientResponse(
                 src.Count,

@@ -42,7 +42,7 @@ public class GroupProfile : Profile
                 src.Name
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<Group>, GetAllGroupResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllGroupResponse(
                 src.Count,

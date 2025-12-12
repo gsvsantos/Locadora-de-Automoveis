@@ -65,7 +65,7 @@ public class EmployeeProfile : Profile
                 src.Salary
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<Employee>, GetAllEmployeeResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllEmployeeResponse(
                 src.Count,

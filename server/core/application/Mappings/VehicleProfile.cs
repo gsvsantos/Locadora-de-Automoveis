@@ -73,7 +73,7 @@ public class VehicleProfile : Profile
                 src.PhotoPath ?? "path not found"
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<Vehicle>, GetAllVehicleResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllVehicleResponse(
                 src.Count,

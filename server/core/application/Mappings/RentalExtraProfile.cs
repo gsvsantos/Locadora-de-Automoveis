@@ -49,7 +49,7 @@ public class RentalExtraProfile : Profile
                 src.Price
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<RentalExtra>, GetAllRentalExtraResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllRentalExtraResponse(
                 src.Count,

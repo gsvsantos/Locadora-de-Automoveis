@@ -62,7 +62,7 @@ public class DriverProfile : Profile
                 src.a
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<Driver>, GetAllDriverResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllDriverResponse(
                 src.Count,
