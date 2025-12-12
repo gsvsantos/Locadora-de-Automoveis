@@ -3,6 +3,7 @@ using Google.Apis.Auth;
 using LocadoraDeAutomoveis.Application.Auth.DTOs;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Configurations;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ namespace LocadoraDeAutomoveis.Application.Auth.Commands.LoginGoogle;
 
 public class LoginWithGoogleRequestHandler(
     UserManager<User> userManager,
+    IRepositoryConfiguration repositoryConfiguration,
     ITokenProvider tokenProvider,
     IRefreshTokenProvider refreshTokenProvider,
     IConfiguration configuration
@@ -46,6 +48,11 @@ public class LoginWithGoogleRequestHandler(
 
                 await userManager.AddToRoleAsync(user, "Admin");
                 await userManager.UpdateAsync(user);
+
+                Configuration configutarion = new();
+                configutarion.AssociateTenant(user.Id);
+                configutarion.AssociateUser(user);
+                await repositoryConfiguration.AddAsync(configutarion);
 
                 if (!userResult.Succeeded)
                 {

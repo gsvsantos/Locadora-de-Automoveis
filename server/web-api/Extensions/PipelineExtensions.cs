@@ -1,4 +1,6 @@
 using Hangfire;
+using LocadoraDeAutomoveis.WebApi.Extensions;
+using LocadoraDeAutomoveis.WebApi.Filters;
 using LocadoraDeAutomoveis.WebAPI.Configuration;
 
 namespace LocadoraDeAutomoveis.WebAPI.Extensions;
@@ -14,16 +16,20 @@ public static class PipelineExtensions
 
         app.UseGlobalExceptionHandler();
 
-        app.UseHangfireDashboard(); ;
-
         app.UseSwagger();
         app.UseSwaggerUI();
 
         app.UseExceptionHandler();
         app.UseHttpsRedirection();
         app.UseCors();
+
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.UseHangfireDashboard("/hangfire", new DashboardOptions
+        {
+            Authorization = [new HangfireDashboardPlatformAdminFilter()]
+        });
 
         app.MapControllers();
 
