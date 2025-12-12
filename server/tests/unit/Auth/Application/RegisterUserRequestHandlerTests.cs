@@ -1,6 +1,7 @@
 ﻿using LocadoraDeAutomoveis.Application.Auth.Commands.Register;
 using LocadoraDeAutomoveis.Application.Auth.DTOs;
 using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Configurations;
 using LocadoraDeAutomoveis.Domain.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Auth.Application;
@@ -18,6 +19,7 @@ public sealed class RegisterUserRequestHandlerTests
     private const string _password = "@CleberDS123!";
 
     private Mock<UserManager<User>> userManagerMock = null!;
+    private Mock<IRepositoryConfiguration> repositoryConfigurationMock = null!;
     private Mock<ITokenProvider> tokenProviderMock = null!;
     private Mock<IRefreshTokenProvider> refreshTokenMock = null!;
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
@@ -31,6 +33,7 @@ public sealed class RegisterUserRequestHandlerTests
             null!, null!, null!, null!, null!, null!, null!, null!
         );
 
+        this.repositoryConfigurationMock = new Mock<IRepositoryConfiguration>();
         this.tokenProviderMock = new Mock<ITokenProvider>();
         this.refreshTokenMock = new Mock<IRefreshTokenProvider>();
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
@@ -38,6 +41,7 @@ public sealed class RegisterUserRequestHandlerTests
 
         this.handler = new RegisterUserRequestHandler(
             this.userManagerMock.Object,
+            this.repositoryConfigurationMock.Object,
             this.tokenProviderMock.Object,
             this.refreshTokenMock.Object,
             this.unitOfWorkMock.Object,

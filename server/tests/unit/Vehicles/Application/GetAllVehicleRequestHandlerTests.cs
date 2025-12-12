@@ -38,7 +38,7 @@ public sealed class GetAllVehicleRequestHandlerTests : UnitTestBase
             .With(v => v.GroupId = groupId).Build().ToList();
 
         this.repositoryVehicleMock
-            .Setup(r => r.GetAllAsync())
+            .Setup(r => r.GetAllAsync(true))
             .ReturnsAsync(vehicles);
 
         GetAllVehicleRequest request = new(null, null, null);

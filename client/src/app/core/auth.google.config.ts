@@ -8,7 +8,7 @@ export const googleAuthConfig: AuthConfig = {
   userinfoEndpoint: 'https://openidconnect.googleapis.com/v1/userinfo',
   revocationEndpoint: 'https://oauth2.googleapis.com/revoke',
   clientId: environment.client_id,
-  redirectUri: window.location.origin + '/home',
+  redirectUri: window.location.origin,
   responseType: 'token id_token',
   scope: 'openid profile email',
   disablePKCE: true,

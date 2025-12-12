@@ -12,8 +12,13 @@
         "errors": {
           "usernameRequired": "El nombre de usuario es obligatorio.",
           "usernameLength": "El nombre de usuario debe tener al menos 3 caracteres.",
+          "fullnameRequired": "El nombre completo es obligatorio.",
+          "fullnameLength": "El nombre completo debe tener al menos 3 caracteres.",
+          "fullnamePattern": "El nombre completo contiene caracteres no válidos.",
           "emailRequired": "El correo electrónico es obligatorio.",
           "emailLength": "Debe ser un correo electrónico válido (p. ej., nombre@proveedor.com).",
+          "phonenumberRequired": "El número de teléfono es obligatorio.",
+          "phonenumberPattern": "Formato no válido. Use (XX) XXXXX-XXXX.",
           "passwordRequired": "La contraseña es obligatoria.",
           "passwordLength": "La contraseña debe tener al menos 6 caracteres."
         },

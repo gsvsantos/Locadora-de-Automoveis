@@ -42,7 +42,7 @@ public sealed class GetAllBillingPlanRequestHandlerTests : UnitTestBase
             .Build().ToList();
 
         this.repositoryBillingPlanMock
-            .Setup(r => r.GetAllAsync())
+            .Setup(r => r.GetAllAsync(true))
             .ReturnsAsync(BillingPlans);
 
         GetAllBillingPlanRequest request = new(null, null);

@@ -12,8 +12,13 @@
         "errors": {
           "usernameRequired": "Username is required.",
           "usernameLength": "Username must be at least 3 characters long.",
+          "fullnameRequired": "Full name is required.",
+          "fullnameLength": "Full name must be at least 3 characters long.",
+          "fullnamePattern": "Full name contains invalid characters.",
           "emailRequired": "Email is required.",
           "emailLength": "Must be a valid email (e.g., name@provider.com).",
+          "phonenumberRequired": "Phone number is required.",
+          "phonenumberPattern": "Invalid format. Use (XX) XXXXX-XXXX.",
           "passwordRequired": "Password is required.",
           "passwordLength": "Password must be at least 6 characters long."
         },

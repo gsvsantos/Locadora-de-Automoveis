@@ -47,7 +47,7 @@ public sealed class GetAllRentalRequestHandlerTests : UnitTestBase
             .Build().ToList();
 
         this.repositoryRentalMock
-            .Setup(r => r.GetAllAsync())
+            .Setup(r => r.GetAllAsync(true))
             .ReturnsAsync(rentals);
 
         GetAllRentalRequest request = new(null, null);

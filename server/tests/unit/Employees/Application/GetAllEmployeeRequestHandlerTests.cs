@@ -34,7 +34,7 @@ public sealed class GetAllEmployeeRequestHandlerTests : UnitTestBase
         List<Employee> employees = Builder<Employee>.CreateListOfSize(10).Build().ToList();
 
         this.repositoryEmployeeMock
-            .Setup(repo => repo.GetAllAsync())
+            .Setup(repo => repo.GetAllAsync(true))
             .ReturnsAsync(employees);
 
         GetAllEmployeeRequest request = new(null, null);

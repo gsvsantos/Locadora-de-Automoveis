@@ -37,7 +37,7 @@ public sealed class GetAllDriverRequestHandlerTests : UnitTestBase
             .Build().ToList();
 
         this.repositoryDriverMock
-            .Setup(r => r.GetAllAsync())
+            .Setup(r => r.GetAllAsync(true))
             .ReturnsAsync(drivers);
 
         GetAllDriverRequest request = new(null, null);
