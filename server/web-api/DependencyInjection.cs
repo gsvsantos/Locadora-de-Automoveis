@@ -145,6 +145,8 @@ public static class DependencyInjection
                     Array.Empty<string>()
                 }
             });
+
+            options.OperationFilter<TenantOverrideHeaderOperationFilter>();
         });
     }
 

@@ -5,6 +5,7 @@ namespace LocadoraDeAutomoveis.Domain.Auth;
 public class User : IdentityUser<Guid>
 {
     public string FullName { get; set; } = string.Empty;
+    public List<string> Roles { get; set; } = [];
     public Guid AccessTokenVersionId { get; set; } = Guid.Empty;
     public Guid TenantId { get; set; }
 

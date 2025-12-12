@@ -80,11 +80,11 @@ public static class AuthDependencyInjection
             {
                 OnTokenValidated = async ctx =>
                 {
-                    string? userIdStr = ctx.Principal?.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+                    string? userIdStr = ctx.Principal?.FindFirst("user_id")?.Value;
 
                     if (!Guid.TryParse(userIdStr, out Guid usuarioId))
                     {
-                        ctx.Fail("Usuário inválido."); return;
+                        ctx.Fail("Invalid User."); return;
                     }
 
                     UserManager<User> userManager = ctx.HttpContext.RequestServices.GetRequiredService<UserManager<User>>();
@@ -92,13 +92,14 @@ public static class AuthDependencyInjection
 
                     if (user is null)
                     {
-                        ctx.Fail("Versão do Access Token inválida.");
+                        ctx.Fail("Invalid Access Token Version.");
                     }
                 }
             };
         });
 
         services.AddAuthorizationBuilder()
+            .AddPolicy("PlatformAdminPolicy", p => p.RequireRole("PlatformAdmin"))
             .AddPolicy("AdminPolicy", p => p.RequireRole("Admin"))
             .AddPolicy("EmployeePolicy", p => p.RequireRole("Employee"))
             .AddPolicy("AdminOrEmployeePolicy", p => p.RequireRole("Admin", "Employee"));

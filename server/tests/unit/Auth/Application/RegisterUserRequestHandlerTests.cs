@@ -99,7 +99,7 @@ public sealed class RegisterUserRequestHandlerTests
             UserName = user.UserName,
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
-            Role = Roles.Admin
+            Roles = [ERoles.Admin.ToString()]
         };
 
         AccessToken accessToken = new()

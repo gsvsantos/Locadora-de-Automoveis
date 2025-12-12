@@ -1,29 +1,39 @@
 ﻿using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.WebApi.Middlewares;
 using System.Security.Claims;
 
 namespace LocadoraDeAutomoveis.WebAPI.Identity;
 
 public sealed class IdentityTenantProvider(IHttpContextAccessor contextAccessor) : ITenantProvider, IUserContext
 {
+    private const string TenantOverrideKey = TenantOverrideMiddleware.TenantOverrideHeaderName;
+
     public Guid? TenantId
     {
         get
         {
-            ClaimsPrincipal? claimsPrincipal = contextAccessor.HttpContext?.User;
+            ClaimsPrincipal? user = contextAccessor.HttpContext?.User;
 
-            if (claimsPrincipal?.Identity?.IsAuthenticated != true)
+            if (user?.Identity?.IsAuthenticated != true)
             {
                 return null;
             }
 
-            Claim? claimId = claimsPrincipal.FindFirst("sub");
+            if (contextAccessor.HttpContext!.User.IsInRole("PlatformAdmin") &&
+                contextAccessor.HttpContext!.Items.TryGetValue(TenantOverrideKey, out object? value) &&
+                value is Guid overrideTenantId)
+            {
+                return overrideTenantId;
+            }
 
-            if (claimId == null)
+            Claim? tenantClaim = user.FindFirst("sub");
+
+            if (tenantClaim == null)
             {
                 return null;
             }
 
-            return TryParseGuid(claimId.Value);
+            return TryParseGuid(tenantClaim.Value);
         }
     }
 

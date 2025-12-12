@@ -41,15 +41,7 @@ public class JwtProvider : ITokenProvider
     {
         byte[] keyBytes = Encoding.ASCII.GetBytes(this.jwtKey!);
 
-        IList<string> userRoles = await this.userManager.GetRolesAsync(user);
-
-        string? domainRoleName = (
-                userRoles.Contains(nameof(Roles.Admin), StringComparer.OrdinalIgnoreCase) ? nameof(Roles.Admin) :
-                userRoles.Contains(nameof(Roles.Employee), StringComparer.OrdinalIgnoreCase) ? nameof(Roles.Employee) :
-                null)
-            ?? throw new InvalidOperationException("User has no domain role (Admin/Employee).");
-
-        Roles domainRole = Enum.Parse<Roles>(domainRoleName, true);
+        IEnumerable<string> userRoles = await this.userManager.GetRolesAsync(user);
 
         List<Claim> claims =
         [
@@ -62,10 +54,7 @@ public class JwtProvider : ITokenProvider
 
         foreach (string role in userRoles)
         {
-            if (Enum.TryParse<Roles>(role, true, out _))
-            {
-                claims.Add(new Claim("roles", role));
-            }
+            claims.Add(new Claim("roles", role));
         }
 
         SecurityTokenDescriptor tokenDescriptor = new()
@@ -96,7 +85,7 @@ public class JwtProvider : ITokenProvider
                 UserName = user.UserName ?? string.Empty,
                 Email = user.Email ?? string.Empty,
                 PhoneNumber = user.PhoneNumber ?? string.Empty,
-                Role = domainRole
+                Roles = (List<string>)userRoles
             }
         };
     }

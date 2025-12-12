@@ -1,8 +1,6 @@
 using Hangfire;
 using LocadoraDeAutomoveis.WebApi.Extensions;
 using LocadoraDeAutomoveis.WebApi.Filters;
-using LocadoraDeAutomoveis.WebApi.Extensions;
-using LocadoraDeAutomoveis.WebApi.Filters;
 using LocadoraDeAutomoveis.WebApi.Middlewares;
 using LocadoraDeAutomoveis.WebAPI.Configuration;
 
