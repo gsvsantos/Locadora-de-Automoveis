@@ -76,33 +76,6 @@
 
     <aside class="sidebar" [class.sidebar--open]="(isHandset$ | async) ? isSidebarOpen : true">
       <div class="sidebar__items">
-        @for (item of navbarItems; track $index) {
-          <a
-            class="sidebar__item-link"
-            [routerLink]="item.link"
-            routerLinkActive="sidebar__item-link--active"
-            (click)="closeSidebar()"
-          >
-            <span class="material-icons sidebar__item-icon">
-              {{ item.icon }}
-            </span>
-            <span class="sidebar__item-label">
-              {{ item.titleKey | transloco }}
-            </span>
-          </a>
-        }
-        @if (isAdmin || isPlatformAdmin) {
-          <a
-            class="sidebar__item-link"
-            routerLink="/employees"
-            routerLinkActive="sidebar__item-link--active"
-            (click)="closeSidebar()"
-          >
-            <span class="material-icons sidebar__item-icon"> person </span>
-            <span class="sidebar__item-label"> Employees </span>
-          </a>
-        }
-
         @if (isPlatformAdmin) {
           <div class="sidebar__separator">Platform</div>
           <a
@@ -114,6 +87,33 @@
             <span class="material-icons sidebar__item-icon"> domain </span>
             <span class="sidebar__item-label"> Tenants </span>
           </a>
+        } @else {
+          @for (item of navbarItems; track $index) {
+            <a
+              class="sidebar__item-link"
+              [routerLink]="item.link"
+              routerLinkActive="sidebar__item-link--active"
+              (click)="closeSidebar()"
+            >
+              <span class="material-icons sidebar__item-icon">
+                {{ item.icon }}
+              </span>
+              <span class="sidebar__item-label">
+                {{ item.titleKey | transloco }}
+              </span>
+            </a>
+          }
+          @if (isAdmin) {
+            <a
+              class="sidebar__item-link"
+              routerLink="/employees"
+              routerLinkActive="sidebar__item-link--active"
+              (click)="closeSidebar()"
+            >
+              <span class="material-icons sidebar__item-icon"> person </span>
+              <span class="sidebar__item-label"> Employees </span>
+            </a>
+          }
         }
       </div>
 
