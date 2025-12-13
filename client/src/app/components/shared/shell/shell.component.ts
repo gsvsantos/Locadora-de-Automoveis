@@ -109,10 +109,37 @@ export class ShellComponent {
   ];
 
   public openSidebar(): void {
+    console.log(this.user?.roles);
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   public closeSidebar(): void {
     this.isSidebarOpen = false;
+  }
+
+  protected getUserRole(): 'platform-admin' | 'admin' | 'employee' | 'user' {
+    const roles = this.user?.roles ?? [];
+
+    if (roles.includes('PlatformAdmin')) return 'platform-admin';
+    if (roles.includes('Admin')) return 'admin';
+    if (roles.includes('Employee')) return 'employee';
+
+    return 'user';
+  }
+
+  protected get isEmployee(): boolean {
+    return this.getUserRole() === 'employee';
+  }
+
+  protected get isAdmin(): boolean {
+    return this.getUserRole() === 'admin';
+  }
+
+  protected get isPlatformAdmin(): boolean {
+    return this.getUserRole() === 'platform-admin';
+  }
+
+  protected get isManager(): boolean {
+    return this.isAdmin || this.isPlatformAdmin;
   }
 }

@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { map, Observable, take } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
-export const AdminOnlyGuard: CanActivateFn = (): Observable<boolean> => {
+export const adminOnlyGuard: CanActivateFn = (): Observable<boolean> => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
@@ -11,7 +11,7 @@ export const AdminOnlyGuard: CanActivateFn = (): Observable<boolean> => {
     map((accessToken) => accessToken?.user),
 
     map((user) => {
-      const isAdmin = user?.role?.toLowerCase() === 'admin';
+      const isAdmin = user?.roles.find((role) => role.toLowerCase() === 'admin');
 
       if (isAdmin) {
         return true;

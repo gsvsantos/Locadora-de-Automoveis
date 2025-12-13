@@ -38,6 +38,7 @@
         },
         "errors": {
           "usernameRequired": "O nome de usuário é obrigatório.",
+          "usernameLength": "O nome de usuário deve ter pelo menos 3 caracteres.",
           "passwordRequired": "A senha é obrigatória.",
           "passwordLength": "A senha deve ter pelo menos 6 caracteres."
         },
@@ -88,6 +89,21 @@
           "noCoupons": "Nenhum dado de uso disponível.",
           "viewUsageStats": "Ver estatísticas de uso"
         }
+      }
+    }
+  },
+  "admin": {
+    "list": {
+      "header": {
+        "title": "Empresas Cadastradas"
+      },
+      "label": {
+        "unnamed": "Empresa sem nome",
+        "roles": "Nível de Acesso",
+        "adminId": "ID do Admin"
+      },
+      "buttons": {
+        "details": "Ver Detalhes"
       }
     }
   },

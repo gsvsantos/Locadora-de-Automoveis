@@ -5,33 +5,33 @@ import { CreateEmployeeComponent } from '../components/employees/create/create-e
 import { UpdateEmployeeComponent } from '../components/employees/update/update-employee.component';
 import { DeleteEmployeeComponent } from '../components/employees/delete/delete-employee.component';
 import { SelfUpdateEmployeeComponent } from '../components/employees/self-update/self-update-employee.component';
-import { AdminOnlyGuard } from '../guards/admin-only.guard';
-import { EmployeeOnlyGuard } from '../guards/employee-only.guard';
+import { adminOnlyGuard } from '../guards/admin-only.guard';
+import { employeeOnlyGuard } from '../guards/employee-only.guard';
 
 export const employeeRoutes: Routes = [
   {
     path: '',
     component: ListEmployeesComponent,
     resolve: { employees: listEmployeesResolver },
-    canActivate: [AdminOnlyGuard],
+    canActivate: [adminOnlyGuard],
     runGuardsAndResolvers: 'paramsOrQueryParamsChange',
   },
-  { path: 'register', component: CreateEmployeeComponent, canActivate: [AdminOnlyGuard] },
+  { path: 'register', component: CreateEmployeeComponent, canActivate: [adminOnlyGuard] },
   {
     path: 'edit/:id',
     component: UpdateEmployeeComponent,
     resolve: { employee: employeeDetailsResolver },
-    canActivate: [AdminOnlyGuard],
+    canActivate: [adminOnlyGuard],
   },
   {
     path: 'options/:id',
     component: SelfUpdateEmployeeComponent,
-    canActivate: [EmployeeOnlyGuard],
+    canActivate: [employeeOnlyGuard],
   },
   {
     path: 'delete/:id',
     component: DeleteEmployeeComponent,
     resolve: { employee: employeeDetailsResolver },
-    canActivate: [AdminOnlyGuard],
+    canActivate: [adminOnlyGuard],
   },
 ];

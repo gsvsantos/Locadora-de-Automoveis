@@ -1,10 +1,9 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, Observable, take } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
-export const employeeOnlyGuard: CanActivateFn = (): Observable<boolean> => {
+export const platformAdminOnlyGuard: CanActivateFn = (): Observable<boolean> => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
@@ -12,13 +11,12 @@ export const employeeOnlyGuard: CanActivateFn = (): Observable<boolean> => {
     map((accessToken) => accessToken?.user),
 
     map((user) => {
-      const isEmployee = user?.roles.find((role) => role.toLowerCase() === 'employee');
+      const isAdmin = user?.roles.find((role) => role === 'PlatformAdmin');
 
-      if (isEmployee) {
+      if (isAdmin && user?.roles.includes('PlatformAdmin')) {
         return true;
       } else {
-        void router.navigate(['/employees']);
-
+        void router.navigate(['/home']);
         return false;
       }
     }),

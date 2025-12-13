@@ -4,7 +4,8 @@
 .update-section,
 .delete-section,
 .configure-section,
-.configuration-details-section {
+.configuration-details-section,
+.self-update-section {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

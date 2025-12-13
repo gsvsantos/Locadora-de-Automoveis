@@ -5,6 +5,7 @@ import { listVehiclesResolver } from '../resolvers/vehicle.resolvers';
 import { listRentalsResolver } from '../resolvers/rental.resolvers';
 import { listClientsResolver } from '../resolvers/client.resolvers';
 import { mostUsedCouponsResolver } from '../resolvers/coupon.resolvers';
+import { platformAdminOnlyGuard } from '../guards/platform-admin-only.guard';
 
 export const routes: Routes = [
   {
@@ -85,5 +86,10 @@ export const routes: Routes = [
     path: 'coupons',
     loadChildren: () => import('../routes/coupon.routes').then((route) => route.couponRoutes),
     canActivate: [authenticatedUserGuard],
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('../routes/admin.routes').then((route) => route.adminRoutes),
+    canActivate: [platformAdminOnlyGuard],
   },
 ];

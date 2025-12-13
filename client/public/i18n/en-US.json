@@ -38,6 +38,7 @@
         },
         "errors": {
           "usernameRequired": "Username is required.",
+          "usernameLength": "Username must be at least 3 characters long.",
           "passwordRequired": "Password is required.",
           "passwordLength": "Password must be at least 6 characters long."
         },
@@ -88,6 +89,21 @@
           "noCoupons": "No usage data available.",
           "viewUsageStats": "View Usage Statistics"
         }
+      }
+    }
+  },
+  "admin": {
+    "list": {
+      "header": {
+        "title": "Registered Companies"
+      },
+      "label": {
+        "unnamed": "Unnamed Company",
+        "roles": "Access Level",
+        "adminId": "Admin ID"
+      },
+      "buttons": {
+        "details": "View Details"
       }
     }
   },

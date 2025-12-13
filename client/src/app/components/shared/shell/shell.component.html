@@ -11,7 +11,8 @@
       </button>
     }
     <div class="navbar__logo">
-      <span class="material-icons"> directions_car </span>Locadora de Automóveis
+      <span class="material-icons"> directions_car </span>
+      {{ isPlatformAdmin ? 'Locadora (Admin)' : 'Locadora de Automóveis' }}
     </div>
     <div class="navbar__spacer"></div>
     @if (!(isHandset$ | async)) {
@@ -33,7 +34,7 @@
 
       <app-language-selector></app-language-selector>
 
-      @if (user?.role !== 'Admin') {
+      @if (isEmployee) {
         <a
           class="navbar__item-link"
           routerLink="configuration/details"
@@ -80,7 +81,7 @@
             </span>
           </a>
         }
-        @if (user?.role === 'Admin') {
+        @if (isAdmin || isPlatformAdmin) {
           <a
             class="sidebar__item-link"
             routerLink="/employees"
@@ -91,9 +92,22 @@
             <span class="sidebar__item-label"> Employees </span>
           </a>
         }
+
+        @if (isPlatformAdmin) {
+          <div class="sidebar__separator">Platform</div>
+          <a
+            class="sidebar__item-link"
+            routerLink="/admin/tenants"
+            routerLinkActive="sidebar__item-link--active"
+            (click)="closeSidebar()"
+          >
+            <span class="material-icons sidebar__item-icon"> domain </span>
+            <span class="sidebar__item-label"> Tenants </span>
+          </a>
+        }
       </div>
 
-      @if (user?.role !== 'Admin') {
+      @if (isEmployee) {
         <div class="sidebar__profile">
           <a
             class="sidebar__profile-link"
@@ -101,7 +115,6 @@
             (click)="closeSidebar()"
           >
             <span class="material-icons sidebar__profile-icon">account_circle</span>
-
             <div>
               <span>{{ user?.userName }}</span>
             </div>
@@ -110,10 +123,14 @@
       } @else {
         <div class="sidebar__profile-admin">
           <div class="sidebar__profile-link-admin">
-            <span class="material-icons sidebar__profile-icon-admin">account_circle</span>
-
+            <span class="material-icons sidebar__profile-icon-admin">
+              {{ isPlatformAdmin ? 'admin_panel_settings' : 'account_circle' }}
+            </span>
             <div>
-              <span>{{ user?.userName }}</span>
+              <span class="sidebar__profile-username-admin">{{ user?.userName }}</span>
+              <span class="sidebar__profile-role-admin">
+                {{ isPlatformAdmin ? 'Platform Admin' : 'Admin' }}
+              </span>
             </div>
           </div>
         </div>

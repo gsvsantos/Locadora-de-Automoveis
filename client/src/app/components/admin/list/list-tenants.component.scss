@@ -1,0 +1,76 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/list-layout' as *; // Importa o layout padrão
+
+.card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba($border, 0.6);
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: $text-main;
+  line-height: 1.4;
+
+  .material-icons {
+    font-size: 1.2rem;
+    color: $primary;
+    opacity: 0.9;
+
+    // Bolinha de fundo padrão
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background-color: $surface-alt;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  span:last-child {
+    font-weight: 500;
+    // Garante que email longo não quebre o layout
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+}
+
+// Estilo especial para a etiqueta de Role (ex: "Admin")
+.role-badge {
+  background-color: rgba($primary, 0.1);
+  color: $primary-active;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+// Estilo para o ID (UUID)
+.uuid-text {
+  font-family: 'Roboto Mono', monospace; // Fonte de código para números
+  color: $text-muted;
+  font-size: 0.85rem;
+}
+
+.copy-icon {
+  font-size: 1rem !important; // Menorzinho
+  color: $text-muted !important;
+  background-color: transparent !important; // Sem bolinha de fundo
+  cursor: pointer;
+  margin-left: auto; // Empurra para a direita se sobrar espaço
+
+  &:hover {
+    color: $primary !important;
+  }
+}

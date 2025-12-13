@@ -14,7 +14,6 @@ import {
 import { AuthApiResponse, LoginAuthDto, RegisterAuthDto } from '../models/auth.models';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { googleAuthConfig } from '../core/auth.google.config';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +21,6 @@ import { Router } from '@angular/router';
 export class AuthService {
   private oauthService = inject(OAuthService);
   private readonly http: HttpClient = inject(HttpClient);
-  private readonly router: Router = inject(Router);
   private readonly apiUrl: string = environment.apiUrl + '/auth';
 
   private readonly accessTokenSubject$ = new BehaviorSubject<AuthApiResponse | undefined>(

@@ -38,6 +38,7 @@
         },
         "errors": {
           "usernameRequired": "El nombre de usuario es obligatorio.",
+          "usernameLength": "El nombre de usuario debe tener al menos 3 caracteres.",
           "passwordRequired": "La contraseña es obligatoria.",
           "passwordLength": "La contraseña debe tener al menos 6 caracteres."
         },
@@ -88,6 +89,21 @@
           "noCoupons": "No hay datos de uso disponibles.",
           "viewUsageStats": "Ver estadísticas de uso"
         }
+      }
+    }
+  },
+  "admin": {
+    "list": {
+      "header": {
+        "title": "Empresas Registradas"
+      },
+      "label": {
+        "unnamed": "Empresa sin nombre",
+        "roles": "Nivel de Acceso",
+        "adminId": "ID del Administrador"
+      },
+      "buttons": {
+        "details": "Ver Detalles"
       }
     }
   },
