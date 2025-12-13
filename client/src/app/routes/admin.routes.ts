@@ -11,7 +11,6 @@ export const adminRoutes: Routes = [
         component: ListTenantsComponent,
         resolve: { tenants: listTenantsResolver },
       },
-      //   { path: 'impersonate', component: ImpersonateTenantComponent },
     ],
   },
 ];

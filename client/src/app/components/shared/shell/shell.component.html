@@ -15,7 +15,7 @@
       {{ isPlatformAdmin ? 'Locadora (Admin)' : 'Locadora de Automóveis' }}
     </div>
     <div class="navbar__spacer"></div>
-    @if (!(isHandset$ | async)) {
+    @if (!(isHandset$ | async) && !isPlatformAdmin) {
       <app-multi-search></app-multi-search>
     }
     <div class="navbar__spacer"></div>
@@ -77,7 +77,6 @@
     <aside class="sidebar" [class.sidebar--open]="(isHandset$ | async) ? isSidebarOpen : true">
       <div class="sidebar__items">
         @if (isPlatformAdmin) {
-          <div class="sidebar__separator">Platform</div>
           <a
             class="sidebar__item-link"
             routerLink="/admin/tenants"

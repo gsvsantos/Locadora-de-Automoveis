@@ -1,26 +1,19 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { map, Observable, take } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
-export const platformAdminOnlyGuard: CanActivateFn = (): Observable<boolean> => {
+export const platformAdminOnlyGuard: CanActivateFn = (): Observable<true | UrlTree> => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
   return authService.getAccessToken().pipe(
-    map((accessToken) => accessToken?.user),
-
-    map((user) => {
-      const isAdmin = user?.roles.find((role) => role === 'PlatformAdmin');
-
-      if (isAdmin && user?.roles.includes('PlatformAdmin')) {
-        return true;
-      } else {
-        void router.navigate(['/home']);
-        return false;
-      }
-    }),
-
     take(1),
+    map((token) => {
+      if (!token) return router.createUrlTree(['/auth/login']);
+
+      const isPlatformAdmin = token.user.roles.includes('PlatformAdmin');
+      return isPlatformAdmin ? true : router.createUrlTree(['/home']);
+    }),
   );
 };

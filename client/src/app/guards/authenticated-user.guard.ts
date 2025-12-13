@@ -5,10 +5,20 @@ import { AuthService } from '../services/auth.service';
 
 export const authenticatedUserGuard: CanActivateFn = (): Observable<true | UrlTree> => {
   const authService = inject(AuthService);
-  const router: Router = inject(Router);
+  const router = inject(Router);
 
   return authService.getAccessToken().pipe(
     take(1),
-    map((token) => (token ? true : router.createUrlTree(['/auth/login']))),
+    map((token) => {
+      if (!token) return router.createUrlTree(['/auth/login']);
+
+      const isPlatformAdmin = token.user.roles.includes('PlatformAdmin');
+
+      if (isPlatformAdmin) {
+        return router.createUrlTree(['/admin/tenants']);
+      }
+
+      return true;
+    }),
   );
 };
