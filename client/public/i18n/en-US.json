@@ -99,8 +99,7 @@
       },
       "label": {
         "unnamed": "Unnamed Company",
-        "roles": "Access Level",
-        "adminId": "Admin ID"
+        "roles": "Access Level"
       },
       "buttons": {
         "impersonate": "Impersonate",

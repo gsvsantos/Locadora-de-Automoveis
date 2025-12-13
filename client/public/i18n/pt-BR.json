@@ -99,8 +99,7 @@
       },
       "label": {
         "unnamed": "Empresa sem nome",
-        "roles": "Nível de Acesso",
-        "adminId": "ID do Admin"
+        "roles": "Nível de Acesso"
       },
       "buttons": {
         "impersonate": "Acessar como empresa",

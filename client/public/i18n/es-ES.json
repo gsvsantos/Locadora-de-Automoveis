@@ -99,11 +99,11 @@
       },
       "label": {
         "unnamed": "Empresa sin nombre",
-        "roles": "Nivel de Acceso",
-        "adminId": "ID del Administrador"
+        "roles": "Nivel de Acceso"
       },
       "buttons": {
-        "details": "Ver Detalles"
+        "impersonate": "Acceder como empresa",
+        "deimpersonate": "Volver a PlatformAdmin"
       }
     }
   },
