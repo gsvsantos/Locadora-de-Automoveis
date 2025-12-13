@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 
-namespace LocadoraDeAutomoveis.Application.Admin.Commands;
+namespace LocadoraDeAutomoveis.Application.Admin.Commands.GetAll;
 
 public record GetAllTenantsResponse(
     int Quantity,

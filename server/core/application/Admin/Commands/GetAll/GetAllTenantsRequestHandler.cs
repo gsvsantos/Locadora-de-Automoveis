@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
-namespace LocadoraDeAutomoveis.Application.Admin.Commands;
+namespace LocadoraDeAutomoveis.Application.Admin.Commands.GetAll;
 
 public class GetAllTenantsRequestHandler(
     UserManager<User> userManager,

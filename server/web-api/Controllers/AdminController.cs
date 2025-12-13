@@ -1,5 +1,5 @@
 ﻿using FluentResults;
-using LocadoraDeAutomoveis.Application.Admin.Commands;
+using LocadoraDeAutomoveis.Application.Admin.Commands.GetAll;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

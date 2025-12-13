@@ -1,5 +1,5 @@
 @use '../../../../styles/variables' as *;
-@use '../../../../styles/list-layout' as *; // Importa o layout padrão
+@use '../../../../styles/list-layout' as *;
 
 .card__content {
   display: flex;
@@ -22,8 +22,6 @@
     font-size: 1.2rem;
     color: $primary;
     opacity: 0.9;
-
-    // Bolinha de fundo padrão
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,7 +34,6 @@
 
   span:last-child {
     font-weight: 500;
-    // Garante que email longo não quebre o layout
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -44,7 +41,6 @@
   }
 }
 
-// Estilo especial para a etiqueta de Role (ex: "Admin")
 .role-badge {
   background-color: rgba($primary, 0.1);
   color: $primary-active;
@@ -56,19 +52,19 @@
   letter-spacing: 0.05em;
 }
 
-// Estilo para o ID (UUID)
 .uuid-text {
-  font-family: 'Roboto Mono', monospace; // Fonte de código para números
+  font-family: 'Roboto Mono', monospace;
   color: $text-muted;
   font-size: 0.85rem;
 }
 
 .copy-icon {
-  font-size: 1rem !important; // Menorzinho
+  font-size: 1rem !important;
   color: $text-muted !important;
-  background-color: transparent !important; // Sem bolinha de fundo
+  background-color: transparent !important;
   cursor: pointer;
-  margin-left: auto; // Empurra para a direita se sobrar espaço
+  margin-left: auto;
+  margin-right: 4px;
 
   &:hover {
     color: $primary !important;

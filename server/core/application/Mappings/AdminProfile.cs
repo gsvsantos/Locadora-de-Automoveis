@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using LocadoraDeAutomoveis.Application.Admin.Commands;
+using LocadoraDeAutomoveis.Application.Admin.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.Auth;
 using System.Collections.Immutable;
 
