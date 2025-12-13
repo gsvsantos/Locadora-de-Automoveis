@@ -10,6 +10,7 @@ import {
   of,
   switchMap,
   tap,
+  throwError,
 } from 'rxjs';
 import { AuthApiResponse, AuthMode, LoginAuthDto, RegisterAuthDto } from '../models/auth.models';
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -93,7 +94,17 @@ export class AuthService {
   }
 
   public stopImpersonation(): Observable<AuthApiResponse> {
-    return this.refresh();
+    return this.refresh().pipe(
+      catchError((err: unknown) => {
+        if (this.platformAccessTokenSnapshot) {
+          this.authModeSubject$.next('platform');
+          this.accessTokenSubject$.next(this.platformAccessTokenSnapshot);
+          return of(this.platformAccessTokenSnapshot);
+        }
+
+        return throwError(() => err);
+      }),
+    );
   }
 
   public register(model: RegisterAuthDto): Observable<AuthApiResponse> {
@@ -133,6 +144,8 @@ export class AuthService {
   }
 
   public revokeAccessToken(): void {
+    this.platformAccessTokenSnapshot = undefined;
+    this.authModeSubject$.next('platform');
     return this.accessTokenSubject$.next(undefined);
   }
 
