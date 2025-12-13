@@ -103,7 +103,8 @@
         "adminId": "Admin ID"
       },
       "buttons": {
-        "details": "View Details"
+        "impersonate": "Impersonate",
+        "deimpersonate": "Back to PlatformAdmin"
       }
     }
   },

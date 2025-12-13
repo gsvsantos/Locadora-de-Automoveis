@@ -11,17 +11,22 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { AuthApiResponse, LoginAuthDto, RegisterAuthDto } from '../models/auth.models';
+import { AuthApiResponse, AuthMode, LoginAuthDto, RegisterAuthDto } from '../models/auth.models';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { googleAuthConfig } from '../core/auth.google.config';
+import { AdminService } from './admin.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private oauthService = inject(OAuthService);
+  private readonly oauthService = inject(OAuthService);
+  private readonly adminService = inject(AdminService);
   private readonly http: HttpClient = inject(HttpClient);
   private readonly apiUrl: string = environment.apiUrl + '/auth';
+
+  private readonly authModeSubject$ = new BehaviorSubject<AuthMode>('platform');
+  private platformAccessTokenSnapshot?: AuthApiResponse;
 
   private readonly accessTokenSubject$ = new BehaviorSubject<AuthApiResponse | undefined>(
     undefined,
@@ -64,6 +69,33 @@ export class AuthService {
     return this.accessTokenSubject$.asObservable();
   }
 
+  public getAuthMode(): Observable<AuthMode> {
+    return this.authModeSubject$.asObservable();
+  }
+
+  public isImpersonatingNow(): boolean {
+    return this.authModeSubject$.value === 'impersonated';
+  }
+
+  public startImpersonation(tenantId: string): Observable<AuthApiResponse> {
+    const currentToken: AuthApiResponse | undefined = this.accessTokenSubject$.value;
+
+    if (currentToken && !this.isImpersonatingNow()) {
+      this.platformAccessTokenSnapshot = currentToken;
+    }
+
+    return this.adminService.impersonateTenant(tenantId).pipe(
+      tap((impersonatedToken: AuthApiResponse) => {
+        this.authModeSubject$.next('impersonated');
+        this.accessTokenSubject$.next(impersonatedToken);
+      }),
+    );
+  }
+
+  public stopImpersonation(): Observable<AuthApiResponse> {
+    return this.refresh();
+  }
+
   public register(model: RegisterAuthDto): Observable<AuthApiResponse> {
     const url = `${this.apiUrl}/register`;
 
@@ -83,8 +115,15 @@ export class AuthService {
   public refresh(): Observable<AuthApiResponse> {
     const url = `${this.apiUrl}/refresh`;
 
-    return this.http.post<AuthApiResponse>(url, {});
+    return this.http.post<AuthApiResponse>(url, {}, { withCredentials: true }).pipe(
+      tap((token: AuthApiResponse) => {
+        this.platformAccessTokenSnapshot = token;
+        this.authModeSubject$.next('platform');
+        this.accessTokenSubject$.next(token);
+      }),
+    );
   }
+
   public logout(): Observable<null> {
     const urlCompleto = `${this.apiUrl}/logout`;
 

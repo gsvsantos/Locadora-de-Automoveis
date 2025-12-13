@@ -16,9 +16,9 @@ public class LoginWithGoogleRequestHandler(
     ITokenProvider tokenProvider,
     IRefreshTokenProvider refreshTokenProvider,
     IConfiguration configuration
-) : IRequestHandler<LoginWithGoogleRequest, Result<(AccessToken, RefreshToken)>>
+) : IRequestHandler<LoginWithGoogleRequest, Result<(AccessToken, IssuedRefreshTokenDto)>>
 {
-    public async Task<Result<(AccessToken, RefreshToken)>> Handle(
+    public async Task<Result<(AccessToken, IssuedRefreshTokenDto)>> Handle(
         LoginWithGoogleRequest request, CancellationToken cancellationToken)
     {
         try
@@ -67,14 +67,14 @@ public class LoginWithGoogleRequestHandler(
                 return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token. Try again!")));
             }
 
-            Result<RefreshToken> refreshTokenResult = await refreshTokenProvider.GenerateRefreshTokenAsync(user);
+            Result<IssuedRefreshTokenDto> refreshTokenResult = await refreshTokenProvider.GenerateRefreshTokenAsync(user);
 
             if (refreshTokenResult.IsFailed)
             {
                 return Result.Fail(ErrorResults.InternalServerError(refreshTokenResult.Errors));
             }
 
-            RefreshToken? refreshToken = refreshTokenResult.Value;
+            IssuedRefreshTokenDto? refreshToken = refreshTokenResult.Value;
 
             if (refreshToken is null)
             {

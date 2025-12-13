@@ -17,9 +17,9 @@ public class RegisterUserRequestHandler(
     IRefreshTokenProvider refreshTokenProvider,
     IUnitOfWork unitOfWork,
     ILogger<RegisterUserRequestHandler> logger
-) : IRequestHandler<RegisterUserRequest, Result<(AccessToken, RefreshToken)>>
+) : IRequestHandler<RegisterUserRequest, Result<(AccessToken, IssuedRefreshTokenDto)>>
 {
-    public async Task<Result<(AccessToken, RefreshToken)>> Handle(
+    public async Task<Result<(AccessToken, IssuedRefreshTokenDto)>> Handle(
         RegisterUserRequest request, CancellationToken cancellationToken)
     {
         User user = new()
@@ -64,14 +64,14 @@ public class RegisterUserRequestHandler(
                 return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token. Try again!")));
             }
 
-            Result<RefreshToken> refreshTokenResult = await refreshTokenProvider.GenerateRefreshTokenAsync(user);
+            Result<IssuedRefreshTokenDto> refreshTokenResult = await refreshTokenProvider.GenerateRefreshTokenAsync(user);
 
             if (refreshTokenResult.IsFailed)
             {
                 return Result.Fail(ErrorResults.InternalServerError(refreshTokenResult.Errors));
             }
 
-            RefreshToken? refreshToken = refreshTokenResult.Value;
+            IssuedRefreshTokenDto? refreshToken = refreshTokenResult.Value;
 
             if (refreshToken is null)
             {

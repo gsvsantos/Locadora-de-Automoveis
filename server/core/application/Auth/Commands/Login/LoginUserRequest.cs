@@ -8,4 +8,4 @@ namespace LocadoraDeAutomoveis.Application.Auth.Commands.Login;
 public record LoginUserRequest(
     string UserName,
     string Password
-) : IRequest<Result<(AccessToken AccessToken, RefreshToken RefreshToken)>>;
+) : IRequest<Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)>>;

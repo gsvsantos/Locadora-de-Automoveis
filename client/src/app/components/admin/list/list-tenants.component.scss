@@ -65,8 +65,48 @@
   cursor: pointer;
   margin-left: auto;
   margin-right: 4px;
+  transition: color 0.2s ease;
 
   &:hover {
     color: $primary !important;
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+.icon-button {
+  appearance: none;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: $text-muted;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+
+  .material-icons {
+    font-size: 20px;
+  }
+
+  &:hover {
+    background-color: $primary-light;
+    color: $primary;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:has(.material-icons:contains('logout')):hover {
+    background-color: rgba($danger, 0.1);
+    color: $danger;
   }
 }

@@ -103,7 +103,8 @@
         "adminId": "ID do Admin"
       },
       "buttons": {
-        "details": "Ver Detalhes"
+        "impersonate": "Acessar como empresa",
+        "deimpersonate": "Voltar para PlatformAdmin"
       }
     }
   },

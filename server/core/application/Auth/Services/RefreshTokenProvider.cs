@@ -22,7 +22,7 @@ public class RefreshTokenProvider(
     private readonly TimeSpan expirationInDays = TimeSpan.FromDays(refreshTokenOptions.ExpirationInDays);
     private readonly string pepperSecret = refreshTokenOptions.PepperSecret;
 
-    public async Task<Result<RefreshToken>> GenerateRefreshTokenAsync(User user)
+    public async Task<Result<IssuedRefreshTokenDto>> GenerateRefreshTokenAsync(User user)
     {
         if (user.Id.Equals(Guid.Empty) || user.TenantId.Equals(Guid.Empty))
         {
@@ -31,14 +31,14 @@ public class RefreshTokenProvider(
 
         string plainToken = GenerateOpaqueToken();
 
-        string hash = Hash(plainToken);
+        string tokenHash = Hash(plainToken);
 
         DateTimeOffset now = DateTimeOffset.UtcNow;
 
         RefreshToken token = new()
         {
             UserAuthenticatedId = user.Id,
-            TokenHash = hash,
+            TokenHash = tokenHash,
             CreatedDateUtc = now,
             ExpirationDateUtc = now.Add(this.expirationInDays),
             CreationIp = this.httpContext?.Connection?.RemoteIpAddress?.ToString() ?? string.Empty,
@@ -51,17 +51,22 @@ public class RefreshTokenProvider(
 
         await unitOfWork.CommitAsync();
 
-        return Result.Ok(token);
+        return Result.Ok(new IssuedRefreshTokenDto(
+            plainToken,
+            token.ExpirationDateUtc
+        ));
     }
 
-    public async Task<Result<(User User, Guid TenantId, RefreshToken NewRefreshToken)>> RotateRefreshTokenAsync(string refreshTokenString, CancellationToken ct)
+    public async Task<Result<(User User, Guid TenantId, IssuedRefreshTokenDto NewRefreshToken)>> RotateRefreshTokenAsync(string refreshTokenString, CancellationToken ct)
     {
         if (string.IsNullOrWhiteSpace(refreshTokenString))
         {
             return Result.Fail("Missing refresh token.");
         }
 
-        RefreshToken? token = await repositoryRefreshToken.GetByTokenHashAsync(refreshTokenString, ct);
+        string tokenHash = Hash(refreshTokenString);
+
+        RefreshToken? token = await repositoryRefreshToken.GetByTokenHashAsync(tokenHash, ct);
 
         if (token is null)
         {
@@ -80,14 +85,14 @@ public class RefreshTokenProvider(
             return Result.Fail(ErrorResults.NotFoundError("User not found."));
         }
 
-        string newPlainToken = GenerateOpaqueToken();
+        string newRefreshTokenPlain = GenerateOpaqueToken();
 
-        string newHash = Hash(newPlainToken);
+        string newRefreshTokenHash = Hash(newRefreshTokenPlain);
 
         DateTimeOffset now = DateTimeOffset.UtcNow;
 
         token.RevokedDateUtc = now;
-        token.ReplacedByTokenHash = newHash;
+        token.ReplacedByTokenHash = newRefreshTokenHash;
         token.RevocationReason = "Rotation";
 
         await repositoryRefreshToken.UpdateAsync(token.Id, token);
@@ -95,7 +100,7 @@ public class RefreshTokenProvider(
         RefreshToken newToken = new()
         {
             UserAuthenticatedId = token.UserAuthenticatedId,
-            TokenHash = newHash,
+            TokenHash = newRefreshTokenHash,
             CreatedDateUtc = now,
             ExpirationDateUtc = now.Add(this.expirationInDays),
             CreationIp = this.httpContext?.Connection?.RemoteIpAddress?.ToString() ?? string.Empty,
@@ -108,7 +113,10 @@ public class RefreshTokenProvider(
 
         await unitOfWork.CommitAsync();
 
-        return Result.Ok((user, token.TenantId, newToken));
+        return Result.Ok((user, token.TenantId, new IssuedRefreshTokenDto(
+                newRefreshTokenPlain,
+                newToken.ExpirationDateUtc
+        )));
     }
 
     public async Task<Result> RevokeUserTokensAsync(Guid userId, string reason, CancellationToken ct)

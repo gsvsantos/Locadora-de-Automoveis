@@ -43,10 +43,27 @@
               </div>
             </div>
 
+            <
             <div class="card__actions" align="end">
-              <a [routerLink]="['details', tenant.tenantId]" [title]="t('buttons.details')">
-                <span class="material-icons">visibility</span>
-              </a>
+              @if (isImpersonating$ | async) {
+                <button
+                  type="button"
+                  class="icon-button"
+                  (click)="deimpersonate()"
+                  [title]="t('buttons.deimpersonate')"
+                >
+                  <span class="material-icons">logout</span>
+                </button>
+              } @else {
+                <button
+                  type="button"
+                  class="icon-button"
+                  (click)="impersonate(tenant.tenantId)"
+                  [title]="t('buttons.impersonate')"
+                >
+                  <span class="material-icons">login</span>
+                </button>
+              }
             </div>
           </div>
         </div>
@@ -54,3 +71,4 @@
     </div>
   </div>
 </section>
+@if (effects$ | async) {}

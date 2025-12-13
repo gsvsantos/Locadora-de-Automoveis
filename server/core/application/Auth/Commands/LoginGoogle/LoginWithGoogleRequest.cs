@@ -7,4 +7,4 @@ namespace LocadoraDeAutomoveis.Application.Auth.Commands.LoginGoogle;
 
 public record LoginWithGoogleRequest(
     string IdToken
-) : IRequest<Result<(AccessToken AccessToken, RefreshToken RefreshToken)>>;
+) : IRequest<Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)>>;

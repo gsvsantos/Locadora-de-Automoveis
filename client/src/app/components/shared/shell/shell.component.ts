@@ -109,7 +109,6 @@ export class ShellComponent {
   ];
 
   public openSidebar(): void {
-    console.log(this.user?.roles);
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 

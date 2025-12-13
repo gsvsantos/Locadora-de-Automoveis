@@ -25,3 +25,5 @@ export interface AuthenticatedUserModel {
   phoneNumber: string;
   roles: string[];
 }
+
+export type AuthMode = 'platform' | 'impersonated';

@@ -11,4 +11,4 @@ public record RegisterUserRequest(
     string Email,
     string PhoneNumber,
     string Password
-) : IRequest<Result<(AccessToken AccessToken, RefreshToken RefreshToken)>>;
+) : IRequest<Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)>>;

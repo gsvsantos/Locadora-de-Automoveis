@@ -80,26 +80,38 @@ public static class AuthDependencyInjection
             {
                 OnTokenValidated = async ctx =>
                 {
-                    string? userIdStr = ctx.Principal?.FindFirst("user_id")?.Value;
+                    string? userIdClaimValue = ctx.Principal?.FindFirst("user_id")?.Value;
+                    string? tokenVersionClaimValue = ctx.Principal?.FindFirst(JwtRegisteredClaimNames.Jti)?.Value;
 
-                    if (!Guid.TryParse(userIdStr, out Guid usuarioId))
+                    if (!Guid.TryParse(userIdClaimValue, out Guid authenticatedUserId) ||
+                        !Guid.TryParse(tokenVersionClaimValue, out Guid tokenVersionId))
                     {
-                        ctx.Fail("Invalid User."); return;
+                        ctx.Fail("Invalid token claims.");
+                        return;
                     }
 
                     UserManager<User> userManager = ctx.HttpContext.RequestServices.GetRequiredService<UserManager<User>>();
-                    User? user = await userManager.FindByIdAsync(usuarioId.ToString());
+                    User? authenticatedUser = await userManager.FindByIdAsync(authenticatedUserId.ToString());
 
-                    if (user is null)
+                    if (authenticatedUser is null)
                     {
-                        ctx.Fail("Invalid Access Token Version.");
+                        ctx.Fail("User not found.");
+                        return;
+                    }
+
+                    if (authenticatedUser.AccessTokenVersionId != tokenVersionId)
+                    {
+                        ctx.Fail("Stale access token.");
+                        return;
                     }
                 }
             };
         });
 
         services.AddAuthorizationBuilder()
-            .AddPolicy("PlatformAdminPolicy", p => p.RequireRole("PlatformAdmin"))
+            .AddPolicy("PlatformAdminPolicy", p => p.RequireRole("PlatformAdmin")
+                .RequireAssertion(ctx => ctx.User.FindFirst("impersonation")?.Value != "true")
+            )
             .AddPolicy("AdminPolicy", p => p.RequireRole("Admin"))
             .AddPolicy("EmployeePolicy", p => p.RequireRole("Employee"))
             .AddPolicy("AdminOrEmployeePolicy", p => p.RequireRole("Admin", "Employee"));

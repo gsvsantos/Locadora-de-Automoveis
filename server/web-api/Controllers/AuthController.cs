@@ -26,7 +26,7 @@ public class AuthController(
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
     {
-        Result<(AccessToken AccessToken, RefreshToken RefreshToken)> result = await mediator.Send(request);
+        Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)> result = await mediator.Send(request);
 
         if (result.IsFailed)
         {
@@ -39,7 +39,7 @@ public class AuthController(
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserRequest request)
     {
-        Result<(AccessToken AccessToken, RefreshToken RefreshToken)> result = await mediator.Send(request);
+        Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)> result = await mediator.Send(request);
 
         if (result.IsFailed)
         {
@@ -52,7 +52,7 @@ public class AuthController(
     [HttpPost("google-login")]
     public async Task<IActionResult> GoogleLogin([FromBody] LoginWithGoogleRequest request)
     {
-        Result<(AccessToken AccessToken, RefreshToken RefreshToken)> result = await mediator.Send(request);
+        Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)> result = await mediator.Send(request);
 
         if (result.IsFailed)
         {
@@ -63,19 +63,18 @@ public class AuthController(
     }
 
     [HttpPost("refresh")]
-    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> Refresh()
     {
-        string? refreshTokenHash = cookieService.Get(this.Request);
+        string? refreshTokenPlain = cookieService.Get(this.Request);
 
-        if (refreshTokenHash is null)
+        if (refreshTokenPlain is null)
         {
             return Unauthorized("Refresh token not found.");
         }
 
-        RefreshTokenRequest request = new(refreshTokenHash);
+        RefreshTokenRequest request = new(refreshTokenPlain);
 
-        Result<(AccessToken AccessToken, RefreshToken RefreshToken)> result = await mediator.Send(request);
+        Result<(AccessToken AccessToken, IssuedRefreshTokenDto NewRefreshToken)> result = await mediator.Send(request);
 
         if (result.IsFailed)
         {
@@ -109,7 +108,7 @@ public class AuthController(
         return ResultAndClearCookie(result);
     }
 
-    private OkObjectResult ResultWithNewCookie((AccessToken AccessToken, RefreshToken RefreshToken) value)
+    private OkObjectResult ResultWithNewCookie((AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken) value)
     {
         cookieService.Write(this.Response, value.RefreshToken);
 

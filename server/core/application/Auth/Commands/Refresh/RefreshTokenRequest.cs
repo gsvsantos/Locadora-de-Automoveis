@@ -7,4 +7,4 @@ namespace LocadoraDeAutomoveis.Application.Auth.Commands.Refresh;
 
 public record RefreshTokenRequest(
     string RefreshTokenString
-) : IRequest<Result<(AccessToken AccessToken, RefreshToken RefreshToken)>>;
+) : IRequest<Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)>>;

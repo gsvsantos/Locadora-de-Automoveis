@@ -13,7 +13,7 @@ public sealed class TenantOverrideHeaderOperationFilter : IOperationFilter
         bool shouldNotOverride =
             route.StartsWith("api/auth") ||
             route.StartsWith("api/search") ||
-            route.StartsWith("api/admin/tenants");
+            route.StartsWith("api/admin");
 
         if (shouldNotOverride)
         {
