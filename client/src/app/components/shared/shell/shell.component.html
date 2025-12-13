@@ -1,4 +1,4 @@
-<div class="shell">
+<div class="shell" *transloco="let t; prefix: 'navbar'">
   <nav class="navbar" aria-label="Menu">
     @if (isHandset$ | async) {
       <button
@@ -21,11 +21,21 @@
     <div class="navbar__spacer"></div>
 
     <div class="navbar__options">
-      <gs-buttons
-        [buttonType]="buttonType.Default"
-        text="Logout"
-        (click)="logoutEvent.emit()"
-      ></gs-buttons>
+      @if (effects$ | async) {}
+
+      @if (isImpersonating$ | async) {
+        <gs-buttons
+          [buttonType]="buttonType.Default"
+          [text]="t('deimpersonate')"
+          (click)="deimpersonate()"
+        ></gs-buttons>
+      } @else {
+        <gs-buttons
+          [buttonType]="buttonType.Default"
+          text="Logout"
+          (click)="logoutEvent.emit()"
+        ></gs-buttons>
+      }
 
       <app-slide-toggle
         [checked]="isDarkMode"

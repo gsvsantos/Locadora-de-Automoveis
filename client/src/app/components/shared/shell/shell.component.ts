@@ -1,10 +1,10 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
-import { Observable } from 'rxjs';
-import { map, shareReplay, tap } from 'rxjs/operators';
+import { EMPTY, merge, Observable, Subject } from 'rxjs';
+import { catchError, exhaustMap, map, shareReplay, startWith, tap } from 'rxjs/operators';
 import { AuthenticatedUserModel } from '../../../models/auth.models';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { SlideToggleComponent } from '../slide-toggle/slide-toggle.component';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { LocalStorageService } from '../../../services/local-storage.service';
@@ -12,6 +12,8 @@ import { MultiSearchComponent } from '../../search/multi/multi-search.component'
 import { LanguageSelector } from '../language-selector/language-selector';
 import { NavbarItem } from '../../../models/navbar-item.model';
 import { TranslocoModule } from '@jsverse/transloco';
+import { AuthService } from '../../../services/auth.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-shell',
@@ -29,19 +31,24 @@ import { TranslocoModule } from '@jsverse/transloco';
   ],
 })
 export class ShellComponent {
-  private breakpointObserver = inject(BreakpointObserver);
-  protected isSidebarOpen: boolean = false;
+  protected readonly breakpointObserver = inject(BreakpointObserver);
+  protected readonly authService = inject(AuthService);
+  protected readonly localStorageService = inject(LocalStorageService);
+  protected readonly notificationService = inject(NotificationService);
+  protected readonly router = inject(Router);
+
   protected readonly buttonType = gsButtonTypeEnum;
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
-
-  private localStorageService = inject(LocalStorageService);
+  protected isSidebarOpen: boolean = false;
   protected themeValue: 'light' | 'dark' = this.localStorageService.getTheme();
   protected isDarkMode: boolean = this.themeValue == 'dark';
 
   @Input({ required: true }) public user?: AuthenticatedUserModel;
   @Output() public logoutEvent = new EventEmitter<void>();
   @Output() public themeEvent = new EventEmitter<boolean>();
+
+  private readonly deimpersonateClickSubject$ = new Subject<void>();
 
   public isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Handset])
@@ -140,5 +147,33 @@ export class ShellComponent {
 
   protected get isManager(): boolean {
     return this.isAdmin || this.isPlatformAdmin;
+  }
+
+  protected readonly isImpersonating$ = this.authService
+    .getAuthMode()
+    .pipe(map((mode) => mode === 'impersonated'));
+
+  protected readonly effects$ = merge(
+    this.deimpersonateClickSubject$.pipe(
+      exhaustMap(() =>
+        this.authService.stopImpersonation().pipe(
+          tap(() => {
+            this.notificationService.success('Back to PlatformAdmin.');
+            void this.router.navigate(['/admin/tenants']);
+          }),
+          catchError((err: string) => {
+            this.notificationService.error(String(err));
+            return EMPTY;
+          }),
+        ),
+      ),
+    ),
+  ).pipe(
+    map(() => true),
+    startWith(true),
+  );
+
+  protected deimpersonate(): void {
+    this.deimpersonateClickSubject$.next();
   }
 }

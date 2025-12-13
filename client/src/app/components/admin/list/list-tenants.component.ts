@@ -1,5 +1,4 @@
 import { AuthService } from './../../../services/auth.service';
-import { AdminService } from './../../../services/admin.service';
 import { Component, inject } from '@angular/core';
 import { Tenant } from '../../../models/admin.models';
 import { AsyncPipe, SlicePipe, TitleCasePipe } from '@angular/common';
@@ -19,12 +18,10 @@ import { NotificationService } from '../../../services/notification.service';
 export class ListTenantsComponent {
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
-  protected readonly adminService: AdminService = inject(AdminService);
   protected readonly authService: AuthService = inject(AuthService);
   protected readonly notificationService = inject(NotificationService);
 
   private readonly impersonateClickSubject$ = new Subject<string>();
-  private readonly deimpersonateClickSubject$ = new Subject<void>();
 
   protected readonly tenants$ = this.route.data.pipe(
     filter((data) => data['tenants'] as boolean),
@@ -50,21 +47,6 @@ export class ListTenantsComponent {
         ),
       ),
     ),
-
-    this.deimpersonateClickSubject$.pipe(
-      exhaustMap(() =>
-        this.authService.stopImpersonation().pipe(
-          tap(() => {
-            this.notificationService.success('Back to PlatformAdmin.');
-            void this.router.navigate(['/admin/tenants']);
-          }),
-          catchError((err: string) => {
-            this.notificationService.error(String(err));
-            return EMPTY;
-          }),
-        ),
-      ),
-    ),
   ).pipe(
     map(() => true),
     startWith(true),
@@ -72,10 +54,6 @@ export class ListTenantsComponent {
 
   protected impersonate(tenantId: string): void {
     this.impersonateClickSubject$.next(tenantId);
-  }
-
-  protected deimpersonate(): void {
-    this.deimpersonateClickSubject$.next();
   }
 
   protected message(success: boolean): void {

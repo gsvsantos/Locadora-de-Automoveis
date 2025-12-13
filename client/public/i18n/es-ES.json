@@ -59,7 +59,8 @@
     "extras": "Extras",
     "rentals": "Alquileres",
     "partners": "Socios",
-    "coupons": "Cupones"
+    "coupons": "Cupones",
+    "deimpersonate": "Volver a PlatformAdmin"
   },
   "home": {
     "dashboard": {
