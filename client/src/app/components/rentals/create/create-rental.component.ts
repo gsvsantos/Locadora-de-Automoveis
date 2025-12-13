@@ -15,7 +15,7 @@ import { Component, inject } from '@angular/core';
 import { Employee } from '../../../models/employee.models';
 import { Driver } from '../../../models/driver.models';
 import { Vehicle } from '../../../models/vehicles.models';
-import { needsIndividual } from '../../../validators/driver.validators';
+import { needsIndividualValidator } from '../../../validators/driver.validators';
 import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
 import { Extra } from '../../../models/extra.models';
@@ -83,7 +83,7 @@ export class CreateRentalComponent {
       estimatedKilometers: [null],
       rentalRentalExtrasIds: [null],
     },
-    { validators: [needsIndividual] },
+    { validators: [needsIndividualValidator] },
   );
 
   public get startDate(): AbstractControl | null {

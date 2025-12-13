@@ -1,6 +1,6 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-export const needsIndividual: ValidatorFn = (
+export const needsIndividualValidator: ValidatorFn = (
   formGroup: AbstractControl,
 ): ValidationErrors | null => {
   const clientTypeIsBusiness = formGroup.get('clientTypeIsBusiness')?.value as boolean;

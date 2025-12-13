@@ -3,90 +3,115 @@
     <div class="card">
       <form [formGroup]="formGroup" class="form">
         <h2>{{ t('card.title') }}</h2>
-        <hr class="bar" />
-        <div class="card-content">
-          <span>{{ t('card.subtitle') }}</span>
 
-          <div class="form-field">
-            <input
-              class="form-input"
-              formControlName="userName"
-              type="text"
-              placeholder="UserName"
-              autocomplete="name"
-            />
-            @if (userName?.errors?.['required'] && userName?.dirty) {
-              <span>{{ t('card.errors.usernameRequired') }}</span>
-            }
-            @if (userName?.errors?.['minlength'] && userName?.dirty) {
-              <span>{{ t('card.errors.usernameLength') }}</span>
-            }
+        <hr class="bar" />
+
+        <div class="card-content">
+          <div class="social-container">
+            <a class="social" aria-label="Sign in with Google" (click)="googleAuth()">
+              <i class="fab fa-google" aria-hidden="true"></i>
+            </a>
           </div>
 
-          <div class="form-field">
+          <span class="full-width">{{ t('card.subtitle') }}</span>
+
+          <div class="form-field full-width">
+            <label>{{ t('card.label.fullName') }}</label>
             <input
               class="form-input"
               formControlName="fullName"
               type="text"
-              placeholder="Full name"
+              [placeholder]="t('card.placeholder.fullName')"
               autocomplete="name"
             />
             @if (fullName?.errors?.['required'] && fullName?.dirty) {
-              <span>{{ t('card.errors.fullnameRequired') }}</span>
-            }
-            @if (fullName?.errors?.['minlength'] && fullName?.dirty) {
-              <span>{{ t('card.errors.fullnameLength') }}</span>
-            }
-            @if (fullName?.errors?.['pattern'] && fullName?.dirty) {
-              <span>{{ t('card.errors.fullnamePattern') }}</span>
+              <span class="error-message">{{ t('card.errors.fullNameRequired') }}</span>
+            } @else if (fullName?.errors?.['minlength'] && fullName?.dirty) {
+              <span class="error-message">{{ t('card.errors.fullNameLength') }}</span>
+            } @else if (fullName?.errors?.['pattern'] && fullName?.dirty) {
+              <span class="error-message">{{ t('card.errors.fullNamePattern') }}</span>
             }
           </div>
 
-          <div class="form-field">
+          <div class="form-field full-width">
+            <label>{{ t('card.label.email') }}</label>
             <input
               class="form-input"
               formControlName="email"
               type="email"
-              placeholder="E-mail"
+              [placeholder]="t('card.placeholder.email')"
               autocomplete="email"
             />
             @if (email?.errors?.['required'] && email?.dirty) {
-              <span>{{ t('card.errors.emailRequired') }}</span>
-            }
-            @if (email?.errors?.['email'] && email?.dirty) {
-              <span>{{ t('card.errors.emailLength') }}</span>
+              <span class="error-message">{{ t('card.errors.emailRequired') }}</span>
+            } @else if (email?.errors?.['email'] && email?.dirty) {
+              <span class="error-message">{{ t('card.errors.emailLength') }}</span>
             }
           </div>
 
           <div class="form-field">
+            <label>{{ t('card.label.phoneNumber') }}</label>
             <input
               class="form-input"
               formControlName="phoneNumber"
               type="tel"
-              placeholder="Phone number"
+              [placeholder]="t('card.placeholder.phoneNumber')"
               autocomplete="tel"
             />
             @if (phoneNumber?.errors?.['required'] && phoneNumber?.dirty) {
-              <span>{{ t('card.errors.phonenumberRequired') }}</span>
-            }
-            @if (phoneNumber?.errors?.['pattern'] && phoneNumber?.dirty) {
-              <span>{{ t('card.errors.phonenumberPattern') }}</span>
+              <span class="error-message">{{ t('card.errors.phonenumberRequired') }}</span>
+            } @else if (phoneNumber?.errors?.['pattern'] && phoneNumber?.dirty) {
+              <span class="error-message">{{ t('card.errors.phonenumberPattern') }}</span>
             }
           </div>
 
           <div class="form-field">
+            <label>{{ t('card.label.userName') }}</label>
+            <input
+              class="form-input"
+              formControlName="userName"
+              type="text"
+              [placeholder]="t('card.placeholder.userName')"
+              autocomplete="name"
+            />
+            @if (userName?.errors?.['required'] && userName?.dirty) {
+              <span class="error-message">{{ t('card.errors.usernameRequired') }}</span>
+            } @else if (userName?.errors?.['minlength'] && userName?.dirty) {
+              <span class="error-message">{{ t('card.errors.usernameLength') }}</span>
+            }
+          </div>
+
+          <div class="form-field">
+            <label>{{ t('card.label.password') }}</label>
             <input
               class="form-input"
               formControlName="password"
               type="password"
-              placeholder="Password"
+              [placeholder]="t('card.placeholder.password')"
               autocomplete="new-password"
             />
             @if (password?.errors?.['required'] && password?.dirty) {
-              <span>{{ t('card.errors.passwordRequired') }}</span>
+              <span class="error-message">{{ t('card.errors.passwordRequired') }}</span>
+            } @else if (password?.errors?.['minlength'] && password?.dirty) {
+              <span class="error-message">{{ t('card.errors.passwordLength') }}</span>
             }
-            @if (password?.errors?.['minlength'] && password?.dirty) {
-              <span>{{ t('card.errors.passwordLength') }}</span>
+          </div>
+
+          <div class="form-field">
+            <label>{{ t('card.label.confirmPassword') }}</label>
+            <input
+              class="form-input"
+              formControlName="confirmPassword"
+              type="password"
+              [placeholder]="t('card.placeholder.confirmPassword')"
+              autocomplete="new-password"
+            />
+            @if (confirmPassword?.errors?.['required'] && confirmPassword?.dirty) {
+              <span class="error-message">{{ t('card.errors.passwordRequired') }}</span>
+            } @else if (confirmPassword?.errors?.['minlength'] && confirmPassword?.dirty) {
+              <span class="error-message">{{ t('card.errors.passwordLength') }}</span>
+            } @else if (formGroup.hasError('passwordMismatch') && confirmPassword?.dirty) {
+              <span class="error-message">{{ t('card.errors.passwordMustMatch') }}</span>
             }
           </div>
         </div>

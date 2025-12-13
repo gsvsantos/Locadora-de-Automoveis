@@ -4,6 +4,7 @@ export interface RegisterAuthDto {
   email: string;
   phoneNumber: string;
   password: string;
+  confirmPassword: string;
 }
 
 export interface LoginAuthDto {

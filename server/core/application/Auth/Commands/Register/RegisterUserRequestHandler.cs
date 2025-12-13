@@ -30,22 +30,27 @@ public class RegisterUserRequestHandler(
             PhoneNumber = request.PhoneNumber
         };
 
-        IdentityResult userResult = await userManager.CreateAsync(user, request.Password);
-
-        if (!userResult.Succeeded)
-        {
-            IEnumerable<string> erros = userResult
-                .Errors
-                .Select(failure => failure.Description)
-                .ToList();
-
-            await userManager.DeleteAsync(user);
-
-            return Result.Fail(ErrorResults.BadRequestError(erros));
-        }
-
         try
         {
+            if (!request.Password.Equals(request.ConfirmPassword))
+            {
+                return Result.Fail(AuthErrorResults.PasswordConfirmationError());
+            }
+
+            IdentityResult userResult = await userManager.CreateAsync(user, request.Password);
+
+            if (!userResult.Succeeded)
+            {
+                IEnumerable<string> erros = userResult
+                    .Errors
+                    .Select(failure => failure.Description)
+                    .ToList();
+
+                await userManager.DeleteAsync(user);
+
+                return Result.Fail(ErrorResults.BadRequestError(erros));
+            }
+
             user.AssociateTenant(user.Id);
 
             await userManager.AddToRoleAsync(user, "Admin");

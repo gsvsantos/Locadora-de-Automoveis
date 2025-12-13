@@ -13,6 +13,7 @@ import { NotificationService } from '../../../services/notification.service';
 import { AuthApiResponse, RegisterAuthDto } from '../../../models/auth.models';
 import { TranslocoModule } from '@jsverse/transloco';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
+import { passwordMatchValidator } from '../../../validators/auth.validators';
 
 @Component({
   selector: 'app-register.component',
@@ -29,26 +30,30 @@ export class RegisterComponent {
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
 
-  protected formGroup: FormGroup = this.formBuilder.group({
-    userName: ['', [Validators.required.bind(this), Validators.minLength(5)]],
-    fullName: [
-      '',
-      [
-        Validators.required.bind(this),
-        Validators.minLength(3),
-        Validators.pattern(/^[a-zA-ZÄäÖöÜüÀàÈèÌìÒòÙùÁáÉéÍíÓóÚúÝýÂâÊêÎîÔôÛûÃãÑñÇç'\-\s]+$/),
+  protected formGroup: FormGroup = this.formBuilder.group(
+    {
+      userName: ['', [Validators.required.bind(this), Validators.minLength(5)]],
+      fullName: [
+        '',
+        [
+          Validators.required.bind(this),
+          Validators.minLength(3),
+          Validators.pattern(/^[a-zA-ZÄäÖöÜüÀàÈèÌìÒòÙùÁáÉéÍíÓóÚúÝýÂâÊêÎîÔôÛûÃãÑñÇç'\-\s]+$/),
+        ],
       ],
-    ],
-    email: ['', [Validators.required.bind(this), Validators.email.bind(this)]],
-    phoneNumber: [
-      '',
-      [
-        Validators.required.bind(this),
-        Validators.pattern(/^\(?\d{2}\)?\s?(9\d{4}|\d{4})-?\d{4}$/).bind(this),
+      email: ['', [Validators.required.bind(this), Validators.email.bind(this)]],
+      phoneNumber: [
+        '',
+        [
+          Validators.required.bind(this),
+          Validators.pattern(/^\(?\d{2}\)?\s?(9\d{4}|\d{4})-?\d{4}$/).bind(this),
+        ],
       ],
-    ],
-    password: ['', [Validators.required.bind(this), Validators.minLength(6)]],
-  });
+      password: ['', [Validators.required.bind(this), Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required.bind(this), Validators.minLength(6)]],
+    },
+    { validators: passwordMatchValidator },
+  );
 
   public get userName(): AbstractControl<unknown, unknown, unknown> | null {
     return this.formGroup.get('userName');
@@ -70,6 +75,10 @@ export class RegisterComponent {
     return this.formGroup.get('password');
   }
 
+  public get confirmPassword(): AbstractControl<unknown, unknown, unknown> | null {
+    return this.formGroup.get('confirmPassword');
+  }
+
   public register(): void {
     if (this.formGroup.invalid) return;
 
@@ -81,5 +90,9 @@ export class RegisterComponent {
     };
 
     this.authService.register(registerModel).subscribe(registerObserver);
+  }
+
+  public googleAuth(): void {
+    this.authService.loginWithGoogle();
   }
 }

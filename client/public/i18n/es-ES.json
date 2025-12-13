@@ -2,49 +2,65 @@
   "auth": {
     "register": {
       "card": {
-        "title": "Crear cuenta",
-        "subtitle": "o utiliza tu correo electrónico para registrarte",
-        "labels": {
-          "username": "Nombre de usuario",
-          "email": "Correo electrónico",
-          "password": "Contraseña"
+        "title": "Crear Cuenta",
+        "subtitle": "O use su correo para registrarse",
+        "placeholder": {
+          "userName": "Nombre de Usuario",
+          "fullName": "Nombre Completo",
+          "email": "Correo Electrónico",
+          "phoneNumber": "Teléfono (ej: (99) 99999-9999)",
+          "password": "Contraseña",
+          "confirmPassword": "Confirmar Contraseña"
+        },
+        "label": {
+          "userName": "Nombre de Usuario",
+          "fullName": "Nombre Completo",
+          "email": "Correo Electrónico",
+          "phoneNumber": "Teléfono",
+          "password": "Contraseña",
+          "confirmPassword": "Confirmar Contraseña"
         },
         "errors": {
-          "usernameRequired": "El nombre de usuario es obligatorio.",
-          "usernameLength": "El nombre de usuario debe tener al menos 3 caracteres.",
-          "fullnameRequired": "El nombre completo es obligatorio.",
-          "fullnameLength": "El nombre completo debe tener al menos 3 caracteres.",
-          "fullnamePattern": "El nombre completo contiene caracteres no válidos.",
-          "emailRequired": "El correo electrónico es obligatorio.",
-          "emailLength": "Debe ser un correo electrónico válido (p. ej., nombre@proveedor.com).",
-          "phonenumberRequired": "El número de teléfono es obligatorio.",
-          "phonenumberPattern": "Formato no válido. Use (XX) XXXXX-XXXX.",
+          "usernameRequired": "El usuario es obligatorio.",
+          "usernameLength": "El usuario debe tener al menos 3 caracteres.",
+          "fullNameRequired": "El nombre completo es obligatorio.",
+          "fullNameLength": "El nombre debe tener al menos 3 caracteres.",
+          "fullNamePattern": "El nombre contiene caracteres no válidos.",
+          "emailRequired": "El correo es obligatorio.",
+          "emailLength": "Formato de correo no válido.",
+          "phoneNumberRequired": "El teléfono es obligatorio.",
+          "phoneNumberPattern": "Formato no válido.",
           "passwordRequired": "La contraseña es obligatoria.",
-          "passwordLength": "La contraseña debe tener al menos 6 caracteres."
+          "passwordLength": "La contraseña debe tener al menos 6 caracteres.",
+          "passwordMustMatch": "Las contraseñas no coinciden."
         },
         "buttons": {
           "login": "¿Ya tienes una cuenta?",
-          "confirm": "Confirmar"
+          "confirm": "Registrarse"
         }
       }
     },
     "login": {
       "card": {
-        "title": "Iniciar sesión",
-        "subtitle": "o utiliza tu cuenta",
-        "labels": {
-          "username": "Nombre de usuario",
+        "title": "Iniciar Sesión",
+        "subtitle": "O use su cuenta",
+        "placeholder": {
+          "userName": "Nombre de Usuario",
+          "password": "Contraseña"
+        },
+        "label": {
+          "userName": "Nombre de Usuario",
           "password": "Contraseña"
         },
         "errors": {
-          "usernameRequired": "El nombre de usuario es obligatorio.",
-          "usernameLength": "El nombre de usuario debe tener al menos 3 caracteres.",
+          "usernameRequired": "El usuario es obligatorio.",
+          "usernameLength": "Longitud de usuario no válida.",
           "passwordRequired": "La contraseña es obligatoria.",
-          "passwordLength": "La contraseña debe tener al menos 6 caracteres."
+          "passwordLength": "Longitud de contraseña no válida."
         },
         "buttons": {
-          "register": "¿Todavía no tienes una cuenta?",
-          "confirm": "Confirmar"
+          "register": "Crear una cuenta",
+          "confirm": "Entrar"
         }
       }
     }

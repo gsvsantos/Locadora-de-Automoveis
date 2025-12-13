@@ -32,7 +32,7 @@ import { DriverService } from './../../../services/driver.service';
 import { Component, inject } from '@angular/core';
 import { Client } from '../../../models/client.models';
 import { ClientService } from '../../../services/client.service';
-import { needsIndividual } from '../../../validators/driver.validators';
+import { needsIndividualValidator } from '../../../validators/driver.validators';
 import { dateToInputDateString } from '../../../utils/date.utils';
 
 @Component({
@@ -205,7 +205,7 @@ export class CreateDriverComponent {
       clientTypeIsBusiness: [false],
       individualClientId: [null],
     },
-    { validators: [needsIndividual] },
+    { validators: [needsIndividualValidator] },
   );
 
   public get clientId(): AbstractControl | null {

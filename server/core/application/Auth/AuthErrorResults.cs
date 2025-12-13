@@ -52,4 +52,11 @@ public abstract class AuthErrorResults
             .CausedBy("Login confirmation with two-factor authentication is required.")
             .WithMetadata("ErrorType", "BadRequest");
     }
+
+    public static Error PasswordConfirmationError()
+    {
+        return new Error("Passwords do not match")
+            .CausedBy("The confirmation password does not match the password.")
+            .WithMetadata("ErrorType", "BadRequest");
+    }
 }

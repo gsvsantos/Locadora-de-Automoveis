@@ -3,48 +3,64 @@
     "register": {
       "card": {
         "title": "Create Account",
-        "subtitle": "or use your email for registration",
-        "labels": {
-          "username": "Username",
+        "subtitle": "Or use your email for registration",
+        "placeholder": {
+          "userName": "Username",
+          "fullName": "Full Name",
           "email": "Email",
-          "password": "Password"
+          "phoneNumber": "Phone Number (e.g., (99) 99999-9999)",
+          "password": "Password",
+          "confirmPassword": "Confirm Password"
+        },
+        "label": {
+          "userName": "Username",
+          "fullName": "Full Name",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "password": "Password",
+          "confirmPassword": "Confirm Password"
         },
         "errors": {
-          "usernameRequired": "Username is required.",
-          "usernameLength": "Username must be at least 3 characters long.",
-          "fullnameRequired": "Full name is required.",
-          "fullnameLength": "Full name must be at least 3 characters long.",
-          "fullnamePattern": "Full name contains invalid characters.",
+          "userNameRequired": "Username is required.",
+          "userNameLength": "Username must be at least 3 characters long.",
+          "fullNameRequired": "Full name is required.",
+          "fullNameLength": "Full name must be at least 3 characters long.",
+          "fullNamePattern": "Full name contains invalid characters.",
           "emailRequired": "Email is required.",
-          "emailLength": "Must be a valid email (e.g., name@provider.com).",
-          "phonenumberRequired": "Phone number is required.",
-          "phonenumberPattern": "Invalid format. Use (XX) XXXXX-XXXX.",
+          "emailLength": "Must be a valid email.",
+          "phoneNumberRequired": "Phone number is required.",
+          "phoneNumberPattern": "Invalid format.",
           "passwordRequired": "Password is required.",
-          "passwordLength": "Password must be at least 6 characters long."
+          "passwordLength": "Password must be at least 6 characters long.",
+          "passwordMustMatch": "Passwords do not match."
         },
         "buttons": {
           "login": "Already have an account?",
-          "confirm": "Confirm"
+          "confirm": "Register"
         }
       }
     },
     "login": {
       "card": {
-        "title": "Sign in",
-        "subtitle": "or use your account",
-        "labels": {
-          "username": "Username",
+        "title": "Sign In",
+        "subtitle": "Or use your account",
+        "placeholder": {
+          "userName": "Username",
+          "password": "Password"
+        },
+        "label": {
+          "userName": "Username",
           "password": "Password"
         },
         "errors": {
           "usernameRequired": "Username is required.",
-          "usernameLength": "Username must be at least 3 characters long.",
+          "usernameLength": "Invalid username length.",
           "passwordRequired": "Password is required.",
-          "passwordLength": "Password must be at least 6 characters long."
+          "passwordLength": "Invalid password length."
         },
         "buttons": {
-          "register": "Don't have an account yet?",
-          "confirm": "Confirm"
+          "register": "Create an account",
+          "confirm": "Sign In"
         }
       }
     }
