@@ -7,5 +7,6 @@ namespace LocadoraDeAutomoveis.Application.Auth.Commands.Login;
 
 public record LoginUserRequest(
     string UserName,
-    string Password
+    string Password,
+    string RecaptchaToken
 ) : IRequest<Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)>>;

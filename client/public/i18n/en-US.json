@@ -22,7 +22,7 @@
         },
         "errors": {
           "userNameRequired": "Username is required.",
-          "userNameLength": "Username must be at least 3 characters long.",
+          "userNameLength": "Username must be at least 5 characters long.",
           "fullNameRequired": "Full name is required.",
           "fullNameLength": "Full name must be at least 3 characters long.",
           "fullNamePattern": "Full name contains invalid characters.",
@@ -53,8 +53,8 @@
           "password": "Password"
         },
         "errors": {
-          "usernameRequired": "Username is required.",
-          "usernameLength": "Username must be at least 3 characters long.",
+          "userNameRequired": "Username is required.",
+          "userNameLength": "Username must be at least 5 characters long.",
           "passwordRequired": "Password is required.",
           "passwordLength": "Password must be at least 6 characters long."
         },

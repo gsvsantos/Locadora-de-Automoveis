@@ -5,11 +5,13 @@ export interface RegisterAuthDto {
   phoneNumber: string;
   password: string;
   confirmPassword: string;
+  recaptchaToken: string;
 }
 
 export interface LoginAuthDto {
   userName: string;
   password: string;
+  recaptchaToken: string;
 }
 
 export interface ChangePasswordRequestDto {

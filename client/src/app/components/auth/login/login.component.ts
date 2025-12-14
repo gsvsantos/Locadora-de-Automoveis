@@ -13,10 +13,12 @@ import { AuthService } from '../../../services/auth.service';
 import { NotificationService } from '../../../services/notification.service';
 import { TranslocoModule } from '@jsverse/transloco';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
+import { RecaptchaModule } from 'ng-recaptcha-2';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-login.component',
-  imports: [RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
+  imports: [RouterLink, ReactiveFormsModule, RecaptchaModule, TranslocoModule, GsButtons],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -28,10 +30,12 @@ export class LoginComponent {
   protected readonly buttonType = gsButtonTypeEnum;
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
+  protected readonly recaptchaSiteKey: string = environment.captcha_key;
 
   protected formGroup: FormGroup = this.formBuilder.group({
     userName: ['', [Validators.required.bind(this), Validators.minLength(3)]],
     password: ['', [Validators.required.bind(this), Validators.minLength(6)]],
+    recaptchaToken: ['', Validators.required.bind(this)],
   });
 
   public get userName(): AbstractControl<unknown, unknown, unknown> | null {
@@ -40,6 +44,10 @@ export class LoginComponent {
 
   public get password(): AbstractControl<unknown, unknown, unknown> | null {
     return this.formGroup.get('password');
+  }
+
+  public get recaptchaToken(): AbstractControl<unknown, unknown, unknown> | null {
+    return this.formGroup.get('recaptchaToken');
   }
 
   public login(): void {
@@ -57,5 +65,10 @@ export class LoginComponent {
 
   public googleAuth(): void {
     this.authService.loginWithGoogle();
+  }
+
+  public onCaptchaResolved(captchaToken: string | null): void {
+    if (!captchaToken) return;
+    this.formGroup.patchValue({ recaptchaToken: captchaToken });
   }
 }

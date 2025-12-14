@@ -11,5 +11,6 @@ public record RegisterUserRequest(
     string Email,
     string PhoneNumber,
     string Password,
-    string ConfirmPassword
+    string ConfirmPassword,
+    string RecaptchaToken
 ) : IRequest<Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)>>;

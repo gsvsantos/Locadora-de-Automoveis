@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Hangfire;
+using LocadoraDeAutomoveis.Application.Auth.Services;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
@@ -167,11 +168,6 @@ public static class DependencyInjection
         services.AddScoped<IRepositoryCoupon, CouponRepository>();
     }
 
-    public static void ConfigureServices(this IServiceCollection services)
-    {
-        services.AddScoped<ICouponQueryService, CouponQueryService>();
-    }
-
     public static void ConfigureSerilog(this IServiceCollection services, ILoggingBuilder logging, IConfiguration configuration)
     {
         string? licenseKey = configuration["NEWRELIC_LICENSE_KEY"];
@@ -198,6 +194,10 @@ public static class DependencyInjection
 
     public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<ICouponQueryService, CouponQueryService>();
+        services.AddScoped<RecaptchaService>();
+        services.AddHttpClient<RecaptchaService>();
+
         Assembly applicationAssembly = typeof(ApplicationAssemblyReference).Assembly;
 
         string? luckyPennySoftwareLicenseKey = configuration["LUCKYPENNYSOFTWARE_LICENSE_KEY"];

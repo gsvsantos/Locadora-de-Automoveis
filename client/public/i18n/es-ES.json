@@ -22,7 +22,7 @@
         },
         "errors": {
           "userNameRequired": "El nombre de usuario es obligatorio.",
-          "userNameLength": "El nombre de usuario debe tener al menos 3 caracteres.",
+          "userNameLength": "El nombre de usuario debe tener al menos 5 caracteres.",
           "fullNameRequired": "El nombre completo es obligatorio.",
           "fullNameLength": "El nombre completo debe tener al menos 3 caracteres.",
           "fullNamePattern": "El nombre completo contiene caracteres no válidos.",
@@ -53,8 +53,8 @@
           "password": "Contraseña"
         },
         "errors": {
-          "usernameRequired": "El nombre de usuario es obligatorio.",
-          "usernameLength": "El nombre de usuario debe tener al menos 3 caracteres.",
+          "userNameRequired": "El nombre de usuario es obligatorio.",
+          "userNameLength": "El nombre de usuario debe tener al menos 5 caracteres.",
           "passwordRequired": "La contraseña es obligatoria.",
           "passwordLength": "La contraseña debe tener al menos 6 caracteres."
         },

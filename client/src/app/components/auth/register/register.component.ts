@@ -14,10 +14,12 @@ import { AuthApiResponse, RegisterAuthDto } from '../../../models/auth.models';
 import { TranslocoModule } from '@jsverse/transloco';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { passwordMatchValidator } from '../../../validators/auth.validators';
+import { RecaptchaModule } from 'ng-recaptcha-2';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-register.component',
-  imports: [RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
+  imports: [RouterLink, ReactiveFormsModule, RecaptchaModule, TranslocoModule, GsButtons],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -29,6 +31,7 @@ export class RegisterComponent {
   protected readonly buttonType = gsButtonTypeEnum;
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
+  protected readonly recaptchaSiteKey: string = environment.captcha_key;
 
   protected formGroup: FormGroup = this.formBuilder.group(
     {
@@ -51,6 +54,7 @@ export class RegisterComponent {
       ],
       password: ['', [Validators.required.bind(this), Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required.bind(this), Validators.minLength(6)]],
+      recaptchaToken: ['', Validators.required.bind(this)],
     },
     { validators: passwordMatchValidator },
   );
@@ -79,6 +83,10 @@ export class RegisterComponent {
     return this.formGroup.get('confirmPassword');
   }
 
+  public get recaptchaToken(): AbstractControl<unknown, unknown, unknown> | null {
+    return this.formGroup.get('recaptchaToken');
+  }
+
   public register(): void {
     if (this.formGroup.invalid) return;
 
@@ -94,5 +102,10 @@ export class RegisterComponent {
 
   public googleAuth(): void {
     this.authService.loginWithGoogle();
+  }
+
+  public onCaptchaResolved(captchaToken: string | null): void {
+    if (!captchaToken) return;
+    this.formGroup.patchValue({ recaptchaToken: captchaToken });
   }
 }

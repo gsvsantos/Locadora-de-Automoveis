@@ -22,9 +22,9 @@
               autocomplete="name"
             />
             @if (userName?.errors?.['required'] && userName?.dirty) {
-              <span>{{ t('card.errors.usernameRequired') }}</span>
+              <span>{{ t('card.errors.userNameRequired') }}</span>
             } @else if (userName?.errors?.['minlength'] && userName?.dirty) {
-              <span>{{ t('card.errors.usernameLength') }}</span>
+              <span>{{ t('card.errors.userNameLength') }}</span>
             }
           </div>
 
@@ -44,6 +44,12 @@
           </div>
         </div>
         <div class="buttons">
+          <re-captcha
+            class="captcha"
+            [siteKey]="recaptchaSiteKey"
+            (resolved)="onCaptchaResolved($event)"
+          >
+          </re-captcha>
           <gs-buttons
             [buttonType]="buttonType.Link"
             [text]="t('card.buttons.register')"

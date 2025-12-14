@@ -59,9 +59,9 @@
               autocomplete="tel"
             />
             @if (phoneNumber?.errors?.['required'] && phoneNumber?.dirty) {
-              <span class="error-message">{{ t('card.errors.phonenumberRequired') }}</span>
+              <span class="error-message">{{ t('card.errors.phoneNumberRequired') }}</span>
             } @else if (phoneNumber?.errors?.['pattern'] && phoneNumber?.dirty) {
-              <span class="error-message">{{ t('card.errors.phonenumberPattern') }}</span>
+              <span class="error-message">{{ t('card.errors.phoneNumberPattern') }}</span>
             }
           </div>
 
@@ -75,9 +75,9 @@
               autocomplete="name"
             />
             @if (userName?.errors?.['required'] && userName?.dirty) {
-              <span class="error-message">{{ t('card.errors.usernameRequired') }}</span>
+              <span class="error-message">{{ t('card.errors.userNameRequired') }}</span>
             } @else if (userName?.errors?.['minlength'] && userName?.dirty) {
-              <span class="error-message">{{ t('card.errors.usernameLength') }}</span>
+              <span class="error-message">{{ t('card.errors.userNameLength') }}</span>
             }
           </div>
 
@@ -115,6 +115,12 @@
             }
           </div>
         </div>
+        <re-captcha
+          class="captcha"
+          [siteKey]="recaptchaSiteKey"
+          (resolved)="onCaptchaResolved($event)"
+        >
+        </re-captcha>
         <div class="buttons">
           <gs-buttons
             [buttonType]="buttonType.Link"

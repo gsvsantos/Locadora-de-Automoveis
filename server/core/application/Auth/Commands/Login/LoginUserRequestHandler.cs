@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Application.Auth.DTOs;
+using LocadoraDeAutomoveis.Application.Auth.Services;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Shared;
@@ -14,6 +15,7 @@ public class LoginUserRequestHandler(
     UserManager<User> userManager,
     ITokenProvider tokenProvider,
     IRefreshTokenProvider refreshTokenProvider,
+    RecaptchaService recaptchaService,
     IUnitOfWork unitOfWork,
     ILogger<LoginUserRequestHandler> logger
 ) : IRequestHandler<LoginUserRequest, Result<(AccessToken, IssuedRefreshTokenDto)>>
@@ -21,6 +23,11 @@ public class LoginUserRequestHandler(
     public async Task<Result<(AccessToken, IssuedRefreshTokenDto)>> Handle(
         LoginUserRequest request, CancellationToken cancellationToken)
     {
+        if (!await recaptchaService.VerifyRecaptchaToken(request.RecaptchaToken))
+        {
+            return Result.Fail(ErrorResults.BadRequestError("Invalid reCAPTCHA verification"));
+        }
+
         User? user = await userManager.FindByNameAsync(request.UserName);
 
         if (user is null)

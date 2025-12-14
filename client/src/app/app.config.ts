@@ -1,5 +1,7 @@
+/* eslint-disable id-length */
 import {
   APP_INITIALIZER,
+  LOCALE_ID,
   ApplicationConfig,
   isDevMode,
   provideBrowserGlobalErrorListeners,
@@ -14,6 +16,7 @@ import { TranslocoHttpLoader } from './transloco-loader';
 import { routes } from './routes/app.routes';
 import { provideOAuthClient } from 'angular-oauth2-oidc';
 import { AuthService } from './services/auth.service';
+import { RECAPTCHA_LOADER_OPTIONS } from 'ng-recaptcha-2';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,7 +25,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withViewTransitions({
-        // eslint-disable-next-line id-length
         onViewTransitionCreated: ({ transition, from, to }) => {
           const shouldAnimate =
             routeHasViewTransitionEnabled(from) && routeHasViewTransitionEnabled(to);
@@ -50,6 +52,17 @@ export const appConfig: ApplicationConfig = {
       useFactory: authInitializer,
       deps: [AuthService],
       multi: true,
+    },
+    {
+      provide: RECAPTCHA_LOADER_OPTIONS,
+      useFactory: (locale: string) => ({
+        onBeforeLoad(url: URL): object {
+          url.searchParams.set('hl', locale);
+
+          return { url };
+        },
+      }),
+      deps: [LOCALE_ID],
     },
     provideAnimationsAsync(),
   ],

@@ -21,15 +21,12 @@ public class Program
         // API Documentation 
         builder.Services.ConfigureOpenApiAuthHeaders();
 
-        // Add Scoped Dependencies
+        // Add Scoped Dependencies & Services
         builder.Services.ConfigureRepositories();
-        builder.Services.ConfigureServices();
+        builder.Services.ConfigureServices(builder.Configuration);
 
         // Logging [env NEWRELIC_LICENSE_KEY]
         builder.Services.ConfigureSerilog(builder.Logging, builder.Configuration);
-
-        // Services
-        builder.Services.ConfigureServices(builder.Configuration);
 
         // Auth [env JWT_GENERATION_KEY, JWT_AUDIENCE_DOMAIN]
         builder.Services
