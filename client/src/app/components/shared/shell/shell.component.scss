@@ -183,14 +183,12 @@
   }
 }
 
-.sidebar__profile,
-.sidebar__profile-admin {
+.sidebar__profile {
   display: flex;
   justify-content: center;
 }
 
-.sidebar__profile-link,
-.sidebar__profile-link-admin {
+.sidebar__profile-link {
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -201,20 +199,19 @@
   font-weight: 500;
   border: 1px solid transparent;
 
-  .sidebar__profile-icon,
-  .sidebar__profile-icon-admin {
+  .sidebar__profile-icon {
     color: $primary;
     font-size: 24px;
     margin-right: 12px;
   }
 
-  .sidebar__profile-role-admin {
+  .sidebar__profile-role {
     display: block;
     font-size: 0.7em;
     opacity: 0.7;
   }
 
-  .sidebar__profile-username-admin {
+  .sidebar__profile-username {
     display: block;
     font-weight: 600;
     font-size: 0.9rem;
@@ -223,12 +220,6 @@
     text-overflow: ellipsis;
     max-width: 140px;
   }
-}
-
-.sidebar__profile-link:hover {
-  transform: translateY(-2px);
-  box-shadow: $shadow-1;
-  border-color: $primary;
 }
 
 .shell__overlay {

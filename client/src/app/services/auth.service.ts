@@ -72,6 +72,39 @@ export class AuthService {
     }
   }
 
+  public hasRole(role: string): boolean {
+    const user = this.accessTokenSubject$.value?.user;
+    if (!user || !user.roles) return false;
+    return user.roles.includes(role);
+  }
+
+  public getUserRole(): string {
+    const user = this.accessTokenSubject$.value?.user;
+    const roles = user?.roles ?? [];
+
+    if (roles.includes('PlatformAdmin')) return 'platform-admin';
+    if (roles.includes('Admin')) return 'admin';
+    if (roles.includes('Employee')) return 'employee';
+
+    return 'user';
+  }
+
+  public get isPlatformAdmin(): boolean {
+    return this.hasRole('PlatformAdmin');
+  }
+
+  public get isAdmin(): boolean {
+    return this.hasRole('Admin');
+  }
+
+  public get isEmployee(): boolean {
+    return this.hasRole('Employee');
+  }
+
+  public get isManager(): boolean {
+    return this.isPlatformAdmin || this.isAdmin;
+  }
+
   public getAccessToken(): Observable<AuthApiResponse | undefined> {
     return this.accessTokenSubject$.asObservable();
   }

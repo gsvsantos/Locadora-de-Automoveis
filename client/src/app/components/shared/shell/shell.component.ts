@@ -123,30 +123,24 @@ export class ShellComponent {
     this.isSidebarOpen = false;
   }
 
-  protected getUserRole(): 'platform-admin' | 'admin' | 'employee' | 'user' {
-    const roles = this.user?.roles ?? [];
-
-    if (roles.includes('PlatformAdmin')) return 'platform-admin';
-    if (roles.includes('Admin')) return 'admin';
-    if (roles.includes('Employee')) return 'employee';
-
-    return 'user';
+  protected get getUserRole(): string {
+    return this.authService.getUserRole();
   }
 
   protected get isEmployee(): boolean {
-    return this.getUserRole() === 'employee';
+    return this.authService.isEmployee;
   }
 
   protected get isAdmin(): boolean {
-    return this.getUserRole() === 'admin';
+    return this.authService.isAdmin;
   }
 
   protected get isPlatformAdmin(): boolean {
-    return this.getUserRole() === 'platform-admin';
+    return this.authService.isPlatformAdmin;
   }
 
   protected get isManager(): boolean {
-    return this.isAdmin || this.isPlatformAdmin;
+    return this.authService.isManager;
   }
 
   protected readonly isImpersonating$ = this.authService

@@ -1187,6 +1187,15 @@
     }
   },
   "configuration": {
+    "menu": {
+      "card": {
+        "quickActions": {
+          "title": "Menu",
+          "profile": "Profile Config",
+          "fuel": "Fuel Config"
+        }
+      }
+    },
     "update": {
       "card": {
         "title": "System Configuration",
