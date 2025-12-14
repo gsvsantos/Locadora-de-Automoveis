@@ -2,41 +2,41 @@
   "auth": {
     "register": {
       "card": {
-        "title": "Criar Conta",
+        "title": "Criar conta",
         "subtitle": "Ou use seu e-mail para se registrar",
         "placeholder": {
-          "userName": "Nome de Usuário",
-          "fullName": "Nome Completo",
+          "userName": "Nome de usuário",
+          "fullName": "Nome completo",
           "email": "E-mail",
-          "phoneNumber": "Telefone (ex: (99) 99999-9999)",
+          "phoneNumber": "Telefone (ex.: (99) 99999-9999)",
           "password": "Senha",
-          "confirmPassword": "Confirmar Senha"
+          "confirmPassword": "Confirmar senha"
         },
         "label": {
-          "userName": "Nome de Usuário",
-          "fullName": "Nome Completo",
+          "userName": "Nome de usuário",
+          "fullName": "Nome completo",
           "email": "E-mail",
           "phoneNumber": "Telefone",
           "password": "Senha",
-          "confirmPassword": "Confirmar Senha"
+          "confirmPassword": "Confirmar senha"
         },
         "errors": {
-          "usernameRequired": "O usuário é obrigatório.",
-          "usernameLength": "O usuário deve ter no mínimo 3 caracteres.",
+          "userNameRequired": "O nome de usuário é obrigatório.",
+          "userNameLength": "O nome de usuário deve ter pelo menos 3 caracteres.",
           "fullNameRequired": "O nome completo é obrigatório.",
-          "fullNameLength": "O nome deve ter no mínimo 3 caracteres.",
-          "fullNamePattern": "O nome contém caracteres inválidos.",
+          "fullNameLength": "O nome completo deve ter pelo menos 3 caracteres.",
+          "fullNamePattern": "O nome completo contém caracteres inválidos.",
           "emailRequired": "O e-mail é obrigatório.",
-          "emailLength": "Formato de e-mail inválido.",
+          "emailLength": "Informe um e-mail válido.",
           "phoneNumberRequired": "O telefone é obrigatório.",
-          "phoneNumberPattern": "Formato inválido.",
+          "phoneNumberPattern": "Formato de telefone inválido.",
           "passwordRequired": "A senha é obrigatória.",
-          "passwordLength": "A senha deve ter no mínimo 6 caracteres.",
+          "passwordLength": "A senha deve ter pelo menos 6 caracteres.",
           "passwordMustMatch": "As senhas não coincidem."
         },
         "buttons": {
-          "login": "Já tenho uma conta",
-          "confirm": "Cadastrar"
+          "login": "Já possui uma conta?",
+          "confirm": "Registrar"
         }
       }
     },
@@ -45,39 +45,24 @@
         "title": "Entrar",
         "subtitle": "Ou use sua conta",
         "placeholder": {
-          "userName": "Nome de Usuário",
+          "userName": "Nome de usuário",
           "password": "Senha"
         },
         "label": {
-          "userName": "Nome de Usuário",
+          "userName": "Nome de usuário",
           "password": "Senha"
         },
         "errors": {
-          "usernameRequired": "O usuário é obrigatório.",
-          "usernameLength": "Tamanho de usuário inválido.",
+          "usernameRequired": "O nome de usuário é obrigatório.",
+          "usernameLength": "O nome de usuário deve ter pelo menos 3 caracteres.",
           "passwordRequired": "A senha é obrigatória.",
-          "passwordLength": "Tamanho de senha inválido."
+          "passwordLength": "A senha deve ter pelo menos 6 caracteres."
         },
         "buttons": {
           "register": "Criar uma conta",
-          "confirm": "Entrar"
+          "confirm": "Entrar",
+          "password": "Esqueceu sua senha?"
         }
-      }
-    },
-    "security": {
-      "title": "Alterar Senha",
-      "label": {
-        "currentPassword": "Senha Atual",
-        "newPassword": "Nova Senha",
-        "confirmNewPassword": "Confirmar Nova Senha"
-      },
-      "errors": {
-        "required": "Campo obrigatório.",
-        "minLength": "A senha deve ter no mínimo 6 caracteres.",
-        "mismatch": "As novas senhas não coincidem."
-      },
-      "buttons": {
-        "change": "Atualizar Senha"
       }
     }
   },
@@ -92,7 +77,7 @@
     "rentals": "Locações",
     "partners": "Parceiros",
     "coupons": "Cupons",
-    "deimpersonate": "Voltar para PlatformAdmin"
+    "deimpersonate": "Voltar para Platform Admin"
   },
   "home": {
     "dashboard": {
@@ -100,8 +85,8 @@
         "quickActions": {
           "title": "Ações rápidas",
           "newRental": "Iniciar nova locação",
-          "newClient": "Registrar novo cliente",
-          "newDriver": "Registrar novo condutor",
+          "newClient": "Cadastrar novo cliente",
+          "newDriver": "Cadastrar novo condutor",
           "viewAllRentals": "Ver todas as locações"
         },
         "stats": {
@@ -128,31 +113,31 @@
   "admin": {
     "list": {
       "header": {
-        "title": "Empresas Cadastradas"
+        "title": "Empresas cadastradas"
       },
       "label": {
         "unnamed": "Empresa sem nome",
-        "roles": "Nível de Acesso"
+        "roles": "Nível de acesso"
       },
       "buttons": {
-        "impersonate": "Acessar como empresa",
-        "deimpersonate": "Voltar para PlatformAdmin"
+        "impersonate": "Entrar como",
+        "deimpersonate": "Voltar para Platform Admin"
       }
     }
   },
   "search": {
     "placeholder": "Buscar",
     "messages": {
-      "notFound": "teste"
+      "notFound": "Nenhum resultado encontrado."
     }
   },
   "employee": {
     "create": {
       "card": {
-        "title": "Registro de novo funcionário",
+        "title": "Cadastro de novo funcionário",
         "subtitle": "Preencha os dados do funcionário abaixo.",
         "section": {
-          "personalData": "Informações pessoais e de contato",
+          "personalData": "Dados pessoais e de contato",
           "accountData": "Credenciais de acesso",
           "professionalData": "Dados profissionais"
         },
@@ -176,7 +161,7 @@
         "errors": {
           "fullNameRequired": "O nome completo é obrigatório.",
           "fullNameLength": "O nome deve ter pelo menos 3 caracteres.",
-          "fullNameInvalid": "Há algo errado nesse nome.",
+          "fullNameInvalid": "Há algo errado com esse nome.",
           "emailRequired": "O e-mail é obrigatório.",
           "emailInvalid": "Formato de e-mail inválido.",
           "phoneNumberRequired": "O telefone é obrigatório.",
@@ -191,7 +176,7 @@
         },
         "buttons": {
           "back": "Voltar",
-          "confirm": "Registrar"
+          "confirm": "Cadastrar"
         }
       }
     },
@@ -232,7 +217,7 @@
         "subtitle": "Tem certeza de que deseja excluir permanentemente o registro deste funcionário?",
         "section": {
           "details": "Informações do funcionário",
-          "warning": "Essa ação não pode ser desfeita. Todos os dados associados serão perdidos."
+          "warning": "Esta ação não pode ser desfeita. Todos os dados associados serão perdidos."
         },
         "label": {
           "fullName": "Nome completo",
@@ -244,47 +229,12 @@
           "confirm": "Excluir"
         }
       }
-    },
-    "selfUpdate": {
-      "card": {
-        "title": "Editar meu perfil",
-        "subtitle": "Atualize suas informações pessoais e de contato.",
-        "section": {
-          "personalData": "Informações pessoais e de contato",
-          "accountData": "Credenciais de acesso (usuário, senha)"
-        },
-        "placeholder": {
-          "fullName": "Nome completo",
-          "email": "E-mail",
-          "phoneNumber": "Telefone (ex.: (99) 99999-9999)",
-          "userName": "Nome de usuário",
-          "password": "Nova senha (deixe em branco para manter a atual)"
-        },
-        "errors": {
-          "fullNameRequired": "Seu nome completo é obrigatório.",
-          "fullNameLength": "Seu nome deve ter pelo menos 3 caracteres.",
-          "emailRequired": "O e-mail é obrigatório.",
-          "emailInvalid": "Formato de e-mail inválido.",
-          "phoneNumberRequired": "O telefone é obrigatório.",
-          "phoneNumberInvalid": "Formato de telefone inválido.",
-          "userNameRequired": "O nome de usuário é obrigatório.",
-          "userNameLength": "O nome de usuário deve ter pelo menos 5 caracteres.",
-          "passwordLength": "A nova senha deve ter pelo menos 8 caracteres."
-        },
-        "label": {
-          "fullName": "Nome completo"
-        },
-        "buttons": {
-          "back": "Voltar",
-          "confirm": "Salvar alterações"
-        }
-      }
     }
   },
   "group": {
     "create": {
       "card": {
-        "title": "Registrar grupo de veículos",
+        "title": "Cadastrar grupo de veículos",
         "subtitle": "Informe os dados do novo grupo de veículos.",
         "placeholder": {
           "name": "Nome do grupo (ex.: Econômico, SUV, Luxo)"
@@ -301,16 +251,16 @@
         },
         "buttons": {
           "back": "Voltar",
-          "confirm": "Confirmar registro"
+          "confirm": "Confirmar cadastro"
         }
       }
     },
     "update": {
       "card": {
         "title": "Editar grupo de veículos",
-        "subtitle": "Modifique o nome do grupo de veículos.",
+        "subtitle": "Altere o nome do grupo de veículos.",
         "section": {
-          "groupData": "Detalhes do grupo"
+          "groupData": "Dados do grupo"
         },
         "placeholder": {
           "name": "Nome do grupo"
@@ -331,10 +281,10 @@
     "delete": {
       "card": {
         "title": "Excluir grupo de veículos",
-        "subtitle": "Revise os dados antes de prosseguir com a exclusão.",
+        "subtitle": "Revise os detalhes antes de prosseguir com a exclusão.",
         "section": {
           "details": "Informações do grupo",
-          "warning": "Essa ação não pode ser desfeita. Todos os veículos associados a esse grupo podem perder a categorização."
+          "warning": "Esta ação não pode ser desfeita. Todos os veículos associados a este grupo podem perder a categorização."
         },
         "label": {
           "name": "Nome"
@@ -355,7 +305,7 @@
         "groupName": "Nome do grupo"
       },
       "buttons": {
-        "register": "Registrar novo plano",
+        "register": "Cadastrar novo plano",
         "seeActives": "Ver ativos",
         "seeInactives": "Ver inativos"
       },
@@ -366,27 +316,27 @@
       },
       "label": {
         "dailyRate": "Diária",
-        "pricePerKm": "Preço por Km",
-        "pricePerKmExtrapolated": "Preço por Km (extra)",
-        "fixedRate": "Taxa fixa"
+        "pricePerKm": "Preço por km",
+        "pricePerKmExtrapolated": "Preço por km (extra)",
+        "fixedRate": "Valor fixo"
       }
     },
     "create": {
       "card": {
-        "title": "Registrar plano de cobrança",
+        "title": "Cadastrar plano de cobrança",
         "subtitle": "Defina as tarifas para o novo grupo de veículos.",
         "section": {
           "groupSelection": "Seleção do grupo de veículos",
           "dailyBilling": "1. Cobrança diária (quilometragem incluída)",
           "controlledBilling": "2. Cobrança controlada (limite de quilometragem)",
-          "freeBilling": "3. Cobrança livre (taxa fixa)"
+          "freeBilling": "3. Cobrança livre (valor fixo)"
         },
         "placeholder": {
           "groupId": "Selecione o grupo...",
           "dailyRate": "Diária (R$)",
-          "pricePerKm": "Preço por Km (R$)",
-          "pricePerKmExtrapolated": "Preço por Km extrapolado (R$)",
-          "fixedRate": "Taxa fixa (R$)"
+          "pricePerKm": "Preço por km (R$)",
+          "pricePerKmExtrapolated": "Preço por km extrapolado (R$)",
+          "fixedRate": "Valor fixo (R$)"
         },
         "label": {
           "groupId": "Grupo de veículos"
@@ -397,26 +347,26 @@
         },
         "buttons": {
           "back": "Voltar",
-          "confirm": "Registrar plano"
+          "confirm": "Cadastrar plano"
         }
       }
     },
     "update": {
       "card": {
         "title": "Editar plano de cobrança",
-        "subtitle": "Revise e atualize as tarifas do plano e o grupo associado.",
+        "subtitle": "Revise e atualize as tarifas e o grupo associado.",
         "section": {
-          "groupSelection": "Grupo de veículos atribuído",
+          "groupSelection": "Grupo de veículos associado",
           "dailyBilling": "1. Cobrança diária (quilometragem incluída)",
           "controlledBilling": "2. Cobrança controlada (limite de quilometragem)",
-          "freeBilling": "3. Cobrança livre (taxa fixa)"
+          "freeBilling": "3. Cobrança livre (valor fixo)"
         },
         "placeholder": {
           "groupIdSelect": "Selecione ou altere o grupo...",
           "dailyRate": "Diária (R$)",
-          "pricePerKm": "Preço por Km (R$)",
-          "pricePerKmExtrapolated": "Preço por Km extrapolado (R$)",
-          "fixedRate": "Taxa fixa (R$)"
+          "pricePerKm": "Preço por km (R$)",
+          "pricePerKmExtrapolated": "Preço por km extrapolado (R$)",
+          "fixedRate": "Valor fixo (R$)"
         },
         "label": {
           "groupId": "Grupo de veículos"
@@ -433,20 +383,20 @@
     "delete": {
       "card": {
         "title": "Excluir plano de cobrança",
-        "subtitle": "Confirme a exclusão permanente do seguinte plano de cobrança.",
+        "subtitle": "Confirme a exclusão definitiva do plano abaixo.",
         "section": {
           "details": "Detalhes do plano",
-          "daily": "Tarifas da cobrança diária",
-          "controlled": "Tarifas da cobrança controlada",
-          "free": "Tarifas da cobrança livre",
-          "warning": "Essa ação não pode ser desfeita. Qualquer locação futura vinculada a esse plano exigirá ajuste manual."
+          "daily": "Tarifas de cobrança diária",
+          "controlled": "Tarifas de cobrança controlada",
+          "free": "Tarifas de cobrança livre",
+          "warning": "Esta ação não pode ser desfeita. Qualquer locação futura vinculada a este plano exigirá ajuste manual."
         },
         "label": {
           "name": "Nome do plano",
           "dailyRate": "Diária",
-          "pricePerKm": "Preço por Km",
-          "pricePerKmExtrapolated": "Preço por Km (extra)",
-          "fixedRate": "Taxa fixa"
+          "pricePerKm": "Preço por km",
+          "pricePerKmExtrapolated": "Preço por km (extra)",
+          "fixedRate": "Valor fixo"
         },
         "buttons": {
           "back": "Cancelar",
@@ -461,7 +411,7 @@
         "title": "Catálogo de veículos"
       },
       "buttons": {
-        "register": "Registrar novo veículo",
+        "register": "Cadastrar novo veículo",
         "seeActives": "Ver ativos",
         "seeInactives": "Ver inativos"
       },
@@ -473,7 +423,7 @@
     },
     "create": {
       "card": {
-        "title": "Registrar novo veículo",
+        "title": "Cadastrar novo veículo",
         "subtitle": "Informe os dados e especificações do veículo.",
         "section": {
           "identification": "Grupo e identificação",
@@ -489,7 +439,7 @@
           "color": "Cor",
           "year": "Ano (ex.: 2023)",
           "fuelType": "Selecione o tipo de combustível...",
-          "fuelTankCapacity": "Capacidade do tanque de combustível (em litros)",
+          "fuelTankCapacity": "Capacidade do tanque (em litros)",
           "photoPath": "URL da foto"
         },
         "label": {
@@ -499,7 +449,7 @@
           "model": "Modelo",
           "color": "Cor",
           "year": "Ano",
-          "fuelType": "Tipo de combustível",
+          "fuelType": "Combustível",
           "fuelTankCapacity": "Capacidade do tanque"
         },
         "fuel": {
@@ -522,7 +472,7 @@
         },
         "buttons": {
           "back": "Voltar",
-          "confirm": "Registrar veículo"
+          "confirm": "Cadastrar veículo"
         }
       }
     },
@@ -544,7 +494,7 @@
           "color": "Cor",
           "year": "Ano (ex.: 2023)",
           "fuelType": "Selecione o tipo de combustível...",
-          "fuelTankCapacity": "Capacidade do tanque de combustível (em litros)",
+          "fuelTankCapacity": "Capacidade do tanque (em litros)",
           "photoPath": "URL da foto"
         },
         "label": {
@@ -554,7 +504,7 @@
           "model": "Modelo",
           "color": "Cor",
           "year": "Ano",
-          "fuelType": "Tipo de combustível",
+          "fuelType": "Combustível",
           "fuelTankCapacity": "Capacidade do tanque"
         },
         "fuel": {
@@ -584,10 +534,10 @@
     "delete": {
       "card": {
         "title": "Excluir veículo",
-        "subtitle": "Confirme a exclusão permanente do seguinte veículo do sistema.",
+        "subtitle": "Confirme a exclusão definitiva do veículo abaixo.",
         "section": {
           "details": "Resumo do veículo",
-          "warning": "Essa ação não pode ser desfeita. Qualquer histórico de locação ou reserva vinculado a esse veículo será afetado."
+          "warning": "Esta ação não pode ser desfeita. Qualquer histórico de locação ou reserva vinculada a este veículo será afetado."
         },
         "label": {
           "licensePlate": "Placa",
@@ -609,7 +559,7 @@
         "title": "Cadastro de clientes"
       },
       "buttons": {
-        "register": "Registrar novo cliente",
+        "register": "Cadastrar novo cliente",
         "seeActives": "Ver ativos",
         "seeInactives": "Ver inativos"
       },
@@ -619,10 +569,10 @@
     },
     "create": {
       "card": {
-        "title": "Registro de novo cliente",
+        "title": "Cadastro de novo cliente",
         "subtitle": "Preencha os dados pessoais e de endereço do cliente.",
         "section": {
-          "personalData": "Informações pessoais e de contato",
+          "personalData": "Dados pessoais e de contato",
           "addressData": "Endereço"
         },
         "placeholder": {
@@ -631,7 +581,7 @@
           "document": "Documento (CPF/CNPJ)",
           "email": "E-mail",
           "phoneNumber": "Telefone",
-          "licenseNumber": "Número da CNH",
+          "licenseNumber": "CNH",
           "state": "Estado",
           "city": "Cidade",
           "neighborhood": "Bairro",
@@ -657,7 +607,7 @@
         "errors": {
           "fullNameRequired": "O nome completo é obrigatório.",
           "fullNameLength": "O nome deve ter pelo menos 3 caracteres.",
-          "fullNameInvalid": "Há algo errado nesse nome.",
+          "fullNameInvalid": "Há algo errado com esse nome.",
           "typeRequired": "O tipo de cliente é obrigatório.",
           "documentRequired": "O documento é obrigatório.",
           "documentInvalid": "O documento deve ser um CPF ou CNPJ válido.",
@@ -672,7 +622,7 @@
         },
         "buttons": {
           "back": "Voltar",
-          "confirm": "Registrar cliente"
+          "confirm": "Cadastrar cliente"
         }
       }
     },
@@ -681,7 +631,7 @@
         "title": "Editar dados do cliente",
         "subtitle": "Atualize as informações e o endereço do cliente.",
         "section": {
-          "personalData": "Informações pessoais e de contato",
+          "personalData": "Dados pessoais e de contato",
           "addressData": "Endereço"
         },
         "placeholder": {
@@ -690,7 +640,7 @@
           "document": "Documento (CPF/CNPJ)",
           "email": "E-mail",
           "phoneNumber": "Telefone",
-          "licenseNumber": "Número da CNH",
+          "licenseNumber": "CNH",
           "state": "Estado",
           "city": "Cidade",
           "neighborhood": "Bairro",
@@ -738,11 +688,11 @@
     "delete": {
       "card": {
         "title": "Excluir cliente",
-        "subtitle": "Confirme a exclusão permanente do registro do cliente.",
+        "subtitle": "Confirme a exclusão definitiva do registro do cliente.",
         "section": {
           "details": "Identificação do cliente",
           "addressSummary": "Resumo do endereço",
-          "warning": "Essa ação não pode ser desfeita. Todo o histórico de locações e dados associados será perdido."
+          "warning": "Esta ação não pode ser desfeita. Todo o histórico de locações e dados associados serão perdidos."
         },
         "label": {
           "fullName": "Nome completo",
@@ -767,7 +717,7 @@
         "title": "Cadastro de condutores"
       },
       "buttons": {
-        "register": "Registrar novo condutor",
+        "register": "Cadastrar novo condutor",
         "seeActives": "Ver ativos",
         "seeInactives": "Ver inativos"
       },
@@ -780,17 +730,17 @@
     },
     "create": {
       "card": {
-        "title": "Registrar novo condutor",
+        "title": "Cadastrar novo condutor",
         "subtitle": "Preencha os dados do condutor e associe-o a um cliente.",
         "section": {
           "identification": "Associação ao cliente",
           "personalData": "Dados pessoais do condutor",
           "licenseData": "Dados da CNH do condutor",
-          "associatedDrivers": "Selecionar condutor existente (PJ)"
+          "associatedDrivers": "Selecionar condutor existente (cliente PJ)"
         },
         "placeholder": {
           "client": "Selecione o cliente associado...",
-          "selectDriver": "Selecione um condutor associado à empresa...",
+          "selectDriver": "Selecione o condutor associado à empresa...",
           "fullName": "Nome completo",
           "document": "Documento (CPF)",
           "email": "E-mail",
@@ -809,8 +759,8 @@
           "licenseValidity": "Validade da CNH"
         },
         "info": {
-          "clientDetailsPrepopulated": "Os dados do cliente foram preenchidos automaticamente e não podem ser editados. Informe apenas os dados da CNH.",
-          "registerNewDriverForCorporate": "Preencha os dados abaixo para registrar um novo condutor pessoa física associado ao cliente PJ."
+          "clientDetailsPrepopulated": "Os dados do cliente foram preenchidos automaticamente e estão bloqueados para edição. Informe apenas os dados da CNH.",
+          "registerNewDriverForCorporate": "Preencha os dados abaixo para cadastrar um novo condutor (PF) associado ao cliente corporativo."
         },
         "errors": {
           "clientRequired": "A associação a um cliente é obrigatória.",
@@ -826,20 +776,20 @@
         },
         "buttons": {
           "back": "Voltar",
-          "confirm": "Registrar condutor"
+          "confirm": "Cadastrar condutor"
         }
       }
     },
     "delete": {
       "card": {
         "title": "Excluir condutor",
-        "subtitle": "Confirme a exclusão permanente do registro do condutor.",
+        "subtitle": "Confirme a exclusão definitiva do registro do condutor.",
         "section": {
           "details": "Identificação do condutor",
           "contact": "Informações de contato",
           "licenseData": "Dados da CNH",
           "associatedClient": "Cliente associado",
-          "warning": "Essa ação não pode ser desfeita. Todo o histórico de locações vinculado a este condutor será afetado."
+          "warning": "Esta ação não pode ser desfeita. Todo o histórico de locações vinculadas a este condutor será afetado."
         },
         "label": {
           "fullName": "Nome completo",
@@ -863,7 +813,7 @@
         "title": "Serviços adicionais e taxas"
       },
       "buttons": {
-        "register": "Registrar novo extra",
+        "register": "Cadastrar novo extra",
         "seeActives": "Ver ativos",
         "seeInactives": "Ver inativos"
       },
@@ -881,13 +831,13 @@
     },
     "create": {
       "card": {
-        "title": "Registrar novo extra",
+        "title": "Cadastrar novo extra",
         "subtitle": "Defina o nome, o tipo e o preço do novo serviço adicional ou taxa.",
         "section": {
-          "details": "Detalhes e precificação do extra"
+          "details": "Detalhes e preço do extra"
         },
         "placeholder": {
-          "name": "Nome do serviço (ex.: Assento para bebê, Seguro total, Taxa de aeroporto)",
+          "name": "Nome do serviço (ex.: Cadeirinha, Seguro total, Taxa de aeroporto)",
           "type": "Selecione o tipo...",
           "price": "Preço (ex.: 50,00)"
         },
@@ -903,7 +853,7 @@
           "fee": "Taxa"
         },
         "info": {
-          "isDaily": "Marque se o preço deve ser cobrado por dia de locação."
+          "isDaily": "Marque se o valor deve ser cobrado por dia de locação."
         },
         "errors": {
           "nameRequired": "O nome é obrigatório.",
@@ -914,19 +864,19 @@
         },
         "buttons": {
           "back": "Voltar",
-          "confirm": "Registrar extra"
+          "confirm": "Cadastrar extra"
         }
       }
     },
     "update": {
       "card": {
         "title": "Editar extra",
-        "subtitle": "Atualize os detalhes do serviço e a precificação.",
+        "subtitle": "Atualize os detalhes do serviço e o preço.",
         "section": {
-          "details": "Detalhes e precificação do extra"
+          "details": "Detalhes e preço do extra"
         },
         "placeholder": {
-          "name": "Nome do serviço (ex.: Assento para bebê, Seguro total, Taxa de aeroporto)",
+          "name": "Nome do serviço (ex.: Cadeirinha, Seguro total, Taxa de aeroporto)",
           "type": "Selecione o tipo...",
           "price": "Preço (ex.: 50,00)"
         },
@@ -942,7 +892,7 @@
           "fee": "Taxa"
         },
         "info": {
-          "isDaily": "Marque se o preço deve ser cobrado por dia de locação."
+          "isDaily": "Marque se o valor deve ser cobrado por dia de locação."
         },
         "errors": {
           "nameRequired": "O nome é obrigatório.",
@@ -960,10 +910,10 @@
     "delete": {
       "card": {
         "title": "Excluir serviço adicional",
-        "subtitle": "Confirme a exclusão permanente do serviço.",
+        "subtitle": "Confirme a exclusão definitiva do serviço.",
         "section": {
           "details": "Detalhes do item",
-          "warning": "Essa ação não pode ser desfeita. Qualquer locação futura vinculada a esse extra exigirá ajuste manual."
+          "warning": "Esta ação não pode ser desfeita. Qualquer locação futura vinculada a este extra exigirá ajuste manual."
         },
         "buttons": {
           "back": "Cancelar",
@@ -999,10 +949,10 @@
         "startDate": "Data de início",
         "expectedReturnDate": "Data prevista de devolução",
         "returnDate": "Data de devolução",
-        "estimatedKilometers": "KM estimados",
-        "startKm": "KM inicial",
+        "estimatedKilometers": "KM estimado",
+        "startKm": "Quilometragem inicial",
         "driver": "Condutor",
-        "basePrice": "Preço base",
+        "basePrice": "Valor base",
         "finalPrice": "Valor total (estimado)",
         "billingPlan": "Plano de cobrança",
         "extras": "Extras"
@@ -1010,12 +960,12 @@
     },
     "create": {
       "card": {
-        "title": "Registro de nova locação",
-        "subtitle": "Defina o cliente, veículo, período e estrutura de cobrança da locação.",
+        "title": "Cadastro de nova locação",
+        "subtitle": "Defina o cliente, veículo, período e estrutura de preços da locação.",
         "section": {
           "association": "Associação de cliente, condutor e funcionário",
           "vehicleAndDates": "Veículo e período",
-          "billing": "Cobrança e quilômetros estimados",
+          "billing": "Cobrança e quilometragem estimada",
           "extrasAndCoupon": "Extras e descontos"
         },
         "placeholder": {
@@ -1023,9 +973,9 @@
           "driver": "Selecione o condutor...",
           "employee": "Selecione o funcionário...",
           "vehicle": "Selecione o veículo...",
-          "startKm": "KM inicial",
+          "startKm": "Quilometragem inicial",
           "billingPlanType": "Selecione o tipo de plano de cobrança...",
-          "estimatedKilometers": "Quilômetros estimados",
+          "estimatedKilometers": "Quilometragem estimada",
           "coupon": "Selecione o cupom (opcional)"
         },
         "label": {
@@ -1037,8 +987,8 @@
           "expectedReturnDate": "Data prevista de devolução",
           "startKm": "KM inicial",
           "billingPlanType": "Tipo de plano de cobrança",
-          "estimatedKilometers": "KM estimados",
-          "extras": "Serviços adicionais/extras",
+          "estimatedKilometers": "KM estimado",
+          "extras": "Serviços adicionais/Extras",
           "coupon": "Cupom"
         },
         "plan": {
@@ -1056,11 +1006,11 @@
           "startKmRequired": "O KM inicial é obrigatório.",
           "startKmMin": "O KM inicial deve ser maior que zero.",
           "billingPlanTypeRequired": "O tipo de plano de cobrança é obrigatório.",
-          "estimatedKilometersRequired": "Os KM estimados são obrigatórios."
+          "estimatedKilometersRequired": "O KM estimado é obrigatório."
         },
         "buttons": {
           "back": "Voltar",
-          "confirm": "Registrar locação"
+          "confirm": "Cadastrar locação"
         }
       }
     },
@@ -1071,17 +1021,17 @@
         "section": {
           "association": "Cliente, condutor e veículo (fixos)",
           "timelineAndEstimates": "Período e estimativas",
-          "extras": "Serviços adicionais/extras",
-          "pricing": "Precificação atual"
+          "extras": "Serviços adicionais/Extras",
+          "pricing": "Preços atuais"
         },
         "placeholder": {
           "client": "Selecione o cliente...",
           "driver": "Selecione o condutor...",
           "employee": "Selecione o funcionário...",
           "vehicle": "Selecione o veículo...",
-          "startKm": "KM inicial",
+          "startKm": "Quilometragem inicial",
           "billingPlanType": "Selecione o tipo de plano de cobrança...",
-          "estimatedKilometers": "Quilômetros estimados",
+          "estimatedKilometers": "Quilometragem estimada",
           "coupon": "Selecione o cupom (opcional)"
         },
         "label": {
@@ -1091,16 +1041,16 @@
           "vehicle": "Veículo",
           "startDate": "Data de início",
           "expectedReturnDate": "Data prevista de devolução",
-          "estimatedKilometers": "KM estimados",
+          "estimatedKilometers": "KM estimado",
           "extras": "Extras selecionados",
           "billingPlanType": "Tipo de plano de cobrança",
-          "baseRentalPrice": "Preço base",
-          "finalPrice": "Preço total",
+          "baseRentalPrice": "Valor base",
+          "finalPrice": "Valor total",
           "coupon": "Cupom"
         },
         "info": {
           "startDateFixed": "A data de início da locação não pode ser alterada.",
-          "extrasHint": "Selecione ou desmarque itens para modificar a lista de extras opcionais."
+          "extrasHint": "Selecione ou desmarque itens para ajustar a lista de extras opcionais."
         },
         "plan": {
           "daily": "Cobrança diária",
@@ -1109,7 +1059,7 @@
         },
         "errors": {
           "expectedReturnDateRequired": "A data prevista de devolução é obrigatória.",
-          "estimatedKilometersRequired": "Os KM estimados são obrigatórios."
+          "estimatedKilometersRequired": "O KM estimado é obrigatório."
         },
         "buttons": {
           "back": "Voltar",
@@ -1119,13 +1069,13 @@
     },
     "delete": {
       "card": {
-        "title": "Cancelar/excluir locação",
-        "subtitle": "Confirme o cancelamento permanente do contrato de locação.",
+        "title": "Cancelar/Excluir locação",
+        "subtitle": "Confirme o cancelamento definitivo do contrato de locação.",
         "section": {
           "details": "Resumo da locação",
           "vehicleAndDates": "Veículo e período",
-          "pricing": "Detalhes de preços",
-          "warning": "Essa ação não pode ser desfeita. Todos os registros financeiros associados serão afetados."
+          "pricing": "Detalhes de preço",
+          "warning": "Esta ação não pode ser desfeita. Todos os registros financeiros associados serão afetados."
         },
         "label": {
           "client": "Cliente",
@@ -1134,7 +1084,7 @@
           "startDate": "Data de início",
           "expectedReturnDate": "Data prevista de devolução",
           "billingPlanType": "Tipo de plano de cobrança",
-          "finalPrice": "Preço total (estimado)",
+          "finalPrice": "Valor total (estimado)",
           "extrasQuantity": "Quantidade de extras"
         },
         "buttons": {
@@ -1145,15 +1095,15 @@
     },
     "return": {
       "card": {
-        "title": "Devolução do veículo",
-        "subtitle": "Registre a quilometragem final e o nível de combustível para encerrar o contrato de locação.",
+        "title": "Devolução de veículo",
+        "subtitle": "Registre a quilometragem final e o nível de combustível para encerrar a locação.",
         "section": {
           "summary": "Resumo da locação (fixo)",
           "returnData": "Dados da devolução",
           "finalCalculation": "Cálculo final"
         },
         "placeholder": {
-          "endKm": "KM final",
+          "endKm": "Quilometragem final",
           "fuelLevel": "Selecione o nível de combustível..."
         },
         "label": {
@@ -1161,7 +1111,7 @@
           "vehicle": "Veículo",
           "startDate": "Data de início",
           "startKm": "KM inicial",
-          "endKm": "Leitura de KM final",
+          "endKm": "KM final",
           "fuelLevel": "Nível de combustível",
           "totalValue": "Valor total"
         },
@@ -1173,7 +1123,7 @@
           "full": "Cheio (100%)"
         },
         "errors": {
-          "endKmRequired": "A leitura de KM final é obrigatória.",
+          "endKmRequired": "A quilometragem final é obrigatória.",
           "endKmMin": "O KM final deve ser maior ou igual ao KM inicial.",
           "fuelLevelRequired": "A seleção do nível de combustível é obrigatória."
         },
@@ -1184,13 +1134,76 @@
       }
     }
   },
-  "configuration": {
+  "profile": {
     "update": {
+      "card": {
+        "title": "Editar meu perfil",
+        "subtitle": "Atualize seus dados pessoais e de contato.",
+        "section": {
+          "personalData": "Dados pessoais e de contato",
+          "accountData": "Credenciais de acesso (nome de usuário, senha)"
+        },
+        "placeholder": {
+          "fullName": "Nome completo",
+          "email": "E-mail",
+          "phoneNumber": "Telefone (ex.: (99) 99999-9999)",
+          "userName": "Nome de usuário",
+          "password": "Nova senha (deixe em branco para manter a atual)"
+        },
+        "errors": {
+          "fullNameRequired": "Seu nome completo é obrigatório.",
+          "fullNameLength": "Seu nome deve ter pelo menos 3 caracteres.",
+          "emailRequired": "O e-mail é obrigatório.",
+          "emailInvalid": "Formato de e-mail inválido.",
+          "phoneNumberRequired": "O telefone é obrigatório.",
+          "phoneNumberInvalid": "Formato de telefone inválido.",
+          "userNameRequired": "O nome de usuário é obrigatório.",
+          "userNameLength": "O nome de usuário deve ter pelo menos 5 caracteres.",
+          "passwordLength": "A nova senha deve ter pelo menos 8 caracteres."
+        },
+        "label": {
+          "fullName": "Nome completo"
+        },
+        "buttons": {
+          "back": "Voltar",
+          "confirm": "Salvar alterações"
+        }
+      }
+    },
+    "change-password": {
+      "title": "Alterar senha",
+      "label": {
+        "currentPassword": "Senha atual",
+        "newPassword": "Nova senha",
+        "confirmNewPassword": "Confirmar nova senha"
+      },
+      "errors": {
+        "required": "Campo obrigatório.",
+        "minLength": "A senha deve ter pelo menos 6 caracteres.",
+        "mismatch": "As novas senhas não coincidem.",
+        "samePassword": "A senha atual e a nova são iguais."
+      },
+      "buttons": {
+        "change": "Atualizar senha"
+      }
+    }
+  },
+  "configuration": {
+    "menu": {
+      "card": {
+        "quickActions": {
+          "title": "Menu",
+          "profile": "Configurações de perfil",
+          "fuel": "Configurações de combustível"
+        }
+      }
+    },
+    "fuel": {
       "card": {
         "title": "Configurações do sistema",
         "subtitle": "Defina os preços base para cálculo de referência.",
         "section": {
-          "fuelPrices": "Preços dos combustíveis"
+          "fuelPrices": "Preços de combustíveis"
         },
         "placeholder": {
           "gasolinePrice": "Preço por litro de gasolina (R$)",
@@ -1224,7 +1237,7 @@
         "title": "Parcerias"
       },
       "buttons": {
-        "register": "Registrar novo parceiro",
+        "register": "Cadastrar novo parceiro",
         "seeActives": "Ver ativos",
         "seeInactives": "Ver inativos"
       },
@@ -1234,7 +1247,7 @@
     },
     "create": {
       "card": {
-        "title": "Registrar novo parceiro",
+        "title": "Cadastrar novo parceiro",
         "subtitle": "Informe o nome completo do novo parceiro.",
         "section": {
           "identification": "Identificação do parceiro"
@@ -1251,7 +1264,7 @@
         },
         "buttons": {
           "back": "Voltar",
-          "confirm": "Registrar parceiro"
+          "confirm": "Cadastrar parceiro"
         }
       }
     },
@@ -1281,10 +1294,10 @@
     "delete": {
       "card": {
         "title": "Excluir parceiro",
-        "subtitle": "Confirme a exclusão permanente do parceiro e de todos os dados associados.",
+        "subtitle": "Confirme a exclusão definitiva do parceiro e de todos os dados associados.",
         "section": {
           "details": "Detalhes do parceiro",
-          "warning": "Essa ação não pode ser desfeita. Todos os cupons associados se tornarão inválidos."
+          "warning": "Esta ação não pode ser desfeita. Todos os cupons associados se tornarão inválidos."
         },
         "label": {
           "fullName": "Nome completo",
@@ -1309,7 +1322,7 @@
           "id": "ID",
           "status": "Status",
           "discountValue": "Valor do desconto",
-          "expirationDate": "Data de vencimento"
+          "expirationDate": "Data de expiração"
         },
         "status": {
           "active": "Ativo",
@@ -1331,15 +1344,15 @@
         "title": "Catálogo de cupons"
       },
       "buttons": {
-        "register": "Registrar novo cupom",
+        "register": "Cadastrar novo cupom",
         "seeActives": "Ver ativos",
         "seeInactives": "Ver inativos",
-        "seeMostUsed": "Ver mais utilizados"
+        "seeMostUsed": "Ver mais usados"
       },
       "label": {
         "partner": "Parceiro",
         "discountValue": "Valor do desconto",
-        "expirationDate": "Data de vencimento",
+        "expirationDate": "Data de expiração",
         "status": "Status"
       },
       "status": {
@@ -1349,10 +1362,10 @@
     },
     "usage": {
       "header": {
-        "title": "Cupons mais utilizados (estatísticas)"
+        "title": "Cupons mais usados (estatísticas)"
       },
       "buttons": {
-        "register": "Registrar novo cupom",
+        "register": "Cadastrar novo cupom",
         "seeAll": "Ver todos os cupons"
       },
       "label": {
@@ -1363,11 +1376,11 @@
     },
     "create": {
       "card": {
-        "title": "Registrar novo cupom",
+        "title": "Cadastrar novo cupom",
         "subtitle": "Defina os detalhes do cupom e associe-o a um parceiro.",
         "section": {
           "details": "Detalhes do cupom",
-          "partner": "Associação ao parceiro"
+          "partner": "Associação de parceiro"
         },
         "placeholder": {
           "name": "Código do cupom (ex.: BLACKFRIDAY25)",
@@ -1377,30 +1390,30 @@
         "label": {
           "name": "Código do cupom",
           "discountValue": "Valor do desconto",
-          "expirationDate": "Data de vencimento",
+          "expirationDate": "Data de expiração",
           "partnerId": "Parceiro associado"
         },
         "errors": {
           "nameRequired": "O código do cupom é obrigatório.",
           "nameLength": "O código deve ter pelo menos 4 caracteres.",
-          "discountValueRequired": "O valor do desconto é obrigatório.",
-          "discountValueMin": "O valor do desconto deve ser maior que zero.",
-          "expirationDateRequired": "A data de vencimento é obrigatória.",
+          "discountValueRequired": "O valor de desconto é obrigatório.",
+          "discountValueMin": "O valor de desconto deve ser maior que zero.",
+          "expirationDateRequired": "A data de expiração é obrigatória.",
           "partnerIdRequired": "A associação a um parceiro é obrigatória."
         },
         "buttons": {
           "back": "Voltar",
-          "confirm": "Registrar cupom"
+          "confirm": "Cadastrar cupom"
         }
       }
     },
     "update": {
       "card": {
-        "title": "Editar dados do cupom",
-        "subtitle": "Atualize os detalhes do cupom ou reatribua o parceiro.",
+        "title": "Editar cupom",
+        "subtitle": "Atualize os detalhes do cupom ou altere o parceiro associado.",
         "section": {
           "details": "Detalhes do cupom",
-          "partner": "Associação ao parceiro"
+          "partner": "Associação de parceiro"
         },
         "placeholder": {
           "name": "Código do cupom (ex.: BLACKFRIDAY25)",
@@ -1410,15 +1423,15 @@
         "label": {
           "name": "Código do cupom",
           "discountValue": "Valor do desconto",
-          "expirationDate": "Data de vencimento",
+          "expirationDate": "Data de expiração",
           "partnerId": "Parceiro associado"
         },
         "errors": {
           "nameRequired": "O código do cupom é obrigatório.",
           "nameLength": "O código deve ter pelo menos 3 caracteres.",
-          "discountValueRequired": "O valor do desconto é obrigatório.",
-          "discountValueMin": "O valor do desconto deve ser maior que zero.",
-          "expirationDateRequired": "A data de vencimento é obrigatória.",
+          "discountValueRequired": "O valor de desconto é obrigatório.",
+          "discountValueMin": "O valor de desconto deve ser maior que zero.",
+          "expirationDateRequired": "A data de expiração é obrigatória.",
           "partnerIdRequired": "A associação a um parceiro é obrigatória."
         },
         "buttons": {
@@ -1430,16 +1443,16 @@
     "delete": {
       "card": {
         "title": "Excluir cupom",
-        "subtitle": "Confirme a exclusão permanente do cupom de desconto.",
+        "subtitle": "Confirme a exclusão definitiva do cupom de desconto.",
         "section": {
           "details": "Detalhes do cupom",
-          "warning": "Essa ação não pode ser desfeita. O cupom deixará de ser válido para uso em locações."
+          "warning": "Esta ação não pode ser desfeita. O cupom não poderá mais ser utilizado em locações."
         },
         "label": {
           "name": "Código do cupom",
           "partner": "Parceiro",
           "discountValue": "Valor do desconto",
-          "expirationDate": "Data de vencimento"
+          "expirationDate": "Data de expiração"
         },
         "buttons": {
           "back": "Cancelar",

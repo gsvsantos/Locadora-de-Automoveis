@@ -29,7 +29,7 @@
           "emailRequired": "Email is required.",
           "emailLength": "Must be a valid email.",
           "phoneNumberRequired": "Phone number is required.",
-          "phoneNumberPattern": "Invalid format.",
+          "phoneNumberPattern": "Invalid phone number format.",
           "passwordRequired": "Password is required.",
           "passwordLength": "Password must be at least 6 characters long.",
           "passwordMustMatch": "Passwords do not match."
@@ -54,32 +54,15 @@
         },
         "errors": {
           "usernameRequired": "Username is required.",
-          "usernameLength": "Invalid username length.",
+          "usernameLength": "Username must be at least 3 characters long.",
           "passwordRequired": "Password is required.",
-          "passwordLength": "Invalid password length."
+          "passwordLength": "Password must be at least 6 characters long."
         },
         "buttons": {
           "register": "Create an account",
           "confirm": "Sign In",
-          "password": "texthere"
+          "password": "Forgot your password?"
         }
-      }
-    },
-    "security": {
-      "title": "Change Password",
-      "label": {
-        "currentPassword": "Current Password",
-        "newPassword": "New Password",
-        "confirmNewPassword": "Confirm New Password"
-      },
-      "errors": {
-        "required": "Field is required.",
-        "minLength": "Password must be at least 6 characters.",
-        "mismatch": "New passwords do not match.",
-        "samePassword": "The current and new password are the same."
-      },
-      "buttons": {
-        "change": "Update Password"
       }
     }
   },
@@ -94,7 +77,7 @@
     "rentals": "Rentals",
     "partners": "Partners",
     "coupons": "Coupons",
-    "deimpersonate": "Back to PlatformAdmin"
+    "deimpersonate": "Back to Platform Admin"
   },
   "home": {
     "dashboard": {
@@ -145,7 +128,7 @@
   "search": {
     "placeholder": "Search",
     "messages": {
-      "notFound": "teste"
+      "notFound": "No results found."
     }
   },
   "employee": {
@@ -178,7 +161,7 @@
         "errors": {
           "fullNameRequired": "The full name is required.",
           "fullNameLength": "The name must be at least 3 characters long.",
-          "fullNameInvalid": "Something is wrong it that name.",
+          "fullNameInvalid": "Something is wrong with that name.",
           "emailRequired": "The email is required.",
           "emailInvalid": "Invalid email format.",
           "phoneNumberRequired": "The phone number is required.",
@@ -244,41 +227,6 @@
         "buttons": {
           "back": "Cancel",
           "confirm": "Delete"
-        }
-      }
-    },
-    "selfUpdate": {
-      "card": {
-        "title": "Edit My Profile",
-        "subtitle": "Update your personal and contact information.",
-        "section": {
-          "personalData": "Personal and Contact Information",
-          "accountData": "Account Credentials (Username, Password)"
-        },
-        "placeholder": {
-          "fullName": "Full Name",
-          "email": "Email",
-          "phoneNumber": "Phone Number (e.g., (99) 99999-9999)",
-          "userName": "Username",
-          "password": "New Password (Leave blank to keep current)"
-        },
-        "errors": {
-          "fullNameRequired": "Your full name is required.",
-          "fullNameLength": "Your name must be at least 3 characters long.",
-          "emailRequired": "Email is required.",
-          "emailInvalid": "Invalid email format.",
-          "phoneNumberRequired": "Phone number is required.",
-          "phoneNumberInvalid": "Invalid phone number format.",
-          "userNameRequired": "Username is required.",
-          "userNameLength": "Username must be at least 5 characters long.",
-          "passwordLength": "New password must be at least 8 characters long."
-        },
-        "label": {
-          "fullName": "Full Name"
-        },
-        "buttons": {
-          "back": "Back",
-          "confirm": "Save Changes"
         }
       }
     }
@@ -470,7 +418,7 @@
       "label": {
         "group": "Group",
         "color": "Color",
-        "fuelCapacityUnit": "L capacity"
+        "fuelCapacityUnit": "Capacity (L)"
       }
     },
     "create": {
@@ -659,7 +607,7 @@
         "errors": {
           "fullNameRequired": "The full name is required.",
           "fullNameLength": "The name must be at least 3 characters long.",
-          "fullNameInvalid": "Something is wrong it that name.",
+          "fullNameInvalid": "Something is wrong with that name.",
           "typeRequired": "Client type is required.",
           "documentRequired": "The document is required.",
           "documentInvalid": "The document must be a CPF or CNPJ document.",
@@ -995,7 +943,7 @@
       "buttons": {
         "register": "Start New Rental",
         "seeActives": "See Active Rentals",
-        "seeInactives": "See Inactives Rentals"
+        "seeInactives": "See Inactive Rentals"
       },
       "label": {
         "startDate": "Start Date",
@@ -1186,17 +1134,71 @@
       }
     }
   },
+  "profile": {
+    "update": {
+      "card": {
+        "title": "Edit My Profile",
+        "subtitle": "Update your personal and contact information.",
+        "section": {
+          "personalData": "Personal and Contact Information",
+          "accountData": "Account Credentials (Username, Password)"
+        },
+        "placeholder": {
+          "fullName": "Full Name",
+          "email": "Email",
+          "phoneNumber": "Phone Number (e.g., (99) 99999-9999)",
+          "userName": "Username",
+          "password": "New Password (Leave blank to keep current)"
+        },
+        "errors": {
+          "fullNameRequired": "Your full name is required.",
+          "fullNameLength": "Your name must be at least 3 characters long.",
+          "emailRequired": "Email is required.",
+          "emailInvalid": "Invalid email format.",
+          "phoneNumberRequired": "Phone number is required.",
+          "phoneNumberInvalid": "Invalid phone number format.",
+          "userNameRequired": "Username is required.",
+          "userNameLength": "Username must be at least 5 characters long.",
+          "passwordLength": "New password must be at least 8 characters long."
+        },
+        "label": {
+          "fullName": "Full Name"
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Save Changes"
+        }
+      }
+    },
+    "change-password": {
+      "title": "Change Password",
+      "label": {
+        "currentPassword": "Current Password",
+        "newPassword": "New Password",
+        "confirmNewPassword": "Confirm New Password"
+      },
+      "errors": {
+        "required": "Field is required.",
+        "minLength": "Password must be at least 6 characters.",
+        "mismatch": "New passwords do not match.",
+        "samePassword": "The current and new password are the same."
+      },
+      "buttons": {
+        "change": "Update Password"
+      }
+    }
+  },
   "configuration": {
     "menu": {
       "card": {
         "quickActions": {
           "title": "Menu",
-          "profile": "Profile Config",
-          "fuel": "Fuel Config"
+          "profile": "Profile Settings",
+          "fuel": "Fuel Settings"
         }
       }
     },
-    "update": {
+    "fuel": {
       "card": {
         "title": "System Configuration",
         "subtitle": "Set the base prices for reference calculation.",

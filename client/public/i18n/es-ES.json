@@ -2,34 +2,34 @@
   "auth": {
     "register": {
       "card": {
-        "title": "Crear Cuenta",
-        "subtitle": "O use su correo para registrarse",
+        "title": "Crear cuenta",
+        "subtitle": "O usa tu correo electrónico para registrarte",
         "placeholder": {
-          "userName": "Nombre de Usuario",
-          "fullName": "Nombre Completo",
-          "email": "Correo Electrónico",
-          "phoneNumber": "Teléfono (ej: (99) 99999-9999)",
+          "userName": "Nombre de usuario",
+          "fullName": "Nombre completo",
+          "email": "Correo electrónico",
+          "phoneNumber": "Número de teléfono (p. ej., (99) 99999-9999)",
           "password": "Contraseña",
-          "confirmPassword": "Confirmar Contraseña"
+          "confirmPassword": "Confirmar contraseña"
         },
         "label": {
-          "userName": "Nombre de Usuario",
-          "fullName": "Nombre Completo",
-          "email": "Correo Electrónico",
-          "phoneNumber": "Teléfono",
+          "userName": "Nombre de usuario",
+          "fullName": "Nombre completo",
+          "email": "Correo electrónico",
+          "phoneNumber": "Número de teléfono",
           "password": "Contraseña",
-          "confirmPassword": "Confirmar Contraseña"
+          "confirmPassword": "Confirmar contraseña"
         },
         "errors": {
-          "usernameRequired": "El usuario es obligatorio.",
-          "usernameLength": "El usuario debe tener al menos 3 caracteres.",
+          "userNameRequired": "El nombre de usuario es obligatorio.",
+          "userNameLength": "El nombre de usuario debe tener al menos 3 caracteres.",
           "fullNameRequired": "El nombre completo es obligatorio.",
-          "fullNameLength": "El nombre debe tener al menos 3 caracteres.",
-          "fullNamePattern": "El nombre contiene caracteres no válidos.",
-          "emailRequired": "El correo es obligatorio.",
-          "emailLength": "Formato de correo no válido.",
-          "phoneNumberRequired": "El teléfono es obligatorio.",
-          "phoneNumberPattern": "Formato no válido.",
+          "fullNameLength": "El nombre completo debe tener al menos 3 caracteres.",
+          "fullNamePattern": "El nombre completo contiene caracteres no válidos.",
+          "emailRequired": "El correo electrónico es obligatorio.",
+          "emailLength": "Debes introducir un correo electrónico válido.",
+          "phoneNumberRequired": "El número de teléfono es obligatorio.",
+          "phoneNumberPattern": "Formato de número de teléfono no válido.",
           "passwordRequired": "La contraseña es obligatoria.",
           "passwordLength": "La contraseña debe tener al menos 6 caracteres.",
           "passwordMustMatch": "Las contraseñas no coinciden."
@@ -42,25 +42,26 @@
     },
     "login": {
       "card": {
-        "title": "Iniciar Sesión",
-        "subtitle": "O use su cuenta",
+        "title": "Iniciar sesión",
+        "subtitle": "O usa tu cuenta",
         "placeholder": {
-          "userName": "Nombre de Usuario",
+          "userName": "Nombre de usuario",
           "password": "Contraseña"
         },
         "label": {
-          "userName": "Nombre de Usuario",
+          "userName": "Nombre de usuario",
           "password": "Contraseña"
         },
         "errors": {
-          "usernameRequired": "El usuario es obligatorio.",
-          "usernameLength": "Longitud de usuario no válida.",
+          "usernameRequired": "El nombre de usuario es obligatorio.",
+          "usernameLength": "El nombre de usuario debe tener al menos 3 caracteres.",
           "passwordRequired": "La contraseña es obligatoria.",
-          "passwordLength": "Longitud de contraseña no válida."
+          "passwordLength": "La contraseña debe tener al menos 6 caracteres."
         },
         "buttons": {
           "register": "Crear una cuenta",
-          "confirm": "Entrar"
+          "confirm": "Iniciar sesión",
+          "password": "¿Has olvidado tu contraseña?"
         }
       }
     }
@@ -68,7 +69,7 @@
   "navbar": {
     "home": "Inicio",
     "groups": "Grupos",
-    "billingPlans": "Planes de cobro",
+    "billingPlans": "Planes de facturación",
     "vehicles": "Vehículos",
     "clients": "Clientes",
     "drivers": "Conductores",
@@ -76,7 +77,7 @@
     "rentals": "Alquileres",
     "partners": "Socios",
     "coupons": "Cupones",
-    "deimpersonate": "Volver a PlatformAdmin"
+    "deimpersonate": "Volver a Platform Admin"
   },
   "home": {
     "dashboard": {
@@ -112,22 +113,22 @@
   "admin": {
     "list": {
       "header": {
-        "title": "Empresas Registradas"
+        "title": "Empresas registradas"
       },
       "label": {
         "unnamed": "Empresa sin nombre",
-        "roles": "Nivel de Acceso"
+        "roles": "Nivel de acceso"
       },
       "buttons": {
-        "impersonate": "Acceder como empresa",
-        "deimpersonate": "Volver a PlatformAdmin"
+        "impersonate": "Suplantar",
+        "deimpersonate": "Volver a Platform Admin"
       }
     }
   },
   "search": {
     "placeholder": "Buscar",
     "messages": {
-      "notFound": "prueba"
+      "notFound": "No se han encontrado resultados."
     }
   },
   "employee": {
@@ -136,14 +137,14 @@
         "title": "Registro de nuevo empleado",
         "subtitle": "Rellena los datos del empleado a continuación.",
         "section": {
-          "personalData": "Información personal y de contacto",
-          "accountData": "Credenciales de la cuenta",
+          "personalData": "Datos personales y de contacto",
+          "accountData": "Credenciales de acceso",
           "professionalData": "Datos profesionales"
         },
         "placeholder": {
           "fullName": "Nombre completo",
           "email": "Correo electrónico",
-          "phoneNumber": "Teléfono (p. ej., (99) 99999-9999)",
+          "phoneNumber": "Número de teléfono (p. ej., (99) 99999-9999)",
           "userName": "Nombre de usuario",
           "password": "Contraseña",
           "salary": "Salario (p. ej., 3500)"
@@ -151,10 +152,10 @@
         "label": {
           "fullName": "Nombre completo",
           "email": "Correo electrónico",
-          "phoneNumber": "Teléfono",
+          "phoneNumber": "Número de teléfono",
           "userName": "Nombre de usuario",
           "password": "Contraseña",
-          "admissionDate": "Fecha de ingreso",
+          "admissionDate": "Fecha de incorporación",
           "salary": "Salario"
         },
         "errors": {
@@ -169,9 +170,9 @@
           "usernameLength": "El nombre de usuario debe tener al menos 5 caracteres.",
           "passwordRequired": "La contraseña es obligatoria.",
           "passwordLength": "La contraseña debe tener al menos 8 caracteres.",
-          "admissionDateRequired": "La fecha de ingreso es obligatoria.",
+          "admissionDateRequired": "La fecha de incorporación es obligatoria.",
           "salaryRequired": "El salario es obligatorio.",
-          "salaryMin": "El salario debe ser mayor que R$ 100,00."
+          "salaryMin": "El salario debe ser superior a 100,00 R$."
         },
         "buttons": {
           "back": "Volver",
@@ -185,7 +186,7 @@
         "subtitle": "Actualiza la información del empleado.",
         "section": {
           "personalData": "Información personal",
-          "accountData": "Credenciales de la cuenta",
+          "accountData": "Credenciales de acceso",
           "professionalData": "Datos profesionales"
         },
         "placeholder": {
@@ -194,15 +195,15 @@
         },
         "label": {
           "fullName": "Nombre completo",
-          "admissionDate": "Fecha de ingreso",
+          "admissionDate": "Fecha de incorporación",
           "salary": "Salario"
         },
         "errors": {
           "fullNameRequired": "El nombre completo es obligatorio.",
           "fullNameLength": "El nombre debe tener al menos 3 caracteres.",
-          "admissionDateRequired": "La fecha de ingreso es obligatoria.",
+          "admissionDateRequired": "La fecha de incorporación es obligatoria.",
           "salaryRequired": "El salario es obligatorio.",
-          "salaryMin": "El salario debe ser mayor que R$ 100,00."
+          "salaryMin": "El salario debe ser superior a 100,00 R$."
         },
         "buttons": {
           "back": "Volver",
@@ -213,54 +214,19 @@
     "delete": {
       "card": {
         "title": "Eliminar empleado",
-        "subtitle": "¿Seguro que deseas eliminar de forma permanente el registro de este empleado?",
+        "subtitle": "¿Seguro que quieres eliminar permanentemente el registro de este empleado?",
         "section": {
           "details": "Información del empleado",
           "warning": "Esta acción no se puede deshacer. Todos los datos asociados se perderán."
         },
         "label": {
           "fullName": "Nombre completo",
-          "admissionDate": "Fecha de ingreso",
+          "admissionDate": "Fecha de incorporación",
           "salary": "Salario"
         },
         "buttons": {
           "back": "Cancelar",
           "confirm": "Eliminar"
-        }
-      }
-    },
-    "selfUpdate": {
-      "card": {
-        "title": "Editar mi perfil",
-        "subtitle": "Actualiza tu información personal y de contacto.",
-        "section": {
-          "personalData": "Información personal y de contacto",
-          "accountData": "Credenciales de acceso (usuario, contraseña)"
-        },
-        "placeholder": {
-          "fullName": "Nombre completo",
-          "email": "Correo electrónico",
-          "phoneNumber": "Teléfono (p. ej., (99) 99999-9999)",
-          "userName": "Nombre de usuario",
-          "password": "Nueva contraseña (deja en blanco para mantener la actual)"
-        },
-        "errors": {
-          "fullNameRequired": "Tu nombre completo es obligatorio.",
-          "fullNameLength": "Tu nombre debe tener al menos 3 caracteres.",
-          "emailRequired": "El correo electrónico es obligatorio.",
-          "emailInvalid": "Formato de correo electrónico no válido.",
-          "phoneNumberRequired": "El número de teléfono es obligatorio.",
-          "phoneNumberInvalid": "Formato de número de teléfono no válido.",
-          "userNameRequired": "El nombre de usuario es obligatorio.",
-          "userNameLength": "El nombre de usuario debe tener al menos 5 caracteres.",
-          "passwordLength": "La nueva contraseña debe tener al menos 8 caracteres."
-        },
-        "label": {
-          "fullName": "Nombre completo"
-        },
-        "buttons": {
-          "back": "Volver",
-          "confirm": "Guardar cambios"
         }
       }
     }
@@ -315,10 +281,10 @@
     "delete": {
       "card": {
         "title": "Eliminar grupo de vehículos",
-        "subtitle": "Revisa los datos antes de continuar con la eliminación.",
+        "subtitle": "Revisa los detalles antes de proceder con la eliminación.",
         "section": {
           "details": "Información del grupo",
-          "warning": "Esta acción no se puede deshacer. Todos los vehículos asociados a este grupo pueden perder la categorización."
+          "warning": "Esta acción no se puede deshacer. Todos los vehículos asociados a este grupo pueden perder su categorización."
         },
         "label": {
           "name": "Nombre"
@@ -333,7 +299,7 @@
   "billingPlans": {
     "list": {
       "header": {
-        "title": "Planes de cobro"
+        "title": "Planes de facturación"
       },
       "card": {
         "groupName": "Nombre del grupo"
@@ -344,32 +310,32 @@
         "seeInactives": "Ver inactivos"
       },
       "type": {
-        "daily": "Cobro diario",
-        "controlled": "Cobro controlado",
-        "free": "Cobro libre"
+        "daily": "Facturación diaria",
+        "controlled": "Facturación controlada",
+        "free": "Facturación libre"
       },
       "label": {
         "dailyRate": "Tarifa diaria",
-        "pricePerKm": "Precio por Km",
-        "pricePerKmExtrapolated": "Precio por Km (extra)",
+        "pricePerKm": "Precio por km",
+        "pricePerKmExtrapolated": "Precio por km (extra)",
         "fixedRate": "Tarifa fija"
       }
     },
     "create": {
       "card": {
-        "title": "Registrar plan de cobro",
+        "title": "Registrar plan de facturación",
         "subtitle": "Define las tarifas para el nuevo grupo de vehículos.",
         "section": {
           "groupSelection": "Seleccionar grupo de vehículos",
-          "dailyBilling": "1. Cobro diario (kilometraje incluido)",
-          "controlledBilling": "2. Cobro controlado (límite de kilometraje)",
-          "freeBilling": "3. Cobro libre (tarifa fija)"
+          "dailyBilling": "1. Facturación diaria (kilometraje incluido)",
+          "controlledBilling": "2. Facturación controlada (límite de kilometraje)",
+          "freeBilling": "3. Facturación libre (tarifa fija)"
         },
         "placeholder": {
-          "groupId": "Selecciona el grupo...",
+          "groupId": "Selecciona un grupo...",
           "dailyRate": "Tarifa diaria (R$)",
-          "pricePerKm": "Precio por Km (R$)",
-          "pricePerKmExtrapolated": "Precio por Km extrapolado (R$)",
+          "pricePerKm": "Precio por km (R$)",
+          "pricePerKmExtrapolated": "Precio por km extrapolado (R$)",
           "fixedRate": "Tarifa fija (R$)"
         },
         "label": {
@@ -377,7 +343,7 @@
         },
         "errors": {
           "groupIdRequired": "La selección del grupo de vehículos es obligatoria.",
-          "rateMin": "La tarifa debe ser mayor que cero."
+          "rateMin": "La tarifa debe ser superior a cero."
         },
         "buttons": {
           "back": "Volver",
@@ -387,26 +353,26 @@
     },
     "update": {
       "card": {
-        "title": "Editar plan de cobro",
-        "subtitle": "Revisa y actualiza las tarifas del plan y el grupo asociado.",
+        "title": "Editar plan de facturación",
+        "subtitle": "Revisa y actualiza las tarifas y el grupo asociado.",
         "section": {
           "groupSelection": "Grupo de vehículos asignado",
-          "dailyBilling": "1. Cobro diario (kilometraje incluido)",
-          "controlledBilling": "2. Cobro controlado (límite de kilometraje)",
-          "freeBilling": "3. Cobro libre (tarifa fija)"
+          "dailyBilling": "1. Facturación diaria (kilometraje incluido)",
+          "controlledBilling": "2. Facturación controlada (límite de kilometraje)",
+          "freeBilling": "3. Facturación libre (tarifa fija)"
         },
         "placeholder": {
-          "groupIdSelect": "Seleccionar o cambiar grupo...",
+          "groupIdSelect": "Selecciona o cambia el grupo...",
           "dailyRate": "Tarifa diaria (R$)",
-          "pricePerKm": "Precio por Km (R$)",
-          "pricePerKmExtrapolated": "Precio por Km extrapolado (R$)",
+          "pricePerKm": "Precio por km (R$)",
+          "pricePerKmExtrapolated": "Precio por km extrapolado (R$)",
           "fixedRate": "Tarifa fija (R$)"
         },
         "label": {
           "groupId": "Grupo de vehículos"
         },
         "errors": {
-          "rateMin": "La tarifa debe ser mayor que cero."
+          "rateMin": "La tarifa debe ser superior a cero."
         },
         "buttons": {
           "back": "Volver",
@@ -416,20 +382,20 @@
     },
     "delete": {
       "card": {
-        "title": "Eliminar plan de cobro",
-        "subtitle": "Confirma la eliminación permanente del siguiente plan de cobro.",
+        "title": "Eliminar plan de facturación",
+        "subtitle": "Confirma la eliminación permanente del siguiente plan.",
         "section": {
           "details": "Detalles del plan",
-          "daily": "Tarifas de cobro diario",
-          "controlled": "Tarifas de cobro controlado",
-          "free": "Tarifas de cobro libre",
+          "daily": "Tarifas de facturación diaria",
+          "controlled": "Tarifas de facturación controlada",
+          "free": "Tarifas de facturación libre",
           "warning": "Esta acción no se puede deshacer. Cualquier alquiler futuro vinculado a este plan requerirá un ajuste manual."
         },
         "label": {
           "name": "Nombre del plan",
           "dailyRate": "Tarifa diaria",
-          "pricePerKm": "Precio por Km",
-          "pricePerKmExtrapolated": "Precio por Km (extra)",
+          "pricePerKm": "Precio por km",
+          "pricePerKmExtrapolated": "Precio por km (extra)",
           "fixedRate": "Tarifa fija"
         },
         "buttons": {
@@ -473,7 +439,7 @@
           "color": "Color",
           "year": "Año (p. ej., 2023)",
           "fuelType": "Selecciona el tipo de combustible...",
-          "fuelTankCapacity": "Capacidad del depósito de combustible (en litros)",
+          "fuelTankCapacity": "Capacidad del depósito (en litros)",
           "photoPath": "URL de la foto"
         },
         "label": {
@@ -483,7 +449,7 @@
           "model": "Modelo",
           "color": "Color",
           "year": "Año",
-          "fuelType": "Tipo de combustible",
+          "fuelType": "Combustible",
           "fuelTankCapacity": "Capacidad del depósito"
         },
         "fuel": {
@@ -528,7 +494,7 @@
           "color": "Color",
           "year": "Año (p. ej., 2023)",
           "fuelType": "Selecciona el tipo de combustible...",
-          "fuelTankCapacity": "Capacidad del depósito de combustible (en litros)",
+          "fuelTankCapacity": "Capacidad del depósito (en litros)",
           "photoPath": "URL de la foto"
         },
         "label": {
@@ -538,7 +504,7 @@
           "model": "Modelo",
           "color": "Color",
           "year": "Año",
-          "fuelType": "Tipo de combustible",
+          "fuelType": "Combustible",
           "fuelTankCapacity": "Capacidad del depósito"
         },
         "fuel": {
@@ -568,7 +534,7 @@
     "delete": {
       "card": {
         "title": "Eliminar vehículo",
-        "subtitle": "Confirma la eliminación permanente del siguiente vehículo del sistema.",
+        "subtitle": "Confirma la eliminación permanente del siguiente vehículo.",
         "section": {
           "details": "Resumen del vehículo",
           "warning": "Esta acción no se puede deshacer. Cualquier historial de alquiler o reserva vinculado a este vehículo se verá afectado."
@@ -606,17 +572,17 @@
         "title": "Registro de nuevo cliente",
         "subtitle": "Rellena los datos personales y de dirección del cliente.",
         "section": {
-          "personalData": "Información personal y de contacto",
+          "personalData": "Datos personales y de contacto",
           "addressData": "Dirección"
         },
         "placeholder": {
           "fullName": "Nombre completo",
           "type": "Selecciona el tipo de cliente...",
-          "document": "Documento (CPF/CNPJ)",
+          "document": "Documento (NIF/CIF)",
           "email": "Correo electrónico",
-          "phoneNumber": "Teléfono",
-          "licenseNumber": "Número de licencia",
-          "state": "Estado",
+          "phoneNumber": "Número de teléfono",
+          "licenseNumber": "Número de permiso",
+          "state": "Provincia",
           "city": "Ciudad",
           "neighborhood": "Barrio",
           "street": "Calle",
@@ -627,16 +593,16 @@
           "type": "Tipo de cliente",
           "document": "Documento",
           "email": "Correo electrónico",
-          "phoneNumber": "Teléfono",
-          "state": "Estado",
+          "phoneNumber": "Número de teléfono",
+          "state": "Provincia",
           "city": "Ciudad",
           "neighborhood": "Barrio",
           "street": "Calle",
           "number": "Número"
         },
         "type": {
-          "individual": "Persona física (PF)",
-          "corporate": "Persona jurídica (PJ)"
+          "individual": "Persona física",
+          "corporate": "Persona jurídica"
         },
         "errors": {
           "fullNameRequired": "El nombre completo es obligatorio.",
@@ -644,11 +610,11 @@
           "fullNameInvalid": "Hay algo incorrecto en ese nombre.",
           "typeRequired": "El tipo de cliente es obligatorio.",
           "documentRequired": "El documento es obligatorio.",
-          "documentInvalid": "El documento debe ser un CPF o CNPJ válido.",
+          "documentInvalid": "El documento debe ser un NIF o CIF válido.",
           "emailRequired": "El correo electrónico es obligatorio.",
           "phoneNumberRequired": "El número de teléfono es obligatorio.",
           "phoneNumberInvalid": "Formato de número de teléfono no válido.",
-          "stateRequired": "El estado es obligatorio.",
+          "stateRequired": "La provincia es obligatoria.",
           "cityRequired": "La ciudad es obligatoria.",
           "neighborhoodRequired": "El barrio es obligatorio.",
           "streetRequired": "La calle es obligatoria.",
@@ -665,17 +631,17 @@
         "title": "Editar datos del cliente",
         "subtitle": "Actualiza la información y la dirección del cliente.",
         "section": {
-          "personalData": "Información personal y de contacto",
+          "personalData": "Datos personales y de contacto",
           "addressData": "Dirección"
         },
         "placeholder": {
           "fullName": "Nombre completo",
           "type": "Selecciona el tipo de cliente...",
-          "document": "Documento (CPF/CNPJ)",
+          "document": "Documento (NIF/CIF)",
           "email": "Correo electrónico",
-          "phoneNumber": "Teléfono",
-          "licenseNumber": "Número de licencia",
-          "state": "Estado",
+          "phoneNumber": "Número de teléfono",
+          "licenseNumber": "Número de permiso",
+          "state": "Provincia",
           "city": "Ciudad",
           "neighborhood": "Barrio",
           "street": "Calle",
@@ -686,16 +652,16 @@
           "type": "Tipo de cliente",
           "document": "Documento",
           "email": "Correo electrónico",
-          "phoneNumber": "Teléfono",
-          "state": "Estado",
+          "phoneNumber": "Número de teléfono",
+          "state": "Provincia",
           "city": "Ciudad",
           "neighborhood": "Barrio",
           "street": "Calle",
           "number": "Número"
         },
         "type": {
-          "individual": "Persona física (PF)",
-          "corporate": "Persona jurídica (PJ)"
+          "individual": "Persona física",
+          "corporate": "Persona jurídica"
         },
         "errors": {
           "fullNameRequired": "El nombre completo es obligatorio.",
@@ -707,7 +673,7 @@
           "emailRequired": "El correo electrónico es obligatorio.",
           "phoneNumberRequired": "El número de teléfono es obligatorio.",
           "phoneNumberInvalid": "Formato de número de teléfono no válido.",
-          "stateRequired": "El estado es obligatorio.",
+          "stateRequired": "La provincia es obligatoria.",
           "cityRequired": "La ciudad es obligatoria.",
           "neighborhoodRequired": "El barrio es obligatorio.",
           "streetRequired": "La calle es obligatoria.",
@@ -732,11 +698,11 @@
           "fullName": "Nombre completo",
           "document": "Documento",
           "email": "Correo electrónico",
-          "phoneNumber": "Teléfono",
+          "phoneNumber": "Número de teléfono",
           "street": "Calle",
           "neighborhood": "Barrio",
           "number": "Número",
-          "cityState": "Ciudad/Estado"
+          "cityState": "Ciudad/Provincia"
         },
         "buttons": {
           "back": "Cancelar",
@@ -757,8 +723,8 @@
       },
       "label": {
         "document": "Documento",
-        "licenseNumber": "Número de licencia",
-        "licenseValidity": "Vigencia de la licencia",
+        "licenseNumber": "Número de permiso",
+        "licenseValidity": "Validez del permiso",
         "client": "Cliente asociado"
       }
     },
@@ -767,46 +733,46 @@
         "title": "Registrar nuevo conductor",
         "subtitle": "Rellena los datos del conductor y asígnalo a un cliente.",
         "section": {
-          "identification": "Asociación al cliente",
+          "identification": "Asociación con el cliente",
           "personalData": "Datos personales del conductor",
-          "licenseData": "Datos de la licencia (CNH)",
-          "associatedDrivers": "Seleccionar conductor existente (PJ)"
+          "licenseData": "Datos del permiso de conducir",
+          "associatedDrivers": "Seleccionar conductor existente (cliente empresa)"
         },
         "placeholder": {
           "client": "Selecciona el cliente asociado...",
           "selectDriver": "Selecciona un conductor asociado a la empresa...",
           "fullName": "Nombre completo",
-          "document": "Documento (CPF)",
+          "document": "Documento (NIF)",
           "email": "Correo electrónico",
-          "phoneNumber": "Teléfono",
-          "licenseNumber": "Número de licencia",
-          "licenseValidity": "Fecha de vigencia de la licencia"
+          "phoneNumber": "Número de teléfono",
+          "licenseNumber": "Número de permiso",
+          "licenseValidity": "Fecha de validez del permiso"
         },
         "label": {
           "client": "Cliente",
           "selectDriver": "Conductor asociado",
           "fullName": "Nombre completo",
-          "document": "Documento (CPF)",
+          "document": "Documento (NIF)",
           "email": "Correo electrónico",
-          "phoneNumber": "Teléfono",
-          "licenseNumber": "Número de licencia",
-          "licenseValidity": "Vigencia de la licencia"
+          "phoneNumber": "Número de teléfono",
+          "licenseNumber": "Número de permiso",
+          "licenseValidity": "Validez del permiso"
         },
         "info": {
-          "clientDetailsPrepopulated": "Los datos del cliente se han rellenado automáticamente y no se pueden editar. Solo proporciona la información de la licencia.",
-          "registerNewDriverForCorporate": "Rellena los datos a continuación para registrar un nuevo conductor persona física asociado al cliente PJ."
+          "clientDetailsPrepopulated": "Los datos del cliente se han rellenado automáticamente y están bloqueados para edición. Introduce únicamente la información del permiso.",
+          "registerNewDriverForCorporate": "Rellena los siguientes datos para registrar un nuevo conductor asociado al cliente empresa."
         },
         "errors": {
-          "clientRequired": "La asociación al cliente es obligatoria.",
+          "clientRequired": "La asociación con un cliente es obligatoria.",
           "selectedDriverRequired": "La selección de un conductor asociado es obligatoria.",
           "fullNameRequired": "El nombre completo es obligatorio.",
           "fullNameLength": "El nombre debe tener al menos 3 caracteres.",
           "documentRequired": "El documento es obligatorio.",
           "emailRequired": "El correo electrónico es obligatorio.",
           "phoneNumberRequired": "El número de teléfono es obligatorio.",
-          "licenseNumberRequired": "El número de licencia es obligatorio.",
-          "licenseLength": "El número de licencia debe tener 11 dígitos.",
-          "licenseValidityRequired": "La fecha de vigencia de la licencia es obligatoria."
+          "licenseNumberRequired": "El número de permiso es obligatorio.",
+          "licenseLength": "El número de permiso debe tener 11 dígitos.",
+          "licenseValidityRequired": "La fecha de validez del permiso es obligatoria."
         },
         "buttons": {
           "back": "Volver",
@@ -821,7 +787,7 @@
         "section": {
           "details": "Identificación del conductor",
           "contact": "Información de contacto",
-          "licenseData": "Datos de la licencia (CNH)",
+          "licenseData": "Datos del permiso",
           "associatedClient": "Cliente asociado",
           "warning": "Esta acción no se puede deshacer. Todo el historial de alquileres vinculado a este conductor se verá afectado."
         },
@@ -829,9 +795,9 @@
           "fullName": "Nombre completo",
           "document": "Documento",
           "email": "Correo electrónico",
-          "phoneNumber": "Teléfono",
-          "licenseNumber": "Número de licencia",
-          "licenseValidity": "Vigencia de la licencia",
+          "phoneNumber": "Número de teléfono",
+          "licenseNumber": "Número de permiso",
+          "licenseValidity": "Validez del permiso",
           "clientName": "Nombre del cliente"
         },
         "buttons": {
@@ -858,7 +824,7 @@
         "fixed": "Fijo"
       },
       "type": {
-        "equipment": "Equipamiento",
+        "equipment": "Equipo",
         "service": "Servicio",
         "fee": "Tasa"
       }
@@ -868,10 +834,10 @@
         "title": "Registrar nuevo extra",
         "subtitle": "Define el nombre, tipo y precio del nuevo servicio adicional o tasa.",
         "section": {
-          "details": "Detalles y precios del extra"
+          "details": "Detalles y precio del extra"
         },
         "placeholder": {
-          "name": "Nombre del servicio (p. ej., Silla para bebé, Seguro total, Tasa de aeropuerto)",
+          "name": "Nombre del servicio (p. ej., Silla bebé, Seguro total, Tasa de aeropuerto)",
           "type": "Selecciona el tipo...",
           "price": "Precio (p. ej., 50,00)"
         },
@@ -882,7 +848,7 @@
           "isDaily": "Cobro diario"
         },
         "type": {
-          "equipment": "Equipamiento",
+          "equipment": "Equipo",
           "service": "Servicio",
           "fee": "Tasa"
         },
@@ -894,7 +860,7 @@
           "nameLength": "El nombre debe tener al menos 3 caracteres.",
           "typeRequired": "La selección del tipo es obligatoria.",
           "priceRequired": "El precio es obligatorio.",
-          "priceMin": "El precio debe ser mayor que cero."
+          "priceMin": "El precio debe ser superior a cero."
         },
         "buttons": {
           "back": "Volver",
@@ -907,10 +873,10 @@
         "title": "Editar extra",
         "subtitle": "Actualiza los detalles del servicio y el precio.",
         "section": {
-          "details": "Detalles y precios del extra"
+          "details": "Detalles y precio del extra"
         },
         "placeholder": {
-          "name": "Nombre del servicio (p. ej., Silla para bebé, Seguro total, Tasa de aeropuerto)",
+          "name": "Nombre del servicio (p. ej., Silla bebé, Seguro total, Tasa de aeropuerto)",
           "type": "Selecciona el tipo...",
           "price": "Precio (p. ej., 50,00)"
         },
@@ -921,7 +887,7 @@
           "isDaily": "Cobro diario"
         },
         "type": {
-          "equipment": "Equipamiento",
+          "equipment": "Equipo",
           "service": "Servicio",
           "fee": "Tasa"
         },
@@ -933,7 +899,7 @@
           "nameLength": "El nombre debe tener al menos 3 caracteres.",
           "typeRequired": "La selección del tipo es obligatoria.",
           "priceRequired": "El precio es obligatorio.",
-          "priceMin": "El precio debe ser mayor que cero."
+          "priceMin": "El precio debe ser superior a cero."
         },
         "buttons": {
           "back": "Volver",
@@ -954,7 +920,7 @@
           "confirm": "Eliminar extra"
         },
         "type": {
-          "equipment": "Equipamiento",
+          "equipment": "Equipo",
           "service": "Servicio",
           "fee": "Tasa"
         },
@@ -984,22 +950,22 @@
         "expectedReturnDate": "Fecha prevista de devolución",
         "returnDate": "Fecha de devolución",
         "estimatedKilometers": "KM estimados",
-        "startKm": "KM inicial",
+        "startKm": "Kilometraje inicial",
         "driver": "Conductor",
         "basePrice": "Precio base",
         "finalPrice": "Valor total (estimado)",
-        "billingPlan": "Plan de cobro",
+        "billingPlan": "Plan de facturación",
         "extras": "Extras"
       }
     },
     "create": {
       "card": {
         "title": "Registro de nuevo alquiler",
-        "subtitle": "Define el cliente, vehículo, período y estructura de cobro del alquiler.",
+        "subtitle": "Define el cliente, vehículo, periodo y estructura de precios del alquiler.",
         "section": {
           "association": "Asociación de cliente, conductor y empleado",
-          "vehicleAndDates": "Vehículo y período",
-          "billing": "Cobro y kilómetros estimados",
+          "vehicleAndDates": "Vehículo y periodo",
+          "billing": "Facturación y kilómetros estimados",
           "extrasAndCoupon": "Extras y descuentos"
         },
         "placeholder": {
@@ -1007,8 +973,8 @@
           "driver": "Selecciona el conductor...",
           "employee": "Selecciona el empleado...",
           "vehicle": "Selecciona el vehículo...",
-          "startKm": "KM inicial",
-          "billingPlanType": "Selecciona el tipo de plan de cobro...",
+          "startKm": "Kilometraje inicial",
+          "billingPlanType": "Selecciona el tipo de plan de facturación...",
           "estimatedKilometers": "Kilómetros estimados",
           "coupon": "Selecciona el cupón (opcional)"
         },
@@ -1020,15 +986,15 @@
           "startDate": "Fecha de inicio",
           "expectedReturnDate": "Fecha prevista de devolución",
           "startKm": "KM inicial",
-          "billingPlanType": "Tipo de plan de cobro",
+          "billingPlanType": "Tipo de plan de facturación",
           "estimatedKilometers": "KM estimados",
-          "extras": "Servicios adicionales/extras",
+          "extras": "Servicios adicionales/Extras",
           "coupon": "Cupón"
         },
         "plan": {
-          "daily": "Cobro diario",
-          "controlled": "Cobro controlado",
-          "free": "Cobro libre"
+          "daily": "Facturación diaria",
+          "controlled": "Facturación controlada",
+          "free": "Facturación libre"
         },
         "errors": {
           "clientRequired": "La selección del cliente es obligatoria.",
@@ -1038,8 +1004,8 @@
           "startDateRequired": "La fecha de inicio es obligatoria.",
           "expectedReturnDateRequired": "La fecha prevista de devolución es obligatoria.",
           "startKmRequired": "El KM inicial es obligatorio.",
-          "startKmMin": "El KM inicial debe ser mayor que cero.",
-          "billingPlanTypeRequired": "El tipo de plan de cobro es obligatorio.",
+          "startKmMin": "El KM inicial debe ser superior a cero.",
+          "billingPlanTypeRequired": "El tipo de plan de facturación es obligatorio.",
           "estimatedKilometersRequired": "Los KM estimados son obligatorios."
         },
         "buttons": {
@@ -1051,11 +1017,11 @@
     "update": {
       "card": {
         "title": "Editar datos del alquiler",
-        "subtitle": "Actualiza el período del alquiler y los servicios opcionales.",
+        "subtitle": "Actualiza el periodo del alquiler y los servicios opcionales.",
         "section": {
           "association": "Cliente, conductor y vehículo (fijos)",
-          "timelineAndEstimates": "Período y estimaciones",
-          "extras": "Servicios adicionales/extras",
+          "timelineAndEstimates": "Periodo y estimaciones",
+          "extras": "Servicios adicionales/Extras",
           "pricing": "Precios actuales"
         },
         "placeholder": {
@@ -1063,8 +1029,8 @@
           "driver": "Selecciona el conductor...",
           "employee": "Selecciona el empleado...",
           "vehicle": "Selecciona el vehículo...",
-          "startKm": "KM inicial",
-          "billingPlanType": "Selecciona el tipo de plan de cobro...",
+          "startKm": "Kilometraje inicial",
+          "billingPlanType": "Selecciona el tipo de plan de facturación...",
           "estimatedKilometers": "Kilómetros estimados",
           "coupon": "Selecciona el cupón (opcional)"
         },
@@ -1077,19 +1043,19 @@
           "expectedReturnDate": "Fecha prevista de devolución",
           "estimatedKilometers": "KM estimados",
           "extras": "Extras seleccionados",
-          "billingPlanType": "Tipo de plan de cobro",
+          "billingPlanType": "Tipo de plan de facturación",
           "baseRentalPrice": "Precio base",
           "finalPrice": "Precio total",
           "coupon": "Cupón"
         },
         "info": {
-          "startDateFixed": "La fecha de inicio del alquiler no puede modificarse.",
-          "extrasHint": "Selecciona o desmarca ítems para modificar la lista de extras opcionales."
+          "startDateFixed": "La fecha de inicio del alquiler no se puede modificar.",
+          "extrasHint": "Selecciona o desmarca elementos para modificar la lista de extras opcionales."
         },
         "plan": {
-          "daily": "Cobro diario",
-          "controlled": "Cobro controlado",
-          "free": "Cobro libre"
+          "daily": "Facturación diaria",
+          "controlled": "Facturación controlada",
+          "free": "Facturación libre"
         },
         "errors": {
           "expectedReturnDateRequired": "La fecha prevista de devolución es obligatoria.",
@@ -1103,11 +1069,11 @@
     },
     "delete": {
       "card": {
-        "title": "Cancelar/eliminar alquiler",
+        "title": "Cancelar/Eliminar alquiler",
         "subtitle": "Confirma la cancelación permanente del contrato de alquiler.",
         "section": {
           "details": "Resumen del alquiler",
-          "vehicleAndDates": "Vehículo y período",
+          "vehicleAndDates": "Vehículo y periodo",
           "pricing": "Detalles de precios",
           "warning": "Esta acción no se puede deshacer. Todos los registros financieros asociados se verán afectados."
         },
@@ -1117,9 +1083,9 @@
           "vehicle": "Vehículo",
           "startDate": "Fecha de inicio",
           "expectedReturnDate": "Fecha prevista de devolución",
-          "billingPlanType": "Tipo de plan de cobro",
+          "billingPlanType": "Tipo de plan de facturación",
           "finalPrice": "Precio total (estimado)",
-          "extrasQuantity": "Cantidad de extras"
+          "extrasQuantity": "Número de extras"
         },
         "buttons": {
           "back": "Cancelar",
@@ -1130,14 +1096,14 @@
     "return": {
       "card": {
         "title": "Devolución del vehículo",
-        "subtitle": "Registra el kilometraje final y el nivel de combustible para cerrar el contrato de alquiler.",
+        "subtitle": "Registra el kilometraje final y el nivel de combustible para cerrar el alquiler.",
         "section": {
           "summary": "Resumen del alquiler (fijo)",
           "returnData": "Datos de la devolución",
           "finalCalculation": "Cálculo final"
         },
         "placeholder": {
-          "endKm": "KM final",
+          "endKm": "Kilometraje final",
           "fuelLevel": "Selecciona el nivel de combustible..."
         },
         "label": {
@@ -1145,7 +1111,7 @@
           "vehicle": "Vehículo",
           "startDate": "Fecha de inicio",
           "startKm": "KM inicial",
-          "endKm": "Lectura de KM final",
+          "endKm": "Lectura final de KM",
           "fuelLevel": "Nivel de combustible",
           "totalValue": "Valor total"
         },
@@ -1157,7 +1123,7 @@
           "full": "Lleno (100%)"
         },
         "errors": {
-          "endKmRequired": "La lectura de KM final es obligatoria.",
+          "endKmRequired": "La lectura final de KM es obligatoria.",
           "endKmMin": "El KM final debe ser mayor o igual que el KM inicial.",
           "fuelLevelRequired": "La selección del nivel de combustible es obligatoria."
         },
@@ -1168,8 +1134,71 @@
       }
     }
   },
-  "configuration": {
+  "profile": {
     "update": {
+      "card": {
+        "title": "Editar mi perfil",
+        "subtitle": "Actualiza tus datos personales y de contacto.",
+        "section": {
+          "personalData": "Datos personales y de contacto",
+          "accountData": "Credenciales de acceso (usuario, contraseña)"
+        },
+        "placeholder": {
+          "fullName": "Nombre completo",
+          "email": "Correo electrónico",
+          "phoneNumber": "Número de teléfono (p. ej., (99) 99999-9999)",
+          "userName": "Nombre de usuario",
+          "password": "Nueva contraseña (deja en blanco para mantener la actual)"
+        },
+        "errors": {
+          "fullNameRequired": "Tu nombre completo es obligatorio.",
+          "fullNameLength": "Tu nombre debe tener al menos 3 caracteres.",
+          "emailRequired": "El correo electrónico es obligatorio.",
+          "emailInvalid": "Formato de correo electrónico no válido.",
+          "phoneNumberRequired": "El número de teléfono es obligatorio.",
+          "phoneNumberInvalid": "Formato de número de teléfono no válido.",
+          "userNameRequired": "El nombre de usuario es obligatorio.",
+          "userNameLength": "El nombre de usuario debe tener al menos 5 caracteres.",
+          "passwordLength": "La nueva contraseña debe tener al menos 8 caracteres."
+        },
+        "label": {
+          "fullName": "Nombre completo"
+        },
+        "buttons": {
+          "back": "Volver",
+          "confirm": "Guardar cambios"
+        }
+      }
+    },
+    "change-password": {
+      "title": "Cambiar contraseña",
+      "label": {
+        "currentPassword": "Contraseña actual",
+        "newPassword": "Nueva contraseña",
+        "confirmNewPassword": "Confirmar nueva contraseña"
+      },
+      "errors": {
+        "required": "Campo obligatorio.",
+        "minLength": "La contraseña debe tener al menos 6 caracteres.",
+        "mismatch": "Las nuevas contraseñas no coinciden.",
+        "samePassword": "La contraseña actual y la nueva son iguales."
+      },
+      "buttons": {
+        "change": "Actualizar contraseña"
+      }
+    }
+  },
+  "configuration": {
+    "menu": {
+      "card": {
+        "quickActions": {
+          "title": "Menú",
+          "profile": "Configuración de perfil",
+          "fuel": "Configuración de combustible"
+        }
+      }
+    },
+    "fuel": {
       "card": {
         "title": "Configuración del sistema",
         "subtitle": "Define los precios base para el cálculo de referencia.",
@@ -1193,7 +1222,7 @@
           "gasPriceRequired": "El precio del gas es obligatorio.",
           "dieselPriceRequired": "El precio del diésel es obligatorio.",
           "alcoholPriceRequired": "El precio del alcohol/etanol es obligatorio.",
-          "priceMin": "El precio debe ser mayor que cero."
+          "priceMin": "El precio debe ser superior a cero."
         },
         "buttons": {
           "back": "Volver",
@@ -1205,7 +1234,7 @@
   "partners": {
     "list": {
       "header": {
-        "title": "Alianzas"
+        "title": "Colaboraciones"
       },
       "buttons": {
         "register": "Registrar nuevo socio",
@@ -1219,7 +1248,7 @@
     "create": {
       "card": {
         "title": "Registrar nuevo socio",
-        "subtitle": "Proporciona el nombre completo del nuevo socio.",
+        "subtitle": "Indica el nombre completo del nuevo socio.",
         "section": {
           "identification": "Identificación del socio"
         },
@@ -1268,7 +1297,7 @@
         "subtitle": "Confirma la eliminación permanente del socio y de todos los datos asociados.",
         "section": {
           "details": "Detalles del socio",
-          "warning": "Esta acción no se puede deshacer. Todos los cupones asociados dejarán de ser válidos."
+          "warning": "Esta acción no se puede deshacer. Todos los cupones asociados pasarán a ser inválidos."
         },
         "label": {
           "fullName": "Nombre completo",
@@ -1293,7 +1322,7 @@
           "id": "ID",
           "status": "Estado",
           "discountValue": "Valor del descuento",
-          "expirationDate": "Fecha de vencimiento"
+          "expirationDate": "Fecha de expiración"
         },
         "status": {
           "active": "Activo",
@@ -1323,7 +1352,7 @@
       "label": {
         "partner": "Socio",
         "discountValue": "Valor del descuento",
-        "expirationDate": "Fecha de vencimiento",
+        "expirationDate": "Fecha de expiración",
         "status": "Estado"
       },
       "status": {
@@ -1341,7 +1370,7 @@
       },
       "label": {
         "partner": "Socio",
-        "usageCount": "Cantidad de usos",
+        "usageCount": "Número de usos",
         "totalDiscountGiven": "Descuento total concedido"
       }
     },
@@ -1351,7 +1380,7 @@
         "subtitle": "Define los detalles del cupón y asígnalo a un socio.",
         "section": {
           "details": "Detalles del cupón",
-          "partner": "Asociación al socio"
+          "partner": "Asociación de socio"
         },
         "placeholder": {
           "name": "Código del cupón (p. ej., BLACKFRIDAY25)",
@@ -1361,16 +1390,16 @@
         "label": {
           "name": "Código del cupón",
           "discountValue": "Valor del descuento",
-          "expirationDate": "Fecha de vencimiento",
+          "expirationDate": "Fecha de expiración",
           "partnerId": "Socio asociado"
         },
         "errors": {
           "nameRequired": "El código del cupón es obligatorio.",
           "nameLength": "El código debe tener al menos 4 caracteres.",
           "discountValueRequired": "El valor del descuento es obligatorio.",
-          "discountValueMin": "El valor del descuento debe ser mayor que cero.",
-          "expirationDateRequired": "La fecha de vencimiento es obligatoria.",
-          "partnerIdRequired": "La asociación a un socio es obligatoria."
+          "discountValueMin": "El valor del descuento debe ser superior a cero.",
+          "expirationDateRequired": "La fecha de expiración es obligatoria.",
+          "partnerIdRequired": "La asociación con un socio es obligatoria."
         },
         "buttons": {
           "back": "Volver",
@@ -1380,11 +1409,11 @@
     },
     "update": {
       "card": {
-        "title": "Editar datos del cupón",
-        "subtitle": "Actualiza los detalles del cupón o reasigna el socio.",
+        "title": "Editar cupón",
+        "subtitle": "Actualiza los detalles del cupón o cambia el socio asociado.",
         "section": {
           "details": "Detalles del cupón",
-          "partner": "Asociación al socio"
+          "partner": "Asociación de socio"
         },
         "placeholder": {
           "name": "Código del cupón (p. ej., BLACKFRIDAY25)",
@@ -1394,16 +1423,16 @@
         "label": {
           "name": "Código del cupón",
           "discountValue": "Valor del descuento",
-          "expirationDate": "Fecha de vencimiento",
+          "expirationDate": "Fecha de expiración",
           "partnerId": "Socio asociado"
         },
         "errors": {
           "nameRequired": "El código del cupón es obligatorio.",
           "nameLength": "El código debe tener al menos 3 caracteres.",
           "discountValueRequired": "El valor del descuento es obligatorio.",
-          "discountValueMin": "El valor del descuento debe ser mayor que cero.",
-          "expirationDateRequired": "La fecha de vencimiento es obligatoria.",
-          "partnerIdRequired": "La asociación a un socio es obligatoria."
+          "discountValueMin": "El valor del descuento debe ser superior a cero.",
+          "expirationDateRequired": "La fecha de expiración es obligatoria.",
+          "partnerIdRequired": "La asociación con un socio es obligatoria."
         },
         "buttons": {
           "back": "Volver",
@@ -1423,7 +1452,7 @@
           "name": "Código del cupón",
           "partner": "Socio",
           "discountValue": "Valor del descuento",
-          "expirationDate": "Fecha de vencimiento"
+          "expirationDate": "Fecha de expiración"
         },
         "buttons": {
           "back": "Cancelar",

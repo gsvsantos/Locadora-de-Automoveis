@@ -1,30 +1,29 @@
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
-import { NotificationService } from '../../../services/notification.service';
-import { distinctUntilChanged, map, Observer, take, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import {
-  AbstractControl,
+  ReactiveFormsModule,
   FormBuilder,
   FormGroup,
-  ReactiveFormsModule,
   Validators,
+  AbstractControl,
 } from '@angular/forms';
+import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
-import { EmployeeService } from '../../../services/employee.service';
+import { map, tap, distinctUntilChanged, Observer, take } from 'rxjs';
 import { IdApiResponse } from '../../../models/api.models';
 import { EmployeeDto } from '../../../models/employee.models';
-import { ChangePasswordComponent } from "../../auth/change-password/change-password.component";
+import { AuthService } from '../../../services/auth.service';
+import { EmployeeService } from '../../../services/employee.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
-  selector: 'app-self-update-employee.component',
-  imports: [AsyncPipe, RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons, ChangePasswordComponent],
-  templateUrl: './self-update-employee.component.html',
-  styleUrl: './self-update-employee.component.scss',
+  selector: 'app-profile-update',
+  imports: [AsyncPipe, RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
+  templateUrl: './profile-update.component.html',
+  styleUrl: './profile-update.component.scss',
 })
-export class SelfUpdateEmployeeComponent {
+export class ProfileUpdateComponent {
   private readonly authService = inject(AuthService);
   protected isSubmitting = false;
   protected readonly formBuilder = inject(FormBuilder);

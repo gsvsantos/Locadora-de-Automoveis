@@ -4,6 +4,7 @@ import { configurationDetailsResolver } from '../resolvers/configuration.resolve
 import { ConfigurationDetailsComponent } from '../components/configuration/details/configuration-details.component';
 import { adminOnlyGuard } from '../guards/admin-only.guard';
 import { ConfigurationMenuComponent } from '../components/configuration/menu/configuration-menu.component';
+import { ProfileComponent } from '../components/configuration/profile/profile.component';
 
 export const configurationRoutes: Routes = [
   { path: '', component: ConfigurationMenuComponent },
@@ -12,6 +13,10 @@ export const configurationRoutes: Routes = [
     component: ConfigureComponent,
     resolve: { configuration: configurationDetailsResolver },
     canActivate: [adminOnlyGuard],
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
   },
   {
     path: 'details',

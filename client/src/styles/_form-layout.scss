@@ -4,9 +4,9 @@
 .create-section,
 .update-section,
 .delete-section,
-.configure-section,
-.configuration-details-section,
-.self-update-section {
+.profile-section,
+.fuel-section,
+.configuration-details-section {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

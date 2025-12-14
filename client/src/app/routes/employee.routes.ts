@@ -4,9 +4,7 @@ import { employeeDetailsResolver, listEmployeesResolver } from '../resolvers/emp
 import { CreateEmployeeComponent } from '../components/employees/create/create-employee.component';
 import { UpdateEmployeeComponent } from '../components/employees/update/update-employee.component';
 import { DeleteEmployeeComponent } from '../components/employees/delete/delete-employee.component';
-import { SelfUpdateEmployeeComponent } from '../components/employees/self-update/self-update-employee.component';
 import { adminOnlyGuard } from '../guards/admin-only.guard';
-import { employeeOnlyGuard } from '../guards/employee-only.guard';
 
 export const employeeRoutes: Routes = [
   {
@@ -22,11 +20,6 @@ export const employeeRoutes: Routes = [
     component: UpdateEmployeeComponent,
     resolve: { employee: employeeDetailsResolver },
     canActivate: [adminOnlyGuard],
-  },
-  {
-    path: 'options/:id',
-    component: SelfUpdateEmployeeComponent,
-    canActivate: [employeeOnlyGuard],
   },
   {
     path: 'delete/:id',
