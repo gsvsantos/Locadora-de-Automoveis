@@ -12,6 +12,12 @@ export interface LoginAuthDto {
   password: string;
 }
 
+export interface ChangePasswordRequestDto {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
+
 export interface AuthApiResponse {
   key: string;
   expiration: Date;

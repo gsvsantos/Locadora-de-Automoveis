@@ -16,10 +16,11 @@ import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-butt
 import { EmployeeService } from '../../../services/employee.service';
 import { IdApiResponse } from '../../../models/api.models';
 import { EmployeeDto } from '../../../models/employee.models';
+import { ChangePasswordComponent } from "../../auth/change-password/change-password.component";
 
 @Component({
   selector: 'app-self-update-employee.component',
-  imports: [AsyncPipe, RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
+  imports: [AsyncPipe, RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons, ChangePasswordComponent],
   templateUrl: './self-update-employee.component.html',
   styleUrl: './self-update-employee.component.scss',
 })

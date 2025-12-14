@@ -53,6 +53,7 @@
   transition: $transition-fast;
 
   &:hover {
+    cursor: pointer;
     color: $primary-active;
     border-color: $primary-active;
     background-color: $surface-alt;

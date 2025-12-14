@@ -44,7 +44,7 @@
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.19",
     "fontawesome-free": "^1.0.4",
-    "gs-buttons": "^3.0.1",
+    "gs-buttons": "^3.1.0",
     "luxon": "^3.7.2",
     "ngx-mask": "^20.0.3",
     "rxjs": "~7.8.0",

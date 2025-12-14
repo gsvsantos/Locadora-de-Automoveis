@@ -6,10 +6,11 @@
         <hr class="bar" />
         <div class="card-content">
           <div class="social-container">
-            <a class="social" aria-label="Sign in with Google" (click)="googleLogin()">
+            <a class="social" aria-label="Sign in with Google" (click)="googleAuth()">
               <i class="fab fa-google" aria-hidden="true"></i>
             </a>
           </div>
+
           <span>{{ t('card.subtitle') }}</span>
 
           <div class="form-field">
@@ -22,8 +23,7 @@
             />
             @if (userName?.errors?.['required'] && userName?.dirty) {
               <span>{{ t('card.errors.usernameRequired') }}</span>
-            }
-            @if (userName?.errors?.['minlength'] && userName?.dirty) {
+            } @else if (userName?.errors?.['minlength'] && userName?.dirty) {
               <span>{{ t('card.errors.usernameLength') }}</span>
             }
           </div>
@@ -38,8 +38,7 @@
             />
             @if (password?.errors?.['required'] && password?.dirty) {
               <span>{{ t('card.errors.passwordRequired') }}</span>
-            }
-            @if (password?.errors?.['minlength'] && password?.dirty) {
+            } @else if (password?.errors?.['minlength'] && password?.dirty) {
               <span>{{ t('card.errors.passwordLength') }}</span>
             }
           </div>
@@ -49,6 +48,7 @@
             [buttonType]="buttonType.Link"
             [text]="t('card.buttons.register')"
             type="submit"
+            [variant]="variantType.Outline"
             routerLink="/auth/register"
           ></gs-buttons>
           <gs-buttons

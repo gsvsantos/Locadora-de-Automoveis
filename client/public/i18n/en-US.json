@@ -60,8 +60,26 @@
         },
         "buttons": {
           "register": "Create an account",
-          "confirm": "Sign In"
+          "confirm": "Sign In",
+          "password": "texthere"
         }
+      }
+    },
+    "security": {
+      "title": "Change Password",
+      "label": {
+        "currentPassword": "Current Password",
+        "newPassword": "New Password",
+        "confirmNewPassword": "Confirm New Password"
+      },
+      "errors": {
+        "required": "Field is required.",
+        "minLength": "Password must be at least 6 characters.",
+        "mismatch": "New passwords do not match.",
+        "samePassword": "The current and new password are the same."
+      },
+      "buttons": {
+        "change": "Update Password"
       }
     }
   },

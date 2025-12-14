@@ -63,6 +63,22 @@
           "confirm": "Entrar"
         }
       }
+    },
+    "security": {
+      "title": "Alterar Senha",
+      "label": {
+        "currentPassword": "Senha Atual",
+        "newPassword": "Nova Senha",
+        "confirmNewPassword": "Confirmar Nova Senha"
+      },
+      "errors": {
+        "required": "Campo obrigatório.",
+        "minLength": "A senha deve ter no mínimo 6 caracteres.",
+        "mismatch": "As novas senhas não coincidem."
+      },
+      "buttons": {
+        "change": "Atualizar Senha"
+      }
     }
   },
   "navbar": {

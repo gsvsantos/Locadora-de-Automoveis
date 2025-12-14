@@ -75,7 +75,7 @@ gs-buttons {
   --gs-btn-bg: var(--clr-primary);
   --gs-btn-fg: #ffffff;
   --gs-btn-hover-bg: color-mix(in srgb, var(--clr-primary), black 10%);
-  --gs-btn-active-bg: color-mix(in srgb, var(--clr-primary), black 20%);
+  --gs-btn-active-bg: var(--clr-primary-active);
   --gs-btn-focus: #fff;
   --gs-btn-transition-props: color, background-color, border-color, box-shadow;
   --gs-btn-transition-dur: 0.15s;

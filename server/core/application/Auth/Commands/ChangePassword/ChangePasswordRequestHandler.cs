@@ -8,19 +8,18 @@ using Microsoft.Extensions.Logging;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace LocadoraDeAutomoveis.Application.Auth.Commands.Logout;
-
-public class LogoutUserRequestHandler(
+namespace LocadoraDeAutomoveis.Application.Auth.Commands.ChangePassword;
+public class ChangePasswordRequestHandler(
     UserManager<User> userManager,
     IRepositoryRefreshToken repositoryRefreshToken,
     IRefreshTokenProvider refreshTokenProvider,
     RefreshTokenOptions refreshTokenOptions,
     IUnitOfWork unitOfWork,
-    ILogger<LogoutUserRequestHandler> logger
-) : IRequestHandler<LogoutUserRequest, Result>
+    ILogger<ChangePasswordRequestHandler> logger
+) : IRequestHandler<ChangePasswordRequest, Result>
 {
     public async Task<Result> Handle(
-        LogoutUserRequest request, CancellationToken cancellationToken)
+        ChangePasswordRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -35,7 +34,7 @@ public class LogoutUserRequestHandler(
 
             Guid userId = refreshToken.UserAuthenticatedId;
 
-            await refreshTokenProvider.RevokeUserTokensAsync(userId, "Logout", cancellationToken);
+            await refreshTokenProvider.RevokeUserTokensAsync(userId, "ChangePassword", cancellationToken);
 
             User? user = await userManager.FindByIdAsync(userId.ToString());
 
@@ -44,7 +43,37 @@ public class LogoutUserRequestHandler(
                 return Result.Fail(ErrorResults.NotFoundError("User not found."));
             }
 
+            bool userPasswordMatch = await userManager.CheckPasswordAsync(user, request.CurrentPassword);
+
+            if (!userPasswordMatch)
+            {
+                return Result.Fail(AuthErrorResults.IncorrectCurrentPasswordError());
+            }
+
+            if (!request.NewPassword.Equals(request.ConfirmNewPassword))
+            {
+                return Result.Fail(AuthErrorResults.NewPasswordConfirmationError());
+            }
+
+            IdentityResult result = await userManager.ChangePasswordAsync(
+                user,
+                request.CurrentPassword,
+                request.NewPassword
+            );
+
+            if (!result.Succeeded)
+            {
+                IEnumerable<string> erros = result
+                    .Errors
+                    .Select(failure => failure.Description)
+                    .ToList();
+
+                return Result.Fail(ErrorResults.BadRequestError(erros));
+            }
+
             user.AccessTokenVersionId = Guid.NewGuid();
+
+            await userManager.UpdateAsync(user);
 
             await unitOfWork.CommitAsync();
 
@@ -56,7 +85,7 @@ public class LogoutUserRequestHandler(
 
             logger.LogError(
                 ex,
-                "An error occurred during logout. \n{@Request}.", request
+                "An error occurred during the request. \n{@Request}.", request
             );
 
             return Result.Fail(ErrorResults.InternalServerError(ex));

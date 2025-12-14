@@ -12,7 +12,13 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { AuthApiResponse, AuthMode, LoginAuthDto, RegisterAuthDto } from '../models/auth.models';
+import {
+  AuthApiResponse,
+  AuthMode,
+  ChangePasswordRequestDto,
+  LoginAuthDto,
+  RegisterAuthDto,
+} from '../models/auth.models';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { googleAuthConfig } from '../core/auth.google.config';
 import { AdminService } from './admin.service';
@@ -135,11 +141,19 @@ export class AuthService {
     );
   }
 
-  public logout(): Observable<null> {
-    const urlCompleto = `${this.apiUrl}/logout`;
+  public changePassword(model: ChangePasswordRequestDto): Observable<void> {
+    const url = `${this.apiUrl}/change-password`;
 
     return this.http
-      .post<null>(urlCompleto, {})
+      .post<void>(url, model)
+      .pipe(tap(() => (this.revokeAccessToken(), this.oauthService.logOut())));
+  }
+
+  public logout(): Observable<null> {
+    const url = `${this.apiUrl}/logout`;
+
+    return this.http
+      .post<null>(url, {})
       .pipe(tap(() => (this.revokeAccessToken(), this.oauthService.logOut())));
   }
 

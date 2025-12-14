@@ -1,4 +1,6 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
+using LocadoraDeAutomoveis.Application.Auth.Commands.ChangePassword;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Login;
 using LocadoraDeAutomoveis.Application.Auth.Commands.LoginGoogle;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Logout;
@@ -19,6 +21,7 @@ namespace LocadoraDeAutomoveis.WebAPI.Controllers;
 [AllowAnonymous]
 public class AuthController(
     IMediator mediator,
+    IMapper mapper,
     SignInManager<User> signInManager,
     IRefreshTokenCookieService cookieService
 ) : ControllerBase
@@ -105,17 +108,41 @@ public class AuthController(
 
         await signInManager.SignOutAsync();
 
-        return ResultAndClearCookie(result);
+        return ResultAndClearCookie();
     }
 
-    private OkObjectResult ResultWithNewCookie((AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken) value)
+    [HttpPost("change-password")]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequestPartial partialRequest)
     {
-        cookieService.Write(this.Response, value.RefreshToken);
+        string? refreshToken = cookieService.Get(this.Request);
 
-        return Ok(value.AccessToken);
+        if (refreshToken is null)
+        {
+            return Unauthorized("Refresh token not found.");
+        }
+
+        ChangePasswordRequest request = mapper.Map<ChangePasswordRequest>((refreshToken, partialRequest));
+
+        Result result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return result.ToHttpResponse();
+        }
+
+        await signInManager.SignOutAsync();
+
+        return ResultAndClearCookie();
     }
 
-    private NoContentResult ResultAndClearCookie(Result result)
+    private OkObjectResult ResultWithNewCookie((AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken) result)
+    {
+        cookieService.Write(this.Response, result.RefreshToken);
+
+        return Ok(result.AccessToken);
+    }
+
+    private NoContentResult ResultAndClearCookie()
     {
         cookieService.Remove(this.Response);
 

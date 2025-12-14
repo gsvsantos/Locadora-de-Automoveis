@@ -16,3 +16,25 @@ export const passwordMatchValidator: ValidatorFn = (
 
   return null;
 };
+
+export const newPasswordMatchValidator: ValidatorFn = (
+  group: AbstractControl,
+): ValidationErrors | null => {
+  const currentPassword = group.get('currentPassword')?.value as string | null;
+  const newPassword = group.get('newPassword')?.value as string | null;
+  const confirmNewPassword = group.get('confirmNewPassword')?.value as string | null;
+
+  if (!currentPassword || !newPassword || !confirmNewPassword) {
+    return null;
+  }
+
+  if (newPassword !== confirmNewPassword) {
+    return { passwordMismatch: true };
+  }
+
+  if (currentPassword === newPassword) {
+    return { samePasswords: true };
+  }
+
+  return null;
+};
