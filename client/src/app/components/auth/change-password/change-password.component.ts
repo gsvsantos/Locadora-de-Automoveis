@@ -10,10 +10,10 @@ import { Router } from '@angular/router';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { AuthService } from '../../../services/auth.service';
 import { NotificationService } from '../../../services/notification.service';
-import { newPasswordMatchValidator } from '../../../validators/auth.validators';
 import { ChangePasswordRequestDto } from '../../../models/auth.models';
 import { TranslocoModule } from '@jsverse/transloco';
-import { PartialObserver, tap } from 'rxjs';
+import { PartialObserver } from 'rxjs';
+import { newPasswordMatchValidator } from '../../../validators/auth.validators';
 
 @Component({
   selector: 'app-change-password',
@@ -30,19 +30,14 @@ export class ChangePasswordComponent {
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
 
-  // protected formGroup: FormGroup = this.formBuilder.group(
-  //   {
-  //     currentPassword: ['', [Validators.required.bind(this), Validators.minLength(6)]],
-  //     newPassword: ['', [Validators.required.bind(this), Validators.minLength(6)]],
-  //     confirmNewPassword: ['', [Validators.required.bind(this), Validators.minLength(6)]],
-  //   },
-  //   { validators: newPasswordMatchValidator },
-  // );
-  protected formGroup: FormGroup = this.formBuilder.group({
-    currentPassword: ['', []],
-    newPassword: ['', []],
-    confirmNewPassword: ['', []],
-  });
+  protected formGroup: FormGroup = this.formBuilder.group(
+    {
+      currentPassword: ['', [Validators.required.bind(this), Validators.minLength(6)]],
+      newPassword: ['', [Validators.required.bind(this), Validators.minLength(6)]],
+      confirmNewPassword: ['', [Validators.required.bind(this), Validators.minLength(6)]],
+    },
+    { validators: newPasswordMatchValidator },
+  );
 
   public get currentPassword(): AbstractControl<unknown, unknown, unknown> | null {
     return this.formGroup.get('currentPassword');
