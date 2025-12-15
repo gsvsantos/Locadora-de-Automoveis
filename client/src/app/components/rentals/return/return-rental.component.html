@@ -65,9 +65,48 @@
             </div>
 
             <h3 class="full-width">{{ t('card.section.finalCalculation') }}</h3>
+
+            <div class="plan-details-box">
+              <label
+                >{{ t('card.label.billingPlanType') }}:
+                <strong>{{ rental.billingPlanType }}</strong></label
+              >
+
+              @switch (rental.billingPlanType) {
+                @case ('Daily') {
+                  <span class="plan-info">
+                    {{ t('card.label.dailyRate') }}:
+                    {{ rental.billingPlan.dailyBilling.dailyRate | currency: 'BRL' }} <br />
+                    {{ t('card.label.pricePerKm') }}:
+                    {{ rental.billingPlan.dailyBilling.pricePerKm | currency: 'BRL' }}
+                  </span>
+                }
+                @case ('Controlled') {
+                  <span class="plan-info">
+                    {{ t('card.label.franchise') }}:
+                    {{ rental.billingPlan.controlledBilling.dailyRate | currency: 'BRL' }} <br />
+                    {{ t('card.label.extraKm') }}:
+                    {{
+                      rental.billingPlan.controlledBilling.pricePerKmExtrapolated | currency: 'BRL'
+                    }}/Km
+                  </span>
+                }
+                @case ('Free') {
+                  <span class="plan-info">
+                    {{ t('card.label.fixedRate') }}:
+                    {{ rental.billingPlan.freeBilling.fixedRate | currency: 'BRL' }}
+                  </span>
+                }
+              }
+            </div>
             <div class="final-price-box">
-              <p>{{ t('card.label.totalValue') }}:</p>
-              <p class="final-price">R$ 0,00</p>
+              <div class="price-label">{{ t('card.label.totalValue') }}</div>
+              <div class="price-value">
+                {{ totalPrice$ | async | currency: 'BRL' : 'symbol' : '1.2-2' }}
+              </div>
+              <div class="price-note">
+                {{ t('card.note.finalPrice') }}
+              </div>
             </div>
           </div>
 

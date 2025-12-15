@@ -11,6 +11,7 @@ import { UpdateRentalComponent } from '../components/rentals/update/update-renta
 import { DeleteRentalComponent } from '../components/rentals/delete/delete-rental.component';
 import { ReturnRentalComponent } from '../components/rentals/return/return-rental.component';
 import { listCouponsResolver } from '../resolvers/coupon.resolvers';
+import { configurationDetailsResolver } from '../resolvers/configuration.resolvers';
 
 export const rentalRoutes: Routes = [
   {
@@ -52,6 +53,6 @@ export const rentalRoutes: Routes = [
   {
     path: 'return/:id',
     component: ReturnRentalComponent,
-    resolve: { rental: rentalDetailsResolver },
+    resolve: { rental: rentalDetailsResolver, configuration: configurationDetailsResolver },
   },
 ];

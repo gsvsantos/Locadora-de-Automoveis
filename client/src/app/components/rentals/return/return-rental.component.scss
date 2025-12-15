@@ -56,9 +56,23 @@ select[multiple].form-input {
   }
 }
 
-.final-price-box {
+.plan-details-box {
+  background-color: #e8f5e9;
+  border: 1px solid #c8e6c9;
+  color: $text-main;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-top: 1rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.final-price-box,
+.plan-details-box {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   margin-top: 1.5rem;
   padding: 15px 20px;
@@ -66,15 +80,22 @@ select[multiple].form-input {
   border-radius: $border-radius;
   border: 1px solid $primary;
 
-  p {
-    margin: 0;
-    color: $text-main;
-    font-size: 1.1rem;
+  .price-label {
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    opacity: 0.8;
+    letter-spacing: 1px;
   }
 
-  .final-price {
+  .price-value {
     font-size: 1.6rem;
     font-weight: 700;
     color: $success;
+  }
+
+  .price-note {
+    font-size: 0.75rem;
+    opacity: 0.6;
+    font-style: italic;
   }
 }

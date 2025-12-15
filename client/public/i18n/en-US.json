@@ -1113,6 +1113,12 @@
           "vehicle": "Vehicle",
           "startDate": "Start Date",
           "startKm": "Starting KM",
+          "billingPlanType": "Billing Plan",
+          "dailyRate": "Daily Rate",
+          "pricePerKm": "Price/Km",
+          "franchise": "Franchise",
+          "extraKm": "Extra Km",
+          "fixedRate": "Fixed Rate",
           "endKm": "Final KM Readout",
           "fuelLevel": "Fuel Level",
           "totalValue": "Total Value"
@@ -1132,6 +1138,9 @@
         "buttons": {
           "back": "Back",
           "confirm": "Confirm Return"
+        },
+        "note": {
+          "finalPrice": "*Includes daily rates, extras, fuel penalties, and applicable discounts."
         }
       }
     }

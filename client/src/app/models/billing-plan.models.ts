@@ -50,3 +50,5 @@ export interface ControlledBillingDto {
 export interface FreeBillingDto {
   fixedRate: number;
 }
+
+export type BillingPlanType = 'Daily' | 'Controlled' | 'Free';

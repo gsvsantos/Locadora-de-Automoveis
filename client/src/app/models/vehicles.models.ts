@@ -5,7 +5,7 @@ export interface VehicleDto {
   brand: string;
   color: string;
   model: string;
-  fuelType: string;
+  fuelType: FuelType;
   fuelTankCapacity: number;
   year: number;
   photoPath: string;
@@ -27,3 +27,5 @@ export interface VehicleDetailsApiDto {
 }
 
 export type VehicleDataPayload = ListVehiclesDto;
+
+export type FuelType = 'Gasoline' | 'Gas' | 'Diesel' | 'Alcohol';

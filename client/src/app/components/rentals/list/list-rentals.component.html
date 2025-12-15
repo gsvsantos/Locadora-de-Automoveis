@@ -91,7 +91,7 @@
                   {{ rental.baseRentalPrice | currency: 'BRL' : 'symbol' : '1.2-2' }}</span
                 >
               </div>
-              @if (rental.finalPrice) {
+              @if (rental.finalPrice !== null && rental.finalPrice !== undefined) {
                 <div class="info-row">
                   <span class="material-icons">attach_money</span>
                   <span

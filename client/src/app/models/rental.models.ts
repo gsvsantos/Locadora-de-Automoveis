@@ -1,8 +1,12 @@
+import { BillingPlanDto, BillingPlanType } from './billing-plan.models';
+import { Coupon } from './coupon.models';
+import { Extra } from './extra.models';
+
 export interface RentalDto {
   startDate: Date;
   expectedReturnDate: Date;
   startKm: number;
-  billingPlanType: string;
+  billingPlanType: BillingPlanType;
   estimatedKilometers: number;
 }
 
@@ -21,7 +25,8 @@ export interface Rental extends RentalDto {
   client: RentalClientDto;
   driver: RentalDriverDto;
   vehicle: RentalVehicleDto;
-  coupon: RentalCouponDto;
+  coupon: Coupon;
+  billingPlan: BillingPlanDto;
   returnDate: Date;
   baseRentalPrice: number;
   finalPrice: number;
@@ -35,7 +40,7 @@ export interface ListRentalsDto {
 }
 
 export interface RentalDetailsDto extends Rental {
-  rentalExtras: RentalExtra[];
+  rentalExtras: Extra[];
 }
 
 export interface RentalDetailsApiDto {
@@ -48,11 +53,6 @@ export interface ReturnRentalDto {
 }
 
 export type RentalDataPayload = ListRentalsDto;
-
-export interface RentalExtra {
-  id: string;
-  name: string;
-}
 
 export interface RentalEmployeeDto {
   id: string;
@@ -75,15 +75,18 @@ export interface RentalDriverDto {
 export interface RentalVehicleDto {
   id: string;
   licensePlate: string;
+  fuelType: string;
+  fuelTankCapacity: number;
   isActive: boolean;
 }
 
-export interface RentalCouponDto {
-  id: string;
-  name: string;
-  partner: RentalCouponPartnerDto;
-  isActive: boolean;
-}
+export const FUEL_LEVEL_PERCENTAGE: Record<string, number> = {
+  Empty: 0,
+  Quarter: 25,
+  Half: 50,
+  ThreeQuarters: 75,
+  Full: 100,
+};
 
 export interface RentalCouponPartnerDto {
   id: string;

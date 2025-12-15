@@ -22,6 +22,7 @@ import { RentalService } from '../../../services/rental.service';
 import { CreateRentalDto, RentalDetailsDto } from '../../../models/rental.models';
 import { dateToInputDateString } from '../../../utils/date.utils';
 import { Coupon } from '../../../models/coupon.models';
+import { needsIndividualValidator } from '../../../validators/driver.validators';
 
 @Component({
   selector: 'app-update-rental.component',
@@ -79,19 +80,22 @@ export class UpdateRentalComponent {
     shareReplay({ bufferSize: 1, refCount: true }),
   );
 
-  protected formGroup: FormGroup = this.formBuilder.group({
-    startDate: ['', [Validators.required.bind(this)]],
-    expectedReturnDate: ['', [Validators.required.bind(this)]],
-    startKm: ['', [Validators.required.bind(this)]],
-    clientId: ['', [Validators.required.bind(this)]],
-    employeeId: ['', [Validators.required.bind(this)]],
-    driverId: ['', [Validators.required.bind(this)]],
-    vehicleId: ['', [Validators.required.bind(this)]],
-    couponId: ['', [Validators.required.bind(this)]],
-    billingPlanType: ['', [Validators.required.bind(this)]],
-    estimatedKilometers: [''],
-    rentalRentalExtrasIds: [''],
-  });
+  protected formGroup: FormGroup = this.formBuilder.group(
+    {
+      startDate: [null, [Validators.required.bind(this)]],
+      expectedReturnDate: [null, [Validators.required.bind(this)]],
+      startKm: [null, [Validators.required.bind(this)]],
+      clientId: [null, [Validators.required.bind(this)]],
+      employeeId: [null, [Validators.required.bind(this)]],
+      driverId: [null, [Validators.required.bind(this)]],
+      vehicleId: [null, [Validators.required.bind(this)]],
+      couponId: [null],
+      billingPlanType: [null, [Validators.required.bind(this)]],
+      estimatedKilometers: [null],
+      rentalRentalExtrasIds: [[]],
+    },
+    { validators: [needsIndividualValidator] },
+  );
 
   public get startDate(): AbstractControl | null {
     return this.formGroup.get('startDate');

@@ -1113,6 +1113,12 @@
           "vehicle": "Vehículo",
           "startDate": "Fecha de inicio",
           "startKm": "KM inicial",
+          "billingPlanType": "Plan de Facturación",
+          "dailyRate": "Tarifa Diaria",
+          "pricePerKm": "Precio/Km",
+          "franchise": "Franquicia",
+          "extraKm": "Km Excedente",
+          "fixedRate": "Tarifa Fija",
           "endKm": "Lectura final de KM",
           "fuelLevel": "Nivel de combustible",
           "totalValue": "Valor total"
@@ -1132,6 +1138,9 @@
         "buttons": {
           "back": "Volver",
           "confirm": "Confirmar devolución"
+        },
+        "note": {
+          "finalPrice": "*Incluye tarifas diarias, extras, multas de combustible y descuentos aplicables."
         }
       }
     }
