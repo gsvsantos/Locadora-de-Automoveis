@@ -7,7 +7,7 @@ export interface RentalDto {
   expectedReturnDate: Date;
   startKm: number;
   billingPlanType: BillingPlanType;
-  estimatedKilometers: number;
+  estimatedKilometers?: number | null;
 }
 
 export interface CreateRentalDto extends RentalDto {
@@ -21,12 +21,11 @@ export interface CreateRentalDto extends RentalDto {
 
 export interface Rental extends RentalDto {
   id: string;
-  employee: RentalEmployeeDto;
+  employee?: RentalEmployeeDto | null;
   client: RentalClientDto;
   driver: RentalDriverDto;
   vehicle: RentalVehicleDto;
-  coupon: Coupon;
-  billingPlan: BillingPlanDto;
+  coupon?: Coupon | null;
   returnDate: Date;
   baseRentalPrice: number;
   finalPrice: number;
@@ -40,16 +39,28 @@ export interface ListRentalsDto {
 }
 
 export interface RentalDetailsDto extends Rental {
+  billingPlan: BillingPlanDto;
   rentalExtras: Extra[];
+  rentalReturn?: RentalReturnDto | null;
 }
 
 export interface RentalDetailsApiDto {
   rental: RentalDetailsDto;
 }
 
-export interface ReturnRentalDto {
+export interface RentalReturnDto {
   endKm: number;
-  fuelLevel: string;
+  fuelLevelAtReturn: string;
+}
+
+export interface RentalReturn extends RentalReturnDto {
+  returnDate: Date;
+  totalMileage: number;
+  extrasTotalCost: number;
+  fuelPenalty: number;
+  penaltyTotalCost: number;
+  discountTotal: number;
+  finalPrice: number;
 }
 
 export type RentalDataPayload = ListRentalsDto;

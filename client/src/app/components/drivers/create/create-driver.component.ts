@@ -245,8 +245,6 @@ export class CreateDriverComponent {
 
     const registerModel: CreateDriverDto = this.formGroup.getRawValue() as CreateDriverDto;
 
-    console.log(registerModel);
-
     const registerObserver: Observer<IdApiResponse> = {
       next: () => this.notificationService.success(`Driver registered successfully!`),
       error: (err: string) => this.notificationService.error(err),

@@ -1,6 +1,7 @@
 @use 'variables' as *;
 
-.list-section {
+.list-section,
+.details-section {
   display: flex;
   justify-content: center;
   padding: 2rem;

@@ -51,7 +51,7 @@
 
             <div class="form-field">
               <label>{{ t('card.label.fuelLevel') }}</label>
-              <select class="form-input" formControlName="fuelLevel">
+              <select class="form-input" formControlName="fuelLevelAtReturn">
                 <option value="">{{ t('card.placeholder.fuelLevel') }}</option>
                 <option value="Empty">{{ t('card.fuel.empty') }}</option>
                 <option value="Quarter">{{ t('card.fuel.quarter') }}</option>
@@ -59,7 +59,7 @@
                 <option value="ThreeQuarters">{{ t('card.fuel.threeQuarters') }}</option>
                 <option value="Full">{{ t('card.fuel.full') }}</option>
               </select>
-              @if (fuelLevel?.errors?.['required'] && fuelLevel?.dirty) {
+              @if (fuelLevelAtReturn?.errors?.['required'] && fuelLevelAtReturn?.dirty) {
                 <span class="error-message">{{ t('card.errors.fuelLevelRequired') }}</span>
               }
             </div>

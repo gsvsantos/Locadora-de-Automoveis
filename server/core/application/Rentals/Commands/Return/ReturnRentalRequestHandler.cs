@@ -74,7 +74,7 @@ public class ReturnRentalRequestHandler(
 
         RentalReturn rentalReturn = mapper.Map<RentalReturn>((request, returnDate, kmDriven));
 
-        rentalReturn.SetFuelLevel(request.FuelLevel);
+        rentalReturn.SetFuelLevel(request.FuelLevelAtReturn);
         rentalReturn.AssociateRental(selectedRental);
 
         try

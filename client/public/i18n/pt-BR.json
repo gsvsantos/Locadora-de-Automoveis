@@ -1069,6 +1069,55 @@
         }
       }
     },
+    "details": {
+      "card": {
+        "title": "Detalhes da Locação",
+        "subtitle": "Visão geral completa do contrato de locação.",
+        "status": {
+          "active": "Ativo",
+          "returned": "Devolvido"
+        },
+        "sections": {
+          "summary": "Resumo da Locação",
+          "plan": "Detalhes do Plano",
+          "extras": "Extras Selecionados",
+          "return": "Dados da Devolução"
+        },
+        "label": {
+          "billingPlan": "Plano de Cobrança",
+          "estimatedKilometers": "Km Estimado",
+          "startDate": "Data de Início",
+          "expectedReturnDate": "Previsão de Entrega",
+          "returnDate": "Data de Devolução",
+          "startKm": "Km Inicial",
+          "driver": "Condutor",
+          "employee": "Funcionário",
+          "coupon": "Cupom",
+          "estimated": "Total Estimado",
+          "final": "Valor Final",
+          "none": "Nenhum",
+          "noExtras": "Nenhum extra selecionado.",
+          "dailyRate": "Diária",
+          "pricePerKm": "Preço por Km",
+          "controlledDailyRate": "Diária Controlada",
+          "pricePerKmExtrapolated": "Preço por Km (Extra)",
+          "fixedRate": "Taxa Fixa",
+          "fuelLevelAtReturn": "Nível de Combustível",
+          "endKm": "Km Final",
+          "totalMileage": "Total Rodado",
+          "extrasTotalCost": "Total de Extras",
+          "fuelPenalty": "Multa de Combustível",
+          "penaltyTotalCost": "Outras Penalidades",
+          "discountTotal": "Desconto Total",
+          "finalPrice": "Preço Final"
+        },
+        "buttons": {
+          "back": "Voltar",
+          "return": "Registrar Devolução",
+          "edit": "Editar"
+        }
+      }
+    },
     "delete": {
       "card": {
         "title": "Cancelar/Excluir locação",

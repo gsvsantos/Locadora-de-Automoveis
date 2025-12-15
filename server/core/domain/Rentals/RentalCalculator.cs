@@ -30,7 +30,7 @@ public static class RentalCalculator
         Rental rental,
         DateTimeOffset returnDate,
         decimal endKm,
-        EFuelLevel fuelLevel,
+        EFuelLevel fuelLevelAtReturn,
         Configuration config)
     {
         int daysUsed = CalculateDays(rental.StartDate, returnDate);
@@ -47,7 +47,7 @@ public static class RentalCalculator
 
         decimal extrasTotalCost = CalculateExtrasCost(rental.Extras, daysUsed);
 
-        decimal fuelPenalty = CalculateFuelPenalty(fuelLevel, rental.Vehicle, config);
+        decimal fuelPenalty = CalculateFuelPenalty(fuelLevelAtReturn, rental.Vehicle, config);
 
         decimal delayPenalty = CalculateDelayPenalty(planTotalCost, rental.ExpectedReturnDate, returnDate);
 

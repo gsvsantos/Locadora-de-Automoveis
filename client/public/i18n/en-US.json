@@ -1069,6 +1069,55 @@
         }
       }
     },
+    "details": {
+      "card": {
+        "title": "Rental Details",
+        "subtitle": "Complete overview of the rental contract.",
+        "status": {
+          "active": "Active",
+          "returned": "Returned"
+        },
+        "sections": {
+          "summary": "Rental Summary",
+          "plan": "Billing Plan Details",
+          "extras": "Selected Extras",
+          "return": "Return Details"
+        },
+        "label": {
+          "billingPlan": "Billing Plan",
+          "estimatedKilometers": "Estimated KM",
+          "startDate": "Start Date",
+          "expectedReturnDate": "Expected Return Date",
+          "returnDate": "Return Date",
+          "startKm": "Starting KM",
+          "driver": "Driver",
+          "employee": "Employee",
+          "coupon": "Coupon",
+          "estimated": "Estimated Total",
+          "final": "Final Amount",
+          "none": "None",
+          "noExtras": "No extras selected.",
+          "dailyRate": "Daily Rate",
+          "pricePerKm": "Price per Km",
+          "controlledDailyRate": "Controlled Daily Rate",
+          "pricePerKmExtrapolated": "Price per Km (Extra)",
+          "fixedRate": "Fixed Rate",
+          "fuelLevelAtReturn": "Fuel Level",
+          "endKm": "End KM",
+          "totalMileage": "Total Mileage",
+          "extrasTotalCost": "Extras Total",
+          "fuelPenalty": "Fuel Penalty",
+          "penaltyTotalCost": "Other Penalties",
+          "discountTotal": "Total Discount",
+          "finalPrice": "Final Price"
+        },
+        "buttons": {
+          "back": "Back",
+          "return": "Register Return",
+          "edit": "Edit"
+        }
+      }
+    },
     "delete": {
       "card": {
         "title": "Cancel/Delete Rental",

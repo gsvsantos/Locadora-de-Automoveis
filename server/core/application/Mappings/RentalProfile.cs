@@ -50,7 +50,7 @@ public class RentalProfile : Profile
             .ConvertUsing(src => new ReturnRentalRequest(
                 src.id,
                 src.p.EndKm,
-                src.p.FuelLevel
+                src.p.FuelLevelAtReturn
             ));
 
         // DTOs

@@ -103,7 +103,7 @@ export class CreateVehicleComponent {
     if (this.formGroup.invalid) return;
 
     const registerModel: VehicleDto = this.formGroup.value as VehicleDto;
-    console.log(registerModel);
+
     const registerObserver: Observer<IdApiResponse> = {
       next: () =>
         this.notificationService.success(

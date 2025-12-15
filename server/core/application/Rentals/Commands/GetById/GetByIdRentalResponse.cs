@@ -47,6 +47,7 @@ public record ByIdRentalDto(
     RentalExtrasQuantity,
     IsActive
 );
+
 public record RentalReturnDto(
     DateTimeOffset ReturnDate,
     decimal EndKm,

@@ -73,10 +73,7 @@ export class UpdateRentalComponent {
   protected readonly rental$ = this.route.data.pipe(
     filter((data) => data['rental'] as boolean),
     map((data) => data['rental'] as RentalDetailsDto),
-    tap((rental: RentalDetailsDto) => {
-      this.fillDriverFields(rental);
-      console.log(this.formGroup);
-    }),
+    tap((rental: RentalDetailsDto) => this.fillDriverFields(rental)),
     shareReplay({ bufferSize: 1, refCount: true }),
   );
 
@@ -169,7 +166,7 @@ export class UpdateRentalComponent {
       billingPlanType: rental.billingPlanType,
       estimatedKilometers: rental.estimatedKilometers,
       clientId: rental.client.id,
-      employeeId: rental.employee.id,
+      employeeId: rental.employee?.id,
       driverId: rental.driver.id,
       vehicleId: rental.vehicle.id,
       rentalRentalExtrasIds: rental.rentalExtras

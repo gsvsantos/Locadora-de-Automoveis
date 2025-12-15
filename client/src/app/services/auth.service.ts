@@ -62,13 +62,13 @@ export class AuthService {
             }
           }),
           catchError((err) => {
-            console.debug('No active session found during init:', err);
+            console.log('No active session found during init:', err);
             return of(undefined);
           }),
         ),
       );
     } catch (err) {
-      console.debug('Auth init failed silently', err);
+      console.log('Auth init failed silently', err);
     }
   }
 

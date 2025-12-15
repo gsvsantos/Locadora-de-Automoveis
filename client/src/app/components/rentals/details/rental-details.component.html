@@ -1,0 +1,270 @@
+<section class="details-section" *transloco="let t; prefix: 'rentals.details.card'">
+  <div class="main-content">
+    <div class="top-bar">
+      <gs-buttons
+        [buttonType]="buttonType.Link"
+        [text]="t('buttons.back')"
+        bootstrapIcon="bi-arrow-left"
+        [target]="targetType.SameTab"
+        [variant]="variantType.Outline"
+        routerLink="/rentals"
+      ></gs-buttons>
+    </div>
+
+    @if (rental$ | async; as rental) {
+      <header class="page-header">
+        <div class="header-title">
+          <h2>{{ rental.vehicle.licensePlate }}</h2>
+          <span class="divider">|</span>
+          <h2 class="subtitle">{{ rental.client.fullName | titlecase }}</h2>
+        </div>
+
+        <div
+          class="status-badge"
+          [class.active]="rental.isActive"
+          [class.returned]="rental.returnDate"
+        >
+          {{ rental.returnDate ? t('status.returned') : t('status.active') }}
+        </div>
+      </header>
+
+      <div class="details-grid">
+        <div class="card summary-card">
+          <div class="card-header">
+            <span class="material-icons">info</span>
+            <h3>{{ t('sections.summary') }}</h3>
+
+            <div class="card-actions">
+              @if (rental.isActive && !rental.returnDate) {
+                <a
+                  [routerLink]="['/rentals/return', rental.id]"
+                  [title]="t('buttons.return')"
+                  class="action-btn success"
+                >
+                  <span class="material-icons">check_circle</span>
+                </a>
+              }
+              <a
+                [routerLink]="['/rentals/edit', rental.id]"
+                [title]="t('buttons.edit')"
+                class="action-btn"
+              >
+                <span class="material-icons">edit</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="data-grid">
+              <div class="data-item">
+                <label>{{ t('label.startDate') }}</label>
+                <span>{{ rental.startDate | date: 'dd/MM/yyyy' }}</span>
+              </div>
+
+              <div class="data-item">
+                <label>{{ t('label.expectedReturnDate') }}</label>
+                <span>{{ rental.expectedReturnDate | date: 'dd/MM/yyyy' }}</span>
+              </div>
+
+              <div class="data-item">
+                <label>{{ t('label.startKm') }}</label>
+                <span>{{ rental.startKm }} km</span>
+              </div>
+
+              @if (rental.estimatedKilometers) {
+                <div class="data-item">
+                  <label>{{ t('label.estimatedKilometers') }}</label>
+                  <span>{{ rental.estimatedKilometers }} km</span>
+                </div>
+              }
+
+              <div class="data-item full-width">
+                <label>{{ t('label.driver') }}</label>
+                <div class="driver-info">
+                  <span class="material-icons">person</span>
+                  <span>{{ rental.driver.fullName }}</span>
+                </div>
+              </div>
+
+              <div class="data-item">
+                <label>{{ t('label.employee') }}</label>
+                <span>{{ rental.employee?.fullName ?? '-' }}</span>
+              </div>
+
+              <div class="data-item">
+                <label>{{ t('label.coupon') }}</label>
+                <span [class.has-coupon]="rental.coupon">{{ rental.coupon?.name ?? '-' }}</span>
+              </div>
+            </div>
+
+            <div class="price-highlight">
+              <span class="price-label">{{ t('label.estimated') }}</span>
+              <span class="price-value">{{
+                rental.baseRentalPrice | currency: 'BRL' : 'symbol' : '1.2-2'
+              }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-column">
+          <div class="card">
+            <div class="card-header">
+              <span class="material-icons">local_offer</span>
+              <h3>{{ t('sections.plan') }}: {{ rental.billingPlanType }}</h3>
+            </div>
+            <div class="card-body">
+              <div class="plan-details">
+                @if (rental.billingPlan.dailyBilling) {
+                  <div class="plan-row">
+                    <span>Daily Rate</span>
+                    <strong>{{
+                      rental.billingPlan.dailyBilling.dailyRate | currency: 'BRL'
+                    }}</strong>
+                  </div>
+                  <div class="plan-row">
+                    <span>Price/Km</span>
+                    <strong>{{
+                      rental.billingPlan.dailyBilling.pricePerKm | currency: 'BRL'
+                    }}</strong>
+                  </div>
+                }
+
+                @if (rental.billingPlan.controlledBilling) {
+                  <div class="plan-row">
+                    <span>Daily Rate</span>
+                    <strong>{{
+                      rental.billingPlan.controlledBilling.dailyRate | currency: 'BRL'
+                    }}</strong>
+                  </div>
+                  <div class="plan-row">
+                    <span>Price/Km (Extra)</span>
+                    <strong>{{
+                      rental.billingPlan.controlledBilling.pricePerKmExtrapolated | currency: 'BRL'
+                    }}</strong>
+                  </div>
+                }
+
+                @if (rental.billingPlan.freeBilling) {
+                  <div class="plan-row">
+                    <span>Fixed Rate</span>
+                    <strong>{{
+                      rental.billingPlan.freeBilling.fixedRate | currency: 'BRL'
+                    }}</strong>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="material-icons">add_circle_outline</span>
+              <h3>{{ t('sections.extras') }}</h3>
+            </div>
+            <div class="card-body">
+              @if (rental.rentalExtras.length > 0) {
+                <div class="extras-list">
+                  @for (extra of rental.rentalExtras; track extra.id) {
+                    <div class="extra-item">
+                      <div class="extra-info">
+                        <span class="extra-name">{{ extra.name }}</span>
+                        @if (extra.isDaily) {
+                          <span class="pill daily">diária</span>
+                        }
+                      </div>
+                      <span class="extra-price">{{ extra.price | currency: 'BRL' }}</span>
+                    </div>
+                  }
+                </div>
+              } @else {
+                <div class="empty-state">
+                  <span class="material-icons">block</span>
+                  <p>{{ t('label.noExtras') }}</p>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+        @if (rentalReturn$ | async; as rr) {
+          @if (rr) {
+            <div class="card return-card full-span">
+              <div class="card-header return-header">
+                <span class="material-icons">task_alt</span>
+                <h3>{{ t('sections.return') }}</h3>
+
+                @if (rr.returnDate) {
+                  <span class="return-date-badge">
+                    {{ rr.returnDate | date: 'dd/MM/yyyy' }}
+                  </span>
+                }
+              </div>
+
+              <div class="card-body">
+                <div class="return-grid">
+                  <div class="return-group">
+                    <h4>Vistoria</h4>
+                    <div class="data-grid">
+                      <div class="data-item">
+                        <label>Fuel Level</label>
+                        <strong class="highlight-text">{{ rr.fuelLevelAtReturn }}</strong>
+                      </div>
+                      <div class="data-item">
+                        <label>End Km</label>
+                        <strong>{{ rr.endKm }} km</strong>
+                      </div>
+
+                      @if (rr.totalMileage) {
+                        <div class="data-item">
+                          <label>Total Rodado</label>
+                          <strong>{{ rr.totalMileage }} km</strong>
+                        </div>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="return-group values">
+                    <h4>Fechamento</h4>
+                    <div class="financial-summary">
+                      @if (rr.extrasTotalCost) {
+                        <div class="fin-row">
+                          <span>Extras</span>
+                          <span>{{ rr.extrasTotalCost | currency: 'BRL' }}</span>
+                        </div>
+                      }
+
+                      @if (rr.fuelPenalty) {
+                        <div class="fin-row">
+                          <span>Fuel Penalty</span>
+                          <span class="danger">{{ rr.fuelPenalty | currency: 'BRL' }}</span>
+                        </div>
+                      }
+
+                      @if (rr.penaltyTotalCost) {
+                        <div class="fin-row">
+                          <span>Other Penalties</span>
+                          <span class="danger">{{ rr.penaltyTotalCost | currency: 'BRL' }}</span>
+                        </div>
+                      }
+
+                      @if (rr.discountTotal) {
+                        <div class="fin-row discount">
+                          <span>Discount</span>
+                          <span>- {{ rr.discountTotal | currency: 'BRL' }}</span>
+                        </div>
+                      }
+
+                      <div class="fin-row total">
+                        <span>Final Price</span>
+                        <span>{{ rr.finalPrice | currency: 'BRL' }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    }
+  </div>
+</section>

@@ -72,7 +72,7 @@ export class UpdateCouponComponent {
     if (this.formGroup.invalid) return;
 
     const updateModel: CouponDto = this.formGroup.value as CouponDto;
-    console.log(updateModel);
+
     const updateObserve: Observer<IdApiResponse> = {
       next: () =>
         this.notificationService.success(`Group "${updateModel.name}" updated successfully!`),

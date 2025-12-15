@@ -28,7 +28,7 @@ import {
   FUEL_LEVEL_PERCENTAGE,
   RentalDetailsDto,
   RentalVehicleDto,
-  ReturnRentalDto,
+  RentalReturnDto,
 } from '../../../models/rental.models';
 import { NotificationService } from '../../../services/notification.service';
 import { RentalService } from '../../../services/rental.service';
@@ -37,11 +37,11 @@ import { Extra } from '../../../models/extra.models';
 import { Configuration } from '../../../models/configuration.models';
 import { FuelType } from '../../../models/vehicles.models';
 
-type FuelLevelKey = keyof typeof FUEL_LEVEL_PERCENTAGE;
+type fuelLevelAtReturnKey = keyof typeof FUEL_LEVEL_PERCENTAGE;
 
 type ReturnFormValue = {
   endKm: number | null;
-  fuelLevel: FuelLevelKey | null;
+  fuelLevelAtReturn: fuelLevelAtReturnKey | null;
 };
 
 @Component({
@@ -84,7 +84,7 @@ export class ReturnRentalComponent {
 
   protected formGroup: FormGroup = this.formBuilder.group({
     endKm: ['', [Validators.required.bind(this)]],
-    fuelLevel: ['', [Validators.required.bind(this)]],
+    fuelLevelAtReturn: ['', [Validators.required.bind(this)]],
   });
 
   protected readonly totalPrice$ = combineLatest([
@@ -94,24 +94,17 @@ export class ReturnRentalComponent {
       startWith(this.formGroup.value as ReturnFormValue),
       debounceTime(300),
       distinctUntilChanged(
-        (first, second) => first?.endKm === second?.endKm && first?.fuelLevel === second?.fuelLevel,
+        (first, second) =>
+          first?.endKm === second?.endKm && first?.fuelLevelAtReturn === second?.fuelLevelAtReturn,
       ),
     ),
   ]).pipe(
     map(([rental, config, formValue]) => {
       if (this.formGroup.invalid) return 0;
       const form = formValue as ReturnFormValue;
-
-      console.log('rental:', rental);
-      console.log('form:', form);
-
       const daysUsed = this.calculateDays(rental.startDate, this.returnDate);
-      console.log('daysUsed:', daysUsed);
-
       const endKm = Number(form.endKm ?? 0);
       const kmDriven = Math.max(0, endKm - rental.startKm);
-      console.log('kmDriven:', kmDriven);
-      console.log('rental.billingPlan:', rental.billingPlan);
 
       const planTotalCost = this.money(
         this.calculatePlanPrice(
@@ -122,27 +115,18 @@ export class ReturnRentalComponent {
           rental.estimatedKilometers ?? 0,
         ),
       );
-      console.log('planTotalCost:', planTotalCost);
-
       const extrasTotalCost = this.money(this.calculateExtrasCost(rental.rentalExtras, daysUsed));
-      console.log('extrasTotalCost:', extrasTotalCost);
 
       const fuelPenality = this.money(
-        this.calculateFuelPenalty(form.fuelLevel, rental.vehicle, config),
+        this.calculateFuelPenalty(form.fuelLevelAtReturn, rental.vehicle, config),
       );
-      console.log('fuelPenality:', fuelPenality);
-
       const delayPenalty = this.money(
         this.calculateDelayPenalty(planTotalCost, rental.expectedReturnDate, this.returnDate),
       );
-      console.log('delayPenalty:', delayPenalty);
-
       const penaltiesTotalCost = this.money(fuelPenality + delayPenalty);
 
       const discountTotal = this.money(rental.coupon?.discountValue ?? 0);
-
       const totalCost = this.money(planTotalCost + extrasTotalCost + penaltiesTotalCost);
-
       const finalPrice = this.money(Math.max(0, totalCost - discountTotal));
 
       return finalPrice;
@@ -155,14 +139,14 @@ export class ReturnRentalComponent {
     return this.formGroup.get('endKm');
   }
 
-  public get fuelLevel(): AbstractControl<FuelLevelKey> | null {
-    return this.formGroup.get('fuelLevel') as AbstractControl<FuelLevelKey> | null;
+  public get fuelLevelAtReturn(): AbstractControl<fuelLevelAtReturnKey> | null {
+    return this.formGroup.get('fuelLevelAtReturn') as AbstractControl<fuelLevelAtReturnKey> | null;
   }
 
   public return(): void {
     if (this.formGroup.invalid) return;
 
-    const returnModel: ReturnRentalDto = this.formGroup.value as ReturnRentalDto;
+    const returnModel: RentalReturnDto = this.formGroup.value as RentalReturnDto;
 
     const returnObserver: Observer<IdApiResponse> = {
       next: () => this.notificationService.success(`Rental returned successfully!`),
@@ -246,13 +230,13 @@ export class ReturnRentalComponent {
   }
 
   private calculateFuelPenalty(
-    fuelLevel: FuelLevelKey | null,
+    fuelLevelAtReturn: fuelLevelAtReturnKey | null,
     vehicle: RentalVehicleDto,
     config: Configuration,
   ): number {
-    if (!fuelLevel) return 0;
+    if (!fuelLevelAtReturn) return 0;
 
-    const levelPercent = FUEL_LEVEL_PERCENTAGE[fuelLevel] ?? 100;
+    const levelPercent = FUEL_LEVEL_PERCENTAGE[fuelLevelAtReturn] ?? 100;
     if (levelPercent >= 100) return 0;
 
     const missingLiters = vehicle.fuelTankCapacity * ((100 - levelPercent) / 100);
