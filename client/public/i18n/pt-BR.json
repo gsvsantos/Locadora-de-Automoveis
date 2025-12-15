@@ -1020,10 +1020,10 @@
         "title": "Editar dados da locação",
         "subtitle": "Atualize o período da locação e os serviços opcionais.",
         "section": {
-          "association": "Cliente, condutor e veículo (fixos)",
-          "timelineAndEstimates": "Período e estimativas",
-          "extras": "Serviços adicionais/Extras",
-          "pricing": "Preços atuais"
+          "association": "Associação de cliente, condutor e funcionário",
+          "vehicleAndDates": "Veículo e período",
+          "billing": "Cobrança e quilometragem estimada",
+          "extrasAndCoupon": "Extras e descontos"
         },
         "placeholder": {
           "client": "Selecione o cliente...",
@@ -1042,10 +1042,10 @@
           "vehicle": "Veículo",
           "startDate": "Data de início",
           "expectedReturnDate": "Data prevista de devolução",
+          "startKm": "KM inicial",
           "estimatedKilometers": "KM estimado",
           "extras": "Extras selecionados",
           "billingPlanType": "Tipo de plano de cobrança",
-          "estimated": "Valor Previsto",
           "final": "Valor Final",
           "dailyRate": "Diária Base",
           "coupon": "Cupom"

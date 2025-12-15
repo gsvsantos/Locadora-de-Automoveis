@@ -1,3 +1,5 @@
+import { Partner } from './partner.models';
+
 export interface CouponDto {
   name: string;
 }
@@ -10,6 +12,7 @@ export interface CreateCouponDto extends CouponDto {
 
 export interface Coupon extends CouponDto {
   id: string;
+  partner: Partner;
   discountValue: number;
   expirationDate: Date;
   isActive: boolean;

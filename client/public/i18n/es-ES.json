@@ -1020,10 +1020,10 @@
         "title": "Editar datos del alquiler",
         "subtitle": "Actualiza el periodo del alquiler y los servicios opcionales.",
         "section": {
-          "association": "Cliente, conductor y vehículo (fijos)",
-          "timelineAndEstimates": "Periodo y estimaciones",
-          "extras": "Servicios adicionales/Extras",
-          "pricing": "Precios actuales"
+          "association": "Asociación de cliente, conductor y empleado",
+          "vehicleAndDates": "Vehículo y periodo",
+          "billing": "Facturación y kilómetros estimados",
+          "extrasAndCoupon": "Extras y descuentos"
         },
         "placeholder": {
           "client": "Selecciona el cliente...",
@@ -1042,10 +1042,10 @@
           "vehicle": "Vehículo",
           "startDate": "Fecha de inicio",
           "expectedReturnDate": "Fecha prevista de devolución",
+          "startKm": "KM inicial",
           "estimatedKilometers": "KM estimados",
           "extras": "Extras seleccionados",
           "billingPlanType": "Tipo de plan de facturación",
-          "estimated": "Total Estimado",
           "final": "Precio Final",
           "dailyRate": "Tarifa Diaria",
           "coupon": "Cupón"

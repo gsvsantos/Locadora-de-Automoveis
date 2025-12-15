@@ -78,6 +78,7 @@ export class CouponService {
     return {
       id: apiCoupon.id,
       name: apiCoupon.name,
+      partner: apiCoupon.partner,
       discountValue: apiCoupon.discountValue,
       expirationDate: apiCoupon.expirationDate,
       isActive: apiCoupon.isActive,

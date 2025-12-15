@@ -44,14 +44,20 @@ select[multiple].form-input {
     border-radius: 6px;
     margin-bottom: 2px;
     cursor: pointer;
+    transition: $transition-fast;
 
     &:checked {
-      background-color: $primary-active;
-      color: $text-main;
+      box-shadow: 0 0 0 100px $primary-active inset;
+      -webkit-box-shadow: 0 0 0 100px $primary-active inset;
+      color: $text-main !important;
     }
 
     &:hover {
-      background-color: rgba($primary, 0.1);
+      background-color: $primary-active;
+      color: $text-inverse;
+    }
+    &:focus {
+      outline: none;
     }
   }
 }

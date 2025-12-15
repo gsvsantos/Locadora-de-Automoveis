@@ -16,6 +16,7 @@ import { CouponService } from '../../../services/coupon.service';
 import { NotificationService } from '../../../services/notification.service';
 import { AsyncPipe } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
+import { dateToInputDateString } from '../../../utils/date.utils';
 
 @Component({
   selector: 'app-update-coupon.component',
@@ -41,7 +42,13 @@ export class UpdateCouponComponent {
   protected readonly coupon$ = this.route.data.pipe(
     filter((data) => data['coupon'] as boolean),
     map((data) => data['coupon'] as Coupon),
-    tap((coupon: Coupon) => this.formGroup.patchValue(coupon)),
+    tap((coupon: Coupon) =>
+      this.formGroup.patchValue({
+        ...coupon,
+        expirationDate: dateToInputDateString(coupon.expirationDate),
+        partnerId: coupon.partner.id,
+      }),
+    ),
     shareReplay({ bufferSize: 1, refCount: true }),
   );
 

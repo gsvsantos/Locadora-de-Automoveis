@@ -46,7 +46,6 @@ export class UpdateEmployeeComponent {
     salary: [0, [Validators.required.bind(this), Validators.min(100)]],
   });
 
-
   protected readonly employee$ = this.route.data.pipe(
     filter((data) => data['employee'] as boolean),
     map((data) => data['employee'] as Employee),

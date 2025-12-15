@@ -34,7 +34,7 @@ export class CreateExtraComponent {
   protected formGroup: FormGroup = this.formBuilder.group({
     name: ['', [Validators.required.bind(this), Validators.minLength(3)]],
     price: ['', [Validators.required.bind(this), Validators.min(1)]],
-    isDaily: ['', [Validators.required.bind(this)]],
+    isDaily: [false, []],
     type: ['', [Validators.required.bind(this)]],
   });
 

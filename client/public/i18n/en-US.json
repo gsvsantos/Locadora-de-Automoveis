@@ -1020,10 +1020,10 @@
         "title": "Edit Rental Details",
         "subtitle": "Update the rental timeline and optional services.",
         "section": {
-          "association": "Client, Driver, and Vehicle (Fixed)",
-          "timelineAndEstimates": "Timeline and Estimates",
-          "extras": "Additional Services/Extras",
-          "pricing": "Current Pricing"
+          "association": "Client, Driver, and Employee Association",
+          "vehicleAndDates": "Vehicle and Timeline",
+          "billing": "Billing and Estimated Kilometers",
+          "extrasAndCoupon": "Extras and Discounts"
         },
         "placeholder": {
           "client": "Select Client...",
@@ -1042,10 +1042,10 @@
           "vehicle": "Vehicle",
           "startDate": "Start Date",
           "expectedReturnDate": "Expected Return Date",
+          "startKm": "Starting KM",
           "estimatedKilometers": "Estimated KM",
           "extras": "Selected Extras",
           "billingPlanType": "Billing Plan Type",
-          "estimated": "Estimated Total",
           "final": "Final Amount",
           "dailyRate": "Daily Rate",
           "coupon": "Coupon"

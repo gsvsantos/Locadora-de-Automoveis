@@ -3,6 +3,7 @@ using LocadoraDeAutomoveis.Application.Coupons.Commands.Create;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Update;
+using LocadoraDeAutomoveis.Application.Partners.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Partners.Commands.GetCoupons;
 using LocadoraDeAutomoveis.Domain.Coupons;
 using System.Collections.Immutable;
@@ -33,9 +34,10 @@ public class CouponProfile : Profile
 
         // DTOs
         CreateMap<Coupon, CouponDto>()
-            .ConvertUsing(src => new CouponDto(
+            .ConvertUsing((src, dest, ctx) => new CouponDto(
                 src.Id,
                 src.Name,
+                ctx.Mapper.Map<PartnerDto>(src.Partner),
                 src.DiscountValue,
                 src.ExpirationDate,
                 src.IsActive

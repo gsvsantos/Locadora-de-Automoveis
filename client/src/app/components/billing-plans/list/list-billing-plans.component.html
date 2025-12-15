@@ -56,6 +56,19 @@
                 </div>
               }
 
+              @if (plan.freeBilling) {
+                <div class="info-group">
+                  <h4>{{ t('type.free') }}</h4>
+                  <div class="info-row">
+                    <span class="material-icons">lock_open</span>
+                    <span
+                      >{{ t('label.fixedRate') }}:
+                      {{ plan.freeBilling.fixedRate | currency: 'BRL' : 'symbol' : '1.2-2' }}</span
+                    >
+                  </div>
+                </div>
+              }
+
               @if (plan.controlledBilling) {
                 <div class="info-group">
                   <h4>{{ t('type.controlled') }}</h4>
@@ -76,19 +89,6 @@
                         plan.controlledBilling.pricePerKmExtrapolated
                           | currency: 'BRL' : 'symbol' : '1.2-2'
                       }}/km</span
-                    >
-                  </div>
-                </div>
-              }
-
-              @if (plan.freeBilling) {
-                <div class="info-group">
-                  <h4>{{ t('type.free') }}</h4>
-                  <div class="info-row">
-                    <span class="material-icons">lock_open</span>
-                    <span
-                      >{{ t('label.fixedRate') }}:
-                      {{ plan.freeBilling.fixedRate | currency: 'BRL' : 'symbol' : '1.2-2' }}</span
                     >
                   </div>
                 </div>
