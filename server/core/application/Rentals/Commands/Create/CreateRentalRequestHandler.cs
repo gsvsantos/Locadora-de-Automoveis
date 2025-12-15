@@ -2,6 +2,7 @@
 using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
+using LocadoraDeAutomoveis.Application.Rentals.Services;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.BillingPlans;
@@ -34,6 +35,7 @@ public class CreateRentalRequestHandler(
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<Rental> validator,
+    RentalEmailService emailService,
     ILogger<CreateRentalRequestHandler> logger
 ) : IRequestHandler<CreateRentalRequest, Result<CreateRentalResponse>>
 {
@@ -161,6 +163,8 @@ public class CreateRentalRequestHandler(
             await repositoryRental.AddAsync(rental);
 
             await unitOfWork.CommitAsync();
+
+            await emailService.ScheduleRentalConfirmation(rental, client);
 
             return Result.Ok(new CreateRentalResponse(rental.Id));
         }

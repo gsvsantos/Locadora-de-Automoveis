@@ -37,8 +37,11 @@
 
 	<ItemGroup>
 		<None Include="Properties\launchSettings.json" />
+		<None Update="Templates\**\*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
-
+	
 	<ItemGroup>
 	  <ProjectReference Include="..\core\application\LocadoraDeAutomoveis.Application.csproj" />
 	  <ProjectReference Include="..\infrastructure\orm\LocadoraDeAutomoveis.Infrastructure.csproj" />

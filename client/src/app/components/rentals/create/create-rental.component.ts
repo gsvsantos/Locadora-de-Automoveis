@@ -78,10 +78,10 @@ export class CreateRentalComponent {
       employeeId: [null, [Validators.required.bind(this)]],
       driverId: [null, [Validators.required.bind(this)]],
       vehicleId: [null, [Validators.required.bind(this)]],
-      couponId: [null, [Validators.required.bind(this)]],
-      billingPlanType: ['', [Validators.required.bind(this)]],
+      couponId: [null],
+      billingPlanType: [null, [Validators.required.bind(this)]],
       estimatedKilometers: [null],
-      rentalRentalExtrasIds: [null],
+      rentalRentalExtrasIds: [[]],
     },
     { validators: [needsIndividualValidator] },
   );

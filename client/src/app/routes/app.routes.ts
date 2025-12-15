@@ -92,4 +92,8 @@ export const routes: Routes = [
     loadChildren: () => import('../routes/admin.routes').then((route) => route.adminRoutes),
     canActivate: [platformAdminOnlyGuard],
   },
+  {
+    path: '**',
+    redirectTo: 'home',
+  },
 ];

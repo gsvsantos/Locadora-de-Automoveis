@@ -87,10 +87,19 @@
               <div class="info-row">
                 <span class="material-icons">attach_money</span>
                 <span
-                  >{{ t('label.basePrice') }}:
+                  >{{ t('label.estimated') }}:
                   {{ rental.baseRentalPrice | currency: 'BRL' : 'symbol' : '1.2-2' }}</span
                 >
               </div>
+              @if (rental.finalPrice) {
+                <div class="info-row">
+                  <span class="material-icons">attach_money</span>
+                  <span
+                    >{{ t('label.final') }}:
+                    {{ rental.finalPrice | currency: 'BRL' : 'symbol' : '1.2-2' }}</span
+                  >
+                </div>
+              }
 
               <div class="card__actions" align="end">
                 @if (rental.isActive && !rental.returnDate) {
@@ -101,6 +110,7 @@
                   <a [routerLink]="['edit', rental.id]">
                     <span class="material-icons">edit</span>
                   </a>
+                } @else {
                   <a class="button button__danger" [routerLink]="['delete', rental.id]">
                     <span class="material-icons">delete</span>
                   </a>

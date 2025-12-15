@@ -6,11 +6,13 @@ using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Auth.Commands.Login;
 
 public class LoginUserRequestHandler(
+    IConfiguration configuration,
     SignInManager<User> signInManager,
     UserManager<User> userManager,
     ITokenProvider tokenProvider,
@@ -23,16 +25,22 @@ public class LoginUserRequestHandler(
     public async Task<Result<(AccessToken, IssuedRefreshTokenDto)>> Handle(
         LoginUserRequest request, CancellationToken cancellationToken)
     {
-        if (!await recaptchaService.VerifyRecaptchaToken(request.RecaptchaToken))
-        {
-            return Result.Fail(ErrorResults.BadRequestError("Invalid reCAPTCHA verification"));
-        }
-
         User? user = await userManager.FindByNameAsync(request.UserName);
 
         if (user is null)
         {
             return Result.Fail(ErrorResults.NotFoundError("User not found."));
+        }
+
+        if (!await recaptchaService.VerifyRecaptchaToken(request.RecaptchaToken))
+        {
+            IList<string> roles = await userManager.GetRolesAsync(user);
+            string? bypass = configuration["CAPTCHA_ADMIN"];
+
+            if (!ShouldBypassCaptcha(roles, bypass, request.RecaptchaToken))
+            {
+                return Result.Fail(ErrorResults.BadRequestError("Invalid reCAPTCHA verification"));
+            }
         }
 
         try
@@ -109,5 +117,10 @@ public class LoginUserRequestHandler(
 
             return Result.Fail(ErrorResults.InternalServerError(ex));
         }
+    }
+
+    private static bool ShouldBypassCaptcha(IList<string> roles, string? bypass, string recaptchaToken)
+    {
+        return (roles.Any() && roles.Contains("PlatformAdmin")) && (!string.IsNullOrWhiteSpace(bypass) && recaptchaToken.Equals(bypass));
     }
 }

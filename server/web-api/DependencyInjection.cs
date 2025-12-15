@@ -2,6 +2,7 @@
 using Hangfire;
 using LocadoraDeAutomoveis.Application.Auth.Services;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
+using LocadoraDeAutomoveis.Application.Rentals.Services;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.BillingPlans;
@@ -15,6 +16,7 @@ using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Domain.Shared.Email;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.Auth;
 using LocadoraDeAutomoveis.Infrastructure.BillingPlans;
@@ -22,6 +24,7 @@ using LocadoraDeAutomoveis.Infrastructure.Clients;
 using LocadoraDeAutomoveis.Infrastructure.Configurations;
 using LocadoraDeAutomoveis.Infrastructure.Coupons;
 using LocadoraDeAutomoveis.Infrastructure.Drivers;
+using LocadoraDeAutomoveis.Infrastructure.Email;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Groups;
 using LocadoraDeAutomoveis.Infrastructure.Partners;
@@ -195,8 +198,6 @@ public static class DependencyInjection
     public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<ICouponQueryService, CouponQueryService>();
-        services.AddScoped<RecaptchaService>();
-        services.AddHttpClient<RecaptchaService>();
 
         Assembly applicationAssembly = typeof(ApplicationAssemblyReference).Assembly;
 
@@ -220,6 +221,8 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(applicationAssembly);
 
+        services.ConfigureRecaptchaService();
+        services.ConfigureEmailSender(configuration);
         services.ConfigureHangFire(configuration);
         services.ConfigureRedisCache(configuration);
     }
@@ -247,6 +250,20 @@ public static class DependencyInjection
                 };
             }
         );
+    }
+
+    private static void ConfigureRecaptchaService(this IServiceCollection services)
+    {
+        services.AddScoped<RecaptchaService>();
+        services.AddHttpClient<RecaptchaService>();
+    }
+
+    private static void ConfigureEmailSender(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<MailSettings>(configuration.GetSection("MAILOPTIONS"));
+        services.AddSingleton<IEmailTemplateService, HtmlTemplateService>();
+        services.AddTransient<IEmailSender, SmtpEmailSender>();
+        services.AddScoped<RentalEmailService>();
     }
 
     private static void ConfigureHangFire(this IServiceCollection services, IConfiguration configuration)

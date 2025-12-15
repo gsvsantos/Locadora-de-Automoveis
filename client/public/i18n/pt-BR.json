@@ -952,8 +952,9 @@
         "estimatedKilometers": "KM estimado",
         "startKm": "Quilometragem inicial",
         "driver": "Condutor",
-        "basePrice": "Valor base",
-        "finalPrice": "Valor total (estimado)",
+        "estimated": "Valor Previsto",
+        "final": "Valor Final",
+        "dailyRate": "Diária Base",
         "billingPlan": "Plano de cobrança",
         "extras": "Extras"
       }
@@ -1044,8 +1045,9 @@
           "estimatedKilometers": "KM estimado",
           "extras": "Extras selecionados",
           "billingPlanType": "Tipo de plano de cobrança",
-          "baseRentalPrice": "Valor base",
-          "finalPrice": "Valor total",
+          "estimated": "Valor Previsto",
+          "final": "Valor Final",
+          "dailyRate": "Diária Base",
           "coupon": "Cupom"
         },
         "info": {
@@ -1084,7 +1086,7 @@
           "startDate": "Data de início",
           "expectedReturnDate": "Data prevista de devolução",
           "billingPlanType": "Tipo de plano de cobrança",
-          "finalPrice": "Valor total (estimado)",
+          "final": "Valor Final",
           "extrasQuantity": "Quantidade de extras"
         },
         "buttons": {
