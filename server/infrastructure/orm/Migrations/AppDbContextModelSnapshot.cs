@@ -1265,7 +1265,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Rentals.RentalReturn", b =>
                 {
                     b.HasOne("LocadoraDeAutomoveis.Domain.Rentals.Rental", "Rental")
-                        .WithOne()
+                        .WithOne("RentalReturn")
                         .HasForeignKey("LocadoraDeAutomoveis.Domain.Rentals.RentalReturn", "RentalId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1392,6 +1392,11 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Partners.Partner", b =>
                 {
                     b.Navigation("Coupons");
+                });
+
+            modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Rentals.Rental", b =>
+                {
+                    b.Navigation("RentalReturn");
                 });
 #pragma warning restore 612, 618
         }

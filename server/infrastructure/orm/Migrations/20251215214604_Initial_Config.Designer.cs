@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251212211304_Initial_Config")]
+    [Migration("20251215214604_Initial_Config")]
     partial class Initial_Config
     {
         /// <inheritdoc />
@@ -1268,7 +1268,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Rentals.RentalReturn", b =>
                 {
                     b.HasOne("LocadoraDeAutomoveis.Domain.Rentals.Rental", "Rental")
-                        .WithOne()
+                        .WithOne("RentalReturn")
                         .HasForeignKey("LocadoraDeAutomoveis.Domain.Rentals.RentalReturn", "RentalId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1395,6 +1395,11 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Partners.Partner", b =>
                 {
                     b.Navigation("Coupons");
+                });
+
+            modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Rentals.Rental", b =>
+                {
+                    b.Navigation("RentalReturn");
                 });
 #pragma warning restore 612, 618
         }
