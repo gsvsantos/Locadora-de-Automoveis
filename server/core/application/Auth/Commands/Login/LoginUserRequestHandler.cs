@@ -1,6 +1,5 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Application.Auth.DTOs;
-using LocadoraDeAutomoveis.Application.Auth.Services;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Shared;
@@ -17,7 +16,7 @@ public class LoginUserRequestHandler(
     UserManager<User> userManager,
     ITokenProvider tokenProvider,
     IRefreshTokenProvider refreshTokenProvider,
-    RecaptchaService recaptchaService,
+    IRecaptchaService recaptchaService,
     IUnitOfWork unitOfWork,
     ILogger<LoginUserRequestHandler> logger
 ) : IRequestHandler<LoginUserRequest, Result<(AccessToken, IssuedRefreshTokenDto)>>

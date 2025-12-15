@@ -3,6 +3,7 @@ using LocadoraDeAutomoveis.Application.Auth.DTOs;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Shared;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Auth.Application;
 
@@ -21,6 +22,7 @@ public sealed class LoginUserRequestHandlerTests
     private Mock<UserManager<User>> userManagerMock = null!;
     private Mock<ITokenProvider> tokenProviderMock = null!;
     private Mock<IRefreshTokenProvider> refreshTokenMock = null!;
+    private Mock<IRecaptchaService> recaptchaServiceMock = null!;
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<ILogger<LoginUserRequestHandler>> loggerMock = null!;
 
@@ -41,14 +43,25 @@ public sealed class LoginUserRequestHandlerTests
 
         this.tokenProviderMock = new Mock<ITokenProvider>();
         this.refreshTokenMock = new Mock<IRefreshTokenProvider>();
+
+        this.recaptchaServiceMock = new Mock<IRecaptchaService>();
+        IConfiguration configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["CAPTCHA_ADMIN"] = "bypass-token"
+            })
+            .Build();
+
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.loggerMock = new Mock<ILogger<LoginUserRequestHandler>>();
 
         this.handler = new LoginUserRequestHandler(
+            configuration,
             this.signInManagerMock.Object,
             this.userManagerMock.Object,
             this.tokenProviderMock.Object,
             this.refreshTokenMock.Object,
+            this.recaptchaServiceMock.Object,
             this.unitOfWorkMock.Object,
             this.loggerMock.Object
         );
@@ -59,7 +72,11 @@ public sealed class LoginUserRequestHandlerTests
     public async Task Handler_ShouldLogin_And_GenerateAccessToken_Successfully()
     {
         // Arrange
-        LoginUserRequest request = new(_userName, _password);
+        LoginUserRequest request = new(_userName, _password, "bypass-token");
+
+        this.recaptchaServiceMock
+            .Setup(r => r.VerifyRecaptchaToken(It.Is<string>(t => t == "bypass-token")))
+            .ReturnsAsync(true);
 
         User user = new()
         {
@@ -103,7 +120,7 @@ public sealed class LoginUserRequestHandlerTests
                     usr.FullName == user.FullName &&
                     usr.Email == user.Email &&
                     usr.PhoneNumber == user.PhoneNumber
-                    )
+                    ), null!
                 ))
             .ReturnsAsync(accessToken);
 
@@ -120,21 +137,26 @@ public sealed class LoginUserRequestHandlerTests
         refreshToken.AssociateTenant(user.TenantId);
         refreshToken.AssociateUser(user);
 
+        IssuedRefreshTokenDto issuedRefresh = new("teste", refreshToken.ExpirationDateUtc);
+
         this.refreshTokenMock
             .Setup(t => t.GenerateRefreshTokenAsync(
                 It.Is<User>(usr =>
-                    usr.UserName == request.UserName &&
-                    usr.FullName == user.FullName &&
-                    usr.Email == user.Email &&
-                    usr.PhoneNumber == user.PhoneNumber
+                    usr.UserName == request.UserName && usr.FullName == user.FullName &&
+                    usr.Email == user.Email && usr.PhoneNumber == user.PhoneNumber
                     )
                 ))
-            .ReturnsAsync(refreshToken);
+            .ReturnsAsync(issuedRefresh);
 
         // Act
-        Result<(AccessToken, RefreshToken)> result = await this.handler.Handle(request, CancellationToken.None);
+        Result<(AccessToken, IssuedRefreshTokenDto)> result = await this.handler.Handle(request, CancellationToken.None);
 
         // Assert
+        this.recaptchaServiceMock.Verify(
+            r => r.VerifyRecaptchaToken("bypass-token"),
+            Times.Once
+        );
+
         this.userManagerMock.Verify(u => u.FindByNameAsync(request.UserName), Times.Once);
 
         this.signInManagerMock.Verify(p =>
@@ -149,7 +171,7 @@ public sealed class LoginUserRequestHandlerTests
                 It.Is<User>(usr =>
                     usr.UserName == request.UserName && usr.FullName == user.FullName &&
                     usr.Email == user.Email && usr.PhoneNumber == user.PhoneNumber
-                )
+                ), null!
             ), Times.Once
         );
 

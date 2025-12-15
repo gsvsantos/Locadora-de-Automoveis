@@ -165,6 +165,7 @@ public class RentalRepository(AppDbContext context)
     {
         return this.records
             .Include(r => r.User)
+            .Include(r => r.RentalReturn)
             .Include(r => r.Employee)
             .Include(r => r.Client)
             .Include(r => r.Driver)

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using LocadoraDeAutomoveis.Domain.Auth;
+using Microsoft.Extensions.Configuration;
 using System.Net.Http.Json;
 
 namespace LocadoraDeAutomoveis.Application.Auth.Services;
@@ -6,7 +7,7 @@ namespace LocadoraDeAutomoveis.Application.Auth.Services;
 public class RecaptchaService(
     HttpClient http,
     IConfiguration configuration
-)
+) : IRecaptchaService
 {
     public async Task<bool> VerifyRecaptchaToken(string token)
     {

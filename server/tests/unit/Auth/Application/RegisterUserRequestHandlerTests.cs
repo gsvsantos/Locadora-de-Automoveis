@@ -22,6 +22,7 @@ public sealed class RegisterUserRequestHandlerTests
     private Mock<IRepositoryConfiguration> repositoryConfigurationMock = null!;
     private Mock<ITokenProvider> tokenProviderMock = null!;
     private Mock<IRefreshTokenProvider> refreshTokenMock = null!;
+    private Mock<IRecaptchaService> recaptchaServiceMock = null!;
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<ILogger<RegisterUserRequestHandler>> loggerMock = null!;
 
@@ -36,6 +37,9 @@ public sealed class RegisterUserRequestHandlerTests
         this.repositoryConfigurationMock = new Mock<IRepositoryConfiguration>();
         this.tokenProviderMock = new Mock<ITokenProvider>();
         this.refreshTokenMock = new Mock<IRefreshTokenProvider>();
+
+        this.recaptchaServiceMock = new Mock<IRecaptchaService>();
+
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.loggerMock = new Mock<ILogger<RegisterUserRequestHandler>>();
 
@@ -44,6 +48,7 @@ public sealed class RegisterUserRequestHandlerTests
             this.repositoryConfigurationMock.Object,
             this.tokenProviderMock.Object,
             this.refreshTokenMock.Object,
+            this.recaptchaServiceMock.Object,
             this.unitOfWorkMock.Object,
             this.loggerMock.Object
         );
@@ -59,8 +64,14 @@ public sealed class RegisterUserRequestHandlerTests
             _fullName,
             _email,
             _phoneNumber,
-            _password
+            _password,
+            _password,
+            "bypass-token"
         );
+
+        this.recaptchaServiceMock
+            .Setup(r => r.VerifyRecaptchaToken(It.Is<string>(t => t == "bypass-token")))
+            .ReturnsAsync(true);
 
         User user = new()
         {
@@ -116,7 +127,7 @@ public sealed class RegisterUserRequestHandlerTests
                     usr.FullName == request.FullName &&
                     usr.Email == request.Email &&
                     usr.PhoneNumber == request.PhoneNumber
-                    )
+                    ), null!
                 ))
             .ReturnsAsync(accessToken);
 
@@ -133,6 +144,8 @@ public sealed class RegisterUserRequestHandlerTests
         refreshToken.AssociateTenant(user.TenantId);
         refreshToken.AssociateUser(user);
 
+        IssuedRefreshTokenDto issuedRefresh = new("teste", refreshToken.ExpirationDateUtc);
+
         this.refreshTokenMock
             .Setup(t => t.GenerateRefreshTokenAsync(
                 It.Is<User>(usr =>
@@ -142,12 +155,17 @@ public sealed class RegisterUserRequestHandlerTests
                     usr.PhoneNumber == request.PhoneNumber
                     )
                 ))
-            .ReturnsAsync(refreshToken);
+            .ReturnsAsync(issuedRefresh);
 
         // Act
-        Result<(AccessToken, RefreshToken)> result = await this.handler.Handle(request, CancellationToken.None);
+        Result<(AccessToken, IssuedRefreshTokenDto)> result = await this.handler.Handle(request, CancellationToken.None);
 
         // Assert
+        this.recaptchaServiceMock.Verify(
+            r => r.VerifyRecaptchaToken("bypass-token"),
+            Times.Once
+        );
+
         this.userManagerMock.Verify(u =>
             u.CreateAsync(
                 It.Is<User>(usr =>
@@ -162,7 +180,7 @@ public sealed class RegisterUserRequestHandlerTests
                 It.Is<User>(usr =>
                     usr.UserName == request.UserName && usr.FullName == request.FullName &&
                     usr.Email == request.Email && usr.PhoneNumber == request.PhoneNumber
-                )
+                ), null!
             ), Times.Once
         );
 

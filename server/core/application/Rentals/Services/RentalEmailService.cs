@@ -9,7 +9,7 @@ namespace LocadoraDeAutomoveis.Application.Rentals.Services;
 public class RentalEmailService(
     IEmailSender emailSender,
     IEmailTemplateService templateService
-)
+) : IRentalEmailService
 {
     public async Task ScheduleRentalConfirmation(Rental rental, Client client)
     {

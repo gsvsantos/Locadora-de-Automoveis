@@ -47,8 +47,12 @@ public class RentalReturnMapper : IEntityTypeConfiguration<RentalReturn>
             .HasConversion<int>()
             .IsRequired();
 
-        builder.HasOne(r => r.Rental)
-            .WithOne()
+        builder.Property(r => r.RentalId)
+            .IsRequired();
+
+        builder.HasOne(rr => rr.Rental)
+            .WithOne(r => r.RentalReturn)
+            .HasForeignKey<RentalReturn>(rr => rr.RentalId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(r => r.Tenant)

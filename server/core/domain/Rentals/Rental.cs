@@ -18,6 +18,7 @@ public class Rental : BaseEntity<Rental>
     public decimal GuaranteeValue { get; set; } = 1000;
     public ERentalStatus Status { get; set; }
     public DateTimeOffset? ReturnDate { get; set; }
+    public RentalReturn? RentalReturn { get; set; }
     public decimal FinalPrice { get; set; } = 0;
     public Guid? EmployeeId { get; set; }
     public Employee? Employee { get; set; }

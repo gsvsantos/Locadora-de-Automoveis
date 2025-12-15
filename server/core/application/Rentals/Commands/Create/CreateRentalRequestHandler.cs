@@ -2,7 +2,6 @@
 using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
-using LocadoraDeAutomoveis.Application.Rentals.Services;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.BillingPlans;
@@ -35,7 +34,7 @@ public class CreateRentalRequestHandler(
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<Rental> validator,
-    RentalEmailService emailService,
+    IRentalEmailService emailService,
     ILogger<CreateRentalRequestHandler> logger
 ) : IRequestHandler<CreateRentalRequest, Result<CreateRentalResponse>>
 {
@@ -164,7 +163,14 @@ public class CreateRentalRequestHandler(
 
             await unitOfWork.CommitAsync();
 
-            await emailService.ScheduleRentalConfirmation(rental, client);
+            try
+            {
+                await emailService.ScheduleRentalConfirmation(rental, client);
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning(ex, "Failed to schedule rental confirmation email for rental {RentalId}", rental.Id);
+            }
 
             return Result.Ok(new CreateRentalResponse(rental.Id));
         }

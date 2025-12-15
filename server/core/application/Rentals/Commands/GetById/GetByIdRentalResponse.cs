@@ -15,13 +15,14 @@ public record ByIdRentalDto(
     RentalClientDto Client,
     RentalDriverDto Driver,
     RentalVehicleDto Vehicle,
-    CouponDto Coupon,
+    CouponDto? Coupon,
     DateTimeOffset StartDate,
     DateTimeOffset ExpectedReturnDate,
     decimal StartKm,
     EBillingPlanType BillingPlanType,
     BillingPlanDto BillingPlan,
     DateTimeOffset? ReturnDate,
+    RentalReturnDto? RentalReturn,
     decimal BaseRentalPrice,
     decimal FinalPrice,
     decimal? EstimatedKilometers,
@@ -45,4 +46,15 @@ public record ByIdRentalDto(
     EstimatedKilometers,
     RentalExtrasQuantity,
     IsActive
+);
+public record RentalReturnDto(
+    DateTimeOffset ReturnDate,
+    decimal EndKm,
+    decimal TotalMileage,
+    decimal ExtrasTotalCost,
+    decimal FuelPenalty,
+    decimal PenaltyTotalCost,
+    decimal DiscountTotal,
+    decimal FinalPrice,
+    EFuelLevel FuelLevelAtReturn
 );
