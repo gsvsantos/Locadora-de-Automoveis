@@ -254,8 +254,8 @@ public static class DependencyInjection
 
     private static void ConfigureRecaptchaService(this IServiceCollection services)
     {
-        services.AddScoped<RecaptchaService>();
-        services.AddHttpClient<RecaptchaService>();
+        services.AddScoped<IRecaptchaService, RecaptchaService>();
+        services.AddHttpClient<IRecaptchaService, RecaptchaService>();
     }
 
     private static void ConfigureEmailSender(this IServiceCollection services, IConfiguration configuration)
@@ -263,7 +263,7 @@ public static class DependencyInjection
         services.Configure<MailSettings>(configuration.GetSection("MAILOPTIONS"));
         services.AddSingleton<IEmailTemplateService, HtmlTemplateService>();
         services.AddTransient<IEmailSender, SmtpEmailSender>();
-        services.AddScoped<RentalEmailService>();
+        services.AddScoped<IRentalEmailService, RentalEmailService>();
     }
 
     private static void ConfigureHangFire(this IServiceCollection services, IConfiguration configuration)
