@@ -26,7 +26,7 @@ public sealed class IdentityTenantProvider(IHttpContextAccessor contextAccessor)
                 return overrideTenantId;
             }
 
-            Claim? tenantClaim = user.FindFirst("sub");
+            Claim? tenantClaim = user.FindFirst("tenant_id");
 
             if (tenantClaim == null)
             {
@@ -48,7 +48,8 @@ public sealed class IdentityTenantProvider(IHttpContextAccessor contextAccessor)
                 return null;
             }
 
-            Claim? claimId = claimsPrincipal.FindFirst("user_id");
+            Claim? claimId = claimsPrincipal.FindFirst("sub")
+                ?? claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier);
 
             if (claimId == null)
             {

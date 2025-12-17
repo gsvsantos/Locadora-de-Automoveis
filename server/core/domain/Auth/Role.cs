@@ -7,5 +7,6 @@ public class Role : IdentityRole<Guid>;
 public enum ERoles
 {
     Admin,
-    Employee
+    Employee,
+    Client
 }

@@ -80,7 +80,7 @@ public static class AuthDependencyInjection
             {
                 OnTokenValidated = async ctx =>
                 {
-                    string? userIdClaimValue = ctx.Principal?.FindFirst("user_id")?.Value;
+                    string? userIdClaimValue = ctx.Principal?.FindFirst("sub")?.Value;
                     string? tokenVersionClaimValue = ctx.Principal?.FindFirst(JwtRegisteredClaimNames.Jti)?.Value;
 
                     if (!Guid.TryParse(userIdClaimValue, out Guid authenticatedUserId) ||

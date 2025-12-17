@@ -16,9 +16,9 @@ import {
   AuthApiResponse,
   AuthMode,
   ChangePasswordRequestDto,
-  CreatePasswordRequestDto,
   LoginAuthDto,
   RegisterAuthDto,
+  ResetPasswordRequestDto,
 } from '../models/auth.models';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { googleAuthConfig } from '../core/auth.google.config';
@@ -175,8 +175,8 @@ export class AuthService {
     );
   }
 
-  public createPassword(model: CreatePasswordRequestDto): Observable<void> {
-    const url = `${this.apiUrl}/create-password`;
+  public resetPassword(model: ResetPasswordRequestDto): Observable<void> {
+    const url = `${this.apiUrl}/reset-password`;
 
     return this.http
       .post<void>(url, model)

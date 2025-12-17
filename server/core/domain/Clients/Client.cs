@@ -1,4 +1,5 @@
-﻿using LocadoraDeAutomoveis.Domain.Shared;
+﻿using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Shared;
 
 namespace LocadoraDeAutomoveis.Domain.Clients;
 
@@ -14,6 +15,8 @@ public class Client : BaseEntity<Client>
     public DateTimeOffset? LicenseValidity { get; set; }
     public Guid? JuristicClientId { get; set; }
     public Client? JuristicClient { get; set; }
+    public Guid? LoginUserId { get; set; }
+    public User? LoginUser { get; set; }
 
     public Client() { }
     public Client(string fullName, string email, string phoneNumber,
@@ -46,6 +49,12 @@ public class Client : BaseEntity<Client>
     {
         this.JuristicClientId = juristiClient.Id;
         this.JuristicClient = juristiClient;
+    }
+
+    public void AssociateLoginUser(User user)
+    {
+        this.LoginUser = user;
+        this.LoginUserId = user.Id;
     }
 
     public override void Update(Client updatedEntity)

@@ -64,6 +64,23 @@
           "password": "Forgot your password?"
         }
       }
+    },
+    "reset-password": {
+      "title": "Change Password",
+      "label": {
+        "currentPassword": "Current Password",
+        "newPassword": "New Password",
+        "confirmNewPassword": "Confirm New Password"
+      },
+      "errors": {
+        "required": "Field is required.",
+        "minLength": "Password must be at least 6 characters.",
+        "mismatch": "New passwords do not match.",
+        "samePassword": "The current and new password are the same."
+      },
+      "buttons": {
+        "change": "Confirm"
+      }
     }
   },
   "navbar": {
@@ -1246,23 +1263,6 @@
       },
       "buttons": {
         "change": "Update Password"
-      }
-    },
-    "create-password": {
-      "title": "Change Password",
-      "label": {
-        "currentPassword": "Current Password",
-        "newPassword": "New Password",
-        "confirmNewPassword": "Confirm New Password"
-      },
-      "errors": {
-        "required": "Field is required.",
-        "minLength": "Password must be at least 6 characters.",
-        "mismatch": "New passwords do not match.",
-        "samePassword": "The current and new password are the same."
-      },
-      "buttons": {
-        "change": "Create Password"
       }
     }
   },

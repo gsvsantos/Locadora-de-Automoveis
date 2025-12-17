@@ -28,6 +28,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<DateTimeOffset>("CreatedDateUtc")
                         .HasColumnType("datetimeoffset");
 
@@ -188,6 +191,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
@@ -221,6 +227,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("Document")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -247,6 +256,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("LicenseValidity")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<Guid?>("LoginUserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -264,6 +276,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("JuristicClientId");
+
+                    b.HasIndex("LoginUserId");
 
                     b.HasIndex("UserId");
 
@@ -284,6 +298,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<decimal>("AlcoholPrice")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<decimal>("DieselPrice")
                         .HasPrecision(18, 2)
@@ -320,6 +337,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<decimal>("DiscountValue")
                         .HasColumnType("decimal(18,2)");
@@ -369,6 +389,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Document")
                         .IsRequired()
@@ -430,6 +453,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("AdmissionDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -437,6 +463,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("LoginUserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Salary")
                         .HasPrecision(18, 2)
@@ -450,6 +479,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LoginUserId");
+
                     b.HasIndex("UserId");
 
                     b.HasIndex("TenantId", "UserId", "IsActive");
@@ -462,6 +493,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -492,6 +526,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -519,6 +556,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -573,6 +613,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                     b.Property<Guid?>("CouponId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid>("DriverId")
                         .HasColumnType("uniqueidentifier");
@@ -643,6 +686,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<decimal>("DiscountTotal")
                         .HasColumnType("decimal(18,2)");
 
@@ -707,6 +753,9 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<int>("FuelTankCapacity")
                         .HasColumnType("int");
@@ -995,6 +1044,10 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .HasForeignKey("JuristicClientId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "LoginUser")
+                        .WithMany()
+                        .HasForeignKey("LoginUserId");
+
                     b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
@@ -1043,6 +1096,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("JuristicClient");
+
+                    b.Navigation("LoginUser");
 
                     b.Navigation("Tenant");
 
@@ -1124,6 +1179,10 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
             modelBuilder.Entity("LocadoraDeAutomoveis.Domain.Employees.Employee", b =>
                 {
+                    b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "LoginUser")
+                        .WithMany()
+                        .HasForeignKey("LoginUserId");
+
                     b.HasOne("LocadoraDeAutomoveis.Domain.Auth.User", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
@@ -1135,6 +1194,8 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("LoginUser");
 
                     b.Navigation("Tenant");
 

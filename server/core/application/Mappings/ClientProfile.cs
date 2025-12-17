@@ -4,6 +4,7 @@ using LocadoraDeAutomoveis.Application.Clients.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetIndividuals;
 using LocadoraDeAutomoveis.Application.Clients.Commands.Update;
+using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Clients;
 using System.Collections.Immutable;
 
@@ -66,6 +67,15 @@ public class ClientProfile : Profile
 
         // HANDLERS 
         // Create
+        CreateMap<CreateClientRequest, User>()
+            .ConvertUsing(src => new User()
+            {
+                UserName = src.Email,
+                FullName = src.FullName,
+                Email = src.Email,
+                PhoneNumber = src.PhoneNumber,
+            });
+
         CreateMap<CreateClientRequest, Address>()
             .ConvertUsing(src => new Address(
                 src.State,

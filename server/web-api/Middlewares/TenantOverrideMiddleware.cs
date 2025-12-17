@@ -51,8 +51,8 @@ public sealed class TenantOverrideMiddleware(
 
         logger.LogWarning(
             "Tenant override: user '{UserName}' (user_id: {UserId}) acting as tenant {TenantId} on {Method} {Path}.",
-            httpContext.User.Identity?.Name,
-            httpContext.User.FindFirst("user_id")?.Value,
+            httpContext.User.Identity?.Name ?? httpContext.User.FindFirst("unique_name")?.Value,
+            httpContext.User.FindFirst("sub")?.Value,
             overrideTenantId,
             httpContext.Request.Method,
             httpContext.Request.Path

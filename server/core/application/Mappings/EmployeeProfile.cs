@@ -58,6 +58,7 @@ public class EmployeeProfile : Profile
                 Email = src.Email,
                 PhoneNumber = src.PhoneNumber,
             });
+
         CreateMap<CreateEmployeeRequest, Employee>()
             .ConvertUsing(src => new Employee(
                 src.FullName,

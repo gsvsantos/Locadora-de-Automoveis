@@ -46,11 +46,11 @@ public class JwtProvider : ITokenProvider
 
         List<Claim> claims =
         [
-            new Claim(JwtRegisteredClaimNames.Sub, user.TenantId.ToString()),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email!),
             new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName!),
             new Claim(JwtRegisteredClaimNames.Jti, user.AccessTokenVersionId.ToString()),
-            new Claim("user_id", user.Id.ToString()),
+            new Claim("tenant_id", user.TenantId.ToString()),
         ];
 
         foreach (string role in userRoles)

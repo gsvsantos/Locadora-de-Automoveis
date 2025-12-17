@@ -10,6 +10,7 @@ public abstract class BaseEntity<T>
     public Guid UserId { get; set; }
     public User? User { get; set; }
     public bool IsActive { get; set; } = true;
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
 
     protected BaseEntity()
     {

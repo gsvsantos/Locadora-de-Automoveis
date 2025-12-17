@@ -64,6 +64,23 @@
           "password": "¿Has olvidado tu contraseña?"
         }
       }
+    },
+    "reset-password": {
+      "title": "Cambiar Contraseña",
+      "label": {
+        "currentPassword": "Contraseña Actual",
+        "newPassword": "Nueva Contraseña",
+        "confirmNewPassword": "Confirmar Nueva Contraseña"
+      },
+      "errors": {
+        "required": "Campo obligatorio.",
+        "minLength": "La contraseña debe tener al menos 6 caracteres.",
+        "mismatch": "Las nuevas contraseñas no coinciden.",
+        "samePassword": "La contraseña actual y la nueva son iguales."
+      },
+      "buttons": {
+        "change": "Confirmar"
+      }
     }
   },
   "navbar": {

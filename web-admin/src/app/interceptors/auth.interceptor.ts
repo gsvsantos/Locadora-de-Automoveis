@@ -14,7 +14,13 @@ export const authInterceptor = (
   const notificationService = inject(NotificationService);
   const router = inject(Router);
 
-  const whitelist = ['/auth/register', '/auth/login', '/auth/refresh', '/auth/logout'];
+  const whitelist = [
+    '/auth/register',
+    '/auth/login',
+    '/auth/refresh',
+    '/auth/logout',
+    '/auth/reset-password',
+  ];
 
   if (whitelist.some((url) => req.url.includes(url))) {
     return next(req.clone({ withCredentials: true })).pipe(

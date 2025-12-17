@@ -9,7 +9,6 @@ using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using System.Text.RegularExpressions;
 
 namespace LocadoraDeAutomoveis.Application.Clients.Commands.Create;
 
@@ -20,6 +19,7 @@ public class CreateClientRequestHandler(
     IRepositoryClient repositoryClient,
     ITenantProvider tenantProvider,
     IUserContext userContext,
+    IAuthEmailService emailService,
     IValidator<Client> validator,
     ILogger<CreateClientRequestHandler> logger
 ) : IRequestHandler<CreateClientRequest, Result<CreateClientResponse>>
@@ -27,24 +27,46 @@ public class CreateClientRequestHandler(
     public async Task<Result<CreateClientResponse>> Handle(
         CreateClientRequest request, CancellationToken cancellationToken)
     {
-        User? user = await userManager.FindByIdAsync(userContext.GetUserId().ToString());
+        User? currentUser = await userManager.FindByIdAsync(userContext.GetUserId().ToString());
 
-        if (user is null)
+        if (currentUser is null)
         {
             return Result.Fail(ErrorResults.NotFoundError(userContext.GetUserId()));
         }
 
-        Address address = mapper.Map<Address>(request);
-        Client client = mapper.Map<Client>((request, address));
-
-        client.DefineType(request.Type);
+        User userLogin = mapper.Map<User>(request);
 
         try
         {
+            IdentityResult identityResult = await userManager.CreateAsync(userLogin);
+
+            if (!identityResult.Succeeded)
+            {
+                IEnumerable<string> errors = identityResult
+                    .Errors
+                    .Select(failure => failure.Description)
+                    .ToList();
+
+                return Result.Fail(ErrorResults.BadRequestError(errors));
+            }
+
+            await userManager.AddToRoleAsync(userLogin, "Client");
+
+            userLogin.AssociateTenant(tenantProvider.GetTenantId());
+
+            await userManager.UpdateAsync(userLogin);
+
+            Address address = mapper.Map<Address>(request);
+            Client client = mapper.Map<Client>((request, address));
+
+            client.DefineType(request.Type);
+
             ValidationResult validationResult = await validator.ValidateAsync(client, cancellationToken);
 
             if (!validationResult.IsValid)
             {
+                await userManager.DeleteAsync(userLogin);
+
                 List<string> errors = validationResult.Errors
                     .Select(failure => failure.ErrorMessage)
                     .ToList();
@@ -56,22 +78,40 @@ public class CreateClientRequestHandler(
 
             if (DocumentAlreadyRegistred(client, existingClients))
             {
+                await userManager.DeleteAsync(userLogin);
+
                 return Result.Fail(ClientErrorResults.DocumentAlreadyRegistredError(request.Document));
             }
 
+            client.AssociateLoginUser(userLogin);
+            client.AssociateUser(currentUser);
             client.AssociateTenant(tenantProvider.GetTenantId());
-
-            client.AssociateUser(user);
 
             await repositoryClient.AddAsync(client);
 
             await unitOfWork.CommitAsync();
+
+            string token = await userManager.GeneratePasswordResetTokenAsync(userLogin);
+
+            try
+            {
+                await emailService.ScheduleClientInvitation(userLogin, token);
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning(ex, "Failed to schedule invitation email for user {UseriD}", userLogin.Id);
+            }
 
             return Result.Ok(new CreateClientResponse(client.Id));
         }
         catch (Exception ex)
         {
             await unitOfWork.RollbackAsync();
+
+            if (userLogin.Id != Guid.Empty)
+            {
+                await userManager.DeleteAsync(userLogin);
+            }
 
             logger.LogError(
                 ex,
@@ -90,16 +130,5 @@ public class CreateClientRequestHandler(
                 client.Document,
                 StringComparison.CurrentCultureIgnoreCase)
             );
-    }
-    private bool IsCnpj(string cnpj)
-    {
-        cnpj = Regex.Replace(cnpj, "[^0-9]", "");
-
-        if (cnpj.Length != 14)
-        {
-            return false;
-        }
-
-        return true;
     }
 }

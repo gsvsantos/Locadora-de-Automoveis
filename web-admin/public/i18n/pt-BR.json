@@ -64,6 +64,23 @@
           "password": "Esqueceu sua senha?"
         }
       }
+    },
+    "reset-password": {
+      "title": "Alterar Senha",
+      "label": {
+        "currentPassword": "Senha Atual",
+        "newPassword": "Nova Senha",
+        "confirmNewPassword": "Confirmar Nova Senha"
+      },
+      "errors": {
+        "required": "Campo obrigatório.",
+        "minLength": "A senha deve ter pelo menos 6 caracteres.",
+        "mismatch": "As novas senhas não coincidem.",
+        "samePassword": "A senha atual e a nova são iguais."
+      },
+      "buttons": {
+        "change": "Confirmar"
+      }
     }
   },
   "navbar": {

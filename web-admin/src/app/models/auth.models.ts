@@ -14,7 +14,9 @@ export interface LoginAuthDto {
   recaptchaToken: string;
 }
 
-export interface CreatePasswordRequestDto {
+export interface ResetPasswordRequestDto {
+  email: string;
+  token: string;
   newPassword: string;
   confirmNewPassword: string;
 }
