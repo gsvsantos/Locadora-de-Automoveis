@@ -2,40 +2,40 @@
   <div class="main-content">
     <div class="card">
       <form [formGroup]="formGroup" class="form" (ngSubmit)="register()">
-        <h2>{{ t('card.title') }}</h2>
+        <h3>{{ t('title') }}</h3>
 
         <hr class="bar" />
 
         <div class="card-content">
-          <span class="full-width">{{ t('card.subtitle') }}</span>
+          <span class="full-width">{{ t('subtitle') }}</span>
 
-          <h3 class="full-width">{{ t('card.section.groupSelection') }}</h3>
+          <h3 class="full-width">{{ t('section.groupSelection') }}</h3>
           <div class="form-field">
-            <label>{{ t('card.label.groupId') }}</label>
+            <label>{{ t('label.groupId') }}</label>
             <select class="form-input" formControlName="groupId">
-              <option value="">{{ t('card.placeholder.groupId') }}</option>
+              <option value="">{{ t('placeholder.groupId') }}</option>
               @for (group of groups$ | async; track group.id) {
                 <option [value]="group.id">{{ group.name }}</option>
               }
             </select>
 
             @if (groupId?.errors?.['required'] && groupId?.dirty) {
-              <span class="error-message">{{ t('card.errors.groupIdRequired') }}</span>
+              <span class="error-message">{{ t('errors.groupIdRequired') }}</span>
             }
           </div>
 
           <div formGroupName="dailyBilling">
-            <h3 class="full-width">{{ t('card.section.dailyBilling') }}</h3>
+            <h3 class="full-width">{{ t('section.dailyBilling') }}</h3>
             <div class="form-field">
               <input
                 class="form-input"
                 formControlName="dailyRate"
                 type="number"
                 step="0.01"
-                [placeholder]="t('card.placeholder.dailyRate')"
+                [placeholder]="t('placeholder.dailyRate')"
               />
               @if (dailyRateDaily?.errors?.['min'] && dailyRateDaily?.dirty) {
-                <span class="error-message">{{ t('card.errors.rateMin') }}</span>
+                <span class="error-message">{{ t('errors.rateMin') }}</span>
               }
             </div>
 
@@ -45,26 +45,26 @@
                 formControlName="pricePerKm"
                 type="number"
                 step="0.01"
-                [placeholder]="t('card.placeholder.pricePerKm')"
+                [placeholder]="t('placeholder.pricePerKm')"
               />
               @if (pricePerKm?.errors?.['min'] && pricePerKm?.dirty) {
-                <span class="error-message">{{ t('card.errors.rateMin') }}</span>
+                <span class="error-message">{{ t('errors.rateMin') }}</span>
               }
             </div>
           </div>
 
           <div formGroupName="controlledBilling">
-            <h3 class="full-width">{{ t('card.section.controlledBilling') }}</h3>
+            <h3 class="full-width">{{ t('section.controlledBilling') }}</h3>
             <div class="form-field">
               <input
                 class="form-input"
                 formControlName="dailyRate"
                 type="number"
                 step="0.01"
-                [placeholder]="t('card.placeholder.dailyRate')"
+                [placeholder]="t('placeholder.dailyRate')"
               />
               @if (dailyRateControlled?.errors?.['min'] && dailyRateControlled?.dirty) {
-                <span class="error-message">{{ t('card.errors.rateMin') }}</span>
+                <span class="error-message">{{ t('errors.rateMin') }}</span>
               }
             </div>
 
@@ -74,30 +74,30 @@
                 formControlName="pricePerKmExtrapolated"
                 type="number"
                 step="0.01"
-                [placeholder]="t('card.placeholder.pricePerKmExtrapolated')"
+                [placeholder]="t('placeholder.pricePerKmExtrapolated')"
               />
               @if (pricePerKmExtrapolated?.errors?.['min'] && pricePerKmExtrapolated?.dirty) {
-                <span class="error-message">{{ t('card.errors.rateMin') }}</span>
+                <span class="error-message">{{ t('errors.rateMin') }}</span>
               }
             </div>
           </div>
 
           <div formGroupName="freeBilling">
-            <h3 class="full-width">{{ t('card.section.freeBilling') }}</h3>
+            <h3 class="full-width">{{ t('section.freeBilling') }}</h3>
             <div class="form-field">
               <input
                 class="form-input"
                 formControlName="fixedRate"
                 type="number"
                 step="0.01"
-                [placeholder]="t('card.placeholder.fixedRate')"
+                [placeholder]="t('placeholder.fixedRate')"
               />
 
               @if (
                 freeBilling?.get('fixedRate')?.errors?.['min'] &&
                 freeBilling?.get('fixedRate')?.dirty
               ) {
-                <span class="error-message">{{ t('card.errors.rateMin') }}</span>
+                <span class="error-message">{{ t('errors.rateMin') }}</span>
               }
             </div>
           </div>
@@ -106,13 +106,13 @@
         <div class="buttons">
           <gs-buttons
             [buttonType]="buttonType.Link"
-            [text]="t('card.buttons.back')"
+            [text]="t('buttons.back')"
             routerLink="/billing-plans"
           ></gs-buttons>
 
           <gs-buttons
             [buttonType]="buttonType.Default"
-            [text]="t('card.buttons.confirm')"
+            [text]="t('buttons.confirm')"
             type="submit"
             [disabled]="formGroup.invalid"
             (click)="register()"

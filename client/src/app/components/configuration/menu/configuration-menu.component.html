@@ -7,26 +7,26 @@
           [buttonType]="buttonType.Default"
           [text]="t('card.quickActions.profile')"
           bootstrapIcon="bi-box-arrow-in-right"
-          [variant]="variantType.Outline"
-          routerLink="profile"
+          [variant]="variantType.Solid"
+          routerLink="/profile/edit"
         ></gs-buttons>
-      @if (isEmployee) {
-        <gs-buttons
-          [buttonType]="buttonType.Default"
-          [text]="t('card.quickActions.fuel')"
-          bootstrapIcon="bi-person-plus"
-          [variant]="variantType.Outline"
-          routerLink="details"
-        ></gs-buttons>
-      } @else {
-        <gs-buttons
-          [buttonType]="buttonType.Default"
-          [text]="t('card.quickActions.fuel')"
-          bootstrapIcon="bi-person-plus"
-          [variant]="variantType.Outline"
-          routerLink="configure"
-        ></gs-buttons>
-      }
+        @if (isEmployee) {
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('card.quickActions.fuel')"
+            bootstrapIcon="bi-person-plus"
+            [variant]="variantType.Outline"
+            routerLink="details"
+          ></gs-buttons>
+        } @else {
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('card.quickActions.fuel')"
+            bootstrapIcon="bi-person-plus"
+            [variant]="variantType.Outline"
+            routerLink="configure"
+          ></gs-buttons>
+        }
       </div>
     </div>
   </div>

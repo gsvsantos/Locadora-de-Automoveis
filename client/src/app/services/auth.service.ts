@@ -16,6 +16,7 @@ import {
   AuthApiResponse,
   AuthMode,
   ChangePasswordRequestDto,
+  CreatePasswordRequestDto,
   LoginAuthDto,
   RegisterAuthDto,
 } from '../models/auth.models';
@@ -172,6 +173,14 @@ export class AuthService {
         this.accessTokenSubject$.next(token);
       }),
     );
+  }
+
+  public createPassword(model: CreatePasswordRequestDto): Observable<void> {
+    const url = `${this.apiUrl}/create-password`;
+
+    return this.http
+      .post<void>(url, model)
+      .pipe(tap(() => (this.revokeAccessToken(), this.oauthService.logOut())));
   }
 
   public changePassword(model: ChangePasswordRequestDto): Observable<void> {

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentResults;
 using LocadoraDeAutomoveis.Application.Auth.Commands.ChangePassword;
+using LocadoraDeAutomoveis.Application.Auth.Commands.CreatePassword;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Login;
 using LocadoraDeAutomoveis.Application.Auth.Commands.LoginGoogle;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Logout;
@@ -98,6 +99,30 @@ public class AuthController(
         }
 
         LogoutUserRequest request = new(refreshToken);
+
+        Result result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return result.ToHttpResponse();
+        }
+
+        await signInManager.SignOutAsync();
+
+        return ResultAndClearCookie();
+    }
+
+    [HttpPost("create-password")]
+    public async Task<IActionResult> CreatePassword([FromBody] CreatePasswordRequestPartial partialRequest)
+    {
+        string? refreshToken = cookieService.Get(this.Request);
+
+        if (refreshToken is null)
+        {
+            return Unauthorized("Refresh token not found.");
+        }
+
+        CreatePasswordRequest request = mapper.Map<CreatePasswordRequest>((refreshToken, partialRequest));
 
         Result result = await mediator.Send(request);
 

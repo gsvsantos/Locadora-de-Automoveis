@@ -33,8 +33,8 @@ public class CreateRentalRequestHandler(
     IRepositoryRentalExtra repositoryRentalExtra,
     ITenantProvider tenantProvider,
     IUserContext userContext,
-    IValidator<Rental> validator,
     IRentalEmailService emailService,
+    IValidator<Rental> validator,
     ILogger<CreateRentalRequestHandler> logger
 ) : IRequestHandler<CreateRentalRequest, Result<CreateRentalResponse>>
 {

@@ -8,18 +8,18 @@ using Microsoft.Extensions.Logging;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace LocadoraDeAutomoveis.Application.Auth.Commands.ChangePassword;
-public class ChangePasswordRequestHandler(
+namespace LocadoraDeAutomoveis.Application.Auth.Commands.CreatePassword;
+
+public class CreatePasswordRequestHandler(
     UserManager<User> userManager,
     IRepositoryRefreshToken repositoryRefreshToken,
     IRefreshTokenProvider refreshTokenProvider,
     RefreshTokenOptions refreshTokenOptions,
     IUnitOfWork unitOfWork,
-    ILogger<ChangePasswordRequestHandler> logger
-) : IRequestHandler<ChangePasswordRequest, Result>
+    ILogger<CreatePasswordRequestHandler> logger
+) : IRequestHandler<CreatePasswordRequest, Result>
 {
-    public async Task<Result> Handle(
-        ChangePasswordRequest request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(CreatePasswordRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -34,19 +34,18 @@ public class ChangePasswordRequestHandler(
 
             Guid userId = refreshToken.UserAuthenticatedId;
 
-            await refreshTokenProvider.RevokeUserTokensAsync(userId, "ChangePassword", cancellationToken);
+            await refreshTokenProvider.RevokeUserTokensAsync(userId, "CreatePassword", cancellationToken);
 
             User? user = await userManager.FindByIdAsync(userId.ToString());
-
             if (user is null)
             {
                 return Result.Fail(ErrorResults.NotFoundError("User not found."));
             }
 
-            bool userPasswordMatch = await userManager.CheckPasswordAsync(user, request.CurrentPassword);
-            if (!userPasswordMatch)
+            bool hasPassword = await userManager.HasPasswordAsync(user);
+            if (hasPassword)
             {
-                return Result.Fail(AuthErrorResults.IncorrectCurrentPasswordError());
+                return Result.Fail(ErrorResults.BadRequestError(["User already has a password. Please use the Change Password flow."]));
             }
 
             if (!request.NewPassword.Equals(request.ConfirmNewPassword))
@@ -54,9 +53,8 @@ public class ChangePasswordRequestHandler(
                 return Result.Fail(AuthErrorResults.NewPasswordConfirmationError());
             }
 
-            IdentityResult result = await userManager.ChangePasswordAsync(
+            IdentityResult result = await userManager.AddPasswordAsync(
                 user,
-                request.CurrentPassword,
                 request.NewPassword
             );
 
@@ -81,12 +79,7 @@ public class ChangePasswordRequestHandler(
         catch (Exception ex)
         {
             await unitOfWork.RollbackAsync();
-
-            logger.LogError(
-                ex,
-                "An error occurred during the request. \n{@Request}.", request
-            );
-
+            logger.LogError(ex, "An error occurred during the request. \n{@Request}.", request);
             return Result.Fail(ErrorResults.InternalServerError(ex));
         }
     }

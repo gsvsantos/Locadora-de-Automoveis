@@ -19,12 +19,12 @@ public class RentalEmailService(
             { "CarModel", rental.Vehicle.Model },
             { "StartDate", rental.StartDate.ToString("MMM dd, yyyy") },
             { "ReturnDate", rental.ExpectedReturnDate.ToString("MMM dd, yyyy") },
-            { "TotalPrice", rental.BaseRentalPrice.ToString("C") },
-            { "BookingLink", "http://localhost:4200/rentals/" + rental.Id } // mudar antes do deploy na azure
+            { "EstimatedPrice", rental.BaseRentalPrice.ToString("C") },
+            { "RentalLink", "http://localhost:4200/rentals/details/" + rental.Id } // mudar antes do deploy na azure
         };
 
         string body = await templateService.GetTemplateAsync("rental-confirmation", placeholders);
-        string subject = $"Booking Confirmed: {rental.Vehicle.Model}";
+        string subject = $"Booking Confirmed: {rental.Vehicle.Model} - LDA";
 
         BackgroundJob.Enqueue(() => emailSender.SendAsync(client.Email, subject, body));
 
@@ -45,7 +45,7 @@ public class RentalEmailService(
             { "ClientName", name },
             { "CarModel", carModel },
             { "ReturnDate", returnDate.ToString("MMM dd, yyyy 'at' HH:mm") },
-            { "BookingLink", $"http://localhost:4200/rentals/{rentalId}" } // mudar antes do deploy na azure
+            { "RentalLink", $"http://localhost:4200/rentals/details/{rentalId}" } // mudar antes do deploy na azure
         };
 
         string body = await templateService.GetTemplateAsync("return-reminder", placeholders);

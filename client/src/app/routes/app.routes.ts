@@ -88,6 +88,11 @@ export const routes: Routes = [
     canActivate: [authenticatedUserGuard],
   },
   {
+    path: 'profile',
+    loadChildren: () => import('../routes/profile.routes').then((route) => route.profileRoutes),
+    canActivate: [authenticatedUserGuard],
+  },
+  {
     path: 'admin',
     loadChildren: () => import('../routes/admin.routes').then((route) => route.adminRoutes),
     canActivate: [platformAdminOnlyGuard],

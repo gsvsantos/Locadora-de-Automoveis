@@ -7,6 +7,7 @@ using LocadoraDeAutomoveis.Domain.Configurations;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Auth.Commands.LoginGoogle;
 
@@ -15,7 +16,9 @@ public class LoginWithGoogleRequestHandler(
     IRepositoryConfiguration repositoryConfiguration,
     ITokenProvider tokenProvider,
     IRefreshTokenProvider refreshTokenProvider,
-    IConfiguration configuration
+    IConfiguration configuration,
+    IAuthEmailService emailService,
+    ILogger<LoginWithGoogleRequestHandler> logger
 ) : IRequestHandler<LoginWithGoogleRequest, Result<(AccessToken, IssuedRefreshTokenDto)>>
 {
     public async Task<Result<(AccessToken, IssuedRefreshTokenDto)>> Handle(
@@ -56,7 +59,18 @@ public class LoginWithGoogleRequestHandler(
 
                 if (!userResult.Succeeded)
                 {
+                    await userManager.DeleteAsync(user);
+
                     return Result.Fail("Failed to create with Google Sign-In: " + userResult.Errors.First().Description);
+                }
+
+                try
+                {
+                    await emailService.ScheduleGoogleLoginWelcome(user);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogWarning(ex, "Failed to schedule google welcome email for user {UseriD}", user.Id);
                 }
             }
 

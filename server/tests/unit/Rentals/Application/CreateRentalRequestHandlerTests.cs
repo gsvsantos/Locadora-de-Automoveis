@@ -83,8 +83,8 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
             this.repositoryRentalExtraMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,
-            this.validatorMock.Object,
             this.emailServiceMock.Object,
+            this.validatorMock.Object,
             this.loggerMock.Object
         );
     }

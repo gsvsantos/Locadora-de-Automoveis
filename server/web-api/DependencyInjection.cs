@@ -263,6 +263,7 @@ public static class DependencyInjection
         services.Configure<MailSettings>(configuration.GetSection("MAILOPTIONS"));
         services.AddSingleton<IEmailTemplateService, HtmlTemplateService>();
         services.AddTransient<IEmailSender, SmtpEmailSender>();
+        services.AddScoped<IAuthEmailService, AuthEmailService>();
         services.AddScoped<IRentalEmailService, RentalEmailService>();
     }
 
