@@ -24,7 +24,7 @@ export class LanguageSelector {
   public onLanguageChange(newLanguageCode: LanguageCode): void {
     if (newLanguageCode !== this.currentLanguage) {
       this.currentLanguage = newLanguageCode;
-      this.localStorageService.setCurrentLanguage(newLanguageCode);
+      this.localStorageService.setLanguage(newLanguageCode);
       window.location.reload();
     }
   }

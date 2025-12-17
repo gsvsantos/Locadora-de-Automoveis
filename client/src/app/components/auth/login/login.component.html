@@ -3,7 +3,9 @@
     <div class="card">
       <form [formGroup]="formGroup" class="form">
         <h2>{{ t('card.title') }}</h2>
+
         <hr class="bar" />
+
         <div class="card-content">
           <div class="social-container">
             <a class="social" aria-label="Sign in with Google" (click)="googleAuth()">
@@ -11,9 +13,9 @@
             </a>
           </div>
 
-          <span>{{ t('card.subtitle') }}</span>
+          <span class="full-width">{{ t('card.subtitle') }}</span>
 
-          <div class="form-field">
+          <div class="form-field full-width">
             <input
               class="form-input"
               formControlName="userName"
@@ -22,13 +24,13 @@
               autocomplete="name"
             />
             @if (userName?.errors?.['required'] && userName?.dirty) {
-              <span>{{ t('card.errors.userNameRequired') }}</span>
+              <span class="error-message">{{ t('card.errors.userNameRequired') }}</span>
             } @else if (userName?.errors?.['minlength'] && userName?.dirty) {
-              <span>{{ t('card.errors.userNameLength') }}</span>
+              <span class="error-message">{{ t('card.errors.userNameLength') }}</span>
             }
           </div>
 
-          <div class="form-field">
+          <div class="form-field full-width">
             <input
               class="form-input"
               formControlName="password"
@@ -37,9 +39,9 @@
               autocomplete="current-password"
             />
             @if (password?.errors?.['required'] && password?.dirty) {
-              <span>{{ t('card.errors.passwordRequired') }}</span>
+              <span class="error-message">{{ t('card.errors.passwordRequired') }}</span>
             } @else if (password?.errors?.['minlength'] && password?.dirty) {
-              <span>{{ t('card.errors.passwordLength') }}</span>
+              <span class="error-message">{{ t('card.errors.passwordLength') }}</span>
             }
           </div>
         </div>
@@ -47,6 +49,7 @@
           <re-captcha
             class="captcha"
             [siteKey]="recaptchaSiteKey"
+            [theme]="themeValue"
             (resolved)="onCaptchaResolved($event)"
           >
           </re-captcha>

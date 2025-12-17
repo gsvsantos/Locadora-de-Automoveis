@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class LocalStorageService {
@@ -9,41 +9,53 @@ export class LocalStorageService {
   private readonly themeKey: string = 'locadora-theme';
   private readonly languageKey: string = 'locadora-language';
 
-  private readonly currentLanguageSubject: BehaviorSubject<LanguageCode> =
-    new BehaviorSubject<LanguageCode>(this.loadInitialLanguage());
+  private readonly themeSubject: BehaviorSubject<ThemeType> = new BehaviorSubject<ThemeType>(
+    this.getInitialTheme(),
+  );
 
-  public readonly currentLanguage$: Observable<LanguageCode> =
-    this.currentLanguageSubject.asObservable();
+  private readonly languageSubject: BehaviorSubject<LanguageCode> =
+    new BehaviorSubject<LanguageCode>(this.getInitialLanguage());
 
   public constructor() {
     this.translocoService.setActiveLang(this.getCurrentLanguage());
   }
 
-  public setTheme(theme: 'light' | 'dark'): void {
+  public setTheme(theme: ThemeType): void {
     localStorage.setItem(this.themeKey, theme);
+    this.themeSubject.next(theme);
   }
 
-  public getTheme(): 'light' | 'dark' {
-    return localStorage.getItem(this.themeKey) as 'light' | 'dark';
+  public getCurrentTheme(): ThemeType {
+    return this.themeSubject.value;
   }
 
-  public getCurrentLanguage(): LanguageCode {
-    return this.currentLanguageSubject.value;
+  public isDarkMode(): boolean {
+    return this.themeSubject.value == 'dark';
   }
 
-  public setCurrentLanguage(newLanguageCode: LanguageCode): void {
+  private getInitialTheme(): ThemeType {
+    const saved = localStorage.getItem(this.themeKey) as ThemeType | null;
+    return saved ?? 'light';
+  }
+
+  public setLanguage(newLanguageCode: LanguageCode): void {
     if (!/^[a-z]{2}-[A-Z]{2}$/.test(newLanguageCode)) {
       throw new Error(`Invalid language: ${newLanguageCode}`);
     }
     localStorage.setItem(this.languageKey, newLanguageCode);
     this.translocoService.setActiveLang(newLanguageCode);
-    this.currentLanguageSubject.next(newLanguageCode);
+    this.languageSubject.next(newLanguageCode);
   }
 
-  private loadInitialLanguage(): LanguageCode {
+  public getCurrentLanguage(): LanguageCode {
+    return this.languageSubject.value;
+  }
+
+  private getInitialLanguage(): LanguageCode {
     const saved = localStorage.getItem(this.languageKey) as LanguageCode | null;
     return saved ?? 'en-US';
   }
 }
 
 export type LanguageCode = `${string}-${string}`;
+export type ThemeType = 'light' | 'dark';

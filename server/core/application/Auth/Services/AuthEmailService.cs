@@ -10,7 +10,21 @@ public class AuthEmailService(
     IEmailTemplateService templateService
 ) : IAuthEmailService
 {
-    public async Task ScheduleGoogleLoginWelcome(User user)
+    public async Task ScheduleBusinessRegisterWelcome(User user)
+    {
+        Dictionary<string, string> placeholders = new()
+        {
+            {"UserFullName", user.FullName },
+            {"LoginUrl", "http://localhost:4200/home"}
+        };
+
+        string body = await templateService.GetTemplateAsync("welcome-business", placeholders);
+        string subject = $"Welcome Partner - LDA";
+
+        BackgroundJob.Enqueue(() => emailSender.SendAsync(user.Email!, subject, body));
+    }
+
+    public async Task ScheduleBusinessGoogleLoginWelcome(User user)
     {
         Dictionary<string, string> placeholders = new()
         {

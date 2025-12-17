@@ -17,6 +17,7 @@ public class RegisterUserRequestHandler(
     IRefreshTokenProvider refreshTokenProvider,
     IRecaptchaService recaptchaService,
     IUnitOfWork unitOfWork,
+    IAuthEmailService emailService,
     ILogger<RegisterUserRequestHandler> logger
 ) : IRequestHandler<RegisterUserRequest, Result<(AccessToken, IssuedRefreshTokenDto)>>
 {
@@ -87,6 +88,15 @@ public class RegisterUserRequestHandler(
             if (refreshToken is null)
             {
                 return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token. Try again!")));
+            }
+
+            try
+            {
+                await emailService.ScheduleBusinessRegisterWelcome(user);
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning(ex, "Failed to schedule google welcome email for user {UseriD}", user.Id);
             }
 
             return Result.Ok((accessToken, refreshToken));

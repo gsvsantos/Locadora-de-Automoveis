@@ -49,8 +49,7 @@ public class RentalEmailService(
         };
 
         string body = await templateService.GetTemplateAsync("return-reminder", placeholders);
-
-        string subject = $"Reminder: {carModel} Return Tomorrow";
+        string subject = $"Reminder: {carModel} Return Tomorrow - LDA";
 
         await emailSender.SendAsync(email, subject, body);
     }

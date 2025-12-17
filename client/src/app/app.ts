@@ -5,7 +5,7 @@ import { PartialObserver } from 'rxjs';
 import { AuthService } from './services/auth.service';
 import { NotificationService } from './services/notification.service';
 import { AsyncPipe } from '@angular/common';
-import { LocalStorageService } from './services/local-storage.service';
+import { LocalStorageService, ThemeType } from './services/local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -16,13 +16,12 @@ import { LocalStorageService } from './services/local-storage.service';
 export class App implements OnInit {
   private document = inject(DOCUMENT);
   private readonly authService = inject(AuthService);
+  private readonly localStorageService = inject(LocalStorageService);
   protected readonly notificationService = inject(NotificationService);
   protected readonly router = inject(Router);
   protected readonly accessToken$ = this.authService.getAccessToken();
-
-  private localStorageService = inject(LocalStorageService);
-  protected themeValue: 'light' | 'dark' = this.localStorageService.getTheme();
-  protected isDarkMode: boolean = this.themeValue == 'dark';
+  protected themeValue: ThemeType = this.localStorageService.getCurrentTheme();
+  protected isDarkMode: boolean = this.localStorageService.isDarkMode();
 
   public ngOnInit(): void {
     this.applyThemeToDocumentBody(this.themeValue);

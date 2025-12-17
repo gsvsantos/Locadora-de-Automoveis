@@ -16,6 +16,7 @@ import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-butt
 import { passwordMatchValidator } from '../../../validators/auth.validators';
 import { RecaptchaModule } from 'ng-recaptcha-2';
 import { environment } from '../../../../environments/environment';
+import { LocalStorageService, ThemeType } from '../../../services/local-storage.service';
 
 @Component({
   selector: 'app-register.component',
@@ -32,6 +33,9 @@ export class RegisterComponent {
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
   protected readonly recaptchaSiteKey: string = environment.captcha_key;
+
+  private localStorageService = inject(LocalStorageService);
+  protected themeValue: ThemeType = this.localStorageService.getCurrentTheme();
 
   protected formGroup: FormGroup = this.formBuilder.group(
     {

@@ -1,128 +1,54 @@
 @use '../../../../styles/variables' as *;
-
-.login-section {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 4rem 0;
-}
-
-.main-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-width: 350px;
-  max-width: fit-content;
-  padding: 2rem 50px;
-  background-color: $surface;
-  border-radius: $border-radius;
-  box-shadow: $shadow-1;
-  border: 1px solid $border;
-}
-
-.card {
-  padding: 0.5rem;
-}
-
-.bar {
-  border: none;
-  height: 1px;
-  background-color: $border;
-}
-
-.card-content {
-  width: 100%;
-}
+@use '../../../../styles/form-layout' as *;
 
 .social-container {
-  margin: 0 0 20px 0;
+  display: flex;
+  justify-content: center;
+  margin: 0 0 1.5rem 0;
 }
 
 .social {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
-  width: 40px;
+  height: 48px;
+  width: 48px;
   margin: 0 5px;
+  font-size: 1.2rem;
   color: $primary;
   border: 1px solid $border;
   border-radius: 50%;
   text-decoration: none;
   transition: $transition-fast;
+  cursor: pointer;
 
   &:hover {
-    cursor: pointer;
     color: $primary-active;
     border-color: $primary-active;
     background-color: $surface-alt;
+    transform: translateY(-2px);
   }
 }
 
-.form-field {
-  width: 100%;
-  position: relative;
-  margin-bottom: 20px;
+.card-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
 
-  span {
-    display: inline-flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    bottom: -20px;
-    left: 0;
-    font-size: 12px;
-    color: $danger;
-  }
+  @media (min-width: 650px) {
+    grid-template-columns: 1fr 1fr;
 
-  .ng-invalid.ng-dirty {
-    border-color: $danger;
-    color: $danger;
-
-    &::placeholder {
-      color: rgba($danger, 0.7);
+    h2,
+    span,
+    .social-container {
+      grid-column: 1 / -1;
     }
   }
 }
 
-.form-input {
-  color: $text-main;
-  background-color: $surface-alt;
-  border: 1px solid $border;
-  border-radius: 20px;
-  box-sizing: border-box;
-  padding: 12px 15px;
-  margin: 8px 0 0;
-  width: 100%;
-  transition: $transition-fast;
-
-  &:hover {
-    border-color: $primary;
-  }
-
-  &:focus {
-    color: $text-main;
-    background-color: $surface;
-    border-color: $primary-active;
-    box-shadow: 0 0 0 4px rgba(var(--shadow-rgb), 0.1);
-    outline: none;
-  }
-
+input[type='password'] {
+  letter-spacing: 0.1em;
   &::placeholder {
-    color: $text-muted;
+    letter-spacing: normal;
   }
-}
-
-.captcha {
-  transform: scale(0.8);
-  transform-origin: 0;
-}
-
-.buttons {
-  margin: 3rem 0 1rem 0;
-  display: flex;
-  justify-self: center;
-  gap: 20px;
 }

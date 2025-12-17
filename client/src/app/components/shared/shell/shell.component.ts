@@ -41,8 +41,7 @@ export class ShellComponent {
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
   protected isSidebarOpen: boolean = false;
-  protected themeValue: 'light' | 'dark' = this.localStorageService.getTheme();
-  protected isDarkMode: boolean = this.themeValue == 'dark';
+  protected isDarkMode: boolean = this.localStorageService.isDarkMode();
 
   @Input({ required: true }) public user?: AuthenticatedUserModel;
   @Output() public logoutEvent = new EventEmitter<void>();

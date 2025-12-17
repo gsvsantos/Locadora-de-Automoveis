@@ -15,6 +15,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { RecaptchaModule } from 'ng-recaptcha-2';
 import { environment } from '../../../../environments/environment';
+import { LocalStorageService, ThemeType } from '../../../services/local-storage.service';
 
 @Component({
   selector: 'app-login.component',
@@ -31,6 +32,9 @@ export class LoginComponent {
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
   protected readonly recaptchaSiteKey: string = environment.captcha_key;
+
+  private localStorageService = inject(LocalStorageService);
+  protected themeValue: ThemeType = this.localStorageService.getCurrentTheme();
 
   protected formGroup: FormGroup = this.formBuilder.group({
     userName: ['', [Validators.required.bind(this), Validators.minLength(3)]],

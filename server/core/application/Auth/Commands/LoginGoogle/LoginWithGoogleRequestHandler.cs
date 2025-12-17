@@ -66,7 +66,7 @@ public class LoginWithGoogleRequestHandler(
 
                 try
                 {
-                    await emailService.ScheduleGoogleLoginWelcome(user);
+                    await emailService.ScheduleBusinessGoogleLoginWelcome(user);
                 }
                 catch (Exception ex)
                 {

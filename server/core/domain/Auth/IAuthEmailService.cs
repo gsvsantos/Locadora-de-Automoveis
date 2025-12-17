@@ -2,5 +2,6 @@
 
 public interface IAuthEmailService
 {
-    Task ScheduleGoogleLoginWelcome(User user);
+    Task ScheduleBusinessRegisterWelcome(User user);
+    Task ScheduleBusinessGoogleLoginWelcome(User user);
 }
