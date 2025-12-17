@@ -83,7 +83,7 @@ export class ResetPasswordComponent {
     const resetPasswordObserver: PartialObserver<void> = {
       error: (err: string) => (console.log(err), this.notificationService.error(err)),
       complete: () => (
-        this.notificationService.success('Success! Please, sign in again.'),
+        this.notificationService.success('Success! Please, sign in.'),
         void this.router.navigate(['/auth', 'login'])
       ),
     };

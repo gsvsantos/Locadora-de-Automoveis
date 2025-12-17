@@ -81,6 +81,22 @@
       "buttons": {
         "change": "Confirmar"
       }
+    },
+    "forgot-password": {
+      "title": "¿Olvidaste tu contraseña?",
+      "placeholder": {
+        "email": "Correo electrónico"
+      },
+      "label": {
+        "email": "Correo electrónico"
+      },
+      "errors": {
+        "emailRequired": "El correo es obligatorio.",
+        "emailLength": "Introduce un correo válido."
+      },
+      "buttons": {
+        "change": "Enviar enlace"
+      }
     }
   },
   "navbar": {

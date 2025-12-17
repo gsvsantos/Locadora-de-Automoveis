@@ -37,8 +37,8 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
     private Mock<IRepositoryRentalExtra> repositoryRentalExtraMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IUserContext> userContextMock = null!;
-    private Mock<IValidator<Rental>> validatorMock = null!;
     private Mock<IRentalEmailService> emailServiceMock = null!;
+    private Mock<IValidator<Rental>> validatorMock = null!;
     private Mock<ILogger<CreateRentalRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
@@ -60,13 +60,13 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
         this.repositoryRentalExtraMock = new Mock<IRepositoryRentalExtra>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.userContextMock = new Mock<IUserContext>();
-        this.validatorMock = new Mock<IValidator<Rental>>();
 
         this.emailServiceMock = new Mock<IRentalEmailService>();
         this.emailServiceMock
             .Setup(s => s.ScheduleRentalConfirmation(It.IsAny<Rental>(), It.IsAny<Client>()))
             .Returns(Task.CompletedTask);
 
+        this.validatorMock = new Mock<IValidator<Rental>>();
         this.loggerMock = new Mock<ILogger<CreateRentalRequestHandler>>();
 
         this.handler = new CreateRentalRequestHandler(

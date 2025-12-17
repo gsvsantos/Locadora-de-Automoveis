@@ -21,6 +21,10 @@ export interface ResetPasswordRequestDto {
   confirmNewPassword: string;
 }
 
+export interface ForgotPasswordRequestDto {
+  email: string;
+}
+
 export interface ChangePasswordRequestDto {
   currentPassword: string;
   newPassword: string;

@@ -22,6 +22,7 @@ public sealed class CreateEmployeeRequestHandlerTests : UnitTestBase
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryEmployee> repositoryEmployeeMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
+    private Mock<IUserContext> userContextMock = null!;
     private Mock<IValidator<Employee>> validatorMock = null!;
     private Mock<ILogger<CreateEmployeeRequestHandler>> loggerMock = null!;
 
@@ -36,6 +37,7 @@ public sealed class CreateEmployeeRequestHandlerTests : UnitTestBase
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryEmployeeMock = new Mock<IRepositoryEmployee>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
+        this.userContextMock = new Mock<IUserContext>();
         this.validatorMock = new Mock<IValidator<Employee>>();
         this.loggerMock = new Mock<ILogger<CreateEmployeeRequestHandler>>();
 
@@ -45,6 +47,7 @@ public sealed class CreateEmployeeRequestHandlerTests : UnitTestBase
             this.mapper,
             this.repositoryEmployeeMock.Object,
             this.tenantProviderMock.Object,
+            this.userContextMock.Object,
             this.validatorMock.Object,
             this.loggerMock.Object
         );

@@ -2,7 +2,8 @@
 
 public interface IAuthEmailService
 {
-    Task ScheduleBusinessRegisterWelcome(User user);
-    Task ScheduleBusinessGoogleLoginWelcome(User user, string resetToken);
-    Task ScheduleClientInvitation(User user, string resetToken);
+    Task SendForgotPasswordEmailAsync(string email, string userName, string resetToken);
+    Task ScheduleBusinessRegisterWelcome(string email, string fullName);
+    Task ScheduleBusinessGoogleLoginWelcome(string email, string fullName, string resetToken);
+    Task ScheduleClientInvitation(string email, string fullName, string resetToken);
 }

@@ -16,6 +16,7 @@ import {
   AuthApiResponse,
   AuthMode,
   ChangePasswordRequestDto,
+  ForgotPasswordRequestDto,
   LoginAuthDto,
   RegisterAuthDto,
   ResetPasswordRequestDto,
@@ -173,6 +174,14 @@ export class AuthService {
         this.accessTokenSubject$.next(token);
       }),
     );
+  }
+
+  public forgotPassword(model: ForgotPasswordRequestDto): Observable<void> {
+    const url = `${this.apiUrl}/forgot-password`;
+
+    return this.http
+      .post<void>(url, model)
+      .pipe(tap(() => (this.revokeAccessToken(), this.oauthService.logOut())));
   }
 
   public resetPassword(model: ResetPasswordRequestDto): Observable<void> {

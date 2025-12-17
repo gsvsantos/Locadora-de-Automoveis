@@ -19,7 +19,8 @@ public class CreatePasswordRequestHandler(
     ILogger<CreatePasswordRequestHandler> logger
 ) : IRequestHandler<CreatePasswordRequest, Result>
 {
-    public async Task<Result> Handle(CreatePasswordRequest request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(
+        CreatePasswordRequest request, CancellationToken cancellationToken)
     {
         try
         {

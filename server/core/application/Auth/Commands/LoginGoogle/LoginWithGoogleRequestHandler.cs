@@ -47,9 +47,20 @@ public class LoginWithGoogleRequestHandler(
 
                 IdentityResult userResult = await userManager.CreateAsync(user);
 
-                user.AssociateTenant(user.Id);
+                if (!userResult.Succeeded)
+                {
+                    IEnumerable<string> errors = userResult
+                        .Errors
+                        .Select(failure => failure.Description)
+                        .ToList();
+
+                    return Result.Fail(ErrorResults.BadRequestError(errors));
+                }
 
                 await userManager.AddToRoleAsync(user, "Admin");
+
+                user.AssociateTenant(user.Id);
+
                 await userManager.UpdateAsync(user);
 
                 Configuration configutarion = new();
@@ -64,9 +75,11 @@ public class LoginWithGoogleRequestHandler(
                     return Result.Fail("Failed to create with Google Sign-In: " + userResult.Errors.First().Description);
                 }
 
+                string token = await userManager.GeneratePasswordResetTokenAsync(user);
+
                 try
                 {
-                    await emailService.ScheduleBusinessGoogleLoginWelcome(user);
+                    await emailService.ScheduleBusinessGoogleLoginWelcome(user.Email, user.FullName, token);
                 }
                 catch (Exception ex)
                 {
@@ -99,11 +112,11 @@ public class LoginWithGoogleRequestHandler(
         }
         catch (InvalidJwtException)
         {
-            return Result.Fail("Token do Google inválido ou expirado.");
+            return Result.Fail("Invalid Google Token.");
         }
         catch (Exception ex)
         {
-            return Result.Fail("Erro interno no login Google: " + ex.Message);
+            return Result.Fail("Something  Google: " + ex.Message);
         }
     }
 }

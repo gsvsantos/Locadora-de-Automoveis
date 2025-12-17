@@ -81,6 +81,23 @@
       "buttons": {
         "change": "Confirm"
       }
+    },
+    "forgot-password": {
+      "title": "Forgot Password?",
+      "placeholder": {
+        "email": "Email Address"
+      },
+      "label": {
+        "email": "Email Address"
+      },
+      "errors": {
+        "emailRequired": "Email is required.",
+        "emailLength": "Please enter a valid email address."
+      },
+      "buttons": {
+        "login": "Already have an account?",
+        "change": "Send Recovery Link"
+      }
     }
   },
   "navbar": {

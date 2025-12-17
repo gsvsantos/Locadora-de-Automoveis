@@ -22,6 +22,7 @@ public sealed class CreateClientRequestHandlerTests : UnitTestBase
     private Mock<IRepositoryClient> repositoryClientMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IUserContext> userContextMock = null!;
+    private Mock<IAuthEmailService> emailServiceMock = null!;
     private Mock<IValidator<Client>> validatorMock = null!;
     private Mock<ILogger<CreateClientRequestHandler>> loggerMock = null!;
 
@@ -37,6 +38,7 @@ public sealed class CreateClientRequestHandlerTests : UnitTestBase
         this.repositoryClientMock = new Mock<IRepositoryClient>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.userContextMock = new Mock<IUserContext>();
+        this.emailServiceMock = new Mock<IAuthEmailService>();
         this.validatorMock = new Mock<IValidator<Client>>();
         this.loggerMock = new Mock<ILogger<CreateClientRequestHandler>>();
 
@@ -47,6 +49,7 @@ public sealed class CreateClientRequestHandlerTests : UnitTestBase
             this.repositoryClientMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,
+            this.emailServiceMock.Object,
             this.validatorMock.Object,
             this.loggerMock.Object
         );

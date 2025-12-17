@@ -81,6 +81,23 @@
       "buttons": {
         "change": "Confirmar"
       }
+    },
+    "forgot-password": {
+      "title": "Esqueceu a Senha?",
+      "placeholder": {
+        "email": "E-mail"
+      },
+      "label": {
+        "email": "E-mail"
+      },
+      "errors": {
+        "emailRequired": "O e-mail é obrigatório.",
+        "emailLength": "Insira um e-mail válido."
+      },
+      "buttons": {
+        "login": "Já possui uma conta?",
+        "change": "Enviar Link"
+      }
     }
   },
   "navbar": {

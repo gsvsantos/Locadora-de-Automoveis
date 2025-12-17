@@ -46,17 +46,25 @@
           </div>
         </div>
         <div class="buttons">
-          <re-captcha
-            class="captcha"
-            [siteKey]="recaptchaSiteKey"
-            [theme]="themeValue"
-            (resolved)="onCaptchaResolved($event)"
-          >
-          </re-captcha>
+          <div style="display: flex; gap: 10px; flex-direction: column">
+            <gs-buttons
+              [buttonType]="buttonType.Link"
+              [text]="t('card.buttons.password')"
+              type="submit"
+              [variant]="variantType.Outline"
+              routerLink="/auth/forget-password"
+            ></gs-buttons>
+            <re-captcha
+              class="captcha"
+              [siteKey]="recaptchaSiteKey"
+              [theme]="themeValue"
+              (resolved)="onCaptchaResolved($event)"
+            >
+            </re-captcha>
+          </div>
           <gs-buttons
             [buttonType]="buttonType.Link"
             [text]="t('card.buttons.register')"
-            type="submit"
             [variant]="variantType.Outline"
             routerLink="/auth/register"
           ></gs-buttons>

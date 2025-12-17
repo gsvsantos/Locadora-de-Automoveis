@@ -24,6 +24,7 @@ public sealed class RegisterUserRequestHandlerTests
     private Mock<IRefreshTokenProvider> refreshTokenMock = null!;
     private Mock<IRecaptchaService> recaptchaServiceMock = null!;
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
+    private Mock<IAuthEmailService> emailServiceMock = null!;
     private Mock<ILogger<RegisterUserRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
@@ -37,10 +38,14 @@ public sealed class RegisterUserRequestHandlerTests
         this.repositoryConfigurationMock = new Mock<IRepositoryConfiguration>();
         this.tokenProviderMock = new Mock<ITokenProvider>();
         this.refreshTokenMock = new Mock<IRefreshTokenProvider>();
-
         this.recaptchaServiceMock = new Mock<IRecaptchaService>();
-
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
+
+        this.emailServiceMock = new Mock<IAuthEmailService>();
+        this.emailServiceMock
+            .Setup(s => s.ScheduleBusinessRegisterWelcome(It.IsAny<User>()))
+            .Returns(Task.CompletedTask);
+
         this.loggerMock = new Mock<ILogger<RegisterUserRequestHandler>>();
 
         this.handler = new RegisterUserRequestHandler(
@@ -50,6 +55,7 @@ public sealed class RegisterUserRequestHandlerTests
             this.refreshTokenMock.Object,
             this.recaptchaServiceMock.Object,
             this.unitOfWorkMock.Object,
+            this.emailServiceMock.Object,
             this.loggerMock.Object
         );
     }

@@ -20,6 +20,7 @@ export const authInterceptor = (
     '/auth/refresh',
     '/auth/logout',
     '/auth/reset-password',
+    '/auth/forget-password',
   ];
 
   if (whitelist.some((url) => req.url.includes(url))) {

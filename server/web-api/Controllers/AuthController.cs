@@ -2,11 +2,13 @@
 using FluentResults;
 using LocadoraDeAutomoveis.Application.Auth.Commands.ChangePassword;
 using LocadoraDeAutomoveis.Application.Auth.Commands.CreatePassword;
+using LocadoraDeAutomoveis.Application.Auth.Commands.ForgotPassword;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Login;
 using LocadoraDeAutomoveis.Application.Auth.Commands.LoginGoogle;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Logout;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Refresh;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Register;
+using LocadoraDeAutomoveis.Application.Auth.Commands.ResetPassword;
 using LocadoraDeAutomoveis.Application.Auth.DTOs;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
@@ -148,6 +150,35 @@ public class AuthController(
 
         ChangePasswordRequest request = mapper.Map<ChangePasswordRequest>((refreshToken, partialRequest));
 
+        Result result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return result.ToHttpResponse();
+        }
+
+        await signInManager.SignOutAsync();
+
+        return ResultAndClearCookie();
+    }
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+    {
+        Result result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return result.ToHttpResponse();
+        }
+
+        await signInManager.SignOutAsync();
+
+        return ResultAndClearCookie();
+    }
+
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+    {
         Result result = await mediator.Send(request);
 
         if (result.IsFailed)
