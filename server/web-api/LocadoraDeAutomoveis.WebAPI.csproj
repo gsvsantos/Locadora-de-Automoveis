@@ -45,6 +45,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\core\application\LocadoraDeAutomoveis.Application.csproj" />
 	  <ProjectReference Include="..\infrastructure\orm\LocadoraDeAutomoveis.Infrastructure.csproj" />
+	  <ProjectReference Include="..\LocadoraDeVeiculos.Infrastructure.S3\LocadoraDeVeiculos.Infrastructure.S3.csproj" />
 	</ItemGroup>
 
 </Project>

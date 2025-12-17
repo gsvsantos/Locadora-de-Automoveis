@@ -24,6 +24,7 @@ public class Program
         // Add Scoped Dependencies & Services
         builder.Services.ConfigureRepositories();
         builder.Services.ConfigureServices(builder.Configuration);
+        builder.Services.AddInfrastructureS3(builder.Configuration);
 
         // Logging [env NEWRELIC_LICENSE_KEY]
         builder.Services.ConfigureSerilog(builder.Logging, builder.Configuration);

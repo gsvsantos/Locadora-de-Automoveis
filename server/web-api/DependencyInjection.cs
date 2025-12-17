@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using Amazon.Runtime;
+using Amazon.S3;
+using FluentValidation;
 using Hangfire;
 using LocadoraDeAutomoveis.Application.Auth.Services;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
@@ -33,8 +35,10 @@ using LocadoraDeAutomoveis.Infrastructure.Rentals;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using LocadoraDeAutomoveis.Infrastructure.Vehicles;
 using LocadoraDeAutomoveis.WebApi.Filters;
+using LocadoraDeVeiculos.Infrastructure.S3;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Reflection;
@@ -250,6 +254,34 @@ public static class DependencyInjection
                 };
             }
         );
+    }
+
+    public static IServiceCollection AddInfrastructureS3(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddCloudflareR2Config(configuration);
+
+        services.AddSingleton<IAmazonS3>(sp =>
+        {
+            CloudflareR2Options options = sp.GetRequiredService<IOptions<CloudflareR2Options>>().Value;
+
+            BasicAWSCredentials credentials = new(options.AccessKeyId, options.SecretAccessKey);
+
+            return new AmazonS3Client(credentials, new AmazonS3Config
+            {
+                ServiceURL = options.ServiceUrl
+            });
+        });
+
+        services.AddScoped<R2FileStorageService>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddCloudflareR2Config(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<CloudflareR2Options>(configuration.GetSection("CLOUDFLARE_R2_CREDENTIALS"));
+
+        return services;
     }
 
     private static void ConfigureRecaptchaService(this IServiceCollection services)
