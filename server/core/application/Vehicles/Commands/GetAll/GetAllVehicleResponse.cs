@@ -17,7 +17,7 @@ public record VehicleDto(
     EFuelType FuelType,
     int FuelTankCapacity,
     int Year,
-    string? PhotoPath,
+    string? Image,
     VehicleGroupDto Group,
     bool IsActive
 );

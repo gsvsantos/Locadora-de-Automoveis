@@ -11,8 +11,23 @@
   display: inline-block;
   font-weight: 700;
   color: $text-main;
+  margin-top: 10px;
 }
 
+.image-upload-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+
+  .preview-img {
+    max-width: 300px;
+    width: 100%;
+    border-radius: 8px;
+  }
+}
 .card__content {
   display: flex;
   flex-direction: column;

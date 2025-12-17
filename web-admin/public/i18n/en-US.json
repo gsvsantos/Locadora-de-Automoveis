@@ -464,7 +464,7 @@
           "identification": "Group and Identification",
           "details": "Technical and Visual Details",
           "fuelAndCapacity": "Fuel and Capacity",
-          "photo": "Photo URL"
+          "image": "Vehicle Image"
         },
         "placeholder": {
           "licensePlate": "License Plate (e.g., ABC-1234)",
@@ -475,7 +475,7 @@
           "year": "Year (e.g., 2023)",
           "fuelType": "Select Fuel Type...",
           "fuelTankCapacity": "Fuel Tank Capacity (in Liters)",
-          "photoPath": "Photo URL"
+          "image": "Vehicle Image"
         },
         "label": {
           "licensePlate": "License Plate",
@@ -519,7 +519,7 @@
           "identification": "Group and Identification",
           "details": "Technical and Visual Details",
           "fuelAndCapacity": "Fuel and Capacity",
-          "photo": "Photo URL"
+          "image": "Vehicle Image"
         },
         "placeholder": {
           "licensePlate": "License Plate (e.g., ABC-1234)",
@@ -530,7 +530,7 @@
           "year": "Year (e.g., 2023)",
           "fuelType": "Select Fuel Type...",
           "fuelTankCapacity": "Fuel Tank Capacity (in Liters)",
-          "photoPath": "Photo URL"
+          "image": "Vehicle Image"
         },
         "label": {
           "licensePlate": "License Plate",

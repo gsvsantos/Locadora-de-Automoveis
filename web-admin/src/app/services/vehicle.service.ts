@@ -4,12 +4,7 @@ import { environment } from '../../environments/environment';
 import { Observable, map } from 'rxjs';
 import { ApiResponseDto, IdApiResponse } from '../models/api.models';
 import { mapApiResponse } from '../utils/map-api-response';
-import {
-  VehicleDto,
-  Vehicle,
-  VehicleDetailsApiDto,
-  ListVehiclesDto,
-} from '../models/vehicles.models';
+import { Vehicle, VehicleDetailsApiDto, ListVehiclesDto } from '../models/vehicles.models';
 
 @Injectable({
   providedIn: 'root',
@@ -18,16 +13,16 @@ export class VehicleService {
   private readonly apiUrl: string = environment.apiUrl + '/vehicle';
   private readonly http: HttpClient = inject(HttpClient);
 
-  public register(registerModel: VehicleDto): Observable<IdApiResponse> {
+  public register(data: FormData): Observable<IdApiResponse> {
     const url = `${this.apiUrl}/create`;
 
-    return this.http.post<IdApiResponse>(url, registerModel);
+    return this.http.post<IdApiResponse>(url, data);
   }
 
-  public update(id: string, updateModel: VehicleDto): Observable<IdApiResponse> {
+  public update(id: string, data: FormData): Observable<IdApiResponse> {
     const url = `${this.apiUrl}/update/${id}`;
 
-    return this.http.put<IdApiResponse>(url, updateModel);
+    return this.http.put<IdApiResponse>(url, data);
   }
 
   public delete(id: string): Observable<null> {
@@ -73,7 +68,7 @@ export class VehicleService {
       fuelType: apiVehicle.fuelType,
       fuelTankCapacity: apiVehicle.fuelTankCapacity,
       year: apiVehicle.year,
-      photoPath: apiVehicle.photoPath,
+      image: apiVehicle.image,
       group: apiVehicle.group,
       isActive: apiVehicle.isActive,
     };

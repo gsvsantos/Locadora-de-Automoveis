@@ -33,6 +33,8 @@ export class CreateVehicleComponent {
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
 
+  protected selectedImage: File | null = null;
+
   protected readonly groups$ = this.route.data.pipe(
     filter((data) => data['groups'] as boolean),
     map((data) => data['groups'] as Group[]),
@@ -59,8 +61,6 @@ export class CreateVehicleComponent {
 
     fuelType: ['', [Validators.required.bind(this)]],
     fuelTankCapacity: ['', [Validators.required.bind(this), Validators.min(1).bind(this)]],
-
-    photoPath: ['', []],
   });
 
   public get licensePlate(): AbstractControl | null {
@@ -95,24 +95,38 @@ export class CreateVehicleComponent {
     return this.formGroup.get('fuelTankCapacity');
   }
 
-  public get photoPath(): AbstractControl | null {
-    return this.formGroup.get('photoPath');
-  }
-
   public register(): void {
     if (this.formGroup.invalid) return;
+
+    const formData = new FormData();
+
+    Object.entries(this.formGroup.value as VehicleDto).forEach(([key, value]) => {
+      formData.append(key, value as string);
+    });
+
+    if (this.selectedImage) {
+      formData.append('image', this.selectedImage);
+    }
 
     const registerModel: VehicleDto = this.formGroup.value as VehicleDto;
 
     const registerObserver: Observer<IdApiResponse> = {
       next: () =>
         this.notificationService.success(
-          `Vehicles ${registerModel.licensePlate} registered successfully!`,
+          `Vehicle ${registerModel.licensePlate} registered successfully!`,
         ),
       error: (err: string) => this.notificationService.error(err),
       complete: () => void this.router.navigate(['/vehicles']),
     };
 
-    this.vehicleService.register(registerModel).subscribe(registerObserver);
+    this.vehicleService.register(formData).subscribe(registerObserver);
+  }
+
+  public onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      this.selectedImage = input.files[0];
+    }
   }
 }

@@ -19,6 +19,8 @@ export class ListVehiclesComponent {
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
 
+  protected readonly urlS3: string = 'https://pub-8c88efdf916b4058be00dc36f97c82bf.r2.dev/';
+
   protected readonly showingInactive$ = this.route.queryParams.pipe(
     map((params) => ({
       isInactive: params['isActive'] === 'false',

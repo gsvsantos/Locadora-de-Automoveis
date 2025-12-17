@@ -33,7 +33,7 @@ public class VehicleMapper : IEntityTypeConfiguration<Vehicle>
         builder.Property(v => v.Year)
             .IsRequired();
 
-        builder.Property(v => v.PhotoPath);
+        builder.Property(v => v.Image);
 
         builder.HasOne(v => v.Group)
             .WithMany(g => g.Vehicles)

@@ -12,14 +12,14 @@ public class Vehicle : BaseEntity<Vehicle>
     public EFuelType FuelType { get; set; }
     public int FuelTankCapacity { get; set; } = 0;
     public int Year { get; set; } = 0;
-    public string? PhotoPath { get; set; }
+    public string? Image { get; set; }
     public Guid GroupId { get; set; } = Guid.Empty;
     public Group Group { get; set; } = null!;
 
     public Vehicle() { }
     public Vehicle(
         string licensePlate, string brand, string color, string model,
-        int fuelTankCapacity, int year, string photoPath
+        int fuelTankCapacity, int year, string image
     ) : this()
     {
         this.LicensePlate = licensePlate;
@@ -28,7 +28,7 @@ public class Vehicle : BaseEntity<Vehicle>
         this.Model = model;
         this.FuelTankCapacity = fuelTankCapacity;
         this.Year = year;
-        this.PhotoPath = photoPath;
+        this.Image = image;
     }
 
     public void AssociateGroup(Group group)
@@ -74,7 +74,7 @@ public class Vehicle : BaseEntity<Vehicle>
         this.FuelType = updatedEntity.FuelType;
         this.FuelTankCapacity = updatedEntity.FuelTankCapacity;
         this.Year = updatedEntity.Year;
-        this.PhotoPath = updatedEntity.PhotoPath;
+        this.Image = updatedEntity.Image;
 
         if (updatedEntity.Group is not null && updatedEntity.Group.Id != this.Group.Id)
         {

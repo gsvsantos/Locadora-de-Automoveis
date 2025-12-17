@@ -464,7 +464,7 @@
           "identification": "Grupo e identificação",
           "details": "Detalhes técnicos e visuais",
           "fuelAndCapacity": "Combustível e capacidade",
-          "photo": "URL da foto"
+          "image": "Foto do Veículo"
         },
         "placeholder": {
           "licensePlate": "Placa (ex.: ABC-1234)",
@@ -475,7 +475,7 @@
           "year": "Ano (ex.: 2023)",
           "fuelType": "Selecione o tipo de combustível...",
           "fuelTankCapacity": "Capacidade do tanque (em litros)",
-          "photoPath": "URL da foto"
+          "image": "Foto do Veículo"
         },
         "label": {
           "licensePlate": "Placa",
@@ -519,7 +519,7 @@
           "identification": "Grupo e identificação",
           "details": "Detalhes técnicos e visuais",
           "fuelAndCapacity": "Combustível e capacidade",
-          "photo": "URL da foto"
+          "image": "Foto do Veículo"
         },
         "placeholder": {
           "licensePlate": "Placa (ex.: ABC-1234)",
@@ -530,7 +530,7 @@
           "year": "Ano (ex.: 2023)",
           "fuelType": "Selecione o tipo de combustível...",
           "fuelTankCapacity": "Capacidade do tanque (em litros)",
-          "photoPath": "URL da foto"
+          "image": "Foto do Veículo"
         },
         "label": {
           "licensePlate": "Placa",

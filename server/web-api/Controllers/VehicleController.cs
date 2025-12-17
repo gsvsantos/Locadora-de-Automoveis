@@ -21,7 +21,7 @@ public class VehicleController(
 ) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> Create([FromBody] CreateVehicleRequest request)
+    public async Task<IActionResult> Create([FromForm] CreateVehicleRequest request)
     {
         Result<CreateVehicleResponse> result = await mediator.Send(request);
 
@@ -49,7 +49,7 @@ public class VehicleController(
     }
 
     [HttpPut("update/{id:guid}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateVehicleRequestPartial partialRequest)
+    public async Task<IActionResult> Update(Guid id, [FromForm] UpdateVehicleRequestPartial partialRequest)
     {
 
         UpdateVehicleRequest request = mapper.Map<UpdateVehicleRequest>((partialRequest, id));

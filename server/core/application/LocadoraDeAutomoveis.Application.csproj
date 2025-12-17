@@ -29,6 +29,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\LocadoraDeVeiculos.Infrastructure.S3\LocadoraDeVeiculos.Infrastructure.S3.csproj" />
 	  <ProjectReference Include="..\domain\LocadoraDeAutomoveis.Domain.csproj" />
 	</ItemGroup>
 

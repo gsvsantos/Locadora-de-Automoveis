@@ -8,7 +8,7 @@ export interface VehicleDto {
   fuelType: FuelType;
   fuelTankCapacity: number;
   year: number;
-  photoPath: string;
+  image?: File;
   group: Group;
 }
 

@@ -463,7 +463,7 @@
           "identification": "Grupo e identificación",
           "details": "Detalles técnicos y visuales",
           "fuelAndCapacity": "Combustible y capacidad",
-          "photo": "URL de la foto"
+          "image": "Foto del Vehículo"
         },
         "placeholder": {
           "licensePlate": "Matrícula (p. ej., ABC-1234)",
@@ -474,7 +474,7 @@
           "year": "Año (p. ej., 2023)",
           "fuelType": "Selecciona el tipo de combustible...",
           "fuelTankCapacity": "Capacidad del depósito (en litros)",
-          "photoPath": "URL de la foto"
+          "image": "Foto del Vehículo"
         },
         "label": {
           "licensePlate": "Matrícula",
@@ -518,7 +518,7 @@
           "identification": "Grupo e identificación",
           "details": "Detalles técnicos y visuales",
           "fuelAndCapacity": "Combustible y capacidad",
-          "photo": "URL de la foto"
+          "image": "Foto del Vehículo"
         },
         "placeholder": {
           "licensePlate": "Matrícula (p. ej., ABC-1234)",
@@ -529,7 +529,7 @@
           "year": "Año (p. ej., 2023)",
           "fuelType": "Selecciona el tipo de combustible...",
           "fuelTankCapacity": "Capacidad del depósito (en litros)",
-          "photoPath": "URL de la foto"
+          "image": "Foto del Vehículo"
         },
         "label": {
           "licensePlate": "Matrícula",

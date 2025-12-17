@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.Create;
 
@@ -12,6 +13,6 @@ public record CreateVehicleRequest(
     EFuelType FuelType,
     int FuelTankCapacity,
     int Year,
-    string? PhotoPath,
+    IFormFile? Image,
     Guid GroupId
 ) : IRequest<Result<CreateVehicleResponse>>;

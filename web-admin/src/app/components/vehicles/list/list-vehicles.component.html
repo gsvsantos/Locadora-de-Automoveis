@@ -28,6 +28,9 @@
       @for (vehicle of vehicles$ | async; track vehicle.id) {
         <div class="item">
           <div class="card" tabindex="0">
+            <div class="image-upload-row">
+              <img class="preview-img" [src]="urlS3 + vehicle.image" alt="" />
+            </div>
             <div class="card__header">
               <div class="card_title">{{ vehicle.licensePlate | uppercase }}</div>
             </div>

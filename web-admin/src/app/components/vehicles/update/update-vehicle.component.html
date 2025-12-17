@@ -1,6 +1,6 @@
 <section class="update-section" *transloco="let t; prefix: 'vehicles.update'">
   <div class="main-content">
-    @if (vehicle$ | async) {
+    @if (vehicle$ | async; as vehicle) {
       <div class="card">
         <form [formGroup]="formGroup" class="form" (ngSubmit)="update()">
           <h2>{{ t('card.title') }}</h2>
@@ -126,17 +126,24 @@
               }
             </div>
 
-            <h3 class="full-width">{{ t('card.section.photo') }}</h3>
+            <h3 class="full-width">{{ t('card.section.image') }}</h3>
+            <div class="image-upload-row">
+              @if (imageSubject | async; as image) {
+                <img [src]="image" class="preview-img" />
+              } @else {
+                @if (vehicle$ | async; as vehicle) {
+                  <img [src]="urlS3 + vehicle.image" class="preview-img" />
+                }
+              }
+            </div>
             <div class="form-field full-width">
               <input
                 class="form-input"
-                formControlName="photoPath"
-                type="text"
-                [placeholder]="t('card.placeholder.photoPath')"
+                type="file"
+                accept="image/*"
+                (change)="onFileSelected($event)"
+                [placeholder]="t('card.placeholder.image')"
               />
-              @if (photoPath?.errors?.['required'] && photoPath?.dirty) {
-                <span class="error-message">{{ t('card.errors.photoPathRequired') }}</span>
-              }
             </div>
           </div>
 

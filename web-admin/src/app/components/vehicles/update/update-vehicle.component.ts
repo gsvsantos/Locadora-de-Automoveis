@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
-import { filter, map, tap, Observer, take, switchMap, shareReplay } from 'rxjs';
+import { filter, map, tap, Observer, take, switchMap, shareReplay, BehaviorSubject } from 'rxjs';
 import { IdApiResponse } from '../../../models/api.models';
 import { Group } from '../../../models/group.models';
 import { NotificationService } from '../../../services/notification.service';
@@ -33,6 +33,10 @@ export class UpdateVehicleComponent {
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
 
+  protected readonly urlS3: string = 'https://pub-8c88efdf916b4058be00dc36f97c82bf.r2.dev/';
+  protected selectedImage: File | null = null;
+  protected imageSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+
   protected readonly groups$ = this.route.data.pipe(
     filter((data) => data['groups'] as boolean),
     map((data) => data['groups'] as Group[]),
@@ -41,7 +45,9 @@ export class UpdateVehicleComponent {
   protected readonly vehicle$ = this.route.data.pipe(
     filter((data) => data['vehicle'] as boolean),
     map((data) => data['vehicle'] as Vehicle),
-    tap((vehicle: Vehicle) => this.formGroup.patchValue({ ...vehicle, groupId: vehicle.group.id })),
+    tap((vehicle: Vehicle) =>
+      this.formGroup.patchValue({ ...vehicle, groupId: vehicle.group.id, image: vehicle.image }),
+    ),
     shareReplay({ bufferSize: 1, refCount: true }),
   );
 
@@ -66,8 +72,6 @@ export class UpdateVehicleComponent {
 
     fuelType: ['', [Validators.required.bind(this)]],
     fuelTankCapacity: ['', [Validators.required.bind(this), Validators.min(1).bind(this)]],
-
-    photoPath: ['', []],
   });
 
   public get licensePlate(): AbstractControl | null {
@@ -102,17 +106,26 @@ export class UpdateVehicleComponent {
     return this.formGroup.get('fuelTankCapacity');
   }
 
-  public get photoPath(): AbstractControl | null {
-    return this.formGroup.get('photoPath');
-  }
-
   public update(): void {
     if (this.formGroup.invalid) return;
+
+    const formData = new FormData();
+
+    Object.entries(this.formGroup.value as VehicleDto).forEach(([key, value]) => {
+      formData.append(key, value as string);
+    });
+
+    if (this.selectedImage) {
+      formData.append('image', this.selectedImage);
+    }
 
     const updateModel: VehicleDto = this.formGroup.value as VehicleDto;
 
     const updateObserve: Observer<IdApiResponse> = {
-      next: () => this.notificationService.success(`Billing Plan updated successfully!`),
+      next: () =>
+        this.notificationService.success(
+          `Vehicle ${updateModel.licensePlate} updated successfully!`,
+        ),
       error: (err: string) => this.notificationService.error(err),
       complete: () => void this.router.navigate(['/vehicles']),
     };
@@ -120,8 +133,23 @@ export class UpdateVehicleComponent {
     this.vehicle$
       .pipe(
         take(1),
-        switchMap((vehicle) => this.vehicleService.update(vehicle.id, updateModel)),
+        switchMap((vehicle) => this.vehicleService.update(vehicle.id, formData)),
       )
       .subscribe(updateObserve);
+  }
+
+  public onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.selectedImage = file;
+
+      const reader = new FileReader();
+      reader.onload = (): void => {
+        this.imageSubject.next(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   }
 }
