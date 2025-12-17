@@ -7,6 +7,38 @@
       content="width=device-width, initial-scale=1.0"
     />
     <title>Return Reminder</title>
+    <style>
+      body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+
+      img {
+        border: 0;
+        outline: none;
+        text-decoration: none;
+        -ms-interpolation-mode: bicubic;
+      }
+
+      @media only screen and (max-width: 600px) {
+        .container {
+          width: 100% !important;
+          max-width: 100% !important;
+          border-radius: 0 !important;
+        }
+
+        .content-padding {
+          padding: 20px !important;
+        }
+
+        .mobile-header {
+          font-size: 20px !important;
+        }
+      }
+    </style>
   </head>
   <body
     style="
@@ -26,6 +58,7 @@
       <tr>
         <td align="center">
           <table
+            class="container"
             border="0"
             cellpadding="0"
             cellspacing="0"
@@ -35,6 +68,7 @@
               border-radius: 8px;
               overflow: hidden;
               box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+              border-collapse: separate;
             "
           >
             <tr>
@@ -43,22 +77,27 @@
                 style="background-color: #e67e22; padding: 30px"
               >
                 <h1
+                  class="mobile-header"
                   style="
                     color: #ffffff;
                     margin: 0;
                     font-size: 24px;
                     letter-spacing: 1px;
+                    font-weight: 600;
                   "
                 >
                   LOCADORA DE VEÍCULOS
                 </h1>
                 <h1
+                  class="mobile-header"
                   style="
                     color: #ffffff;
-                    margin: 0;
+                    margin: 5px 0 0 0;
                     font-size: 24px;
                     letter-spacing: 1px;
                     text-transform: uppercase;
+                    font-weight: 400;
+                    opacity: 0.9;
                   "
                 >
                   Upcoming Return
@@ -67,7 +106,10 @@
             </tr>
 
             <tr>
-              <td style="padding: 40px 30px">
+              <td
+                class="content-padding"
+                style="padding: 40px 30px"
+              >
                 <h2 style="color: #333333; margin-top: 0">
                   Hello, {{ClientName}}!
                 </h2>
@@ -133,29 +175,44 @@
 
                 <table
                   border="0"
-                  cellpadding="0"
                   cellspacing="0"
+                  cellpadding="0"
                   width="100%"
                   style="margin-top: 30px"
                 >
                   <tr>
                     <td align="center">
-                      <a
-                        href="{{BookingLink}}"
-                        target="_blank"
-                        style="
-                          display: inline-block;
-                          padding: 14px 30px;
-                          background-color: #333333;
-                          color: #ffffff;
-                          text-decoration: none;
-                          border-radius: 4px;
-                          font-weight: bold;
-                          font-size: 16px;
-                        "
+                      <table
+                        border="0"
+                        cellspacing="0"
+                        cellpadding="0"
                       >
-                        View Rental Details
-                      </a>
+                        <tr>
+                          <td
+                            align="center"
+                            style="border-radius: 4px"
+                          >
+                            <a
+                              href="{{BookingLink}}"
+                              target="_blank"
+                              style="
+                                background-color: #333333;
+                                font-size: 16px;
+                                font-family: Helvetica, Arial, sans-serif;
+                                color: #ffffff;
+                                text-decoration: none;
+                                padding: 14px 30px;
+                                border-radius: 4px;
+                                border: 1px solid #333333;
+                                display: inline-block;
+                                font-weight: bold;
+                              "
+                            >
+                              View Rental Details
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
                     </td>
                   </tr>
                 </table>
