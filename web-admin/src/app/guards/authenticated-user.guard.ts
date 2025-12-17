@@ -12,6 +12,12 @@ export const authenticatedUserGuard: CanActivateFn = (): Observable<true | UrlTr
     map((token) => {
       if (!token) return router.createUrlTree(['/auth/login']);
 
+      const isClient = token.user.roles.includes('Client');
+
+      if (isClient) {
+        return router.createUrlTree(['/auth/login']);
+      }
+
       const isPlatformAdmin = token.user.roles.includes('PlatformAdmin');
 
       if (isPlatformAdmin) {

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "locadora-de-automoveis": {
+    "locadora-de-automoveis-admin": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -85,10 +85,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "locadora-de-automoveis:build:production"
+              "buildTarget": "locadora-de-automoveis-admin:build:production"
             },
             "development": {
-              "buildTarget": "locadora-de-automoveis:build:development"
+              "buildTarget": "locadora-de-automoveis-admin:build:development"
             }
           },
           "defaultConfiguration": "development"
