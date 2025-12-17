@@ -68,8 +68,9 @@
   },
   "navbar": {
     "home": "Início",
+    "employees": "Funcionários",
     "groups": "Grupos",
-    "billingPlans": "Planos de cobrança",
+    "billingPlans": "Planos de Cobrança",
     "vehicles": "Veículos",
     "clients": "Clientes",
     "drivers": "Condutores",
