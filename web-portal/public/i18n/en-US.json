@@ -9,17 +9,19 @@
           "password": "Password"
         },
         "placeholder": {
-          "userName": "Enter your email",
+          "userName": "Enter your email or username",
           "password": "Enter your password"
+        },
+        "errors": {
+          "userNameRequired": "Username is required.",
+          "userNameLength": "Username must be at least 5 characters long.",
+          "passwordRequired": "Password is required.",
+          "passwordLength": "Password must be at least 6 characters long."
         },
         "buttons": {
           "confirm": "Sign In",
           "register": "Create an account",
           "forgotPassword": "Forgot password?"
-        },
-        "errors": {
-          "userNameRequired": "Email/Username is required.",
-          "passwordRequired": "Password is required."
         }
       }
     },
@@ -74,6 +76,11 @@
       "label": {
         "newPassword": "New Password",
         "confirmNewPassword": "Confirm New Password"
+      },
+      "errors": {
+        "required": "Field is required.",
+        "minLength": "Password must be at least 6 characters.",
+        "mismatch": "New passwords do not match."
       },
       "buttons": {
         "change": "Set New Password"

@@ -117,6 +117,7 @@
         </div>
         <re-captcha
           class="captcha"
+          #captchaRef
           [siteKey]="recaptchaSiteKey"
           [theme]="themeValue"
           (resolved)="onCaptchaResolved($event)"

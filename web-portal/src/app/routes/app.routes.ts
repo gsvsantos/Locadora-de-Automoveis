@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { unknownUserGuard } from '../guards/unknown-user.guard';
 import { authenticatedUserGuard } from '../guards/authenticated-user.guard';
 
 export const routes: Routes = [
@@ -11,7 +10,6 @@ export const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('../routes/auth.routes').then((route) => route.authRoutes),
-    canActivate: [unknownUserGuard],
   },
   {
     path: 'home',

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -14,7 +14,7 @@ import { AuthApiResponse, RegisterAuthDto } from '../../../models/auth.models';
 import { TranslocoModule } from '@jsverse/transloco';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { passwordMatchValidator } from '../../../validators/auth.validators';
-import { RecaptchaModule } from 'ng-recaptcha-2';
+import { RecaptchaComponent, RecaptchaModule } from 'ng-recaptcha-2';
 import { environment } from '../../../../environments/environment';
 import { LocalStorageService, ThemeType } from '../../../services/local-storage.service';
 
@@ -33,6 +33,8 @@ export class RegisterComponent {
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
   protected readonly recaptchaSiteKey: string = environment.captcha_key;
+
+  @ViewChild('captchaRef') protected captchaElem!: RecaptchaComponent;
 
   private localStorageService = inject(LocalStorageService);
   protected themeValue: ThemeType = this.localStorageService.getCurrentTheme();
@@ -97,7 +99,7 @@ export class RegisterComponent {
     const registerModel: RegisterAuthDto = this.formGroup.value as RegisterAuthDto;
 
     const registerObserver: PartialObserver<AuthApiResponse> = {
-      error: (err: string) => this.notificationService.error(err),
+      error: (err: string) => (this.notificationService.error(err), this.captchaElem.reset()),
       complete: () => void this.router.navigate(['/home']),
     };
 

@@ -47,7 +47,7 @@ public class AuthEmailService(
         string encodedToken = Uri.EscapeDataString(resetToken);
         string encodedEmail = Uri.EscapeDataString(email);
 
-        string link = $"http://localhost:4200/auth/reset-password?token={encodedToken}&email={encodedEmail}";
+        string link = $"http://localhost:4201/auth/reset-password?token={encodedToken}&email={encodedEmail}";
 
         Dictionary<string, string> placeholders = new()
         {
