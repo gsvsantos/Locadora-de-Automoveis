@@ -35,13 +35,26 @@ public class GlobalSearchRequestHandler
 
             string term = request.Term.Trim().ToLower();
 
-            List<Employee> employees = await repositoryEmployee.SearchAsync(term, cancellationToken);
-            List<Vehicle> vehicles = await repositoryVehicle.SearchAsync(term, cancellationToken);
-            List<Client> clients = await repositoryClient.SearchAsync(term, cancellationToken);
-            List<Driver> drivers = await repositoryDriver.SearchAsync(term, cancellationToken);
-            List<Coupon> coupons = await repositoryCoupon.SearchAsync(term, cancellationToken);
-            List<Rental> rentals = await repositoryRental.SearchAsync(term, cancellationToken);
-            List<Group> groups = await repositoryGroup.SearchAsync(term, cancellationToken);
+            Task<List<Employee>> employeesTask = repositoryEmployee.SearchAsync(term, cancellationToken);
+            Task<List<Vehicle>> vehiclesTask = repositoryVehicle.SearchAsync(term, cancellationToken);
+            Task<List<Client>> clientsTask = repositoryClient.SearchAsync(term, cancellationToken);
+            Task<List<Driver>> driversTask = repositoryDriver.SearchAsync(term, cancellationToken);
+            Task<List<Coupon>> couponsTask = repositoryCoupon.SearchAsync(term, cancellationToken);
+            Task<List<Rental>> rentalsTask = repositoryRental.SearchAsync(term, cancellationToken);
+            Task<List<Group>> groupsTask = repositoryGroup.SearchAsync(term, cancellationToken);
+
+            await Task.WhenAll(
+                employeesTask, vehiclesTask, clientsTask, driversTask,
+                couponsTask, rentalsTask, groupsTask
+            );
+
+            List<Employee> employees = employeesTask.Result;
+            List<Vehicle> vehicles = vehiclesTask.Result;
+            List<Client> clients = clientsTask.Result;
+            List<Driver> drivers = driversTask.Result;
+            List<Coupon> coupons = couponsTask.Result;
+            List<Rental> rentals = rentalsTask.Result;
+            List<Group> groups = groupsTask.Result;
 
             List<GlobalSearchItemDto> items = [];
 
