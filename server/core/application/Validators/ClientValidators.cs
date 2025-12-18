@@ -17,12 +17,18 @@ public class ClientValidators : AbstractValidator<Client>
             .EmailAddress().WithMessage("The provided Email is not valid.")
             .MaximumLength(254);
 
-        RuleFor(c => c.PhoneNumber)
-            .NotEmpty().WithMessage("The Phone Number is required.")
-            .Matches(@"^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$").WithMessage("The Phone Number must be in a valid format (e.g., (11) 99999-9999).");
+        When(c => !string.IsNullOrEmpty(c.PhoneNumber), () =>
+        {
+            RuleFor(c => c.PhoneNumber)
+                .NotEmpty().WithMessage("The Phone Number is required.")
+                .Matches(@"^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$").WithMessage("The Phone Number must be in a valid format (e.g., (11) 99999-9999).");
+        });
 
         RuleSet("Complete", () =>
         {
+            RuleFor(c => c.PhoneNumber)
+            .NotEmpty().WithMessage("Phone Number is required to complete profile.");
+
             RuleFor(c => c.Document)
                 .NotEmpty().WithMessage("Document is required to complete the profile.");
 

@@ -4,6 +4,7 @@ using LocadoraDeAutomoveis.Application.Auth.Commands.ChangePassword;
 using LocadoraDeAutomoveis.Application.Auth.Commands.CreatePassword;
 using LocadoraDeAutomoveis.Application.Auth.Commands.ForgotPassword;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Login;
+using LocadoraDeAutomoveis.Application.Auth.Commands.LoginClientGoogle;
 using LocadoraDeAutomoveis.Application.Auth.Commands.LoginGoogle;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Logout;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Refresh;
@@ -69,8 +70,21 @@ public class AuthController(
         return ResultWithNewCookie(result.Value);
     }
 
-    [HttpPost("google-login")]
-    public async Task<IActionResult> GoogleLogin([FromBody] LoginWithGoogleRequest request)
+    [HttpPost("login-google")]
+    public async Task<IActionResult> LoginGoogle([FromBody] LoginUserGoogleRequest request)
+    {
+        Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)> result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return result.ToHttpResponse();
+        }
+
+        return ResultWithNewCookie(result.Value);
+    }
+
+    [HttpPost("login-google-client")]
+    public async Task<IActionResult> LoginGoogle([FromBody] LoginClientGoogleRequest request)
     {
         Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)> result = await mediator.Send(request);
 

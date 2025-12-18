@@ -42,6 +42,25 @@ public class AuthEmailService(
         BackgroundJob.Enqueue(() => emailSender.SendAsync(email, subject, body));
     }
 
+    public async Task ScheduleClientGoogleWelcome(string email, string fullName, string resetToken)
+    {
+        string encodedToken = Uri.EscapeDataString(resetToken);
+        string encodedEmail = Uri.EscapeDataString(email);
+
+        string link = $"http://localhost:4200/auth/reset-password?token={encodedToken}&email={encodedEmail}";
+
+        Dictionary<string, string> placeholders = new()
+        {
+            {"UserFullName", fullName },
+            {"ResetPasswordUrl", link}
+        };
+
+        string body = await templateService.GetTemplateAsync("welcome-client-google", placeholders);
+        string subject = $"Google Registration - LDA";
+
+        BackgroundJob.Enqueue(() => emailSender.SendAsync(email, subject, body));
+    }
+
     public async Task ScheduleBusinessRegisterWelcome(string email, string fullName)
     {
         Dictionary<string, string> placeholders = new()
@@ -56,7 +75,7 @@ public class AuthEmailService(
         BackgroundJob.Enqueue(() => emailSender.SendAsync(email, subject, body));
     }
 
-    public async Task ScheduleBusinessGoogleLoginWelcome(string email, string fullName, string resetToken)
+    public async Task ScheduleBusinessGoogleWelcome(string email, string fullName, string resetToken)
     {
         string encodedToken = Uri.EscapeDataString(resetToken);
         string encodedEmail = Uri.EscapeDataString(email);
