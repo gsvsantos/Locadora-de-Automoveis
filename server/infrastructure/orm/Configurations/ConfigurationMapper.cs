@@ -28,6 +28,9 @@ public class ConfigurationMapper : IEntityTypeConfiguration<Configuration>
             .HasPrecision(18, 2)
             .IsRequired();
 
+        builder.Property(x => x.TenantId)
+            .IsRequired(false);
+
         builder.HasOne(c => c.Tenant)
             .WithMany()
             .HasForeignKey(t => t.TenantId)

@@ -41,6 +41,9 @@ public class VehicleMapper : IEntityTypeConfiguration<Vehicle>
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
+        builder.Property(x => x.TenantId)
+            .IsRequired(false);
+
         builder.HasOne(t => t.Tenant)
             .WithMany()
             .HasForeignKey(t => t.TenantId)

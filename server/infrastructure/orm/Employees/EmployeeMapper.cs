@@ -22,6 +22,9 @@ public class EmployeeMapper : IEntityTypeConfiguration<Employee>
         builder.Property(e => e.Salary)
             .HasPrecision(18, 2);
 
+        builder.Property(x => x.TenantId)
+            .IsRequired(false);
+
         builder.HasOne(t => t.Tenant)
             .WithMany()
             .HasForeignKey(t => t.TenantId)

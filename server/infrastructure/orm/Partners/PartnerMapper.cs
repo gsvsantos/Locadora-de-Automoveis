@@ -20,6 +20,9 @@ public class PartnerMapper : IEntityTypeConfiguration<Partner>
             .HasForeignKey(c => c.PartnerId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder.Property(x => x.TenantId)
+            .IsRequired(false);
+
         builder.HasOne(d => d.Tenant)
             .WithMany()
             .HasForeignKey(d => d.TenantId)

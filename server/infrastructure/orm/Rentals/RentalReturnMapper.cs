@@ -55,6 +55,9 @@ public class RentalReturnMapper : IEntityTypeConfiguration<RentalReturn>
             .HasForeignKey<RentalReturn>(rr => rr.RentalId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder.Property(x => x.TenantId)
+            .IsRequired(false);
+
         builder.HasOne(r => r.Tenant)
             .WithMany()
             .HasForeignKey(r => r.TenantId)

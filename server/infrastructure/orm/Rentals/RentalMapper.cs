@@ -79,6 +79,9 @@ public class RentalMapper : IEntityTypeConfiguration<Rental>
             .WithMany()
             .UsingEntity(j => j.ToTable("RentalExtras"));
 
+        builder.Property(x => x.TenantId)
+            .IsRequired(false);
+
         builder.HasOne(t => t.Tenant)
             .WithMany()
             .HasForeignKey(t => t.TenantId)

@@ -58,6 +58,9 @@ public class ClientMapper : IEntityTypeConfiguration<Client>
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired(false);
 
+        builder.Property(x => x.TenantId)
+            .IsRequired(false);
+
         builder.HasOne(c => c.Tenant)
             .WithMany()
             .HasForeignKey(c => c.TenantId)

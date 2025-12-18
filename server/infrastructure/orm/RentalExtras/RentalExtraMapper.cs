@@ -26,6 +26,9 @@ public class RentalExtraMapper : IEntityTypeConfiguration<RentalExtra>
         builder.Property(rS => rS.Type)
             .IsRequired();
 
+        builder.Property(x => x.TenantId)
+            .IsRequired(false);
+
         builder.HasOne(rS => rS.Tenant)
             .WithMany()
             .HasForeignKey(rS => rS.TenantId)
