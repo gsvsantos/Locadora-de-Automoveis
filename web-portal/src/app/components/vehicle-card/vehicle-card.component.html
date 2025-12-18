@@ -1,0 +1,45 @@
+<div class="card-container" *transloco="let t; prefix: 'vehicleCard'">
+  <div class="image-wrapper">
+    <img [src]="imageUrl" [alt]="vehicle.model" loading="lazy" />
+    <span class="group-badge">{{ vehicle.group.name }}</span>
+  </div>
+
+  <div class="content">
+    <div class="header">
+      <h3 class="title">{{ vehicle.brand }} {{ vehicle.model }}</h3>
+      <span class="license-plate">{{ vehicle.licensePlate }}</span>
+    </div>
+
+    <div class="specs">
+      <div class="spec-item">
+        <span class="material-icons">local_gas_station</span>
+        <span>{{ vehicle.fuelType }}</span>
+      </div>
+      <div class="spec-item">
+        <!-- <span class="material-icons">settings</span>
+        <span>{{ t('transmission.manual') }}</span>
+        implementar transmissão no cadastro de veículo -->
+      </div>
+      <div class="spec-item">
+        <!-- <span class="material-icons">people</span>
+        <span>{{ t('seats', { count: 5 }) }}</span> 
+        implementar assentos no cadastro de veículo -->
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="price">
+        <!-- <span class="label">{{ t('dailyRateLabel') }}</span>
+        trazer preços dos planos deste veículo -->
+      </div>
+
+      <gs-buttons
+        [buttonType]="buttonType.Default"
+        [text]="t('rentButton')"
+        [variant]="variantType.Solid"
+        [routerLink]="['/rentals/new', vehicle.id]"
+      >
+      </gs-buttons>
+    </div>
+  </div>
+</div>

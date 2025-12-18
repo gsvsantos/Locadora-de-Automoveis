@@ -1,16 +1,17 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { Observable, map } from 'rxjs';
 import { PagedResult } from '../../models/paged-result.model';
 import { Vehicle } from '../../models/vehicle.model';
+import { VehicleCardComponent } from '../vehicle-card/vehicle-card.component';
 
 @Component({
   selector: 'app-home',
-  imports: [AsyncPipe, ReactiveFormsModule, RouterLink, TranslocoModule, GsButtons],
+  imports: [AsyncPipe, ReactiveFormsModule, TranslocoModule, GsButtons, VehicleCardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -22,8 +23,11 @@ export class Home {
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
 
+  protected readonly Math = Math;
   protected readonly urlS3: string = 'https://pub-8c88efdf916b4058be00dc36f97c82bf.r2.dev/';
-  protected readonly searchControl = new FormControl('');
+  protected readonly searchControl = new FormControl(
+    this.route.snapshot.queryParams['searchTerm'] || '',
+  );
 
   protected readonly state$: Observable<PagedResult<Vehicle>> = this.route.data.pipe(
     map((data) => data['pagedVehicles'] as PagedResult<Vehicle>),

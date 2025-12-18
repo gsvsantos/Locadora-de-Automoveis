@@ -1,34 +1,58 @@
-<section class="home-section" *transloco="let t; prefix: 'home'">
-  @if (state$ | async; as result) {
-    <div class="header">
-      <h1>{{ t('title') }}</h1>
-      <input [formControl]="searchControl" [placeholder]="t('searchPlaceholder')" />
+<section class="list-section" *transloco="let t; prefix: 'home'">
+  <div class="main-content">
+    <div class="items-container">
+      <div class="search-bar">
+        <input
+          class="search-input"
+          [formControl]="searchControl"
+          [placeholder]="t('searchPlaceholder')"
+        />
+      </div>
     </div>
 
-    <div class="vehicles-grid">
-      @for (vehicle of result.items; track vehicle.id) {
-        <div class="vehicle-card">
-          <img [src]="urlS3 + vehicle.image" [alt]="vehicle.model" />
-
-          <div class="details">
-            <h3>{{ vehicle.brand }} {{ vehicle.model }}</h3>
-
-            <span class="badge">{{ t('fuel.' + vehicle.fuelType) }} </span>
-
-            <gs-buttons
-              [buttonType]="buttonType.Link"
-              [text]="t('details')"
-              [routerLink]="['details', vehicle.id]"
-            ></gs-buttons>
+    @if (state$ | async; as state) {
+      <div class="list">
+        @for (vehicle of state.items; track vehicle.id) {
+          <div class="item">
+            <app-vehicle-card [vehicle]="vehicle" [imageBaseUrl]="urlS3"> </app-vehicle-card>
           </div>
+        } @empty {
+          <p class="empty-state">{{ t('noVehiclesFound') }}</p>
+        }
+      </div>
+
+      @if (state.totalCount > state.pageSize) {
+        <div class="pagination">
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('pagination.prev')"
+            [variant]="variantType.Outline"
+            [disabled]="state.currentPage === 1"
+            (click)="onPageChange(state.currentPage - 1)"
+          >
+          </gs-buttons>
+
+          <span>
+            {{
+              t('pagination.info', {
+                page: state.currentPage,
+                total: Math.ceil(state.totalCount / state.pageSize),
+              })
+            }}
+          </span>
+
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('pagination.next')"
+            [variant]="variantType.Outline"
+            [disabled]="state.currentPage * state.pageSize >= state.totalCount"
+            (click)="onPageChange(state.currentPage + 1)"
+          >
+          </gs-buttons>
         </div>
       }
-    </div>
-
-    <div class="pagination">
-      <span>{{ t('footer.total') }}: {{ result.totalCount }}</span>
-    </div>
-  } @else {
-    <p>{{ t('loading') }}</p>
-  }
+    } @else {
+      <div class="loading-skeleton">{{ t('loading') }}</div>
+    }
+  </div>
 </section>

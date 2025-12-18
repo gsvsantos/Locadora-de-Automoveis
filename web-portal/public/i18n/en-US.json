@@ -99,19 +99,23 @@
     "footerRights": "Locadora de Veículos. All rights reserved."
   },
   "home": {
-    "title": "Find Your Perfect Ride",
     "searchPlaceholder": "Search by brand or model...",
-    "details": "View Offer",
-    "loading": "Loading available vehicles...",
-    "fuel": {
-      "Gasoline": "Gasoline",
-      "Gas": "Gas",
-      "Diesel": "Diesel",
-      "Alcohol": "Ethanol"
-    },
-    "footer": {
-      "total": "Total items"
+    "noVehiclesFound": "No vehicles found.",
+    "loading": "Loading vehicles...",
+    "pagination": {
+      "prev": "Previous",
+      "next": "Next",
+      "info": "Page {{page}} of {{total}}"
     }
+  },
+  "vehicleCard": {
+    "dailyRateLabel": "Daily rate from",
+    "rentButton": "Rent Now",
+    "transmission": {
+      "manual": "Manual",
+      "automatic": "Automatic"
+    },
+    "seats": "{{count}} Seats"
   },
   "search": {
     "results": {
