@@ -28,6 +28,19 @@ public class AuthEmailService(
 
         BackgroundJob.Enqueue(() => emailSender.SendAsync(email, subject, body));
     }
+    public async Task ScheduleClientRegisterWelcome(string email, string fullName)
+    {
+        Dictionary<string, string> placeholders = new()
+        {
+            {"UserFullName", fullName },
+            {"LoginUrl", "http://localhost:4201/home"}
+        };
+
+        string body = await templateService.GetTemplateAsync("welcome-client", placeholders);
+        string subject = $"Welcome Client - LDA";
+
+        BackgroundJob.Enqueue(() => emailSender.SendAsync(email, subject, body));
+    }
 
     public async Task ScheduleBusinessRegisterWelcome(string email, string fullName)
     {

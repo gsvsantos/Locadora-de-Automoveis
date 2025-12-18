@@ -12,7 +12,7 @@ public class AdminProfile : Profile
         // DTOs
         CreateMap<(User User, IList<string> Roles), TenantDto>()
             .ConvertUsing(item => new TenantDto(
-                    item.User.TenantId,
+                    item.User.GetTenantId(),
                     item.User.Id,
                     item.User.FullName,
                     item.User.Email ?? string.Empty,

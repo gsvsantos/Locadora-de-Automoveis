@@ -13,6 +13,12 @@ public class ClientRepository(AppDbContext context)
             .AnyAsync(x => x.JuristicClientId.Equals(id));
     }
 
+    public async Task<bool> ExistsByDocumentAsync(string document)
+    {
+        return await this.records
+            .AnyAsync(c => c.Document.Equals(document));
+    }
+
     public async Task<List<Client>> SearchAsync(string term, CancellationToken ct)
     {
         return await this.records

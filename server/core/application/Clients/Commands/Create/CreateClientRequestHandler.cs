@@ -61,7 +61,11 @@ public class CreateClientRequestHandler(
 
             client.DefineType(request.Type);
 
-            ValidationResult validationResult = await validator.ValidateAsync(client, cancellationToken);
+            ValidationResult validationResult = await validator.ValidateAsync(
+                client,
+                options => options.IncludeRuleSets("default", "Complete"),
+                cancellationToken
+            );
 
             if (!validationResult.IsValid)
             {
@@ -74,15 +78,13 @@ public class CreateClientRequestHandler(
                 return Result.Fail(ErrorResults.BadRequestError(errors));
             }
 
-            List<Client> existingClients = await repositoryClient.GetAllAsync();
+            bool documentExists = await repositoryClient.ExistsByDocumentAsync(client.Document!);
 
-            if (DocumentAlreadyRegistred(client, existingClients))
+            if (documentExists)
             {
                 await userManager.DeleteAsync(userLogin);
-
-                return Result.Fail(ClientErrorResults.DocumentAlreadyRegistredError(request.Document));
+                return Result.Fail(ClientErrorResults.DocumentAlreadyRegistredError(client.Document!));
             }
-
             client.AssociateLoginUser(userLogin);
             client.AssociateUser(currentUser);
             client.AssociateTenant(tenantProvider.GetTenantId());
@@ -120,15 +122,5 @@ public class CreateClientRequestHandler(
 
             return Result.Fail(ErrorResults.InternalServerError(ex));
         }
-    }
-
-    private static bool DocumentAlreadyRegistred(Client client, List<Client> existingClients)
-    {
-        return existingClients
-            .Any(entity => string.Equals(
-                entity.Document,
-                client.Document,
-                StringComparison.CurrentCultureIgnoreCase)
-            );
     }
 }

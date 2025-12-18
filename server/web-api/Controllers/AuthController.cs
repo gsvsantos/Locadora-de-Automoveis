@@ -8,6 +8,7 @@ using LocadoraDeAutomoveis.Application.Auth.Commands.LoginGoogle;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Logout;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Refresh;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Register;
+using LocadoraDeAutomoveis.Application.Auth.Commands.RegisterClient;
 using LocadoraDeAutomoveis.Application.Auth.Commands.ResetPassword;
 using LocadoraDeAutomoveis.Application.Auth.DTOs;
 using LocadoraDeAutomoveis.Domain.Auth;
@@ -31,6 +32,19 @@ public class AuthController(
 {
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
+    {
+        Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)> result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return result.ToHttpResponse();
+        }
+
+        return ResultWithNewCookie(result.Value);
+    }
+
+    [HttpPost("register-client")]
+    public async Task<IActionResult> RegisterClient([FromBody] RegisterClientRequest request)
     {
         Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)> result = await mediator.Send(request);
 

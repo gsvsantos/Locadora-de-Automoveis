@@ -8,8 +8,8 @@ public class Client : BaseEntity<Client>
     public string FullName { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
-    public string Document { get; set; } = string.Empty;
-    public Address Address { get; set; } = null!;
+    public string? Document { get; set; }
+    public Address? Address { get; set; }
     public EClientType Type { get; set; }
     public string? LicenseNumber { get; set; } = null;
     public DateTimeOffset? LicenseValidity { get; set; }
@@ -19,6 +19,13 @@ public class Client : BaseEntity<Client>
     public User? LoginUser { get; set; }
 
     public Client() { }
+
+    public Client(string fullName, string email, string phoneNumber) : this()
+    {
+        this.FullName = fullName;
+        this.Email = email;
+        this.PhoneNumber = phoneNumber;
+    }
     public Client(string fullName, string email, string phoneNumber,
         string document, Address address
     ) : this()
@@ -43,6 +50,22 @@ public class Client : BaseEntity<Client>
     public void SetLicenseValidity(DateTimeOffset licenseValidity)
     {
         this.LicenseValidity = licenseValidity;
+    }
+
+    public void CompleteProfile(string document, Address address, string? licenseNumber = null, DateTimeOffset? licenseValidity = null)
+    {
+        this.Document = document;
+        this.Address = address;
+
+        if (licenseNumber != null)
+        {
+            this.LicenseNumber = licenseNumber;
+        }
+
+        if (licenseValidity != null)
+        {
+            this.LicenseValidity = licenseValidity;
+        }
     }
 
     public void AssociateJuristicClient(Client juristiClient)

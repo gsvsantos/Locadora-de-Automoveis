@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using LocadoraDeAutomoveis.Application.Auth.Commands.ChangePassword;
 using LocadoraDeAutomoveis.Application.Auth.Commands.CreatePassword;
+using LocadoraDeAutomoveis.Application.Auth.Commands.RegisterClient;
+using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Clients;
 
 namespace LocadoraDeAutomoveis.Application.Mappings;
 
@@ -24,6 +27,24 @@ public class AuthProfile : Profile
             src.rp.CurrentPassword,
             src.rp.NewPassword,
             src.rp.ConfirmNewPassword
+            ));
+
+        // HANDLERS 
+        // RegisterClient
+        CreateMap<RegisterClientRequest, User>()
+            .ConvertUsing(src => new User()
+            {
+                UserName = src.UserName,
+                FullName = src.FullName,
+                Email = src.Email,
+                PhoneNumber = src.PhoneNumber,
+            });
+
+        CreateMap<RegisterClientRequest, Client>()
+            .ConvertUsing(src => new Client(
+                src.FullName,
+                src.Email,
+                src.PhoneNumber
             ));
     }
 }

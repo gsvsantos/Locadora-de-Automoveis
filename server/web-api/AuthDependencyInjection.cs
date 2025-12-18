@@ -114,7 +114,8 @@ public static class AuthDependencyInjection
             )
             .AddPolicy("AdminPolicy", p => p.RequireRole("Admin"))
             .AddPolicy("EmployeePolicy", p => p.RequireRole("Employee"))
-            .AddPolicy("AdminOrEmployeePolicy", p => p.RequireRole("Admin", "Employee"));
+            .AddPolicy("AdminOrEmployeePolicy", p => p.RequireRole("Admin", "Employee"))
+            .AddPolicy("EveryonePolicy", p => p.RequireRole("Admin", "Employee", "Client"));
 
         return services;
     }

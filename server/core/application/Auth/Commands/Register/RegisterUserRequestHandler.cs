@@ -53,16 +53,12 @@ public class RegisterUserRequestHandler(
                     .Select(failure => failure.Description)
                     .ToList();
 
-                await userManager.DeleteAsync(user);
-
                 return Result.Fail(ErrorResults.BadRequestError(erros));
             }
 
             user.AssociateTenant(user.Id);
 
             await userManager.AddToRoleAsync(user, "Admin");
-
-            await userManager.UpdateAsync(user);
 
             Configuration configutarion = new();
             configutarion.AssociateTenant(user.Id);
@@ -92,7 +88,7 @@ public class RegisterUserRequestHandler(
 
             try
             {
-                await emailService.ScheduleBusinessRegisterWelcome(user);
+                await emailService.ScheduleBusinessRegisterWelcome(user.Email!, user.FullName);
             }
             catch (Exception ex)
             {

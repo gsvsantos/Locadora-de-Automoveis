@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251218112706_Initial_Config")]
+    [Migration("20251218120048_Initial_Config")]
     partial class Initial_Config
     {
         /// <inheritdoc />
@@ -234,7 +234,6 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Document")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
@@ -286,7 +285,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
 
                     b.HasIndex("Document", "TenantId")
                         .IsUnique()
-                        .HasFilter("[TenantId] IS NOT NULL");
+                        .HasFilter("[Document] IS NOT NULL AND [TenantId] IS NOT NULL");
 
                     b.HasIndex("TenantId", "UserId", "IsActive");
 
@@ -1096,8 +1095,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                                 .HasForeignKey("ClientId");
                         });
 
-                    b.Navigation("Address")
-                        .IsRequired();
+                    b.Navigation("Address");
 
                     b.Navigation("JuristicClient");
 

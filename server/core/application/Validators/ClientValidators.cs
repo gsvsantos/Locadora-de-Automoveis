@@ -21,33 +21,44 @@ public class ClientValidators : AbstractValidator<Client>
             .NotEmpty().WithMessage("The Phone Number is required.")
             .Matches(@"^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$").WithMessage("The Phone Number must be in a valid format (e.g., (11) 99999-9999).");
 
-        RuleFor(c => c.Address.State)
-            .NotEmpty().WithMessage("The State is required.")
-            .Length(2).WithMessage("The State must be the 2-letter abbreviation (e.g., SP, NY).");
-
-        RuleFor(c => c.Address.City)
-            .NotEmpty().WithMessage("The City is required.");
-
-        RuleFor(c => c.Address.Neighborhood)
-            .NotEmpty().WithMessage("The Neighborhood/District is required.");
-
-        RuleFor(c => c.Address.Street)
-            .NotEmpty().WithMessage("The Street is required.");
-
-        RuleFor(c => c.Address.Number)
-            .GreaterThan(0).WithMessage("The Number must be greater than zero.");
-
-        When(c => c.Type == EClientType.Business, () =>
+        RuleSet("Complete", () =>
         {
             RuleFor(c => c.Document)
-                .NotEmpty().WithMessage("The Business (Corporate Tax ID) is required for Legal Entities.")
-                .Must(IsValidCnpj).WithMessage("The provided Business is invalid.");
-        })
-        .Otherwise(() =>
-        {
-            RuleFor(c => c.Document)
-                .NotEmpty().WithMessage("The Individual (Individual Tax ID) is required for Individuals.")
-                .Must(IsValidCpf).WithMessage("The provided Individual is invalid.");
+                .NotEmpty().WithMessage("Document is required to complete the profile.");
+
+            When(c => !string.IsNullOrEmpty(c.Document) && c.Type == EClientType.Business, () =>
+            {
+                RuleFor(c => c.Document)
+                    .Must(IsValidCnpj).WithMessage("The provided Business Document (CNPJ) is invalid.");
+            });
+
+            When(c => !string.IsNullOrEmpty(c.Document) && c.Type == EClientType.Individual, () =>
+            {
+                RuleFor(c => c.Document)
+                    .Must(IsValidCpf).WithMessage("The provided Individual Document (CPF) is invalid.");
+            });
+
+            RuleFor(c => c.Address)
+                .NotNull().WithMessage("Address is required to complete the profile.");
+
+            When(c => c.Address != null, () =>
+            {
+                RuleFor(c => c.Address!.State)
+                    .NotEmpty().WithMessage("The State is required.")
+                    .Length(2).WithMessage("The State must be 2 letters.");
+
+                RuleFor(c => c.Address!.City)
+                    .NotEmpty().WithMessage("The City is required.");
+
+                RuleFor(c => c.Address!.Neighborhood)
+                    .NotEmpty().WithMessage("The Neighborhood is required.");
+
+                RuleFor(c => c.Address!.Street)
+                    .NotEmpty().WithMessage("The Street is required.");
+
+                RuleFor(c => c.Address!.Number)
+                    .GreaterThan(0).WithMessage("The Number must be greater than zero.");
+            });
         });
     }
 
@@ -59,13 +70,7 @@ public class ClientValidators : AbstractValidator<Client>
         }
 
         cpf = Regex.Replace(cpf, "[^0-9]", "");
-
-        if (cpf.Length != 11)
-        {
-            return false;
-        }
-
-        return true;
+        return cpf.Length == 11;
     }
 
     private bool IsValidCnpj(string? cnpj)
@@ -76,12 +81,6 @@ public class ClientValidators : AbstractValidator<Client>
         }
 
         cnpj = Regex.Replace(cnpj, "[^0-9]", "");
-
-        if (cnpj.Length != 14)
-        {
-            return false;
-        }
-
-        return true;
+        return cnpj.Length == 14;
     }
 }

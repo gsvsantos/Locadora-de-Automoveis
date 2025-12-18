@@ -168,12 +168,12 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     FullName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(254)", maxLength: 254, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Document = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Address_State = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_Neighborhood = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_Number = table.Column<int>(type: "int", nullable: false),
+                    Document = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Address_State = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address_City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address_Neighborhood = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address_Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address_Number = table.Column<int>(type: "int", nullable: true),
                     Type = table.Column<int>(type: "int", nullable: false),
                     LicenseNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LicenseValidity = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -762,7 +762,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                 table: "Clients",
                 columns: new[] { "Document", "TenantId" },
                 unique: true,
-                filter: "[TenantId] IS NOT NULL");
+                filter: "[Document] IS NOT NULL AND [TenantId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clients_JuristicClientId",

@@ -84,6 +84,7 @@ public class ClientProfile : Profile
                 src.Street,
                 src.Number
             ));
+
         CreateMap<(CreateClientRequest r, Address a), Client>()
             .ConvertUsing(src => new Client(
                 src.r.FullName,

@@ -44,7 +44,7 @@ public class RefreshTokenProvider(
             CreationIp = this.httpContext?.Connection?.RemoteIpAddress?.ToString() ?? string.Empty,
             UserAgent = this.httpContext?.Request.Headers[HeaderNames.UserAgent].ToString() ?? string.Empty,
         };
-        token.AssociateTenant(user.TenantId);
+        token.AssociateTenant(user.GetTenantId());
         token.AssociateUser(user);
 
         await repositoryRefreshToken.AddAsync(token);
@@ -106,14 +106,14 @@ public class RefreshTokenProvider(
             CreationIp = this.httpContext?.Connection?.RemoteIpAddress?.ToString() ?? string.Empty,
             UserAgent = this.httpContext?.Request.Headers[HeaderNames.UserAgent].ToString() ?? string.Empty,
         };
-        newToken.AssociateTenant(token.TenantId);
+        newToken.AssociateTenant(token.GetTenantId());
         newToken.AssociateUser(user);
 
         await repositoryRefreshToken.AddAsync(newToken);
 
         await unitOfWork.CommitAsync();
 
-        return Result.Ok((user, token.TenantId, new IssuedRefreshTokenDto(
+        return Result.Ok((user, token.GetTenantId(), new IssuedRefreshTokenDto(
                 newRefreshTokenPlain,
                 newToken.ExpirationDateUtc
         )));

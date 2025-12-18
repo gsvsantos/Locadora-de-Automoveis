@@ -20,4 +20,9 @@ public class User : IdentityUser<Guid>
     {
         this.TenantId = tenantId == Guid.Empty ? null : tenantId;
     }
+
+    public Guid GetTenantId()
+    {
+        return this.TenantId.GetValueOrDefault();
+    }
 }

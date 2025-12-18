@@ -42,7 +42,7 @@ public class ImpersonateTenantRequestHandler(
 
         ImpersonationActorDto actor = new(
             actorUser.Id,
-             actorUser.TenantId,
+             actorUser.TenantId.GetValueOrDefault(),
             actorUser.UserName ?? string.Empty,
             actorUser.Email ?? string.Empty
         );
