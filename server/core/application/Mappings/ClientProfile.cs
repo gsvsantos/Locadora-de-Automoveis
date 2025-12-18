@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Application.Clients.Commands.Create;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetById;
+using LocadoraDeAutomoveis.Application.Clients.Commands.GetClientProfile;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetIndividuals;
 using LocadoraDeAutomoveis.Application.Clients.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Auth;
@@ -133,5 +134,15 @@ public class ClientProfile : Profile
                 src.a
             )
             { Id = src.r.Id });
+
+        // GetById
+        CreateMap<Client, ClientProfileDto>()
+            .ConvertUsing(src => new ClientProfileDto(
+                src.Id,
+                src.FullName,
+                src.Email,
+                src.PhoneNumber,
+                src.Document
+            ));
     }
 }

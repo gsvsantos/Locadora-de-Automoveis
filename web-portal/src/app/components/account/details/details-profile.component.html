@@ -1,0 +1,32 @@
+<section class="account-container" *transloco="let t; prefix: 'account'">
+  @if (account$ | async; as account) {
+    <div class="profile-header">
+      <h2>{{ t('personalInfo') }}</h2>
+      <p>{{ t('manageYourData') }}</p>
+    </div>
+
+    <div class="details-grid">
+      <div class="info-group">
+        <label>{{ t('fields.fullName') }}</label>
+        <span>{{ account.fullName }}</span>
+      </div>
+
+      <div class="info-group">
+        <label>{{ t('fields.email') }}</label>
+        <span>{{ account.email }}</span>
+      </div>
+
+      <div class="info-group">
+        <label>{{ t('fields.phone') }}</label>
+        <span>{{ account.phoneNumber }}</span>
+      </div>
+
+      <div class="info-group">
+        <label>{{ t('fields.document') }}</label>
+        <span>{{ account.document }}</span>
+      </div>
+    </div>
+  } @else {
+    <div class="loading-spinner">{{ t('loading') }}</div>
+  }
+</section>

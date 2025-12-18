@@ -40,4 +40,11 @@ public class ClientRepository(AppDbContext context)
             .Where(c => c.JuristicClientId.Equals(id))
             .ToListAsync(ct);
     }
+
+    public async Task<Client?> GetByUserIdAsync(Guid userId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(e => e.UserId == userId);
+    }
 }

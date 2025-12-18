@@ -11,4 +11,6 @@ public interface IRepositoryClient : IRepository<Client>
     Task<List<Client>> GetIndividualClientsFromBusinessId(Guid id, CancellationToken ct = default);
 
     Task<List<Client>> SearchAsync(string term, CancellationToken ct = default);
+
+    Task<Client?> GetByUserIdAsync(Guid userId);
 }

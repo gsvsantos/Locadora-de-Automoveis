@@ -192,21 +192,14 @@
     },
     "empty": "You haven't rented any cars yet."
   },
-  "profile": {
-    "title": "My Account",
-    "personalInfo": {
-      "title": "Personal Information",
-      "label": {
-        "fullName": "Full Name",
-        "email": "Email",
-        "phone": "Phone Number",
-        "document": "Document (CPF/CNPJ)"
-      },
-      "button": "Save Changes"
-    },
-    "security": {
-      "title": "Security",
-      "changePasswordBtn": "Change Password"
+  "account": {
+    "personalInfo": "Personal Information",
+    "manageYourData": "Manage your profile data and contact info",
+    "fields": {
+      "fullName": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "document": "Document (CPF/CNPJ)"
     }
   }
 }

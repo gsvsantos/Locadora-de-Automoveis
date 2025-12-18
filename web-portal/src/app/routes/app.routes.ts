@@ -19,8 +19,8 @@ export const routes: Routes = [
     canActivate: [authenticatedUserGuard],
   },
   {
-    path: 'profile',
-    loadChildren: () => import('../routes/profile.routes').then((route) => route.profileRoutes),
+    path: 'account',
+    loadChildren: () => import('./account.routes').then((route) => route.accountRoutes),
     canActivate: [authenticatedUserGuard],
   },
   {
