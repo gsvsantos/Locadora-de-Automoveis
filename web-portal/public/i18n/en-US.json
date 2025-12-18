@@ -1,0 +1,198 @@
+{
+  "auth": {
+    "login": {
+      "card": {
+        "title": "Welcome Back",
+        "subtitle": "Sign in to your account to continue",
+        "label": {
+          "userName": "Email or Username",
+          "password": "Password"
+        },
+        "placeholder": {
+          "userName": "Enter your email",
+          "password": "Enter your password"
+        },
+        "buttons": {
+          "confirm": "Sign In",
+          "register": "Create an account",
+          "forgotPassword": "Forgot password?"
+        },
+        "errors": {
+          "userNameRequired": "Email/Username is required.",
+          "passwordRequired": "Password is required."
+        }
+      }
+    },
+    "register": {
+      "card": {
+        "title": "Create Account",
+        "subtitle": "Join us and start renting today",
+        "label": {
+          "fullName": "Full Name",
+          "email": "Email Address",
+          "userName": "Username",
+          "phoneNumber": "Phone Number",
+          "password": "Password",
+          "confirmPassword": "Confirm Password"
+        },
+        "placeholder": {
+          "fullName": "Your full name",
+          "email": "name@example.com",
+          "userName": "Choose a username",
+          "phoneNumber": "(99) 99999-9999",
+          "password": "Min. 6 characters",
+          "confirmPassword": "Repeat password"
+        },
+        "buttons": {
+          "confirm": "Register",
+          "login": "Already have an account?"
+        },
+        "errors": {
+          "required": "This field is required.",
+          "emailInvalid": "Please enter a valid email.",
+          "passwordMismatch": "Passwords do not match."
+        }
+      }
+    },
+    "forgot-password": {
+      "title": "Forgot Password?",
+      "subtitle": "Enter your email to receive a recovery link.",
+      "label": {
+        "email": "Email Address"
+      },
+      "buttons": {
+        "change": "Send Recovery Link",
+        "back": "Back to Login"
+      },
+      "errors": {
+        "emailRequired": "Email is required.",
+        "emailLength": "Please enter a valid email address."
+      }
+    },
+    "reset-password": {
+      "title": "Reset Password",
+      "label": {
+        "newPassword": "New Password",
+        "confirmNewPassword": "Confirm New Password"
+      },
+      "buttons": {
+        "change": "Set New Password"
+      }
+    }
+  },
+  "navbar": {
+    "logo": "Locadora de Veículos",
+    "home": "Home",
+    "myRentals": "My Rentals",
+    "login": "Sign In",
+    "register": "Sign Up",
+    "profile": "My Profile",
+    "logout": "Logout",
+    "welcome": "Hello",
+    "footerRights": "Locadora de Veículos. All rights reserved."
+  },
+  "home": {
+    "hero": {
+      "title": "Find the perfect car for your trip",
+      "subtitle": "Unbeatable prices and unlimited kilometers for your adventure."
+    },
+    "searchWidget": {
+      "label": {
+        "pickupDate": "Pick-up Date",
+        "returnDate": "Return Date",
+        "group": "Vehicle Category"
+      },
+      "placeholder": {
+        "group": "Select a category (e.g., SUV)"
+      },
+      "button": "Search Deals"
+    },
+    "activeRental": {
+      "title": "Current Rental",
+      "returnDue": "Return expected by:",
+      "extendButton": "Extend Rental"
+    }
+  },
+  "search": {
+    "results": {
+      "title": "Available Vehicles",
+      "priceFrom": "From",
+      "perDay": "/ day",
+      "bookButton": "Book Now",
+      "notFound": "No vehicles found for these dates."
+    },
+    "filters": {
+      "title": "Filters",
+      "group": "Category",
+      "price": "Price Range"
+    }
+  },
+  "checkout": {
+    "steps": {
+      "details": "Rental Details",
+      "extras": "Extras & Insurance",
+      "summary": "Summary & Payment"
+    },
+    "vehicle": {
+      "group": "Group",
+      "transmission": "Transmission",
+      "fuel": "Fuel",
+      "seats": "Seats"
+    },
+    "billing": {
+      "planLabel": "Choose a Plan",
+      "daily": "Daily Plan (Km + Daily)",
+      "controlled": "Controlled Plan (Fixed Limit)",
+      "free": "Free Plan (Unlimited Km)"
+    },
+    "extras": {
+      "title": "Add Optional Services",
+      "dailyCost": "per day",
+      "fixedCost": "fixed price"
+    },
+    "summary": {
+      "title": "Reservation Summary",
+      "total": "Total Estimated",
+      "confirmButton": "Confirm Reservation"
+    },
+    "success": {
+      "title": "Reservation Confirmed!",
+      "message": "Your car is reserved. We sent the details to your email.",
+      "button": "Go to My Rentals"
+    }
+  },
+  "myRentals": {
+    "title": "My Rentals",
+    "tabs": {
+      "active": "Active / Upcoming",
+      "history": "History"
+    },
+    "card": {
+      "pickup": "Pick-up",
+      "return": "Return",
+      "total": "Total",
+      "status": "Status",
+      "actions": {
+        "details": "View Details"
+      }
+    },
+    "empty": "You haven't rented any cars yet."
+  },
+  "profile": {
+    "title": "My Account",
+    "personalInfo": {
+      "title": "Personal Information",
+      "label": {
+        "fullName": "Full Name",
+        "email": "Email",
+        "phone": "Phone Number",
+        "document": "Document (CPF/CNPJ)"
+      },
+      "button": "Save Changes"
+    },
+    "security": {
+      "title": "Security",
+      "changePasswordBtn": "Change Password"
+    }
+  }
+}

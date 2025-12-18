@@ -1,0 +1,172 @@
+@use '../../../../styles/variables' as *;
+
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  z-index: 100;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background-color: $surface-alt;
+  border: 1px solid $border;
+  border-radius: 24px;
+  padding: 0 16px;
+  height: 44px;
+  transition: all $transition-fast;
+  position: relative;
+  z-index: 101;
+
+  &.active {
+    border-radius: 24px 24px 0 0;
+    border-bottom-color: transparent;
+    box-shadow: $shadow-1;
+  }
+
+  &:focus-within {
+    background-color: $surface;
+    border-color: $primary;
+    box-shadow: 0 0 0 4px rgba(var(--shadow-rgb), 0.1);
+  }
+
+  &:hover {
+    border-color: $primary;
+    background-color: rgba($primary, 0.05);
+  }
+
+  input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 0 12px;
+    font-size: 0.95rem;
+    color: $text-main;
+
+    &::placeholder {
+      color: $text-muted;
+    }
+  }
+
+  .search-icon {
+    color: $text-muted;
+  }
+
+  .close-icon {
+    color: $text-muted;
+    cursor: pointer;
+    font-size: 1.2rem;
+    &:hover {
+      color: $danger;
+    }
+  }
+}
+
+.results-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: $surface;
+  border: 1px solid $border;
+  border-top: none;
+  border-radius: 0 0 24px 24px;
+  box-shadow: $shadow-1;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-bottom: 8px;
+  z-index: 100;
+}
+
+.result-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba($border, 0.5);
+  transition: background-color $transition-fast;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: $surface-alt;
+  }
+
+  .icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: $primary-light;
+    border-radius: 50%;
+    margin-right: 12px;
+    color: $primary;
+
+    .material-icons {
+      font-size: 1.2rem;
+    }
+  }
+
+  .info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      font-weight: 600;
+      color: $text-main;
+      font-size: 0.9rem;
+    }
+
+    .desc {
+      font-size: 0.8rem;
+      color: $text-muted;
+    }
+  }
+
+  .type-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $text-muted;
+    background-color: $surface-alt;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid $border;
+  }
+}
+
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  color: $text-muted;
+  gap: 8px;
+
+  .material-icons {
+    font-size: 2rem;
+    opacity: 0.5;
+  }
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid $surface-alt;
+  border-top-color: $primary;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

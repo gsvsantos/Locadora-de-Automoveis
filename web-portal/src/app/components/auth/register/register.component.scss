@@ -1,0 +1,54 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/form-layout' as *;
+
+.social-container {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 1.5rem 0;
+}
+
+.social {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  width: 48px;
+  margin: 0 5px;
+  font-size: 1.2rem;
+  color: $primary;
+  border: 1px solid $border;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: $transition-fast;
+  cursor: pointer;
+
+  &:hover {
+    color: $primary-active;
+    border-color: $primary-active;
+    background-color: $surface-alt;
+    transform: translateY(-2px);
+  }
+}
+
+.card-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  @media (min-width: 650px) {
+    grid-template-columns: 1fr 1fr;
+
+    h2,
+    span,
+    .social-container {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+input[type='password'] {
+  letter-spacing: 0.1em;
+  &::placeholder {
+    letter-spacing: normal;
+  }
+}

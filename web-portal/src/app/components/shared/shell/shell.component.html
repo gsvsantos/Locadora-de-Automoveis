@@ -1,0 +1,88 @@
+<div class="client-shell" *transloco="let t; prefix: 'navbar'">
+  <nav class="navbar">
+    <div class="container">
+      <a routerLink="/home" class="navbar__logo">
+        <span class="material-icons logo-icon">directions_car</span>
+        <span class="logo-text">{{ t('logo') }}</span>
+      </a>
+
+      <div class="navbar__links desktop-only">
+        @for (item of navLinks; track item.link) {
+          <a [routerLink]="item.link" routerLinkActive="active" class="nav-link">
+            <span class="material-icons">{{ item.icon }}</span>
+            {{ t(item.label) }}
+          </a>
+        }
+      </div>
+
+      <div class="navbar__actions desktop-only">
+        <app-slide-toggle
+          [checked]="isDarkMode"
+          (toggleChange)="themeEvent.emit($event)"
+        ></app-slide-toggle>
+        <app-language-selector></app-language-selector>
+
+        @if (user) {
+          <div class="user-profile">
+            <span class="user-name">{{ t('welcome') }}, {{ user.fullName.split(' ')[0] }}</span>
+
+            <a routerLink="/profile" class="profile-btn" [title]="t('profile')">
+              <span class="material-icons">person</span>
+            </a>
+
+            <button (click)="logoutEvent.emit()" class="logout-btn" [title]="t('logout')">
+              <span class="material-icons">logout</span>
+            </button>
+          </div>
+        } @else {
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('login')"
+            routerLink="/auth/login"
+          >
+          </gs-buttons>
+        }
+      </div>
+
+      <button class="mobile-toggle mobile-only" (click)="toggleMobileMenu()">
+        <span class="material-icons">{{ isMobileMenuOpen ? 'close' : 'menu' }}</span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" [class.open]="isMobileMenuOpen">
+    @for (item of navLinks; track item.link) {
+      <a
+        [routerLink]="item.link"
+        (click)="closeMobileMenu()"
+        routerLinkActive="active"
+        class="mobile-link"
+      >
+        <span class="material-icons">{{ item.icon }}</span>
+        {{ t(item.label) }}
+      </a>
+    }
+    <div class="mobile-actions">
+      @if (user) {
+        <a routerLink="/profile" (click)="closeMobileMenu()" class="mobile-link">
+          <span class="material-icons">person</span> {{ t('profile') }}
+        </a>
+        <button (click)="logoutEvent.emit()" class="mobile-btn">{{ t('logout') }}</button>
+      } @else {
+        <gs-buttons
+          [buttonType]="buttonType.Default"
+          [text]="t('login')"
+          routerLink="/auth/login"
+        ></gs-buttons>
+      }
+    </div>
+  </div>
+
+  <main class="main-content">
+    <ng-content></ng-content>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; {{ year }} {{ t('footerRights') }}</p>
+  </footer>
+</div>
