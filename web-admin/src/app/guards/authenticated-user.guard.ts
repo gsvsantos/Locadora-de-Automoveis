@@ -2,9 +2,11 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { map, Observable, take } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { NotificationService } from '../services/notification.service';
 
 export const authenticatedUserGuard: CanActivateFn = (): Observable<true | UrlTree> => {
   const authService = inject(AuthService);
+  const notificationService = inject(NotificationService);
   const router = inject(Router);
 
   return authService.getAccessToken().pipe(
@@ -12,15 +14,17 @@ export const authenticatedUserGuard: CanActivateFn = (): Observable<true | UrlTr
     map((token) => {
       if (!token) return router.createUrlTree(['/auth/login']);
 
-      const isClient = token.user.roles.includes('Client');
+      const roles = token.user?.roles ?? [];
 
-      if (isClient) {
-        return router.createUrlTree(['/auth/login']);
+      if (roles.includes('Client')) {
+        authService.revokeAccessToken();
+        notificationService.error('User not allowed');
+        return router.createUrlTree(['/auth/login'], {
+          queryParams: { reason: 'not-allowed' },
+        });
       }
 
-      const isPlatformAdmin = token.user.roles.includes('PlatformAdmin');
-
-      if (isPlatformAdmin) {
+      if (roles.includes('PlatformAdmin')) {
         return router.createUrlTree(['/admin/tenants']);
       }
 

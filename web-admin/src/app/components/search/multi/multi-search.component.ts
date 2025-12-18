@@ -41,7 +41,7 @@ export class MultiSearchComponent {
   protected readonly queryText$: Observable<string> = this.searchControl.valueChanges.pipe(
     debounceTime(300),
     distinctUntilChanged(),
-    map((value: string) => (console.log(value), value.trim())),
+    map((value: string) => value.trim()),
     shareReplay({ bufferSize: 1, refCount: true }),
   );
 

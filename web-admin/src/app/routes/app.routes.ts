@@ -20,7 +20,7 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () =>
       import('../components/home/home.component').then((component) => component.Home),
-    canActivate: [authenticatedUserGuard],
+    canMatch: [authenticatedUserGuard],
     resolve: {
       clients: listClientsResolver,
       coupons: mostUsedCouponsResolver,
@@ -31,69 +31,69 @@ export const routes: Routes = [
   {
     path: 'employees',
     loadChildren: () => import('../routes/employee.routes').then((route) => route.employeeRoutes),
-    canActivate: [authenticatedUserGuard],
+    canMatch: [authenticatedUserGuard],
   },
   {
     path: 'groups',
     loadChildren: () => import('../routes/group.routes').then((route) => route.groupRoutes),
-    canActivate: [authenticatedUserGuard],
+    canMatch: [authenticatedUserGuard],
   },
   {
     path: 'billing-plans',
     loadChildren: () =>
       import('../routes/billing-plan.routes').then((route) => route.billingPlanRoutes),
-    canActivate: [authenticatedUserGuard],
+    canMatch: [authenticatedUserGuard],
   },
   {
     path: 'vehicles',
     loadChildren: () => import('../routes/vehicle.routes').then((route) => route.vehicleRoutes),
-    canActivate: [authenticatedUserGuard],
+    canMatch: [authenticatedUserGuard],
   },
   {
     path: 'clients',
     loadChildren: () => import('../routes/client.routes').then((route) => route.clientRoutes),
-    canActivate: [authenticatedUserGuard],
+    canMatch: [authenticatedUserGuard],
   },
   {
     path: 'drivers',
     loadChildren: () => import('../routes/driver.routes').then((route) => route.driverRoutes),
-    canActivate: [authenticatedUserGuard],
+    canMatch: [authenticatedUserGuard],
   },
   {
     path: 'extras',
     loadChildren: () => import('../routes/extra.routes').then((route) => route.extraRoutes),
-    canActivate: [authenticatedUserGuard],
+    canMatch: [authenticatedUserGuard],
   },
   {
     path: 'rentals',
     loadChildren: () => import('../routes/rental.routes').then((route) => route.rentalRoutes),
-    canActivate: [authenticatedUserGuard],
+    canMatch: [authenticatedUserGuard],
   },
   {
     path: 'configuration',
     loadChildren: () =>
       import('../routes/configuration.routes').then((route) => route.configurationRoutes),
-    canActivate: [authenticatedUserGuard],
+    canMatch: [authenticatedUserGuard],
   },
   {
     path: 'partners',
     loadChildren: () => import('../routes/partner.routes').then((route) => route.partnerRoutes),
-    canActivate: [authenticatedUserGuard],
+    canMatch: [authenticatedUserGuard],
   },
   {
     path: 'coupons',
     loadChildren: () => import('../routes/coupon.routes').then((route) => route.couponRoutes),
-    canActivate: [authenticatedUserGuard],
+    canMatch: [authenticatedUserGuard],
   },
   {
     path: 'profile',
     loadChildren: () => import('../routes/profile.routes').then((route) => route.profileRoutes),
-    canActivate: [authenticatedUserGuard],
+    canMatch: [authenticatedUserGuard],
   },
   {
     path: 'admin',
     loadChildren: () => import('../routes/admin.routes').then((route) => route.adminRoutes),
-    canActivate: [platformAdminOnlyGuard],
+    canMatch: [platformAdminOnlyGuard],
   },
   {
     path: '**',

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import {
@@ -9,6 +9,7 @@ import {
   Observable,
   of,
   switchMap,
+  take,
   tap,
   throwError,
 } from 'rxjs';
@@ -24,14 +25,20 @@ import {
 import { OAuthService } from 'angular-oauth2-oidc';
 import { googleAuthConfig } from '../core/auth.google.config';
 import { AdminService } from './admin.service';
+import { LocalStorageService } from './local-storage.service';
+import { NotificationService } from './notification.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly localStorageService = inject(LocalStorageService);
+  private readonly notificationService = inject(NotificationService);
   private readonly oauthService = inject(OAuthService);
   private readonly adminService = inject(AdminService);
   private readonly http: HttpClient = inject(HttpClient);
+  private readonly router = inject(Router);
   private readonly apiUrl: string = environment.apiUrl + '/auth';
 
   private readonly authModeSubject$ = new BehaviorSubject<AuthMode>('platform');
@@ -47,11 +54,18 @@ export class AuthService {
   }
 
   public async initialize(): Promise<void> {
+    const isLoggedFlag = this.localStorageService.getLogged();
+    const comingFromGoogle = this.isComingFromGoogle;
+
+    if (!isLoggedFlag && !comingFromGoogle) {
+      return;
+    }
+
     try {
       await firstValueFrom(
         from(this.oauthService.tryLogin()).pipe(
           switchMap(() => {
-            if (this.oauthService.hasValidIdToken()) {
+            if (this.oauthService.hasValidIdToken() && comingFromGoogle) {
               const googleIdToken = this.oauthService.getIdToken();
               return this.loginWithGoogleBackend(googleIdToken);
             }
@@ -60,17 +74,32 @@ export class AuthService {
           }),
           tap((token) => {
             if (token) {
-              this.accessTokenSubject$.next(token);
+              this.handleLoginSuccess(token);
+
+              if (comingFromGoogle) {
+                this.clearUrlParams();
+                this.oauthService.logOut();
+              }
             }
           }),
-          catchError((err) => {
-            console.log('No active session found during init:', err);
+          take(1),
+          catchError((err: HttpErrorResponse) => {
+            console.log('Auth failed:', err);
+
+            if (this.oauthService.hasValidIdToken()) {
+              const apiError = err.error as { errors?: string[] };
+              const errorMessage: string | undefined = apiError?.errors?.[0];
+              this.notificationService.error(errorMessage!);
+              this.clearUrlParams();
+            }
+            this.handleLogoutCleanup();
             return of(undefined);
           }),
         ),
       );
     } catch (err) {
       console.log('Auth init failed silently', err);
+      this.handleLogoutCleanup();
     }
   }
 
@@ -149,11 +178,11 @@ export class AuthService {
   }
 
   public register(model: RegisterAuthDto): Observable<AuthApiResponse> {
-    const url = `${this.apiUrl}/register`;
+    const url = `${this.apiUrl}/register-client`;
 
     return this.http
       .post<AuthApiResponse>(url, model)
-      .pipe(tap((token) => this.accessTokenSubject$.next(token)));
+      .pipe(tap((token) => this.handleLoginSuccess(token)));
   }
 
   public login(loginModel: LoginAuthDto): Observable<AuthApiResponse> {
@@ -161,7 +190,7 @@ export class AuthService {
 
     return this.http
       .post<AuthApiResponse>(url, loginModel)
-      .pipe(tap((token) => this.accessTokenSubject$.next(token)));
+      .pipe(tap((token) => this.handleLoginSuccess(token)));
   }
 
   public refresh(): Observable<AuthApiResponse> {
@@ -171,7 +200,18 @@ export class AuthService {
       tap((token: AuthApiResponse) => {
         this.platformAccessTokenSnapshot = token;
         this.authModeSubject$.next('platform');
-        this.accessTokenSubject$.next(token);
+        this.handleLoginSuccess(token);
+      }),
+    );
+  }
+
+  public logout(): Observable<null> {
+    const url = `${this.apiUrl}/logout`;
+
+    return this.http.post<null>(url, {}).pipe(
+      tap(() => {
+        this.handleLogoutCleanup();
+        this.oauthService.logOut();
       }),
     );
   }
@@ -181,7 +221,7 @@ export class AuthService {
 
     return this.http
       .post<void>(url, model)
-      .pipe(tap(() => (this.revokeAccessToken(), this.oauthService.logOut())));
+      .pipe(tap(() => (this.handleLogoutCleanup(), this.oauthService.logOut())));
   }
 
   public resetPassword(model: ResetPasswordRequestDto): Observable<void> {
@@ -189,7 +229,7 @@ export class AuthService {
 
     return this.http
       .post<void>(url, model)
-      .pipe(tap(() => (this.revokeAccessToken(), this.oauthService.logOut())));
+      .pipe(tap(() => (this.handleLogoutCleanup(), this.oauthService.logOut())));
   }
 
   public changePassword(model: ChangePasswordRequestDto): Observable<void> {
@@ -197,15 +237,7 @@ export class AuthService {
 
     return this.http
       .post<void>(url, model)
-      .pipe(tap(() => (this.revokeAccessToken(), this.oauthService.logOut())));
-  }
-
-  public logout(): Observable<null> {
-    const url = `${this.apiUrl}/logout`;
-
-    return this.http
-      .post<null>(url, {})
-      .pipe(tap(() => (this.revokeAccessToken(), this.oauthService.logOut())));
+      .pipe(tap(() => (this.handleLogoutCleanup(), this.oauthService.logOut())));
   }
 
   public revokeAccessToken(): void {
@@ -219,8 +251,31 @@ export class AuthService {
   }
 
   private loginWithGoogleBackend(idToken: string): Observable<AuthApiResponse> {
-    const url = `${this.apiUrl}/google-login`;
+    const url = `${this.apiUrl}/login-google`;
 
     return this.http.post<AuthApiResponse>(url, { idToken });
+  }
+
+  private handleLoginSuccess(token: AuthApiResponse): void {
+    this.accessTokenSubject$.next(token);
+    this.localStorageService.setLogged();
+  }
+
+  private handleLogoutCleanup(): void {
+    this.revokeAccessToken();
+    this.localStorageService.removeLogged();
+  }
+
+  private get isComingFromGoogle(): boolean {
+    const url = window.location.href;
+    return url.includes('code=') || url.includes('id_token=') || url.includes('access_token=');
+  }
+
+  private clearUrlParams(): void {
+    void this.router.navigate([], {
+      queryParams: {},
+      fragment: undefined,
+      replaceUrl: true,
+    });
   }
 }

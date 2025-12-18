@@ -9,6 +9,21 @@ export const unknownUserGuard: CanActivateFn = (): Observable<true | UrlTree> =>
 
   return authService.getAccessToken().pipe(
     take(1),
-    map((token) => (!token ? true : router.createUrlTree(['/home']))),
+    map((token) => {
+      if (!token) return true;
+
+      const roles = token.user?.roles ?? [];
+
+      if (roles.includes('Client')) {
+        authService.revokeAccessToken();
+        return true;
+      }
+
+      if (roles.includes('PlatformAdmin')) {
+        return router.createUrlTree(['/admin/tenants']);
+      }
+
+      return router.createUrlTree(['/home']);
+    }),
   );
 };

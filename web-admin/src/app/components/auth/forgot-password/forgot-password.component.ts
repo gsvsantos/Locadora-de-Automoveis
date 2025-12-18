@@ -17,10 +17,10 @@ import { TranslocoModule } from '@jsverse/transloco';
 @Component({
   selector: 'app-forget-password.component',
   imports: [RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
-  templateUrl: './forget-password.component.html',
-  styleUrl: './forget-password.component.scss',
+  templateUrl: './forgot-password.component.html',
+  styleUrl: './forgot-password.component.scss',
 })
-export class ForgetPasswordComponent {
+export class ForgotPasswordComponent {
   protected readonly formBuilder = inject(FormBuilder);
   protected readonly router = inject(Router);
   protected readonly route = inject(ActivatedRoute);

@@ -42,8 +42,8 @@
     },
     "login": {
       "card": {
-        "title": "Sign In",
-        "subtitle": "Or use your account",
+        "title": "Welcome Back",
+        "subtitle": "Sign in to your account to continue",
         "placeholder": {
           "userName": "Username",
           "password": "Password"
@@ -1263,23 +1263,6 @@
           "back": "Back",
           "confirm": "Save Changes"
         }
-      }
-    },
-    "change-password": {
-      "title": "Change Password",
-      "label": {
-        "currentPassword": "Current Password",
-        "newPassword": "New Password",
-        "confirmNewPassword": "Confirm New Password"
-      },
-      "errors": {
-        "required": "Field is required.",
-        "minLength": "Password must be at least 6 characters.",
-        "mismatch": "New passwords do not match.",
-        "samePassword": "The current and new password are the same."
-      },
-      "buttons": {
-        "change": "Update Password"
       }
     }
   },
