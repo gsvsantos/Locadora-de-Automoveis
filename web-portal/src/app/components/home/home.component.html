@@ -1,3 +1,34 @@
-<section class="dashboard-section" *transloco="let t; prefix: 'home.dashboard'">
-  <div class="dashboard-grid"></div>
+<section class="home-section" *transloco="let t; prefix: 'home'">
+  @if (state$ | async; as result) {
+    <div class="header">
+      <h1>{{ t('title') }}</h1>
+      <input [formControl]="searchControl" [placeholder]="t('searchPlaceholder')" />
+    </div>
+
+    <div class="vehicles-grid">
+      @for (vehicle of result.items; track vehicle.id) {
+        <div class="vehicle-card">
+          <img [src]="urlS3 + vehicle.image" [alt]="vehicle.model" />
+
+          <div class="details">
+            <h3>{{ vehicle.brand }} {{ vehicle.model }}</h3>
+
+            <span class="badge">{{ t('fuel.' + vehicle.fuelType) }} </span>
+
+            <gs-buttons
+              [buttonType]="buttonType.Link"
+              [text]="t('details')"
+              [routerLink]="['details', vehicle.id]"
+            ></gs-buttons>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="pagination">
+      <span>{{ t('footer.total') }}: {{ result.totalCount }}</span>
+    </div>
+  } @else {
+    <p>{{ t('loading') }}</p>
+  }
 </section>

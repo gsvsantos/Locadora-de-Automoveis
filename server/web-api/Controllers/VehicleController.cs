@@ -3,8 +3,10 @@ using FluentResults;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.Create;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAllAvailable;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.Update;
+using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -67,5 +69,19 @@ public class VehicleController(
         Result<DeleteVehicleResponse> result = await mediator.Send(request);
 
         return result.ToHttpResponse();
+    }
+
+    [HttpGet("available")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetAllAvailable([FromQuery] GetAllAvailableVehiclesRequest request)
+    {
+        Result<PagedResult<VehicleDto>> result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return result.ToHttpResponse();
+        }
+
+        return Ok(result.Value);
     }
 }

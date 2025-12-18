@@ -1,4 +1,5 @@
-﻿using LocadoraDeAutomoveis.Domain.Vehicles;
+﻿using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +33,50 @@ public class VehicleRepository(AppDbContext context)
                 v.LicensePlate.ToLower().Contains(term))
             .Take(5)
             .ToListAsync(ct);
+    }
+
+    public async Task<PagedResult<Vehicle>> GetAllAvailableAsync(
+        int pageNumber, int pageSize,
+        string? term, Guid? groupId,
+        EFuelType? fuelType, CancellationToken cancellationToken
+    )
+    {
+        IQueryable<Vehicle> query = this.records
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Include(v => v.Group)
+            .Where(v => v.IsActive == true);
+
+        if (!string.IsNullOrWhiteSpace(term))
+        {
+            string termLower = term.ToLower();
+            query = query.Where(v =>
+                v.Model.ToLower().Contains(termLower) ||
+                v.Brand.ToLower().Contains(termLower) ||
+                v.LicensePlate.ToLower().Contains(termLower));
+        }
+
+        if (groupId.HasValue)
+        {
+            query = query.Where(v => v.GroupId.Equals(groupId.Value));
+        }
+
+        if (fuelType.HasValue)
+        {
+            query = query.Where(v => v.FuelType.Equals(fuelType.Value));
+        }
+
+        int totalCount = await query.CountAsync(cancellationToken);
+
+        List<Vehicle> items = await query
+            .OrderBy(v => v.Group.Name)
+            .ThenBy(v => v.Brand)
+            .ThenBy(v => v.Model)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<Vehicle>(items, totalCount, pageNumber, pageSize);
     }
 
     public override async Task<List<Vehicle>> GetAllAsync()

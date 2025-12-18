@@ -99,25 +99,18 @@
     "footerRights": "Locadora de Veículos. All rights reserved."
   },
   "home": {
-    "hero": {
-      "title": "Find the perfect car for your trip",
-      "subtitle": "Unbeatable prices and unlimited kilometers for your adventure."
+    "title": "Find Your Perfect Ride",
+    "searchPlaceholder": "Search by brand or model...",
+    "details": "View Offer",
+    "loading": "Loading available vehicles...",
+    "fuel": {
+      "Gasoline": "Gasoline",
+      "Gas": "Gas",
+      "Diesel": "Diesel",
+      "Alcohol": "Ethanol"
     },
-    "searchWidget": {
-      "label": {
-        "pickupDate": "Pick-up Date",
-        "returnDate": "Return Date",
-        "group": "Vehicle Category"
-      },
-      "placeholder": {
-        "group": "Select a category (e.g., SUV)"
-      },
-      "button": "Search Deals"
-    },
-    "activeRental": {
-      "title": "Current Rental",
-      "returnDue": "Return expected by:",
-      "extendButton": "Extend Rental"
+    "footer": {
+      "total": "Total items"
     }
   },
   "search": {
