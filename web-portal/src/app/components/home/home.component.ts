@@ -4,10 +4,22 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
-import { Observable, map } from 'rxjs';
+import {
+  Observable,
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  shareReplay,
+  startWith,
+  switchMap,
+} from 'rxjs';
 import { PagedResult } from '../../models/paged-result.model';
 import { Vehicle } from '../../models/vehicle.model';
 import { VehicleCardComponent } from '../vehicle-card/vehicle-card.component';
+import { VehicleService } from '../../services/vehicle.service';
+import { Group } from '../../models/group.models';
+import { GroupService } from '../../services/group.service';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +29,8 @@ import { VehicleCardComponent } from '../vehicle-card/vehicle-card.component';
 })
 export class Home {
   protected readonly translocoService = inject(TranslocoService);
+  protected readonly vehicleService = inject(VehicleService);
+  protected readonly groupService = inject(GroupService);
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
   protected readonly buttonType = gsButtonTypeEnum;
@@ -25,23 +39,52 @@ export class Home {
 
   protected readonly Math = Math;
   protected readonly urlS3: string = 'https://pub-8c88efdf916b4058be00dc36f97c82bf.r2.dev/';
-  protected readonly searchControl = new FormControl(
-    this.route.snapshot.queryParams['searchTerm'] || '',
+
+  protected readonly searchControl = new FormControl('');
+  protected readonly groupIdControl = new FormControl<string | null>(null);
+  protected readonly fuelTypeControl = new FormControl<string | null>(null);
+  protected currentPage = 1;
+
+  protected readonly queryText$ = this.searchControl.valueChanges.pipe(
+    startWith(this.searchControl.value ?? ''),
+    debounceTime(300),
+    distinctUntilChanged(),
+    map((value) => (value || '').trim()),
   );
 
-  protected readonly state$: Observable<PagedResult<Vehicle>> = this.route.data.pipe(
-    map((data) => data['pagedVehicles'] as PagedResult<Vehicle>),
+  protected readonly groupId$ = this.groupIdControl.valueChanges.pipe(
+    startWith(this.groupIdControl.value ?? undefined),
+    distinctUntilChanged(),
   );
 
-  protected updateParams(queryParams: unknown): void {
-    void this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: queryParams!,
-      queryParamsHandling: 'merge',
-    });
-  }
+  protected readonly fuelType$ = this.fuelTypeControl.valueChanges.pipe(
+    startWith(this.fuelTypeControl.value ?? undefined),
+    distinctUntilChanged(),
+  );
+
+  protected readonly groups$: Observable<Group[]> = this.groupService
+    .getAllDistinct()
+    .pipe(shareReplay({ bufferSize: 1, refCount: true }));
+
+  protected readonly state$: Observable<PagedResult<Vehicle>> = combineLatest([
+    this.queryText$,
+    this.groupId$,
+    this.fuelType$,
+  ]).pipe(
+    switchMap(([term, groupId, fuelType]) =>
+      this.vehicleService.getAvailableVehicles(
+        this.currentPage,
+        10,
+        term || undefined,
+        groupId || undefined,
+        fuelType || undefined,
+      ),
+    ),
+    shareReplay({ bufferSize: 1, refCount: true }),
+  );
 
   protected onPageChange(newPage: number): void {
-    this.updateParams({ page: newPage });
+    this.currentPage = newPage;
+    this.searchControl.setValue(this.searchControl.value ?? '', { emitEvent: true });
   }
 }

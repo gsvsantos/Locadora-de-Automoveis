@@ -18,6 +18,16 @@ public class GroupRepository(AppDbContext context)
             .ToListAsync(ct);
     }
 
+    public async Task<List<Group>> GetAllDistinct()
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .Include(g => g.User)
+            .Include(g => g.Vehicles)
+            .Where(g => g.IsActive == true)
+            .ToListAsync();
+    }
+
     public override async Task<List<Group>> GetAllAsync()
     {
         return await this.records

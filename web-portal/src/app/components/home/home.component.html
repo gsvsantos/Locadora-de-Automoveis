@@ -8,6 +8,25 @@
           [placeholder]="t('searchPlaceholder')"
         />
       </div>
+      <div class="filters-container" style="display: flex; gap: 1rem">
+        <select class="form-input" [formControl]="groupIdControl">
+          <option [ngValue]="null">{{ t('filters.allGroups') }}</option>
+
+          @if (groups$ | async; as groups) {
+            @for (group of groups; track group.id) {
+              <option [ngValue]="group.id">{{ group.name }}</option>
+            }
+          }
+        </select>
+
+        <select class="form-input" [formControl]="fuelTypeControl">
+          <option [ngValue]="null">{{ t('filters.allFuels') }}</option>
+          <option value="Gasoline">{{ t('fuel.Gasoline') }}</option>
+          <option value="Diesel">{{ t('fuel.Diesel') }}</option>
+          <option value="Alcohol">{{ t('fuel.Alcohol') }}</option>
+          <option value="Gas">{{ t('fuel.Gas') }}</option>
+        </select>
+      </div>
     </div>
 
     @if (state$ | async; as state) {

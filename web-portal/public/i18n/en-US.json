@@ -100,8 +100,18 @@
   },
   "home": {
     "searchPlaceholder": "Search by brand or model...",
-    "noVehiclesFound": "No vehicles found.",
-    "loading": "Loading vehicles...",
+    "noVehiclesFound": "No vehicles found for the selected criteria.",
+    "loading": "Loading available vehicles...",
+    "filters": {
+      "allGroups": "All Groups",
+      "allFuels": "All Fuel Types"
+    },
+    "fuel": {
+      "Gasoline": "Gasoline",
+      "Gas": "Natural Gas",
+      "Diesel": "Diesel",
+      "Alcohol": "Ethanol"
+    },
     "pagination": {
       "prev": "Previous",
       "next": "Next",

@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { authenticatedUserGuard } from '../guards/authenticated-user.guard';
-import { availableVehiclesResolver } from '../resolvers/vehicle.resolvers';
 
 export const routes: Routes = [
   {
@@ -16,9 +15,6 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () =>
       import('../components/home/home.component').then((component) => component.Home),
-    resolve: {
-      pagedVehicles: availableVehiclesResolver,
-    },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange',
     canActivate: [authenticatedUserGuard],
   },

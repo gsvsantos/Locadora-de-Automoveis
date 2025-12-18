@@ -24,10 +24,10 @@ public class RegisterUserRequestHandler(
     public async Task<Result<(AccessToken, IssuedRefreshTokenDto)>> Handle(
         RegisterUserRequest request, CancellationToken cancellationToken)
     {
-        if (!await recaptchaService.VerifyRecaptchaToken(request.RecaptchaToken))
-        {
-            return Result.Fail(ErrorResults.BadRequestError("Invalid reCAPTCHA verification"));
-        }
+        //if (!await recaptchaService.VerifyRecaptchaToken(request.RecaptchaToken))
+        //{
+        //    return Result.Fail(ErrorResults.BadRequestError("Invalid reCAPTCHA verification"));
+        //}
 
         User user = new()
         {
