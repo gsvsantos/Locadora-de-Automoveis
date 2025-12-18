@@ -11,18 +11,18 @@ using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Auth.Commands.LoginGoogle;
 
-public class LoginWithGoogleRequestHandler(
+public class LoginUserGoogleRequestHandler(
     UserManager<User> userManager,
     IRepositoryConfiguration repositoryConfiguration,
     ITokenProvider tokenProvider,
     IRefreshTokenProvider refreshTokenProvider,
     IConfiguration configuration,
     IAuthEmailService emailService,
-    ILogger<LoginWithGoogleRequestHandler> logger
-) : IRequestHandler<LoginWithGoogleRequest, Result<(AccessToken, IssuedRefreshTokenDto)>>
+    ILogger<LoginUserGoogleRequestHandler> logger
+) : IRequestHandler<LoginUserGoogleRequest, Result<(AccessToken, IssuedRefreshTokenDto)>>
 {
     public async Task<Result<(AccessToken, IssuedRefreshTokenDto)>> Handle(
-        LoginWithGoogleRequest request, CancellationToken cancellationToken)
+        LoginUserGoogleRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -33,11 +33,11 @@ public class LoginWithGoogleRequestHandler(
 
             GoogleJsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(request.IdToken, settings);
 
-            User? user = await userManager.FindByEmailAsync(payload.Email);
+            User? userLogin = await userManager.FindByEmailAsync(payload.Email);
 
-            if (user is null)
+            if (userLogin is null)
             {
-                user = new User
+                userLogin = new User
                 {
                     UserName = payload.Email,
                     Email = payload.Email,
@@ -45,7 +45,7 @@ public class LoginWithGoogleRequestHandler(
                     EmailConfirmed = true,
                 };
 
-                IdentityResult userResult = await userManager.CreateAsync(user);
+                IdentityResult userResult = await userManager.CreateAsync(userLogin);
 
                 if (!userResult.Succeeded)
                 {
@@ -57,44 +57,44 @@ public class LoginWithGoogleRequestHandler(
                     return Result.Fail(ErrorResults.BadRequestError(errors));
                 }
 
-                await userManager.AddToRoleAsync(user, "Admin");
+                await userManager.AddToRoleAsync(userLogin, "Admin");
 
-                user.AssociateTenant(user.Id);
+                userLogin.AssociateTenant(userLogin.Id);
 
-                await userManager.UpdateAsync(user);
+                await userManager.UpdateAsync(userLogin);
 
                 Configuration configutarion = new();
-                configutarion.AssociateTenant(user.Id);
-                configutarion.AssociateUser(user);
+                configutarion.AssociateTenant(userLogin.Id);
+                configutarion.AssociateUser(userLogin);
                 await repositoryConfiguration.AddAsync(configutarion);
 
                 if (!userResult.Succeeded)
                 {
-                    await userManager.DeleteAsync(user);
+                    await userManager.DeleteAsync(userLogin);
 
                     return Result.Fail("Failed to create with Google Sign-In: " + userResult.Errors.First().Description);
                 }
 
-                string token = await userManager.GeneratePasswordResetTokenAsync(user);
+                string token = await userManager.GeneratePasswordResetTokenAsync(userLogin);
 
                 try
                 {
-                    await emailService.ScheduleBusinessGoogleLoginWelcome(user.Email, user.FullName, token);
+                    await emailService.ScheduleBusinessGoogleWelcome(userLogin.Email, userLogin.FullName, token);
                 }
                 catch (Exception ex)
                 {
-                    logger.LogWarning(ex, "Failed to schedule google welcome email for user {UseriD}", user.Id);
+                    logger.LogWarning(ex, "Failed to schedule google welcome email for userLogin {UseriD}", userLogin.Id);
                 }
             }
 
-            AccessToken? accessToken = await tokenProvider.GenerateAccessToken(user) as AccessToken;
+            AccessToken? accessToken = await tokenProvider.GenerateAccessToken(userLogin) as AccessToken;
 
             if (accessToken is null)
             {
                 return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token. Try again!")));
             }
 
-            Result<IssuedRefreshTokenDto> refreshTokenResult = await refreshTokenProvider.GenerateRefreshTokenAsync(user);
+            Result<IssuedRefreshTokenDto> refreshTokenResult = await refreshTokenProvider.GenerateRefreshTokenAsync(userLogin);
 
             if (refreshTokenResult.IsFailed)
             {

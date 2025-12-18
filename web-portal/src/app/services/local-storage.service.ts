@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 export class LocalStorageService {
   private readonly translocoService = inject(TranslocoService);
 
+  private readonly loggedKey: string = 'is_logged_in';
   private readonly themeKey: string = 'locadora-theme';
   private readonly languageKey: string = 'locadora-language';
 
@@ -18,6 +19,18 @@ export class LocalStorageService {
 
   public constructor() {
     this.translocoService.setActiveLang(this.getCurrentLanguage());
+  }
+
+  public setLogged(): void {
+    localStorage.setItem(this.loggedKey, 'true');
+  }
+
+  public getLogged(): string | null {
+    return localStorage.getItem(this.loggedKey);
+  }
+
+  public removeLogged(): void {
+    localStorage.getItem(this.loggedKey);
   }
 
   public setTheme(theme: ThemeType): void {

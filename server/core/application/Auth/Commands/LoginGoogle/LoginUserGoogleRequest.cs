@@ -5,6 +5,6 @@ using MediatR;
 
 namespace LocadoraDeAutomoveis.Application.Auth.Commands.LoginGoogle;
 
-public record LoginWithGoogleRequest(
+public record LoginUserGoogleRequest(
     string IdToken
-) : IRequest<Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)>>;
+) : IRequest<Result<(AccessToken, IssuedRefreshTokenDto)>>;

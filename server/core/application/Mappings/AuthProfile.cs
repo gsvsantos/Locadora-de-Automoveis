@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Google.Apis.Auth;
 using LocadoraDeAutomoveis.Application.Auth.Commands.ChangePassword;
 using LocadoraDeAutomoveis.Application.Auth.Commands.CreatePassword;
 using LocadoraDeAutomoveis.Application.Auth.Commands.RegisterClient;
@@ -45,6 +46,22 @@ public class AuthProfile : Profile
                 src.FullName,
                 src.Email,
                 src.PhoneNumber
+            ));
+
+        // RegisterClientGoogle
+        CreateMap<GoogleJsonWebSignature.Payload, User>()
+            .ConvertUsing(src => new User()
+            {
+                UserName = src.Email,
+                FullName = src.Name,
+                Email = src.Email,
+            });
+
+        CreateMap<GoogleJsonWebSignature.Payload, Client>()
+            .ConvertUsing(src => new Client(
+                src.Name,
+                src.Email,
+                ""
             ));
     }
 }
