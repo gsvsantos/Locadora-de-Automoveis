@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
-import { Vehicle } from '../../models/vehicle.model';
+import { Vehicle } from '../../models/vehicle.models';
 import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({

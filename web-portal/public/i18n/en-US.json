@@ -45,14 +45,23 @@
           "password": "Min. 6 characters",
           "confirmPassword": "Repeat password"
         },
+        "errors": {
+          "userNameRequired": "Username is required.",
+          "userNameLength": "Username must be at least 5 characters long.",
+          "fullNameRequired": "Full name is required.",
+          "fullNameLength": "Full name must be at least 3 characters long.",
+          "fullNamePattern": "Full name contains invalid characters.",
+          "emailRequired": "Email is required.",
+          "emailLength": "Must be a valid email.",
+          "phoneNumberRequired": "Phone number is required.",
+          "phoneNumberPattern": "Invalid phone number format.",
+          "passwordRequired": "Password is required.",
+          "passwordLength": "Password must be at least 6 characters long.",
+          "passwordMustMatch": "Passwords do not match."
+        },
         "buttons": {
           "confirm": "Register",
           "login": "Already have an account?"
-        },
-        "errors": {
-          "required": "This field is required.",
-          "emailInvalid": "Please enter a valid email.",
-          "passwordMismatch": "Passwords do not match."
         }
       }
     },
@@ -108,7 +117,7 @@
     },
     "fuel": {
       "Gasoline": "Gasoline",
-      "Gas": "Natural Gas",
+      "Gas": "Gas",
       "Diesel": "Diesel",
       "Alcohol": "Ethanol"
     },
@@ -200,6 +209,52 @@
       "email": "Email Address",
       "phone": "Phone Number",
       "document": "Document (CPF/CNPJ)"
+    }
+  },
+  "rentals": {
+    "createSelf": {
+      "card": {
+        "title": "Complete Your Reservation",
+        "subtitle": "Review the vehicle details and choose your rental options below.",
+        "section": {
+          "vehicle": "Selected Vehicle",
+          "driver": "Driver Details",
+          "datesAndPlan": "Dates & Billing Plan",
+          "extras": "Extras & Discounts"
+        },
+        "label": {
+          "driver": "Who will drive?",
+          "startDate": "Pick-up Date",
+          "expectedReturnDate": "Return Date",
+          "billingPlanType": "Billing Plan",
+          "estimatedKilometers": "Estimated Kilometers",
+          "coupon": "Coupon Code",
+          "extras": "Optional Extras"
+        },
+        "placeholder": {
+          "driver": "Select the driver...",
+          "billingPlanType": "Select a plan...",
+          "estimatedKilometers": "Ex: 400",
+          "coupon": "Select a coupon (optional)"
+        },
+        "plan": {
+          "daily": "Daily Plan (Rate + Km)",
+          "controlled": "Controlled Plan (Fixed Limit)",
+          "free": "Free Plan (Unlimited Km)"
+        },
+        "errors": {
+          "vehicleNotFound": "Could not load vehicle details.",
+          "driverRequired": "Please select a driver.",
+          "startDateRequired": "Pick-up date is required.",
+          "expectedReturnDateRequired": "Return date is required.",
+          "billingPlanTypeRequired": "You must select a billing plan.",
+          "estimatedKilometersRequired": "Please estimate the kilometers for this plan."
+        },
+        "buttons": {
+          "back": "Back to List",
+          "confirm": "Confirm Rental"
+        }
+      }
     }
   }
 }

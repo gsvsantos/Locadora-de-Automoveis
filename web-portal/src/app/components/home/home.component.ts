@@ -14,8 +14,8 @@ import {
   startWith,
   switchMap,
 } from 'rxjs';
-import { PagedResult } from '../../models/paged-result.model';
-import { Vehicle } from '../../models/vehicle.model';
+import { PagedResult } from '../../models/paged-result.models';
+import { Vehicle } from '../../models/vehicle.models';
 import { VehicleCardComponent } from '../vehicle-card/vehicle-card.component';
 import { VehicleService } from '../../services/vehicle.service';
 import { Group } from '../../models/group.models';
