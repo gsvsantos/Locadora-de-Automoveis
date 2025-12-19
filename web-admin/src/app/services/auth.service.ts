@@ -178,7 +178,7 @@ export class AuthService {
   }
 
   public register(model: RegisterAuthDto): Observable<AuthApiResponse> {
-    const url = `${this.apiUrl}/register-client`;
+    const url = `${this.apiUrl}/register`;
 
     return this.http
       .post<AuthApiResponse>(url, model)

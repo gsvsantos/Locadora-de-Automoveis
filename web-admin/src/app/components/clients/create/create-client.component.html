@@ -136,7 +136,7 @@
               type="number"
               [placeholder]="t('card.placeholder.number')"
             />
-            @if (street?.errors?.['required'] && street?.dirty) {
+            @if (number?.errors?.['required'] && number?.dirty) {
               <span class="error-message">{{ t('card.errors.numberRequired') }}</span>
             }
           </div>
