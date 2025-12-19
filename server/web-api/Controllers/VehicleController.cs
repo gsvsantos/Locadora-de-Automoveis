@@ -4,6 +4,7 @@ using LocadoraDeAutomoveis.Application.Vehicles.Commands.Create;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAllAvailable;
+using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAvailableById;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Shared;
@@ -83,5 +84,16 @@ public class VehicleController(
         }
 
         return Ok(result.Value);
+    }
+
+    [HttpGet("available/{id:guid}")]
+    [Authorize("EveryonePolicy")]
+    public async Task<IActionResult> GetVehicleForRental(Guid id)
+    {
+        GetAvailableByIdRequest request = new(id);
+
+        Result<GetAvailableByIdResponse> result = await mediator.Send(request);
+
+        return result.ToHttpResponse();
     }
 }

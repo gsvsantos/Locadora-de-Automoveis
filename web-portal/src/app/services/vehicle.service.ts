@@ -1,9 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
-import { PagedResult } from '../models/paged-result.model';
-import { Vehicle } from '../models/vehicle.model';
+import { map, Observable } from 'rxjs';
+import { PagedResult } from '../models/paged-result.models';
+import { Vehicle, VehicleDetailsApiDto } from '../models/vehicle.models';
+import { ApiResponseDto } from '../models/api.models';
+import { mapApiResponse } from '../utils/map-api-response';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +13,15 @@ import { Vehicle } from '../models/vehicle.model';
 export class VehicleService {
   private readonly apiUrl: string = environment.apiUrl + '/vehicle';
   private readonly http: HttpClient = inject(HttpClient);
+
+  public getById(id: string): Observable<Vehicle> {
+    const url: string = `${this.apiUrl}/available/${id}`;
+
+    return this.http.get<ApiResponseDto>(url).pipe(
+      map(mapApiResponse<VehicleDetailsApiDto>),
+      map((apiDto: VehicleDetailsApiDto) => this.mapVehicleFromApi(apiDto.vehicle)),
+    );
+  }
 
   public getAvailableVehicles(
     page: number = 1,
@@ -26,5 +37,21 @@ export class VehicleService {
     if (fuelType) params = params.set('fuelType', fuelType);
 
     return this.http.get<PagedResult<Vehicle>>(`${this.apiUrl}/available`, { params });
+  }
+
+  private mapVehicleFromApi(apiVehicle: VehicleDetailsApiDto['vehicle']): Vehicle {
+    return {
+      id: apiVehicle.id,
+      licensePlate: apiVehicle.licensePlate,
+      brand: apiVehicle.brand,
+      color: apiVehicle.color,
+      model: apiVehicle.model,
+      fuelType: apiVehicle.fuelType,
+      fuelTankCapacity: apiVehicle.fuelTankCapacity,
+      year: apiVehicle.year,
+      image: apiVehicle.image,
+      group: apiVehicle.group,
+      isActive: apiVehicle.isActive,
+    };
   }
 }

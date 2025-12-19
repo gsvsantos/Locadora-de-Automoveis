@@ -17,4 +17,8 @@ export interface Vehicle extends VehicleDto {
   isActive: boolean;
 }
 
+export interface VehicleDetailsApiDto {
+  vehicle: Vehicle;
+}
+
 export type FuelType = 'Gasoline' | 'Gas' | 'Diesel' | 'Alcohol';
