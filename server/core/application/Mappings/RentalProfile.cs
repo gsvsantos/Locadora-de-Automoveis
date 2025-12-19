@@ -146,8 +146,7 @@ public class RentalProfile : Profile
         CreateMap<CreateRentalRequest, Rental>()
             .ConvertUsing(src => new Rental(
                 src.StartDate,
-                src.ExpectedReturnDate,
-                src.StartKm
+                src.ExpectedReturnDate
             ));
 
         // GetAll
@@ -176,8 +175,7 @@ public class RentalProfile : Profile
         CreateMap<UpdateRentalRequest, Rental>()
             .ConvertUsing(src => new Rental(
                 src.StartDate,
-                src.ExpectedReturnDate,
-                src.StartKm
+                src.ExpectedReturnDate
             )
             { Id = src.Id });
     }

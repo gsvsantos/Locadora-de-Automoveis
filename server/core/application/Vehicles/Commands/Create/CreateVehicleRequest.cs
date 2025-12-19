@@ -12,6 +12,7 @@ public record CreateVehicleRequest(
     string Model,
     EFuelType FuelType,
     int FuelTankCapacity,
+    decimal Kilometers,
     int Year,
     IFormFile? Image,
     Guid GroupId

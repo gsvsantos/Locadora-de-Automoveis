@@ -12,6 +12,7 @@ public record UpdateVehicleRequestPartial(
     string Model,
     EFuelType FuelType,
     int FuelTankCapacity,
+    decimal Kilometers,
     int Year,
     IFormFile? Image,
     Guid GroupId
@@ -25,6 +26,7 @@ public record UpdateVehicleRequest(
     string Model,
     EFuelType FuelType,
     int FuelTankCapacity,
+    decimal Kilometers,
     int Year,
     IFormFile? Image,
     Guid GroupId

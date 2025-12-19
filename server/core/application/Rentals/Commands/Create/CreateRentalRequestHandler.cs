@@ -80,9 +80,9 @@ public class CreateRentalRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.VehicleId));
         }
 
-        BillingPlan? BillingPlan = await repositoryBillingPlan.GetByGroupId(vehicle.GroupId);
+        BillingPlan? billingPlan = await repositoryBillingPlan.GetByGroupId(vehicle.GroupId);
 
-        if (BillingPlan is null)
+        if (billingPlan is null)
         {
             return Result.Fail(ErrorResults.NotFoundError(vehicle.GroupId));
         }
@@ -123,8 +123,9 @@ public class CreateRentalRequestHandler(
         rental.AssociateClient(client);
         rental.AssociateDriver(driver);
         rental.AssociateVehicle(vehicle);
-        rental.AssociateBillingPlan(BillingPlan);
+        rental.AssociateBillingPlan(billingPlan);
         rental.SetBillingPlanType(request.BillingPlanType);
+        rental.SetStartKm(vehicle.Kilometers);
 
         if (request.BillingPlanType.Equals(EBillingPlanType.Controlled)
             && request.EstimatedKilometers.HasValue)

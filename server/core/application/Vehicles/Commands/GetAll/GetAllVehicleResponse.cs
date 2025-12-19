@@ -16,6 +16,7 @@ public record VehicleDto(
     string Model,
     EFuelType FuelType,
     int FuelTankCapacity,
+    decimal Kilometers,
     int Year,
     string? Image,
     VehicleGroupDto Group,

@@ -36,6 +36,7 @@ public static class RentalCalculator
         int daysUsed = CalculateDays(rental.StartDate, returnDate);
 
         decimal kilometersDriven = Math.Max(0m, endKm - rental.StartKm);
+        rental.Vehicle.KilometersSum(kilometersDriven);
 
         decimal planTotalCost = CalculatePlanPrice(
             rental.BillingPlan,

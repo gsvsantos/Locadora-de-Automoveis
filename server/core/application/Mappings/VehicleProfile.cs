@@ -32,6 +32,7 @@ public class VehicleProfile : Profile
                 src.p.Model,
                 src.p.FuelType,
                 src.p.FuelTankCapacity,
+                src.p.Kilometers,
                 src.p.Year,
                 src.p.Image,
                 src.p.GroupId
@@ -54,6 +55,7 @@ public class VehicleProfile : Profile
                 src.Model,
                 src.FuelType,
                 src.FuelTankCapacity,
+                src.Kilometers,
                 src.Year,
                 src.Image,
                 ctx.Mapper.Map<VehicleGroupDto>(src.Group),
@@ -69,6 +71,7 @@ public class VehicleProfile : Profile
                 src.r.Color,
                 src.r.Model,
                 src.r.FuelTankCapacity,
+                src.r.Kilometers,
                 src.r.Year,
                 src.img
             ));
@@ -95,6 +98,7 @@ public class VehicleProfile : Profile
                 src.r.Color,
                 src.r.Model,
                 src.r.FuelTankCapacity,
+                src.r.Kilometers,
                 src.r.Year,
                 src.img
             )
