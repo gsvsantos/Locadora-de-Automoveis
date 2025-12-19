@@ -9,4 +9,6 @@ public interface IRepositoryCoupon : IRepository<Coupon>
     Task<Coupon?> GetByNameAsync(string name);
 
     Task<List<Coupon>> SearchAsync(string term, CancellationToken ct = default);
+
+    Task<List<Coupon>> GetAllAvailableAsync();
 }

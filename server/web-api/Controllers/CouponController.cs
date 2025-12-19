@@ -3,6 +3,7 @@ using FluentResults;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Create;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAllAvailable;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Update;
@@ -76,6 +77,14 @@ public class CouponController(
         DeleteCouponRequest request = new(id);
 
         Result<DeleteCouponResponse> result = await mediator.Send(request);
+
+        return result.ToHttpResponse();
+    }
+
+    [HttpGet("available")]
+    public async Task<IActionResult> GetAll([FromQuery] GetAllAvailableCouponRequest request)
+    {
+        Result<GetAllAvailableCouponResponse> result = await mediator.Send(request);
 
         return result.ToHttpResponse();
     }

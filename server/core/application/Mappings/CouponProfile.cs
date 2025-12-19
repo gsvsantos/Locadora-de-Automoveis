@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Create;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAllAvailable;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Update;
 using LocadoraDeAutomoveis.Application.Partners.Commands.GetAll;
@@ -74,5 +75,13 @@ public class CouponProfile : Profile
                 src.ExpirationDate
             )
             { Id = src.Id });
+
+        // GetAllAvailable
+        CreateMap<List<Coupon>, GetAllAvailableCouponResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetAllAvailableCouponResponse(
+                src.Count,
+                src.Select(c => ctx.Mapper.Map<CouponDto>(c)).ToImmutableList()
+                    ?? ImmutableList<CouponDto>.Empty
+            ));
     }
 }

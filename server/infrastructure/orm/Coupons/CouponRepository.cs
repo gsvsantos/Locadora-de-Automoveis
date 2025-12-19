@@ -33,6 +33,19 @@ public class CouponRepository(AppDbContext context)
             .ToListAsync(ct);
     }
 
+    public async Task<List<Coupon>> GetAllAvailableAsync()
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Include(c => c.User)
+            .Include(c => c.Partner)
+            .Where(c => c.ExpirationDate >= DateTimeOffset.UtcNow)
+            .Where(c => c.IsManuallyDisabled == false)
+            .Where(c => c.IsActive == true)
+            .ToListAsync();
+    }
+
     public override async Task<List<Coupon>> GetAllAsync()
     {
         return await this.records
