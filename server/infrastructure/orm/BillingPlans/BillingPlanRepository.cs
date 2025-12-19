@@ -51,8 +51,8 @@ public class BillingPlanRepository(AppDbContext context)
         return await this.records
             .Include(pp => pp.User)
             .Include(pp => pp.Group)
-            .Take(quantity)
             .Where(pp => pp.IsActive == isActive)
+            .Take(quantity)
             .ToListAsync();
     }
 

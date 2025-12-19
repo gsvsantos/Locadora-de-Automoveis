@@ -62,7 +62,7 @@ public class BaseRepository<T>(AppDbContext context) where T : BaseEntity<T>
 
     public virtual async Task<List<T>> GetAllAsync(int quantity, bool isActive)
     {
-        return await this.records.Include(x => x.User).Take(quantity).Where(e => e.IsActive == isActive).ToListAsync();
+        return await this.records.Include(x => x.User).Where(e => e.IsActive == isActive).Take(quantity).ToListAsync();
     }
 
     public virtual async Task<T?> GetByIdAsync(Guid entityId)

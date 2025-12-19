@@ -37,8 +37,8 @@ public class PartnerRepository(AppDbContext context)
         return await this.records
             .Include(p => p.User)
             .Include(p => p.Coupons)
-            .Take(quantity)
             .Where(p => p.IsActive == isActive)
+            .Take(quantity)
             .ToListAsync();
     }
 

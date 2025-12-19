@@ -58,8 +58,8 @@ public class GroupRepository(AppDbContext context)
         return await this.records
             .Include(g => g.User)
             .Include(g => g.Vehicles)
-            .Take(quantity)
             .Where(g => g.IsActive == isActive)
+            .Take(quantity)
             .ToListAsync();
     }
 

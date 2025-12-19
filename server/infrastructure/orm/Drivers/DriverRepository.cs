@@ -63,8 +63,8 @@ public class DriverRepository(AppDbContext context)
         return await this.records
             .Include(d => d.User)
             .Include(d => d.Client)
-            .Take(quantity)
             .Where(d => d.IsActive == isActive)
+            .Take(quantity)
             .ToListAsync();
     }
 

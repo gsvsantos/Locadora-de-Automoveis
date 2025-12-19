@@ -64,8 +64,8 @@ public class CouponRepository(AppDbContext context)
         return await this.records
             .Include(c => c.User)
             .Include(c => c.Partner)
-            .Take(quantity)
             .Where(c => c.IsActive == isActive)
+            .Take(quantity)
             .ToListAsync();
     }
 
