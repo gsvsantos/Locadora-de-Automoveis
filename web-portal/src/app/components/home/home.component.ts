@@ -9,6 +9,7 @@ import {
   combineLatest,
   debounceTime,
   distinctUntilChanged,
+  filter,
   map,
   shareReplay,
   startWith,
@@ -62,9 +63,10 @@ export class Home {
     distinctUntilChanged(),
   );
 
-  protected readonly groups$: Observable<Group[]> = this.groupService
-    .getAllDistinct()
-    .pipe(shareReplay({ bufferSize: 1, refCount: true }));
+  protected readonly groups$ = this.route.data.pipe(
+    filter((data) => data['groups'] as boolean),
+    map((data) => data['groups'] as Group[]),
+  );
 
   protected readonly state$: Observable<PagedResult<Vehicle>> = combineLatest([
     this.queryText$,

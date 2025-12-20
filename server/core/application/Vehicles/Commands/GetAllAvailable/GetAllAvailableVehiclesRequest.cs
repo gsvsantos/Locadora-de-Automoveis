@@ -1,6 +1,4 @@
 ﻿using FluentResults;
-using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAll;
-using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
 
@@ -12,4 +10,4 @@ public record GetAllAvailableVehiclesRequest(
     string? Term = null,
     Guid? GroupId = null,
     EFuelType? FuelType = null
-) : IRequest<Result<PagedResult<VehicleDto>>>;
+) : IRequest<Result<GetAllAvailableVehiclesResponse>>;

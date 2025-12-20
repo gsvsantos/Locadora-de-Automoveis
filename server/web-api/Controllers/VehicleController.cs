@@ -7,7 +7,6 @@ using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAllAvailable;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAvailableById;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.Update;
-using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -80,14 +79,9 @@ public class VehicleController(
     [AllowAnonymous]
     public async Task<IActionResult> GetAllAvailable([FromQuery] GetAllAvailableVehiclesRequest request)
     {
-        Result<PagedResult<VehicleDto>> result = await mediator.Send(request);
+        Result<GetAllAvailableVehiclesResponse> result = await mediator.Send(request);
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
-
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 
     [HttpGet("available/{id:guid}")]

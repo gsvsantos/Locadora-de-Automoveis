@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { map, Observable } from 'rxjs';
 import { PagedResult } from '../models/paged-result.models';
-import { Vehicle, VehicleDetailsApiDto } from '../models/vehicle.models';
+import { ListVehiclesDto, Vehicle, VehicleDetailsApiDto } from '../models/vehicle.models';
 import { ApiResponseDto } from '../models/api.models';
 import { mapApiResponse } from '../utils/map-api-response';
 
@@ -37,7 +37,10 @@ export class VehicleService {
     if (groupId) params = params.set('groupId', groupId);
     if (fuelType) params = params.set('fuelType', fuelType);
 
-    return this.http.get<PagedResult<Vehicle>>(url, { params });
+    return this.http.get<ApiResponseDto>(url, { params }).pipe(
+      map(mapApiResponse<ListVehiclesDto>),
+      map((res) => res.vehicles),
+    );
   }
 
   private mapVehicleFromApi(apiVehicle: VehicleDetailsApiDto['vehicle']): Vehicle {

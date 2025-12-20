@@ -10,14 +10,13 @@ using Microsoft.Extensions.Logging;
 namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAllAvailable;
 
 public class GetAllAvailableVehiclesRequestHandler(
-    IRepositoryVehicle repositoryVehicle,
     IMapper mapper,
+    IRepositoryVehicle repositoryVehicle,
     ILogger<GetAllAvailableVehiclesRequestHandler> logger
-) : IRequestHandler<GetAllAvailableVehiclesRequest, Result<PagedResult<VehicleDto>>>
+) : IRequestHandler<GetAllAvailableVehiclesRequest, Result<GetAllAvailableVehiclesResponse>>
 {
-    public async Task<Result<PagedResult<VehicleDto>>> Handle(
-        GetAllAvailableVehiclesRequest request,
-        CancellationToken cancellationToken)
+    public async Task<Result<GetAllAvailableVehiclesResponse>> Handle(
+        GetAllAvailableVehiclesRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -39,7 +38,9 @@ public class GetAllAvailableVehiclesRequestHandler(
                 request.PageSize
             );
 
-            return Result.Ok(result);
+            GetAllAvailableVehiclesResponse response = new(result);
+
+            return Result.Ok(response);
         }
         catch (Exception ex)
         {

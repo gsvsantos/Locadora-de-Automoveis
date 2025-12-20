@@ -1,4 +1,5 @@
 import { Group } from './group.models';
+import { PagedResult } from './paged-result.models';
 
 export interface VehicleDto {
   licensePlate: string;
@@ -19,6 +20,10 @@ export interface Vehicle extends VehicleDto {
 
 export interface VehicleDetailsApiDto {
   vehicle: Vehicle;
+}
+
+export interface ListVehiclesDto {
+  vehicles: PagedResult<Vehicle>;
 }
 
 export type FuelType = 'Gasoline' | 'Gas' | 'Diesel' | 'Alcohol';
