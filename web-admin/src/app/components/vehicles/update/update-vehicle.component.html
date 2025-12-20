@@ -104,7 +104,6 @@
                 <option value="Gas">{{ t('card.fuel.gas') }}</option>
                 <option value="Diesel">{{ t('card.fuel.diesel') }}</option>
                 <option value="Alcohol">{{ t('card.fuel.alcohol') }}</option>
-                <option value="Ethanol">{{ t('card.fuel.ethanol') }}</option>
               </select>
               @if (fuelType?.errors?.['required'] && fuelType?.dirty) {
                 <span class="error-message">{{ t('card.errors.fuelTypeRequired') }}</span>

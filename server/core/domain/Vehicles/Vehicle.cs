@@ -95,8 +95,7 @@ public enum EFuelType
     Gasoline,
     Gas,
     Diesel,
-    Alcohol,
-    Ethanol
+    Alcohol
 }
 
 public enum EVehicleStatus

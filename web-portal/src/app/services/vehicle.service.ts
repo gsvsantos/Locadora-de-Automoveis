@@ -30,13 +30,14 @@ export class VehicleService {
     groupId?: string,
     fuelType?: string,
   ): Observable<PagedResult<Vehicle>> {
+    const url = `${this.apiUrl}/available`;
     let params = new HttpParams().set('pageNumber', page).set('pageSize', pageSize);
 
     if (term) params = params.set('term', term);
     if (groupId) params = params.set('groupId', groupId);
     if (fuelType) params = params.set('fuelType', fuelType);
 
-    return this.http.get<PagedResult<Vehicle>>(`${this.apiUrl}/available`, { params });
+    return this.http.get<PagedResult<Vehicle>>(url, { params });
   }
 
   private mapVehicleFromApi(apiVehicle: VehicleDetailsApiDto['vehicle']): Vehicle {
