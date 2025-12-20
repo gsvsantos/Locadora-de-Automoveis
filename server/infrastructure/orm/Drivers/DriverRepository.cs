@@ -16,7 +16,6 @@ public class DriverRepository(AppDbContext context)
     public async Task<Driver?> GetDriverByClientId(Guid clientId)
     {
         return await this.records
-            .Include(d => d.User)
             .Include(d => d.Client)
             .FirstOrDefaultAsync(d => d.Client.Id.Equals(clientId));
     }
@@ -33,10 +32,27 @@ public class DriverRepository(AppDbContext context)
             .ToListAsync(ct);
     }
 
+    public async Task<Driver?> GetByTenantAndIdAsync(Guid tenantId, Guid entityId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .Include(d => d.Client)
+            .Where(d => d.TenantId.Equals(tenantId))
+            .FirstOrDefaultAsync(d => d.Id.Equals(entityId));
+    }
+
+    public async Task<List<Driver>> GetAllByTenantDistinctAsync(Guid tenantId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .Include(d => d.Client)
+            .Where(d => d.TenantId.Equals(tenantId))
+            .ToListAsync();
+    }
+
     public override async Task<List<Driver>> GetAllAsync()
     {
         return await this.records
-            .Include(d => d.User)
             .Include(d => d.Client)
             .ToListAsync();
     }
@@ -44,7 +60,6 @@ public class DriverRepository(AppDbContext context)
     public override async Task<List<Driver>> GetAllAsync(int quantity)
     {
         return await this.records
-            .Include(d => d.User)
             .Include(d => d.Client)
             .Take(quantity).ToListAsync();
     }
@@ -52,7 +67,6 @@ public class DriverRepository(AppDbContext context)
     public override async Task<List<Driver>> GetAllAsync(bool isActive)
     {
         return await this.records
-            .Include(d => d.User)
             .Include(d => d.Client)
             .Where(d => d.IsActive == isActive)
             .ToListAsync();
@@ -61,7 +75,6 @@ public class DriverRepository(AppDbContext context)
     public override async Task<List<Driver>> GetAllAsync(int quantity, bool isActive)
     {
         return await this.records
-            .Include(d => d.User)
             .Include(d => d.Client)
             .Where(d => d.IsActive == isActive)
             .Take(quantity)
@@ -71,7 +84,6 @@ public class DriverRepository(AppDbContext context)
     public override async Task<Driver?> GetByIdAsync(Guid entityId)
     {
         return await this.records
-            .Include(d => d.User)
             .Include(d => d.Client)
             .FirstOrDefaultAsync(d => d.Id.Equals(entityId));
     }

@@ -9,4 +9,8 @@ public interface IRepositoryDriver : IRepository<Driver>
     Task<Driver?> GetDriverByClientId(Guid clientId);
 
     Task<List<Driver>> SearchAsync(string term, CancellationToken ct = default);
+
+    Task<Driver?> GetByTenantAndIdAsync(Guid tenantId, Guid entityId);
+
+    Task<List<Driver>> GetAllByTenantDistinctAsync(Guid tenantId);
 }
