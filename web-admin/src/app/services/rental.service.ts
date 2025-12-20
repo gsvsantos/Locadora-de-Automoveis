@@ -85,6 +85,7 @@ export class RentalService {
       billingPlanType: apiRental.billingPlanType,
       billingPlan: apiRental.billingPlan,
       returnDate: apiRental.returnDate,
+      rentalReturn: apiRental.rentalReturn,
       baseRentalPrice: apiRental.baseRentalPrice,
       finalPrice: apiRental.finalPrice,
       estimatedKilometers: apiRental.estimatedKilometers,

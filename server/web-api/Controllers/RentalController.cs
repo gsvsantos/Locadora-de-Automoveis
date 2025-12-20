@@ -5,6 +5,7 @@ using LocadoraDeAutomoveis.Application.Rentals.Commands.CreateSelfRental;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetById;
+using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentalBy;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentals;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Return;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Update;
@@ -100,6 +101,17 @@ public class RentalController(
     public async Task<IActionResult> GetMyRentals([FromQuery] GetMyRentalsRequest request)
     {
         Result<GetMyRentalsResponse> result = await mediator.Send(request);
+
+        return result.ToHttpResponse();
+    }
+
+    [HttpGet("me/{id:guid}")]
+    [Authorize("EveryonePolicy")]
+    public async Task<IActionResult> GetMyRentalById(Guid id)
+    {
+        GetMyRentalByIdRequest request = new(id);
+
+        Result<GetMyRentalByIdResponse> result = await mediator.Send(request);
 
         return result.ToHttpResponse();
     }

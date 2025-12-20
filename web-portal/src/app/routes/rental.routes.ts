@@ -4,8 +4,9 @@ import { vehicleDetailsResolver } from '../resolvers/vehicle.resolvers';
 import { listCouponsResolver } from '../resolvers/coupon.resolvers';
 import { listDriversResolver } from '../resolvers/driver.resolvers';
 import { listExtrasResolver } from '../resolvers/extra.resolvers';
-import { listRentalsResolver } from '../resolvers/rental.resolvers';
+import { listRentalsResolver, rentalDetailsResolver } from '../resolvers/rental.resolvers';
 import { ListRentalsComponent } from '../components/rentals/list/list-rentals.component';
+import { RentalDetailsComponent } from '../components/rentals/details/rental-details.component';
 
 export const rentalRoutes: Routes = [
   {
@@ -23,5 +24,10 @@ export const rentalRoutes: Routes = [
       drivers: listDriversResolver,
       extras: listExtrasResolver,
     },
+  },
+  {
+    path: 'details/:id',
+    component: RentalDetailsComponent,
+    resolve: { rental: rentalDetailsResolver },
   },
 ];

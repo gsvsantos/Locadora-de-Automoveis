@@ -207,6 +207,26 @@ public class RentalRepository(AppDbContext context)
         return new PagedResult<Rental>(rentals, totalCount, pageNumber, pageSize);
     }
 
+    public async Task<Rental?> GetMyByIdDistinctAsync(Guid rentalId, Guid loginUserId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Include(r => r.RentalReturn)
+            .Include(r => r.Client)
+            .Include(r => r.Driver)
+            .Include(r => r.Vehicle)
+                .ThenInclude(v => v.Group)
+            .Include(r => r.Coupon)
+                .ThenInclude(c => c!.Partner)
+            .Include(r => r.BillingPlan)
+            .Include(r => r.Extras)
+            .FirstOrDefaultAsync(r =>
+                r.Id.Equals(rentalId) &&
+                r.Client.LoginUserId.Equals(loginUserId)
+            );
+    }
+
     public async Task<List<Guid>> GetRentedVehicleIds()
     {
         return await this.records

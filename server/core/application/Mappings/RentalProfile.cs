@@ -6,6 +6,7 @@ using LocadoraDeAutomoveis.Application.Rentals.Commands.Create;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.CreateSelfRental;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetById;
+using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentalBy;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentals;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Return;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Update;
@@ -206,6 +207,12 @@ public class RentalProfile : Profile
             .ConvertUsing(src => new Rental(
                 src.StartDate,
                 src.ExpectedReturnDate
+            ));
+
+        // GetMyRentalById
+        CreateMap<Rental, GetMyRentalByIdResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetMyRentalByIdResponse(
+               ctx.Mapper.Map<ByIdRentalDto>(src)
             ));
     }
 }

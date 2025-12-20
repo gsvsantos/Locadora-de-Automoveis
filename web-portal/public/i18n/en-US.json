@@ -128,13 +128,13 @@
     }
   },
   "vehicleCard": {
-    "dailyRateLabel": "Daily rate from",
     "rentButton": "Rent Now",
     "transmission": {
       "manual": "Manual",
       "automatic": "Automatic"
     },
-    "seats": "{{count}} Seats"
+    "seats": "{{ count }} Seats",
+    "kilometers": "{{ km }} Kilometers"
   },
   "search": {
     "results": {
@@ -283,6 +283,33 @@
       "empty": {
         "title": "No rentals found",
         "subtitle": "Try adjusting your filters or create a new rental."
+      }
+    },
+    "details": {
+      "card": {
+        "buttons": {
+          "back": "Back"
+        },
+        "sections": {
+          "summary": "Summary",
+          "plan": "Billing Plan",
+          "extras": "Extras",
+          "return": "Return"
+        },
+        "status": {
+          "active": "Active",
+          "returned": "Returned"
+        },
+        "label": {
+          "startDate": "Pick-up Date",
+          "expectedReturnDate": "Return Date",
+          "startKm": "Start Km",
+          "estimatedKilometers": "Estimated Kilometers",
+          "driver": "Driver",
+          "coupon": "Coupon",
+          "estimated": "Estimated",
+          "noExtras": "No extras selected."
+        }
       }
     }
   }

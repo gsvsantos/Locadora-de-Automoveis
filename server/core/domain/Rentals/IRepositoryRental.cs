@@ -44,5 +44,7 @@ public interface IRepositoryRental : IRepository<Rental>
 
     Task<PagedResult<Rental>> GetMyRentalsDistinctAsync(Guid loginUserId, int pageNumber, int pageSize, string? term, Guid? tenantId, ERentalStatus? status, CancellationToken cancellationToken);
 
+    Task<Rental?> GetMyByIdDistinctAsync(Guid rentalId, Guid loginUserId);
+
     Task<List<Guid>> GetRentedVehicleIds();
 }

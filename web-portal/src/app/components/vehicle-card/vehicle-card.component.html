@@ -25,14 +25,13 @@
         <span>{{ t('seats', { count: 5 }) }}</span> 
         implementar assentos no cadastro de veículo -->
       </div>
+      <div class="spec-item">
+        <span class="material-icons">route</span>
+        <span>{{ t('kilometers', { km: vehicle.kilometers }) }}</span>
+      </div>
     </div>
 
     <div class="footer">
-      <div class="price">
-        <!-- <span class="label">{{ t('dailyRateLabel') }}</span>
-        trazer preços dos planos deste veículo -->
-      </div>
-
       <gs-buttons
         [buttonType]="buttonType.Default"
         [text]="t('rentButton')"

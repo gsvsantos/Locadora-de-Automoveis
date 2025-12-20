@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { IdApiResponse, ApiResponseDto } from '../models/api.models';
 import {
@@ -27,7 +27,7 @@ export class RentalService {
   }
 
   public getById(id: string): Observable<RentalDetailsDto> {
-    const url: string = `${this.apiUrl}/get/${id}`;
+    const url: string = `${this.apiUrl}/me/${id}`;
 
     return this.http.get<ApiResponseDto>(url).pipe(
       map(mapApiResponse<RentalDetailsApiDto>),
@@ -40,7 +40,6 @@ export class RentalService {
 
     return this.http.get<ApiResponseDto>(url, {}).pipe(
       map(mapApiResponse<ListClientRentalDto>),
-      tap((res) => console.log(res)),
       map((res) => res.rentals),
     );
   }
@@ -60,6 +59,7 @@ export class RentalService {
       billingPlanType: apiRental.billingPlanType,
       billingPlan: apiRental.billingPlan,
       returnDate: apiRental.returnDate,
+      rentalReturn: apiRental.rentalReturn,
       baseRentalPrice: apiRental.baseRentalPrice,
       finalPrice: apiRental.finalPrice,
       estimatedKilometers: apiRental.estimatedKilometers,
