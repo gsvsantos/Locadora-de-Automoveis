@@ -13,12 +13,12 @@
           "confirmPassword": "Confirm Password"
         },
         "label": {
-          "userName": "Username",
-          "fullName": "Full Name",
-          "email": "Email",
-          "phoneNumber": "Phone Number",
-          "password": "Password",
-          "confirmPassword": "Confirm Password"
+          "userName": "Choose a username",
+          "fullName": "Your full name",
+          "email": "name@example.com",
+          "phoneNumber": "(99) 99999-9999",
+          "password": "Min. 6 characters",
+          "confirmPassword": "Repeat password"
         },
         "errors": {
           "userNameRequired": "Username is required.",
@@ -68,22 +68,21 @@
     "reset-password": {
       "title": "Change Password",
       "label": {
-        "currentPassword": "Current Password",
         "newPassword": "New Password",
         "confirmNewPassword": "Confirm New Password"
       },
       "errors": {
         "required": "Field is required.",
         "minLength": "Password must be at least 6 characters.",
-        "mismatch": "New passwords do not match.",
-        "samePassword": "The current and new password are the same."
+        "mismatch": "New passwords do not match."
       },
       "buttons": {
-        "change": "Confirm"
+        "change": "Set New Password"
       }
     },
     "forgot-password": {
       "title": "Forgot Password?",
+      "subtitle": "Enter your email to receive a recovery link.",
       "placeholder": {
         "email": "Email Address"
       },
@@ -95,8 +94,8 @@
         "emailLength": "Please enter a valid email address."
       },
       "buttons": {
-        "login": "Already have an account?",
-        "change": "Send Recovery Link"
+        "change": "Send Recovery Link",
+        "back": "Back to Login"
       }
     }
   },

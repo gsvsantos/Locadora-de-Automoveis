@@ -1,0 +1,319 @@
+{
+  "auth": {
+    "register": {
+      "card": {
+        "title": "Criar conta",
+        "subtitle": "Junte-se a nós e comece a alugar hoje mesmo",
+        "placeholder": {
+          "fullName": "Seu nome completo",
+          "email": "nome@exemplo.com",
+          "userName": "Escolha um nome de usuário",
+          "phoneNumber": "(99) 99999-9999",
+          "password": "Mín. 6 caracteres",
+          "confirmPassword": "Repita a senha"
+        },
+        "label": {
+          "userName": "Nome de usuário",
+          "fullName": "Nome completo",
+          "email": "Endereço de e-mail",
+          "phoneNumber": "Telefone (ex.: (99) 99999-9999)",
+          "password": "Senha",
+          "confirmPassword": "Confirmar senha"
+        },
+        "errors": {
+          "userNameRequired": "Nome de usuário é obrigatório.",
+          "userNameLength": "O nome de usuário deve ter pelo menos 5 caracteres.",
+          "fullNameRequired": "Nome completo é obrigatório.",
+          "fullNameLength": "O nome completo deve ter pelo menos 3 caracteres.",
+          "fullNamePattern": "O nome completo contém caracteres inválidos.",
+          "emailRequired": "E-mail é obrigatório.",
+          "emailLength": "Informe um e-mail válido.",
+          "phoneNumberRequired": "Telefone é obrigatório.",
+          "phoneNumberPattern": "Formato de telefone inválido.",
+          "passwordRequired": "Senha é obrigatória.",
+          "passwordLength": "A senha deve ter pelo menos 6 caracteres.",
+          "passwordMustMatch": "As senhas não coincidem."
+        },
+        "buttons": {
+          "confirm": "Registrar",
+          "login": "Já tem uma conta?"
+        }
+      }
+    },
+    "login": {
+      "card": {
+        "title": "Bem-vindo de volta",
+        "subtitle": "Entre na sua conta para continuar",
+        "placeholder": {
+          "userName": "Informe seu e-mail ou nome de usuário",
+          "password": "Informe sua senha"
+        },
+        "label": {
+          "userName": "E-mail ou nome de usuário",
+          "password": "Senha"
+        },
+        "errors": {
+          "userNameRequired": "Nome de usuário é obrigatório.",
+          "userNameLength": "O nome de usuário deve ter pelo menos 5 caracteres.",
+          "passwordRequired": "Senha é obrigatória.",
+          "passwordLength": "A senha deve ter pelo menos 6 caracteres."
+        },
+        "buttons": {
+          "confirm": "Entrar",
+          "register": "Criar uma conta",
+          "password": "Esqueceu a senha?"
+        }
+      }
+    },
+    "reset-password": {
+      "title": "Redefinir senha",
+      "label": {
+        "newPassword": "Nova senha",
+        "confirmNewPassword": "Confirmar nova senha"
+      },
+      "errors": {
+        "required": "Campo obrigatório.",
+        "minLength": "A senha deve ter pelo menos 6 caracteres.",
+        "mismatch": "As novas senhas não coincidem."
+      },
+      "buttons": {
+        "change": "Definir nova senha"
+      }
+    },
+    "forgot-password": {
+      "title": "Esqueceu a senha?",
+      "subtitle": "Informe seu e-mail para receber um link de recuperação.",
+      "placeholder": {
+        "email": "Endereço de e-mail"
+      },
+      "label": {
+        "email": "Endereço de e-mail"
+      },
+      "errors": {
+        "emailRequired": "E-mail é obrigatório.",
+        "emailLength": "Informe um endereço de e-mail válido."
+      },
+      "buttons": {
+        "change": "Enviar link de recuperação",
+        "login": "Voltar para o login"
+      }
+    }
+  },
+  "navbar": {
+    "logo": "Locadora de Veículos",
+    "home": "Início",
+    "myRentals": "Minhas locações",
+    "login": "Entrar",
+    "register": "Cadastrar-se",
+    "profile": "Meu perfil",
+    "logout": "Sair",
+    "welcome": "Olá",
+    "footerRights": "Locadora de Veículos. Todos os direitos reservados."
+  },
+  "home": {
+    "searchPlaceholder": "Busque por marca ou modelo...",
+    "noVehiclesFound": "Nenhum veículo encontrado para os critérios selecionados.",
+    "loading": "Carregando veículos disponíveis...",
+    "filters": {
+      "allGroups": "Todos os grupos",
+      "allFuels": "Todos os tipos de combustível"
+    },
+    "fuel": {
+      "Gasoline": "Gasolina",
+      "Gas": "Gás",
+      "Diesel": "Diesel",
+      "Alcohol": "Álcool"
+    },
+    "pagination": {
+      "prev": "Anterior",
+      "next": "Próxima",
+      "info": "Página {{page}} de {{total}}"
+    }
+  },
+  "vehicleCard": {
+    "rentButton": "Alugar agora",
+    "transmission": {
+      "manual": "Manual",
+      "automatic": "Automático"
+    },
+    "seats": "{{ count }} assentos",
+    "kilometers": "{{ km }} quilômetros"
+  },
+  "search": {
+    "results": {
+      "title": "Veículos disponíveis",
+      "priceFrom": "A partir de",
+      "perDay": "/ dia",
+      "bookButton": "Reservar agora",
+      "notFound": "Nenhum veículo encontrado para essas datas."
+    },
+    "filters": {
+      "title": "Filtros",
+      "group": "Categoria",
+      "price": "Faixa de preço"
+    }
+  },
+  "checkout": {
+    "steps": {
+      "details": "Detalhes da locação",
+      "extras": "Extras e seguros",
+      "summary": "Resumo e pagamento"
+    },
+    "vehicle": {
+      "group": "Grupo",
+      "transmission": "Transmissão",
+      "fuel": "Combustível",
+      "seats": "Assentos"
+    },
+    "billing": {
+      "planLabel": "Escolha um plano",
+      "daily": "Plano diário (Km + diária)",
+      "controlled": "Plano controlado (limite fixo)",
+      "free": "Plano livre (Km ilimitado)"
+    },
+    "extras": {
+      "title": "Adicionar serviços opcionais",
+      "dailyCost": "por dia",
+      "fixedCost": "preço fixo"
+    },
+    "summary": {
+      "title": "Resumo da reserva",
+      "total": "Total estimado",
+      "confirmButton": "Confirmar reserva"
+    },
+    "success": {
+      "title": "Reserva confirmada!",
+      "message": "Seu carro está reservado. Enviamos os detalhes para o seu e-mail.",
+      "button": "Ir para Minhas locações"
+    }
+  },
+  "myRentals": {
+    "title": "Minhas locações",
+    "tabs": {
+      "active": "Ativas / futuras",
+      "history": "Histórico"
+    },
+    "card": {
+      "pickup": "Retirada",
+      "return": "Devolução",
+      "total": "Total",
+      "status": "Status",
+      "actions": {
+        "details": "Ver detalhes"
+      }
+    },
+    "empty": "Você ainda não alugou nenhum veículo."
+  },
+  "account": {
+    "personalInfo": "Informações pessoais",
+    "manageYourData": "Gerencie os dados do seu perfil e contato",
+    "fields": {
+      "fullName": "Nome completo",
+      "email": "Endereço de e-mail",
+      "phone": "Telefone",
+      "document": "Documento (CPF/CNPJ)"
+    }
+  },
+  "rentals": {
+    "createSelf": {
+      "card": {
+        "title": "Conclua sua reserva",
+        "subtitle": "Revise os detalhes do veículo e escolha as opções de locação abaixo.",
+        "section": {
+          "vehicle": "Veículo selecionado",
+          "driver": "Dados do condutor",
+          "datesAndPlan": "Datas e plano de cobrança",
+          "extras": "Extras e descontos"
+        },
+        "label": {
+          "driver": "Quem vai dirigir?",
+          "startDate": "Data de retirada",
+          "expectedReturnDate": "Data de devolução",
+          "billingPlanType": "Plano de cobrança",
+          "estimatedKilometers": "Quilometragem estimada",
+          "coupon": "Código do cupom",
+          "extras": "Extras opcionais"
+        },
+        "placeholder": {
+          "driver": "Selecione o condutor...",
+          "billingPlanType": "Selecione um plano...",
+          "estimatedKilometers": "Ex.: 400",
+          "coupon": "Selecione um cupom (opcional)"
+        },
+        "plan": {
+          "daily": "Plano diário (Tarifa + Km)",
+          "controlled": "Plano controlado (limite fixo)",
+          "free": "Plano livre (Km ilimitado)"
+        },
+        "errors": {
+          "vehicleNotFound": "Não foi possível carregar os detalhes do veículo.",
+          "driverRequired": "Selecione um condutor.",
+          "startDateRequired": "Data de retirada é obrigatória.",
+          "expectedReturnDateRequired": "Data de devolução é obrigatória.",
+          "billingPlanTypeRequired": "Você deve selecionar um plano de cobrança.",
+          "estimatedKilometersRequired": "Informe a quilometragem estimada para este plano."
+        },
+        "buttons": {
+          "back": "Voltar para a lista",
+          "confirm": "Confirmar locação"
+        }
+      }
+    },
+    "list": {
+      "header": {
+        "title": "Minhas locações"
+      },
+      "buttons": {
+        "register": "Nova locação"
+      },
+      "label": {
+        "billingPlan": "Plano de cobrança",
+        "estimatedKilometers": "Quilometragem estimada",
+        "startDate": "Data de retirada",
+        "expectedReturnDate": "Data de devolução",
+        "returnDate": "Devolvido em",
+        "startKm": "Km inicial",
+        "driver": "Condutor",
+        "extras": "Extras",
+        "estimated": "Estimado",
+        "final": "Final"
+      },
+      "status": {
+        "Open": "Aberta",
+        "Closed": "Fechada",
+        "Canceled": "Cancelada"
+      },
+      "empty": {
+        "title": "Nenhuma locação encontrada",
+        "subtitle": "Tente ajustar seus filtros ou crie uma nova locação."
+      }
+    },
+    "details": {
+      "card": {
+        "buttons": {
+          "back": "Voltar"
+        },
+        "sections": {
+          "summary": "Resumo",
+          "plan": "Plano de cobrança",
+          "extras": "Extras",
+          "return": "Devolução"
+        },
+        "status": {
+          "active": "Ativa",
+          "returned": "Devolvida"
+        },
+        "label": {
+          "startDate": "Data de retirada",
+          "expectedReturnDate": "Data de devolução",
+          "startKm": "Km inicial",
+          "estimatedKilometers": "Quilometragem estimada",
+          "driver": "Condutor",
+          "coupon": "Cupom",
+          "estimated": "Estimado",
+          "noExtras": "Nenhum extra selecionado."
+        }
+      }
+    }
+  }
+}

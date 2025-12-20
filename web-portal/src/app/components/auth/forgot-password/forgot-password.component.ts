@@ -41,8 +41,13 @@ export class ForgotPasswordComponent {
   public forgotPassword(): void {
     if (this.formGroup.invalid) return;
 
-    const forgotPasswordModel: ForgotPasswordRequestDto = this.formGroup
+    const forgotPasswordModelPartial: ForgotPasswordRequestDto = this.formGroup
       .value as ForgotPasswordRequestDto;
+
+    const forgotPasswordModel: ForgotPasswordRequestDto = {
+      email: forgotPasswordModelPartial.email,
+      isPortal: true,
+    };
 
     const forgetPasswordObserver: PartialObserver<void> = {
       error: (err: string) => (console.log(err), this.notificationService.error(err)),

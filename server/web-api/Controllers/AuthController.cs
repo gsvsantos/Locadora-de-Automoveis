@@ -189,6 +189,7 @@ public class AuthController(
 
         return ResultAndClearCookie();
     }
+
     [HttpPost("forgot-password")]
     public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
     {

@@ -4,5 +4,6 @@ using MediatR;
 namespace LocadoraDeAutomoveis.Application.Auth.Commands.ForgotPassword;
 
 public record ForgotPasswordRequest(
-    string Email
+    string Email,
+    bool IsPortal
 ) : IRequest<Result>;

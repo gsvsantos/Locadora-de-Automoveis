@@ -1,42 +1,9 @@
 {
   "auth": {
-    "login": {
-      "card": {
-        "title": "Welcome Back",
-        "subtitle": "Sign in to your account to continue",
-        "label": {
-          "userName": "Email or Username",
-          "password": "Password"
-        },
-        "placeholder": {
-          "userName": "Enter your email or username",
-          "password": "Enter your password"
-        },
-        "errors": {
-          "userNameRequired": "Username is required.",
-          "userNameLength": "Username must be at least 5 characters long.",
-          "passwordRequired": "Password is required.",
-          "passwordLength": "Password must be at least 6 characters long."
-        },
-        "buttons": {
-          "confirm": "Sign In",
-          "register": "Create an account",
-          "forgotPassword": "Forgot password?"
-        }
-      }
-    },
     "register": {
       "card": {
         "title": "Create Account",
         "subtitle": "Join us and start renting today",
-        "label": {
-          "fullName": "Full Name",
-          "email": "Email Address",
-          "userName": "Username",
-          "phoneNumber": "Phone Number",
-          "password": "Password",
-          "confirmPassword": "Confirm Password"
-        },
         "placeholder": {
           "fullName": "Your full name",
           "email": "name@example.com",
@@ -44,6 +11,14 @@
           "phoneNumber": "(99) 99999-9999",
           "password": "Min. 6 characters",
           "confirmPassword": "Repeat password"
+        },
+        "label": {
+          "userName": "Username",
+          "fullName": "Full Name",
+          "email": "Email Address",
+          "phoneNumber": "Phone Number (e.g., (99) 99999-9999)",
+          "password": "Password",
+          "confirmPassword": "Confirm Password"
         },
         "errors": {
           "userNameRequired": "Username is required.",
@@ -65,19 +40,29 @@
         }
       }
     },
-    "forgot-password": {
-      "title": "Forgot Password?",
-      "subtitle": "Enter your email to receive a recovery link.",
-      "label": {
-        "email": "Email Address"
-      },
-      "buttons": {
-        "change": "Send Recovery Link",
-        "back": "Back to Login"
-      },
-      "errors": {
-        "emailRequired": "Email is required.",
-        "emailLength": "Please enter a valid email address."
+    "login": {
+      "card": {
+        "title": "Welcome Back",
+        "subtitle": "Sign in to your account to continue",
+        "placeholder": {
+          "userName": "Enter your email or username",
+          "password": "Enter your password"
+        },
+        "label": {
+          "userName": "Email or Username",
+          "password": "Password"
+        },
+        "errors": {
+          "userNameRequired": "Username is required.",
+          "userNameLength": "Username must be at least 5 characters long.",
+          "passwordRequired": "Password is required.",
+          "passwordLength": "Password must be at least 6 characters long."
+        },
+        "buttons": {
+          "confirm": "Sign In",
+          "register": "Create an account",
+          "password": "Forgot password?"
+        }
       }
     },
     "reset-password": {
@@ -93,6 +78,24 @@
       },
       "buttons": {
         "change": "Set New Password"
+      }
+    },
+    "forgot-password": {
+      "title": "Forgot Password?",
+      "subtitle": "Enter your email to receive a recovery link.",
+      "placeholder": {
+        "email": "Email Address"
+      },
+      "label": {
+        "email": "Email Address"
+      },
+      "errors": {
+        "emailRequired": "Email is required.",
+        "emailLength": "Please enter a valid email address."
+      },
+      "buttons": {
+        "change": "Send Recovery Link",
+        "login": "Back to Login"
       }
     }
   },

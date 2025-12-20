@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { Vehicle } from '../../models/vehicle.models';
@@ -8,7 +8,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 @Component({
   selector: 'app-vehicle-card',
   standalone: true,
-  imports: [CommonModule, RouterLink, CurrencyPipe, TranslocoModule, GsButtons],
+  imports: [CommonModule, RouterLink, TranslocoModule, GsButtons],
   templateUrl: './vehicle-card.component.html',
   styleUrl: './vehicle-card.component.scss',
 })

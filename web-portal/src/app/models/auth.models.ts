@@ -23,6 +23,7 @@ export interface ResetPasswordRequestDto {
 
 export interface ForgotPasswordRequestDto {
   email: string;
+  isPortal: boolean;
 }
 
 export interface ChangePasswordRequestDto {

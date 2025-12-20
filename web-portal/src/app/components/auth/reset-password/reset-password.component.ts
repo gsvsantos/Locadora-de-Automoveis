@@ -69,14 +69,14 @@ export class ResetPasswordComponent {
   public resetPassword(email: string, token: string): void {
     if (this.formGroup.invalid) return;
 
-    const resetPasswordModelPartia: ResetPasswordRequestDto = this.formGroup
+    const resetPasswordModelPartial: ResetPasswordRequestDto = this.formGroup
       .value as ResetPasswordRequestDto;
 
     const resetPasswordModel: ResetPasswordRequestDto = {
       email: email,
       token: token,
-      newPassword: resetPasswordModelPartia.newPassword,
-      confirmNewPassword: resetPasswordModelPartia.confirmNewPassword,
+      newPassword: resetPasswordModelPartial.newPassword,
+      confirmNewPassword: resetPasswordModelPartial.confirmNewPassword,
     };
 
     const resetPasswordObserver: PartialObserver<void> = {

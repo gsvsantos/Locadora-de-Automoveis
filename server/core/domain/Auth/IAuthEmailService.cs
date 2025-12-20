@@ -2,7 +2,7 @@
 
 public interface IAuthEmailService
 {
-    Task SendForgotPasswordEmailAsync(string email, string userName, string resetToken);
+    Task SendForgotPasswordEmailAsync(string email, string userName, string resetToken, bool isPortal);
     Task ScheduleClientRegisterWelcome(string email, string fullName);
     Task ScheduleClientGoogleWelcome(string email, string fullName, string resetToken);
     Task ScheduleBusinessRegisterWelcome(string email, string fullName);

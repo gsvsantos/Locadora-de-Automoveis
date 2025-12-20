@@ -10,12 +10,21 @@ public class AuthEmailService(
     IEmailTemplateService templateService
 ) : IAuthEmailService
 {
-    public async Task SendForgotPasswordEmailAsync(string email, string userName, string resetToken)
+    public async Task SendForgotPasswordEmailAsync(string email, string userName, string resetToken, bool toPortal)
     {
         string encodedToken = Uri.EscapeDataString(resetToken);
         string encodedEmail = Uri.EscapeDataString(email);
 
-        string link = $"http://localhost:4200/auth/reset-password?token={encodedToken}&email={encodedEmail}";
+        string link = "";
+
+        if (!toPortal)
+        {
+            link = $"http://localhost:4200/auth/reset-password?token={encodedToken}&email={encodedEmail}";
+        }
+        else
+        {
+            link = $"http://localhost:4201/auth/reset-password?token={encodedToken}&email={encodedEmail}";
+        }
 
         Dictionary<string, string> placeholders = new()
         {

@@ -1,10 +1,8 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
 import { AuthenticatedUserModel } from '../../../models/auth.models';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { SlideToggleComponent } from '../slide-toggle/slide-toggle.component';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
-import { MultiSearchComponent } from '../../search/multi/multi-search.component';
 import { LanguageSelector } from '../language-selector/language-selector';
 import { TranslocoModule } from '@jsverse/transloco';
 import { AuthService } from '../../../services/auth.service';
@@ -15,12 +13,10 @@ import { LocalStorageService } from '../../../services/local-storage.service';
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
   imports: [
-    AsyncPipe,
     RouterLink,
     RouterLinkActive,
     SlideToggleComponent,
     GsButtons,
-    MultiSearchComponent,
     TranslocoModule,
     LanguageSelector,
   ],
