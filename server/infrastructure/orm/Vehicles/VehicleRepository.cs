@@ -17,7 +17,6 @@ public class VehicleRepository(AppDbContext context)
     public async Task<List<Vehicle>> GetByGroupIdAsync(Guid groupId)
     {
         return await this.records
-            .Include(v => v.User)
             .Include(v => v.Group)
             .Where(v => v.GroupId.Equals(groupId))
             .ToListAsync();
@@ -82,15 +81,21 @@ public class VehicleRepository(AppDbContext context)
     public override async Task<List<Vehicle>> GetAllAsync()
     {
         return await this.records
-            .Include(v => v.User)
             .Include(v => v.Group)
             .ToListAsync();
+    }
+
+    public async Task<Vehicle?> GetByIdDistinctAsync(Guid id)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .Include(v => v.Group)
+            .FirstOrDefaultAsync(v => v.Id.Equals(id));
     }
 
     public override async Task<List<Vehicle>> GetAllAsync(int quantity)
     {
         return await this.records
-            .Include(v => v.User)
             .Include(v => v.Group)
             .Take(quantity).ToListAsync();
     }
@@ -98,7 +103,6 @@ public class VehicleRepository(AppDbContext context)
     public override async Task<List<Vehicle>> GetAllAsync(bool isActive)
     {
         return await this.records
-            .Include(v => v.User)
             .Include(v => v.Group)
             .Where(v => v.IsActive == isActive)
             .ToListAsync();
@@ -107,7 +111,6 @@ public class VehicleRepository(AppDbContext context)
     public override async Task<List<Vehicle>> GetAllAsync(int quantity, bool isActive)
     {
         return await this.records
-            .Include(v => v.User)
             .Include(v => v.Group)
             .Take(quantity)
             .Where(v => v.IsActive == isActive)
@@ -117,7 +120,6 @@ public class VehicleRepository(AppDbContext context)
     public override async Task<Vehicle?> GetByIdAsync(Guid entityId)
     {
         return await this.records
-            .Include(v => v.User)
             .Include(v => v.Group)
             .FirstOrDefaultAsync(v => v.Id.Equals(entityId));
     }

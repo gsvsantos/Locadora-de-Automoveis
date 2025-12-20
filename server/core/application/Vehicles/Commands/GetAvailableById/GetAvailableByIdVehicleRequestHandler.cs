@@ -8,19 +8,19 @@ using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAvailableById;
 
-public class GetAvailableByIdRequestHandler(
+public class GetAvailableByIdVehicleRequestHandler(
     IMapper mapper,
     IRepositoryVehicle repositoryVehicle,
     IRepositoryRental repositoryRental,
-    ILogger<GetAvailableByIdRequestHandler> logger
-) : IRequestHandler<GetAvailableByIdRequest, Result<GetAvailableByIdResponse>>
+    ILogger<GetAvailableByIdVehicleRequestHandler> logger
+) : IRequestHandler<GetAvailableByIdVehicleRequest, Result<GetAvailableByIdVehicleResponse>>
 {
-    public async Task<Result<GetAvailableByIdResponse>> Handle(
-        GetAvailableByIdRequest request, CancellationToken cancellationToken)
+    public async Task<Result<GetAvailableByIdVehicleResponse>> Handle(
+        GetAvailableByIdVehicleRequest request, CancellationToken cancellationToken)
     {
         try
         {
-            Vehicle? selectedVehicle = await repositoryVehicle.GetByIdAsync(request.Id);
+            Vehicle? selectedVehicle = await repositoryVehicle.GetByIdDistinctAsync(request.Id);
 
             if (selectedVehicle is null || !selectedVehicle.IsActive)
             {
@@ -34,7 +34,7 @@ public class GetAvailableByIdRequestHandler(
                 return Result.Fail(VehicleErrorResults.VehicleUnavailable(request.Id));
             }
 
-            GetAvailableByIdResponse response = mapper.Map<GetAvailableByIdResponse>(selectedVehicle);
+            GetAvailableByIdVehicleResponse response = mapper.Map<GetAvailableByIdVehicleResponse>(selectedVehicle);
 
             return Result.Ok(response);
         }

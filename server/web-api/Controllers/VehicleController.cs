@@ -17,13 +17,13 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 
 [ApiController]
 [Route("api/vehicle")]
-[Authorize("AdminOrEmployeePolicy")]
 public class VehicleController(
     IMediator mediator,
     IMapper mapper
 ) : ControllerBase
 {
     [HttpPost("create")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> Create([FromForm] CreateVehicleRequest request)
     {
         Result<CreateVehicleResponse> result = await mediator.Send(request);
@@ -32,6 +32,7 @@ public class VehicleController(
     }
 
     [HttpGet("get-all")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> GetAll([FromQuery] GetAllVehicleRequestPartial partialRequest)
     {
         GetAllVehicleRequest request = mapper.Map<GetAllVehicleRequest>(partialRequest);
@@ -42,6 +43,7 @@ public class VehicleController(
     }
 
     [HttpGet("get/{id:guid}")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> GetById(Guid id)
     {
         GetByIdVehicleRequest request = new(id);
@@ -52,6 +54,7 @@ public class VehicleController(
     }
 
     [HttpPut("update/{id:guid}")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> Update(Guid id, [FromForm] UpdateVehicleRequestPartial partialRequest)
     {
 
@@ -63,6 +66,7 @@ public class VehicleController(
     }
 
     [HttpDelete("delete/{id:guid}")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> Delete(Guid id)
     {
         DeleteVehicleRequest request = new(id);
@@ -90,9 +94,9 @@ public class VehicleController(
     [Authorize("EveryonePolicy")]
     public async Task<IActionResult> GetVehicleForRental(Guid id)
     {
-        GetAvailableByIdRequest request = new(id);
+        GetAvailableByIdVehicleRequest request = new(id);
 
-        Result<GetAvailableByIdResponse> result = await mediator.Send(request);
+        Result<GetAvailableByIdVehicleResponse> result = await mediator.Send(request);
 
         return result.ToHttpResponse();
     }

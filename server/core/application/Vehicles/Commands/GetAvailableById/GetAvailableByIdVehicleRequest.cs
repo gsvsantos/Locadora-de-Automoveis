@@ -3,6 +3,6 @@ using MediatR;
 
 namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAvailableById;
 
-public record GetAvailableByIdRequest(
+public record GetAvailableByIdVehicleRequest(
     Guid Id
-) : IRequest<Result<GetAvailableByIdResponse>>;
+) : IRequest<Result<GetAvailableByIdVehicleResponse>>;

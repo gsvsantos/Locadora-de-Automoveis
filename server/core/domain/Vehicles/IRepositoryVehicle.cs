@@ -11,4 +11,6 @@ public interface IRepositoryVehicle : IRepository<Vehicle>
     Task<List<Vehicle>> SearchAsync(string term, CancellationToken ct = default);
 
     Task<PagedResult<Vehicle>> GetAllAvailableAsync(int pageNumber, int pageSize, string? term, Guid? groupId, EFuelType? fuelType, CancellationToken cancellationToken);
+
+    Task<Vehicle?> GetByIdDistinctAsync(Guid id);
 }

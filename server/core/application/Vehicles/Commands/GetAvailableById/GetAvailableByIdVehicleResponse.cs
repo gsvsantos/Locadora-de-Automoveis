@@ -2,6 +2,6 @@
 
 namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAvailableById;
 
-public record GetAvailableByIdResponse(
+public record GetAvailableByIdVehicleResponse(
     VehicleDto Vehicle
 );

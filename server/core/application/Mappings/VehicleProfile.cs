@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.Create;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAvailableById;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Groups;
@@ -103,5 +104,11 @@ public class VehicleProfile : Profile
                 src.img
             )
             { Id = src.r.Id });
+
+        // GetAvailableByIdVehicle
+        CreateMap<Vehicle, GetAvailableByIdVehicleResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetAvailableByIdVehicleResponse(
+               ctx.Mapper.Map<VehicleDto>(src)
+            ));
     }
 }
