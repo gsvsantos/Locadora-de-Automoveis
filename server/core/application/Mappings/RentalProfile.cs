@@ -3,6 +3,7 @@ using LocadoraDeAutomoveis.Application.BillingPlans.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Partners.Commands.GetCoupons;
 using LocadoraDeAutomoveis.Application.RentalExtras.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Create;
+using LocadoraDeAutomoveis.Application.Rentals.Commands.CreateSelfRental;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Return;
@@ -178,5 +179,12 @@ public class RentalProfile : Profile
                 src.ExpectedReturnDate
             )
             { Id = src.Id });
+
+        // CreateSelf
+        CreateMap<CreateSelfRentalRequest, Rental>()
+            .ConvertUsing(src => new Rental(
+                src.StartDate,
+                src.ExpectedReturnDate
+            ));
     }
 }

@@ -24,6 +24,11 @@ export const routes: Routes = [
     canActivate: [authenticatedUserGuard],
   },
   {
+    path: 'rentals',
+    loadChildren: () => import('./rental.routes').then((route) => route.rentalRoutes),
+    canActivate: [authenticatedUserGuard],
+  },
+  {
     path: '**',
     redirectTo: 'home',
   },

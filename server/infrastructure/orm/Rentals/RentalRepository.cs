@@ -37,6 +37,16 @@ public class RentalRepository(AppDbContext context)
             r.Status != ERentalStatus.Open);
     }
 
+    public async Task<bool> HasActiveRentalsByVehicleDistinctAsync(Guid vehicleId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .AnyAsync(r =>
+                r.VehicleId.Equals(vehicleId) &&
+                r.Status == ERentalStatus.Open
+            );
+    }
+
     public async Task<bool> HasActiveRentalsByVehicle(Guid vehicleId)
     {
         return await this.records.AnyAsync(r =>
@@ -63,6 +73,16 @@ public class RentalRepository(AppDbContext context)
         return await this.records.AnyAsync(r =>
             r.ClientId.Equals(clientId) &&
             r.Status != ERentalStatus.Open);
+    }
+
+    public async Task<bool> HasActiveRentalsByDriverDistinctAsync(Guid driverId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .AnyAsync(r =>
+                r.DriverId.Equals(driverId) &&
+                r.Status == ERentalStatus.Open
+            );
     }
 
     public async Task<bool> HasActiveRentalsByDriver(Guid driverId)
@@ -92,10 +112,20 @@ public class RentalRepository(AppDbContext context)
             r.Extras.Any(s => s.Id.Equals(extraId)));
     }
 
-    public async Task<bool> HasClientUsedCoupon(Guid clientId, Guid couponId)
+    public async Task<bool> HasCouponUsedByClientDistinctAsync(Guid clientId, Guid couponId)
     {
         return await this.records
+            .IgnoreQueryFilters()
             .AnyAsync(r =>
+                r.ClientId.Equals(clientId) &&
+                r.CouponId.Equals(couponId) &&
+                r.Status != ERentalStatus.Canceled
+            );
+    }
+
+    public async Task<bool> HasClientUsedCoupon(Guid clientId, Guid couponId)
+    {
+        return await this.records.AnyAsync(r =>
                 r.ClientId.Equals(clientId) &&
                 r.CouponId.Equals(couponId) &&
                 r.Status != ERentalStatus.Canceled);
@@ -164,7 +194,6 @@ public class RentalRepository(AppDbContext context)
     private IQueryable<Rental> WithIncludes()
     {
         return this.records
-            .Include(r => r.User)
             .Include(r => r.RentalReturn)
             .Include(r => r.Employee)
             .Include(r => r.Client)

@@ -12,6 +12,8 @@ public interface IRepositoryRental : IRepository<Rental>
 
     Task<bool> HasRentalHistoryByBillingPlan(Guid BillingPlanId);
 
+    Task<bool> HasActiveRentalsByVehicleDistinctAsync(Guid vehicleId);
+
     Task<bool> HasActiveRentalsByVehicle(Guid vehicleId);
 
     Task<bool> HasRentalHistoryByVehicle(Guid vehicleId);
@@ -20,6 +22,8 @@ public interface IRepositoryRental : IRepository<Rental>
 
     Task<bool> HasRentalHistoryByClient(Guid clientId);
 
+    Task<bool> HasActiveRentalsByDriverDistinctAsync(Guid driverId);
+
     Task<bool> HasActiveRentalsByDriver(Guid driverId);
 
     Task<bool> HasRentalHistoryByDriver(Guid driverId);
@@ -27,6 +31,8 @@ public interface IRepositoryRental : IRepository<Rental>
     Task<bool> HasActiveRentalsByRentalExtra(Guid extraId);
 
     Task<bool> HasRentalHistoryByRentalExtra(Guid extraId);
+
+    Task<bool> HasCouponUsedByClientDistinctAsync(Guid clientId, Guid couponId);
 
     Task<bool> HasActiveRentalsByCoupon(Guid couponId);
 
