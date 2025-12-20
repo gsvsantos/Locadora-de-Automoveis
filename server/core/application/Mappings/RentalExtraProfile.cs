@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LocadoraDeAutomoveis.Application.RentalExtras.Commands.Create;
 using LocadoraDeAutomoveis.Application.RentalExtras.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.RentalExtras.Commands.GetAllDistinct;
 using LocadoraDeAutomoveis.Application.RentalExtras.Commands.GetById;
 using LocadoraDeAutomoveis.Application.RentalExtras.Commands.Update;
 using LocadoraDeAutomoveis.Domain.RentalExtras;
@@ -70,5 +71,13 @@ public class RentalExtraProfile : Profile
                 src.Price
             )
             { Id = src.Id });
+
+        // GetAllDistinct
+        CreateMap<List<RentalExtra>, GetAllDistinctExtraResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetAllDistinctExtraResponse(
+                src.Count,
+                src.Select(c => ctx.Mapper.Map<RentalExtraDto>(c)).ToImmutableList()
+                    ?? ImmutableList<RentalExtraDto>.Empty
+            ));
     }
 }

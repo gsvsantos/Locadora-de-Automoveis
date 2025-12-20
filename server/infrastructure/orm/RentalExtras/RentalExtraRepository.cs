@@ -10,8 +10,27 @@ public class RentalExtraRepository(AppDbContext context)
     public async Task<List<RentalExtra>> GetManyByIds(List<Guid> ids)
     {
         return await this.records
-            .Include(re => re.User)
             .Where(re => ids.Contains(re.Id))
+            .Where(re => re.IsActive == true)
+            .ToListAsync();
+    }
+
+    public async Task<List<RentalExtra>> GetManyByTenantAndIdsDistinctAsync(Guid tenantId, List<Guid> ids)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .Where(re => ids.Contains(re.Id))
+            .Where(re => re.TenantId.Equals(tenantId))
+            .Where(re => re.IsActive == true)
+            .ToListAsync();
+    }
+
+    public async Task<List<RentalExtra>> GetAllByTenantDistinctAsync(Guid tenantId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .Where(d => d.TenantId.Equals(tenantId))
+            .Where(d => d.IsActive == true)
             .ToListAsync();
     }
 }
