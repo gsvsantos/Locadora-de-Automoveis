@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { PagedResult } from '../models/paged-result.models';
 import { ListVehiclesDto, Vehicle, VehicleDetailsApiDto } from '../models/vehicle.models';
 import { ApiResponseDto } from '../models/api.models';
@@ -39,6 +39,7 @@ export class VehicleService {
 
     return this.http.get<ApiResponseDto>(url, { params }).pipe(
       map(mapApiResponse<ListVehiclesDto>),
+      tap((res) => console.log(res)),
       map((res) => res.vehicles),
     );
   }

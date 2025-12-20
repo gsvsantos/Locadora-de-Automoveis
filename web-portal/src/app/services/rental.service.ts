@@ -1,16 +1,17 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { IdApiResponse, ApiResponseDto } from '../models/api.models';
 import {
-  Rental,
   RentalDetailsApiDto,
-  ListRentalsDto,
   RentalDetailsDto,
+  ListClientRentalDto,
+  ClientRentalDto,
   CreateSelfRentalDto,
 } from '../models/rental.models';
 import { mapApiResponse } from '../utils/map-api-response';
+import { PagedResult } from '../models/paged-result.models';
 
 @Injectable({
   providedIn: 'root',
@@ -34,20 +35,12 @@ export class RentalService {
     );
   }
 
-  public getAll(quantity?: number, isActive?: boolean): Observable<Rental[]> {
-    const url = `${this.apiUrl}/get-all`;
-    let params = new HttpParams();
+  public getAll(): Observable<PagedResult<ClientRentalDto>> {
+    const url = `${this.apiUrl}/me`;
 
-    if (quantity !== undefined && quantity > 0) {
-      params = params.set('Quantity', quantity.toString());
-    }
-
-    if (isActive !== undefined) {
-      params = params.set('IsActive', isActive.toString());
-    }
-
-    return this.http.get<ApiResponseDto>(url, { params: params }).pipe(
-      map(mapApiResponse<ListRentalsDto>),
+    return this.http.get<ApiResponseDto>(url, {}).pipe(
+      map(mapApiResponse<ListClientRentalDto>),
+      tap((res) => console.log(res)),
       map((res) => res.rentals),
     );
   }

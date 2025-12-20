@@ -255,6 +255,35 @@
           "confirm": "Confirm Rental"
         }
       }
+    },
+    "list": {
+      "header": {
+        "title": "My Rentals"
+      },
+      "buttons": {
+        "register": "New Rental"
+      },
+      "label": {
+        "billingPlan": "Billing Plan",
+        "estimatedKilometers": "Estimated Kilometers",
+        "startDate": "Pick-up Date",
+        "expectedReturnDate": "Return Date",
+        "returnDate": "Returned on",
+        "startKm": "Start Km",
+        "driver": "Driver",
+        "extras": "Extras",
+        "estimated": "Estimated",
+        "final": "Final"
+      },
+      "status": {
+        "Open": "Open",
+        "Closed": "Closed",
+        "Canceled": "Canceled"
+      },
+      "empty": {
+        "title": "No rentals found",
+        "subtitle": "Try adjusting your filters or create a new rental."
+      }
     }
   }
 }

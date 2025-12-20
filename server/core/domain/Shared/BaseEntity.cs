@@ -68,7 +68,7 @@ public abstract class BaseEntity<T>
 
     public virtual Guid GetTenantId()
     {
-        return this.TenantId.GetValueOrDefault();
+        return this.TenantId ?? Guid.Empty;
     }
 
     public abstract void Update(T updatedEntity);

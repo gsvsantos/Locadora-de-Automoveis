@@ -4,14 +4,16 @@ import { vehicleDetailsResolver } from '../resolvers/vehicle.resolvers';
 import { listCouponsResolver } from '../resolvers/coupon.resolvers';
 import { listDriversResolver } from '../resolvers/driver.resolvers';
 import { listExtrasResolver } from '../resolvers/extra.resolvers';
+import { listRentalsResolver } from '../resolvers/rental.resolvers';
+import { ListRentalsComponent } from '../components/rentals/list/list-rentals.component';
 
 export const rentalRoutes: Routes = [
-  // {
-  //   path: '',
-  //   component: ListRentalsComponent,
-  //   resolve: { rentals: listRentalsResolver },
-  //   runGuardsAndResolvers: 'paramsOrQueryParamsChange',
-  // },
+  {
+    path: '',
+    component: ListRentalsComponent,
+    resolve: { rentals: listRentalsResolver },
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+  },
   {
     path: 'new/:id',
     component: CreateSelfComponent,

@@ -1,6 +1,7 @@
 import { BillingPlanDto, BillingPlanType } from './billing-plan.models';
 import { Coupon } from './coupon.models';
 import { Extra } from './extra.models';
+import { PagedResult } from './paged-result.models';
 
 export interface RentalDto {
   startDate: Date;
@@ -28,6 +29,24 @@ export interface CreateSelfRentalDto {
   billingPlanType: BillingPlanType;
   estimatedKilometers?: number | null;
   rentalRentalExtrasIds: string[];
+}
+
+export interface ListClientRentalDto {
+  rentals: PagedResult<ClientRentalDto>;
+}
+
+export interface ClientRentalDto {
+  id: string;
+  client: RentalClientDto;
+  driver: RentalDriverDto;
+  vehicle: RentalVehicleDto;
+  returnDate: Date;
+  baseRentalPrice: number;
+  finalPrice: number;
+  rentalExtrasQuantity: number;
+  isActive: boolean;
+  status: RentalStatus;
+  tenantId: string;
 }
 
 export interface Rental extends RentalDto {
@@ -129,3 +148,5 @@ export interface RentalIndividualClientDto {
   licenseNumber: string;
   licenseValidity: Date;
 }
+
+export type RentalStatus = 'Open' | 'Completed' | 'DiCanceledesel';

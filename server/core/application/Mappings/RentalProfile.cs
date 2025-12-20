@@ -6,6 +6,7 @@ using LocadoraDeAutomoveis.Application.Rentals.Commands.Create;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.CreateSelfRental;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetById;
+using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentals;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Return;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Clients;
@@ -140,6 +141,26 @@ public class RentalProfile : Profile
                 src.Extras.Select(r => ctx.Mapper.Map<RentalExtraDto>(r)).ToImmutableList()
                 ?? ImmutableList<RentalExtraDto>.Empty,
                 src.IsActive
+            ));
+
+        CreateMap<Rental, ClientRentalDto>()
+            .ConvertUsing((src, dest, ctx) => new ClientRentalDto(
+                src.Id,
+                ctx.Mapper.Map<RentalClientDto>(src.Client),
+                ctx.Mapper.Map<RentalDriverDto>(src.Driver),
+                ctx.Mapper.Map<RentalVehicleDto>(src.Vehicle),
+                src.StartDate,
+                src.ExpectedReturnDate,
+                src.StartKm,
+                src.BillingPlanType,
+                src.ReturnDate,
+                src.BaseRentalPrice,
+                src.FinalPrice,
+                src.EstimatedKilometers,
+                src.Extras.Count,
+                src.IsActive,
+                src.Status,
+                src.GetTenantId()
             ));
 
         // HANDLERS

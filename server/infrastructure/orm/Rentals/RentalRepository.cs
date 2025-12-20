@@ -1,4 +1,5 @@
 ﻿using LocadoraDeAutomoveis.Domain.Rentals;
+using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using Microsoft.EntityFrameworkCore;
 
@@ -159,6 +160,51 @@ public class RentalRepository(AppDbContext context)
             .OrderByDescending(r => r.StartDate)
             .Take(5)
             .ToListAsync(ct);
+    }
+
+    public async Task<PagedResult<Rental>> GetMyRentalsDistinctAsync(
+        Guid loginUserId, int pageNumber,
+        int pageSize, string? term,
+        Guid? tenantId, ERentalStatus? status,
+        CancellationToken cancellationToken
+    )
+    {
+        IQueryable<Rental> query = this.records
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Include(r => r.Client)
+            .Include(r => r.Vehicle)
+            .Include(r => r.Driver)
+            .Where(r => r.IsActive)
+            .Where(r => r.Client.LoginUserId.Equals(loginUserId));
+
+        if (!string.IsNullOrWhiteSpace(term))
+        {
+            string termLower = term.Trim();
+            query = query.Where(r =>
+                r.Vehicle.Model.ToLower().Contains(termLower) ||
+                r.Vehicle.LicensePlate.ToLower().Contains(termLower));
+        }
+
+        if (tenantId.HasValue && tenantId.Value != Guid.Empty)
+        {
+            query = query.Where(r => r.TenantId.Equals(tenantId.Value));
+        }
+
+        if (status.HasValue)
+        {
+            query = query.Where(r => r.Status.Equals(status.Value));
+        }
+
+        int totalCount = await query.CountAsync(cancellationToken);
+
+        List<Rental> rentals = await query
+            .OrderByDescending(r => r.StartDate)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<Rental>(rentals, totalCount, pageNumber, pageSize);
     }
 
     public override async Task<List<Rental>> GetAllAsync()

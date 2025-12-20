@@ -41,4 +41,6 @@ public interface IRepositoryRental : IRepository<Rental>
     Task<bool> HasClientUsedCoupon(Guid clientId, Guid couponId);
 
     Task<List<Rental>> SearchAsync(string term, CancellationToken ct = default);
+
+    Task<PagedResult<Rental>> GetMyRentalsDistinctAsync(Guid loginUserId, int pageNumber, int pageSize, string? term, Guid? tenantId, ERentalStatus? status, CancellationToken cancellationToken);
 }

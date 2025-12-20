@@ -43,7 +43,7 @@ export class ShellComponent {
 
   public navLinks = [
     { label: 'home', link: '/home', icon: 'home' },
-    { label: 'myRentals', link: '/my-rentals', icon: 'key' },
+    { label: 'myRentals', link: '/rentals', icon: 'key' },
   ];
 
   public toggleMobileMenu(): void {
