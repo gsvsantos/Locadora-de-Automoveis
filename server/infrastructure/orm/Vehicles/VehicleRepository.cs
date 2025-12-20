@@ -19,6 +19,7 @@ public class VehicleRepository(AppDbContext context)
         return await this.records
             .Include(v => v.Group)
             .Where(v => v.GroupId.Equals(groupId))
+            .Where(v => v.IsActive == true)
             .ToListAsync();
     }
 
@@ -78,19 +79,20 @@ public class VehicleRepository(AppDbContext context)
         return new PagedResult<Vehicle>(items, totalCount, pageNumber, pageSize);
     }
 
-    public override async Task<List<Vehicle>> GetAllAsync()
-    {
-        return await this.records
-            .Include(v => v.Group)
-            .ToListAsync();
-    }
-
     public async Task<Vehicle?> GetByIdDistinctAsync(Guid id)
     {
         return await this.records
             .IgnoreQueryFilters()
             .Include(v => v.Group)
+            .Where(v => v.IsActive == true)
             .FirstOrDefaultAsync(v => v.Id.Equals(id));
+    }
+
+    public override async Task<List<Vehicle>> GetAllAsync()
+    {
+        return await this.records
+            .Include(v => v.Group)
+            .ToListAsync();
     }
 
     public override async Task<List<Vehicle>> GetAllAsync(int quantity)

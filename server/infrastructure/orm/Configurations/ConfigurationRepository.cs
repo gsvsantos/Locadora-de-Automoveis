@@ -10,6 +10,6 @@ public class ConfigurationRepository(AppDbContext context)
     public async Task<Configuration?> GetByTenantId(Guid tenantId)
     {
         return await this.records
-            .FirstOrDefaultAsync(c => c.TenantId == tenantId);
+            .FirstOrDefaultAsync(c => c.TenantId.Equals(tenantId));
     }
 }

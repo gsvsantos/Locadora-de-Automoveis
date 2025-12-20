@@ -17,6 +17,7 @@ public class DriverRepository(AppDbContext context)
     {
         return await this.records
             .Include(d => d.Client)
+            .Where(c => c.IsActive == true)
             .FirstOrDefaultAsync(d => d.Client.Id.Equals(clientId));
     }
 
@@ -38,6 +39,7 @@ public class DriverRepository(AppDbContext context)
             .IgnoreQueryFilters()
             .Include(d => d.Client)
             .Where(d => d.TenantId.Equals(tenantId))
+            .Where(c => c.IsActive == true)
             .FirstOrDefaultAsync(d => d.Id.Equals(entityId));
     }
 
@@ -47,6 +49,7 @@ public class DriverRepository(AppDbContext context)
             .IgnoreQueryFilters()
             .Include(d => d.Client)
             .Where(d => d.TenantId.Equals(tenantId))
+            .Where(d => d.IsActive == true)
             .ToListAsync();
     }
 

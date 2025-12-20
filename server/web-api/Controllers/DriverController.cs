@@ -63,7 +63,7 @@ public class DriverController(
 
     [HttpGet("available/vehicle/{vehicleId:guid}")]
     [Authorize("EveryonePolicy")]
-    public async Task<IActionResult> GetAll(Guid vehicleId)
+    public async Task<IActionResult> GetAllDistinct(Guid vehicleId)
     {
         GetAllDistinctDriverRequest request = new(vehicleId);
 

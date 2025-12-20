@@ -16,7 +16,7 @@ public class ClientRepository(AppDbContext context)
     public async Task<bool> ExistsByDocumentAsync(string document)
     {
         return await this.records
-            .AnyAsync(c => c.Document.Equals(document));
+            .AnyAsync(c => c.Document!.Equals(document));
     }
 
     public async Task<List<Client>> SearchAsync(string term, CancellationToken ct)
@@ -35,9 +35,9 @@ public class ClientRepository(AppDbContext context)
     public async Task<List<Client>> GetIndividualClientsFromBusinessId(Guid id, CancellationToken ct = default)
     {
         return await this.records
-            .Include(c => c.User)
             .Include(c => c.JuristicClient)
             .Where(c => c.JuristicClientId.Equals(id))
+            .Where(c => c.IsActive == true)
             .ToListAsync(ct);
     }
 
@@ -45,6 +45,7 @@ public class ClientRepository(AppDbContext context)
     {
         return await this.records
             .IgnoreQueryFilters()
-            .FirstOrDefaultAsync(e => e.UserId == userId);
+            .Where(c => c.IsActive == true)
+            .FirstOrDefaultAsync(e => e.UserId.Equals(userId));
     }
 }

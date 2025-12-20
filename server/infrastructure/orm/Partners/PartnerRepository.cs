@@ -10,7 +10,6 @@ public class PartnerRepository(AppDbContext context)
     public override async Task<List<Partner>> GetAllAsync()
     {
         return await this.records
-            .Include(p => p.User)
             .Include(p => p.Coupons)
             .ToListAsync();
     }
@@ -18,7 +17,6 @@ public class PartnerRepository(AppDbContext context)
     public override async Task<List<Partner>> GetAllAsync(int quantity)
     {
         return await this.records
-            .Include(p => p.User)
             .Include(p => p.Coupons)
             .Take(quantity).ToListAsync();
     }
@@ -26,7 +24,6 @@ public class PartnerRepository(AppDbContext context)
     public override async Task<List<Partner>> GetAllAsync(bool isActive)
     {
         return await this.records
-            .Include(p => p.User)
             .Include(p => p.Coupons)
             .Where(p => p.IsActive == isActive)
             .ToListAsync();
@@ -35,7 +32,6 @@ public class PartnerRepository(AppDbContext context)
     public override async Task<List<Partner>> GetAllAsync(int quantity, bool isActive)
     {
         return await this.records
-            .Include(p => p.User)
             .Include(p => p.Coupons)
             .Where(p => p.IsActive == isActive)
             .Take(quantity)
@@ -45,7 +41,6 @@ public class PartnerRepository(AppDbContext context)
     public override async Task<Partner?> GetByIdAsync(Guid entityId)
     {
         return await this.records
-            .Include(p => p.User)
             .Include(p => p.Coupons)
             .FirstOrDefaultAsync(p => p.Id.Equals(entityId));
     }

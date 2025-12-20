@@ -47,26 +47,26 @@ public class BaseRepository<T>(AppDbContext context) where T : BaseEntity<T>
 
     public virtual async Task<List<T>> GetAllAsync()
     {
-        return await this.records.Include(x => x.User).ToListAsync();
+        return await this.records.ToListAsync();
     }
 
     public virtual async Task<List<T>> GetAllAsync(int quantity)
     {
-        return await this.records.Include(x => x.User).Take(quantity).ToListAsync();
+        return await this.records.Take(quantity).ToListAsync();
     }
 
     public virtual async Task<List<T>> GetAllAsync(bool isActive)
     {
-        return await this.records.Include(x => x.User).Where(e => e.IsActive == isActive).ToListAsync();
+        return await this.records.Where(x => x.IsActive == isActive).ToListAsync();
     }
 
     public virtual async Task<List<T>> GetAllAsync(int quantity, bool isActive)
     {
-        return await this.records.Include(x => x.User).Where(e => e.IsActive == isActive).Take(quantity).ToListAsync();
+        return await this.records.Where(x => x.IsActive == isActive).Take(quantity).ToListAsync();
     }
 
     public virtual async Task<T?> GetByIdAsync(Guid entityId)
     {
-        return await this.records.Include(x => x.User).FirstOrDefaultAsync(x => x.Id.Equals(entityId));
+        return await this.records.FirstOrDefaultAsync(x => x.Id.Equals(entityId));
     }
 }
