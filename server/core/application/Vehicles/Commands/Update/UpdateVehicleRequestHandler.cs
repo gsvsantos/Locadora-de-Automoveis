@@ -53,7 +53,7 @@ public class UpdateVehicleRequestHandler(
 
         Guid tenantId = tenantProvider.GetTenantId();
 
-        string imageKey = string.Empty;
+        string imageKey = selectedVehicle.Image ?? string.Empty;
         if (request.Image is { Length: > 0 })
         {
             string extension = Path.GetExtension(request.Image.FileName);
