@@ -207,6 +207,15 @@ public class RentalRepository(AppDbContext context)
         return new PagedResult<Rental>(rentals, totalCount, pageNumber, pageSize);
     }
 
+    public async Task<List<Guid>> GetRentedVehicleIds()
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .Where(r => r.Status == ERentalStatus.Open)
+            .Select(r => r.VehicleId)
+            .ToListAsync();
+    }
+
     public override async Task<List<Rental>> GetAllAsync()
     {
         return await WithIncludes().ToListAsync();

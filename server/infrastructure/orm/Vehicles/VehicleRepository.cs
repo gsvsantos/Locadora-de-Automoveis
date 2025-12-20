@@ -38,13 +38,15 @@ public class VehicleRepository(AppDbContext context)
     public async Task<PagedResult<Vehicle>> GetAllAvailableAsync(
         int pageNumber, int pageSize,
         string? term, Guid? groupId,
-        EFuelType? fuelType, CancellationToken cancellationToken
+        EFuelType? fuelType, List<Guid> rentedIds,
+        CancellationToken cancellationToken
     )
     {
         IQueryable<Vehicle> query = this.records
             .IgnoreQueryFilters()
             .AsNoTracking()
             .Include(v => v.Group)
+            .Where(v => !rentedIds.Contains(v.Id))
             .Where(v => v.IsActive == true);
 
         if (!string.IsNullOrWhiteSpace(term))
