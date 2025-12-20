@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FluentResults;
-using LocadoraDeAutomoveis.Application.Groups.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Groups;
 using MediatR;
@@ -8,14 +7,14 @@ using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Groups.Commands.GetAllDistinct;
 
-public class GetAllDistinctGroupsRequestHandler(
+public class GetAllDistinctGroupRequestHandler(
     IRepositoryGroup repositoryGroup,
     IMapper mapper,
-    ILogger<GetAllDistinctGroupsRequestHandler> logger
-) : IRequestHandler<GetAllDistinctGroupsRequest, Result<List<GroupDto>>>
+    ILogger<GetAllDistinctGroupRequestHandler> logger
+) : IRequestHandler<GetAllDistinctGroupRequest, Result<GetAllDistinctGroupResponse>>
 {
-    public async Task<Result<List<GroupDto>>> Handle(
-        GetAllDistinctGroupsRequest request, CancellationToken cancellationToken)
+    public async Task<Result<GetAllDistinctGroupResponse>> Handle(
+        GetAllDistinctGroupRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -26,9 +25,9 @@ public class GetAllDistinctGroupsRequestHandler(
                 .Select(g => g.First())
                 .ToList();
 
-            List<GroupDto> dtos = mapper.Map<List<GroupDto>>(distinctGroups);
+            GetAllDistinctGroupResponse response = mapper.Map<GetAllDistinctGroupResponse>(distinctGroups);
 
-            return Result.Ok(dtos);
+            return Result.Ok(response);
         }
         catch (Exception ex)
         {

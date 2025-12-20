@@ -73,13 +73,10 @@ public class GroupController(
     [AllowAnonymous]
     public async Task<IActionResult> GetAllDistinct()
     {
-        Result<List<GroupDto>> result = await mediator.Send(new GetAllDistinctGroupsRequest());
+        GetAllDistinctGroupRequest request = new();
 
-        if (result.IsFailed)
-        {
-            return result.ToHttpResponse();
-        }
+        Result<GetAllDistinctGroupResponse> result = await mediator.Send(request);
 
-        return Ok(result.Value);
+        return result.ToHttpResponse();
     }
 }

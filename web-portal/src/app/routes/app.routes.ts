@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authenticatedUserGuard } from '../guards/authenticated-user.guard';
+import { listDistinctGroupsResolver } from '../resolvers/group.resolvers';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,7 @@ export const routes: Routes = [
       import('../components/home/home.component').then((component) => component.Home),
     runGuardsAndResolvers: 'paramsOrQueryParamsChange',
     canActivate: [authenticatedUserGuard],
+    resolve: { groups: listDistinctGroupsResolver },
   },
   {
     path: 'account',
