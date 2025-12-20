@@ -64,13 +64,11 @@
               </div>
 
               <div class="data-item">
-                <label>{{ t('sections.plan') }}</label>
-                <span>{{ rental.billingPlanType }}</span>
-              </div>
-
-              <div class="data-item">
                 <label>{{ t('label.coupon') }}</label>
-                <span [class.has-coupon]="rental.coupon">{{ rental.coupon?.name ?? '-' }}</span>
+                <span [class.has-coupon]="rental.coupon">
+                  {{ rental.coupon?.name ?? '-' }}
+                  {{ rental.coupon?.discountValue ?? '' | currency: 'BRL' : 'symbol' : '1.2-2' }}
+                </span>
               </div>
             </div>
 
@@ -84,6 +82,57 @@
         </div>
 
         <div class="right-column">
+          <div class="card">
+            <div class="card-header">
+              <span class="material-icons">local_offer</span>
+              <h3>{{ t('sections.plan') }}: {{ rental.billingPlanType }}</h3>
+            </div>
+            <div class="card-body">
+              <div class="plan-details">
+                @if (rental.billingPlanType === 'Daily' && rental.billingPlan.dailyBilling) {
+                  <div class="plan-row">
+                    <span>Daily Rate</span>
+                    <strong>{{
+                      rental.billingPlan.dailyBilling.dailyRate | currency: 'BRL'
+                    }}</strong>
+                  </div>
+                  <div class="plan-row">
+                    <span>Price/Km</span>
+                    <strong>{{
+                      rental.billingPlan.dailyBilling.pricePerKm | currency: 'BRL'
+                    }}</strong>
+                  </div>
+                }
+
+                @if (
+                  rental.billingPlanType === 'Controlled' && rental.billingPlan.controlledBilling
+                ) {
+                  <div class="plan-row">
+                    <span>Daily Rate</span>
+                    <strong>{{
+                      rental.billingPlan.controlledBilling.dailyRate | currency: 'BRL'
+                    }}</strong>
+                  </div>
+                  <div class="plan-row">
+                    <span>Price/Km (Extra)</span>
+                    <strong>{{
+                      rental.billingPlan.controlledBilling.pricePerKmExtrapolated | currency: 'BRL'
+                    }}</strong>
+                  </div>
+                }
+
+                @if (rental.billingPlanType === 'Free' && rental.billingPlan.freeBilling) {
+                  <div class="plan-row">
+                    <span>Fixed Rate</span>
+                    <strong>{{
+                      rental.billingPlan.freeBilling.fixedRate | currency: 'BRL'
+                    }}</strong>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+
           <div class="card">
             <div class="card-header">
               <span class="material-icons">add_circle_outline</span>
