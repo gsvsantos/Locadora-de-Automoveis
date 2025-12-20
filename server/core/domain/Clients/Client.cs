@@ -52,6 +52,12 @@ public class Client : BaseEntity<Client>
         this.LicenseValidity = licenseValidity;
     }
 
+    public void SetLicense(string licenseNumber, DateTimeOffset licenseValidity)
+    {
+        this.LicenseNumber = licenseNumber;
+        this.LicenseValidity = licenseValidity;
+    }
+
     public void CompleteProfile(string document, Address address, string? licenseNumber = null, DateTimeOffset? licenseValidity = null)
     {
         this.Document = document;
@@ -78,6 +84,53 @@ public class Client : BaseEntity<Client>
     {
         this.LoginUser = user;
         this.LoginUserId = user.Id;
+    }
+
+    public static Client CreateTenantCopyFromGlobal(Client globalClient, Guid tenantId, User loginUser, User createdByUser)
+    {
+        Client tenantClient = new(
+        globalClient.FullName,
+        globalClient.Email,
+        globalClient.PhoneNumber
+    );
+
+        tenantClient.DefineType(globalClient.Type);
+
+        if (!string.IsNullOrWhiteSpace(globalClient.Document) && globalClient.Address is not null)
+        {
+            Address newAddress = new(
+                 globalClient.Address.State,
+                 globalClient.Address.City,
+                 globalClient.Address.Neighborhood,
+                 globalClient.Address.Street,
+                 globalClient.Address.Number
+             );
+
+            tenantClient.CompleteProfile(
+                globalClient.Document,
+                newAddress,
+                globalClient.LicenseNumber,
+                globalClient.LicenseValidity
+            );
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(globalClient.LicenseNumber))
+            {
+                tenantClient.SetLicenseNumber(globalClient.LicenseNumber);
+            }
+
+            if (globalClient.LicenseValidity.HasValue)
+            {
+                tenantClient.SetLicenseValidity(globalClient.LicenseValidity.Value);
+            }
+        }
+
+        tenantClient.AssociateTenant(tenantId);
+        tenantClient.AssociateLoginUser(loginUser);
+        tenantClient.AssociateUser(createdByUser);
+
+        return tenantClient;
     }
 
     public override void Update(Client updatedEntity)

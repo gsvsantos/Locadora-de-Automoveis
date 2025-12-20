@@ -12,5 +12,9 @@ public interface IRepositoryClient : IRepository<Client>
 
     Task<List<Client>> SearchAsync(string term, CancellationToken ct = default);
 
-    Task<Client?> GetByUserIdAsync(Guid userId);
+    Task<Client?> GetByTenantAndLoginUserIdAsync(Guid tenantId, Guid loginUserId);
+
+    Task<Client?> GetGlobalByLoginUserIdAsync(Guid loginUserId);
+
+    Task<Client?> GetByTenantAndDocumentAsync(Guid tenantId, string document);
 }

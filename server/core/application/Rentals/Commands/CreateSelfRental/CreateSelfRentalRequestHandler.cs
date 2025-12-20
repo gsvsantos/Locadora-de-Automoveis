@@ -48,13 +48,6 @@ public class CreateSelfRentalRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(userId));
         }
 
-        Client? client = await repositoryClient.GetByUserIdAsync(userId);
-
-        if (client is null)
-        {
-            return Result.Fail(ErrorResults.NotFoundError(userId));
-        }
-
         Vehicle? vehicle = await repositoryVehicle.GetByIdDistinctAsync(request.VehicleId);
 
         if (vehicle is null)
@@ -63,6 +56,73 @@ public class CreateSelfRentalRequestHandler(
         }
 
         Guid tenantId = vehicle.GetTenantId();
+
+        Client? client = await repositoryClient.GetByTenantAndLoginUserIdAsync(tenantId, userId);
+
+        if (client is null)
+        {
+            Client? globalClient = await repositoryClient.GetGlobalByLoginUserIdAsync(userId);
+            if (globalClient is null)
+            {
+                return Result.Fail(ErrorResults.NotFoundError(userId));
+            }
+
+            if (!string.IsNullOrWhiteSpace(globalClient.Document))
+            {
+                Client? existingTenantClientByDocument =
+                    await repositoryClient.GetByTenantAndDocumentAsync(tenantId, globalClient.Document);
+
+                if (existingTenantClientByDocument is not null)
+                {
+                    if (existingTenantClientByDocument.LoginUserId is null)
+                    {
+                        existingTenantClientByDocument.AssociateLoginUser(user);
+
+                        if (string.IsNullOrWhiteSpace(existingTenantClientByDocument.FullName))
+                        {
+                            existingTenantClientByDocument.FullName = globalClient.FullName;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(existingTenantClientByDocument.Email))
+                        {
+                            existingTenantClientByDocument.Email = globalClient.Email;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(existingTenantClientByDocument.PhoneNumber))
+                        {
+                            existingTenantClientByDocument.PhoneNumber = globalClient.PhoneNumber;
+                        }
+                    }
+                    else if (existingTenantClientByDocument.LoginUserId != userId)
+                    {
+                        return Result.Fail(ErrorResults.ConflictError(
+                            "The provided document is already associated with a different account in this company."
+                        ));
+                    }
+
+                    client = existingTenantClientByDocument;
+                }
+            }
+
+            if (client is null)
+            {
+                client = Client.CreateTenantCopyFromGlobal(
+                    globalClient,
+                    tenantId,
+                    user,
+                     user
+                );
+
+                await repositoryClient.AddAsync(client);
+            }
+        }
+
+        if (client.TenantId != tenantId)
+        {
+            return Result.Fail(ErrorResults.ConflictError(
+                "Tenant mismatch: the resolved client does not belong to the vehicle's company."
+            ));
+        }
 
         Driver? driver = await repositoryDriver.GetByTenantAndIdAsync(tenantId, request.DriverId);
 

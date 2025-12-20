@@ -41,11 +41,37 @@ public class ClientRepository(AppDbContext context)
             .ToListAsync(ct);
     }
 
-    public async Task<Client?> GetByUserIdAsync(Guid userId)
+    public async Task<Client?> GetByTenantAndLoginUserIdAsync(Guid tenantId, Guid loginUserId)
     {
         return await this.records
             .IgnoreQueryFilters()
-            .Where(c => c.IsActive == true)
-            .FirstOrDefaultAsync(e => e.UserId.Equals(userId));
+            .Where(client =>
+                client.IsActive == true &&
+                client.TenantId.Equals(tenantId) &&
+                client.LoginUserId.Equals(loginUserId)
+            )
+            .FirstOrDefaultAsync();
+    }
+    public async Task<Client?> GetGlobalByLoginUserIdAsync(Guid loginUserId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .Where(client =>
+                client.IsActive == true &&
+                client.TenantId == null &&
+                client.LoginUserId.Equals(loginUserId)
+            )
+            .FirstOrDefaultAsync();
+    }
+
+    public Task<Client?> GetByTenantAndDocumentAsync(Guid tenantId, string document)
+    {
+        return this.records
+            .IgnoreQueryFilters()
+            .Where(client =>
+                client.IsActive &&
+                client.TenantId.Equals(tenantId) &&
+                client.Document == document)
+            .FirstOrDefaultAsync();
     }
 }

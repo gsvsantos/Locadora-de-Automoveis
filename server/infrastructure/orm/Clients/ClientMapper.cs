@@ -46,6 +46,9 @@ public class ClientMapper : IEntityTypeConfiguration<Client>
             .IsRequired();
         });
 
+        builder.Navigation(c => c.Address)
+            .IsRequired(false);
+
         builder.Property(c => c.Document);
 
         builder.Property(c => c.LicenseNumber);
@@ -73,7 +76,16 @@ public class ClientMapper : IEntityTypeConfiguration<Client>
 
         builder.HasIndex(c => new { c.TenantId, c.UserId, c.IsActive });
 
-        builder.HasIndex(c => new { c.Document, c.TenantId })
-            .IsUnique();
+        builder.HasIndex(client => new { client.TenantId, client.LoginUserId })
+             .IsUnique()
+             .HasFilter("[TenantId] IS NOT NULL AND [LoginUserId] IS NOT NULL");
+
+        builder.HasIndex(client => client.LoginUserId)
+            .IsUnique()
+            .HasFilter("[TenantId] IS NULL AND [LoginUserId] IS NOT NULL");
+
+        builder.HasIndex(client => new { client.Document, client.TenantId })
+            .IsUnique()
+            .HasFilter("[TenantId] IS NOT NULL AND [Document] IS NOT NULL");
     }
 }

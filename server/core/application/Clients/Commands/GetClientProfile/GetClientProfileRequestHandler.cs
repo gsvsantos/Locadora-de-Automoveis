@@ -16,9 +16,9 @@ public class GetClientProfileRequestHandler(
     public async Task<Result<GetClientProfileResponse>> Handle(
         GetClientProfileRequest request, CancellationToken cancellationToken)
     {
-        Guid userId = userContext.GetUserId();
+        Guid loginUserId = userContext.GetUserId();
 
-        Client? client = await repositoryClient.GetByUserIdAsync(userId);
+        Client? client = await repositoryClient.GetGlobalByLoginUserIdAsync(loginUserId);
 
         if (client is null)
         {

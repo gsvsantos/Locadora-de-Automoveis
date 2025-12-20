@@ -30,6 +30,10 @@ public class VehicleMapper : IEntityTypeConfiguration<Vehicle>
         builder.Property(v => v.FuelTankCapacity)
             .IsRequired();
 
+        builder.Property(v => v.Kilometers)
+            .HasColumnType("decimal(18,2)")
+            .IsRequired();
+
         builder.Property(v => v.Year)
             .IsRequired();
 
