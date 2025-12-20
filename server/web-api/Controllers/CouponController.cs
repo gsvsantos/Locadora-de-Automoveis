@@ -16,13 +16,13 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 
 [ApiController]
 [Route("api/coupon")]
-[Authorize("AdminOrEmployeePolicy")]
 public class CouponController(
     IMediator mediator,
     IMapper mapper
 ) : ControllerBase
 {
     [HttpPost("create")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> Create([FromBody] CreateCouponRequest request)
     {
         Result<CreateCouponResponse> result = await mediator.Send(request);
@@ -31,6 +31,7 @@ public class CouponController(
     }
 
     [HttpGet("get/{id:guid}")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> GetById(Guid id)
     {
         GetByIdCouponRequest request = new(id);
@@ -41,6 +42,7 @@ public class CouponController(
     }
 
     [HttpGet("get-all")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> GetAll([FromQuery] GetAllCouponRequestPartial partialRequest)
     {
         GetAllCouponRequest request = mapper.Map<GetAllCouponRequest>(partialRequest);
@@ -51,6 +53,7 @@ public class CouponController(
     }
 
     [HttpGet("most-used")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> GetMostUsed()
     {
         GetMostUsedCouponRequest request = new();
@@ -61,6 +64,7 @@ public class CouponController(
     }
 
     [HttpPut("update/{id:guid}")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateCouponRequestPartial partialRequest)
     {
 
@@ -72,6 +76,7 @@ public class CouponController(
     }
 
     [HttpDelete("delete/{id:guid}")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> Delete(Guid id)
     {
         DeleteCouponRequest request = new(id);
@@ -81,10 +86,13 @@ public class CouponController(
         return result.ToHttpResponse();
     }
 
-    [HttpGet("available")]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllAvailableCouponRequest request)
+    [HttpGet("available/vehicle/{vehicleId:guid}")]
+    [Authorize("EveryonePolicy")]
+    public async Task<IActionResult> GetAllDistinct(Guid vehicleId)
     {
-        Result<GetAllAvailableCouponResponse> result = await mediator.Send(request);
+        GetAllDistinctCouponRequest request = new(vehicleId);
+
+        Result<GetAllDistinctCouponResponse> result = await mediator.Send(request);
 
         return result.ToHttpResponse();
     }

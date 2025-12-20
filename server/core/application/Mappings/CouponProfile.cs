@@ -76,9 +76,9 @@ public class CouponProfile : Profile
             )
             { Id = src.Id });
 
-        // GetAllAvailable
-        CreateMap<List<Coupon>, GetAllAvailableCouponResponse>()
-            .ConvertUsing((src, dest, ctx) => new GetAllAvailableCouponResponse(
+        // GetAllDistinct
+        CreateMap<List<Coupon>, GetAllDistinctCouponResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetAllDistinctCouponResponse(
                 src.Count,
                 src.Select(c => ctx.Mapper.Map<CouponDto>(c)).ToImmutableList()
                     ?? ImmutableList<CouponDto>.Empty

@@ -13,8 +13,8 @@ export class CouponService {
   private readonly apiUrl: string = environment.apiUrl + '/coupon';
   private readonly http: HttpClient = inject(HttpClient);
 
-  public getAll(): Observable<Coupon[]> {
-    const url = `${this.apiUrl}/available`;
+  public getAll(id: string): Observable<Coupon[]> {
+    const url = `${this.apiUrl}/available/vehicle/${id}`;
 
     return this.http.get<ApiResponseDto>(url, {}).pipe(
       map(mapApiResponse<ListCouponsDto>),

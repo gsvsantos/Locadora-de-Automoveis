@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 
 namespace LocadoraDeAutomoveis.Application.Coupons.Commands.GetAllAvailable;
 
-public record GetAllAvailableCouponResponse(
+public record GetAllDistinctCouponResponse(
     int Quantity,
     ImmutableList<CouponDto> Coupons
 );

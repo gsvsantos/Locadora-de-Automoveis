@@ -15,8 +15,8 @@ public class CouponRepository(AppDbContext context)
     public async Task<Coupon?> GetByNameAsync(string name)
     {
         return await this.records
-            .Include(c => c.User)
             .Include(c => c.Partner)
+            .Where(c => c.IsActive == true)
             .FirstOrDefaultAsync(c => c.Name.Equals(name));
     }
 
@@ -33,23 +33,31 @@ public class CouponRepository(AppDbContext context)
             .ToListAsync(ct);
     }
 
-    public async Task<List<Coupon>> GetAllAvailableAsync()
+    public async Task<List<Coupon>> GetAllByTenantDistinctAsync(Guid tenantId)
     {
         return await this.records
             .IgnoreQueryFilters()
-            .AsNoTracking()
-            .Include(c => c.User)
             .Include(c => c.Partner)
             .Where(c => c.ExpirationDate >= DateTimeOffset.UtcNow)
             .Where(c => c.IsManuallyDisabled == false)
+            .Where(c => c.TenantId.Equals(tenantId))
             .Where(c => c.IsActive == true)
             .ToListAsync();
+    }
+
+    public async Task<Coupon?> GetByTenantAndIdAsync(Guid tenantId, Guid entityId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .Include(c => c.Partner)
+            .Where(c => c.TenantId.Equals(tenantId))
+            .Where(c => c.IsActive == true)
+            .FirstOrDefaultAsync(c => c.Id.Equals(entityId));
     }
 
     public override async Task<List<Coupon>> GetAllAsync()
     {
         return await this.records
-            .Include(c => c.User)
             .Include(c => c.Partner)
             .ToListAsync();
     }
@@ -57,7 +65,6 @@ public class CouponRepository(AppDbContext context)
     public override async Task<List<Coupon>> GetAllAsync(int quantity)
     {
         return await this.records
-            .Include(c => c.User)
             .Include(c => c.Partner)
             .Take(quantity)
             .ToListAsync();
@@ -66,7 +73,6 @@ public class CouponRepository(AppDbContext context)
     public override async Task<List<Coupon>> GetAllAsync(bool isActive)
     {
         return await this.records
-            .Include(c => c.User)
             .Include(c => c.Partner)
             .Where(c => c.IsActive == isActive)
             .ToListAsync();
@@ -75,7 +81,6 @@ public class CouponRepository(AppDbContext context)
     public override async Task<List<Coupon>> GetAllAsync(int quantity, bool isActive)
     {
         return await this.records
-            .Include(c => c.User)
             .Include(c => c.Partner)
             .Where(c => c.IsActive == isActive)
             .Take(quantity)
@@ -85,7 +90,6 @@ public class CouponRepository(AppDbContext context)
     public override async Task<Coupon?> GetByIdAsync(Guid id)
     {
         return await this.records
-            .Include(c => c.User)
             .Include(c => c.Partner)
             .FirstOrDefaultAsync(c => c.Id.Equals(id));
     }
