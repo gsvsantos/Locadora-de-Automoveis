@@ -20,7 +20,7 @@ public class UpdateVehicleRequestHandler(
     IRepositoryVehicle repositoryVehicle,
     IRepositoryGroup repositoryGroup,
     IRepositoryRental repositoryRental,
-    R2FileStorageService fileStorageService,
+    IR2FileStorageService fileStorageService,
     ITenantProvider tenantProvider,
     IValidator<Vehicle> validator,
     ILogger<UpdateVehicleRequestHandler> logger

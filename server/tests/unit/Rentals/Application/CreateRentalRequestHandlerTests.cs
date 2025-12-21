@@ -162,6 +162,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
             "Cor",
             "Modelo",
             50,
+            1000,
             2022,
             "path"
         )

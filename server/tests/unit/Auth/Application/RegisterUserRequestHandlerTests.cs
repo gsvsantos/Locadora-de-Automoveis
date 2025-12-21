@@ -43,7 +43,7 @@ public sealed class RegisterUserRequestHandlerTests
 
         this.emailServiceMock = new Mock<IAuthEmailService>();
         this.emailServiceMock
-            .Setup(s => s.ScheduleBusinessRegisterWelcome(It.IsAny<User>()))
+            .Setup(s => s.ScheduleBusinessRegisterWelcome(It.IsAny<string>(), It.IsAny<string>(), null))
             .Returns(Task.CompletedTask);
 
         this.loggerMock = new Mock<ILogger<RegisterUserRequestHandler>>();
@@ -147,7 +147,7 @@ public sealed class RegisterUserRequestHandlerTests
             CreationIp = string.Empty,
             UserAgent = string.Empty,
         };
-        refreshToken.AssociateTenant(user.TenantId);
+        refreshToken.AssociateTenant(user.GetTenantId());
         refreshToken.AssociateUser(user);
 
         IssuedRefreshTokenDto issuedRefresh = new("teste", refreshToken.ExpirationDateUtc);

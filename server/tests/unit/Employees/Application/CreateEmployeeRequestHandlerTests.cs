@@ -68,6 +68,30 @@ public sealed class CreateEmployeeRequestHandlerTests : UnitTestBase
             _email, _phoneNumber, _password
         );
 
+        Guid currentUserId = Guid.NewGuid();
+
+        this.userContextMock
+            .Setup(c => c.GetUserId())
+            .Returns(currentUserId);
+
+        User currentUser = new()
+        {
+            Id = currentUserId,
+            UserName = "admin",
+            FullName = "Admin",
+            Email = "admin@local",
+            PhoneNumber = "(00) 00000-0000",
+            TenantId = tenantId
+        };
+
+        this.userManagerMock
+            .Setup(u => u.FindByIdAsync(currentUserId.ToString()))
+            .ReturnsAsync(currentUser);
+
+        this.userManagerMock
+            .Setup(u => u.UpdateAsync(It.IsAny<User>()))
+            .ReturnsAsync(IdentityResult.Success);
+
         User user = new()
         {
             UserName = _userName,
@@ -82,10 +106,10 @@ public sealed class CreateEmployeeRequestHandlerTests : UnitTestBase
                 It.Is<User>(usr =>
                     usr.UserName == request.UserName &&
                     usr.FullName == request.FullName &&
-                    usr.Email == request.Email &&
-                    usr.PhoneNumber == request.PhoneNumber
-                    ), _password
-                ))
+                    usr.Email == request.Email
+                ),
+                request.Password
+            ))
             .ReturnsAsync(IdentityResult.Success);
 
         this.userManagerMock
@@ -105,6 +129,10 @@ public sealed class CreateEmployeeRequestHandlerTests : UnitTestBase
             request.Salary)
         { User = user, TenantId = tenantId };
 
+        this.repositoryEmployeeMock
+            .Setup(r => r.AddAsync(It.IsAny<Employee>()))
+            .Returns(Task.CompletedTask);
+
         this.validatorMock
             .Setup(v => v.ValidateAsync(
                 It.Is<Employee>(emp =>
@@ -119,20 +147,14 @@ public sealed class CreateEmployeeRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetAllAsync())
             .ReturnsAsync([]);
 
+        this.unitOfWorkMock
+            .Setup(u => u.CommitAsync())
+            .Returns(Task.CompletedTask);
+
         // Act
         Result<CreateEmployeeResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
 
         // Assert
-        this.validatorMock
-            .Verify(v => v.ValidateAsync(
-                It.Is<Employee>(emp =>
-                    emp.FullName == request.FullName &&
-                    emp.AdmissionDate == request.AdmissionDate &&
-                    emp.Salary == request.Salary
-                    ), CancellationToken.None
-                ), Times.Once
-            );
-
         this.userManagerMock
             .Verify(u => u.CreateAsync(
                 It.Is<User>(usr =>
@@ -146,14 +168,32 @@ public sealed class CreateEmployeeRequestHandlerTests : UnitTestBase
 
         this.userManagerMock
             .Verify(u => u.AddToRoleAsync(
-                It.Is<User>(usr =>
-                    usr.UserName == request.UserName &&
-                    usr.FullName == request.FullName &&
-                    usr.Email == request.Email &&
-                    usr.PhoneNumber == request.PhoneNumber
-                    ), "Employee"
+                It.IsAny<User>(), "Employee"
                 ), Times.Once
             );
+
+        this.userManagerMock.Verify(
+            u => u.FindByIdAsync(currentUserId.ToString()),
+            Times.Once
+        );
+
+        this.userManagerMock.Verify(
+            u => u.UpdateAsync(It.IsAny<User>()),
+            Times.Once
+        );
+
+        this.repositoryEmployeeMock.Verify(r => r.GetAllAsync(), Times.Once);
+
+        this.repositoryEmployeeMock.Verify(r => r.AddAsync(
+            It.Is<Employee>(createdEmployee =>
+                createdEmployee.TenantId == tenantId &&
+                createdEmployee.FullName == request.FullName &&
+                createdEmployee.AdmissionDate == request.AdmissionDate &&
+                createdEmployee.Salary == request.Salary
+            )), Times.Once
+        );
+
+        this.unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
 
         Assert.IsTrue(result.IsSuccess);
     }

@@ -32,6 +32,11 @@ public sealed class RentalRepositoryTests : TestFixture
 
         Employee employee = Builder<Employee>.CreateNew()
             .With(e => e.FullName = userEmployee.FullName)
+            .Do(e =>
+            {
+                e.LoginUserId = null;
+                e.LoginUser = null;
+            })
             .Build();
 
         employee.AssociateTenant(tenant.Id);
@@ -79,6 +84,8 @@ public sealed class RentalRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build();
 
@@ -125,8 +132,7 @@ public sealed class RentalRepositoryTests : TestFixture
         {
             Rental rental = new(
                 DateTimeOffset.Now.AddDays(1),
-                DateTimeOffset.Now.AddDays(5),
-                1000
+                DateTimeOffset.Now.AddDays(5)
             );
 
             rental.AssociateTenant(tenant.Id);
@@ -137,6 +143,7 @@ public sealed class RentalRepositoryTests : TestFixture
             rental.AssociateVehicle(vehicle);
             rental.AssociateBillingPlan(billingPlan);
             rental.AddRangeExtras(extras);
+            rental.SetStartKm(vehicle.Kilometers);
             existingRentals.Add(rental);
         }
 
@@ -170,6 +177,11 @@ public sealed class RentalRepositoryTests : TestFixture
 
         Employee employee = Builder<Employee>.CreateNew()
             .With(e => e.FullName = userEmployee.FullName)
+            .Do(e =>
+            {
+                e.LoginUserId = null;
+                e.LoginUser = null;
+            })
             .Build();
 
         employee.AssociateTenant(tenant.Id);
@@ -217,6 +229,8 @@ public sealed class RentalRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build();
 
@@ -241,8 +255,7 @@ public sealed class RentalRepositoryTests : TestFixture
         {
             Rental rental = new(
                 DateTimeOffset.Now,
-                DateTimeOffset.Now.AddDays(5),
-                1000
+                DateTimeOffset.Now.AddDays(5)
             );
 
             rental.AssociateTenant(tenant.Id);
@@ -252,6 +265,7 @@ public sealed class RentalRepositoryTests : TestFixture
             rental.AssociateDriver(driver);
             rental.AssociateVehicle(vehicle);
             rental.AssociateBillingPlan(BillingPlan);
+            rental.SetStartKm(vehicle.Kilometers);
             existingRentals.Add(rental);
         }
 
@@ -289,6 +303,11 @@ public sealed class RentalRepositoryTests : TestFixture
 
         Employee employee = Builder<Employee>.CreateNew()
             .With(e => e.FullName = userEmployee.FullName)
+            .Do(e =>
+            {
+                e.LoginUserId = null;
+                e.LoginUser = null;
+            })
             .Build();
 
         employee.AssociateTenant(tenant.Id);
@@ -336,6 +355,8 @@ public sealed class RentalRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build();
 
@@ -357,8 +378,7 @@ public sealed class RentalRepositoryTests : TestFixture
 
         Rental rental = new(
             DateTimeOffset.Now,
-            DateTimeOffset.Now.AddDays(3),
-            1000
+            DateTimeOffset.Now.AddDays(3)
         );
 
         rental.AssociateTenant(tenant.Id);
@@ -368,6 +388,7 @@ public sealed class RentalRepositoryTests : TestFixture
         rental.AssociateDriver(driver);
         rental.AssociateVehicle(vehicle);
         rental.AssociateBillingPlan(BillingPlan);
+        rental.SetStartKm(vehicle.Kilometers);
 
         await this.rentalRepository.AddAsync(rental);
 

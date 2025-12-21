@@ -27,6 +27,7 @@ public sealed class EmployeeRepositoryTests : TestFixture
             .With(e => e.FullName == "Employee")
             .With(e => e.Id == Guid.NewGuid()).Persist();
         employee.AssociateUser(userEmployee);
+        employee.AssociateLoginUser(userEmployee);
         employee.AssociateTenant(tenant.Id);
 
         // Act

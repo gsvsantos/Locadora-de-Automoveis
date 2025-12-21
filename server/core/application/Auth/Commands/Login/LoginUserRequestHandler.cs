@@ -31,16 +31,16 @@ public class LoginUserRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError("User not found."));
         }
 
-        //if (!await recaptchaService.VerifyRecaptchaToken(request.RecaptchaToken))
-        //{
-        //    IList<string> roles = await userManager.GetRolesAsync(user);
-        //    string? bypass = configuration["CAPTCHA_ADMIN"];
+        if (!await recaptchaService.VerifyRecaptchaToken(request.RecaptchaToken))
+        {
+            IList<string> roles = await userManager.GetRolesAsync(user);
+            string? bypass = configuration["CAPTCHA_ADMIN"];
 
-        //    if (!ShouldBypassCaptcha(roles, bypass, request.RecaptchaToken))
-        //    {
-        //        return Result.Fail(ErrorResults.BadRequestError("Invalid reCAPTCHA verification"));
-        //    }
-        //}
+            if (!ShouldBypassCaptcha(roles, bypass, request.RecaptchaToken))
+            {
+                return Result.Fail(ErrorResults.BadRequestError("Invalid reCAPTCHA verification"));
+            }
+        }
 
         try
         {

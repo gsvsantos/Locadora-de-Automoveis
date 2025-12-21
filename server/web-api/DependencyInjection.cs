@@ -274,7 +274,7 @@ public static class DependencyInjection
             });
         });
 
-        services.AddScoped<R2FileStorageService>();
+        services.AddScoped<IR2FileStorageService, R2FileStorageService>();
 
         return services;
     }

@@ -46,6 +46,7 @@ public sealed class DeleteVehicleRequestHandlerTests
             "Preto",
             "Chevette",
             45,
+            1000,
             1984,
             string.Empty
         )

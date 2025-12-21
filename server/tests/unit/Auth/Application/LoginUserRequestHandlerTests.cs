@@ -134,7 +134,7 @@ public sealed class LoginUserRequestHandlerTests
             CreationIp = string.Empty,
             UserAgent = string.Empty,
         };
-        refreshToken.AssociateTenant(user.TenantId);
+        refreshToken.AssociateTenant(user.GetTenantId());
         refreshToken.AssociateUser(user);
 
         IssuedRefreshTokenDto issuedRefresh = new("teste", refreshToken.ExpirationDateUtc);

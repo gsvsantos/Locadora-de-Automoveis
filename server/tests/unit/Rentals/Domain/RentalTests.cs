@@ -39,7 +39,8 @@ public sealed class RentalTests
         decimal startKm = 15000;
 
         // Act
-        Rental rental = new(start, end, startKm);
+        Rental rental = new(start, end);
+        rental.SetStartKm(startKm);
 
         // Assert
         Assert.AreEqual(start, rental.StartDate);
@@ -190,19 +191,19 @@ public sealed class RentalTests
         // Arrange
         Rental rental = new(
             DateTimeOffset.Now,
-            DateTimeOffset.Now.AddDays(1),
-            100
+            DateTimeOffset.Now.AddDays(1)
         );
 
         rental.AssociateClient(Builder<Client>.CreateNew().Build());
         rental.AssociateDriver(Builder<Driver>.CreateNew().Build());
         rental.AssociateBillingPlan(Builder<BillingPlan>.CreateNew().Build());
+        rental.SetStartKm(100);
 
         Rental updatedData = new(
             DateTimeOffset.Now.AddDays(2),
-            DateTimeOffset.Now.AddDays(7),
-            200
+            DateTimeOffset.Now.AddDays(7)
         );
+        updatedData.SetStartKm(200);
 
         Employee newEmployee = Builder<Employee>.CreateNew().Build();
         Client newClient = Builder<Client>.CreateNew().Build();

@@ -79,6 +79,7 @@ public class Vehicle : BaseEntity<Vehicle>
         this.Model = updatedEntity.Model;
         this.FuelType = updatedEntity.FuelType;
         this.FuelTankCapacity = updatedEntity.FuelTankCapacity;
+        this.Kilometers = updatedEntity.Kilometers;
         this.Year = updatedEntity.Year;
         this.Image = updatedEntity.Image;
 

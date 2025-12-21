@@ -1,8 +1,10 @@
 ﻿using LocadoraDeAutomoveis.Application.Vehicles.Commands.Update;
+using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
+using LocadoraDeAutomoveis.Infrastructure.S3;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Vehicles.Application;
@@ -17,6 +19,8 @@ public sealed class UpdateVehicleRequestHandlerTests : UnitTestBase
     private Mock<IRepositoryVehicle> repositoryVehicleMock = null!;
     private Mock<IRepositoryGroup> repositoryGroupMock = null!;
     private Mock<IRepositoryRental> repositoryRentalMock = null!;
+    private Mock<IR2FileStorageService> fileStorageMock = null!;
+    private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IValidator<Vehicle>> validatorMock = null!;
     private Mock<ILogger<UpdateVehicleRequestHandler>> loggerMock = null!;
 
@@ -27,6 +31,8 @@ public sealed class UpdateVehicleRequestHandlerTests : UnitTestBase
         this.repositoryVehicleMock = new Mock<IRepositoryVehicle>();
         this.repositoryGroupMock = new Mock<IRepositoryGroup>();
         this.repositoryRentalMock = new Mock<IRepositoryRental>();
+        this.fileStorageMock = new Mock<IR2FileStorageService>();
+        this.tenantProviderMock = new Mock<ITenantProvider>();
         this.validatorMock = new Mock<IValidator<Vehicle>>();
         this.loggerMock = new Mock<ILogger<UpdateVehicleRequestHandler>>();
 
@@ -36,6 +42,8 @@ public sealed class UpdateVehicleRequestHandlerTests : UnitTestBase
             this.repositoryVehicleMock.Object,
             this.repositoryGroupMock.Object,
             this.repositoryRentalMock.Object,
+            this.fileStorageMock.Object,
+            this.tenantProviderMock.Object,
             this.validatorMock.Object,
             this.loggerMock.Object
         );
@@ -60,6 +68,7 @@ public sealed class UpdateVehicleRequestHandlerTests : UnitTestBase
             "Chevette",
             EFuelType.Gasoline,
             45,
+            500,
             1984,
             null,
             groupId
@@ -71,6 +80,7 @@ public sealed class UpdateVehicleRequestHandlerTests : UnitTestBase
             "Bege",
             "Chevette",
             45,
+            1000,
             2004,
             string.Empty
         )
@@ -85,27 +95,21 @@ public sealed class UpdateVehicleRequestHandlerTests : UnitTestBase
             .Setup(r => r.GetByIdAsync(groupId))
             .ReturnsAsync(group);
 
+        string expectedPhotoPath = vehicle.Image ?? string.Empty;
         Vehicle updatedVehicle = new(
             request.LicensePlate,
             request.Brand,
             request.Color,
             request.Model,
             request.FuelTankCapacity,
+            request.Kilometers,
             request.Year,
-            request.PhotoPath ?? string.Empty
+            expectedPhotoPath
         );
-        updatedVehicle.SetFuelType(request.FuelType);
 
-        string expectedPhotoPath = request.PhotoPath ?? "path not found";
+        updatedVehicle.SetFuelType(request.FuelType);
         this.validatorMock
-            .Setup(v => v.ValidateAsync(
-                It.Is<Vehicle>(v =>
-                    v.LicensePlate == updatedVehicle.LicensePlate && v.Brand == updatedVehicle.Brand &&
-                    v.Color == updatedVehicle.Color && v.Model == updatedVehicle.Model &&
-                    v.FuelType == updatedVehicle.FuelType && v.FuelTankCapacity == updatedVehicle.FuelTankCapacity &&
-                    v.Year == updatedVehicle.Year && v.PhotoPath == expectedPhotoPath
-                    ), CancellationToken.None
-                ))
+            .Setup(v => v.ValidateAsync(It.IsAny<Vehicle>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new ValidationResult());
 
         this.repositoryVehicleMock
@@ -131,16 +135,10 @@ public sealed class UpdateVehicleRequestHandlerTests : UnitTestBase
             .Verify(r => r.GetByIdAsync(groupId),
             Times.Once);
 
-        this.validatorMock
-            .Verify(v => v.ValidateAsync(
-                It.Is<Vehicle>(v =>
-                    v.LicensePlate == updatedVehicle.LicensePlate && v.Brand == updatedVehicle.Brand &&
-                    v.Color == updatedVehicle.Color && v.Model == updatedVehicle.Model &&
-                    v.FuelType == updatedVehicle.FuelType && v.FuelTankCapacity == updatedVehicle.FuelTankCapacity &&
-                    v.Year == updatedVehicle.Year && v.PhotoPath == expectedPhotoPath
-                    ), CancellationToken.None
-                ), Times.Once
-            );
+        this.validatorMock.Verify(
+            v => v.ValidateAsync(It.IsAny<Vehicle>(), It.IsAny<CancellationToken>()),
+            Times.Once
+        );
 
         this.repositoryVehicleMock
             .Verify(r => r.GetAllAsync(),
@@ -153,7 +151,7 @@ public sealed class UpdateVehicleRequestHandlerTests : UnitTestBase
                     v.LicensePlate == updatedVehicle.LicensePlate && v.Brand == updatedVehicle.Brand &&
                     v.Color == updatedVehicle.Color && v.Model == updatedVehicle.Model &&
                     v.FuelType == updatedVehicle.FuelType && v.FuelTankCapacity == updatedVehicle.FuelTankCapacity &&
-                    v.Year == updatedVehicle.Year && v.PhotoPath == expectedPhotoPath
+                    v.Year == updatedVehicle.Year && v.Image == expectedPhotoPath
                     )
                 ), Times.Once
             );

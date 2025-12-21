@@ -20,7 +20,7 @@ public class CreateVehicleRequestHandler(
     IMapper mapper,
     IRepositoryVehicle repositoryVehicle,
     IRepositoryGroup repositoryGroup,
-    R2FileStorageService fileStorageService,
+    IR2FileStorageService fileStorageService,
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<Vehicle> validator,

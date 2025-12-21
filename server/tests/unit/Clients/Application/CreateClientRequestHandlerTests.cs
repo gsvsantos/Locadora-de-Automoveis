@@ -57,7 +57,7 @@ public sealed class CreateClientRequestHandlerTests : UnitTestBase
 
     #region CreateClient Tests (Happy Path)
     [TestMethod]
-    public void Handler_ShouldCreateClient_Successfully()
+    public async Task Handler_ShouldCreateClient_Successfully()
     {
         // Arrange
         Guid tenantId = Guid.NewGuid();
@@ -65,16 +65,24 @@ public sealed class CreateClientRequestHandlerTests : UnitTestBase
             .Setup(t => t.GetTenantId())
             .Returns(tenantId);
 
-        Guid userId = Guid.NewGuid();
-        User user = new()
+        Guid currentUserId = Guid.NewGuid();
+        this.userContextMock
+            .Setup(c => c.GetUserId())
+            .Returns(currentUserId);
+
+        User currentUser = new()
         {
-            Id = userId,
+            Id = currentUserId,
             UserName = _userName,
             FullName = _fullName,
             Email = _email,
             PhoneNumber = _phoneNumber,
+            TenantId = tenantId
         };
-        user.AssociateTenant(tenantId);
+
+        this.userManagerMock
+            .Setup(u => u.FindByIdAsync(It.Is<string>(id => id == currentUserId.ToString())))
+            .ReturnsAsync(currentUser);
 
         CreateClientRequest request = new(
             "Ricardo",
@@ -89,59 +97,70 @@ public sealed class CreateClientRequestHandlerTests : UnitTestBase
             "000.000.000-01"
         );
 
-        this.userContextMock
-            .Setup(t => t.GetUserId())
-            .Returns(userId);
+        this.userManagerMock
+            .Setup(u => u.CreateAsync(It.IsAny<User>()))
+            .ReturnsAsync(IdentityResult.Success);
 
         this.userManagerMock
-            .Setup(u => u.FindByIdAsync(this.userContextMock.Object.GetUserId().ToString()))
-            .ReturnsAsync(user);
+            .Setup(u => u.AddToRoleAsync(It.IsAny<User>(), "Client"))
+            .ReturnsAsync(IdentityResult.Success);
 
-        Address address = new(
-            request.State,
-            request.City,
-            request.Neighborhood,
-            request.Street,
-            request.Number
-        );
-
-        Client client = new(
-            request.FullName,
-            request.Email,
-            request.PhoneNumber,
-            request.Document,
-            address
-        );
+        this.userManagerMock
+            .Setup(u => u.UpdateAsync(It.IsAny<User>()))
+            .ReturnsAsync(IdentityResult.Success);
 
         this.validatorMock
-            .Setup(v => v.ValidateAsync(
-                It.IsAny<Client>(),
-                CancellationToken.None
-                ))
+            .Setup(v => v.ValidateAsync(It.IsAny<IValidationContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new ValidationResult());
 
         this.repositoryClientMock
-            .Setup(r => r.GetAllAsync())
-            .ReturnsAsync([]);
+            .Setup(r => r.ExistsByDocumentAsync(It.IsAny<string>()))
+            .ReturnsAsync(false);
+
+        this.repositoryClientMock
+            .Setup(r => r.AddAsync(It.IsAny<Client>()))
+            .Returns(Task.CompletedTask);
+
+        this.unitOfWorkMock
+            .Setup(u => u.CommitAsync())
+            .Returns(Task.CompletedTask);
+
+        this.userManagerMock
+            .Setup(u => u.GeneratePasswordResetTokenAsync(It.IsAny<User>()))
+            .ReturnsAsync("token");
+
+        this.emailServiceMock
+            .Setup(s => s.ScheduleClientInvitation(
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>()
+            ))
+            .Returns(Task.CompletedTask);
 
         // Act
-        Result<CreateClientResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
+        Result<CreateClientResponse> result = await this.handler.Handle(request, CancellationToken.None);
 
         // Assert
-        this.validatorMock
-            .Verify(v => v.ValidateAsync(
-                It.IsAny<Client>(),
-                CancellationToken.None
-                ), Times.Once
-            );
+        this.userManagerMock.Verify(
+            u => u.FindByIdAsync(It.Is<string>(id => id == currentUserId.ToString())),
+            Times.Once
+        );
 
-        this.repositoryClientMock
-            .Verify(r => r.GetAllAsync(), Times.Once);
+        this.validatorMock.Verify(
+            v => v.ValidateAsync(It.IsAny<IValidationContext>(), It.IsAny<CancellationToken>()),
+            Times.Once
+        );
 
-        this.repositoryClientMock
-            .Verify(r => r.AddAsync(
-                It.IsAny<Client>()), Times.Once
-            );
+        this.repositoryClientMock.Verify(
+            r => r.ExistsByDocumentAsync(It.Is<string>(doc => doc == request.Document)),
+            Times.Once
+        );
+
+        this.repositoryClientMock.Verify(
+            r => r.AddAsync(It.IsAny<Client>()),
+            Times.Once
+        );
 
         this.unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
 
