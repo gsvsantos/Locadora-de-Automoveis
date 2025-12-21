@@ -79,7 +79,7 @@ public class LoginUserGoogleRequestHandler(
 
                 try
                 {
-                    await emailService.ScheduleBusinessGoogleWelcome(userLogin.Email, userLogin.FullName, token);
+                    await emailService.ScheduleBusinessGoogleWelcome(userLogin.Email, userLogin.FullName, token, userLogin.PreferredLanguage);
                 }
                 catch (Exception ex)
                 {

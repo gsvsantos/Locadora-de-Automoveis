@@ -98,7 +98,7 @@ public class LoginClientGoogleRequestHandler(
 
                 try
                 {
-                    await emailService.ScheduleClientGoogleWelcome(client.Email, client.FullName, token);
+                    await emailService.ScheduleClientGoogleWelcome(client.Email, client.FullName, token, client.PreferredLanguage);
                 }
                 catch (Exception ex)
                 {

@@ -1,125 +1,163 @@
 ﻿using Hangfire;
-using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Shared.Email;
+using Microsoft.Extensions.Options;
 
 namespace LocadoraDeAutomoveis.Application.Auth.Services;
 
 public class AuthEmailService(
     IEmailSender emailSender,
-    IEmailTemplateService templateService
+    IEmailTemplateService templateService,
+    IOptions<AppUrlsOptions> appUrlsOptions
 ) : IAuthEmailService
 {
-    public async Task SendForgotPasswordEmailAsync(string email, string userName, string resetToken, bool toPortal)
+    private readonly AppUrlsOptions appUrls = appUrlsOptions.Value;
+
+    public async Task SendForgotPasswordEmailAsync(string email, string userName, string resetToken, bool toPortal, string? language = null)
     {
+        string resolvedLanguage = language ?? "pt-BR";
+
         string encodedToken = Uri.EscapeDataString(resetToken);
         string encodedEmail = Uri.EscapeDataString(email);
 
-        string link = "";
-
-        if (!toPortal)
-        {
-            link = $"http://localhost:4200/auth/reset-password?token={encodedToken}&email={encodedEmail}";
-        }
-        else
-        {
-            link = $"http://localhost:4201/auth/reset-password?token={encodedToken}&email={encodedEmail}";
-        }
+        string baseUrl = toPortal ? this.appUrls.PortalApp : this.appUrls.AdminApp;
+        string resetPasswordUrl = $"{baseUrl}/auth/reset-password?token={encodedToken}&email={encodedEmail}";
 
         Dictionary<string, string> placeholders = new()
         {
             {"UserName", userName },
-            {"Link", link}
+            {"Link", resetPasswordUrl }
         };
 
-        string body = await templateService.GetTemplateAsync("forget-password", placeholders);
-        string subject = $"Password Recovery - LDA";
+        string body = await templateService.GetTemplateAsync("forget-password", placeholders, resolvedLanguage);
+        string subject = GetSubject("forget-password", resolvedLanguage);
 
         BackgroundJob.Enqueue(() => emailSender.SendAsync(email, subject, body));
     }
-    public async Task ScheduleClientRegisterWelcome(string email, string fullName)
+
+    public async Task ScheduleClientRegisterWelcome(string email, string fullName, string? language = null)
     {
+        string resolvedLanguage = language ?? "pt-BR";
+
         Dictionary<string, string> placeholders = new()
         {
             {"UserFullName", fullName },
-            {"LoginUrl", "http://localhost:4201/home"}
+            { "LoginUrl", $"{this.appUrls.PortalApp}/home" }
         };
 
-        string body = await templateService.GetTemplateAsync("welcome-client", placeholders);
-        string subject = $"Welcome Client - LDA";
+        string body = await templateService.GetTemplateAsync("welcome-client", placeholders, resolvedLanguage);
+        string subject = GetSubject("welcome-client", resolvedLanguage);
 
         BackgroundJob.Enqueue(() => emailSender.SendAsync(email, subject, body));
     }
 
-    public async Task ScheduleClientGoogleWelcome(string email, string fullName, string resetToken)
+    public async Task ScheduleClientGoogleWelcome(string email, string fullName, string resetToken, string? language = null)
     {
+        string resolvedLanguage = language ?? "pt-BR";
+
         string encodedToken = Uri.EscapeDataString(resetToken);
         string encodedEmail = Uri.EscapeDataString(email);
 
-        string link = $"http://localhost:4201/auth/reset-password?token={encodedToken}&email={encodedEmail}";
+        string resetPasswordUrl = $"{this.appUrls.PortalApp}/auth/reset-password?token={encodedToken}&email={encodedEmail}";
 
         Dictionary<string, string> placeholders = new()
         {
             {"UserFullName", fullName },
-            {"ResetPasswordUrl", link}
+            {"ResetPasswordUrl", resetPasswordUrl}
         };
 
-        string body = await templateService.GetTemplateAsync("welcome-client-google", placeholders);
-        string subject = $"Google Registration - LDA";
+        string body = await templateService.GetTemplateAsync("welcome-client-google", placeholders, resolvedLanguage);
+        string subject = GetSubject("welcome-client-google", resolvedLanguage);
 
         BackgroundJob.Enqueue(() => emailSender.SendAsync(email, subject, body));
     }
 
-    public async Task ScheduleBusinessRegisterWelcome(string email, string fullName)
+    public async Task ScheduleBusinessRegisterWelcome(string email, string fullName, string? language = null)
     {
+        string resolvedLanguage = language ?? "pt-BR";
+
         Dictionary<string, string> placeholders = new()
         {
             {"UserFullName", fullName },
-            {"LoginUrl", "http://localhost:4200/home"}
+            {"LoginUrl", $"{this.appUrls.AdminApp}/home" }
         };
 
-        string body = await templateService.GetTemplateAsync("welcome-business", placeholders);
-        string subject = $"Welcome Partner - LDA";
+        string body = await templateService.GetTemplateAsync("welcome-business", placeholders, resolvedLanguage);
+        string subject = GetSubject("welcome-business", resolvedLanguage);
 
         BackgroundJob.Enqueue(() => emailSender.SendAsync(email, subject, body));
     }
 
-    public async Task ScheduleBusinessGoogleWelcome(string email, string fullName, string resetToken)
+    public async Task ScheduleBusinessGoogleWelcome(string email, string fullName, string resetToken, string? language = null)
     {
+        string resolvedLanguage = language ?? "pt-BR";
+
         string encodedToken = Uri.EscapeDataString(resetToken);
         string encodedEmail = Uri.EscapeDataString(email);
 
-        string link = $"http://localhost:4200/auth/reset-password?token={encodedToken}&email={encodedEmail}";
+        string resetPasswordUrl = $"{this.appUrls.AdminApp}/auth/reset-password?token={encodedToken}&email={encodedEmail}";
 
         Dictionary<string, string> placeholders = new()
         {
             {"UserFullName", fullName },
-            {"ResetPasswordUrl", link}
+            {"ResetPasswordUrl", resetPasswordUrl }
         };
 
-        string body = await templateService.GetTemplateAsync("welcome-business-google", placeholders);
-        string subject = $"Google Registration - LDA";
+        string body = await templateService.GetTemplateAsync("welcome-business-google", placeholders, resolvedLanguage);
+        string subject = GetSubject("welcome-business-google", resolvedLanguage);
 
         BackgroundJob.Enqueue(() => emailSender.SendAsync(email, subject, body));
     }
 
-    public async Task ScheduleClientInvitation(string email, string fullName, string resetToken)
+    public async Task ScheduleClientInvitation(string email, string fullName, string resetToken, string? language = null)
     {
+        string resolvedLanguage = language ?? "pt-BR";
+
         string encodedToken = Uri.EscapeDataString(resetToken);
         string encodedEmail = Uri.EscapeDataString(email);
 
-        string link = $"http://localhost:4201/auth/reset-password?token={encodedToken}&email={encodedEmail}";
+        string resetPasswordUrl = $"{this.appUrls.PortalApp}/auth/reset-password?token={encodedToken}&email={encodedEmail}";
 
         Dictionary<string, string> placeholders = new()
         {
             {"ClientName", fullName },
-            {"ResetPasswordUrl", link}
+            {"ResetPasswordUrl", resetPasswordUrl }
         };
 
-        string body = await templateService.GetTemplateAsync("client-invitation", placeholders);
-        string subject = "Welcome to the Family - LDA";
+        string body = await templateService.GetTemplateAsync("client-invitation", placeholders, resolvedLanguage);
+        string subject = GetSubject("client-invitation", resolvedLanguage);
 
-        // 4. Envia
         BackgroundJob.Enqueue(() => emailSender.SendAsync(email, subject, body));
+    }
+    private static string GetSubject(string templateKey, string language)
+    {
+        return (templateKey, language) switch
+        {
+            ("forget-password", "pt-BR") => "Recuperação de senha - LDA",
+            ("forget-password", "es-ES") => "Recuperación de contraseña - LDA",
+            ("forget-password", _) => "Password Recovery - LDA",
+
+            ("welcome-client", "pt-BR") => "Bem-vindo! - LDA",
+            ("welcome-client", "es-ES") => "¡Bienvenido! - LDA",
+            ("welcome-client", _) => "Welcome! - LDA",
+
+            ("welcome-client-google", "pt-BR") => "Cadastro com Google - LDA",
+            ("welcome-client-google", "es-ES") => "Registro con Google - LDA",
+            ("welcome-client-google", _) => "Google Registration - LDA",
+
+            ("welcome-business", "pt-BR") => "Bem-vindo, parceiro! - LDA",
+            ("welcome-business", "es-ES") => "¡Bienvenido, socio! - LDA",
+            ("welcome-business", _) => "Welcome Partner - LDA",
+
+            ("welcome-business-google", "pt-BR") => "Cadastro com Google - LDA",
+            ("welcome-business-google", "es-ES") => "Registro con Google - LDA",
+            ("welcome-business-google", _) => "Google Registration - LDA",
+
+            ("client-invitation", "pt-BR") => "Bem-vindo à família - LDA",
+            ("client-invitation", "es-ES") => "Bienvenido a la familia - LDA",
+            ("client-invitation", _) => "Welcome to the Family - LDA",
+
+            _ => "LDA"
+        };
     }
 }

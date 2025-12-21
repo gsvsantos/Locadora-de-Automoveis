@@ -36,6 +36,7 @@ using LocadoraDeAutomoveis.Infrastructure.S3;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using LocadoraDeAutomoveis.Infrastructure.Vehicles;
 using LocadoraDeAutomoveis.WebApi.Filters;
+using LocadoraDeAutomoveis.WebApi.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -202,6 +203,7 @@ public static class DependencyInjection
     public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<ICouponQueryService, CouponQueryService>();
+        services.AddScoped<AcceptLanguageResolver>();
 
         Assembly applicationAssembly = typeof(ApplicationAssemblyReference).Assembly;
 
@@ -292,7 +294,15 @@ public static class DependencyInjection
 
     private static void ConfigureEmailSender(this IServiceCollection services, IConfiguration configuration)
     {
+        services.Configure<AppUrlsOptions>(configuration.GetSection("APPURLS"));
         services.Configure<MailSettings>(configuration.GetSection("MAILOPTIONS"));
+        services.Configure<EmailTemplateOptions>(opt =>
+        {
+            opt.TemplatesFolderName = "Templates";
+            opt.DefaultLanguage = "en-US";
+            opt.EnableNeutralLanguageFallback = true;
+            opt.HtmlEncodeValues = true;
+        });
         services.AddSingleton<IEmailTemplateService, HtmlTemplateService>();
         services.AddTransient<IEmailSender, SmtpEmailSender>();
         services.AddScoped<IAuthEmailService, AuthEmailService>();

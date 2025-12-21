@@ -29,7 +29,7 @@ public class ForgotPasswordRequestHandler(
 
             try
             {
-                await emailService.SendForgotPasswordEmailAsync(user.Email!, user.FullName, token, request.IsPortal);
+                await emailService.SendForgotPasswordEmailAsync(user.Email!, user.FullName, token, request.IsPortal, user.PreferredLanguage);
             }
             catch (Exception ex)
             {

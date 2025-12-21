@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Recordatorio de devolución</title>
+    <style>
+      body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+
+      img {
+        border: 0;
+        outline: none;
+        text-decoration: none;
+        -ms-interpolation-mode: bicubic;
+      }
+
+      @media only screen and (max-width: 600px) {
+        .container {
+          width: 100% !important;
+          max-width: 100% !important;
+          border-radius: 0 !important;
+        }
+
+        .content-padding {
+          padding: 20px !important;
+        }
+
+        .mobile-header {
+          font-size: 20px !important;
+        }
+      }
+    </style>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    "
+  >
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      width="100%"
+      style="background-color: #f4f6f8; padding: 20px"
+    >
+      <tr>
+        <td align="center">
+          <table
+            class="container"
+            border="0"
+            cellpadding="0"
+            cellspacing="0"
+            width="600"
+            style="
+              background-color: #ffffff;
+              border-radius: 8px;
+              overflow: hidden;
+              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+              border-collapse: separate;
+            "
+          >
+            <tr>
+              <td
+                align="center"
+                style="background-color: #e67e22; padding: 30px"
+              >
+                <h1
+                  class="mobile-header"
+                  style="
+                    color: #ffffff;
+                    margin: 0;
+                    font-size: 24px;
+                    letter-spacing: 1px;
+                    font-weight: 600;
+                  "
+                >
+                  LOCADORA DE VEÍCULOS
+                </h1>
+                <h1
+                  class="mobile-header"
+                  style="
+                    color: #ffffff;
+                    margin: 5px 0 0 0;
+                    font-size: 24px;
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                    font-weight: 400;
+                    opacity: 0.9;
+                  "
+                >Próxima devolución</h1>
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                class="content-padding"
+                style="padding: 40px 30px"
+              >
+                <h2 style="color: #333333; margin-top: 0">
+                  ¡Hola, {{ClientName}}!
+                </h2>
+                <p style="color: #666666; font-size: 16px; line-height: 1.5">
+                  Este es un recordatorio amistoso de que tu alquiler del
+                  <strong>{{CarModel}}</strong> está por finalizar.
+                </p>
+
+                <table
+                  border="0"
+                  cellpadding="0"
+                  cellspacing="0"
+                  width="100%"
+                  style="
+                    background-color: #fff8e1;
+                    border-left: 4px solid #e67e22;
+                    margin: 20px 0;
+                    padding: 15px;
+                  "
+                >
+                  <tr>
+                    <td>
+                      <p
+                        style="
+                          margin: 0;
+                          color: #e67e22;
+                          font-weight: bold;
+                          font-size: 12px;
+                          text-transform: uppercase;
+                        "
+                      >Fecha prevista de devolución</p>
+                      <p
+                        style="
+                          margin: 5px 0 0;
+                          color: #333333;
+                          font-size: 20px;
+                          font-weight: bold;
+                        "
+                      >
+                        {{ReturnDate}}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+
+                <h3 style="color: #333333; font-size: 16px; margin-top: 25px">Checklist de devolución:</h3>
+                <ul
+                  style="
+                    color: #666666;
+                    font-size: 14px;
+                    line-height: 1.6;
+                    padding-left: 20px;
+                  "
+                >
+                  <li>Asegúrate de que el tanque esté lleno para evitar cargos adicionales.</li>
+                  <li>Revisa el vehículo para asegurarte de no dejar pertenencias personales.</li>
+                  <li>Ten a mano las llaves y la documentación.</li>
+                </ul>
+
+                <table
+                  border="0"
+                  cellspacing="0"
+                  cellpadding="0"
+                  width="100%"
+                  style="margin-top: 30px"
+                >
+                  <tr>
+                    <td align="center">
+                      <table
+                        border="0"
+                        cellspacing="0"
+                        cellpadding="0"
+                      >
+                        <tr>
+                          <td
+                            align="center"
+                            style="border-radius: 4px"
+                          >
+                            <a
+                              href="{{RentalLink}}"
+                              target="_blank"
+                              style="
+                                background-color: #333333;
+                                font-size: 16px;
+                                font-family: Helvetica, Arial, sans-serif;
+                                color: #ffffff;
+                                text-decoration: none;
+                                padding: 14px 30px;
+                                border-radius: 4px;
+                                border: 1px solid #333333;
+                                display: inline-block;
+                                font-weight: bold;
+                              "
+                            >Ver detalles del alquiler</a>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+                <p
+                  style="
+                    color: #999999;
+                    font-size: 14px;
+                    margin-top: 30px;
+                    border-top: 1px solid #eeeeee;
+                    padding-top: 20px;
+                  "
+                >
+                  ¿Necesitas extender el alquiler? Contáctanos de inmediato.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                align="center"
+                style="
+                  background-color: #eeeeee;
+                  padding: 20px;
+                  color: #888888;
+                  font-size: 12px;
+                "
+              >
+                <p style="margin: 0">
+                  © 2025 Locadora De Veículos. All rights reserved.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

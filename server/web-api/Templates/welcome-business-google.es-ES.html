@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
-    <title>Welcome to the Family</title>
+    <title>Registro con Google: acción requerida</title>
     <style>
       body {
         margin: 0 !important;
@@ -96,8 +96,8 @@
                 style="padding: 40px 40px 20px 40px; text-align: center"
               >
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/3126/3126589.png"
-                  alt="New User"
+                  src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png"
+                  alt="Seguridad"
                   width="64"
                   style="display: block; margin: 0 auto; border: 0"
                 />
@@ -111,7 +111,7 @@
                 <h1
                   style="color: #333333; margin-bottom: 10px; font-size: 22px"
                 >
-                  Welcome, {{ClientName}}!
+                  ¡Bienvenido(a), {{UserFullName}}!
                 </h1>
 
                 <p
@@ -119,13 +119,35 @@
                     color: #666666;
                     font-size: 16px;
                     line-height: 1.6;
-                    margin-bottom: 30px;
+                    margin-bottom: 20px;
                   "
                 >
-                  Ready to hit the road? Your account has been successfully
-                  created. Whether you need a car for a weekend getaway or a
-                  daily commute, our entire fleet is now at your disposal.
+                  Tu cuenta corporativa se creó correctamente con
+                  <strong>Google</strong>. Ahora puedes acceder a tu panel al instante.
                 </p>
+
+                <div
+                  style="
+                    background-color: #fff8e1;
+                    border-left: 4px solid #ffc107;
+                    padding: 15px;
+                    margin-bottom: 30px;
+                    text-align: left;
+                  "
+                >
+                  <p
+                    style="
+                      margin: 0;
+                      color: #856404;
+                      font-size: 14px;
+                      line-height: 1.5;
+                    "
+                  >
+                    <strong>Acción requerida:</strong> Como te registraste mediante un
+                    proveedor social, aún no tienes una contraseña local. Te
+                    recomendamos crear una contraseña para asegurar un acceso sin interrupciones.
+                  </p>
+                </div>
 
                 <table
                   border="0"
@@ -139,7 +161,7 @@
                       style="border-radius: 4px"
                     >
                       <a
-                        href="{{LoginUrl}}"
+                        href="{{ResetPasswordUrl}}"
                         target="_blank"
                         style="
                           background-color: #009688;
@@ -153,9 +175,7 @@
                           display: inline-block;
                           font-weight: bold;
                         "
-                      >
-                        Find Your Car
-                      </a>
+                      >Crear mi contraseña</a>
                     </td>
                   </tr>
                 </table>
@@ -172,7 +192,7 @@
                 "
               >
                 <p style="margin: 5px 0">
-                  Did not sign up? Please disregard this email.
+                  Si lo prefieres, puedes seguir iniciando sesión con Google sin establecer una contraseña.
                 </p>
                 <p style="margin: 0">
                   © 2025 Locadora De Veículos. All rights reserved.

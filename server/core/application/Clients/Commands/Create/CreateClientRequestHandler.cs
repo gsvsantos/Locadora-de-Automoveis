@@ -97,7 +97,7 @@ public class CreateClientRequestHandler(
 
             try
             {
-                await emailService.ScheduleClientInvitation(userLogin.Email!, userLogin.FullName, token);
+                await emailService.ScheduleClientInvitation(userLogin.Email!, userLogin.FullName, token, userLogin.PreferredLanguage);
             }
             catch (Exception ex)
             {

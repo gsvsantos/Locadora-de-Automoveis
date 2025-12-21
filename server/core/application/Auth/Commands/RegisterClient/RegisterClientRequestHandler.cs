@@ -107,7 +107,7 @@ public class RegisterClientRequestHandler(
 
             try
             {
-                await emailService.ScheduleClientRegisterWelcome(client.Email, client.FullName);
+                await emailService.ScheduleClientRegisterWelcome(client.Email, client.FullName, client.PreferredLanguage);
             }
             catch (Exception ex)
             {

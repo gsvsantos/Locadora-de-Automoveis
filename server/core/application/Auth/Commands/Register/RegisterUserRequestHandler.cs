@@ -88,7 +88,7 @@ public class RegisterUserRequestHandler(
 
             try
             {
-                await emailService.ScheduleBusinessRegisterWelcome(user.Email!, user.FullName);
+                await emailService.ScheduleBusinessRegisterWelcome(user.Email!, user.FullName, user.PreferredLanguage);
             }
             catch (Exception ex)
             {
