@@ -17,6 +17,7 @@ public class Client : BaseEntity<Client>
     public Client? JuristicClient { get; set; }
     public Guid? LoginUserId { get; set; }
     public User? LoginUser { get; set; }
+    public string PreferredLanguage { get; private set; } = "pt-BR";
 
     public Client() { }
 
@@ -84,6 +85,11 @@ public class Client : BaseEntity<Client>
     {
         this.LoginUser = user;
         this.LoginUserId = user.Id;
+    }
+
+    public void SetPreferredLanguage(string language)
+    {
+        this.PreferredLanguage = language;
     }
 
     public static Client CreateTenantCopyFromGlobal(Client globalClient, Guid tenantId, User loginUser, User createdByUser)

@@ -10,7 +10,7 @@ import {
 import { ActivatedRouteSnapshot, provideRouter, withViewTransitions } from '@angular/router';
 
 import { provideTransloco } from '@jsverse/transloco';
-import { provideAuth } from './providers/auth.provider';
+import { provideEnvironments } from './providers/environment.provider';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { routes } from './routes/app.routes';
@@ -45,7 +45,7 @@ export const appConfig: ApplicationConfig = {
       },
       loader: TranslocoHttpLoader,
     }),
-    provideAuth(),
+    provideEnvironments(),
     provideOAuthClient(),
     {
       provide: APP_INITIALIZER,

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using LocadoraDeAutomoveis.Application.Account.Commands.GetClientProfile;
 using LocadoraDeAutomoveis.Application.Clients.Commands.Create;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetById;
-using LocadoraDeAutomoveis.Application.Clients.Commands.GetClientProfile;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetIndividuals;
 using LocadoraDeAutomoveis.Application.Clients.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Auth;

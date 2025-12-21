@@ -1,5 +1,7 @@
 ﻿using FluentResults;
-using LocadoraDeAutomoveis.Application.Clients.Commands.GetClientProfile;
+using LocadoraDeAutomoveis.Application.Account.Commands.GetClientProfile;
+using LocadoraDeAutomoveis.Application.Account.Commands.UpdateLanguage;
+using LocadoraDeAutomoveis.Infrastructure.Localization;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -13,9 +15,24 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 public class AccountController(IMediator mediator) : ControllerBase
 {
     [HttpGet("profile")]
-    public async Task<IActionResult> GetProfile([FromQuery] GetClientProfileRequest request)
+    public async Task<IActionResult> GetProfile()
     {
-        Result<GetClientProfileResponse> result = await mediator.Send(request);
+        GetProfileRequest request = new();
+
+        Result<GetProfileResponse> result = await mediator.Send(request);
+
+        return result.ToHttpResponse();
+    }
+
+    [HttpPut("language")]
+    public async Task<IActionResult> UpdateLanguage([FromBody] UpdateLanguageRequest request)
+    {
+        if (!LanguageCodes.IsSupported(request.Language))
+        {
+            return BadRequest("Unsupported language.");
+        }
+
+        Result<UpdateLanguageResponse> result = await mediator.Send(request);
 
         return result.ToHttpResponse();
     }

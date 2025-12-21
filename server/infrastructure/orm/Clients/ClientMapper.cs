@@ -30,19 +30,19 @@ public class ClientMapper : IEntityTypeConfiguration<Client>
 
         builder.OwnsOne(c => c.Address, a =>
         {
-            a.Property(p => p.State)
+            a.Property(a => a.State)
             .IsRequired();
 
-            a.Property(p => p.City)
+            a.Property(a => a.City)
             .IsRequired();
 
-            a.Property(p => p.Neighborhood)
+            a.Property(a => a.Neighborhood)
             .IsRequired();
 
-            a.Property(p => p.Street)
+            a.Property(a => a.Street)
             .IsRequired();
 
-            a.Property(p => p.Number)
+            a.Property(a => a.Number)
             .IsRequired();
         });
 
@@ -53,15 +53,18 @@ public class ClientMapper : IEntityTypeConfiguration<Client>
 
         builder.Property(c => c.LicenseNumber);
 
-        builder.Property(d => d.LicenseValidity);
+        builder.Property(c => c.LicenseValidity);
 
-        builder.HasOne(d => d.JuristicClient)
+        builder.HasOne(c => c.JuristicClient)
             .WithMany()
-            .HasForeignKey(d => d.JuristicClientId)
+            .HasForeignKey(c => c.JuristicClientId)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired(false);
 
-        builder.Property(x => x.TenantId)
+        builder.Property(c => c.PreferredLanguage)
+            .IsRequired();
+
+        builder.Property(c => c.TenantId)
             .IsRequired(false);
 
         builder.HasOne(c => c.Tenant)

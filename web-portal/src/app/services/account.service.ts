@@ -1,10 +1,11 @@
-import { ClientProfile, ClientProfileApiDto } from './../models/account.models';
+import { ClientProfile, ClientProfileApiDto, UpdateLanguageDto } from './../models/account.models';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { mapApiResponse } from '../utils/map-api-response';
 import { ApiResponseDto } from '../models/api.models';
+import { LanguageCode } from './local-storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -18,6 +19,14 @@ export class AccountService {
       map(mapApiResponse<ClientProfileApiDto>),
       map((apiDto: ClientProfileApiDto) => this.mapClientProfileFromApi(apiDto.client)),
     );
+  }
+
+  public setActiveLang(newLanguageCode: LanguageCode): Observable<null> {
+    const url = `${this.apiUrl}/language`;
+
+    const body: UpdateLanguageDto = { language: newLanguageCode };
+
+    return this.http.put<null>(url, body);
   }
 
   private mapClientProfileFromApi(apiClientProfile: ClientProfileApiDto['client']): ClientProfile {

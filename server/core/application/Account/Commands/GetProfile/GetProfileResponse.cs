@@ -1,6 +1,6 @@
-﻿namespace LocadoraDeAutomoveis.Application.Clients.Commands.GetClientProfile;
+﻿namespace LocadoraDeAutomoveis.Application.Account.Commands.GetClientProfile;
 
-public record GetClientProfileResponse(
+public record GetProfileResponse(
     ClientProfileDto Client
 );
 

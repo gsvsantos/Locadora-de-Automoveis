@@ -9,3 +9,7 @@ export interface ClientProfile {
 export interface ClientProfileApiDto {
   client: ClientProfile;
 }
+
+export interface UpdateLanguageDto {
+  language: string;
+}
