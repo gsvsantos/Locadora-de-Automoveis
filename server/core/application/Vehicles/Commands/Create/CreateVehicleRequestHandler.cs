@@ -7,7 +7,7 @@ using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
-using LocadoraDeVeiculos.Infrastructure.S3;
+using LocadoraDeAutomoveis.Infrastructure.S3;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;

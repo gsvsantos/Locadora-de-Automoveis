@@ -1,4 +1,4 @@
-﻿namespace LocadoraDeVeiculos.Infrastructure.S3;
+﻿namespace LocadoraDeAutomoveis.Infrastructure.S3;
 
 public sealed class CloudflareR2Options
 {

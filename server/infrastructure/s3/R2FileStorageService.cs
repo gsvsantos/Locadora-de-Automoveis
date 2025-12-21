@@ -2,7 +2,7 @@
 using Amazon.S3.Model;
 using Microsoft.Extensions.Options;
 
-namespace LocadoraDeVeiculos.Infrastructure.S3;
+namespace LocadoraDeAutomoveis.Infrastructure.S3;
 
 public sealed class R2FileStorageService(IAmazonS3 s3, IOptions<CloudflareR2Options> options)
 {
