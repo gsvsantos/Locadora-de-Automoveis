@@ -8,6 +8,7 @@
           [placeholder]="t('searchPlaceholder')"
         />
       </div>
+
       <div class="filters-container" style="display: flex; gap: 1rem">
         <select class="form-input" [formControl]="groupIdControl">
           <option [ngValue]="null">{{ t('filters.allGroups') }}</option>
@@ -29,33 +30,59 @@
       </div>
     </div>
 
-    @if (state$ | async; as state) {
+    @if (viewModel$ | async; as vm) {
+      @if (!vm.rentalStatus.canRent) {
+        <div class="rent-blocked-banner">
+          <strong>{{ t('rentBlocked.title') }}</strong>
+          <div>
+            @if (vm.rentalStatus.reason === 'ActiveRentalExists') {
+              @if (vm.rentalStatus.rental?.vehicleLicensePlate; as plate) {
+                {{ t('rentBlocked.reasons.activeRentalExists', { plate }) }}
+              } @else {
+                {{ t('rentBlocked.reasons.activeRentalExistsWithoutPlate') }}
+              }
+            } @else if (vm.rentalStatus.reason === 'NotAuthenticated') {
+              {{ t('rentBlocked.reasons.notAuthenticated') }}
+            } @else {
+              {{ t('rentBlocked.reasons.unknown') }}
+            }
+          </div>
+        </div>
+      }
+
       <div class="list">
-        @for (vehicle of state.items; track vehicle.id) {
+        @for (vehicle of vm.state.items; track vehicle.id) {
           <div class="item">
-            <app-vehicle-card [vehicle]="vehicle" [imageBaseUrl]="urlS3"> </app-vehicle-card>
+            <app-vehicle-card
+              [vehicle]="vehicle"
+              [imageBaseUrl]="urlS3"
+              [canRent]="vm.rentalStatus.canRent"
+              [rentalBlockReason]="vm.rentalStatus.reason"
+              [activeRentalPlate]="vm.rentalStatus.rental?.vehicleLicensePlate ?? null"
+            >
+            </app-vehicle-card>
           </div>
         } @empty {
           <p class="empty-state">{{ t('noVehiclesFound') }}</p>
         }
       </div>
 
-      @if (state.totalCount > state.pageSize) {
+      @if (vm.state.totalCount > vm.state.pageSize) {
         <div class="pagination">
           <gs-buttons
             [buttonType]="buttonType.Default"
             [text]="t('pagination.prev')"
             [variant]="variantType.Outline"
-            [disabled]="state.currentPage === 1"
-            (click)="onPageChange(state.currentPage - 1)"
+            [disabled]="vm.state.currentPage === 1"
+            (click)="onPageChange(vm.state.currentPage - 1)"
           >
           </gs-buttons>
 
           <span>
             {{
               t('pagination.info', {
-                page: state.currentPage,
-                total: Math.ceil(state.totalCount / state.pageSize),
+                page: vm.state.currentPage,
+                total: Math.ceil(vm.state.totalCount / vm.state.pageSize),
               })
             }}
           </span>
@@ -64,8 +91,8 @@
             [buttonType]="buttonType.Default"
             [text]="t('pagination.next')"
             [variant]="variantType.Outline"
-            [disabled]="state.currentPage * state.pageSize >= state.totalCount"
-            (click)="onPageChange(state.currentPage + 1)"
+            [disabled]="vm.state.currentPage * vm.state.pageSize >= vm.state.totalCount"
+            (click)="onPageChange(vm.state.currentPage + 1)"
           >
           </gs-buttons>
         </div>

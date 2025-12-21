@@ -62,6 +62,16 @@ public class RentalRepository(AppDbContext context)
             r.Status != ERentalStatus.Open);
     }
 
+    public async Task<bool> HasActiveRentalsByLoginUserDistinctAsync(Guid loginUserId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .AnyAsync(r =>
+                r.Client.LoginUserId.Equals(loginUserId) &&
+                r.Status == ERentalStatus.Open
+            );
+    }
+
     public async Task<bool> HasActiveRentalsByClient(Guid clientId)
     {
         return await this.records.AnyAsync(r =>
@@ -225,6 +235,18 @@ public class RentalRepository(AppDbContext context)
                 r.Id.Equals(rentalId) &&
                 r.Client.LoginUserId.Equals(loginUserId)
             );
+    }
+
+    public async Task<Rental?> GetActiveRentalByLoginUserDistinctAsync(Guid loginUserId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Include(r => r.Vehicle)
+            .Where(r => r.IsActive)
+            .Where(r => r.Status == ERentalStatus.Open)
+            .Where(r => r.Client.LoginUserId.Equals(loginUserId))
+            .FirstOrDefaultAsync();
     }
 
     public async Task<List<Guid>> GetRentedVehicleIds()

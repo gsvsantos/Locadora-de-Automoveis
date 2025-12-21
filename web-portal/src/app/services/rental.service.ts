@@ -9,6 +9,7 @@ import {
   ListClientRentalDto,
   ClientRentalDto,
   CreateSelfRentalDto,
+  MyRentalStatusDto,
 } from '../models/rental.models';
 import { mapApiResponse } from '../utils/map-api-response';
 import { PagedResult } from '../models/paged-result.models';
@@ -42,6 +43,12 @@ export class RentalService {
       map(mapApiResponse<ListClientRentalDto>),
       map((res) => res.rentals),
     );
+  }
+
+  public getMyRentalStatus(): Observable<MyRentalStatusDto> {
+    const url = `${this.apiUrl}/me/status`;
+
+    return this.http.get<ApiResponseDto>(url).pipe(map(mapApiResponse<MyRentalStatusDto>));
   }
 
   private mapRentalFromApi(apiRental: RentalDetailsApiDto['rental']): RentalDetailsDto {

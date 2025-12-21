@@ -18,6 +18,8 @@ public interface IRepositoryRental : IRepository<Rental>
 
     Task<bool> HasRentalHistoryByVehicle(Guid vehicleId);
 
+    Task<bool> HasActiveRentalsByLoginUserDistinctAsync(Guid loginUserId);
+
     Task<bool> HasActiveRentalsByClient(Guid clientId);
 
     Task<bool> HasRentalHistoryByClient(Guid clientId);
@@ -45,6 +47,8 @@ public interface IRepositoryRental : IRepository<Rental>
     Task<PagedResult<Rental>> GetMyRentalsDistinctAsync(Guid loginUserId, int pageNumber, int pageSize, string? term, Guid? tenantId, ERentalStatus? status, CancellationToken cancellationToken);
 
     Task<Rental?> GetMyByIdDistinctAsync(Guid rentalId, Guid loginUserId);
+
+    Task<Rental?> GetActiveRentalByLoginUserDistinctAsync(Guid loginUserId);
 
     Task<List<Guid>> GetRentedVehicleIds();
 }

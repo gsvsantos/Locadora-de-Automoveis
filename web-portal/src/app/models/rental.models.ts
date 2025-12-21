@@ -35,6 +35,18 @@ export interface ListClientRentalDto {
   rentals: PagedResult<ClientRentalDto>;
 }
 
+export interface MyRentalStatusDto {
+  canRent: boolean;
+  reason: RentalBlockReason | null;
+  rental: ActiveRentalStatusDto | null;
+}
+
+export interface ActiveRentalStatusDto {
+  rentalId: string;
+  vehicleLicensePlate: string;
+  startedAt: Date;
+}
+
 export interface ClientRentalDto {
   id: string;
   client: RentalClientDto;
@@ -150,3 +162,5 @@ export interface RentalIndividualClientDto {
 }
 
 export type RentalStatus = 'Open' | 'Completed' | 'DiCanceledesel';
+
+export type RentalBlockReason = 'ActiveRentalExists' | 'NotAuthenticated' | 'Unknown' | null;

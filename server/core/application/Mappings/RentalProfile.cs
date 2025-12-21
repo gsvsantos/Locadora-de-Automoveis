@@ -8,6 +8,7 @@ using LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentalBy;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentals;
+using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentalStatus;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Return;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Clients;
@@ -164,6 +165,13 @@ public class RentalProfile : Profile
                 src.GetTenantId()
             ));
 
+        CreateMap<Rental, ActiveRentalDto>()
+            .ConvertUsing((src, dest, ctx) => new ActiveRentalDto(
+                src.Id,
+                src.Vehicle.LicensePlate,
+                src.StartDate
+            ));
+
         // HANDLERS
         // Create
         CreateMap<CreateRentalRequest, Rental>()
@@ -213,6 +221,14 @@ public class RentalProfile : Profile
         CreateMap<Rental, GetMyRentalByIdResponse>()
             .ConvertUsing((src, dest, ctx) => new GetMyRentalByIdResponse(
                ctx.Mapper.Map<ByIdRentalDto>(src)
+            ));
+
+        // GetMyRentalStatus
+        CreateMap<Rental, GetMyRentalStatusResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetMyRentalStatusResponse(
+               false,
+               "ActiveRentalExists",
+               ctx.Mapper.Map<ActiveRentalDto>(src)
             ));
     }
 }

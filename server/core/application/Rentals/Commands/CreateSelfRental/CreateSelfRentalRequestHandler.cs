@@ -117,6 +117,13 @@ public class CreateSelfRentalRequestHandler(
             }
         }
 
+        bool cantRent = await repositoryRental.HasActiveRentalsByLoginUserDistinctAsync(userId);
+
+        if (cantRent)
+        {
+            return Result.Fail(RentalErrorResults.ClientAlreadyHasActiveRentError());
+        }
+
         if (client.TenantId != tenantId)
         {
             return Result.Fail(ErrorResults.ConflictError(

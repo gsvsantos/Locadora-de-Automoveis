@@ -111,6 +111,15 @@
     "footerRights": "Locadora de Veículos. All rights reserved."
   },
   "home": {
+    "rentBlocked": {
+      "title": "Rental unavailable",
+      "reasons": {
+        "activeRentalExists": "You already have an active rental for vehicle {{plate}}.",
+        "activeRentalExistsWithoutPlate": "You already have an active rental.",
+        "notAuthenticated": "Please sign in to rent a vehicle.",
+        "unknown": "We couldn't verify your rental eligibility."
+      }
+    },
     "searchPlaceholder": "Search by brand or model...",
     "noVehiclesFound": "No vehicles found for the selected criteria.",
     "loading": "Loading available vehicles...",
@@ -131,13 +140,16 @@
     }
   },
   "vehicleCard": {
-    "rentButton": "Rent Now",
     "transmission": {
       "manual": "Manual",
       "automatic": "Automatic"
     },
     "seats": "{{ count }} Seats",
-    "kilometers": "{{ km }} Kilometers"
+    "kilometers": "{{ km }} Kilometers",
+    "buttons": {
+      "rent": "Rent Now",
+      "blocked": "Blocked"
+    }
   },
   "search": {
     "results": {

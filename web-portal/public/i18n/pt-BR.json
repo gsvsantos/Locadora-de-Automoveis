@@ -111,6 +111,15 @@
     "footerRights": "Locadora de Veículos. Todos os direitos reservados."
   },
   "home": {
+    "rentBlocked": {
+      "title": "Locação indisponível",
+      "reasons": {
+        "activeRentalExists": "Você já possui um aluguel ativo do veículo {{plate}}.",
+        "activeRentalExistsWithoutPlate": "Você já possui um aluguel ativo.",
+        "notAuthenticated": "Faça login para alugar um veículo.",
+        "unknown": "Não foi possível verificar sua disponibilidade para locação."
+      }
+    },
     "searchPlaceholder": "Busque por marca ou modelo...",
     "noVehiclesFound": "Nenhum veículo encontrado para os critérios selecionados.",
     "loading": "Carregando veículos disponíveis...",
@@ -131,13 +140,16 @@
     }
   },
   "vehicleCard": {
-    "rentButton": "Alugar agora",
     "transmission": {
       "manual": "Manual",
       "automatic": "Automático"
     },
     "seats": "{{ count }} assentos",
-    "kilometers": "{{ km }} quilômetros"
+    "kilometers": "{{ km }} quilômetros",
+    "buttons": {
+      "rent": "Alugar agora",
+      "blocked": "Bloqueado"
+    }
   },
   "search": {
     "results": {

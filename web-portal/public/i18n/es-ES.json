@@ -111,6 +111,15 @@
     "footerRights": "Alquiler de Vehículos. Todos los derechos reservados."
   },
   "home": {
+    "rentBlocked": {
+      "title": "Alquiler no disponible",
+      "reasons": {
+        "activeRentalExists": "Ya tienes un alquiler activo del vehículo {{plate}}.",
+        "activeRentalExistsWithoutPlate": "Ya tienes un alquiler activo.",
+        "notAuthenticated": "Inicia sesión para alquilar un vehículo.",
+        "unknown": "No se ha podido verificar tu disponibilidad para alquilar."
+      }
+    },
     "searchPlaceholder": "Busca por marca o modelo...",
     "noVehiclesFound": "No se han encontrado vehículos para los criterios seleccionados.",
     "loading": "Cargando vehículos disponibles...",
@@ -131,13 +140,16 @@
     }
   },
   "vehicleCard": {
-    "rentButton": "Alquilar ahora",
     "transmission": {
       "manual": "Manual",
       "automatic": "Automático"
     },
     "seats": "{{ count }} plazas",
-    "kilometers": "{{ km }} kilómetros"
+    "kilometers": "{{ km }} kilómetros",
+    "buttons": {
+      "rent": "Alquilar ahora",
+      "blocked": "Bloqueado"
+    }
   },
   "search": {
     "results": {

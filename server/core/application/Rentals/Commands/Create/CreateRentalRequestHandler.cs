@@ -66,6 +66,13 @@ public class CreateRentalRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.ClientId));
         }
 
+        bool cantRent = await repositoryRental.HasActiveRentalsByClient(client.Id);
+
+        if (cantRent)
+        {
+            return Result.Fail(RentalErrorResults.ClientAlreadyHasActiveRentError());
+        }
+
         Driver? driver = await repositoryDriver.GetByIdAsync(request.DriverId);
 
         if (driver is null)

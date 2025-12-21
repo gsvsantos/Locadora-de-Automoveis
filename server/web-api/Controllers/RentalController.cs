@@ -7,6 +7,7 @@ using LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentalBy;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentals;
+using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentalStatus;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Return;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Update;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
@@ -112,6 +113,17 @@ public class RentalController(
         GetMyRentalByIdRequest request = new(id);
 
         Result<GetMyRentalByIdResponse> result = await mediator.Send(request);
+
+        return result.ToHttpResponse();
+    }
+
+    [HttpGet("me/status")]
+    [Authorize("EveryonePolicy")]
+    public async Task<IActionResult> GetMyRentalStatus()
+    {
+        GetMyRentalStatusRequest request = new();
+
+        Result<GetMyRentalStatusResponse> result = await mediator.Send(request);
 
         return result.ToHttpResponse();
     }

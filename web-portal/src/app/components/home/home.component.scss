@@ -88,6 +88,20 @@
   }
 }
 
+.rent-blocked-banner {
+  margin: 1rem 0;
+  padding: 12px 14px;
+  border: 1px solid $border;
+  border-radius: 12px;
+  background: $surface-alt;
+  color: $text-main;
+
+  strong {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+}
+
 .empty-state {
   color: $text-muted;
   text-align: center;

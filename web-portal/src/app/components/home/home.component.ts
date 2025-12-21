@@ -21,6 +21,8 @@ import { VehicleCardComponent } from '../vehicle-card/vehicle-card.component';
 import { VehicleService } from '../../services/vehicle.service';
 import { Group } from '../../models/group.models';
 import { GroupService } from '../../services/group.service';
+import { MyRentalStatusDto } from '../../models/rental.models';
+import { RentalService } from '../../services/rental.service';
 
 @Component({
   selector: 'app-home',
@@ -32,6 +34,7 @@ export class Home {
   protected readonly translocoService = inject(TranslocoService);
   protected readonly vehicleService = inject(VehicleService);
   protected readonly groupService = inject(GroupService);
+  protected readonly rentalService = inject(RentalService);
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
   protected readonly buttonType = gsButtonTypeEnum;
@@ -68,6 +71,10 @@ export class Home {
     map((data) => data['groups'] as Group[]),
   );
 
+  protected readonly rentalStatus$: Observable<MyRentalStatusDto> = this.rentalService
+    .getMyRentalStatus()
+    .pipe(shareReplay({ bufferSize: 1, refCount: true }));
+
   protected readonly state$: Observable<PagedResult<Vehicle>> = combineLatest([
     this.queryText$,
     this.groupId$,
@@ -82,6 +89,11 @@ export class Home {
         fuelType || undefined,
       ),
     ),
+    shareReplay({ bufferSize: 1, refCount: true }),
+  );
+
+  protected readonly viewModel$ = combineLatest([this.state$, this.rentalStatus$]).pipe(
+    map(([state, rentalStatus]) => ({ state, rentalStatus })),
     shareReplay({ bufferSize: 1, refCount: true }),
   );
 

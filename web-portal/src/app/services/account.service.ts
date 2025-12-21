@@ -20,14 +20,6 @@ export class AccountService {
     );
   }
 
-  // public updateProfile(data: unknown): Observable<void> {
-  //   return this.http.put<void>(`${this.apiUrl}/profile`, data);
-  // }
-
-  // public getMyRentals(page: number = 1): Observable<PagedResult<Rental>> {
-  //   return this.http.get<PagedResult<Rental>>(`${this.apiUrl}/rentals?page=${page}`);
-  // }
-
   private mapClientProfileFromApi(apiClientProfile: ClientProfileApiDto['client']): ClientProfile {
     return {
       id: apiClientProfile.id,
