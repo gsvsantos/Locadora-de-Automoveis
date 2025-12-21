@@ -17,7 +17,7 @@ const environmentFileContent =
   `export const environment = {\n` +
   `  production: true,\n` +
   `  apiUrl: ${JSON.stringify(apiUrl)},\n` +
-  `  client_id: ${JSON.stringify(googleClientId)}\n` +
+  `  client_id: ${JSON.stringify(googleClientId)},\n` +
   `  captcha_key: ${JSON.stringify(captcha_key)}\n` +
   `} as const;\n`;
 
