@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Create;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAllDistinct;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Update;
+using LocadoraDeAutomoveis.Application.Partners.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Partners.Commands.GetCoupons;
 using LocadoraDeAutomoveis.Domain.Coupons;
 using System.Collections.Immutable;
@@ -33,9 +35,10 @@ public class CouponProfile : Profile
 
         // DTOs
         CreateMap<Coupon, CouponDto>()
-            .ConvertUsing(src => new CouponDto(
+            .ConvertUsing((src, dest, ctx) => new CouponDto(
                 src.Id,
                 src.Name,
+                ctx.Mapper.Map<PartnerDto>(src.Partner),
                 src.DiscountValue,
                 src.ExpirationDate,
                 src.IsActive
@@ -50,7 +53,7 @@ public class CouponProfile : Profile
                 src.ExpirationDate
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<Coupon>, GetAllCouponResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllCouponResponse(
                 src.Count,
@@ -72,5 +75,13 @@ public class CouponProfile : Profile
                 src.ExpirationDate
             )
             { Id = src.Id });
+
+        // GetAllDistinct
+        CreateMap<List<Coupon>, GetAllDistinctCouponResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetAllDistinctCouponResponse(
+                src.Count,
+                src.Select(c => ctx.Mapper.Map<CouponDto>(c)).ToImmutableList()
+                    ?? ImmutableList<CouponDto>.Empty
+            ));
     }
 }

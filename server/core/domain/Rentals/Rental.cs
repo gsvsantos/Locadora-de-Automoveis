@@ -18,6 +18,7 @@ public class Rental : BaseEntity<Rental>
     public decimal GuaranteeValue { get; set; } = 1000;
     public ERentalStatus Status { get; set; }
     public DateTimeOffset? ReturnDate { get; set; }
+    public RentalReturn? RentalReturn { get; set; }
     public decimal FinalPrice { get; set; } = 0;
     public Guid? EmployeeId { get; set; }
     public Employee? Employee { get; set; }
@@ -36,11 +37,10 @@ public class Rental : BaseEntity<Rental>
     public List<RentalExtra> Extras { get; set; } = [];
 
     public Rental() { }
-    public Rental(DateTimeOffset startDate, DateTimeOffset expectedReturnDate, decimal startKm) : this()
+    public Rental(DateTimeOffset startDate, DateTimeOffset expectedReturnDate) : this()
     {
         this.StartDate = startDate;
         this.ExpectedReturnDate = expectedReturnDate;
-        this.StartKm = startKm;
     }
 
     public void AddRangeExtras(List<RentalExtra> extras)
@@ -66,6 +66,11 @@ public class Rental : BaseEntity<Rental>
     public void SetEstimatedKilometers(decimal estimatedKilometers)
     {
         this.EstimatedKilometers = estimatedKilometers;
+    }
+
+    public void SetStartKm(decimal startKm)
+    {
+        this.StartKm = startKm;
     }
 
     public void SetStatus(ERentalStatus status)

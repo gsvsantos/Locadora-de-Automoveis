@@ -67,6 +67,10 @@ public class AppDbContext(
                 .HasQueryFilter(x => x.TenantId.Equals(tenantProvider.GetTenantId()));
         }
 
+        modelBuilder.Entity<User>()
+            .Property(u => u.TenantId)
+            .IsRequired(false);
+
         Assembly assembly = typeof(AppDbContext).Assembly;
 
         modelBuilder.ApplyConfigurationsFromAssembly(assembly);

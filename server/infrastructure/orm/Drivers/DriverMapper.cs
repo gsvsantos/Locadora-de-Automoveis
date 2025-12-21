@@ -38,6 +38,9 @@ public class DriverMapper : IEntityTypeConfiguration<Driver>
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
+        builder.Property(x => x.TenantId)
+            .IsRequired(false);
+
         builder.HasOne(d => d.Tenant)
             .WithMany()
             .HasForeignKey(d => d.TenantId)

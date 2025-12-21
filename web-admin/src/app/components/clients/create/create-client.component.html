@@ -1,0 +1,176 @@
+<section class="create-section" *transloco="let t; prefix: 'clients.create'">
+  <div class="main-content">
+    <div class="card">
+      <form [formGroup]="formGroup" class="form" (ngSubmit)="register()">
+        <h2>{{ t('card.title') }}</h2>
+
+        <hr class="bar" />
+
+        <div class="card-content">
+          <span class="full-width">{{ t('card.subtitle') }}</span>
+
+          <h3 class="full-width">{{ t('card.section.personalData') }}</h3>
+          <div class="form-field full-width">
+            <label>{{ t('card.label.type') }}</label>
+            <select class="form-input" formControlName="type">
+              <option value="">{{ t('card.placeholder.type') }}</option>
+              <option value="Individual">{{ t('card.type.individual') }}</option>
+              <option value="Business">{{ t('card.type.corporate') }}</option>
+            </select>
+            @if (type?.errors?.['required'] && type?.dirty) {
+              <span class="error-message">{{ t('card.errors.typeRequired') }}</span>
+            }
+          </div>
+
+          <div class="form-field">
+            <label>{{ t('card.label.fullName') }}</label>
+            <input
+              class="form-input"
+              formControlName="fullName"
+              type="text"
+              [placeholder]="t('card.placeholder.fullName')"
+              autocomplete="name"
+            />
+            @if (fullName?.errors?.['required'] && fullName?.dirty) {
+              <span class="error-message">{{ t('card.errors.fullNameRequired') }}</span>
+            }
+            @if (fullName?.errors?.['minlength'] && fullName?.dirty) {
+              <span class="error-message">{{ t('card.errors.fullNameLength') }}</span>
+            }
+            @if (fullName?.errors?.['pattern'] && fullName?.dirty) {
+              <span class="error-message">{{ t('card.errors.fullNameInvalid') }}</span>
+            }
+          </div>
+
+          <div class="form-field">
+            <label>{{ t('card.label.document') }}</label>
+            <input
+              class="form-input"
+              formControlName="document"
+              type="text"
+              [placeholder]="t('card.placeholder.document')"
+            />
+            @if (document?.errors?.['required'] && document?.dirty) {
+              <span class="error-message">{{ t('card.errors.documentRequired') }}</span>
+            }
+            @if (document?.errors?.['pattern'] && document?.dirty) {
+              <span class="error-message">{{ t('card.errors.documentInvalid') }}</span>
+            }
+          </div>
+
+          <div class="form-field">
+            <label>{{ t('card.label.email') }}</label>
+            <input
+              class="form-input"
+              formControlName="email"
+              type="email"
+              [placeholder]="t('card.placeholder.email')"
+              autocomplete="email"
+            />
+            @if (email?.errors?.['required'] && email?.dirty) {
+              <span class="error-message">{{ t('card.errors.emailRequired') }}</span>
+            }
+          </div>
+
+          <div class="form-field">
+            <label>{{ t('card.label.phoneNumber') }}</label>
+            <input
+              class="form-input"
+              formControlName="phoneNumber"
+              type="tel"
+              [placeholder]="t('card.placeholder.phoneNumber')"
+            />
+            @if (phoneNumber?.errors?.['required'] && phoneNumber?.dirty) {
+              <span class="error-message">{{ t('card.errors.phoneNumberRequired') }}</span>
+            }
+            @if (phoneNumber?.errors?.['pattern'] && phoneNumber?.dirty) {
+              <span class="error-message">{{ t('card.errors.phoneNumberInvalid') }}</span>
+            }
+          </div>
+
+          <h3 class="full-width">{{ t('card.section.addressData') }}</h3>
+          <div class="form-field">
+            <label>{{ t('card.label.state') }}</label>
+            <input
+              class="form-input"
+              formControlName="state"
+              type="text"
+              [placeholder]="t('card.placeholder.state')"
+            />
+            @if (state?.errors?.['required'] && state?.dirty) {
+              <span class="error-message">{{ t('card.errors.stateRequired') }}</span>
+            }
+          </div>
+
+          <div class="form-field">
+            <label>{{ t('card.label.city') }}</label>
+            <input
+              class="form-input"
+              formControlName="city"
+              type="text"
+              [placeholder]="t('card.placeholder.city')"
+            />
+            @if (city?.errors?.['required'] && city?.dirty) {
+              <span class="error-message">{{ t('card.errors.cityRequired') }}</span>
+            }
+          </div>
+
+          <div class="form-field">
+            <label>{{ t('card.label.neighborhood') }}</label>
+            <input
+              class="form-input"
+              formControlName="neighborhood"
+              type="text"
+              [placeholder]="t('card.placeholder.neighborhood')"
+            />
+            @if (neighborhood?.errors?.['required'] && neighborhood?.dirty) {
+              <span class="error-message">{{ t('card.errors.neighborhoodRequired') }}</span>
+            }
+          </div>
+
+          <div class="form-field">
+            <label>{{ t('card.label.number') }}</label>
+            <input
+              class="form-input"
+              formControlName="number"
+              type="number"
+              [placeholder]="t('card.placeholder.number')"
+            />
+            @if (number?.errors?.['required'] && number?.dirty) {
+              <span class="error-message">{{ t('card.errors.numberRequired') }}</span>
+            }
+          </div>
+
+          <div class="form-field full-width">
+            <label>{{ t('card.label.street') }}</label>
+            <input
+              class="form-input"
+              formControlName="street"
+              type="text"
+              [placeholder]="t('card.placeholder.street')"
+            />
+            @if (street?.errors?.['required'] && street?.dirty) {
+              <span class="error-message">{{ t('card.errors.streetRequired') }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="buttons">
+          <gs-buttons
+            [buttonType]="buttonType.Link"
+            [text]="t('card.buttons.back')"
+            routerLink="/clients"
+          ></gs-buttons>
+
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('card.buttons.confirm')"
+            type="submit"
+            [disabled]="formGroup.invalid"
+            (click)="register()"
+          ></gs-buttons>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

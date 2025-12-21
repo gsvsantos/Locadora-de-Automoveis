@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LocadoraDeAutomoveis.Application.Drivers.Commands.Create;
 using LocadoraDeAutomoveis.Application.Drivers.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.Drivers.Commands.GetAllDistinct;
 using LocadoraDeAutomoveis.Application.Drivers.Commands.GetById;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Drivers;
@@ -62,7 +63,7 @@ public class DriverProfile : Profile
                 src.a
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<Driver>, GetAllDriverResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllDriverResponse(
                 src.Count,
@@ -74,6 +75,14 @@ public class DriverProfile : Profile
         CreateMap<Driver, GetByIdDriverResponse>()
             .ConvertUsing((src, dest, ctx) => new GetByIdDriverResponse(
                ctx.Mapper.Map<DriverDto>(src)
+            ));
+
+        // GetAll
+        CreateMap<List<Driver>, GetAllDistinctDriverResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetAllDistinctDriverResponse(
+                src.Count,
+                src.Select(c => ctx.Mapper.Map<DriverDto>(c)).ToImmutableList()
+                    ?? ImmutableList<DriverDto>.Empty
             ));
     }
 }

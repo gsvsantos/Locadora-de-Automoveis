@@ -2,5 +2,5 @@
 
 public interface ITokenProvider
 {
-    Task<IAccessToken> GenerateAccessToken(User user);
+    Task<IAccessToken> GenerateAccessToken(User user, ImpersonationActorDto? actor = null);
 }

@@ -3,6 +3,7 @@ using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
+using LocadoraDeAutomoveis.Infrastructure.S3;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Vehicles.Application;
@@ -22,6 +23,7 @@ public sealed class CreateVehicleRequestHandlerTests : UnitTestBase
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryVehicle> repositoryVehicleMock = null!;
     private Mock<IRepositoryGroup> repositoryGroupMock = null!;
+    private Mock<IR2FileStorageService> fileStorageMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IUserContext> userContextMock = null!;
     private Mock<IValidator<Vehicle>> validatorMock = null!;
@@ -38,6 +40,7 @@ public sealed class CreateVehicleRequestHandlerTests : UnitTestBase
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryVehicleMock = new Mock<IRepositoryVehicle>();
         this.repositoryGroupMock = new Mock<IRepositoryGroup>();
+        this.fileStorageMock = new Mock<IR2FileStorageService>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.userContextMock = new Mock<IUserContext>();
         this.validatorMock = new Mock<IValidator<Vehicle>>();
@@ -49,6 +52,7 @@ public sealed class CreateVehicleRequestHandlerTests : UnitTestBase
             this.mapper,
             this.repositoryVehicleMock.Object,
             this.repositoryGroupMock.Object,
+            this.fileStorageMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,
             this.validatorMock.Object,
@@ -92,6 +96,7 @@ public sealed class CreateVehicleRequestHandlerTests : UnitTestBase
             "Chevette",
             EFuelType.Gasoline,
             45,
+            1000,
             1984,
             null,
             groupId
@@ -105,29 +110,23 @@ public sealed class CreateVehicleRequestHandlerTests : UnitTestBase
             .Setup(u => u.FindByIdAsync(this.userContextMock.Object.GetUserId().ToString()))
             .ReturnsAsync(user);
 
-        string expectedPhotoPath = request.PhotoPath ?? "path not found";
+        string expectedPhotoPath = "fake-image-key.jpg";
         Vehicle vehicle = new(
             request.LicensePlate,
             request.Brand,
             request.Color,
             request.Model,
             request.FuelTankCapacity,
+            request.Kilometers,
             request.Year,
-            request.PhotoPath ?? string.Empty
+            expectedPhotoPath
         );
         vehicle.AssociateTenant(tenantId);
         vehicle.AssociateUser(user);
         vehicle.AssociateGroup(group);
 
         this.validatorMock
-            .Setup(v => v.ValidateAsync(
-                It.Is<Vehicle>(v =>
-                    v.LicensePlate == request.LicensePlate && v.Brand == request.Brand &&
-                    v.Color == request.Color && v.Model == request.Model &&
-                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.FuelTankCapacity &&
-                    v.Year == request.Year && v.PhotoPath == expectedPhotoPath
-                    ), CancellationToken.None
-                ))
+            .Setup(v => v.ValidateAsync(It.IsAny<Vehicle>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new ValidationResult());
 
         this.repositoryVehicleMock
@@ -135,14 +134,18 @@ public sealed class CreateVehicleRequestHandlerTests : UnitTestBase
             .ReturnsAsync([]);
 
         this.repositoryVehicleMock
-            .Setup(r => r.AddAsync(
-                It.Is<Vehicle>(v =>
-                    v.LicensePlate == request.LicensePlate && v.Brand == request.Brand &&
-                    v.Color == request.Color && v.Model == request.Model &&
-                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.FuelTankCapacity &&
-                    v.Year == request.Year && v.PhotoPath == expectedPhotoPath
-                    ))
-            ).Verifiable();
+            .Setup(r => r.AddAsync(It.Is<Vehicle>(createdVehicle =>
+                createdVehicle.LicensePlate == request.LicensePlate &&
+                createdVehicle.Brand == request.Brand &&
+                createdVehicle.Color == request.Color &&
+                createdVehicle.Model == request.Model &&
+                createdVehicle.FuelType == request.FuelType &&
+                createdVehicle.FuelTankCapacity == request.FuelTankCapacity &&
+                createdVehicle.Year == request.Year &&
+                string.IsNullOrEmpty(createdVehicle.Image) &&
+                createdVehicle.GroupId == groupId
+            )))
+            .Verifiable();
 
         // Act
         Result<CreateVehicleResponse> result = this.handler.Handle(request, CancellationToken.None).Result;
@@ -156,27 +159,31 @@ public sealed class CreateVehicleRequestHandlerTests : UnitTestBase
             .Verify(r => r.GetByIdAsync(groupId),
             Times.Once);
 
-        this.validatorMock
-            .Verify(v => v.ValidateAsync(
-                It.Is<Vehicle>(v =>
-                    v.LicensePlate == request.LicensePlate && v.Brand == request.Brand &&
-                    v.Color == request.Color && v.Model == request.Model &&
-                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.FuelTankCapacity &&
-                    v.Year == request.Year && v.PhotoPath == expectedPhotoPath
-                    ), CancellationToken.None
-                ), Times.Once
-            );
+        this.fileStorageMock.Verify(
+            s => s.UploadAsync(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
+            Times.Never
+        );
+
+        this.validatorMock.Verify(
+            v => v.ValidateAsync(It.IsAny<Vehicle>(), It.IsAny<CancellationToken>()),
+            Times.Once
+        );
 
         this.repositoryVehicleMock
             .Verify(r => r.GetAllAsync(), Times.Once);
 
         this.repositoryVehicleMock
             .Verify(r => r.AddAsync(
-                It.Is<Vehicle>(v =>
-                    v.LicensePlate == request.LicensePlate && v.Brand == request.Brand &&
-                    v.Color == request.Color && v.Model == request.Model &&
-                    v.FuelType == request.FuelType && v.FuelTankCapacity == request.FuelTankCapacity &&
-                    v.Year == request.Year && v.PhotoPath == expectedPhotoPath
+                It.Is<Vehicle>(createdVehicle =>
+                        createdVehicle.LicensePlate == request.LicensePlate &&
+                        createdVehicle.Brand == request.Brand &&
+                        createdVehicle.Color == request.Color &&
+                        createdVehicle.Model == request.Model &&
+                        createdVehicle.FuelType == request.FuelType &&
+                        createdVehicle.FuelTankCapacity == request.FuelTankCapacity &&
+                        createdVehicle.Year == request.Year &&
+                        string.IsNullOrEmpty(createdVehicle.Image) &&
+                        createdVehicle.GroupId == groupId
                     )
                 ), Times.Once
             );

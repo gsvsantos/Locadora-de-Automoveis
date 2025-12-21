@@ -38,8 +38,7 @@ public sealed class DeleteRentalRequestHandlerTests
 
         Rental rental = new(
             DateTimeOffset.Now,
-            DateTimeOffset.Now.AddDays(5),
-            0
+            DateTimeOffset.Now.AddDays(5)
         )
         { Id = rentalId };
         rental.SetStatus(ERentalStatus.Completed);

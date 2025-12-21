@@ -101,6 +101,7 @@ public sealed class ReturnRentalRequestHandlerTests : UnitTestBase
             "Branco",
             "Uno",
             50,
+            1000m,
             2022,
             "path"
         )
@@ -108,8 +109,7 @@ public sealed class ReturnRentalRequestHandlerTests : UnitTestBase
 
         Rental rental = new(
             DateTimeOffset.UtcNow.AddDays(-5),
-            DateTimeOffset.UtcNow.AddDays(1),
-            1000m
+            DateTimeOffset.UtcNow.AddDays(1)
         )
         {
             Id = rentalId,
@@ -117,6 +117,7 @@ public sealed class ReturnRentalRequestHandlerTests : UnitTestBase
             BillingPlanType = EBillingPlanType.Daily,
             Vehicle = vehicle
         };
+        rental.SetStartKm(vehicle.Kilometers);
 
         this.repositoryRentalMock
             .Setup(r => r.GetByIdAsync(rentalId))

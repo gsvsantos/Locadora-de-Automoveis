@@ -30,16 +30,23 @@ public class VehicleMapper : IEntityTypeConfiguration<Vehicle>
         builder.Property(v => v.FuelTankCapacity)
             .IsRequired();
 
+        builder.Property(v => v.Kilometers)
+            .HasColumnType("decimal(18,2)")
+            .IsRequired();
+
         builder.Property(v => v.Year)
             .IsRequired();
 
-        builder.Property(v => v.PhotoPath);
+        builder.Property(v => v.Image);
 
         builder.HasOne(v => v.Group)
             .WithMany(g => g.Vehicles)
             .HasForeignKey(v => v.GroupId)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
+
+        builder.Property(x => x.TenantId)
+            .IsRequired(false);
 
         builder.HasOne(t => t.Tenant)
             .WithMany()

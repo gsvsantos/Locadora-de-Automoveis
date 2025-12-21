@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LocadoraDeAutomoveis.Application.Groups.Commands.Create;
 using LocadoraDeAutomoveis.Application.Groups.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.Groups.Commands.GetAllDistinct;
 using LocadoraDeAutomoveis.Application.Groups.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Groups.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Groups;
@@ -42,7 +43,7 @@ public class GroupProfile : Profile
                 src.Name
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<Group>, GetAllGroupResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllGroupResponse(
                 src.Count,
@@ -62,5 +63,13 @@ public class GroupProfile : Profile
                 src.Name
             )
             { Id = src.Id });
+
+        // GetAllDistinct
+        CreateMap<List<Group>, GetAllDistinctGroupResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetAllDistinctGroupResponse(
+                src.Count,
+                src.Select(c => ctx.Mapper.Map<GroupDto>(c)).ToImmutableList()
+                    ?? ImmutableList<GroupDto>.Empty
+            ));
     }
 }

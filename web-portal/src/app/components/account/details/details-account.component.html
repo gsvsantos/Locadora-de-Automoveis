@@ -1,0 +1,112 @@
+<section class="account-container" *transloco="let t; prefix: 'account'">
+  @if (account$ | async; as account) {
+    <div class="account-card">
+      <div class="profile-header">
+        <div class="header-title header-icon">
+          <span class="material-icons">person</span>
+          <h2>{{ t('personalInfo') }}</h2>
+        </div>
+        <p class="header-subtitle">{{ t('manageYourData') }}</p>
+      </div>
+
+      <div class="details-grid">
+        <div class="section-title full-width">
+          <span class="material-icons">badge</span>
+          <h3>{{ t('sections.profile') }}</h3>
+        </div>
+
+        <div class="info-group">
+          <label>{{ t('fields.fullName') }}</label>
+          <span class="detail-value" [class.detail-value--empty]="!account.fullName">
+            {{ account.fullName || t('notProvided') }}
+          </span>
+        </div>
+
+        <div class="info-group">
+          <label>{{ t('fields.document') }}</label>
+          <span class="detail-value" [class.detail-value--empty]="!account.document">
+            {{ account.document || t('notProvided') }}
+          </span>
+        </div>
+
+        <div class="divider full-width"></div>
+
+        <div class="section-title full-width">
+          <span class="material-icons">call</span>
+          <h3>{{ t('sections.contact') }}</h3>
+        </div>
+
+        <div class="info-group">
+          <label>{{ t('fields.email') }}</label>
+
+          @if (account.email) {
+            <a class="detail-value detail-link" [href]="'mailto:' + account.email">
+              {{ account.email }}
+            </a>
+          } @else {
+            <span class="detail-value detail-value--empty">
+              {{ t('notProvided') }}
+            </span>
+          }
+        </div>
+
+        <div class="info-group">
+          <label>{{ t('fields.phone') }}</label>
+
+          @if (account.phoneNumber) {
+            <a class="detail-value detail-link" [href]="'tel:' + account.phoneNumber">
+              {{ account.phoneNumber }}
+            </a>
+          } @else {
+            <span class="detail-value detail-value--empty">
+              {{ t('notProvided') }}
+            </span>
+          }
+        </div>
+
+        <div class="divider full-width"></div>
+
+        <div class="section-title full-width">
+          <span class="material-icons">home</span>
+          <h3>{{ t('sections.address') }}</h3>
+        </div>
+
+        <div class="info-group full-width">
+          <label>{{ t('fields.fullAddress') }}</label>
+
+          @if (account.address) {
+            <span
+              class="detail-value"
+              [class.detail-value--empty]="
+                !account.address.street &&
+                account.address.number == null &&
+                !account.address.neighborhood &&
+                !account.address.city &&
+                !account.address.state
+              "
+            >
+              {{
+                (
+                  (account.address.street ? account.address.street : '') +
+                  (account.address.number != null ? ', ' + account.address.number : '') +
+                  (account.address.neighborhood ? ' - ' + account.address.neighborhood : '') +
+                  (account.address.city ? ', ' + account.address.city : '') +
+                  (account.address.state ? '/' + account.address.state : '')
+                ).trim() || t('notProvided')
+              }}
+            </span>
+          } @else {
+            <span class="detail-value detail-value--empty">
+              {{ t('notProvided') }}
+            </span>
+          }
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>{{ t('loading') }}</p>
+    </div>
+  }
+</section>

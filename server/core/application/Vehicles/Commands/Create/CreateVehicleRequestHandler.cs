@@ -7,6 +7,7 @@ using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
+using LocadoraDeAutomoveis.Infrastructure.S3;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -19,6 +20,7 @@ public class CreateVehicleRequestHandler(
     IMapper mapper,
     IRepositoryVehicle repositoryVehicle,
     IRepositoryGroup repositoryGroup,
+    IR2FileStorageService fileStorageService,
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<Vehicle> validator,
@@ -42,7 +44,27 @@ public class CreateVehicleRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.GroupId));
         }
 
-        Vehicle vehicle = mapper.Map<Vehicle>(request);
+        Guid tenantId = tenantProvider.GetTenantId();
+
+        string imageKey = string.Empty;
+        if (request.Image is { Length: > 0 })
+        {
+            string extension = Path.GetExtension(request.Image.FileName);
+
+            if (string.IsNullOrWhiteSpace(extension))
+            {
+                extension = ".jpg";
+            }
+
+            string key = $"vehicles/{tenantId}/{Guid.NewGuid()}{extension}";
+            string contentType = request.Image.ContentType;
+
+            await using Stream stream = request.Image.OpenReadStream();
+
+            imageKey = await fileStorageService.UploadAsync(stream, contentType, key, cancellationToken);
+        }
+
+        Vehicle vehicle = mapper.Map<Vehicle>((request, imageKey));
         vehicle.SetFuelType(request.FuelType);
 
         try
@@ -65,7 +87,7 @@ public class CreateVehicleRequestHandler(
                 return Result.Fail(VehicleErrorResults.DuplicateLicensePlateError(request.LicensePlate));
             }
 
-            vehicle.AssociateTenant(tenantProvider.GetTenantId());
+            vehicle.AssociateTenant(tenantId);
 
             vehicle.AssociateUser(user);
 

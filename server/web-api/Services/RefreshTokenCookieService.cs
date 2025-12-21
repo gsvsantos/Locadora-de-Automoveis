@@ -7,7 +7,7 @@ public sealed class RefreshTokenCookieService(RefreshTokenOptions refreshTokenOp
 {
     private readonly string cookieName = refreshTokenOptions.CookieName;
     private const string RefreshTokenPath = "/api/auth";
-    public void Write(HttpResponse response, RefreshToken refreshToken)
+    public void Write(HttpResponse response, IssuedRefreshTokenDto refreshToken)
     {
         CookieOptions options = new()
         {
@@ -19,7 +19,7 @@ public sealed class RefreshTokenCookieService(RefreshTokenOptions refreshTokenOp
             IsEssential = true
         };
 
-        response.Cookies.Append(this.cookieName, refreshToken.TokenHash, options);
+        response.Cookies.Append(this.cookieName, refreshToken.PlainToken, options);
     }
 
     public string? Get(HttpRequest request)

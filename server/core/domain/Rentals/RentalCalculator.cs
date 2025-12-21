@@ -30,12 +30,13 @@ public static class RentalCalculator
         Rental rental,
         DateTimeOffset returnDate,
         decimal endKm,
-        EFuelLevel fuelLevel,
+        EFuelLevel fuelLevelAtReturn,
         Configuration config)
     {
         int daysUsed = CalculateDays(rental.StartDate, returnDate);
 
         decimal kilometersDriven = Math.Max(0m, endKm - rental.StartKm);
+        rental.Vehicle.KilometersSum(kilometersDriven);
 
         decimal planTotalCost = CalculatePlanPrice(
             rental.BillingPlan,
@@ -47,21 +48,30 @@ public static class RentalCalculator
 
         decimal extrasTotalCost = CalculateExtrasCost(rental.Extras, daysUsed);
 
-        decimal fuelPenalty = CalculateFuelPenalty(fuelLevel, rental.Vehicle, config);
+        decimal fuelPenalty = CalculateFuelPenalty(fuelLevelAtReturn, rental.Vehicle, config);
 
         decimal delayPenalty = CalculateDelayPenalty(planTotalCost, rental.ExpectedReturnDate, returnDate);
 
-        decimal penaltiesTotalCost = fuelPenalty + delayPenalty;
-
         decimal discountTotal = rental.Coupon?.DiscountValue ?? 0m;
 
-        decimal totalCost = planTotalCost + extrasTotalCost + penaltiesTotalCost;
-        decimal finalPrice = Math.Max(0m, totalCost - discountTotal);
+        planTotalCost = Money(planTotalCost);
+        extrasTotalCost = Money(extrasTotalCost);
+        fuelPenalty = Money(fuelPenalty);
+        delayPenalty = Money(delayPenalty);
+        discountTotal = Money(discountTotal);
+
+        decimal penaltiesTotalCost = Money(fuelPenalty + delayPenalty);
+
+        decimal totalCost = Money(planTotalCost + extrasTotalCost + penaltiesTotalCost);
+        decimal finalPrice = Money(Math.Max(0m, totalCost - discountTotal));
 
         return new CalculationResult(
-            finalPrice, planTotalCost,
-            extrasTotalCost, penaltiesTotalCost,
-            discountTotal, fuelPenalty
+            finalPrice,
+            planTotalCost,
+            extrasTotalCost,
+            penaltiesTotalCost,
+            discountTotal,
+            fuelPenalty
         );
     }
 
@@ -140,14 +150,10 @@ public static class RentalCalculator
     private static decimal CalculateDelayPenalty(
         decimal planTotal,
         DateTimeOffset expectedReturn,
-        DateTimeOffset actualReturn)
+        DateTimeOffset actualReturn
+    )
     {
-        if (actualReturn.Date > expectedReturn.Date)
-        {
-            return planTotal * 0.10m;
-        }
-
-        return 0m;
+        return actualReturn.Date > expectedReturn.Date ? planTotal * 0.10m : 0;
     }
 
     private static decimal ApplyCouponDiscount(decimal total, Coupon? coupon)
@@ -158,6 +164,11 @@ public static class RentalCalculator
         }
 
         return total - coupon.DiscountValue;
+    }
+
+    private static decimal Money(decimal value)
+    {
+        return Math.Round(value, 2, MidpointRounding.AwayFromZero);
     }
 }
 

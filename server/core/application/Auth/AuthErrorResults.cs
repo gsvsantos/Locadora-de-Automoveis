@@ -32,6 +32,13 @@ public abstract class AuthErrorResults
             .WithMetadata("ErrorType", "BadRequest");
     }
 
+    public static Error IncorrectCurrentPasswordError()
+    {
+        return new Error("Incorrect current password")
+            .CausedBy("The current password are incorrect")
+            .WithMetadata("ErrorType", "BadRequest");
+    }
+
     public static Error UserLockedOutError()
     {
         return new Error("User locked out")
@@ -50,6 +57,20 @@ public abstract class AuthErrorResults
     {
         return new Error("Two-factor authentication required")
             .CausedBy("Login confirmation with two-factor authentication is required.")
+            .WithMetadata("ErrorType", "BadRequest");
+    }
+
+    public static Error PasswordConfirmationError()
+    {
+        return new Error("Passwords do not match")
+            .CausedBy("The confirmation password does not match the password.")
+            .WithMetadata("ErrorType", "BadRequest");
+    }
+
+    public static Error NewPasswordConfirmationError()
+    {
+        return new Error("New passwords do not match")
+        .CausedBy("The confirmation for the new password does not match.")
             .WithMetadata("ErrorType", "BadRequest");
     }
 }

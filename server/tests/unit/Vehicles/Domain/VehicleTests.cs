@@ -23,7 +23,7 @@ public sealed class VehicleTests
         Assert.AreEqual(EFuelType.Gasoline, vehicle.FuelType);
         Assert.AreEqual(0, vehicle.FuelTankCapacity);
         Assert.AreEqual(0, vehicle.Year);
-        Assert.IsNull(vehicle.PhotoPath);
+        Assert.IsNull(vehicle.Image);
     }
 
     [TestMethod]
@@ -36,6 +36,7 @@ public sealed class VehicleTests
             "Preto",
             "Chevette",
             45,
+            1000,
             1984,
             string.Empty
         );
@@ -51,7 +52,7 @@ public sealed class VehicleTests
         Assert.AreEqual(EFuelType.Gasoline, vehicle.FuelType);
         Assert.AreEqual(45, vehicle.FuelTankCapacity);
         Assert.AreEqual(1984, vehicle.Year);
-        Assert.AreEqual(string.Empty, vehicle.PhotoPath);
+        Assert.AreEqual(string.Empty, vehicle.Image);
     }
 
     [TestMethod]
@@ -64,6 +65,7 @@ public sealed class VehicleTests
             "Preto",
             "Chevette",
             45,
+            500,
             2004,
             string.Empty
         );
@@ -75,6 +77,7 @@ public sealed class VehicleTests
             "Preto",
             "Chevette",
             45,
+            1000,
             1984,
             "https://aquelesite.net/ze"
         );
@@ -92,8 +95,9 @@ public sealed class VehicleTests
         Assert.AreEqual("Chevette", vehicle.Model);
         Assert.AreEqual(EFuelType.Gasoline, vehicle.FuelType);
         Assert.AreEqual(45, vehicle.FuelTankCapacity);
+        Assert.AreEqual(1000, vehicle.Kilometers);
         Assert.AreEqual(1984, vehicle.Year);
-        Assert.AreEqual("https://aquelesite.net/ze", vehicle.PhotoPath);
+        Assert.AreEqual("https://aquelesite.net/ze", vehicle.Image);
     }
 
     [TestMethod]

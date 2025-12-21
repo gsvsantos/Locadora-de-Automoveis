@@ -1,0 +1,134 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/list-layout' as *;
+
+.search-bar {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  color: $text-main;
+  background-color: $surface-alt;
+  border: 1px solid $border;
+  border-radius: 12px;
+  transition: all $transition-fast;
+  box-sizing: border-box;
+
+  &:hover {
+    border-color: $primary;
+    background-color: $surface;
+  }
+
+  &:focus {
+    background-color: $surface;
+    border-color: $primary-active;
+    box-shadow: 0 0 0 4px rgba(var(--shadow-rgb), 0.15);
+    outline: none;
+  }
+
+  &::placeholder {
+    color: $text-muted;
+    opacity: 0.7;
+  }
+}
+
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .form-input {
+    min-width: 160px;
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    color: $text-main;
+    background-color: $surface-alt;
+    border: 1px solid $border;
+    border-radius: 10px;
+    transition: all $transition-fast;
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+    background-size: 1rem;
+
+    &:hover {
+      border-color: $primary;
+      background-color: $surface;
+    }
+
+    &:focus {
+      background-color: $surface;
+      border-color: $primary-active;
+      box-shadow: 0 0 0 4px rgba(var(--shadow-rgb), 0.1);
+      outline: none;
+    }
+
+    option {
+      color: $text-main;
+      background: $surface;
+    }
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 0;
+
+  span {
+    color: $text-muted;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+}
+
+.rent-blocked-banner {
+  margin: 1rem 0;
+  padding: 12px 14px;
+  border: 1px solid $border;
+  border-radius: 12px;
+  background: $surface-alt;
+  color: $text-main;
+
+  strong {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+}
+
+.empty-state {
+  color: $text-muted;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.loading-skeleton {
+  color: $text-muted;
+  text-align: center;
+  padding: 4rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .filters-container {
+    flex-direction: column;
+
+    .form-input {
+      width: 100%;
+    }
+  }
+
+  .search-bar {
+    max-width: 100%;
+  }
+
+  .list {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}

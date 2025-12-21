@@ -21,7 +21,7 @@ public sealed class ClientTests
         Assert.AreEqual(string.Empty, client.PhoneNumber);
         Assert.IsTrue(client.Type == EClientType.Individual);
         Assert.IsNull(client.Address);
-        Assert.AreEqual(string.Empty, client.Document);
+        Assert.AreEqual(null, client.Document);
         Assert.IsNull(client.LicenseNumber);
         Assert.IsNull(client.JuristicClientId);
         Assert.IsNull(client.JuristicClient);

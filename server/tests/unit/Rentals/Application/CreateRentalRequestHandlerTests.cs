@@ -37,6 +37,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
     private Mock<IRepositoryRentalExtra> repositoryRentalExtraMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IUserContext> userContextMock = null!;
+    private Mock<IRentalEmailService> emailServiceMock = null!;
     private Mock<IValidator<Rental>> validatorMock = null!;
     private Mock<ILogger<CreateRentalRequestHandler>> loggerMock = null!;
 
@@ -59,6 +60,12 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
         this.repositoryRentalExtraMock = new Mock<IRepositoryRentalExtra>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.userContextMock = new Mock<IUserContext>();
+
+        this.emailServiceMock = new Mock<IRentalEmailService>();
+        this.emailServiceMock
+            .Setup(s => s.ScheduleRentalConfirmation(It.IsAny<Rental>(), It.IsAny<Client>()))
+            .Returns(Task.CompletedTask);
+
         this.validatorMock = new Mock<IValidator<Rental>>();
         this.loggerMock = new Mock<ILogger<CreateRentalRequestHandler>>();
 
@@ -76,6 +83,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
             this.repositoryRentalExtraMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,
+            this.emailServiceMock.Object,
             this.validatorMock.Object,
             this.loggerMock.Object
         );
@@ -154,6 +162,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
             "Cor",
             "Modelo",
             50,
+            1000,
             2022,
             "path"
         )

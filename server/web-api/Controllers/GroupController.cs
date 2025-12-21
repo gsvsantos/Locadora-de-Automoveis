@@ -3,6 +3,7 @@ using FluentResults;
 using LocadoraDeAutomoveis.Application.Groups.Commands.Create;
 using LocadoraDeAutomoveis.Application.Groups.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Groups.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.Groups.Commands.GetAllDistinct;
 using LocadoraDeAutomoveis.Application.Groups.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Groups.Commands.Update;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
@@ -64,6 +65,17 @@ public class GroupController(
         DeleteGroupRequest request = new(id);
 
         Result<DeleteGroupResponse> result = await mediator.Send(request);
+
+        return result.ToHttpResponse();
+    }
+
+    [HttpGet("groups")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetAllDistinct()
+    {
+        GetAllDistinctGroupRequest request = new();
+
+        Result<GetAllDistinctGroupResponse> result = await mediator.Send(request);
 
         return result.ToHttpResponse();
     }

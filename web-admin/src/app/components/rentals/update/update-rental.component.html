@@ -1,0 +1,172 @@
+<section class="update-section" *transloco="let t; prefix: 'rentals.update'">
+  <div class="main-content">
+    @if (rental$ | async; as rental) {
+      <div class="card">
+        <form [formGroup]="formGroup" class="form" (ngSubmit)="update()">
+          <h2>{{ t('card.title') }}</h2>
+
+          <hr class="bar" />
+
+          <div class="card-content">
+            <span class="full-width">{{ t('card.subtitle') }}</span>
+
+            <h3 class="full-width">{{ t('card.section.association') }}</h3>
+            <div class="form-field full-width">
+              <label>{{ t('card.label.client') }}</label>
+              <select class="form-input" formControlName="clientId">
+                <option [ngValue]="null">{{ t('card.placeholder.client') }}</option>
+                @for (client of clients$ | async; track client.id) {
+                  <option [ngValue]="client.id">{{ client.fullName }}</option>
+                }
+              </select>
+              @if (clientId?.errors?.['required'] && clientId?.dirty) {
+                <span class="error-message">{{ t('card.errors.clientRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.driver') }}</label>
+              <select class="form-input" formControlName="driverId">
+                <option [ngValue]="null">{{ t('card.placeholder.driver') }}</option>
+                @for (driver of drivers$ | async; track driver.id) {
+                  <option [ngValue]="driver.id">{{ driver.fullName }}</option>
+                }
+              </select>
+              @if (driverId?.errors?.['required'] && driverId?.dirty) {
+                <span class="error-message">{{ t('card.errors.driverRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.employee') }}</label>
+              <select class="form-input" formControlName="employeeId">
+                <option [ngValue]="null">{{ t('card.placeholder.employee') }}</option>
+                @for (employee of employees$ | async; track employee.id) {
+                  <option [ngValue]="employee.id">{{ employee.fullName }}</option>
+                }
+              </select>
+              @if (employeeId?.errors?.['required'] && employeeId?.dirty) {
+                <span class="error-message">{{ t('card.errors.employeeRequired') }}</span>
+              }
+            </div>
+
+            <h3 class="full-width">{{ t('card.section.vehicleAndDates') }}</h3>
+            <div class="form-field full-width">
+              <label>{{ t('card.label.vehicle') }}</label>
+              <select class="form-input" formControlName="vehicleId">
+                <option [ngValue]="null">{{ t('card.placeholder.vehicle') }}</option>
+                @for (vehicle of vehicles$ | async; track vehicle.id) {
+                  <option [ngValue]="vehicle.id">
+                    {{ vehicle.licensePlate }} ({{ vehicle.model }})
+                  </option>
+                }
+              </select>
+              @if (vehicleId?.errors?.['required'] && vehicleId?.dirty) {
+                <span class="error-message">{{ t('card.errors.vehicleRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.startDate') }}</label>
+              <input class="form-input" formControlName="startDate" type="date" />
+              @if (startDate?.errors?.['required'] && startDate?.dirty) {
+                <span class="error-message">{{ t('card.errors.startDateRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.expectedReturnDate') }}</label>
+              <input class="form-input" formControlName="expectedReturnDate" type="date" />
+              @if (expectedReturnDate?.errors?.['required'] && expectedReturnDate?.dirty) {
+                <span class="error-message">{{ t('card.errors.expectedReturnDateRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field full-width">
+              <label>{{ t('card.label.startKm') }}</label>
+              <input
+                class="form-input"
+                formControlName="startKm"
+                type="number"
+                [placeholder]="t('card.placeholder.startKm')"
+              />
+              @if (startKm?.errors?.['required'] && startKm?.dirty) {
+                <span class="error-message">{{ t('card.errors.startKmRequired') }}</span>
+              }
+              @if (startKm?.errors?.['min'] && startKm?.dirty) {
+                <span class="error-message">{{ t('card.errors.startKmMin') }}</span>
+              }
+            </div>
+
+            <h3 class="full-width">{{ t('card.section.billing') }}</h3>
+            <div class="form-field">
+              <label>{{ t('card.label.billingPlanType') }}</label>
+              <select class="form-input" formControlName="billingPlanType">
+                <option [ngValue]="null">{{ t('card.placeholder.billingPlanType') }}</option>
+                <option value="Daily">{{ t('card.plan.daily') }}</option>
+                <option value="Controlled">{{ t('card.plan.controlled') }}</option>
+                <option value="Free">{{ t('card.plan.free') }}</option>
+              </select>
+              @if (billingPlanType?.errors?.['required'] && billingPlanType?.dirty) {
+                <span class="error-message">{{ t('card.errors.billingPlanTypeRequired') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.estimatedKilometers') }}</label>
+              <input
+                class="form-input"
+                formControlName="estimatedKilometers"
+                type="number"
+                [placeholder]="t('card.placeholder.estimatedKilometers')"
+              />
+              @if (estimatedKilometers?.errors?.['required'] && estimatedKilometers?.dirty) {
+                <span class="error-message">{{
+                  t('card.errors.estimatedKilometersRequired')
+                }}</span>
+              }
+            </div>
+
+            <h3 class="full-width">{{ t('card.section.extrasAndCoupon') }}</h3>
+            <div class="form-field full-width">
+              <label>{{ t('card.label.extras') }}</label>
+              <select class="form-input" formControlName="rentalRentalExtrasIds" multiple>
+                @for (extra of extras$ | async; track extra.id) {
+                  <option [value]="extra.id">
+                    {{ extra.name }} ({{ extra.price | currency: 'BRL' : 'symbol' : '1.2-2' }})
+                  </option>
+                }
+              </select>
+            </div>
+
+            <div class="form-field full-width">
+              <label>{{ t('card.label.coupon') }}</label>
+              <select class="form-input" formControlName="couponId">
+                <option [ngValue]="null">{{ t('card.placeholder.coupon') }}</option>
+                @for (coupon of coupons$ | async; track coupon.id) {
+                  <option [ngValue]="coupon.id">{{ coupon.name }}</option>
+                }
+              </select>
+            </div>
+          </div>
+
+          <div class="buttons">
+            <gs-buttons
+              [buttonType]="buttonType.Link"
+              [text]="t('card.buttons.back')"
+              routerLink="/rentals"
+            ></gs-buttons>
+
+            <gs-buttons
+              [buttonType]="buttonType.Default"
+              [text]="t('card.buttons.confirm')"
+              type="submit"
+              [disabled]="formGroup.invalid"
+              (click)="update()"
+            ></gs-buttons>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+</section>

@@ -1,9 +1,16 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
+using LocadoraDeAutomoveis.Application.Auth.Commands.ChangePassword;
+using LocadoraDeAutomoveis.Application.Auth.Commands.CreatePassword;
+using LocadoraDeAutomoveis.Application.Auth.Commands.ForgotPassword;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Login;
+using LocadoraDeAutomoveis.Application.Auth.Commands.LoginClientGoogle;
 using LocadoraDeAutomoveis.Application.Auth.Commands.LoginGoogle;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Logout;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Refresh;
 using LocadoraDeAutomoveis.Application.Auth.Commands.Register;
+using LocadoraDeAutomoveis.Application.Auth.Commands.RegisterClient;
+using LocadoraDeAutomoveis.Application.Auth.Commands.ResetPassword;
 using LocadoraDeAutomoveis.Application.Auth.DTOs;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
@@ -19,6 +26,7 @@ namespace LocadoraDeAutomoveis.WebAPI.Controllers;
 [AllowAnonymous]
 public class AuthController(
     IMediator mediator,
+    IMapper mapper,
     SignInManager<User> signInManager,
     IRefreshTokenCookieService cookieService
 ) : ControllerBase
@@ -26,7 +34,20 @@ public class AuthController(
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
     {
-        Result<(AccessToken AccessToken, RefreshToken RefreshToken)> result = await mediator.Send(request);
+        Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)> result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return result.ToHttpResponse();
+        }
+
+        return ResultWithNewCookie(result.Value);
+    }
+
+    [HttpPost("register-client")]
+    public async Task<IActionResult> RegisterClient([FromBody] RegisterClientRequest request)
+    {
+        Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)> result = await mediator.Send(request);
 
         if (result.IsFailed)
         {
@@ -39,7 +60,7 @@ public class AuthController(
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserRequest request)
     {
-        Result<(AccessToken AccessToken, RefreshToken RefreshToken)> result = await mediator.Send(request);
+        Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)> result = await mediator.Send(request);
 
         if (result.IsFailed)
         {
@@ -49,10 +70,23 @@ public class AuthController(
         return ResultWithNewCookie(result.Value);
     }
 
-    [HttpPost("google-login")]
-    public async Task<IActionResult> GoogleLogin([FromBody] LoginWithGoogleRequest request)
+    [HttpPost("login-google")]
+    public async Task<IActionResult> LoginGoogle([FromBody] LoginUserGoogleRequest request)
     {
-        Result<(AccessToken AccessToken, RefreshToken RefreshToken)> result = await mediator.Send(request);
+        Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)> result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return result.ToHttpResponse();
+        }
+
+        return ResultWithNewCookie(result.Value);
+    }
+
+    [HttpPost("login-google-client")]
+    public async Task<IActionResult> LoginGoogle([FromBody] LoginClientGoogleRequest request)
+    {
+        Result<(AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken)> result = await mediator.Send(request);
 
         if (result.IsFailed)
         {
@@ -63,19 +97,18 @@ public class AuthController(
     }
 
     [HttpPost("refresh")]
-    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> Refresh()
     {
-        string? refreshTokenHash = cookieService.Get(this.Request);
+        string? refreshTokenPlain = cookieService.Get(this.Request);
 
-        if (refreshTokenHash is null)
+        if (refreshTokenPlain is null)
         {
             return Unauthorized("Refresh token not found.");
         }
 
-        RefreshTokenRequest request = new(refreshTokenHash);
+        RefreshTokenRequest request = new(refreshTokenPlain);
 
-        Result<(AccessToken AccessToken, RefreshToken RefreshToken)> result = await mediator.Send(request);
+        Result<(AccessToken AccessToken, IssuedRefreshTokenDto NewRefreshToken)> result = await mediator.Send(request);
 
         if (result.IsFailed)
         {
@@ -106,17 +139,95 @@ public class AuthController(
 
         await signInManager.SignOutAsync();
 
-        return ResultAndClearCookie(result);
+        return ResultAndClearCookie();
     }
 
-    private OkObjectResult ResultWithNewCookie((AccessToken AccessToken, RefreshToken RefreshToken) value)
+    [HttpPost("create-password")]
+    public async Task<IActionResult> CreatePassword([FromBody] CreatePasswordRequestPartial partialRequest)
     {
-        cookieService.Write(this.Response, value.RefreshToken);
+        string? refreshToken = cookieService.Get(this.Request);
 
-        return Ok(value.AccessToken);
+        if (refreshToken is null)
+        {
+            return Unauthorized("Refresh token not found.");
+        }
+
+        CreatePasswordRequest request = mapper.Map<CreatePasswordRequest>((refreshToken, partialRequest));
+
+        Result result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return result.ToHttpResponse();
+        }
+
+        await signInManager.SignOutAsync();
+
+        return ResultAndClearCookie();
     }
 
-    private NoContentResult ResultAndClearCookie(Result result)
+    [HttpPost("change-password")]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequestPartial partialRequest)
+    {
+        string? refreshToken = cookieService.Get(this.Request);
+
+        if (refreshToken is null)
+        {
+            return Unauthorized("Refresh token not found.");
+        }
+
+        ChangePasswordRequest request = mapper.Map<ChangePasswordRequest>((refreshToken, partialRequest));
+
+        Result result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return result.ToHttpResponse();
+        }
+
+        await signInManager.SignOutAsync();
+
+        return ResultAndClearCookie();
+    }
+
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+    {
+        Result result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return result.ToHttpResponse();
+        }
+
+        await signInManager.SignOutAsync();
+
+        return ResultAndClearCookie();
+    }
+
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+    {
+        Result result = await mediator.Send(request);
+
+        if (result.IsFailed)
+        {
+            return result.ToHttpResponse();
+        }
+
+        await signInManager.SignOutAsync();
+
+        return ResultAndClearCookie();
+    }
+
+    private OkObjectResult ResultWithNewCookie((AccessToken AccessToken, IssuedRefreshTokenDto RefreshToken) result)
+    {
+        cookieService.Write(this.Response, result.RefreshToken);
+
+        return Ok(result.AccessToken);
+    }
+
+    private NoContentResult ResultAndClearCookie()
     {
         cookieService.Remove(this.Response);
 

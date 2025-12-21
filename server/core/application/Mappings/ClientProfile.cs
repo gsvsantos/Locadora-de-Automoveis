@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using LocadoraDeAutomoveis.Application.Account.Commands.GetProfile;
 using LocadoraDeAutomoveis.Application.Clients.Commands.Create;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetIndividuals;
 using LocadoraDeAutomoveis.Application.Clients.Commands.Update;
+using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Clients;
 using System.Collections.Immutable;
 
@@ -66,6 +68,15 @@ public class ClientProfile : Profile
 
         // HANDLERS 
         // Create
+        CreateMap<CreateClientRequest, User>()
+            .ConvertUsing(src => new User()
+            {
+                UserName = src.Email,
+                FullName = src.FullName,
+                Email = src.Email,
+                PhoneNumber = src.PhoneNumber,
+            });
+
         CreateMap<CreateClientRequest, Address>()
             .ConvertUsing(src => new Address(
                 src.State,
@@ -74,6 +85,7 @@ public class ClientProfile : Profile
                 src.Street,
                 src.Number
             ));
+
         CreateMap<(CreateClientRequest r, Address a), Client>()
             .ConvertUsing(src => new Client(
                 src.r.FullName,
@@ -83,7 +95,7 @@ public class ClientProfile : Profile
                 src.a
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<Client>, GetAllClientResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllClientResponse(
                 src.Count,
@@ -122,5 +134,16 @@ public class ClientProfile : Profile
                 src.a
             )
             { Id = src.r.Id });
+
+        // GetById
+        CreateMap<Client, ClientProfileDto>()
+            .ConvertUsing(src => new ClientProfileDto(
+                src.Id,
+                src.FullName,
+                src.Email,
+                src.PhoneNumber,
+                src.Document,
+                src.Address
+            ));
     }
 }

@@ -5,11 +5,12 @@ namespace LocadoraDeAutomoveis.Domain.Shared;
 public abstract class BaseEntity<T>
 {
     public Guid Id { get; set; }
-    public Guid TenantId { get; set; }
+    public Guid? TenantId { get; set; }
     public User? Tenant { get; set; }
     public Guid UserId { get; set; }
     public User? User { get; set; }
     public bool IsActive { get; set; } = true;
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
 
     protected BaseEntity()
     {
@@ -50,22 +51,24 @@ public abstract class BaseEntity<T>
 
     public virtual void AssociateTenant(Guid tenantId)
     {
-        if (tenantId == Guid.Empty)
+        Guid? targetId = tenantId == Guid.Empty ? null : tenantId;
+
+        if (this.TenantId == targetId)
         {
             return;
         }
 
-        if (this.TenantId == tenantId && (this.Tenant is null || this.Tenant.Id == tenantId))
-        {
-            return;
-        }
+        this.TenantId = targetId;
 
-        this.TenantId = tenantId;
-
-        if (this.Tenant is not null && this.Tenant.Id != tenantId)
+        if (this.Tenant is not null && this.Tenant.Id != targetId)
         {
             this.Tenant = null;
         }
+    }
+
+    public virtual Guid GetTenantId()
+    {
+        return this.TenantId ?? Guid.Empty;
     }
 
     public abstract void Update(T updatedEntity);

@@ -6,11 +6,11 @@ namespace LocadoraDeAutomoveis.Application.Rentals.Commands.Return;
 
 public record ReturnRentalRequestPartial(
     decimal EndKm,
-    EFuelLevel FuelLevel
+    EFuelLevel FuelLevelAtReturn
 );
 
 public record ReturnRentalRequest(
     Guid Id,
     decimal EndKm,
-    EFuelLevel FuelLevel
+    EFuelLevel FuelLevelAtReturn
 ) : IRequest<Result<ReturnRentalResponse>>;

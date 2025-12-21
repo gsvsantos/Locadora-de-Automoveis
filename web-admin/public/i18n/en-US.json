@@ -1,0 +1,1541 @@
+{
+  "auth": {
+    "register": {
+      "card": {
+        "title": "Create Account",
+        "subtitle": "Or use your email for registration",
+        "placeholder": {
+          "userName": "Username",
+          "fullName": "Full Name",
+          "email": "Email",
+          "phoneNumber": "Phone Number (e.g., (99) 99999-9999)",
+          "password": "Password",
+          "confirmPassword": "Confirm Password"
+        },
+        "label": {
+          "userName": "Choose a username",
+          "fullName": "Your full name",
+          "email": "name@example.com",
+          "phoneNumber": "(99) 99999-9999",
+          "password": "Min. 6 characters",
+          "confirmPassword": "Repeat password"
+        },
+        "errors": {
+          "userNameRequired": "Username is required.",
+          "userNameLength": "Username must be at least 5 characters long.",
+          "fullNameRequired": "Full name is required.",
+          "fullNameLength": "Full name must be at least 3 characters long.",
+          "fullNamePattern": "Full name contains invalid characters.",
+          "emailRequired": "Email is required.",
+          "emailLength": "Must be a valid email.",
+          "phoneNumberRequired": "Phone number is required.",
+          "phoneNumberPattern": "Invalid phone number format.",
+          "passwordRequired": "Password is required.",
+          "passwordLength": "Password must be at least 6 characters long.",
+          "passwordMustMatch": "Passwords do not match."
+        },
+        "buttons": {
+          "login": "Already have an account?",
+          "confirm": "Register"
+        }
+      }
+    },
+    "login": {
+      "card": {
+        "title": "Welcome Back",
+        "subtitle": "Sign in to your account to continue",
+        "placeholder": {
+          "userName": "Username",
+          "password": "Password"
+        },
+        "label": {
+          "userName": "Username",
+          "password": "Password"
+        },
+        "errors": {
+          "userNameRequired": "Username is required.",
+          "userNameLength": "Username must be at least 5 characters long.",
+          "passwordRequired": "Password is required.",
+          "passwordLength": "Password must be at least 6 characters long."
+        },
+        "buttons": {
+          "register": "Create an account",
+          "confirm": "Sign In",
+          "password": "Forgot your password?"
+        }
+      }
+    },
+    "reset-password": {
+      "title": "Change Password",
+      "label": {
+        "newPassword": "New Password",
+        "confirmNewPassword": "Confirm New Password"
+      },
+      "errors": {
+        "required": "Field is required.",
+        "minLength": "Password must be at least 6 characters.",
+        "mismatch": "New passwords do not match."
+      },
+      "buttons": {
+        "change": "Set New Password"
+      }
+    },
+    "forgot-password": {
+      "title": "Forgot Password?",
+      "subtitle": "Enter your email to receive a recovery link.",
+      "placeholder": {
+        "email": "Email Address"
+      },
+      "label": {
+        "email": "Email Address"
+      },
+      "errors": {
+        "emailRequired": "Email is required.",
+        "emailLength": "Please enter a valid email address."
+      },
+      "buttons": {
+        "change": "Send Recovery Link",
+        "back": "Back to Login"
+      }
+    }
+  },
+  "navbar": {
+    "home": "Home",
+    "employees": "Employees",
+    "groups": "Groups",
+    "billingPlans": "Billing Plans",
+    "vehicles": "Vehicles",
+    "clients": "Clients",
+    "drivers": "Drivers",
+    "extras": "Extras",
+    "rentals": "Rentals",
+    "partners": "Partners",
+    "coupons": "Coupons",
+    "deimpersonate": "Back to Platform Admin"
+  },
+  "home": {
+    "dashboard": {
+      "card": {
+        "quickActions": {
+          "title": "Quick Actions",
+          "newRental": "Start New Rental",
+          "newClient": "Register New Client",
+          "newDriver": "Register New Driver",
+          "viewAllRentals": "View All Rentals"
+        },
+        "stats": {
+          "title": "System Summary",
+          "totalVehicles": "Total Vehicles",
+          "activeRentals": "Active Rentals",
+          "activeClients": "Active Clients",
+          "viewAllVehicles": "View All Vehicles"
+        },
+        "pendingReturns": {
+          "title": "Pending Returns (Upcoming)",
+          "noReturns": "No immediate returns scheduled.",
+          "viewAll": "View All Rentals"
+        },
+        "topCoupons": {
+          "title": "Top Used Coupons",
+          "usageCount": "{{count}} uses",
+          "noCoupons": "No usage data available.",
+          "viewUsageStats": "View Usage Statistics"
+        }
+      }
+    }
+  },
+  "admin": {
+    "list": {
+      "header": {
+        "title": "Registered Companies"
+      },
+      "label": {
+        "unnamed": "Unnamed Company",
+        "roles": "Access Level"
+      },
+      "buttons": {
+        "impersonate": "Impersonate",
+        "deimpersonate": "Back to PlatformAdmin"
+      }
+    }
+  },
+  "search": {
+    "placeholder": "Search",
+    "messages": {
+      "notFound": "No results found."
+    }
+  },
+  "employee": {
+    "create": {
+      "card": {
+        "title": "New Employee Registration",
+        "subtitle": "Please fill in the employee's details below.",
+        "section": {
+          "personalData": "Personal and Contact Information",
+          "accountData": "Account Credentials",
+          "professionalData": "Professional Data"
+        },
+        "placeholder": {
+          "fullName": "Full Name",
+          "email": "Email",
+          "phoneNumber": "Phone Number (e.g., (99) 99999-9999)",
+          "userName": "Username",
+          "password": "Password",
+          "salary": "Salary (e.g., 3500)"
+        },
+        "label": {
+          "fullName": "Full Name",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "userName": "Username",
+          "password": "Password",
+          "admissionDate": "Admission Date",
+          "salary": "Salary"
+        },
+        "errors": {
+          "fullNameRequired": "The full name is required.",
+          "fullNameLength": "The name must be at least 3 characters long.",
+          "fullNameInvalid": "Something is wrong with that name.",
+          "emailRequired": "The email is required.",
+          "emailInvalid": "Invalid email format.",
+          "phoneNumberRequired": "The phone number is required.",
+          "phoneNumberInvalid": "Invalid phone number format.",
+          "usernameRequired": "The username is required.",
+          "usernameLength": "The username must be at least 5 characters long.",
+          "passwordRequired": "The password is required.",
+          "passwordLength": "The password must be at least 8 characters long.",
+          "admissionDateRequired": "The admission date is required.",
+          "salaryRequired": "The salary is required.",
+          "salaryMin": "The salary must be greater than $100.00."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register"
+        }
+      }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Employee Details",
+        "subtitle": "Update the employee's information.",
+        "section": {
+          "personalData": "Personal Information",
+          "accountData": "Account Credentials",
+          "professionalData": "Professional Data"
+        },
+        "placeholder": {
+          "fullName": "Full Name",
+          "salary": "Salary (e.g., 3500.00)"
+        },
+        "label": {
+          "fullName": "Full Name",
+          "admissionDate": "Admission Date",
+          "salary": "Salary"
+        },
+        "errors": {
+          "fullNameRequired": "The full name is required.",
+          "fullNameLength": "The name must be at least 3 characters long.",
+          "admissionDateRequired": "The admission date is required.",
+          "salaryRequired": "The salary is required.",
+          "salaryMin": "The salary must be greater than $100.00."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update"
+        }
+      }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Employee",
+        "subtitle": "Are you sure you want to permanently delete this employee's record?",
+        "section": {
+          "details": "Employee Information",
+          "warning": "This action cannot be undone. All associated data will be lost."
+        },
+        "label": {
+          "fullName": "Full Name",
+          "admissionDate": "Admission Date",
+          "salary": "Salary"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete"
+        }
+      }
+    }
+  },
+  "group": {
+    "create": {
+      "card": {
+        "title": "Register Vehicle Group",
+        "subtitle": "Enter the details for the new vehicle group.",
+        "placeholder": {
+          "name": "Group Name (e.g., Economy, SUV, Luxury)"
+        },
+        "section": {
+          "identification": "Group Identification"
+        },
+        "label": {
+          "name": "Group Name"
+        },
+        "errors": {
+          "nameRequired": "The group name is required.",
+          "nameLength": "The name must be at least 3 characters long."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Confirm Registration"
+        }
+      }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Vehicle Group",
+        "subtitle": "Modify the name of the vehicle group.",
+        "section": {
+          "groupData": "Group Details"
+        },
+        "placeholder": {
+          "name": "Group Name"
+        },
+        "label": {
+          "name": "Group Name"
+        },
+        "errors": {
+          "nameRequired": "The group name is required.",
+          "nameLength": "The name must be at least 3 characters long."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update Group"
+        }
+      }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Vehicle Group",
+        "subtitle": "Review the details before proceeding with the deletion.",
+        "section": {
+          "details": "Group Information",
+          "warning": "This action cannot be undone. All vehicles associated with this group may lose categorization."
+        },
+        "label": {
+          "name": "Name"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Group"
+        }
+      }
+    }
+  },
+  "billingPlans": {
+    "list": {
+      "header": {
+        "title": "Billing Plans"
+      },
+      "card": {
+        "groupName": "Group Name"
+      },
+      "buttons": {
+        "register": "Register New Plan",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives"
+      },
+      "type": {
+        "daily": "Daily Billing",
+        "controlled": "Controlled Billing",
+        "free": "Free Billing"
+      },
+      "label": {
+        "dailyRate": "Daily Rate",
+        "pricePerKm": "Price per Km",
+        "pricePerKmExtrapolated": "Price per Km (Extra)",
+        "fixedRate": "Fixed Rate"
+      }
+    },
+    "create": {
+      "card": {
+        "title": "Register Billing Plan",
+        "subtitle": "Define rates for the new vehicle group.",
+        "section": {
+          "groupSelection": "Select Vehicle Group",
+          "dailyBilling": "1. Daily Billing (Mileage Included)",
+          "controlledBilling": "2. Controlled Billing (Mileage Limit)",
+          "freeBilling": "3. Free Billing (Fixed Rate)"
+        },
+        "placeholder": {
+          "groupId": "Select Group...",
+          "dailyRate": "Daily Rate (R$)",
+          "pricePerKm": "Price per Km (R$)",
+          "pricePerKmExtrapolated": "Price per Km Extrapolated (R$)",
+          "fixedRate": "Fixed Rate (R$)"
+        },
+        "label": {
+          "groupId": "Vehicle Group"
+        },
+        "errors": {
+          "groupIdRequired": "Vehicle group selection is mandatory.",
+          "rateMin": "The rate must be greater than zero."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register Plan"
+        }
+      }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Billing Plan",
+        "subtitle": "Review and update the plan rates and associated group.",
+        "section": {
+          "groupSelection": "Assigned Vehicle Group",
+          "dailyBilling": "1. Daily Billing (Mileage Included)",
+          "controlledBilling": "2. Controlled Billing (Mileage Limit)",
+          "freeBilling": "3. Free Billing (Fixed Rate)"
+        },
+        "placeholder": {
+          "groupIdSelect": "Select or Change Group...",
+          "dailyRate": "Daily Rate (R$)",
+          "pricePerKm": "Price per Km (R$)",
+          "pricePerKmExtrapolated": "Price per Km Extrapolated (R$)",
+          "fixedRate": "Fixed Rate (R$)"
+        },
+        "label": {
+          "groupId": "Vehicle Group"
+        },
+        "errors": {
+          "rateMin": "The rate must be greater than zero."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update Plan"
+        }
+      }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Billing Plan",
+        "subtitle": "Confirm permanent deletion of the following billing plan.",
+        "section": {
+          "details": "Plan Details",
+          "daily": "Daily Billing Rates",
+          "controlled": "Controlled Billing Rates",
+          "free": "Free Billing Rates",
+          "warning": "This action cannot be undone. Any future rental linked to this plan will require manual adjustment."
+        },
+        "label": {
+          "name": "Plan Name",
+          "dailyRate": "Daily Rate",
+          "pricePerKm": "Price per Km",
+          "pricePerKmExtrapolated": "Price per Km (Extra)",
+          "fixedRate": "Fixed Rate"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Plan"
+        }
+      }
+    }
+  },
+  "vehicles": {
+    "list": {
+      "header": {
+        "title": "Vehicles Catalog"
+      },
+      "buttons": {
+        "register": "Register New Vehicle",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives"
+      },
+      "label": {
+        "group": "Group",
+        "color": "Color",
+        "fuelCapacityUnit": "Capacity (L)"
+      }
+    },
+    "create": {
+      "card": {
+        "title": "Register New Vehicle",
+        "subtitle": "Enter the details and specifications of the vehicle.",
+        "section": {
+          "identification": "Group and Identification",
+          "details": "Technical and Visual Details",
+          "fuelAndCapacity": "Fuel and Capacity",
+          "image": "Vehicle Image"
+        },
+        "placeholder": {
+          "licensePlate": "License Plate (e.g., ABC-1234)",
+          "groupId": "Select Vehicle Group...",
+          "brand": "Brand (e.g., Chevrolet, Ford)",
+          "model": "Model (e.g., Onix, Ka)",
+          "color": "Color",
+          "year": "Year (e.g., 2023)",
+          "fuelType": "Select Fuel Type...",
+          "fuelTankCapacity": "Fuel Tank Capacity (in Liters)",
+          "image": "Vehicle Image"
+        },
+        "label": {
+          "licensePlate": "License Plate",
+          "group": "Group",
+          "brand": "Brand",
+          "model": "Model",
+          "color": "Color",
+          "year": "Year",
+          "fuelType": "Fuel Type",
+          "fuelTankCapacity": "Tank Capacity"
+        },
+        "fuel": {
+          "gasoline": "Gasoline",
+          "gas": "Gas",
+          "diesel": "Diesel",
+          "alcohol": "Alcohol",
+          "ethanol": "Ethanol"
+        },
+        "errors": {
+          "licensePlateRequired": "License plate is required.",
+          "licensePlatePattern": "License Plate must follow the pattern: ABC-1234 or ABC-1D23",
+          "groupIdRequired": "Vehicle group selection is mandatory.",
+          "brandRequired": "Brand is required.",
+          "modelRequired": "Model is required.",
+          "colorRequired": "Color is required.",
+          "yearRequired": "Year is required.",
+          "fuelTypeRequired": "Fuel type is required.",
+          "fuelTankCapacityRequired": "Fuel tank capacity is required."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register Vehicle"
+        }
+      }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Vehicle Details",
+        "subtitle": "Update the specifications and group of the vehicle.",
+        "section": {
+          "identification": "Group and Identification",
+          "details": "Technical and Visual Details",
+          "fuelAndCapacity": "Fuel and Capacity",
+          "image": "Vehicle Image"
+        },
+        "placeholder": {
+          "licensePlate": "License Plate (e.g., ABC-1234)",
+          "groupId": "Select Vehicle Group...",
+          "brand": "Brand (e.g., Chevrolet, Ford)",
+          "model": "Model (e.g., Onix, Ka)",
+          "color": "Color",
+          "year": "Year (e.g., 2023)",
+          "fuelType": "Select Fuel Type...",
+          "fuelTankCapacity": "Fuel Tank Capacity (in Liters)",
+          "image": "Vehicle Image"
+        },
+        "label": {
+          "licensePlate": "License Plate",
+          "group": "Group",
+          "brand": "Brand",
+          "model": "Model",
+          "color": "Color",
+          "year": "Year",
+          "fuelType": "Fuel Type",
+          "fuelTankCapacity": "Tank Capacity"
+        },
+        "fuel": {
+          "gasoline": "Gasoline",
+          "gas": "Gas",
+          "diesel": "Diesel",
+          "alcohol": "Alcohol",
+          "ethanol": "Ethanol"
+        },
+        "errors": {
+          "licensePlateRequired": "License plate is required.",
+          "licensePlatePattern": "License Plate must follow the pattern: ABC-1234 or ABC-1D23",
+          "groupIdRequired": "Vehicle group selection is mandatory.",
+          "brandRequired": "Brand is required.",
+          "modelRequired": "Model is required.",
+          "colorRequired": "Color is required.",
+          "yearRequired": "Year is required.",
+          "fuelTypeRequired": "Fuel type is required.",
+          "fuelTankCapacityRequired": "Fuel tank capacity is required."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update Vehicle"
+        }
+      }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Vehicle",
+        "subtitle": "Confirm permanent deletion of the following vehicle from the system.",
+        "section": {
+          "details": "Vehicle Summary",
+          "warning": "This action cannot be undone. Any rental history or reservation linked to this vehicle will be affected."
+        },
+        "label": {
+          "licensePlate": "License Plate",
+          "brandAndModel": "Brand / Model",
+          "year": "Year",
+          "group": "Group",
+          "color": "Color"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Vehicle"
+        }
+      }
+    }
+  },
+  "clients": {
+    "list": {
+      "header": {
+        "title": "Clients Registration"
+      },
+      "buttons": {
+        "register": "Register New Client",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives"
+      },
+      "label": {
+        "type": "Type"
+      }
+    },
+    "create": {
+      "card": {
+        "title": "New Client Registration",
+        "subtitle": "Please fill in the client's personal and address details.",
+        "section": {
+          "personalData": "Personal and Contact Information",
+          "addressData": "Address"
+        },
+        "placeholder": {
+          "fullName": "Full Name",
+          "type": "Select Client Type...",
+          "document": "Document (CPF/CNPJ)",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "licenseNumber": "License Number",
+          "state": "State",
+          "city": "City",
+          "neighborhood": "Neighborhood",
+          "street": "Street",
+          "number": "Number"
+        },
+        "label": {
+          "fullName": "Full Name",
+          "type": "Client Type",
+          "document": "Document",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "state": "State",
+          "city": "City",
+          "neighborhood": "Neighborhood",
+          "street": "Street",
+          "number": "Number"
+        },
+        "type": {
+          "individual": "Individual (PF)",
+          "corporate": "Corporate (PJ)"
+        },
+        "errors": {
+          "fullNameRequired": "The full name is required.",
+          "fullNameLength": "The name must be at least 3 characters long.",
+          "fullNameInvalid": "Something is wrong with that name.",
+          "typeRequired": "Client type is required.",
+          "documentRequired": "The document is required.",
+          "documentInvalid": "The document must be a CPF or CNPJ document.",
+          "emailRequired": "The email is required.",
+          "phoneNumberRequired": "The phone number is required.",
+          "phoneNumberInvalid": "Invalid phone number format.",
+          "stateRequired": "State is required.",
+          "cityRequired": "City is required.",
+          "neighborhoodRequired": "Neighborhood is required.",
+          "streetRequired": "Street is required.",
+          "numberRequired": "Number is required."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register Client"
+        }
+      }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Client Details",
+        "subtitle": "Update the client's information and address.",
+        "section": {
+          "personalData": "Personal and Contact Information",
+          "addressData": "Address"
+        },
+        "placeholder": {
+          "fullName": "Full Name",
+          "type": "Select Client Type...",
+          "document": "Document (CPF/CNPJ)",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "licenseNumber": "License Number",
+          "state": "State",
+          "city": "City",
+          "neighborhood": "Neighborhood",
+          "street": "Street",
+          "number": "Number"
+        },
+        "label": {
+          "fullName": "Full Name",
+          "type": "Client Type",
+          "document": "Document",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "state": "State",
+          "city": "City",
+          "neighborhood": "Neighborhood",
+          "street": "Street",
+          "number": "Number"
+        },
+        "type": {
+          "individual": "Individual (PF)",
+          "corporate": "Corporate (PJ)"
+        },
+        "errors": {
+          "fullNameRequired": "The full name is required.",
+          "fullNameLength": "Name must be valid.",
+          "fullNameInvalid": "Invalid name format.",
+          "typeRequired": "Client type is required.",
+          "documentRequired": "The document is required.",
+          "documentInvalid": "Invalid document format.",
+          "emailRequired": "The email is required.",
+          "phoneNumberRequired": "The phone number is required.",
+          "phoneNumberInvalid": "Invalid phone number format.",
+          "stateRequired": "State is required.",
+          "cityRequired": "City is required.",
+          "neighborhoodRequired": "Neighborhood is required.",
+          "streetRequired": "Street is required.",
+          "numberRequired": "Number is required."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update Client"
+        }
+      }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Client",
+        "subtitle": "Confirm permanent deletion of the client's record.",
+        "section": {
+          "details": "Client Identification",
+          "addressSummary": "Address Summary",
+          "warning": "This action cannot be undone. All rental history and associated data will be lost."
+        },
+        "label": {
+          "fullName": "Full Name",
+          "document": "Document",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "street": "Street",
+          "neighborhood": "Neighborhood",
+          "number": "Number",
+          "cityState": "City/State"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Client"
+        }
+      }
+    }
+  },
+  "drivers": {
+    "list": {
+      "header": {
+        "title": "Drivers Registration"
+      },
+      "buttons": {
+        "register": "Register New Driver",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives"
+      },
+      "label": {
+        "document": "Document",
+        "licenseNumber": "License Number",
+        "licenseValidity": "License Validity",
+        "client": "Associated Client"
+      }
+    },
+    "create": {
+      "card": {
+        "title": "Register New Driver",
+        "subtitle": "Fill in the driver's details and associate them with a client.",
+        "section": {
+          "identification": "Client Association",
+          "personalData": "Driver's Personal Data",
+          "licenseData": "Driver's License Details (CNH)",
+          "associatedDrivers": "Select Existing Driver (Corporate)"
+        },
+        "placeholder": {
+          "client": "Select Associated Client...",
+          "selectDriver": "Select driver associated with the company...",
+          "fullName": "Full Name",
+          "document": "Document (CPF)",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "licenseNumber": "License Number",
+          "licenseValidity": "License Validity Date"
+        },
+        "label": {
+          "client": "Client",
+          "selectDriver": "Associated Driver",
+          "fullName": "Full Name",
+          "document": "Document (CPF)",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "licenseNumber": "License Number",
+          "licenseValidity": "License Validity"
+        },
+        "info": {
+          "clientDetailsPrepopulated": "Client details have been pre-filled and disabled for editing. Please only provide the license information.",
+          "registerNewDriverForCorporate": "Fill in the details below to register a new individual driver associated with the corporate client."
+        },
+        "errors": {
+          "clientRequired": "Client association is mandatory.",
+          "selectedDriverRequired": "Selecting an associated driver is mandatory.",
+          "fullNameRequired": "The full name is required.",
+          "fullNameLength": "The name must be at least 3 characters long.",
+          "documentRequired": "The document is required.",
+          "emailRequired": "The email is required.",
+          "phoneNumberRequired": "The phone number is required.",
+          "licenseNumberRequired": "The license number is required.",
+          "licenseLength": "The license number must be 11 digits long.",
+          "licenseValidityRequired": "The license validity date is required."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register Driver"
+        }
+      }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Driver",
+        "subtitle": "Confirm permanent deletion of the driver's record.",
+        "section": {
+          "details": "Driver Identification",
+          "contact": "Contact Information",
+          "licenseData": "License Details (CNH)",
+          "associatedClient": "Associated Client",
+          "warning": "This action cannot be undone. All rental history linked to this driver will be affected."
+        },
+        "label": {
+          "fullName": "Full Name",
+          "document": "Document",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "licenseNumber": "License Number",
+          "licenseValidity": "License Validity",
+          "clientName": "Client Name"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Driver"
+        }
+      }
+    }
+  },
+  "extras": {
+    "list": {
+      "header": {
+        "title": "Additional Services and Fees"
+      },
+      "buttons": {
+        "register": "Register New Extra",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives"
+      },
+      "label": {
+        "type": "Type",
+        "price": "Price",
+        "daily": "Daily",
+        "fixed": "Fixed"
+      },
+      "type": {
+        "equipment": "Equipment",
+        "service": "Service",
+        "fee": "Fee"
+      }
+    },
+    "create": {
+      "card": {
+        "title": "Register New Extra",
+        "subtitle": "Define the name, type, and price for the new additional service or fee.",
+        "section": {
+          "details": "Extra Details and Pricing"
+        },
+        "placeholder": {
+          "name": "Service Name (e.g., Baby Seat, Full Insurance, Airport Fee)",
+          "type": "Select Type...",
+          "price": "Price (e.g., 50.00)"
+        },
+        "label": {
+          "name": "Name",
+          "type": "Type",
+          "price": "Price (R$)",
+          "isDaily": "Daily Charge"
+        },
+        "type": {
+          "equipment": "Equipment",
+          "service": "Service",
+          "fee": "Fee"
+        },
+        "info": {
+          "isDaily": "Check if the price should be charged per day of rental."
+        },
+        "errors": {
+          "nameRequired": "The name is required.",
+          "nameLength": "The name must be at least 3 characters long.",
+          "typeRequired": "The type selection is mandatory.",
+          "priceRequired": "The price is required.",
+          "priceMin": "The price must be greater than zero."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register Extra"
+        }
+      }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Extra Details",
+        "subtitle": "Update the service details and pricing.",
+        "section": {
+          "details": "Extra Details and Pricing"
+        },
+        "placeholder": {
+          "name": "Service Name (e.g., Baby Seat, Full Insurance, Airport Fee)",
+          "type": "Select Type...",
+          "price": "Price (e.g., 50.00)"
+        },
+        "label": {
+          "name": "Name",
+          "type": "Type",
+          "price": "Price (R$)",
+          "isDaily": "Daily Charge"
+        },
+        "type": {
+          "equipment": "Equipment",
+          "service": "Service",
+          "fee": "Fee"
+        },
+        "info": {
+          "isDaily": "Check if the price should be charged per day of rental."
+        },
+        "errors": {
+          "nameRequired": "The name is required.",
+          "nameLength": "The name must be at least 3 characters long.",
+          "typeRequired": "The type selection is mandatory.",
+          "priceRequired": "The price is required.",
+          "priceMin": "The price must be greater than zero."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update Extra"
+        }
+      }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Additional Service",
+        "subtitle": "Confirm permanent deletion of the service.",
+        "section": {
+          "details": "Item Details",
+          "warning": "This action cannot be undone. Any future rental linked to this extra will require manual adjustment."
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Extra"
+        },
+        "type": {
+          "equipment": "Equipment",
+          "service": "Service",
+          "fee": "Fee"
+        },
+        "label": {
+          "name": "Name",
+          "type": "Type",
+          "price": "Price",
+          "chargeType": "Charge Type",
+          "daily": "Daily",
+          "fixed": "Fixed"
+        }
+      }
+    }
+  },
+  "rentals": {
+    "list": {
+      "header": {
+        "title": "Rental Catalog"
+      },
+      "buttons": {
+        "register": "Start New Rental",
+        "seeActives": "See Active Rentals",
+        "seeInactives": "See Inactive Rentals"
+      },
+      "label": {
+        "startDate": "Start Date",
+        "expectedReturnDate": "Expected Return Date",
+        "returnDate": "Return Date",
+        "estimatedKilometers": "Estimated KM",
+        "startKm": "Start Kilometers",
+        "driver": "Driver",
+        "estimated": "Estimated Total",
+        "final": "Final Amount",
+        "dailyRate": "Daily Rate",
+        "billingPlan": "Billing Plan",
+        "extras": "Extras"
+      }
+    },
+    "create": {
+      "card": {
+        "title": "New Rental Registration",
+        "subtitle": "Define the client, vehicle, timeline, and pricing structure for the rental.",
+        "section": {
+          "association": "Client, Driver, and Employee Association",
+          "vehicleAndDates": "Vehicle and Timeline",
+          "billing": "Billing and Estimated Kilometers",
+          "extrasAndCoupon": "Extras and Discounts"
+        },
+        "placeholder": {
+          "client": "Select Client...",
+          "driver": "Select Driver...",
+          "employee": "Select Employee...",
+          "vehicle": "Select Vehicle...",
+          "startKm": "Starting Kilometers",
+          "billingPlanType": "Select Billing Plan Type...",
+          "estimatedKilometers": "Estimated Kilometers",
+          "coupon": "Select Coupon (Optional)"
+        },
+        "label": {
+          "client": "Client",
+          "driver": "Driver",
+          "employee": "Employee",
+          "vehicle": "Vehicle",
+          "startDate": "Start Date",
+          "expectedReturnDate": "Expected Return Date",
+          "startKm": "Starting KM",
+          "billingPlanType": "Billing Plan Type",
+          "estimatedKilometers": "Estimated KM",
+          "extras": "Additional Services/Extras",
+          "coupon": "Coupon"
+        },
+        "plan": {
+          "daily": "Daily Billing",
+          "controlled": "Controlled Billing",
+          "free": "Free Billing"
+        },
+        "errors": {
+          "clientRequired": "Client selection is mandatory.",
+          "driverRequired": "Driver selection is mandatory.",
+          "employeeRequired": "Employee selection is mandatory.",
+          "vehicleRequired": "Vehicle selection is mandatory.",
+          "startDateRequired": "Start date is mandatory.",
+          "expectedReturnDateRequired": "Expected return date is mandatory.",
+          "startKmRequired": "Starting KM is mandatory.",
+          "startKmMin": "Starting KM must be greater than zero.",
+          "billingPlanTypeRequired": "Billing plan type is mandatory.",
+          "estimatedKilometersRequired": "Estimated KM is mandatory."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register Rental"
+        }
+      }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Rental Details",
+        "subtitle": "Update the rental timeline and optional services.",
+        "section": {
+          "association": "Client, Driver, and Employee Association",
+          "vehicleAndDates": "Vehicle and Timeline",
+          "billing": "Billing and Estimated Kilometers",
+          "extrasAndCoupon": "Extras and Discounts"
+        },
+        "placeholder": {
+          "client": "Select Client...",
+          "driver": "Select Driver...",
+          "employee": "Select Employee...",
+          "vehicle": "Select Vehicle...",
+          "startKm": "Starting Kilometers",
+          "billingPlanType": "Select Billing Plan Type...",
+          "estimatedKilometers": "Estimated Kilometers",
+          "coupon": "Select Coupon (Optional)"
+        },
+        "label": {
+          "client": "Client",
+          "driver": "Driver",
+          "employee": "Employee",
+          "vehicle": "Vehicle",
+          "startDate": "Start Date",
+          "expectedReturnDate": "Expected Return Date",
+          "startKm": "Starting KM",
+          "estimatedKilometers": "Estimated KM",
+          "extras": "Selected Extras",
+          "billingPlanType": "Billing Plan Type",
+          "final": "Final Amount",
+          "dailyRate": "Daily Rate",
+          "coupon": "Coupon"
+        },
+        "info": {
+          "startDateFixed": "The rental start date cannot be modified.",
+          "extrasHint": "Select or deselect items to modify the list of optional extras."
+        },
+        "plan": {
+          "daily": "Daily Billing",
+          "controlled": "Controlled Billing",
+          "free": "Free Billing"
+        },
+        "errors": {
+          "expectedReturnDateRequired": "Expected return date is mandatory.",
+          "estimatedKilometersRequired": "Estimated KM is mandatory."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update Rental"
+        }
+      }
+    },
+    "details": {
+      "card": {
+        "title": "Rental Details",
+        "subtitle": "Complete overview of the rental contract.",
+        "status": {
+          "active": "Active",
+          "returned": "Returned"
+        },
+        "sections": {
+          "summary": "Rental Summary",
+          "plan": "Billing Plan Details",
+          "extras": "Selected Extras",
+          "return": "Return Details"
+        },
+        "label": {
+          "billingPlan": "Billing Plan",
+          "estimatedKilometers": "Estimated KM",
+          "startDate": "Start Date",
+          "expectedReturnDate": "Expected Return Date",
+          "returnDate": "Return Date",
+          "startKm": "Starting KM",
+          "driver": "Driver",
+          "employee": "Employee",
+          "coupon": "Coupon",
+          "estimated": "Estimated Total",
+          "final": "Final Amount",
+          "none": "None",
+          "noExtras": "No extras selected.",
+          "dailyRate": "Daily Rate",
+          "pricePerKm": "Price per Km",
+          "controlledDailyRate": "Controlled Daily Rate",
+          "pricePerKmExtrapolated": "Price per Km (Extra)",
+          "fixedRate": "Fixed Rate",
+          "fuelLevelAtReturn": "Fuel Level",
+          "endKm": "End KM",
+          "totalMileage": "Total Mileage",
+          "extrasTotalCost": "Extras Total",
+          "fuelPenalty": "Fuel Penalty",
+          "penaltyTotalCost": "Other Penalties",
+          "discountTotal": "Total Discount",
+          "finalPrice": "Final Price"
+        },
+        "buttons": {
+          "back": "Back",
+          "return": "Register Return",
+          "edit": "Edit"
+        }
+      }
+    },
+    "delete": {
+      "card": {
+        "title": "Cancel/Delete Rental",
+        "subtitle": "Confirm permanent cancellation of the rental contract.",
+        "section": {
+          "details": "Rental Summary",
+          "vehicleAndDates": "Vehicle and Timeline",
+          "pricing": "Pricing Details",
+          "warning": "This action cannot be undone. All associated financial records will be affected."
+        },
+        "label": {
+          "client": "Client",
+          "driver": "Driver",
+          "vehicle": "Vehicle",
+          "startDate": "Start Date",
+          "expectedReturnDate": "Expected Return Date",
+          "billingPlanType": "Billing Plan Type",
+          "final": "Final Amount",
+          "extrasQuantity": "Number of Extras"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Rental"
+        }
+      }
+    },
+    "return": {
+      "card": {
+        "title": "Vehicle Return",
+        "subtitle": "Register the final kilometer reading and fuel level to close the rental contract.",
+        "section": {
+          "summary": "Rental Summary (Fixed)",
+          "returnData": "Return Details",
+          "finalCalculation": "Final Calculation"
+        },
+        "placeholder": {
+          "endKm": "Final Kilometers",
+          "fuelLevel": "Select Fuel Level..."
+        },
+        "label": {
+          "client": "Client",
+          "vehicle": "Vehicle",
+          "startDate": "Start Date",
+          "startKm": "Starting KM",
+          "billingPlanType": "Billing Plan",
+          "dailyRate": "Daily Rate",
+          "pricePerKm": "Price/Km",
+          "franchise": "Franchise",
+          "extraKm": "Extra Km",
+          "fixedRate": "Fixed Rate",
+          "endKm": "Final KM Readout",
+          "fuelLevel": "Fuel Level",
+          "totalValue": "Total Value"
+        },
+        "fuel": {
+          "empty": "Empty (0%)",
+          "quarter": "1/4 Full (25%)",
+          "half": "1/2 Full (50%)",
+          "threeQuarters": "3/4 Full (75%)",
+          "full": "Full (100%)"
+        },
+        "errors": {
+          "endKmRequired": "Final KM reading is mandatory.",
+          "endKmMin": "Final KM must be greater than or equal to the Starting KM.",
+          "fuelLevelRequired": "Fuel level selection is mandatory."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Confirm Return"
+        },
+        "note": {
+          "finalPrice": "*Includes daily rates, extras, fuel penalties, and applicable discounts."
+        }
+      }
+    }
+  },
+  "profile": {
+    "update": {
+      "card": {
+        "title": "Edit My Profile",
+        "subtitle": "Update your personal and contact information.",
+        "section": {
+          "personalData": "Personal and Contact Information",
+          "accountData": "Account Credentials (Username, Password)"
+        },
+        "placeholder": {
+          "fullName": "Full Name",
+          "email": "Email",
+          "phoneNumber": "Phone Number (e.g., (99) 99999-9999)",
+          "userName": "Username",
+          "password": "New Password (Leave blank to keep current)"
+        },
+        "errors": {
+          "fullNameRequired": "Your full name is required.",
+          "fullNameLength": "Your name must be at least 3 characters long.",
+          "emailRequired": "Email is required.",
+          "emailInvalid": "Invalid email format.",
+          "phoneNumberRequired": "Phone number is required.",
+          "phoneNumberInvalid": "Invalid phone number format.",
+          "userNameRequired": "Username is required.",
+          "userNameLength": "Username must be at least 5 characters long.",
+          "passwordLength": "New password must be at least 8 characters long."
+        },
+        "label": {
+          "fullName": "Full Name"
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Save Changes"
+        }
+      }
+    }
+  },
+  "configuration": {
+    "menu": {
+      "card": {
+        "quickActions": {
+          "title": "Menu",
+          "profile": "Profile Settings",
+          "fuel": "Fuel Settings"
+        }
+      }
+    },
+    "fuel": {
+      "card": {
+        "title": "System Configuration",
+        "subtitle": "Set the base prices for reference calculation.",
+        "section": {
+          "fuelPrices": "Fuel Prices"
+        },
+        "placeholder": {
+          "gasolinePrice": "Price per liter of Gasoline (R$)",
+          "gasPrice": "Price per liter of Gas (R$)",
+          "dieselPrice": "Price per liter of Diesel (R$)",
+          "alcoholPrice": "Price per liter of Alcohol (R$)"
+        },
+        "label": {
+          "gasolinePrice": "Gasoline Price",
+          "gasPrice": "Gas Price (Natural Gas)",
+          "dieselPrice": "Diesel Price",
+          "alcoholPrice": "Alcohol/Ethanol Price"
+        },
+        "errors": {
+          "gasolinePriceRequired": "Gasoline price is mandatory.",
+          "gasPriceRequired": "Gas price is mandatory.",
+          "dieselPriceRequired": "Diesel price is mandatory.",
+          "alcoholPriceRequired": "Alcohol/Ethanol price is mandatory.",
+          "priceMin": "The price must be greater than zero."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Save Configuration"
+        }
+      }
+    }
+  },
+  "partners": {
+    "list": {
+      "header": {
+        "title": "Partnerships"
+      },
+      "buttons": {
+        "register": "Register New Partner",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives"
+      },
+      "label": {
+        "couponsQuantity": "Coupons Quantity"
+      }
+    },
+    "create": {
+      "card": {
+        "title": "Register New Partner",
+        "subtitle": "Provide the full name of the new partner.",
+        "section": {
+          "identification": "Partner Identification"
+        },
+        "placeholder": {
+          "fullName": "Full Name or Company Name"
+        },
+        "label": {
+          "fullName": "Full Name"
+        },
+        "errors": {
+          "fullNameRequired": "The partner name is required.",
+          "fullNameLength": "The name must be at least 3 characters long."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register Partner"
+        }
+      }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Partner Details",
+        "subtitle": "Update the full name of the partner.",
+        "section": {
+          "identification": "Partner Identification"
+        },
+        "placeholder": {
+          "fullName": "Full Name or Company Name"
+        },
+        "label": {
+          "fullName": "Full Name"
+        },
+        "errors": {
+          "fullNameRequired": "The partner name is required.",
+          "fullNameLength": "The name must be at least 3 characters long."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update Partner"
+        }
+      }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Partner",
+        "subtitle": "Confirm permanent deletion of the partner and all associated data.",
+        "section": {
+          "details": "Partner Details",
+          "warning": "This action cannot be undone. All associated coupons will become invalid."
+        },
+        "label": {
+          "fullName": "Full Name",
+          "couponsQuantity": "Associated Coupons"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Partner"
+        }
+      }
+    },
+    "details": {
+      "card": {
+        "title": "Partner Details",
+        "subtitle": "Overview of the partner and associated discount coupons.",
+        "section": {
+          "partnerDetails": "Partner Information",
+          "couponsList": "Associated Coupons"
+        },
+        "label": {
+          "fullName": "Full Name",
+          "id": "ID",
+          "status": "Status",
+          "discountValue": "Discount Value",
+          "expirationDate": "Expiration Date"
+        },
+        "status": {
+          "active": "Active",
+          "inactive": "Inactive"
+        },
+        "info": {
+          "noCoupons": "This partner does not have any active coupons."
+        },
+        "buttons": {
+          "back": "Back to List",
+          "editPartner": "Edit Partner"
+        }
+      }
+    }
+  },
+  "coupons": {
+    "list": {
+      "header": {
+        "title": "Coupon Catalog"
+      },
+      "buttons": {
+        "register": "Register New Coupon",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives",
+        "seeMostUsed": "See Most Used"
+      },
+      "label": {
+        "partner": "Partner",
+        "discountValue": "Discount Value",
+        "expirationDate": "Expiration Date",
+        "status": "Status"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      }
+    },
+    "usage": {
+      "header": {
+        "title": "Most Used Coupons (Statistics)"
+      },
+      "buttons": {
+        "register": "Register New Coupon",
+        "seeAll": "See All Coupons"
+      },
+      "label": {
+        "partner": "Partner",
+        "usageCount": "Usage Count",
+        "totalDiscountGiven": "Total Discount Given"
+      }
+    },
+    "create": {
+      "card": {
+        "title": "Register New Coupon",
+        "subtitle": "Define the coupon details and associate it with a partner.",
+        "section": {
+          "details": "Coupon Details",
+          "partner": "Partner Association"
+        },
+        "placeholder": {
+          "name": "Coupon Code (e.g., BLACKFRIDAY25)",
+          "discountValue": "Discount Value (R$)",
+          "partnerId": "Select Partner..."
+        },
+        "label": {
+          "name": "Coupon Code",
+          "discountValue": "Discount Value",
+          "expirationDate": "Expiration Date",
+          "partnerId": "Associated Partner"
+        },
+        "errors": {
+          "nameRequired": "The coupon code is mandatory.",
+          "nameLength": "The code must be at least 4 characters long.",
+          "discountValueRequired": "Discount value is mandatory.",
+          "discountValueMin": "Discount value must be greater than zero.",
+          "expirationDateRequired": "Expiration date is mandatory.",
+          "partnerIdRequired": "Partner association is mandatory."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Register Coupon"
+        }
+      }
+    },
+    "update": {
+      "card": {
+        "title": "Edit Coupon Details",
+        "subtitle": "Update the coupon details or reassign the partner.",
+        "section": {
+          "details": "Coupon Details",
+          "partner": "Partner Association"
+        },
+        "placeholder": {
+          "name": "Coupon Code (e.g., BLACKFRIDAY25)",
+          "discountValue": "Discount Value (R$)",
+          "partnerId": "Select Partner..."
+        },
+        "label": {
+          "name": "Coupon Code",
+          "discountValue": "Discount Value",
+          "expirationDate": "Expiration Date",
+          "partnerId": "Associated Partner"
+        },
+        "errors": {
+          "nameRequired": "The coupon code is mandatory.",
+          "nameLength": "The code must be at least 3 characters long.",
+          "discountValueRequired": "Discount value is mandatory.",
+          "discountValueMin": "Discount value must be greater than zero.",
+          "expirationDateRequired": "Expiration date is mandatory.",
+          "partnerIdRequired": "Partner association is mandatory."
+        },
+        "buttons": {
+          "back": "Back",
+          "confirm": "Update Coupon"
+        }
+      }
+    },
+    "delete": {
+      "card": {
+        "title": "Delete Coupon",
+        "subtitle": "Confirm permanent deletion of the discount coupon.",
+        "section": {
+          "details": "Coupon Details",
+          "warning": "This action cannot be undone. The coupon will no longer be valid for use in rentals."
+        },
+        "label": {
+          "name": "Coupon Code",
+          "partner": "Partner",
+          "discountValue": "Discount Value",
+          "expirationDate": "Expiration Date"
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Delete Coupon"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,129 @@
+<div class="shell" *transloco="let t; prefix: 'navbar'">
+  <nav class="navbar" aria-label="Menu">
+    @if (isHandset$ | async) {
+      <button
+        class="navbar__menu-button"
+        type="button"
+        (click)="openSidebar()"
+        aria-label="Open Menu"
+      >
+        <span class="material-icons">menu</span>
+      </button>
+    }
+    <div class="navbar__logo">
+      <span class="material-icons"> directions_car </span>
+      {{ isPlatformAdmin ? 'Locadora (Admin)' : 'Locadora de Automóveis' }}
+    </div>
+    <div class="navbar__spacer"></div>
+    @if (!(isHandset$ | async) && !isPlatformAdmin) {
+      <app-multi-search></app-multi-search>
+    }
+    <div class="navbar__spacer"></div>
+    
+    <div class="navbar__options">
+      @if (effects$ | async) {}
+
+      @if (isImpersonating$ | async) {
+        <gs-buttons
+          [buttonType]="buttonType.Default"
+          [text]="t('deimpersonate')"
+          (click)="deimpersonate()"
+        ></gs-buttons>
+      } @else {
+        <gs-buttons
+          [buttonType]="buttonType.Default"
+          text="Logout"
+          (click)="logoutEvent.emit()"
+        ></gs-buttons>
+      }
+
+      <app-slide-toggle
+        [checked]="isDarkMode"
+        (toggleChange)="themeEvent.emit($event)"
+      ></app-slide-toggle>
+
+      <app-language-selector></app-language-selector>
+
+      <a
+        class="navbar__item-link"
+        routerLink="configuration"
+        routerLinkActive="navbar__item-link--active"
+        (click)="closeSidebar()"
+      >
+        <span class="material-icons navbar__item-icon"> settings </span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="shell__layout">
+    <div
+      class="shell__overlay"
+      [class.shell__overlay--visible]="(isHandset$ | async) && isSidebarOpen"
+      (click)="closeSidebar()"
+      aria-hidden="true"
+    ></div>
+
+    <aside class="sidebar" [class.sidebar--open]="(isHandset$ | async) ? isSidebarOpen : true">
+      <div class="sidebar__items">
+        @if (isPlatformAdmin) {
+          <a
+            class="sidebar__item-link"
+            routerLink="/admin/tenants"
+            routerLinkActive="sidebar__item-link--active"
+            (click)="closeSidebar()"
+          >
+            <span class="material-icons sidebar__item-icon"> domain </span>
+            <span class="sidebar__item-label"> Tenants </span>
+          </a>
+        } @else {
+          @for (item of navbarItems; track $index) {
+            <a
+              class="sidebar__item-link"
+              [routerLink]="item.link"
+              routerLinkActive="sidebar__item-link--active"
+              (click)="closeSidebar()"
+            >
+              <span class="material-icons sidebar__item-icon">
+                {{ item.icon }}
+              </span>
+              <span class="sidebar__item-label">
+                {{ item.titleKey | transloco }}
+              </span>
+            </a>
+          }
+          @if (isAdmin) {
+            <a
+              class="sidebar__item-link"
+              routerLink="/employees"
+              routerLinkActive="sidebar__item-link--active"
+              (click)="closeSidebar()"
+            >
+              <span class="material-icons sidebar__item-icon"> person </span>
+              <span class="sidebar__item-label"> {{ t('employees') }} </span>
+            </a>
+          }
+        }
+      </div>
+      <div class="sidebar__profile">
+        <div class="sidebar__profile-link">
+          <span class="material-icons sidebar__profile-icon">
+            {{ isPlatformAdmin ? 'admin_panel_settings' : 'account_circle' }}
+          </span>
+          <div>
+            <span class="sidebar__profile-username">{{ user?.userName }}</span>
+            <span class="sidebar__profile-role">
+              {{ getUserRole }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="shell__content">
+      <svg class="borda-svg" height="32" width="32">
+        <path class="OkLq5b" d="M 32,0 H -32,0 V 0,32 a 32, 32 0 0, 1 32,-32"></path>
+      </svg>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

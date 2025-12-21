@@ -1,0 +1,135 @@
+@use '../../../styles/variables' as *;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.card-container {
+  background-color: $surface;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: $shadow-2;
+  border: 1px solid $border;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: all $transition-fast;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    border-color: color-mix(in srgb, var(--clr-primary), var(--clr-border) 70%);
+  }
+}
+
+.image-wrapper {
+  position: relative;
+  height: 200px;
+  background-color: $surface-alt;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform $transition-normal;
+  }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+
+  .group-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    backdrop-filter: blur(6px);
+  }
+}
+
+.content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  .title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $text-main;
+    margin: 0;
+    line-height: 1.35;
+  }
+
+  .license-plate {
+    font-size: 0.875rem;
+    color: $text-muted;
+  }
+}
+
+.specs {
+  display: flex;
+  gap: 1rem;
+  color: $text-muted;
+  font-size: 0.875rem;
+  flex-wrap: wrap;
+
+  .spec-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+
+    .material-icons {
+      font-size: 1.1rem;
+      color: $primary;
+    }
+  }
+}
+
+.rent-block-hint {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--clr-border), transparent 40%);
+
+  .price {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .label {
+      font-size: 0.75rem;
+      color: $text-muted;
+    }
+
+    .value {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: $primary;
+    }
+  }
+}

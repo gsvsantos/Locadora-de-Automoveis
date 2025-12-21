@@ -1,6 +1,10 @@
-﻿using FluentValidation;
+﻿using Amazon.Runtime;
+using Amazon.S3;
+using FluentValidation;
 using Hangfire;
+using LocadoraDeAutomoveis.Application.Auth.Services;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
+using LocadoraDeAutomoveis.Application.Rentals.Services;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.BillingPlans;
@@ -14,6 +18,7 @@ using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
+using LocadoraDeAutomoveis.Domain.Shared.Email;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.Auth;
 using LocadoraDeAutomoveis.Infrastructure.BillingPlans;
@@ -21,16 +26,20 @@ using LocadoraDeAutomoveis.Infrastructure.Clients;
 using LocadoraDeAutomoveis.Infrastructure.Configurations;
 using LocadoraDeAutomoveis.Infrastructure.Coupons;
 using LocadoraDeAutomoveis.Infrastructure.Drivers;
+using LocadoraDeAutomoveis.Infrastructure.Email;
 using LocadoraDeAutomoveis.Infrastructure.Employees;
 using LocadoraDeAutomoveis.Infrastructure.Groups;
 using LocadoraDeAutomoveis.Infrastructure.Partners;
 using LocadoraDeAutomoveis.Infrastructure.RentalExtras;
 using LocadoraDeAutomoveis.Infrastructure.Rentals;
+using LocadoraDeAutomoveis.Infrastructure.S3;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using LocadoraDeAutomoveis.Infrastructure.Vehicles;
 using LocadoraDeAutomoveis.WebApi.Filters;
+using LocadoraDeAutomoveis.WebApi.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Reflection;
@@ -145,6 +154,8 @@ public static class DependencyInjection
                     Array.Empty<string>()
                 }
             });
+
+            options.OperationFilter<TenantOverrideHeaderOperationFilter>();
         });
     }
 
@@ -163,11 +174,6 @@ public static class DependencyInjection
         services.AddScoped<IRepositoryRentalReturn, RentalReturnRepository>();
         services.AddScoped<IRepositoryPartner, PartnerRepository>();
         services.AddScoped<IRepositoryCoupon, CouponRepository>();
-    }
-
-    public static void ConfigureServices(this IServiceCollection services)
-    {
-        services.AddScoped<ICouponQueryService, CouponQueryService>();
     }
 
     public static void ConfigureSerilog(this IServiceCollection services, ILoggingBuilder logging, IConfiguration configuration)
@@ -196,6 +202,9 @@ public static class DependencyInjection
 
     public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<ICouponQueryService, CouponQueryService>();
+        services.AddScoped<AcceptLanguageResolver>();
+
         Assembly applicationAssembly = typeof(ApplicationAssemblyReference).Assembly;
 
         string? luckyPennySoftwareLicenseKey = configuration["LUCKYPENNYSOFTWARE_LICENSE_KEY"];
@@ -218,6 +227,8 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(applicationAssembly);
 
+        services.ConfigureRecaptchaService();
+        services.ConfigureEmailSender(configuration);
         services.ConfigureHangFire(configuration);
         services.ConfigureRedisCache(configuration);
     }
@@ -245,6 +256,57 @@ public static class DependencyInjection
                 };
             }
         );
+    }
+
+    public static IServiceCollection AddInfrastructureS3(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddCloudflareR2Config(configuration);
+
+        services.AddSingleton<IAmazonS3>(sp =>
+        {
+            CloudflareR2Options options = sp.GetRequiredService<IOptions<CloudflareR2Options>>().Value;
+
+            BasicAWSCredentials credentials = new(options.AccessKeyId, options.SecretAccessKey);
+
+            return new AmazonS3Client(credentials, new AmazonS3Config
+            {
+                ServiceURL = options.ServiceUrl
+            });
+        });
+
+        services.AddScoped<IR2FileStorageService, R2FileStorageService>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddCloudflareR2Config(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<CloudflareR2Options>(configuration.GetSection("CLOUDFLARE_R2_CREDENTIALS"));
+
+        return services;
+    }
+
+    private static void ConfigureRecaptchaService(this IServiceCollection services)
+    {
+        services.AddScoped<IRecaptchaService, RecaptchaService>();
+        services.AddHttpClient<IRecaptchaService, RecaptchaService>();
+    }
+
+    private static void ConfigureEmailSender(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<AppUrlsOptions>(configuration.GetSection("APPURLS"));
+        services.Configure<MailSettings>(configuration.GetSection("MAILOPTIONS"));
+        services.Configure<EmailTemplateOptions>(opt =>
+        {
+            opt.TemplatesFolderName = "Templates";
+            opt.DefaultLanguage = "en-US";
+            opt.EnableNeutralLanguageFallback = true;
+            opt.HtmlEncodeValues = true;
+        });
+        services.AddSingleton<IEmailTemplateService, HtmlTemplateService>();
+        services.AddTransient<IEmailSender, SmtpEmailSender>();
+        services.AddScoped<IAuthEmailService, AuthEmailService>();
+        services.AddScoped<IRentalEmailService, RentalEmailService>();
     }
 
     private static void ConfigureHangFire(this IServiceCollection services, IConfiguration configuration)

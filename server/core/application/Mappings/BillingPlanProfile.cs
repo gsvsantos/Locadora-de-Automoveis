@@ -58,7 +58,7 @@ public class BillingPlanProfile : Profile
                 src.r.FreeBilling.ToProps()
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<BillingPlan>, GetAllBillingPlanResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllBillingPlanResponse(
                 src.Count,

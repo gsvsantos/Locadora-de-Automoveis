@@ -26,6 +26,9 @@ public class RefreshTokenMapper : IEntityTypeConfiguration<RefreshToken>
             .HasForeignKey(r => r.UserAuthenticatedId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        builder.Property(x => x.TenantId)
+            .IsRequired(false);
+
         builder.HasOne(t => t.Tenant)
             .WithMany()
             .HasForeignKey(t => t.TenantId)

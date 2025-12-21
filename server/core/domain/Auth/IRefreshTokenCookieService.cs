@@ -4,7 +4,7 @@ namespace LocadoraDeAutomoveis.Domain.Auth;
 
 public interface IRefreshTokenCookieService
 {
-    void Write(HttpResponse response, RefreshToken refreshToken);
+    void Write(HttpResponse response, IssuedRefreshTokenDto refreshToken);
     string? Get(HttpRequest request);
     void Remove(HttpResponse response);
 }

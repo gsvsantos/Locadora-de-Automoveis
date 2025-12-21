@@ -3,6 +3,7 @@ using FluentResults;
 using LocadoraDeAutomoveis.Application.RentalExtras.Commands.Create;
 using LocadoraDeAutomoveis.Application.RentalExtras.Commands.Delete;
 using LocadoraDeAutomoveis.Application.RentalExtras.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.RentalExtras.Commands.GetAllDistinct;
 using LocadoraDeAutomoveis.Application.RentalExtras.Commands.GetById;
 using LocadoraDeAutomoveis.Application.RentalExtras.Commands.Update;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
@@ -14,13 +15,13 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 
 [ApiController]
 [Route("api/rental-extras")]
-[Authorize("AdminOrEmployeePolicy")]
 public class RentalExtraController(
     IMediator mediator,
     IMapper mapper
 ) : ControllerBase
 {
     [HttpPost("create")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> Create([FromBody] CreateRentalExtraRequest request)
     {
         Result<CreateRentalExtraResponse> result = await mediator.Send(request);
@@ -29,6 +30,7 @@ public class RentalExtraController(
     }
 
     [HttpGet("get-all")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> GetAll([FromQuery] GetAllRentalExtraRequestPartial partialRequest)
     {
         GetAllRentalExtraRequest request = mapper.Map<GetAllRentalExtraRequest>(partialRequest);
@@ -39,6 +41,7 @@ public class RentalExtraController(
     }
 
     [HttpGet("get/{id:guid}")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> GetById(Guid id)
     {
         GetByIdRentalExtraRequest request = new(id);
@@ -49,6 +52,7 @@ public class RentalExtraController(
     }
 
     [HttpPut("update/{id:guid}")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateRentalExtraRequestPartial partialRequest)
     {
         UpdateRentalExtraRequest request = mapper.Map<UpdateRentalExtraRequest>((partialRequest, id));
@@ -59,11 +63,23 @@ public class RentalExtraController(
     }
 
     [HttpDelete("delete/{id:guid}")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> Delete(Guid id)
     {
         DeleteRentalExtraRequest request = new(id);
 
         Result<DeleteRentalExtraResponse> result = await mediator.Send(request);
+
+        return result.ToHttpResponse();
+    }
+
+    [HttpGet("available/vehicle/{vehicleId:guid}")]
+    [Authorize("EveryonePolicy")]
+    public async Task<IActionResult> GetAllDistinct(Guid vehicleId)
+    {
+        GetAllDistinctExtraRequest request = new(vehicleId);
+
+        Result<GetAllDistinctExtraResponse> result = await mediator.Send(request);
 
         return result.ToHttpResponse();
     }

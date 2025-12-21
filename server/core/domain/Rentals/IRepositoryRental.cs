@@ -12,13 +12,19 @@ public interface IRepositoryRental : IRepository<Rental>
 
     Task<bool> HasRentalHistoryByBillingPlan(Guid BillingPlanId);
 
+    Task<bool> HasActiveRentalsByVehicleDistinctAsync(Guid vehicleId);
+
     Task<bool> HasActiveRentalsByVehicle(Guid vehicleId);
 
     Task<bool> HasRentalHistoryByVehicle(Guid vehicleId);
 
+    Task<bool> HasActiveRentalsByLoginUserDistinctAsync(Guid loginUserId);
+
     Task<bool> HasActiveRentalsByClient(Guid clientId);
 
     Task<bool> HasRentalHistoryByClient(Guid clientId);
+
+    Task<bool> HasActiveRentalsByDriverDistinctAsync(Guid driverId);
 
     Task<bool> HasActiveRentalsByDriver(Guid driverId);
 
@@ -28,6 +34,8 @@ public interface IRepositoryRental : IRepository<Rental>
 
     Task<bool> HasRentalHistoryByRentalExtra(Guid extraId);
 
+    Task<bool> HasCouponUsedByClientDistinctAsync(Guid clientId, Guid couponId);
+
     Task<bool> HasActiveRentalsByCoupon(Guid couponId);
 
     Task<bool> HasRentalHistoryByCoupon(Guid couponId);
@@ -35,4 +43,12 @@ public interface IRepositoryRental : IRepository<Rental>
     Task<bool> HasClientUsedCoupon(Guid clientId, Guid couponId);
 
     Task<List<Rental>> SearchAsync(string term, CancellationToken ct = default);
+
+    Task<PagedResult<Rental>> GetMyRentalsDistinctAsync(Guid loginUserId, int pageNumber, int pageSize, string? term, Guid? tenantId, ERentalStatus? status, CancellationToken cancellationToken);
+
+    Task<Rental?> GetMyByIdDistinctAsync(Guid rentalId, Guid loginUserId);
+
+    Task<Rental?> GetActiveRentalByLoginUserDistinctAsync(Guid loginUserId);
+
+    Task<List<Guid>> GetRentedVehicleIds();
 }

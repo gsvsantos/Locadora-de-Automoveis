@@ -21,6 +21,7 @@ public record GetCouponsPartnerDto(
 public record CouponDto(
     Guid Id,
     string Name,
+    PartnerDto Partner,
     decimal DiscountValue,
     DateTimeOffset ExpirationDate,
     bool IsActive

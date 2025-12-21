@@ -41,6 +41,7 @@ public sealed class GetByIdVehicleRequestHandlerTests : UnitTestBase
             "Preto",
             "Chevette",
             45,
+            1000,
             1984,
             string.Empty
         )
@@ -69,7 +70,7 @@ public sealed class GetByIdVehicleRequestHandlerTests : UnitTestBase
         Assert.AreEqual(vehicle.FuelType, dto.FuelType);
         Assert.AreEqual(vehicle.FuelTankCapacity, dto.FuelTankCapacity);
         Assert.AreEqual(vehicle.Year, dto.Year);
-        Assert.AreEqual(vehicle.PhotoPath, dto.PhotoPath);
+        Assert.AreEqual(vehicle.Image, dto.Image);
     }
     #endregion
 }

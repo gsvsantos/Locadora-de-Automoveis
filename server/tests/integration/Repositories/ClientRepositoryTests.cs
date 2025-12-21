@@ -37,6 +37,8 @@ public sealed class ClientRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build().ToList();
 
@@ -61,6 +63,8 @@ public sealed class ClientRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build().ToList();
 
@@ -182,6 +186,8 @@ public sealed class ClientRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build().ToList();
 
@@ -206,6 +212,8 @@ public sealed class ClientRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build().ToList();
 
@@ -315,6 +323,8 @@ public sealed class ClientRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build();
 
@@ -364,6 +374,8 @@ public sealed class ClientRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build();
 

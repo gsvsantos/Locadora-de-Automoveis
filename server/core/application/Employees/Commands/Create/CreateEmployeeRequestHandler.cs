@@ -18,6 +18,7 @@ public class CreateEmployeeRequestHandler(
     IMapper mapper,
     IRepositoryEmployee repositoryEmployee,
     ITenantProvider tenantProvider,
+    IUserContext userContext,
     IValidator<Employee> validator,
     ILogger<CreateEmployeeRequestHandler> logger
 ) : IRequestHandler<CreateEmployeeRequest, Result<CreateEmployeeResponse>>
@@ -25,11 +26,18 @@ public class CreateEmployeeRequestHandler(
     public async Task<Result<CreateEmployeeResponse>> Handle(
         CreateEmployeeRequest request, CancellationToken cancellationToken)
     {
-        User user = mapper.Map<User>(request);
+        User? currentUser = await userManager.FindByIdAsync(userContext.GetUserId().ToString());
+
+        if (currentUser is null)
+        {
+            return Result.Fail(ErrorResults.NotFoundError(userContext.GetUserId()));
+        }
+
+        User userLogin = mapper.Map<User>(request);
 
         try
         {
-            IdentityResult usuarioResult = await userManager.CreateAsync(user, request.Password);
+            IdentityResult usuarioResult = await userManager.CreateAsync(userLogin, request.Password);
 
             if (!usuarioResult.Succeeded)
             {
@@ -38,11 +46,13 @@ public class CreateEmployeeRequestHandler(
                     .Select(failure => failure.Description)
                     .ToList();
 
-                await userManager.DeleteAsync(user);
-
                 return Result.Fail(ErrorResults.BadRequestError(erros));
             }
-            await userManager.AddToRoleAsync(user, "Employee");
+            await userManager.AddToRoleAsync(userLogin, "Employee");
+
+            userLogin.AssociateTenant(tenantProvider.GetTenantId());
+
+            await userManager.UpdateAsync(userLogin);
 
             Employee employee = mapper.Map<Employee>(request);
 
@@ -50,6 +60,8 @@ public class CreateEmployeeRequestHandler(
 
             if (!validationResult.IsValid)
             {
+                await userManager.DeleteAsync(userLogin);
+
                 List<string> errors = validationResult.Errors
                     .Select(failure => failure.ErrorMessage)
                     .ToList();
@@ -61,13 +73,13 @@ public class CreateEmployeeRequestHandler(
 
             if (DuplicateName(employee, existingEmployees))
             {
+                await userManager.DeleteAsync(userLogin);
+
                 return Result.Fail(EmployeeErrorResults.DuplicateNameError(request.FullName));
             }
 
-            user.AssociateTenant(tenantProvider.GetTenantId());
-
-            employee.AssociateUser(user);
-
+            employee.AssociateLoginUser(userLogin);
+            employee.AssociateUser(currentUser);
             employee.AssociateTenant(tenantProvider.GetTenantId());
 
             await repositoryEmployee.AddAsync(employee);
@@ -80,7 +92,10 @@ public class CreateEmployeeRequestHandler(
         {
             await unitOfWork.RollbackAsync();
 
-            await userManager.DeleteAsync(user);
+            if (userLogin.Id != Guid.Empty)
+            {
+                await userManager.DeleteAsync(userLogin);
+            }
 
             logger.LogError(
                 ex,

@@ -1,4 +1,5 @@
 ﻿using LocadoraDeAutomoveis.Domain.Rentals;
+using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Infrastructure.Shared;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +38,16 @@ public class RentalRepository(AppDbContext context)
             r.Status != ERentalStatus.Open);
     }
 
+    public async Task<bool> HasActiveRentalsByVehicleDistinctAsync(Guid vehicleId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .AnyAsync(r =>
+                r.VehicleId.Equals(vehicleId) &&
+                r.Status == ERentalStatus.Open
+            );
+    }
+
     public async Task<bool> HasActiveRentalsByVehicle(Guid vehicleId)
     {
         return await this.records.AnyAsync(r =>
@@ -51,6 +62,16 @@ public class RentalRepository(AppDbContext context)
             r.Status != ERentalStatus.Open);
     }
 
+    public async Task<bool> HasActiveRentalsByLoginUserDistinctAsync(Guid loginUserId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .AnyAsync(r =>
+                r.Client.LoginUserId.Equals(loginUserId) &&
+                r.Status == ERentalStatus.Open
+            );
+    }
+
     public async Task<bool> HasActiveRentalsByClient(Guid clientId)
     {
         return await this.records.AnyAsync(r =>
@@ -63,6 +84,16 @@ public class RentalRepository(AppDbContext context)
         return await this.records.AnyAsync(r =>
             r.ClientId.Equals(clientId) &&
             r.Status != ERentalStatus.Open);
+    }
+
+    public async Task<bool> HasActiveRentalsByDriverDistinctAsync(Guid driverId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .AnyAsync(r =>
+                r.DriverId.Equals(driverId) &&
+                r.Status == ERentalStatus.Open
+            );
     }
 
     public async Task<bool> HasActiveRentalsByDriver(Guid driverId)
@@ -92,10 +123,20 @@ public class RentalRepository(AppDbContext context)
             r.Extras.Any(s => s.Id.Equals(extraId)));
     }
 
-    public async Task<bool> HasClientUsedCoupon(Guid clientId, Guid couponId)
+    public async Task<bool> HasCouponUsedByClientDistinctAsync(Guid clientId, Guid couponId)
     {
         return await this.records
+            .IgnoreQueryFilters()
             .AnyAsync(r =>
+                r.ClientId.Equals(clientId) &&
+                r.CouponId.Equals(couponId) &&
+                r.Status != ERentalStatus.Canceled
+            );
+    }
+
+    public async Task<bool> HasClientUsedCoupon(Guid clientId, Guid couponId)
+    {
+        return await this.records.AnyAsync(r =>
                 r.ClientId.Equals(clientId) &&
                 r.CouponId.Equals(couponId) &&
                 r.Status != ERentalStatus.Canceled);
@@ -131,6 +172,92 @@ public class RentalRepository(AppDbContext context)
             .ToListAsync(ct);
     }
 
+    public async Task<PagedResult<Rental>> GetMyRentalsDistinctAsync(
+        Guid loginUserId, int pageNumber,
+        int pageSize, string? term,
+        Guid? tenantId, ERentalStatus? status,
+        CancellationToken cancellationToken
+    )
+    {
+        IQueryable<Rental> query = this.records
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Include(r => r.Client)
+            .Include(r => r.Vehicle)
+            .Include(r => r.Driver)
+            .Where(r => r.IsActive)
+            .Where(r => r.Client.LoginUserId.Equals(loginUserId));
+
+        if (!string.IsNullOrWhiteSpace(term))
+        {
+            string termLower = term.Trim();
+            query = query.Where(r =>
+                r.Vehicle.Model.ToLower().Contains(termLower) ||
+                r.Vehicle.LicensePlate.ToLower().Contains(termLower));
+        }
+
+        if (tenantId.HasValue && tenantId.Value != Guid.Empty)
+        {
+            query = query.Where(r => r.TenantId.Equals(tenantId.Value));
+        }
+
+        if (status.HasValue)
+        {
+            query = query.Where(r => r.Status.Equals(status.Value));
+        }
+
+        int totalCount = await query.CountAsync(cancellationToken);
+
+        List<Rental> rentals = await query
+            .OrderByDescending(r => r.StartDate)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<Rental>(rentals, totalCount, pageNumber, pageSize);
+    }
+
+    public async Task<Rental?> GetMyByIdDistinctAsync(Guid rentalId, Guid loginUserId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Include(r => r.RentalReturn)
+            .Include(r => r.Client)
+            .Include(r => r.Driver)
+            .Include(r => r.Vehicle)
+                .ThenInclude(v => v.Group)
+            .Include(r => r.Coupon)
+                .ThenInclude(c => c!.Partner)
+            .Include(r => r.BillingPlan)
+            .Include(r => r.Extras)
+            .FirstOrDefaultAsync(r =>
+                r.Id.Equals(rentalId) &&
+                r.Client.LoginUserId.Equals(loginUserId)
+            );
+    }
+
+    public async Task<Rental?> GetActiveRentalByLoginUserDistinctAsync(Guid loginUserId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Include(r => r.Vehicle)
+            .Where(r => r.IsActive)
+            .Where(r => r.Status == ERentalStatus.Open)
+            .Where(r => r.Client.LoginUserId.Equals(loginUserId))
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task<List<Guid>> GetRentedVehicleIds()
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .Where(r => r.Status == ERentalStatus.Open)
+            .Select(r => r.VehicleId)
+            .ToListAsync();
+    }
+
     public override async Task<List<Rental>> GetAllAsync()
     {
         return await WithIncludes().ToListAsync();
@@ -164,7 +291,7 @@ public class RentalRepository(AppDbContext context)
     private IQueryable<Rental> WithIncludes()
     {
         return this.records
-            .Include(r => r.User)
+            .Include(r => r.RentalReturn)
             .Include(r => r.Employee)
             .Include(r => r.Client)
             .Include(r => r.Driver)

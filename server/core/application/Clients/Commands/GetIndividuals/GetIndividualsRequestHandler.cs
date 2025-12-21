@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using FluentResults;
-using LocadoraDeAutomoveis.Application.Clients.Commands.GetIndividuals;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Clients;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace LocadoraDeAutomoveis.Application.Clients.GetIndividuals;
+namespace LocadoraDeAutomoveis.Application.Clients.Commands.GetIndividuals;
 
 public class GetIndividualsRequestHandler(
     IMapper mapper,

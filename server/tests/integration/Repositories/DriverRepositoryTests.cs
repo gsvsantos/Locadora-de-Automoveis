@@ -37,6 +37,8 @@ public sealed class DriverRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build().ToList();
 
@@ -62,6 +64,8 @@ public sealed class DriverRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build().ToList();
 
@@ -76,6 +80,8 @@ public sealed class DriverRepositoryTests : TestFixture
         {
             client.JuristicClientId = null;
             client.JuristicClient = null;
+            client.LoginUserId = null;
+            client.LoginUser = null;
         }
 
         await this.clientRepository.AddMultiplyAsync(existingCNPJClients);
@@ -184,6 +190,8 @@ public sealed class DriverRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build().ToList();
 
@@ -200,6 +208,8 @@ public sealed class DriverRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build().ToList();
 
@@ -207,6 +217,8 @@ public sealed class DriverRepositoryTests : TestFixture
         {
             client.JuristicClientId = null;
             client.JuristicClient = null;
+            client.LoginUserId = null;
+            client.LoginUser = null;
         }
 
         foreach (Client juridicalClient in existingCNPJClients)
@@ -335,6 +347,8 @@ public sealed class DriverRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build();
 
@@ -404,6 +418,8 @@ public sealed class DriverRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build();
 
@@ -426,6 +442,8 @@ public sealed class DriverRepositoryTests : TestFixture
             {
                 c.JuristicClientId = null;
                 c.JuristicClient = null;
+                c.LoginUserId = null;
+                c.LoginUser = null;
             })
             .Build();
 

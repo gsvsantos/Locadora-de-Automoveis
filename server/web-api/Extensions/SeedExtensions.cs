@@ -26,7 +26,7 @@ public static class SeedExtensions
         RoleManager<Role> roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
         UserManager<User> userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
 
-        foreach (string domainRoleName in Enum.GetNames(typeof(Roles)))
+        foreach (string domainRoleName in Enum.GetNames(typeof(ERoles)))
         {
             if (await roleManager.RoleExistsAsync(domainRoleName))
             {

@@ -1,0 +1,140 @@
+@use 'variables' as *;
+
+.list-section,
+.details-section {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  color: $primary;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 24px;
+    background-color: $primary;
+    border-radius: 4px;
+  }
+}
+
+.items-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    gs-buttons {
+      width: 100%;
+    }
+  }
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  padding-bottom: 2rem;
+}
+
+.item .card {
+  display: flex;
+  flex-direction: column;
+  background-color: $surface;
+  border-radius: 16px;
+  border: 1px solid $border;
+  box-shadow: $shadow-2;
+  padding: 1.5rem;
+  transition: all $transition-fast;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    border-color: rgba($primary, 0.3);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+}
+
+.card__header {
+  margin-bottom: 1rem;
+
+  .card_title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $text-main;
+    line-height: 1.4;
+  }
+}
+
+.card__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: auto;
+  gap: 8px;
+  padding-top: 1rem;
+  border-top: 1px solid rgba($border, 0.5);
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: $text-muted;
+    transition: $transition-fast;
+    cursor: pointer;
+    text-decoration: none;
+
+    .material-icons {
+      font-size: 20px;
+    }
+
+    &:hover {
+      background-color: $primary-light;
+      color: $primary;
+    }
+
+    &.button__danger:hover {
+      background-color: rgba($danger, 0.1);
+      color: $danger;
+    }
+  }
+}
+
+.button__danger {
+  color: $text-muted;
+  &:hover {
+    color: $danger;
+  }
+}

@@ -1,0 +1,112 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/list-layout' as *;
+
+.card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba($border, 0.6);
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: $text-main;
+  line-height: 1.4;
+
+  .material-icons {
+    font-size: 1.2rem;
+    color: $primary;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background-color: $surface-alt;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  span:last-child {
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+}
+
+.role-badge {
+  background-color: rgba($primary, 0.1);
+  color: $primary-active;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.uuid-text {
+  font-family: 'Roboto Mono', monospace;
+  color: $text-muted;
+  font-size: 0.85rem;
+}
+
+.copy-icon {
+  font-size: 1rem !important;
+  color: $text-muted !important;
+  background-color: transparent !important;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 4px;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $primary !important;
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+.icon-button {
+  appearance: none;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: $text-muted;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+
+  .material-icons {
+    font-size: 20px;
+  }
+
+  &:hover {
+    background-color: $primary-light;
+    color: $primary;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:has(.material-icons:contains('logout')):hover {
+    background-color: rgba($danger, 0.1);
+    color: $danger;
+  }
+}

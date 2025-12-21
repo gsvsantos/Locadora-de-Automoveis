@@ -4,8 +4,9 @@ namespace LocadoraDeAutomoveis.Domain.Auth;
 
 public class Role : IdentityRole<Guid>;
 
-public enum Roles
+public enum ERoles
 {
     Admin,
-    Employee
+    Employee,
+    Client
 }

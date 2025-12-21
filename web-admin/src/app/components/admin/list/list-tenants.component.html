@@ -1,0 +1,62 @@
+<section class="list-section" *transloco="let t; prefix: 'admin.list'">
+  <div class="main-content">
+    <h2>{{ t('header.title') }}</h2>
+
+    <hr class="bar" />
+
+    <div class="list">
+      @if (effects$ | async) {}
+      @for (tenant of tenants$ | async; track tenant.tenantId) {
+        <div class="item">
+          <div class="card" tabindex="0">
+            <div class="card__header">
+              <div class="card_title">
+                {{ tenant.displayName || t('label.unnamed') | titlecase }}
+              </div>
+            </div>
+
+            <div class="card__content">
+              <div class="info-row">
+                <span class="material-icons">email</span>
+                <span [title]="tenant.email">{{ tenant.email }}</span>
+              </div>
+
+              <div class="info-row">
+                <span class="material-icons">admin_panel_settings</span>
+                <span
+                  >{{ t('label.roles') }}:
+                  <span class="role-badge">{{ tenant.roles.join(', ') }}</span>
+                </span>
+              </div>
+
+              <div class="info-row id-row">
+                <span class="material-icons">fingerprint</span>
+                <span class="uuid-text" [title]="tenant.adminUserId">
+                  Admin ID: {{ tenant.adminUserId | slice: 0 : 8 }}...
+                </span>
+                <span
+                  class="material-icons copy-icon"
+                  title="Copy ID"
+                  [cdkCopyToClipboard]="tenant.tenantId"
+                  (cdkCopyToClipboardCopied)="message($event)"
+                  >content_copy</span
+                >
+              </div>
+            </div>
+
+            <div class="card__actions" align="end">
+              <button
+                type="button"
+                class="icon-button"
+                (click)="impersonate(tenant.tenantId)"
+                [title]="t('buttons.impersonate')"
+              >
+                <span class="material-icons">login</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

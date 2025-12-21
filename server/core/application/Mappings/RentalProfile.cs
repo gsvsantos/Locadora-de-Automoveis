@@ -1,15 +1,19 @@
 ﻿using AutoMapper;
-using LocadoraDeAutomoveis.Application.Partners.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.BillingPlans.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.Partners.Commands.GetCoupons;
+using LocadoraDeAutomoveis.Application.RentalExtras.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Create;
+using LocadoraDeAutomoveis.Application.Rentals.Commands.CreateSelfRental;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetById;
+using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentalById;
+using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentals;
+using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentalStatus;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Return;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Update;
 using LocadoraDeAutomoveis.Domain.Clients;
-using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
-using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using System.Collections.Immutable;
@@ -50,7 +54,7 @@ public class RentalProfile : Profile
             .ConvertUsing(src => new ReturnRentalRequest(
                 src.id,
                 src.p.EndKm,
-                src.p.FuelLevel
+                src.p.FuelLevelAtReturn
             ));
 
         // DTOs
@@ -79,15 +83,22 @@ public class RentalProfile : Profile
             .ConvertUsing(src => new RentalVehicleDto(
                 src.Id,
                 src.LicensePlate,
+                src.FuelType,
+                src.FuelTankCapacity,
                 src.IsActive
             ));
 
-        CreateMap<Coupon, RentalCouponDto>()
-            .ConvertUsing((src, dest, ctx) => new RentalCouponDto(
-                src.Id,
-                src.Name,
-                ctx.Mapper.Map<PartnerDto>(src.Partner),
-                src.IsActive
+        CreateMap<RentalReturn, RentalReturnDto>()
+            .ConvertUsing(src => new RentalReturnDto(
+                src.ReturnDate,
+                src.EndKm,
+                src.TotalMileage,
+                src.ExtrasTotalCost,
+                src.FuelPenalty,
+                src.PenaltyTotalCost,
+                src.DiscountTotal,
+                src.FinalPrice,
+                src.FuelLevelAtReturn
             ));
 
         CreateMap<Rental, RentalDto>()
@@ -97,7 +108,7 @@ public class RentalProfile : Profile
                 ctx.Mapper.Map<RentalClientDto>(src.Client),
                 ctx.Mapper.Map<RentalDriverDto>(src.Driver),
                 ctx.Mapper.Map<RentalVehicleDto>(src.Vehicle),
-                ctx.Mapper.Map<RentalCouponDto>(src.Coupon),
+                (src.Coupon is not null) ? ctx.Mapper.Map<CouponDto>(src.Coupon) : null,
                 src.StartDate,
                 src.ExpectedReturnDate,
                 src.StartKm,
@@ -108,12 +119,6 @@ public class RentalProfile : Profile
                 src.EstimatedKilometers,
                 src.Extras.Count,
                 src.IsActive
-            ));
-
-        CreateMap<RentalExtra, RentalRentalExtraDto>()
-            .ConvertUsing(src => new RentalRentalExtraDto(
-                src.Id,
-                src.Name
             ));
 
         CreateMap<Rental, ByIdRentalDto>()
@@ -123,7 +128,29 @@ public class RentalProfile : Profile
                 ctx.Mapper.Map<RentalClientDto>(src.Client),
                 ctx.Mapper.Map<RentalDriverDto>(src.Driver),
                 ctx.Mapper.Map<RentalVehicleDto>(src.Vehicle),
-                ctx.Mapper.Map<RentalCouponDto>(src.Coupon),
+                (src.Coupon is not null) ? ctx.Mapper.Map<CouponDto>(src.Coupon) : null,
+                src.StartDate,
+                src.ExpectedReturnDate,
+                src.StartKm,
+                src.BillingPlanType,
+                ctx.Mapper.Map<BillingPlanDto>(src.BillingPlan),
+                src.ReturnDate,
+                (src.RentalReturn is not null) ? ctx.Mapper.Map<RentalReturnDto>(src.RentalReturn) : null,
+                src.BaseRentalPrice,
+                src.FinalPrice,
+                src.EstimatedKilometers,
+                src.Extras.Count,
+                src.Extras.Select(r => ctx.Mapper.Map<RentalExtraDto>(r)).ToImmutableList()
+                ?? ImmutableList<RentalExtraDto>.Empty,
+                src.IsActive
+            ));
+
+        CreateMap<Rental, ClientRentalDto>()
+            .ConvertUsing((src, dest, ctx) => new ClientRentalDto(
+                src.Id,
+                ctx.Mapper.Map<RentalClientDto>(src.Client),
+                ctx.Mapper.Map<RentalDriverDto>(src.Driver),
+                ctx.Mapper.Map<RentalVehicleDto>(src.Vehicle),
                 src.StartDate,
                 src.ExpectedReturnDate,
                 src.StartKm,
@@ -133,9 +160,16 @@ public class RentalProfile : Profile
                 src.FinalPrice,
                 src.EstimatedKilometers,
                 src.Extras.Count,
-                src.Extras.Select(r => ctx.Mapper.Map<RentalRentalExtraDto>(r)).ToImmutableList()
-                ?? ImmutableList<RentalRentalExtraDto>.Empty,
-                src.IsActive
+                src.IsActive,
+                src.Status,
+                src.GetTenantId()
+            ));
+
+        CreateMap<Rental, ActiveRentalDto>()
+            .ConvertUsing((src, dest, ctx) => new ActiveRentalDto(
+                src.Id,
+                src.Vehicle.LicensePlate,
+                src.StartDate
             ));
 
         // HANDLERS
@@ -143,11 +177,10 @@ public class RentalProfile : Profile
         CreateMap<CreateRentalRequest, Rental>()
             .ConvertUsing(src => new Rental(
                 src.StartDate,
-                src.ExpectedReturnDate,
-                src.StartKm
+                src.ExpectedReturnDate
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<Rental>, GetAllRentalResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllRentalResponse(
                 src.Count,
@@ -173,9 +206,29 @@ public class RentalProfile : Profile
         CreateMap<UpdateRentalRequest, Rental>()
             .ConvertUsing(src => new Rental(
                 src.StartDate,
-                src.ExpectedReturnDate,
-                src.StartKm
+                src.ExpectedReturnDate
             )
             { Id = src.Id });
+
+        // CreateSelf
+        CreateMap<CreateSelfRentalRequest, Rental>()
+            .ConvertUsing(src => new Rental(
+                src.StartDate,
+                src.ExpectedReturnDate
+            ));
+
+        // GetMyRentalById
+        CreateMap<Rental, GetMyRentalByIdResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetMyRentalByIdResponse(
+               ctx.Mapper.Map<ByIdRentalDto>(src)
+            ));
+
+        // GetMyRentalStatus
+        CreateMap<Rental, GetMyRentalStatusResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetMyRentalStatusResponse(
+               false,
+               "ActiveRentalExists",
+               ctx.Mapper.Map<ActiveRentalDto>(src)
+            ));
     }
 }

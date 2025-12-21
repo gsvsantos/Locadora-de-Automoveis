@@ -1,0 +1,101 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/form-layout' as *;
+
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $primary;
+  margin: 1.5rem 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background-color: $primary;
+    border-radius: 2px;
+    display: inline-block;
+  }
+}
+
+hr:not(.bar) {
+  display: none;
+}
+
+.card-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+
+  @media (min-width: 650px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+select[multiple].form-input {
+  padding: 8px;
+
+  option {
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 2px;
+    cursor: pointer;
+
+    &:checked {
+      background-color: $primary-active;
+      color: $text-main;
+    }
+
+    &:hover {
+      background-color: rgba($primary, 0.1);
+    }
+  }
+}
+
+.plan-details-box {
+  background-color: #e8f5e9;
+  border: 1px solid #c8e6c9;
+  color: $text-main;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.final-price-box,
+.plan-details-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding: 15px 20px;
+  background-color: $surface-alt;
+  border-radius: $border-radius;
+  border: 1px solid $primary;
+
+  .price-label {
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    opacity: 0.8;
+    letter-spacing: 1px;
+  }
+
+  .price-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $success;
+  }
+
+  .price-note {
+    font-size: 0.75rem;
+    opacity: 0.6;
+    font-style: italic;
+  }
+}

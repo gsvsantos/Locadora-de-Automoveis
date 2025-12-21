@@ -58,6 +58,7 @@ public class EmployeeProfile : Profile
                 Email = src.Email,
                 PhoneNumber = src.PhoneNumber,
             });
+
         CreateMap<CreateEmployeeRequest, Employee>()
             .ConvertUsing(src => new Employee(
                 src.FullName,
@@ -65,7 +66,7 @@ public class EmployeeProfile : Profile
                 src.Salary
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<Employee>, GetAllEmployeeResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllEmployeeResponse(
                 src.Count,

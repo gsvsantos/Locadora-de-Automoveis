@@ -21,6 +21,9 @@ public class GroupMapper : IEntityTypeConfiguration<Group>
             .HasForeignKey(v => v.GroupId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder.Property(x => x.TenantId)
+            .IsRequired(false);
+
         builder.HasOne(t => t.Tenant)
             .WithMany()
             .HasForeignKey(t => t.TenantId)

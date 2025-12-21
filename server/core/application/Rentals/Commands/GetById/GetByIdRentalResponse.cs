@@ -1,4 +1,7 @@
-﻿using LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
+﻿using LocadoraDeAutomoveis.Application.BillingPlans.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.Partners.Commands.GetCoupons;
+using LocadoraDeAutomoveis.Application.RentalExtras.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using System.Collections.Immutable;
 
@@ -12,17 +15,19 @@ public record ByIdRentalDto(
     RentalClientDto Client,
     RentalDriverDto Driver,
     RentalVehicleDto Vehicle,
-    RentalCouponDto Coupon,
+    CouponDto? Coupon,
     DateTimeOffset StartDate,
     DateTimeOffset ExpectedReturnDate,
     decimal StartKm,
     EBillingPlanType BillingPlanType,
+    BillingPlanDto BillingPlan,
     DateTimeOffset? ReturnDate,
+    RentalReturnDto? RentalReturn,
     decimal BaseRentalPrice,
     decimal FinalPrice,
     decimal? EstimatedKilometers,
     int RentalExtrasQuantity,
-    ImmutableList<RentalRentalExtraDto> RentalExtras,
+    ImmutableList<RentalExtraDto> RentalExtras,
     bool IsActive
 ) : RentalDto(
     Id,
@@ -43,7 +48,14 @@ public record ByIdRentalDto(
     IsActive
 );
 
-public record RentalRentalExtraDto(
-    Guid Id,
-    string Name
+public record RentalReturnDto(
+    DateTimeOffset ReturnDate,
+    decimal EndKm,
+    decimal TotalMileage,
+    decimal ExtrasTotalCost,
+    decimal FuelPenalty,
+    decimal PenaltyTotalCost,
+    decimal DiscountTotal,
+    decimal FinalPrice,
+    EFuelLevel FuelLevelAtReturn
 );

@@ -59,7 +59,7 @@ public class PartnerProfile : Profile
                 src.FullName
             ));
 
-        // GetALl
+        // GetAll
         CreateMap<List<Partner>, GetAllPartnerResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllPartnerResponse(
                 src.Count,

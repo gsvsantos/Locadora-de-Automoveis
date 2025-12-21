@@ -1,0 +1,62 @@
+<div class="card-container" *transloco="let t; prefix: 'vehicleCard'">
+  <div class="image-wrapper">
+    <img [src]="imageUrl" [alt]="vehicle.model" loading="lazy" />
+    <span class="group-badge">{{ vehicle.group.name }}</span>
+  </div>
+
+  <div class="content">
+    <div class="header">
+      <h3 class="title">{{ vehicle.brand }} {{ vehicle.model }}</h3>
+      <span class="license-plate">{{ vehicle.licensePlate }}</span>
+    </div>
+
+    <div class="specs">
+      <div class="spec-item">
+        <span class="material-icons">local_gas_station</span>
+        <span>{{ vehicle.fuelType }}</span>
+      </div>
+      <div class="spec-item">
+        <span class="material-icons">route</span>
+        <span>{{ t('kilometers', { km: vehicle.kilometers }) }}</span>
+      </div>
+    </div>
+
+    @if (rentDisabled) {
+      <div class="rent-block-hint" *transloco="let th; prefix: 'home'">
+        @if (rentalBlockReason === 'ActiveRentalExists') {
+          @if (activeRentalPlate; as plate) {
+            {{ th('rentBlocked.reasons.activeRentalExists', { plate }) }}
+          } @else {
+            {{ th('rentBlocked.reasons.activeRentalExistsWithoutPlate') }}
+          }
+        } @else if (rentalBlockReason === 'NotAuthenticated') {
+          {{ th('rentBlocked.reasons.notAuthenticated') }}
+        } @else {
+          {{ th('rentBlocked.reasons.unknown') }}
+        }
+      </div>
+    }
+
+    <div class="footer">
+      @if (!rentDisabled) {
+        <gs-buttons
+          [buttonType]="buttonType.Link"
+          [text]="t('buttons.rent')"
+          [variant]="variantType.Outline"
+          [routerLink]="['/rentals/new', vehicle.id]"
+        >
+        </gs-buttons>
+      } @else {
+        <gs-buttons
+          [buttonType]="buttonType.Link"
+          [text]="t('buttons.blocked')"
+          bootstrapIcon="bi-lock"
+          [variant]="variantType.Solid"
+          [disabled]="true"
+          (click)="$event.preventDefault(); $event.stopPropagation()"
+        >
+        </gs-buttons>
+      }
+    </div>
+  </div>
+</div>

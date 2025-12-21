@@ -5,20 +5,23 @@ using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Auth.Commands.Login;
 
 public class LoginUserRequestHandler(
+    IConfiguration configuration,
     SignInManager<User> signInManager,
     UserManager<User> userManager,
     ITokenProvider tokenProvider,
     IRefreshTokenProvider refreshTokenProvider,
+    IRecaptchaService recaptchaService,
     IUnitOfWork unitOfWork,
     ILogger<LoginUserRequestHandler> logger
-) : IRequestHandler<LoginUserRequest, Result<(AccessToken, RefreshToken)>>
+) : IRequestHandler<LoginUserRequest, Result<(AccessToken, IssuedRefreshTokenDto)>>
 {
-    public async Task<Result<(AccessToken, RefreshToken)>> Handle(
+    public async Task<Result<(AccessToken, IssuedRefreshTokenDto)>> Handle(
         LoginUserRequest request, CancellationToken cancellationToken)
     {
         User? user = await userManager.FindByNameAsync(request.UserName);
@@ -26,6 +29,17 @@ public class LoginUserRequestHandler(
         if (user is null)
         {
             return Result.Fail(ErrorResults.NotFoundError("User not found."));
+        }
+
+        if (!await recaptchaService.VerifyRecaptchaToken(request.RecaptchaToken))
+        {
+            IList<string> roles = await userManager.GetRolesAsync(user);
+            string? bypass = configuration["CAPTCHA_ADMIN"];
+
+            if (!ShouldBypassCaptcha(roles, bypass, request.RecaptchaToken))
+            {
+                return Result.Fail(ErrorResults.BadRequestError("Invalid reCAPTCHA verification"));
+            }
         }
 
         try
@@ -75,14 +89,14 @@ public class LoginUserRequestHandler(
                 return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token. Try again!")));
             }
 
-            Result<RefreshToken> refreshTokenResult = await refreshTokenProvider.GenerateRefreshTokenAsync(user);
+            Result<IssuedRefreshTokenDto> refreshTokenResult = await refreshTokenProvider.GenerateRefreshTokenAsync(user);
 
             if (refreshTokenResult.IsFailed)
             {
                 return Result.Fail(ErrorResults.InternalServerError(refreshTokenResult.Errors));
             }
 
-            RefreshToken? refreshToken = refreshTokenResult.Value;
+            IssuedRefreshTokenDto? refreshToken = refreshTokenResult.Value;
 
             if (refreshToken is null)
             {
@@ -102,5 +116,10 @@ public class LoginUserRequestHandler(
 
             return Result.Fail(ErrorResults.InternalServerError(ex));
         }
+    }
+
+    private static bool ShouldBypassCaptcha(IList<string> roles, string? bypass, string recaptchaToken)
+    {
+        return (roles.Any() && roles.Contains("PlatformAdmin")) && (!string.IsNullOrWhiteSpace(bypass) && recaptchaToken.Equals(bypass));
     }
 }

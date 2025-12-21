@@ -1,0 +1,30 @@
+import { Group } from './group.models';
+import { PagedResult } from './paged-result.models';
+
+export interface VehicleDto {
+  licensePlate: string;
+  brand: string;
+  color: string;
+  model: string;
+  fuelType: FuelType;
+  fuelTankCapacity: number;
+  kilometers: number;
+  year: number;
+  image?: File;
+  group: Group;
+}
+
+export interface Vehicle extends VehicleDto {
+  id: string;
+  isActive: boolean;
+}
+
+export interface VehicleDetailsApiDto {
+  vehicle: Vehicle;
+}
+
+export interface ListVehiclesDto {
+  vehicles: PagedResult<Vehicle>;
+}
+
+export type FuelType = 'Gasoline' | 'Gas' | 'Diesel' | 'Alcohol';

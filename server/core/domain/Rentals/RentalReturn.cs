@@ -25,9 +25,9 @@ public class RentalReturn : BaseEntity<RentalReturn>
         this.TotalMileage = totalMileage;
     }
 
-    public void SetFuelLevel(EFuelLevel eFuelLevel)
+    public void SetFuelLevel(EFuelLevel fuelLevel)
     {
-        this.FuelLevelAtReturn = eFuelLevel;
+        this.FuelLevelAtReturn = fuelLevel;
     }
 
     public void SetExtrasTotalCost(decimal extrasTotal)

@@ -51,6 +51,9 @@ public class BillingPlanMapper : IEntityTypeConfiguration<BillingPlan>
             .HasForeignKey(pp => pp.GroupId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder.Property(x => x.TenantId)
+            .IsRequired(false);
+
         builder.HasOne(t => t.Tenant)
             .WithMany()
             .HasForeignKey(t => t.TenantId)

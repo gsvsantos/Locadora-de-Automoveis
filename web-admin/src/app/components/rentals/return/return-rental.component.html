@@ -1,0 +1,132 @@
+<section class="update-section" *transloco="let t; prefix: 'rentals.return'">
+  <div class="main-content">
+    @if (rental$ | async; as rental) {
+      <div class="card">
+        <form [formGroup]="formGroup" class="form" (ngSubmit)="return()">
+          <h2>{{ t('card.title') }}</h2>
+
+          <hr class="bar" />
+
+          <div class="card-content">
+            <span class="full-width">{{ t('card.subtitle') }}</span>
+
+            <h3 class="full-width">{{ t('card.section.summary') }}</h3>
+            <div class="form-field">
+              <label>{{ t('card.label.client') }}</label>
+              <input class="form-input" [value]="rental.client.fullName" disabled />
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.vehicle') }}</label>
+              <input class="form-input" [value]="rental.vehicle.licensePlate" disabled />
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.startDate') }}</label>
+              <input class="form-input" [value]="rental.startDate | date: 'dd/MM/yyyy'" disabled />
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.startKm') }}</label>
+              <input class="form-input" [value]="rental.startKm" disabled />
+            </div>
+
+            <h3 class="full-width">{{ t('card.section.returnData') }}</h3>
+            <div class="form-field">
+              <label>{{ t('card.label.endKm') }}</label>
+              <input
+                class="form-input"
+                formControlName="endKm"
+                type="number"
+                min="{{ rental.startKm }}"
+                [placeholder]="t('card.placeholder.endKm')"
+              />
+              @if (endKm?.errors?.['required'] && endKm?.dirty) {
+                <span class="error-message">{{ t('card.errors.endKmRequired') }}</span>
+              }
+              @if (endKm?.errors?.['min'] && endKm?.dirty) {
+                <span class="error-message">{{ t('card.errors.endKmMin') }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label>{{ t('card.label.fuelLevel') }}</label>
+              <select class="form-input" formControlName="fuelLevelAtReturn">
+                <option value="">{{ t('card.placeholder.fuelLevel') }}</option>
+                <option value="Empty">{{ t('card.fuel.empty') }}</option>
+                <option value="Quarter">{{ t('card.fuel.quarter') }}</option>
+                <option value="Half">{{ t('card.fuel.half') }}</option>
+                <option value="ThreeQuarters">{{ t('card.fuel.threeQuarters') }}</option>
+                <option value="Full">{{ t('card.fuel.full') }}</option>
+              </select>
+              @if (fuelLevelAtReturn?.errors?.['required'] && fuelLevelAtReturn?.dirty) {
+                <span class="error-message">{{ t('card.errors.fuelLevelRequired') }}</span>
+              }
+            </div>
+
+            <h3 class="full-width">{{ t('card.section.finalCalculation') }}</h3>
+
+            <div class="plan-details-box">
+              <label
+                >{{ t('card.label.billingPlanType') }}:
+                <strong>{{ rental.billingPlanType }}</strong></label
+              >
+
+              @switch (rental.billingPlanType) {
+                @case ('Daily') {
+                  <span class="plan-info">
+                    {{ t('card.label.dailyRate') }}:
+                    {{ rental.billingPlan.dailyBilling.dailyRate | currency: 'BRL' }} <br />
+                    {{ t('card.label.pricePerKm') }}:
+                    {{ rental.billingPlan.dailyBilling.pricePerKm | currency: 'BRL' }}
+                  </span>
+                }
+                @case ('Controlled') {
+                  <span class="plan-info">
+                    {{ t('card.label.franchise') }}:
+                    {{ rental.billingPlan.controlledBilling.dailyRate | currency: 'BRL' }} <br />
+                    {{ t('card.label.extraKm') }}:
+                    {{
+                      rental.billingPlan.controlledBilling.pricePerKmExtrapolated | currency: 'BRL'
+                    }}/Km
+                  </span>
+                }
+                @case ('Free') {
+                  <span class="plan-info">
+                    {{ t('card.label.fixedRate') }}:
+                    {{ rental.billingPlan.freeBilling.fixedRate | currency: 'BRL' }}
+                  </span>
+                }
+              }
+            </div>
+            <div class="final-price-box">
+              <div class="price-label">{{ t('card.label.totalValue') }}</div>
+              <div class="price-value">
+                {{ totalPrice$ | async | currency: 'BRL' : 'symbol' : '1.2-2' }}
+              </div>
+              <div class="price-note">
+                {{ t('card.note.finalPrice') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="buttons">
+            <gs-buttons
+              [buttonType]="buttonType.Link"
+              [text]="t('card.buttons.back')"
+              routerLink="/rentals"
+            ></gs-buttons>
+
+            <gs-buttons
+              [buttonType]="buttonType.Default"
+              [text]="t('card.buttons.confirm')"
+              type="submit"
+              [disabled]="formGroup.invalid"
+              (click)="return()"
+            ></gs-buttons>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+</section>

@@ -5,6 +5,8 @@ using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace LocadoraDeAutomoveis.Application.Auth.Commands.Logout;
 
@@ -12,6 +14,7 @@ public class LogoutUserRequestHandler(
     UserManager<User> userManager,
     IRepositoryRefreshToken repositoryRefreshToken,
     IRefreshTokenProvider refreshTokenProvider,
+    RefreshTokenOptions refreshTokenOptions,
     IUnitOfWork unitOfWork,
     ILogger<LogoutUserRequestHandler> logger
 ) : IRequestHandler<LogoutUserRequest, Result>
@@ -21,11 +24,13 @@ public class LogoutUserRequestHandler(
     {
         try
         {
-            RefreshToken? refreshToken = await repositoryRefreshToken.GetByTokenHashAsync(request.RefreshTokenHash);
+            string refreshTokenHash = Hash(request.RefreshTokenPlain);
+
+            RefreshToken? refreshToken = await repositoryRefreshToken.GetByTokenHashAsync(refreshTokenHash, cancellationToken);
 
             if (refreshToken is null)
             {
-                return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token. Try again!")));
+                return Result.Fail(ErrorResults.InternalServerError(new Exception("Something went wrong! Refresh token not found.")));
             }
 
             Guid userId = refreshToken.UserAuthenticatedId;
@@ -56,5 +61,13 @@ public class LogoutUserRequestHandler(
 
             return Result.Fail(ErrorResults.InternalServerError(ex));
         }
+    }
+
+    private string Hash(string plainTextValue)
+    {
+        using HMACSHA256 hmac = new(Encoding.UTF8.GetBytes(refreshTokenOptions.PepperSecret));
+        return Convert.ToHexString(
+            hmac.ComputeHash(Encoding.UTF8.GetBytes(plainTextValue))
+        );
     }
 }

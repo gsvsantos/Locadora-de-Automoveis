@@ -29,7 +29,6 @@ public class RentalReturnRepository(AppDbContext context)
                 .ThenInclude(r => r.Client)
             .Include(rr => rr.Rental)
                 .ThenInclude(r => r.Driver)
-
             .Include(rr => rr.Rental)
                 .ThenInclude(r => r.Vehicle)
                     .ThenInclude(v => v.Group)

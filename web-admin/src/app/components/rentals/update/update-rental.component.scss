@@ -1,0 +1,63 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/form-layout' as *;
+
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $primary;
+  margin: 1.5rem 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background-color: $primary;
+    border-radius: 2px;
+    display: inline-block;
+  }
+}
+
+hr:not(.bar) {
+  display: none;
+}
+
+.card-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+
+  @media (min-width: 650px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+select[multiple].form-input {
+  padding: 8px;
+
+  option {
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:checked {
+      box-shadow: 0 0 0 100px $primary-active inset;
+      -webkit-box-shadow: 0 0 0 100px $primary-active inset;
+      color: $text-main !important;
+    }
+
+    &:hover {
+      background-color: $primary-active;
+      color: $text-inverse;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}

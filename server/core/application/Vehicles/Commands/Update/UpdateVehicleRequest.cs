@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.Update;
 
@@ -11,8 +12,9 @@ public record UpdateVehicleRequestPartial(
     string Model,
     EFuelType FuelType,
     int FuelTankCapacity,
+    decimal Kilometers,
     int Year,
-    string? PhotoPath,
+    IFormFile? Image,
     Guid GroupId
 );
 
@@ -24,7 +26,8 @@ public record UpdateVehicleRequest(
     string Model,
     EFuelType FuelType,
     int FuelTankCapacity,
+    decimal Kilometers,
     int Year,
-    string? PhotoPath,
+    IFormFile? Image,
     Guid GroupId
 ) : IRequest<Result<UpdateVehicleResponse>>;

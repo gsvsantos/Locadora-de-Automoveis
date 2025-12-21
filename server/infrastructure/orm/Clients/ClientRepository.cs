@@ -13,6 +13,12 @@ public class ClientRepository(AppDbContext context)
             .AnyAsync(x => x.JuristicClientId.Equals(id));
     }
 
+    public async Task<bool> ExistsByDocumentAsync(string document)
+    {
+        return await this.records
+            .AnyAsync(c => c.Document!.Equals(document));
+    }
+
     public async Task<List<Client>> SearchAsync(string term, CancellationToken ct)
     {
         return await this.records
@@ -29,9 +35,43 @@ public class ClientRepository(AppDbContext context)
     public async Task<List<Client>> GetIndividualClientsFromBusinessId(Guid id, CancellationToken ct = default)
     {
         return await this.records
-            .Include(c => c.User)
             .Include(c => c.JuristicClient)
             .Where(c => c.JuristicClientId.Equals(id))
+            .Where(c => c.IsActive == true)
             .ToListAsync(ct);
+    }
+
+    public async Task<Client?> GetByTenantAndLoginUserIdAsync(Guid tenantId, Guid loginUserId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .Where(client =>
+                client.IsActive == true &&
+                client.TenantId.Equals(tenantId) &&
+                client.LoginUserId.Equals(loginUserId)
+            )
+            .FirstOrDefaultAsync();
+    }
+    public async Task<Client?> GetGlobalByLoginUserIdAsync(Guid loginUserId)
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .Where(client =>
+                client.IsActive == true &&
+                client.TenantId == null &&
+                client.LoginUserId.Equals(loginUserId)
+            )
+            .FirstOrDefaultAsync();
+    }
+
+    public Task<Client?> GetByTenantAndDocumentAsync(Guid tenantId, string document)
+    {
+        return this.records
+            .IgnoreQueryFilters()
+            .Where(client =>
+                client.IsActive &&
+                client.TenantId.Equals(tenantId) &&
+                client.Document == document)
+            .FirstOrDefaultAsync();
     }
 }

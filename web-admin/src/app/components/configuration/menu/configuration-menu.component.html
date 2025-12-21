@@ -1,0 +1,33 @@
+<section class="dashboard-section" *transloco="let t; prefix: 'configuration.menu'">
+  <div class="dashboard-grid">
+    <div class="dashboard-card action-card">
+      <h3>{{ t('card.quickActions.title') }}</h3>
+      <div class="quick-actions">
+        <gs-buttons
+          [buttonType]="buttonType.Default"
+          [text]="t('card.quickActions.profile')"
+          bootstrapIcon="bi-box-arrow-in-right"
+          [variant]="variantType.Solid"
+          routerLink="/profile/edit"
+        ></gs-buttons>
+        @if (isEmployee) {
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('card.quickActions.fuel')"
+            bootstrapIcon="bi-person-plus"
+            [variant]="variantType.Outline"
+            routerLink="details"
+          ></gs-buttons>
+        } @else {
+          <gs-buttons
+            [buttonType]="buttonType.Default"
+            [text]="t('card.quickActions.fuel')"
+            bootstrapIcon="bi-person-plus"
+            [variant]="variantType.Outline"
+            routerLink="configure"
+          ></gs-buttons>
+        }
+      </div>
+    </div>
+  </div>
+</section>

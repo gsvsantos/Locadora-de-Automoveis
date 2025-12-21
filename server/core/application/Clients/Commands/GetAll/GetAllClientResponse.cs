@@ -15,7 +15,7 @@ public record ClientDto(
     string Email,
     string PhoneNumber,
     string? Document,
-    Address Address,
+    Address? Address,
     EClientType Type,
     string? LicenseNumber,
     DateTimeOffset? LicenseValidity,

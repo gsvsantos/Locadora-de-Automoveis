@@ -3,6 +3,8 @@ using FluentResults;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.Create;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAll;
+using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAllAvailable;
+using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAvailableById;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.Update;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
@@ -14,14 +16,14 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 
 [ApiController]
 [Route("api/vehicle")]
-[Authorize("AdminOrEmployeePolicy")]
 public class VehicleController(
     IMediator mediator,
     IMapper mapper
 ) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> Create([FromBody] CreateVehicleRequest request)
+    [Authorize("AdminOrEmployeePolicy")]
+    public async Task<IActionResult> Create([FromForm] CreateVehicleRequest request)
     {
         Result<CreateVehicleResponse> result = await mediator.Send(request);
 
@@ -29,6 +31,7 @@ public class VehicleController(
     }
 
     [HttpGet("get-all")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> GetAll([FromQuery] GetAllVehicleRequestPartial partialRequest)
     {
         GetAllVehicleRequest request = mapper.Map<GetAllVehicleRequest>(partialRequest);
@@ -39,6 +42,7 @@ public class VehicleController(
     }
 
     [HttpGet("get/{id:guid}")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> GetById(Guid id)
     {
         GetByIdVehicleRequest request = new(id);
@@ -49,7 +53,8 @@ public class VehicleController(
     }
 
     [HttpPut("update/{id:guid}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateVehicleRequestPartial partialRequest)
+    [Authorize("AdminOrEmployeePolicy")]
+    public async Task<IActionResult> Update(Guid id, [FromForm] UpdateVehicleRequestPartial partialRequest)
     {
 
         UpdateVehicleRequest request = mapper.Map<UpdateVehicleRequest>((partialRequest, id));
@@ -60,11 +65,32 @@ public class VehicleController(
     }
 
     [HttpDelete("delete/{id:guid}")]
+    [Authorize("AdminOrEmployeePolicy")]
     public async Task<IActionResult> Delete(Guid id)
     {
         DeleteVehicleRequest request = new(id);
 
         Result<DeleteVehicleResponse> result = await mediator.Send(request);
+
+        return result.ToHttpResponse();
+    }
+
+    [HttpGet("available")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetAllAvailable([FromQuery] GetAllAvailableVehiclesRequest request)
+    {
+        Result<GetAllAvailableVehiclesResponse> result = await mediator.Send(request);
+
+        return result.ToHttpResponse();
+    }
+
+    [HttpGet("available/{id:guid}")]
+    [Authorize("EveryonePolicy")]
+    public async Task<IActionResult> GetVehicleForRental(Guid id)
+    {
+        GetAvailableByIdVehicleRequest request = new(id);
+
+        Result<GetAvailableByIdVehicleResponse> result = await mediator.Send(request);
 
         return result.ToHttpResponse();
     }

@@ -1,0 +1,339 @@
+{
+  "auth": {
+    "register": {
+      "card": {
+        "title": "Create Account",
+        "subtitle": "Join us and start renting today",
+        "placeholder": {
+          "fullName": "Your full name",
+          "email": "name@example.com",
+          "userName": "Choose a username",
+          "phoneNumber": "(99) 99999-9999",
+          "password": "Min. 6 characters",
+          "confirmPassword": "Repeat password"
+        },
+        "label": {
+          "userName": "Username",
+          "fullName": "Full Name",
+          "email": "Email Address",
+          "phoneNumber": "Phone Number (e.g., (99) 99999-9999)",
+          "password": "Password",
+          "confirmPassword": "Confirm Password"
+        },
+        "errors": {
+          "userNameRequired": "Username is required.",
+          "userNameLength": "Username must be at least 5 characters long.",
+          "fullNameRequired": "Full name is required.",
+          "fullNameLength": "Full name must be at least 3 characters long.",
+          "fullNamePattern": "Full name contains invalid characters.",
+          "emailRequired": "Email is required.",
+          "emailLength": "Must be a valid email.",
+          "phoneNumberRequired": "Phone number is required.",
+          "phoneNumberPattern": "Invalid phone number format.",
+          "passwordRequired": "Password is required.",
+          "passwordLength": "Password must be at least 6 characters long.",
+          "passwordMustMatch": "Passwords do not match."
+        },
+        "buttons": {
+          "confirm": "Register",
+          "login": "Already have an account?"
+        }
+      }
+    },
+    "login": {
+      "card": {
+        "title": "Welcome Back",
+        "subtitle": "Sign in to your account to continue",
+        "placeholder": {
+          "userName": "Enter your email or username",
+          "password": "Enter your password"
+        },
+        "label": {
+          "userName": "Email or Username",
+          "password": "Password"
+        },
+        "errors": {
+          "userNameRequired": "Username is required.",
+          "userNameLength": "Username must be at least 5 characters long.",
+          "passwordRequired": "Password is required.",
+          "passwordLength": "Password must be at least 6 characters long."
+        },
+        "buttons": {
+          "confirm": "Sign In",
+          "register": "Create an account",
+          "password": "Forgot password?"
+        }
+      }
+    },
+    "reset-password": {
+      "title": "Reset Password",
+      "label": {
+        "newPassword": "New Password",
+        "confirmNewPassword": "Confirm New Password"
+      },
+      "errors": {
+        "required": "Field is required.",
+        "minLength": "Password must be at least 6 characters.",
+        "mismatch": "New passwords do not match."
+      },
+      "buttons": {
+        "change": "Set New Password"
+      }
+    },
+    "forgot-password": {
+      "title": "Forgot Password?",
+      "subtitle": "Enter your email to receive a recovery link.",
+      "placeholder": {
+        "email": "Email Address"
+      },
+      "label": {
+        "email": "Email Address"
+      },
+      "errors": {
+        "emailRequired": "Email is required.",
+        "emailLength": "Please enter a valid email address."
+      },
+      "buttons": {
+        "change": "Send Recovery Link",
+        "login": "Back to Login"
+      }
+    }
+  },
+  "navbar": {
+    "logo": "Locadora de Veículos",
+    "home": "Home",
+    "myRentals": "My Rentals",
+    "login": "Sign In",
+    "register": "Sign Up",
+    "profile": "My Profile",
+    "logout": "Logout",
+    "welcome": "Hello",
+    "footerRights": "Locadora de Veículos. All rights reserved."
+  },
+  "home": {
+    "rentBlocked": {
+      "title": "Rental unavailable",
+      "reasons": {
+        "activeRentalExists": "You already have an active rental for vehicle {{plate}}.",
+        "activeRentalExistsWithoutPlate": "You already have an active rental.",
+        "notAuthenticated": "Please sign in to rent a vehicle.",
+        "unknown": "We couldn't verify your rental eligibility."
+      }
+    },
+    "searchPlaceholder": "Search by brand or model...",
+    "noVehiclesFound": "No vehicles found for the selected criteria.",
+    "loading": "Loading available vehicles...",
+    "filters": {
+      "allGroups": "All Groups",
+      "allFuels": "All Fuel Types"
+    },
+    "fuel": {
+      "Gasoline": "Gasoline",
+      "Gas": "Gas",
+      "Diesel": "Diesel",
+      "Alcohol": "Alcohol"
+    },
+    "pagination": {
+      "prev": "Previous",
+      "next": "Next",
+      "info": "Page {{page}} of {{total}}"
+    }
+  },
+  "vehicleCard": {
+    "transmission": {
+      "manual": "Manual",
+      "automatic": "Automatic"
+    },
+    "seats": "{{ count }} Seats",
+    "kilometers": "{{ km }} Kilometers",
+    "buttons": {
+      "rent": "Rent Now",
+      "blocked": "Blocked"
+    }
+  },
+  "search": {
+    "results": {
+      "title": "Available Vehicles",
+      "priceFrom": "From",
+      "perDay": "/ day",
+      "bookButton": "Book Now",
+      "notFound": "No vehicles found for these dates."
+    },
+    "filters": {
+      "title": "Filters",
+      "group": "Category",
+      "price": "Price Range"
+    }
+  },
+  "checkout": {
+    "steps": {
+      "details": "Rental Details",
+      "extras": "Extras & Insurance",
+      "summary": "Summary & Payment"
+    },
+    "vehicle": {
+      "group": "Group",
+      "transmission": "Transmission",
+      "fuel": "Fuel",
+      "seats": "Seats"
+    },
+    "billing": {
+      "planLabel": "Choose a Plan",
+      "daily": "Daily Plan (Km + Daily)",
+      "controlled": "Controlled Plan (Fixed Limit)",
+      "free": "Free Plan (Unlimited Km)"
+    },
+    "extras": {
+      "title": "Add Optional Services",
+      "dailyCost": "per day",
+      "fixedCost": "fixed price"
+    },
+    "summary": {
+      "title": "Reservation Summary",
+      "total": "Total Estimated",
+      "confirmButton": "Confirm Reservation"
+    },
+    "success": {
+      "title": "Reservation Confirmed!",
+      "message": "Your car is reserved. We sent the details to your email.",
+      "button": "Go to My Rentals"
+    }
+  },
+  "myRentals": {
+    "title": "My Rentals",
+    "tabs": {
+      "active": "Active / Upcoming",
+      "history": "History"
+    },
+    "card": {
+      "pickup": "Pick-up",
+      "return": "Return",
+      "total": "Total",
+      "status": "Status",
+      "actions": {
+        "details": "View Details"
+      }
+    },
+    "empty": "You haven't rented any cars yet."
+  },
+  "account": {
+    "loading": "Loading your profile...",
+    "personalInfo": "Personal Information",
+    "manageYourData": "Manage your profile data and contact info",
+    "notProvided": "Not provided",
+    "sections": {
+      "profile": "Profile",
+      "contact": "Contact",
+      "address": "Address"
+    },
+    "fields": {
+      "fullName": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "document": "Document (CPF/CNPJ)",
+      "fullAddress": "Full address"
+    }
+  },
+  "rentals": {
+    "createSelf": {
+      "card": {
+        "title": "Complete Your Reservation",
+        "subtitle": "Review the vehicle details and choose your rental options below.",
+        "section": {
+          "vehicle": "Selected Vehicle",
+          "driver": "Driver Details",
+          "datesAndPlan": "Dates & Billing Plan",
+          "extras": "Extras & Discounts"
+        },
+        "label": {
+          "driver": "Who will drive?",
+          "startDate": "Pick-up Date",
+          "expectedReturnDate": "Return Date",
+          "billingPlanType": "Billing Plan",
+          "estimatedKilometers": "Estimated Kilometers",
+          "coupon": "Coupon Code",
+          "extras": "Optional Extras"
+        },
+        "placeholder": {
+          "driver": "Select the driver...",
+          "billingPlanType": "Select a plan...",
+          "estimatedKilometers": "Ex: 400",
+          "coupon": "Select a coupon (optional)"
+        },
+        "plan": {
+          "daily": "Daily Plan (Rate + Km)",
+          "controlled": "Controlled Plan (Fixed Limit)",
+          "free": "Free Plan (Unlimited Km)"
+        },
+        "errors": {
+          "vehicleNotFound": "Could not load vehicle details.",
+          "driverRequired": "Please select a driver.",
+          "startDateRequired": "Pick-up date is required.",
+          "expectedReturnDateRequired": "Return date is required.",
+          "billingPlanTypeRequired": "You must select a billing plan.",
+          "estimatedKilometersRequired": "Please estimate the kilometers for this plan."
+        },
+        "buttons": {
+          "back": "Back to List",
+          "confirm": "Confirm Rental"
+        }
+      }
+    },
+    "list": {
+      "header": {
+        "title": "My Rentals"
+      },
+      "buttons": {
+        "register": "New Rental"
+      },
+      "label": {
+        "billingPlan": "Billing Plan",
+        "estimatedKilometers": "Estimated Kilometers",
+        "startDate": "Pick-up Date",
+        "expectedReturnDate": "Return Date",
+        "returnDate": "Returned on",
+        "startKm": "Start Km",
+        "driver": "Driver",
+        "extras": "Extras",
+        "estimated": "Estimated",
+        "final": "Final"
+      },
+      "status": {
+        "Open": "Open",
+        "Closed": "Closed",
+        "Canceled": "Canceled"
+      },
+      "empty": {
+        "title": "No rentals found",
+        "subtitle": "Try adjusting your filters or create a new rental."
+      }
+    },
+    "details": {
+      "card": {
+        "buttons": {
+          "back": "Back"
+        },
+        "sections": {
+          "summary": "Summary",
+          "plan": "Billing Plan",
+          "extras": "Extras",
+          "return": "Return"
+        },
+        "status": {
+          "active": "Active",
+          "returned": "Returned"
+        },
+        "label": {
+          "startDate": "Pick-up Date",
+          "expectedReturnDate": "Return Date",
+          "startKm": "Start Km",
+          "estimatedKilometers": "Estimated Kilometers",
+          "driver": "Driver",
+          "coupon": "Coupon",
+          "estimated": "Estimated",
+          "noExtras": "No extras selected."
+        }
+      }
+    }
+  }
+}

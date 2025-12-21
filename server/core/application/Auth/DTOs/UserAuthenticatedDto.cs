@@ -1,6 +1,4 @@
-﻿using LocadoraDeAutomoveis.Domain.Auth;
-
-namespace LocadoraDeAutomoveis.Application.Auth.DTOs;
+﻿namespace LocadoraDeAutomoveis.Application.Auth.DTOs;
 
 public class UserAuthenticatedDto
 {
@@ -9,5 +7,5 @@ public class UserAuthenticatedDto
     public required string UserName { get; set; }
     public required string Email { get; set; }
     public required string PhoneNumber { get; set; }
-    public required Roles Role { get; set; }
+    public required List<string> Roles { get; set; }
 }

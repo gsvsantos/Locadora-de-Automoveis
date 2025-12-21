@@ -1,6 +1,7 @@
 using Hangfire;
 using LocadoraDeAutomoveis.WebApi.Extensions;
 using LocadoraDeAutomoveis.WebApi.Filters;
+using LocadoraDeAutomoveis.WebApi.Middlewares;
 using LocadoraDeAutomoveis.WebAPI.Configuration;
 
 namespace LocadoraDeAutomoveis.WebAPI.Extensions;
@@ -25,6 +26,8 @@ public static class PipelineExtensions
 
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.UseMiddleware<TenantOverrideMiddleware>();
 
         app.UseHangfireDashboard("/hangfire", new DashboardOptions
         {

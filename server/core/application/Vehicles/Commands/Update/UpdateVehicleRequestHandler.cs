@@ -3,10 +3,12 @@ using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Application.Shared;
+using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
+using LocadoraDeAutomoveis.Infrastructure.S3;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -18,6 +20,8 @@ public class UpdateVehicleRequestHandler(
     IRepositoryVehicle repositoryVehicle,
     IRepositoryGroup repositoryGroup,
     IRepositoryRental repositoryRental,
+    IR2FileStorageService fileStorageService,
+    ITenantProvider tenantProvider,
     IValidator<Vehicle> validator,
     ILogger<UpdateVehicleRequestHandler> logger
 ) : IRequestHandler<UpdateVehicleRequest, Result<UpdateVehicleResponse>>
@@ -47,7 +51,27 @@ public class UpdateVehicleRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.GroupId));
         }
 
-        Vehicle updatedVehicle = mapper.Map<Vehicle>(request);
+        Guid tenantId = tenantProvider.GetTenantId();
+
+        string imageKey = selectedVehicle.Image ?? string.Empty;
+        if (request.Image is { Length: > 0 })
+        {
+            string extension = Path.GetExtension(request.Image.FileName);
+
+            if (string.IsNullOrWhiteSpace(extension))
+            {
+                extension = ".jpg";
+            }
+
+            string key = $"vehicles/{tenantId}/{Guid.NewGuid()}{extension}";
+            string contentType = request.Image.ContentType;
+
+            await using Stream stream = request.Image.OpenReadStream();
+
+            imageKey = await fileStorageService.UploadAsync(stream, contentType, key, cancellationToken);
+        }
+
+        Vehicle updatedVehicle = mapper.Map<Vehicle>((request, imageKey));
         updatedVehicle.SetFuelType(request.FuelType);
 
         try

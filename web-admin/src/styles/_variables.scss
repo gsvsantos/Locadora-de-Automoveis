@@ -1,0 +1,84 @@
+@use 'sass:color';
+
+:root,
+[data-theme='light'] {
+  --clr-primary: #00b894;
+  --clr-primary-active: #008f72;
+  --clr-primary-light: #e0f7f3;
+  --clr-background: #f8fafc;
+  --clr-surface: #ffffff;
+  --clr-surface-alt: #f1f5f9;
+  --clr-border: #e2e8f0;
+  --clr-text-main: #1e293b;
+  --clr-text-muted: #64748b;
+  --clr-text-inv: #ffffff;
+  --shadow-rgb: 148, 163, 184;
+  --toggle-off-bg: #cbd5e1;
+}
+
+[data-theme='dark'] {
+  --clr-primary: #55efc4;
+  --clr-primary-active: #00b894;
+  --clr-primary-light: #08332d;
+  --clr-background: #051815;
+  --clr-surface: #0b2622;
+  --clr-surface-alt: #123630;
+  --clr-border: #1d4f45;
+  --clr-text-main: #e0f7f3;
+  --clr-text-muted: #8fa3a0;
+  --clr-text-inv: #051815;
+  --shadow-rgb: 0, 0, 0;
+  --toggle-off-bg: #475569;
+}
+
+$primary: var(--clr-primary);
+$primary-active: var(--clr-primary-active);
+$primary-light: var(--clr-primary-light);
+
+$background: var(--clr-background);
+$surface: var(--clr-surface);
+$surface-alt: var(--clr-surface-alt);
+$border: var(--clr-border);
+$toggle-off: var(--toggle-off-bg);
+
+$text-main: var(--clr-text-main);
+$text-muted: var(--clr-text-muted);
+$text-inverse: var(--clr-text-inv);
+
+$danger: #ff7675;
+$danger-hover: #e45757;
+$success: #00b894;
+$warning: #fdcb6e;
+
+$shadow-1: 0px 4px 20px rgba(var(--shadow-rgb), 0.2);
+$shadow-2: 0px 1px 10px rgba(var(--shadow-rgb), 0.2);
+$border-radius: 12px;
+
+$transition-fast: 0.2s ease;
+$transition-normal: 0.25s ease;
+$transition-slow: 0.5s ease-in-out;
+
+$gradient-sidebar: linear-gradient(180deg, var(--clr-surface) 0%, var(--clr-background) 100%);
+$gradient-primary: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-active) 100%);
+
+@function mask-gradient($dir, $leftpx, $rightpx) {
+  @return linear-gradient(
+    to $dir,
+    transparent,
+    #000 $leftpx,
+    #000 calc(100% - $rightpx),
+    transparent
+  );
+}
+
+gs-buttons {
+  --gs-btn-bg: var(--clr-primary);
+  --gs-btn-fg: #ffffff;
+  --gs-btn-hover-bg: color-mix(in srgb, var(--clr-primary), black 10%);
+  --gs-btn-active-bg: var(--clr-primary-active);
+  --gs-btn-focus: #fff;
+  --gs-btn-transition-props: color, background-color, border-color, box-shadow;
+  --gs-btn-transition-dur: 0.15s;
+  --gs-btn-transition-ease: ease-in-out;
+  --gs-btn-transition-delay: 0s;
+}

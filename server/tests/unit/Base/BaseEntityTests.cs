@@ -14,7 +14,7 @@ public sealed class BaseEntityTests
 
         // Assert
         Assert.AreNotEqual(Guid.Empty, entity.Id);
-        Assert.AreEqual(Guid.Empty, entity.TenantId);
+        Assert.AreEqual(null, entity.TenantId);
         Assert.IsNull(entity.Tenant);
         Assert.AreEqual(string.Empty, entity.Name);
         Assert.AreEqual(0, entity.Age);
@@ -34,7 +34,7 @@ public sealed class BaseEntityTests
 
         // Assert
         Assert.AreNotEqual(Guid.Empty, entity.Id);
-        Assert.AreEqual(Guid.Empty, entity.TenantId);
+        Assert.AreEqual(null, entity.TenantId);
         Assert.IsNull(entity.Tenant);
         Assert.AreEqual("Entity Teste da Silva", entity.Name);
         Assert.AreEqual(33, entity.Age);

@@ -15,13 +15,20 @@ public class RegisterUserRequestHandler(
     IRepositoryConfiguration repositoryConfiguration,
     ITokenProvider tokenProvider,
     IRefreshTokenProvider refreshTokenProvider,
+    IRecaptchaService recaptchaService,
     IUnitOfWork unitOfWork,
+    IAuthEmailService emailService,
     ILogger<RegisterUserRequestHandler> logger
-) : IRequestHandler<RegisterUserRequest, Result<(AccessToken, RefreshToken)>>
+) : IRequestHandler<RegisterUserRequest, Result<(AccessToken, IssuedRefreshTokenDto)>>
 {
-    public async Task<Result<(AccessToken, RefreshToken)>> Handle(
+    public async Task<Result<(AccessToken, IssuedRefreshTokenDto)>> Handle(
         RegisterUserRequest request, CancellationToken cancellationToken)
     {
+        if (!await recaptchaService.VerifyRecaptchaToken(request.RecaptchaToken))
+        {
+            return Result.Fail(ErrorResults.BadRequestError("Invalid reCAPTCHA verification"));
+        }
+
         User user = new()
         {
             UserName = request.UserName,
@@ -30,27 +37,28 @@ public class RegisterUserRequestHandler(
             PhoneNumber = request.PhoneNumber
         };
 
-        IdentityResult userResult = await userManager.CreateAsync(user, request.Password);
-
-        if (!userResult.Succeeded)
-        {
-            IEnumerable<string> erros = userResult
-                .Errors
-                .Select(failure => failure.Description)
-                .ToList();
-
-            await userManager.DeleteAsync(user);
-
-            return Result.Fail(ErrorResults.BadRequestError(erros));
-        }
-
         try
         {
+            if (!request.Password.Equals(request.ConfirmPassword))
+            {
+                return Result.Fail(AuthErrorResults.PasswordConfirmationError());
+            }
+
+            IdentityResult userResult = await userManager.CreateAsync(user, request.Password);
+
+            if (!userResult.Succeeded)
+            {
+                IEnumerable<string> erros = userResult
+                    .Errors
+                    .Select(failure => failure.Description)
+                    .ToList();
+
+                return Result.Fail(ErrorResults.BadRequestError(erros));
+            }
+
             user.AssociateTenant(user.Id);
 
             await userManager.AddToRoleAsync(user, "Admin");
-
-            await userManager.UpdateAsync(user);
 
             Configuration configutarion = new();
             configutarion.AssociateTenant(user.Id);
@@ -64,18 +72,27 @@ public class RegisterUserRequestHandler(
                 return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token. Try again!")));
             }
 
-            Result<RefreshToken> refreshTokenResult = await refreshTokenProvider.GenerateRefreshTokenAsync(user);
+            Result<IssuedRefreshTokenDto> refreshTokenResult = await refreshTokenProvider.GenerateRefreshTokenAsync(user);
 
             if (refreshTokenResult.IsFailed)
             {
                 return Result.Fail(ErrorResults.InternalServerError(refreshTokenResult.Errors));
             }
 
-            RefreshToken? refreshToken = refreshTokenResult.Value;
+            IssuedRefreshTokenDto? refreshToken = refreshTokenResult.Value;
 
             if (refreshToken is null)
             {
                 return Result.Fail(ErrorResults.InternalServerError(new Exception("Failed to generate access token. Try again!")));
+            }
+
+            try
+            {
+                await emailService.ScheduleBusinessRegisterWelcome(user.Email!, user.FullName, user.PreferredLanguage);
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning(ex, "Failed to schedule google welcome email for user {UseriD}", user.Id);
             }
 
             return Result.Ok((accessToken, refreshToken));

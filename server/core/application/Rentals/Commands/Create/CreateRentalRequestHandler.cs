@@ -33,6 +33,7 @@ public class CreateRentalRequestHandler(
     IRepositoryRentalExtra repositoryRentalExtra,
     ITenantProvider tenantProvider,
     IUserContext userContext,
+    IRentalEmailService emailService,
     IValidator<Rental> validator,
     ILogger<CreateRentalRequestHandler> logger
 ) : IRequestHandler<CreateRentalRequest, Result<CreateRentalResponse>>
@@ -65,6 +66,13 @@ public class CreateRentalRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.ClientId));
         }
 
+        bool cantRent = await repositoryRental.HasActiveRentalsByClient(client.Id);
+
+        if (cantRent)
+        {
+            return Result.Fail(RentalErrorResults.ClientAlreadyHasActiveRentError());
+        }
+
         Driver? driver = await repositoryDriver.GetByIdAsync(request.DriverId);
 
         if (driver is null)
@@ -79,9 +87,9 @@ public class CreateRentalRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.VehicleId));
         }
 
-        BillingPlan? BillingPlan = await repositoryBillingPlan.GetByGroupId(vehicle.GroupId);
+        BillingPlan? billingPlan = await repositoryBillingPlan.GetByGroupId(vehicle.GroupId);
 
-        if (BillingPlan is null)
+        if (billingPlan is null)
         {
             return Result.Fail(ErrorResults.NotFoundError(vehicle.GroupId));
         }
@@ -122,8 +130,9 @@ public class CreateRentalRequestHandler(
         rental.AssociateClient(client);
         rental.AssociateDriver(driver);
         rental.AssociateVehicle(vehicle);
-        rental.AssociateBillingPlan(BillingPlan);
+        rental.AssociateBillingPlan(billingPlan);
         rental.SetBillingPlanType(request.BillingPlanType);
+        rental.SetStartKm(vehicle.Kilometers);
 
         if (request.BillingPlanType.Equals(EBillingPlanType.Controlled)
             && request.EstimatedKilometers.HasValue)
@@ -161,6 +170,15 @@ public class CreateRentalRequestHandler(
             await repositoryRental.AddAsync(rental);
 
             await unitOfWork.CommitAsync();
+
+            try
+            {
+                await emailService.ScheduleRentalConfirmation(rental, client);
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning(ex, "Failed to schedule rental confirmation email for rental {RentalId}", rental.Id);
+            }
 
             return Result.Ok(new CreateRentalResponse(rental.Id));
         }

@@ -11,24 +11,25 @@ public class Vehicle : BaseEntity<Vehicle>
     public string Model { get; set; } = string.Empty;
     public EFuelType FuelType { get; set; }
     public int FuelTankCapacity { get; set; } = 0;
+    public decimal Kilometers { get; set; } = 0;
     public int Year { get; set; } = 0;
-    public string? PhotoPath { get; set; }
+    public string? Image { get; set; }
     public Guid GroupId { get; set; } = Guid.Empty;
     public Group Group { get; set; } = null!;
 
     public Vehicle() { }
     public Vehicle(
         string licensePlate, string brand, string color, string model,
-        int fuelTankCapacity, int year, string photoPath
-    ) : this()
+        int fuelTankCapacity, decimal kilometers, int year, string image) : this()
     {
         this.LicensePlate = licensePlate;
         this.Brand = brand;
         this.Color = color;
         this.Model = model;
         this.FuelTankCapacity = fuelTankCapacity;
+        this.Kilometers = kilometers;
         this.Year = year;
-        this.PhotoPath = photoPath;
+        this.Image = image;
     }
 
     public void AssociateGroup(Group group)
@@ -65,6 +66,11 @@ public class Vehicle : BaseEntity<Vehicle>
         this.FuelType = fuelType;
     }
 
+    public void KilometersSum(decimal kilometersDriven)
+    {
+        this.Kilometers += kilometersDriven;
+    }
+
     public override void Update(Vehicle updatedEntity)
     {
         this.LicensePlate = updatedEntity.LicensePlate;
@@ -73,8 +79,9 @@ public class Vehicle : BaseEntity<Vehicle>
         this.Model = updatedEntity.Model;
         this.FuelType = updatedEntity.FuelType;
         this.FuelTankCapacity = updatedEntity.FuelTankCapacity;
+        this.Kilometers = updatedEntity.Kilometers;
         this.Year = updatedEntity.Year;
-        this.PhotoPath = updatedEntity.PhotoPath;
+        this.Image = updatedEntity.Image;
 
         if (updatedEntity.Group is not null && updatedEntity.Group.Id != this.Group.Id)
         {
@@ -89,6 +96,10 @@ public enum EFuelType
     Gasoline,
     Gas,
     Diesel,
-    Alcohol,
-    Ethanol
+    Alcohol
+}
+
+public enum EVehicleStatus
+{
+
 }
