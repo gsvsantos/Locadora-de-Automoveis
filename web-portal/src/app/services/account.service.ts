@@ -36,6 +36,7 @@ export class AccountService {
       email: apiClientProfile.email,
       phoneNumber: apiClientProfile.phoneNumber,
       document: apiClientProfile.document,
+      address: apiClientProfile.address,
     };
   }
 }

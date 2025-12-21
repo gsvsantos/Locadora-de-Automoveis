@@ -217,13 +217,21 @@
     "empty": "Você ainda não alugou nenhum veículo."
   },
   "account": {
+    "loading": "Carregando seu perfil...",
     "personalInfo": "Informações pessoais",
     "manageYourData": "Gerencie os dados do seu perfil e contato",
+    "notProvided": "Não informado",
+    "sections": {
+      "profile": "Perfil",
+      "contact": "Contato",
+      "address": "Endereço"
+    },
     "fields": {
       "fullName": "Nome completo",
       "email": "Endereço de e-mail",
       "phone": "Telefone",
-      "document": "Documento (CPF/CNPJ)"
+      "document": "Documento (CPF/CNPJ)",
+      "fullAddress": "Endereço completo"
     }
   },
   "rentals": {

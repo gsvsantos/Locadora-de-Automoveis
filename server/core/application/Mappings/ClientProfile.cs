@@ -142,7 +142,8 @@ public class ClientProfile : Profile
                 src.FullName,
                 src.Email,
                 src.PhoneNumber,
-                src.Document
+                src.Document,
+                src.Address
             ));
     }
 }

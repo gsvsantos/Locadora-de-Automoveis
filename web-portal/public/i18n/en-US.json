@@ -217,13 +217,21 @@
     "empty": "You haven't rented any cars yet."
   },
   "account": {
+    "loading": "Loading your profile...",
     "personalInfo": "Personal Information",
     "manageYourData": "Manage your profile data and contact info",
+    "notProvided": "Not provided",
+    "sections": {
+      "profile": "Profile",
+      "contact": "Contact",
+      "address": "Address"
+    },
     "fields": {
       "fullName": "Full Name",
       "email": "Email Address",
       "phone": "Phone Number",
-      "document": "Document (CPF/CNPJ)"
+      "document": "Document (CPF/CNPJ)",
+      "fullAddress": "Full address"
     }
   },
   "rentals": {
