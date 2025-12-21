@@ -9,16 +9,16 @@ using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Account.Commands.GetProfile;
 
-public class GetProfileRequestHandler(
+public class GetDetailsRequestHandler(
     IMapper mapper,
     IUserContext userContext,
     IUnitOfWork unitOfWork,
     IRepositoryClient repositoryClient,
-    ILogger<GetProfileRequestHandler> logger
-) : IRequestHandler<GetProfileRequest, Result<GetProfileResponse>>
+    ILogger<GetDetailsRequestHandler> logger
+) : IRequestHandler<GetDetailsRequest, Result<GetDetailsResponse>>
 {
-    public async Task<Result<GetProfileResponse>> Handle(
-        GetProfileRequest request, CancellationToken cancellationToken)
+    public async Task<Result<GetDetailsResponse>> Handle(
+        GetDetailsRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -33,7 +33,7 @@ public class GetProfileRequestHandler(
 
             ClientProfileDto clientDto = mapper.Map<ClientProfileDto>(client);
 
-            return Result.Ok(new GetProfileResponse(clientDto));
+            return Result.Ok(new GetDetailsResponse(clientDto));
         }
         catch (Exception ex)
         {

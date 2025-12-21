@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { DetailsProfileComponent } from '../components/account/details/details-profile.component';
+import { DetailsAccountComponent } from '../components/account/details/details-account.component';
 
 export const accountRoutes: Routes = [
   {
     path: '',
-    component: DetailsProfileComponent,
+    component: DetailsAccountComponent,
   },
 ];

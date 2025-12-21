@@ -14,12 +14,12 @@ namespace LocadoraDeAutomoveis.WebApi.Controllers;
 [Authorize("EveryonePolicy")]
 public class AccountController(IMediator mediator) : ControllerBase
 {
-    [HttpGet("profile")]
-    public async Task<IActionResult> GetProfile()
+    [HttpGet("details")]
+    public async Task<IActionResult> GetDetails()
     {
-        GetProfileRequest request = new();
+        GetDetailsRequest request = new();
 
-        Result<GetProfileResponse> result = await mediator.Send(request);
+        Result<GetDetailsResponse> result = await mediator.Send(request);
 
         return result.ToHttpResponse();
     }

@@ -2,7 +2,7 @@
 
 namespace LocadoraDeAutomoveis.Application.Account.Commands.GetProfile;
 
-public record GetProfileResponse(
+public record GetDetailsResponse(
     ClientProfileDto Client
 );
 

@@ -6,12 +6,12 @@ import { ClientProfile } from '../../../models/account.models';
 import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-details-profile.component',
+  selector: 'app-details-account.component',
   imports: [AsyncPipe, TranslocoModule],
-  templateUrl: './details-profile.component.html',
-  styleUrl: './details-profile.component.scss',
+  templateUrl: './details-account.component.html',
+  styleUrl: './details-account.component.scss',
 })
-export class DetailsProfileComponent {
+export class DetailsAccountComponent {
   protected readonly accountService = inject(AccountService);
 
   protected readonly account$: Observable<ClientProfile> = this.accountService
