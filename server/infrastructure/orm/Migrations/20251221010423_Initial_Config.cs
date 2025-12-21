@@ -490,6 +490,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FuelType = table.Column<int>(type: "int", nullable: false),
                     FuelTankCapacity = table.Column<int>(type: "int", nullable: false),
+                    Kilometers = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -762,7 +763,7 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
                 table: "Clients",
                 columns: new[] { "Document", "TenantId" },
                 unique: true,
-                filter: "[Document] IS NOT NULL AND [TenantId] IS NOT NULL");
+                filter: "[TenantId] IS NOT NULL AND [Document] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clients_JuristicClientId",
@@ -772,7 +773,16 @@ namespace LocadoraDeAutomoveis.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Clients_LoginUserId",
                 table: "Clients",
-                column: "LoginUserId");
+                column: "LoginUserId",
+                unique: true,
+                filter: "[TenantId] IS NULL AND [LoginUserId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clients_TenantId_LoginUserId",
+                table: "Clients",
+                columns: new[] { "TenantId", "LoginUserId" },
+                unique: true,
+                filter: "[TenantId] IS NOT NULL AND [LoginUserId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clients_TenantId_UserId_IsActive",
