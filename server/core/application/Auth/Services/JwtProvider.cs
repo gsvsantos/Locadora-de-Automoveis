@@ -1,5 +1,4 @@
-﻿using LocadoraDeAutomoveis.Application.Admin.Commands.DTOs;
-using LocadoraDeAutomoveis.Application.Auth.DTOs;
+﻿using LocadoraDeAutomoveis.Application.Auth.DTOs;
 using LocadoraDeAutomoveis.Domain.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

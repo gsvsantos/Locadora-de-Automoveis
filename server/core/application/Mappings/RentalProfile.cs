@@ -6,7 +6,7 @@ using LocadoraDeAutomoveis.Application.Rentals.Commands.Create;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.CreateSelfRental;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetById;
-using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentalBy;
+using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentalById;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentals;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentalStatus;
 using LocadoraDeAutomoveis.Application.Rentals.Commands.Return;

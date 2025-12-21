@@ -1,5 +1,5 @@
 ﻿using FluentResults;
-using LocadoraDeAutomoveis.Application.Account.Commands.GetClientProfile;
+using LocadoraDeAutomoveis.Application.Account.Commands.GetProfile;
 using LocadoraDeAutomoveis.Application.Account.Commands.UpdateLanguage;
 using LocadoraDeAutomoveis.Infrastructure.Localization;
 using LocadoraDeAutomoveis.WebAPI.Extensions;

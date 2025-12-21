@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Create;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAll;
-using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAllAvailable;
+using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAllDistinct;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Update;
 using LocadoraDeAutomoveis.Application.Partners.Commands.GetAll;

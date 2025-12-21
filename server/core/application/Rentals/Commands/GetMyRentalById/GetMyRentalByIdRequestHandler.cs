@@ -6,7 +6,7 @@ using LocadoraDeAutomoveis.Domain.Rentals;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentalBy;
+namespace LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentalById;
 
 public class GetMyRentalByIdRequestHandler(
     IMapper mapper,

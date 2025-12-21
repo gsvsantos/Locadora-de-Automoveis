@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using LocadoraDeAutomoveis.Application.Admin.Commands.DTOs;
 using LocadoraDeAutomoveis.Application.Auth.DTOs;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;

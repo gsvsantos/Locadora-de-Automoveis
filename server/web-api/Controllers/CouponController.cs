@@ -3,7 +3,7 @@ using FluentResults;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Create;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Delete;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAll;
-using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAllAvailable;
+using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAllDistinct;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetById;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Update;

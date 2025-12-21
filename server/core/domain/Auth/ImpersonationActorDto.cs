@@ -1,4 +1,4 @@
-﻿namespace LocadoraDeAutomoveis.Application.Admin.Commands.DTOs;
+﻿namespace LocadoraDeAutomoveis.Domain.Auth;
 
 public sealed record ImpersonationActorDto(
     Guid ActorUserId,

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FluentResults;
-using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAllAvailable;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAllAvailable;
 using LocadoraDeAutomoveis.Domain.Coupons;

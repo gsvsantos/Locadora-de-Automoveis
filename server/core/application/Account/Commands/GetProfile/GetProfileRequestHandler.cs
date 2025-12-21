@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FluentResults;
-using LocadoraDeAutomoveis.Application.Account.Commands.GetClientProfile;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Clients;

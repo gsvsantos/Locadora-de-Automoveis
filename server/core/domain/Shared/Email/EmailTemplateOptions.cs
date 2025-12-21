@@ -1,4 +1,4 @@
-﻿namespace LocadoraDeAutomoveis.Infrastructure.Email;
+﻿namespace LocadoraDeAutomoveis.Domain.Shared.Email;
 
 public sealed class EmailTemplateOptions
 {

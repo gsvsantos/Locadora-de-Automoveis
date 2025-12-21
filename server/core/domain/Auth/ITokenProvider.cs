@@ -1,6 +1,4 @@
-﻿using LocadoraDeAutomoveis.Application.Admin.Commands.DTOs;
-
-namespace LocadoraDeAutomoveis.Domain.Auth;
+﻿namespace LocadoraDeAutomoveis.Domain.Auth;
 
 public interface ITokenProvider
 {
