@@ -1,13 +1,12 @@
 ﻿using LocadoraDeAutomoveis.Domain.Clients;
 
-namespace LocadoraDeAutomoveis.Application.Account.Commands.GetProfile;
+namespace LocadoraDeAutomoveis.Application.Account.Commands.GetAccount;
 
-public record GetDetailsResponse(
+public record GetAccountDetailsResponse(
     ClientProfileDto Client
 );
 
 public record ClientProfileDto(
-    Guid Id,
     string FullName,
     string Email,
     string PhoneNumber,

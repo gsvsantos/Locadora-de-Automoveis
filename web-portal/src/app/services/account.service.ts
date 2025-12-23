@@ -21,6 +21,12 @@ export class AccountService {
     );
   }
 
+  public updateProfile(updateModel: ClientProfile): Observable<null> {
+    const url: string = `${this.apiUrl}/update`;
+
+    return this.http.put<null>(url, updateModel);
+  }
+
   public setActiveLang(newLanguageCode: LanguageCode): Observable<null> {
     const url = `${this.apiUrl}/language`;
 
@@ -31,7 +37,6 @@ export class AccountService {
 
   private mapClientProfileFromApi(apiClientProfile: ClientProfileApiDto['client']): ClientProfile {
     return {
-      id: apiClientProfile.id,
       fullName: apiClientProfile.fullName,
       email: apiClientProfile.email,
       phoneNumber: apiClientProfile.phoneNumber,

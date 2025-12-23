@@ -53,6 +53,14 @@ public class DriverRepository(AppDbContext context)
             .ToListAsync();
     }
 
+    public async Task<Driver?> GetDriverByClientIdDistinctAsync(Guid clientId)
+    {
+        return await this.records
+            .Include(d => d.Client)
+            .Where(c => c.IsActive == true)
+            .FirstOrDefaultAsync(d => d.Client.Id.Equals(clientId));
+    }
+
     public override async Task<List<Driver>> GetAllAsync()
     {
         return await this.records

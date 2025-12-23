@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using LocadoraDeAutomoveis.Application.Account.Commands.GetProfile;
+using LocadoraDeAutomoveis.Application.Account.Commands.GetAccount;
+using LocadoraDeAutomoveis.Application.Account.Commands.UpdateAccount;
 using LocadoraDeAutomoveis.Application.Clients.Commands.Create;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetById;
@@ -95,6 +96,15 @@ public class ClientProfile : Profile
                 src.a
             ));
 
+        CreateMap<Client, ClientProfileDto>()
+            .ConvertUsing(src => new ClientProfileDto(
+                src.FullName,
+                src.Email,
+                src.PhoneNumber,
+                src.Document,
+                src.Address
+            ));
+
         // GetAll
         CreateMap<List<Client>, GetAllClientResponse>()
             .ConvertUsing((src, dest, ctx) => new GetAllClientResponse(
@@ -135,15 +145,23 @@ public class ClientProfile : Profile
             )
             { Id = src.r.Id });
 
-        // GetById
-        CreateMap<Client, ClientProfileDto>()
-            .ConvertUsing(src => new ClientProfileDto(
-                src.Id,
-                src.FullName,
-                src.Email,
-                src.PhoneNumber,
-                src.Document,
-                src.Address
+        // GetAccountDetails
+        CreateMap<UpdateAccountRequest, Address>()
+            .ConvertUsing(src => new Address(
+                src.State,
+                src.City,
+                src.Neighborhood,
+                src.Street,
+                src.Number
             ));
+        CreateMap<(UpdateAccountRequest r, Address a, Guid id), Client>()
+            .ConvertUsing(src => new Client(
+                src.r.FullName,
+                src.r.Email,
+                src.r.PhoneNumber,
+                src.r.Document,
+                src.a
+            )
+            { Id = src.id });
     }
 }

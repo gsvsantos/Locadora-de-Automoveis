@@ -13,4 +13,6 @@ public interface IRepositoryDriver : IRepository<Driver>
     Task<Driver?> GetByTenantAndIdAsync(Guid tenantId, Guid entityId);
 
     Task<List<Driver>> GetAllByTenantDistinctAsync(Guid tenantId);
+
+    Task<Driver?> GetDriverByClientIdDistinctAsync(Guid clientId);
 }

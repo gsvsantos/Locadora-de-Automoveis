@@ -7,18 +7,18 @@ using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace LocadoraDeAutomoveis.Application.Account.Commands.GetProfile;
+namespace LocadoraDeAutomoveis.Application.Account.Commands.GetAccount;
 
-public class GetDetailsRequestHandler(
+public class GetAccountDetailsRequestHandler(
     IMapper mapper,
     IUserContext userContext,
     IUnitOfWork unitOfWork,
     IRepositoryClient repositoryClient,
-    ILogger<GetDetailsRequestHandler> logger
-) : IRequestHandler<GetDetailsRequest, Result<GetDetailsResponse>>
+    ILogger<GetAccountDetailsRequestHandler> logger
+) : IRequestHandler<GetAccountDetailsRequest, Result<GetAccountDetailsResponse>>
 {
-    public async Task<Result<GetDetailsResponse>> Handle(
-        GetDetailsRequest request, CancellationToken cancellationToken)
+    public async Task<Result<GetAccountDetailsResponse>> Handle(
+        GetAccountDetailsRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -33,7 +33,7 @@ public class GetDetailsRequestHandler(
 
             ClientProfileDto clientDto = mapper.Map<ClientProfileDto>(client);
 
-            return Result.Ok(new GetDetailsResponse(clientDto));
+            return Result.Ok(new GetAccountDetailsResponse(clientDto));
         }
         catch (Exception ex)
         {
