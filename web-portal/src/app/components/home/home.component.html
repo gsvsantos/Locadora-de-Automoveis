@@ -35,13 +35,7 @@
         <div class="rent-blocked-banner">
           <strong>{{ t('rentBlocked.title') }}</strong>
           <div class="rent-blocked-messages">
-            @if (vm.rentalStatus.reason === 'ActiveRentalExists') {
-              @if (vm.rentalStatus.rental?.vehicleLicensePlate; as plate) {
-                {{ t('rentBlocked.reasons.activeRentalExists', { plate }) }}
-              } @else {
-                {{ t('rentBlocked.reasons.activeRentalExistsWithoutPlate') }}
-              }
-            } @else if (vm.rentalStatus.reason === 'ProfileIncomplete') {
+            @if (vm.rentalStatus.reason === 'ProfileIncomplete') {
               {{ t('rentBlocked.reasons.profileIncomplete') }}
               <gs-buttons
                 class="button"
@@ -52,6 +46,12 @@
                 bootstrapIcon="bi-arrow-right-square"
               >
               </gs-buttons>
+            } @else if (vm.rentalStatus.reason === 'ActiveRentalExists') {
+              @if (vm.rentalStatus.rental?.vehicleLicensePlate; as plate) {
+                {{ t('rentBlocked.reasons.activeRentalExists', { plate }) }}
+              } @else {
+                {{ t('rentBlocked.reasons.activeRentalExistsWithoutPlate') }}
+              }
             } @else if (vm.rentalStatus.reason === 'NotAuthenticated') {
               {{ t('rentBlocked.reasons.notAuthenticated') }}
             } @else {

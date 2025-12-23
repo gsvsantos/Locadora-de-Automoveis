@@ -23,14 +23,14 @@
 
     @if (rentDisabled) {
       <div class="rent-block-hint" *transloco="let th; prefix: 'home'">
-        @if (rentalBlockReason === 'ActiveRentalExists') {
+        @if (rentalBlockReason === 'ProfileIncomplete') {
+          {{ th('rentBlocked.reasons.profileIncomplete') }}
+        } @else if (rentalBlockReason === 'ActiveRentalExists') {
           @if (activeRentalPlate; as plate) {
             {{ th('rentBlocked.reasons.activeRentalExists', { plate }) }}
           } @else {
             {{ th('rentBlocked.reasons.activeRentalExistsWithoutPlate') }}
           }
-        } @else if (rentalBlockReason === 'ProfileIncomplete') {
-          {{ th('rentBlocked.reasons.profileIncomplete') }}
         } @else if (rentalBlockReason === 'NotAuthenticated') {
           {{ th('rentBlocked.reasons.notAuthenticated') }}
         } @else {
