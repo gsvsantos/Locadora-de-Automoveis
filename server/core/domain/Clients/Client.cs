@@ -59,20 +59,9 @@ public class Client : BaseEntity<Client>
         this.LicenseValidity = licenseValidity;
     }
 
-    public void CompleteProfile(string document, Address address, string? licenseNumber = null, DateTimeOffset? licenseValidity = null)
+    public void SetPreferredLanguage(string language)
     {
-        this.Document = document;
-        this.Address = address;
-
-        if (licenseNumber != null)
-        {
-            this.LicenseNumber = licenseNumber;
-        }
-
-        if (licenseValidity != null)
-        {
-            this.LicenseValidity = licenseValidity;
-        }
+        this.PreferredLanguage = language;
     }
 
     public void AssociateJuristicClient(Client juristiClient)
@@ -87,9 +76,27 @@ public class Client : BaseEntity<Client>
         this.LoginUserId = user.Id;
     }
 
-    public void SetPreferredLanguage(string language)
+    public bool HasFullProfile()
     {
-        this.PreferredLanguage = language;
+        return this.Address is not null &&
+             !string.IsNullOrWhiteSpace(this.Document) &&
+             !string.IsNullOrWhiteSpace(this.PhoneNumber);
+    }
+
+    public void CompleteProfile(string document, Address address, string? licenseNumber = null, DateTimeOffset? licenseValidity = null)
+    {
+        this.Document = document;
+        this.Address = address;
+
+        if (licenseNumber != null)
+        {
+            this.LicenseNumber = licenseNumber;
+        }
+
+        if (licenseValidity != null)
+        {
+            this.LicenseValidity = licenseValidity;
+        }
     }
 
     public static Client CreateTenantCopyFromGlobal(Client globalClient, Guid tenantId, User loginUser, User createdByUser)

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using LocadoraDeAutomoveis.Application.Account.Commands.GetAccount;
+using LocadoraDeAutomoveis.Application.Account.Commands.GetAccountDetails;
 using LocadoraDeAutomoveis.Application.Account.Commands.UpdateAccount;
 using LocadoraDeAutomoveis.Application.Clients.Commands.Create;
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetAll;

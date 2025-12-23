@@ -7,7 +7,7 @@ using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace LocadoraDeAutomoveis.Application.Account.Commands.GetAccount;
+namespace LocadoraDeAutomoveis.Application.Account.Commands.GetAccountDetails;
 
 public class GetAccountDetailsRequestHandler(
     IMapper mapper,

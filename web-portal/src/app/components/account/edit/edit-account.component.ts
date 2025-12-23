@@ -13,7 +13,6 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { filter, map, tap, shareReplay, Observer, take } from 'rxjs';
 import { ClientProfile } from '../../../models/account.models';
-import { IdApiResponse } from '../../../models/api.models';
 import { AccountService } from '../../../services/account.service';
 import { NotificationService } from '../../../services/notification.service';
 

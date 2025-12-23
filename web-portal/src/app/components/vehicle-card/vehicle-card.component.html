@@ -29,6 +29,8 @@
           } @else {
             {{ th('rentBlocked.reasons.activeRentalExistsWithoutPlate') }}
           }
+        } @else if (rentalBlockReason === 'ProfileIncomplete') {
+          {{ th('rentBlocked.reasons.profileIncomplete') }}
         } @else if (rentalBlockReason === 'NotAuthenticated') {
           {{ th('rentBlocked.reasons.notAuthenticated') }}
         } @else {

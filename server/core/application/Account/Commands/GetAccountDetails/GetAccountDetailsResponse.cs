@@ -1,6 +1,6 @@
 ﻿using LocadoraDeAutomoveis.Domain.Clients;
 
-namespace LocadoraDeAutomoveis.Application.Account.Commands.GetAccount;
+namespace LocadoraDeAutomoveis.Application.Account.Commands.GetAccountDetails;
 
 public record GetAccountDetailsResponse(
     ClientProfileDto Client

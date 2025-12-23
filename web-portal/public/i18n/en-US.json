@@ -117,6 +117,7 @@
         "activeRentalExists": "You already have an active rental for vehicle {{plate}}.",
         "activeRentalExistsWithoutPlate": "You already have an active rental.",
         "notAuthenticated": "Please sign in to rent a vehicle.",
+        "profileIncomplete": "Please complete your registration first.",
         "unknown": "We couldn't verify your rental eligibility."
       }
     },

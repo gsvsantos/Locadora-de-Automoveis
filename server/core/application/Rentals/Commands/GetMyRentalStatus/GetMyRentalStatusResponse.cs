@@ -2,7 +2,7 @@
 
 public record GetMyRentalStatusResponse(
     bool CanRent,
-    string? Reason,
+    ERentalStatusBlockReason? Reason,
     ActiveRentalDto? Rental
 );
 
@@ -11,3 +11,9 @@ public sealed record ActiveRentalDto(
     string VehicleLicensePlate,
     DateTimeOffset StartedAt
 );
+
+public enum ERentalStatusBlockReason
+{
+    ProfileIncomplete,
+    ActiveRentalExists
+}

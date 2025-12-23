@@ -114,10 +114,11 @@
     "rentBlocked": {
       "title": "Locação indisponível",
       "reasons": {
-        "activeRentalExists": "Você já possui um aluguel ativo do veículo {{plate}}.",
-        "activeRentalExistsWithoutPlate": "Você já possui um aluguel ativo.",
-        "notAuthenticated": "Faça login para alugar um veículo.",
-        "unknown": "Não foi possível verificar sua disponibilidade para locação."
+        "activeRentalExists": "Você já possui uma locação ativa para o veículo {{plate}}.",
+        "activeRentalExistsWithoutPlate": "Você já possui uma locação ativa.",
+        "notAuthenticated": "Por favor, faça login para alugar um veículo.",
+        "profileIncomplete": "Por favor, complete seu cadastro antes de continuar.",
+        "unknown": "Não conseguimos verificar sua elegibilidade para locação."
       }
     },
     "searchPlaceholder": "Busque por marca ou modelo...",
@@ -280,7 +281,7 @@
           "confirm": "Salvar Alterações"
         }
       }
-    } 
+    }
   },
   "rentals": {
     "createSelf": {

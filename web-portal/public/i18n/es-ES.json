@@ -114,10 +114,11 @@
     "rentBlocked": {
       "title": "Alquiler no disponible",
       "reasons": {
-        "activeRentalExists": "Ya tienes un alquiler activo del vehículo {{plate}}.",
+        "activeRentalExists": "Ya tienes un alquiler activo para el vehículo {{plate}}.",
         "activeRentalExistsWithoutPlate": "Ya tienes un alquiler activo.",
-        "notAuthenticated": "Inicia sesión para alquilar un vehículo.",
-        "unknown": "No se ha podido verificar tu disponibilidad para alquilar."
+        "notAuthenticated": "Por favor, inicia sesión para alquilar un vehículo.",
+        "profileIncomplete": "Por favor, completa tu registro antes de continuar.",
+        "unknown": "No pudimos verificar tu elegibilidad para el alquiler."
       }
     },
     "searchPlaceholder": "Busca por marca o modelo...",

@@ -161,6 +161,11 @@ export interface RentalIndividualClientDto {
   licenseValidity: Date;
 }
 
-export type RentalStatus = 'Open' | 'Completed' | 'DiCanceledesel';
+export type RentalStatus = 'Open' | 'Completed' | 'Canceled';
 
-export type RentalBlockReason = 'ActiveRentalExists' | 'NotAuthenticated' | 'Unknown' | null;
+export type RentalBlockReason =
+  | 'ActiveRentalExists'
+  | 'ProfileIncomplete'
+  | 'NotAuthenticated'
+  | 'Unknown'
+  | null;
