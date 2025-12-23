@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
-import { AccountService } from '../../../services/account.service';
 import { AsyncPipe } from '@angular/common';
-import { Observable, shareReplay } from 'rxjs';
-import { ClientProfile } from '../../../models/account.models';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
+import { filter, map, shareReplay } from 'rxjs';
+import { ClientProfile } from '../../../models/account.models';
 
 @Component({
   selector: 'app-details-account.component',
@@ -12,9 +12,11 @@ import { TranslocoModule } from '@jsverse/transloco';
   styleUrl: './details-account.component.scss',
 })
 export class DetailsAccountComponent {
-  protected readonly accountService = inject(AccountService);
+  protected readonly route = inject(ActivatedRoute);
 
-  protected readonly account$: Observable<ClientProfile> = this.accountService
-    .getProfile()
-    .pipe(shareReplay({ bufferSize: 1, refCount: true }));
+  protected readonly account$ = this.route.data.pipe(
+    filter((data) => data['account'] as boolean),
+    map((data) => data['account'] as ClientProfile),
+    shareReplay({ bufferSize: 1, refCount: true }),
+  );
 }
