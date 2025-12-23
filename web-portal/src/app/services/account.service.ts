@@ -13,7 +13,7 @@ export class AccountService {
   private readonly apiUrl = `${environment.apiUrl}/account`;
 
   public getProfile(): Observable<ClientProfile> {
-    const url: string = `${this.apiUrl}/profile`;
+    const url: string = `${this.apiUrl}/details`;
 
     return this.http.get<ApiResponseDto>(url).pipe(
       map(mapApiResponse<ClientProfileApiDto>),

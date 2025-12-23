@@ -4,3 +4,5 @@
 .vs
 .vscode
 /client/src/environments/environment.development.ts
+/web-admin/src/environments/environment.development.ts
+/web-portal/src/environments/environment.development.ts
