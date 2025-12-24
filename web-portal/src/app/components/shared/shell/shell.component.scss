@@ -107,14 +107,6 @@
   }
 }
 
-.main-content {
-  flex: 1;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-}
-
 .footer {
   background-color: $surface-alt;
   padding: 2rem;
@@ -124,7 +116,6 @@
   margin-top: auto;
 }
 
-// Mobile
 .mobile-only {
   display: none;
 }

@@ -103,36 +103,47 @@
           </div>
         }
 
-        <h3 class="full-width">{{ t('card.section.extras') }}</h3>
+        @if ({ hasCoupon: hasCoupon$ | async, hasExtras: hasExtras$ | async }; as state) {
+          @if (state.hasCoupon || state.hasExtras) {
+            <h3 class="full-width">{{ t('card.section.extras') }}</h3>
+          }
 
-        <div class="form-field full-width">
-          <label>{{ t('card.label.coupon') }}</label>
-          <select class="form-input" formControlName="couponId">
-            <option [ngValue]="null">{{ t('card.placeholder.coupon') }}</option>
-            @for (coupon of coupons$ | async; track coupon.id) {
-              <option [ngValue]="coupon.id">
-                {{ coupon.name }}
-                @if (coupon.discountValue) {
-                  (-{{ coupon.discountValue | currency: 'BRL' }})
+          @if (state.hasCoupon) {
+            <div class="form-field full-width">
+              <label>{{ t('card.label.coupon') }}</label>
+              <select class="form-input" formControlName="couponId">
+                <option [ngValue]="null">{{ t('card.placeholder.coupon') }}</option>
+
+                @for (coupon of coupons$ | async; track coupon.id) {
+                  <option [ngValue]="coupon.id">
+                    {{ coupon.name }}
+                    @if (coupon.discountValue) {
+                      (-{{ coupon.discountValue | currency: 'BRL' }})
+                    }
+                  </option>
                 }
-              </option>
-            }
-          </select>
-        </div>
+              </select>
+            </div>
+          } @else if (state.hasExtras) {}
 
-        <div class="form-field full-width">
-          <label>{{ t('card.label.extras') }}</label>
-          <select class="form-input" formControlName="rentalRentalExtrasIds" multiple>
-            @for (extra of extras$ | async; track extra.id) {
-              <option [value]="extra.id">
-                {{ extra.name }} ({{ extra.price | currency: 'BRL' : 'symbol' : '1.2-2' }})
-              </option>
-            }
-          </select>
-          <small class="helper-text"
-            >Hold Ctrl (Windows) or Cmd (Mac) to select multiple options.</small
-          >
-        </div>
+          @if (state.hasExtras) {
+            <div class="form-field full-width">
+              <label>{{ t('card.label.extras') }}</label>
+              <select class="form-input" formControlName="rentalRentalExtrasIds" multiple>
+                @for (extra of extras$ | async; track extra.id) {
+                  <option [value]="extra.id">
+                    {{ extra.name }} ({{ extra.price | currency: 'BRL' : 'symbol' : '1.2-2' }})
+                  </option>
+                }
+              </select>
+              <small class="helper-text">{{ t('card.helper.multiSelect') }}</small>
+            </div>
+          } @else if (state.hasCoupon) {}
+        } @else {
+          <div class="info-message full-width">
+            {{ t('card.warnings.noOptionsAvailable') }}
+          </div>
+        }
       </div>
 
       <div class="buttons">

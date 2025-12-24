@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using FluentResults;
-using LocadoraDeAutomoveis.Application.Rentals.Commands.CreateSelfRental;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
@@ -13,9 +13,10 @@ namespace LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentalStatus;
 public class GetMyRentalStatusRequestHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper,
+    IRepositoryClient repositoryClient,
     IRepositoryRental repositoryRental,
     IUserContext userContext,
-    ILogger<CreateSelfRentalRequestHandler> logger
+    ILogger<GetMyRentalStatusRequestHandler> logger
 ) : IRequestHandler<GetMyRentalStatusRequest, Result<GetMyRentalStatusResponse>>
 {
     public async Task<Result<GetMyRentalStatusResponse>> Handle(
@@ -25,20 +26,30 @@ public class GetMyRentalStatusRequestHandler(
         {
             Guid loginUserId = userContext.GetUserId();
 
-            Rental? rental = await repositoryRental.GetActiveRentalByLoginUserDistinctAsync(loginUserId);
+            Client? client = await repositoryClient.GetGlobalByLoginUserIdAsync(loginUserId);
 
-            if (rental is null)
+            if (client is null)
+            {
+                return Result.Fail(ErrorResults.NotFoundError("Client profile not found."));
+            }
+
+            if (!client.HasFullProfile())
             {
                 return Result.Ok(new GetMyRentalStatusResponse(
-                    true,
-                    null,
+                    false,
+                    ERentalStatusBlockReason.ProfileIncomplete,
                     null
                 ));
             }
 
-            GetMyRentalStatusResponse response = mapper.Map<GetMyRentalStatusResponse>(rental);
+            Rental? rental = await repositoryRental.GetActiveRentalByLoginUserDistinctAsync(loginUserId);
 
-            return Result.Ok(response);
+            if (rental is not null)
+            {
+                return Result.Ok(mapper.Map<GetMyRentalStatusResponse>(rental));
+            }
+
+            return Result.Ok(new GetMyRentalStatusResponse(true, null, null));
         }
         catch (Exception ex)
         {
@@ -46,7 +57,7 @@ public class GetMyRentalStatusRequestHandler(
 
             logger.LogError(
                 ex,
-                "An error occurred during registration. \n{@Request}.", request
+                "An error occurred while getting rental status. {@Request}", request
             );
 
             return Result.Fail(ErrorResults.InternalServerError(ex));

@@ -13,12 +13,18 @@ export class AccountService {
   private readonly apiUrl = `${environment.apiUrl}/account`;
 
   public getProfile(): Observable<ClientProfile> {
-    const url: string = `${this.apiUrl}/profile`;
+    const url: string = `${this.apiUrl}/details`;
 
     return this.http.get<ApiResponseDto>(url).pipe(
       map(mapApiResponse<ClientProfileApiDto>),
       map((apiDto: ClientProfileApiDto) => this.mapClientProfileFromApi(apiDto.client)),
     );
+  }
+
+  public updateProfile(updateModel: ClientProfile): Observable<null> {
+    const url: string = `${this.apiUrl}/update`;
+
+    return this.http.put<null>(url, updateModel);
   }
 
   public setActiveLang(newLanguageCode: LanguageCode): Observable<null> {
@@ -31,7 +37,6 @@ export class AccountService {
 
   private mapClientProfileFromApi(apiClientProfile: ClientProfileApiDto['client']): ClientProfile {
     return {
-      id: apiClientProfile.id,
       fullName: apiClientProfile.fullName,
       email: apiClientProfile.email,
       phoneNumber: apiClientProfile.phoneNumber,

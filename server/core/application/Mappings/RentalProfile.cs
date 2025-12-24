@@ -227,7 +227,7 @@ public class RentalProfile : Profile
         CreateMap<Rental, GetMyRentalStatusResponse>()
             .ConvertUsing((src, dest, ctx) => new GetMyRentalStatusResponse(
                false,
-               "ActiveRentalExists",
+               ERentalStatusBlockReason.ActiveRentalExists,
                ctx.Mapper.Map<ActiveRentalDto>(src)
             ));
     }

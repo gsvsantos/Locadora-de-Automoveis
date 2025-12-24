@@ -34,8 +34,19 @@
       @if (!vm.rentalStatus.canRent) {
         <div class="rent-blocked-banner">
           <strong>{{ t('rentBlocked.title') }}</strong>
-          <div>
-            @if (vm.rentalStatus.reason === 'ActiveRentalExists') {
+          <div class="rent-blocked-messages">
+            @if (vm.rentalStatus.reason === 'ProfileIncomplete') {
+              {{ t('rentBlocked.reasons.profileIncomplete') }}
+              <gs-buttons
+                class="button"
+                [buttonType]="buttonType.Link"
+                [routerLink]="['/account', 'edit']"
+                [variant]="variantType.Outline"
+                text=""
+                bootstrapIcon="bi-arrow-right-square"
+              >
+              </gs-buttons>
+            } @else if (vm.rentalStatus.reason === 'ActiveRentalExists') {
               @if (vm.rentalStatus.rental?.vehicleLicensePlate; as plate) {
                 {{ t('rentBlocked.reasons.activeRentalExists', { plate }) }}
               } @else {

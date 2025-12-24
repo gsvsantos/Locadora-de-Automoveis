@@ -1,5 +1,6 @@
 ﻿using FluentResults;
-using LocadoraDeAutomoveis.Application.Account.Commands.GetProfile;
+using LocadoraDeAutomoveis.Application.Account.Commands.GetAccountDetails;
+using LocadoraDeAutomoveis.Application.Account.Commands.UpdateAccount;
 using LocadoraDeAutomoveis.Application.Account.Commands.UpdateLanguage;
 using LocadoraDeAutomoveis.Infrastructure.Localization;
 using LocadoraDeAutomoveis.WebAPI.Extensions;
@@ -17,9 +18,17 @@ public class AccountController(IMediator mediator) : ControllerBase
     [HttpGet("details")]
     public async Task<IActionResult> GetDetails()
     {
-        GetDetailsRequest request = new();
+        GetAccountDetailsRequest request = new();
 
-        Result<GetDetailsResponse> result = await mediator.Send(request);
+        Result<GetAccountDetailsResponse> result = await mediator.Send(request);
+
+        return result.ToHttpResponse();
+    }
+
+    [HttpPut("update")]
+    public async Task<IActionResult> Update([FromBody] UpdateAccountRequest request)
+    {
+        Result<UpdateAccountResponse> result = await mediator.Send(request);
 
         return result.ToHttpResponse();
     }

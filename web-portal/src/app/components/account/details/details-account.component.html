@@ -1,4 +1,4 @@
-<section class="account-container" *transloco="let t; prefix: 'account'">
+<section class="account-container" *transloco="let t; prefix: 'account.details'">
   @if (account$ | async; as account) {
     <div class="account-card">
       <div class="profile-header">
@@ -7,6 +7,16 @@
           <h2>{{ t('personalInfo') }}</h2>
         </div>
         <p class="header-subtitle">{{ t('manageYourData') }}</p>
+        <div class="buttons">
+          <gs-buttons
+            [buttonType]="buttonType.Link"
+            routerLink="edit"
+            [variant]="variantType.Outline"
+            text=""
+            bootstrapIcon="bi-pencil"
+          >
+          </gs-buttons>
+        </div>
       </div>
 
       <div class="details-grid">

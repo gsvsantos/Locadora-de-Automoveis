@@ -4,7 +4,6 @@
 .search-bar {
   width: 100%;
   max-width: 600px;
-  margin-bottom: 1rem;
 }
 
 .search-input {
@@ -113,6 +112,20 @@
   text-align: center;
   padding: 4rem;
   font-weight: 500;
+}
+
+@media (max-width: 1024px) {
+  .filters-container {
+    justify-self: center;
+  }
+
+  .search-bar {
+    max-width: 100%;
+  }
+
+  .list {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
 }
 
 @media (max-width: 768px) {

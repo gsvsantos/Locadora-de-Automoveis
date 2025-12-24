@@ -117,6 +117,7 @@
         "activeRentalExists": "You already have an active rental for vehicle {{plate}}.",
         "activeRentalExistsWithoutPlate": "You already have an active rental.",
         "notAuthenticated": "Please sign in to rent a vehicle.",
+        "profileIncomplete": "Please complete your registration first.",
         "unknown": "We couldn't verify your rental eligibility."
       }
     },
@@ -217,21 +218,69 @@
     "empty": "You haven't rented any cars yet."
   },
   "account": {
-    "loading": "Loading your profile...",
-    "personalInfo": "Personal Information",
-    "manageYourData": "Manage your profile data and contact info",
-    "notProvided": "Not provided",
-    "sections": {
-      "profile": "Profile",
-      "contact": "Contact",
-      "address": "Address"
+    "details": {
+      "loading": "Loading your profile...",
+      "personalInfo": "Personal Information",
+      "manageYourData": "Manage your profile data and contact info",
+      "notProvided": "Not provided",
+      "sections": {
+        "profile": "Profile",
+        "contact": "Contact",
+        "address": "Address"
+      },
+      "fields": {
+        "fullName": "Full Name",
+        "email": "Email Address",
+        "phone": "Phone Number",
+        "document": "Document (CPF/CNPJ)",
+        "fullAddress": "Full address"
+      }
     },
-    "fields": {
-      "fullName": "Full Name",
-      "email": "Email Address",
-      "phone": "Phone Number",
-      "document": "Document (CPF/CNPJ)",
-      "fullAddress": "Full address"
+    "edit": {
+      "card": {
+        "title": "Edit Profile",
+        "subtitle": "Update your personal information and address.",
+        "section": {
+          "personalData": "Personal Data",
+          "addressData": "Address"
+        },
+        "label": {
+          "fullName": "Full Name",
+          "email": "Email Address",
+          "phoneNumber": "Phone Number",
+          "document": "Document (CPF)",
+          "state": "State",
+          "city": "City",
+          "neighborhood": "Neighborhood",
+          "street": "Street",
+          "number": "Number"
+        },
+        "placeholder": {
+          "fullName": "Enter your full name",
+          "email": "Enter your email",
+          "phoneNumber": "(99) 99999-9999",
+          "document": "000.000.000-00",
+          "state": "State",
+          "city": "City",
+          "neighborhood": "Neighborhood",
+          "street": "Street",
+          "number": "123"
+        },
+        "errors": {
+          "fullNameRequired": "Full name is required.",
+          "fullNameLength": "Name is too short.",
+          "fullNameInvalid": "Invalid characters in name.",
+          "emailRequired": "Email is required.",
+          "emailInvalid": "Please enter a valid email.",
+          "phoneNumberRequired": "Phone number is required.",
+          "phoneNumberInvalid": "Invalid phone format.",
+          "documentInvalid": "Invalid document format."
+        },
+        "buttons": {
+          "back": "Cancel",
+          "confirm": "Save Changes"
+        }
+      }
     }
   },
   "rentals": {
@@ -260,10 +309,18 @@
           "estimatedKilometers": "Ex: 400",
           "coupon": "Select a coupon (optional)"
         },
+        "helper": {
+          "multiSelect": "Hold Ctrl (Windows) or Cmd (Mac) to select multiple options."
+        },
         "plan": {
           "daily": "Daily Plan (Rate + Km)",
           "controlled": "Controlled Plan (Fixed Limit)",
           "free": "Free Plan (Unlimited Km)"
+        },
+        "warnings": {
+          "noCoupons": "No coupons available for this vehicle.",
+          "noExtras": "No extra services available.",
+          "noOptionsAvailable": "No coupons or extras available for this rental."
         },
         "errors": {
           "vehicleNotFound": "Could not load vehicle details.",

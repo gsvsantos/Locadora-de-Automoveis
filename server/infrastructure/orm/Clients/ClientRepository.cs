@@ -16,7 +16,40 @@ public class ClientRepository(AppDbContext context)
     public async Task<bool> ExistsByDocumentAsync(string document)
     {
         return await this.records
-            .AnyAsync(c => c.Document!.Equals(document));
+            .AnyAsync(c =>
+                c.Document != null &&
+                c.Document.Equals(document)
+            );
+    }
+
+    public async Task<bool> ExistsByDocumentAsync(string document, Guid ignoreClientId)
+    {
+        return await this.records
+            .Where(c => !c.Id.Equals(ignoreClientId))
+            .AnyAsync(c =>
+                c.Document != null &&
+                c.Document.Equals(document)
+            );
+    }
+
+    public async Task<bool> UpdateGlobalAsync(Guid clientId, Client updatedClient)
+    {
+        Client? existingClient = await this.records
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(c =>
+                c.Id == clientId &&
+                c.TenantId == null &&
+                c.IsActive
+            );
+
+        if (existingClient is null)
+        {
+            return false;
+        }
+
+        existingClient.Update(updatedClient);
+
+        return true;
     }
 
     public async Task<List<Client>> SearchAsync(string term, CancellationToken ct)
@@ -64,9 +97,9 @@ public class ClientRepository(AppDbContext context)
             .FirstOrDefaultAsync();
     }
 
-    public Task<Client?> GetByTenantAndDocumentAsync(Guid tenantId, string document)
+    public async Task<Client?> GetByTenantAndDocumentAsync(Guid tenantId, string document)
     {
-        return this.records
+        return await this.records
             .IgnoreQueryFilters()
             .Where(client =>
                 client.IsActive &&

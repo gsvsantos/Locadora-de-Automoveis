@@ -68,6 +68,16 @@ export class CreateSelfComponent {
     rentalRentalExtrasIds: [[]],
   });
 
+  protected readonly hasCoupon$: Observable<boolean> = this.coupons$.pipe(
+    tap((res) => console.log(res)),
+    map((res) => res.length >= 1),
+  );
+
+  protected readonly hasExtras$: Observable<boolean> = this.extras$.pipe(
+    tap((res) => console.log(res)),
+    map((res) => res.length >= 1),
+  );
+
   protected readonly billingPlanLogic$: Observable<string | null> = defer(() => {
     const planControl = this.billingPlanType;
 

@@ -2,6 +2,7 @@
 using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAll;
+using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
@@ -13,6 +14,7 @@ namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAllAvailable;
 public class GetAllAvailableVehiclesRequestHandler(
     IMapper mapper,
     IRepositoryVehicle repositoryVehicle,
+    IRepositoryDriver repositoryDriver,
     IRepositoryRental repositoryRental,
     ILogger<GetAllAvailableVehiclesRequestHandler> logger
 ) : IRequestHandler<GetAllAvailableVehiclesRequest, Result<GetAllAvailableVehiclesResponse>>
@@ -24,6 +26,8 @@ public class GetAllAvailableVehiclesRequestHandler(
         {
             List<Guid> rentedIds = await repositoryRental.GetRentedVehicleIds();
 
+            List<Guid?> tenantsWithDrivers = await repositoryDriver.GetTenantsWithActiveDriversAsync();
+
             PagedResult<Vehicle> pagedVehicles = await repositoryVehicle.GetAllAvailableAsync(
             request.PageNumber,
             request.PageSize,
@@ -31,6 +35,7 @@ public class GetAllAvailableVehiclesRequestHandler(
             request.GroupId,
             request.FuelType,
             rentedIds,
+            tenantsWithDrivers,
             cancellationToken
             );
 

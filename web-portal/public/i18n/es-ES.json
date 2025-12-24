@@ -114,10 +114,11 @@
     "rentBlocked": {
       "title": "Alquiler no disponible",
       "reasons": {
-        "activeRentalExists": "Ya tienes un alquiler activo del vehículo {{plate}}.",
+        "activeRentalExists": "Ya tienes un alquiler activo para el vehículo {{plate}}.",
         "activeRentalExistsWithoutPlate": "Ya tienes un alquiler activo.",
-        "notAuthenticated": "Inicia sesión para alquilar un vehículo.",
-        "unknown": "No se ha podido verificar tu disponibilidad para alquilar."
+        "notAuthenticated": "Por favor, inicia sesión para alquilar un vehículo.",
+        "profileIncomplete": "Por favor, completa tu registro antes de continuar.",
+        "unknown": "No pudimos verificar tu elegibilidad para el alquiler."
       }
     },
     "searchPlaceholder": "Busca por marca o modelo...",
@@ -217,21 +218,69 @@
     "empty": "Todavía no has alquilado ningún vehículo."
   },
   "account": {
-    "loading": "Cargando tu perfil...",
-    "personalInfo": "Información personal",
-    "manageYourData": "Gestiona los datos de tu perfil y tu información de contacto",
-    "notProvided": "No informado",
-    "sections": {
-      "profile": "Perfil",
-      "contact": "Contacto",
-      "address": "Dirección"
+    "details": {
+      "loading": "Cargando tu perfil...",
+      "personalInfo": "Información personal",
+      "manageYourData": "Gestiona los datos de tu perfil y tu información de contacto",
+      "notProvided": "No informado",
+      "sections": {
+        "profile": "Perfil",
+        "contact": "Contacto",
+        "address": "Dirección"
+      },
+      "fields": {
+        "fullName": "Nombre completo",
+        "email": "Correo electrónico",
+        "phone": "Número de teléfono",
+        "document": "Documento (CPF/CNPJ)",
+        "fullAddress": "Dirección completa"
+      }
     },
-    "fields": {
-      "fullName": "Nombre completo",
-      "email": "Correo electrónico",
-      "phone": "Número de teléfono",
-      "document": "Documento (CPF/CNPJ)",
-      "fullAddress": "Dirección completa"
+    "edit": {
+      "card": {
+        "title": "Editar Perfil",
+        "subtitle": "Actualice su información personal y dirección.",
+        "section": {
+          "personalData": "Datos Personales",
+          "addressData": "Dirección"
+        },
+        "label": {
+          "fullName": "Nombre Completo",
+          "email": "Correo Electrónico",
+          "phoneNumber": "Teléfono",
+          "document": "Documento (CPF)",
+          "state": "Estado / Provincia",
+          "city": "Ciudad",
+          "neighborhood": "Barrio",
+          "street": "Calle / Dirección",
+          "number": "Número"
+        },
+        "placeholder": {
+          "fullName": "Ingrese su nombre completo",
+          "email": "Ingrese su correo",
+          "phoneNumber": "(99) 99999-9999",
+          "document": "000.000.000-00",
+          "state": "Estado",
+          "city": "Su ciudad",
+          "neighborhood": "Su barrio",
+          "street": "Nombre de la calle",
+          "number": "123"
+        },
+        "errors": {
+          "fullNameRequired": "El nombre completo es obligatorio.",
+          "fullNameLength": "El nombre es demasiado corto.",
+          "fullNameInvalid": "Caracteres inválidos en el nombre.",
+          "emailRequired": "El correo electrónico es obligatorio.",
+          "emailInvalid": "Por favor, introduzca un correo válido.",
+          "phoneNumberRequired": "El teléfono es obligatorio.",
+          "phoneNumberInvalid": "Formato de teléfono inválido.",
+          "documentInvalid": "Formato de documento inválido."
+        },
+        "buttons": {
+          "back": "Cancelar",
+          "confirm": "Guardar Cambios"
+        }
+      }
     }
   },
   "rentals": {
@@ -260,10 +309,18 @@
           "estimatedKilometers": "Ej.: 400",
           "coupon": "Selecciona un cupón (opcional)"
         },
+        "helper": {
+          "multiSelect": "Mantenga Ctrl (Windows) o Cmd (Mac) para seleccionar varias opciones."
+        },
         "plan": {
           "daily": "Plan diario (Tarifa + Km)",
           "controlled": "Plan controlado (límite fijo)",
           "free": "Plan libre (Km ilimitados)"
+        },
+        "warnings": {
+          "noCoupons": "No hay cupones disponibles para este vehículo.",
+          "noExtras": "No hay servicios extra disponibles.",
+          "noOptionsAvailable": "No hay cupones ni extras disponibles para este alquiler."
         },
         "errors": {
           "vehicleNotFound": "No se han podido cargar los detalles del vehículo.",

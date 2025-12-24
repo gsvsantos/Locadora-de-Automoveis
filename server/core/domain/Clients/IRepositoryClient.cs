@@ -8,6 +8,10 @@ public interface IRepositoryClient : IRepository<Client>
 
     Task<bool> ExistsByDocumentAsync(string document);
 
+    Task<bool> ExistsByDocumentAsync(string document, Guid ignoreClientId);
+
+    Task<bool> UpdateGlobalAsync(Guid clientId, Client updatedClient);
+
     Task<List<Client>> GetIndividualClientsFromBusinessId(Guid id, CancellationToken ct = default);
 
     Task<List<Client>> SearchAsync(string term, CancellationToken ct = default);

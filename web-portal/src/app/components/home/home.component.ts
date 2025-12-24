@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import {
@@ -26,7 +26,14 @@ import { RentalService } from '../../services/rental.service';
 
 @Component({
   selector: 'app-home',
-  imports: [AsyncPipe, ReactiveFormsModule, TranslocoModule, GsButtons, VehicleCardComponent],
+  imports: [
+    AsyncPipe,
+    RouterLink,
+    ReactiveFormsModule,
+    TranslocoModule,
+    GsButtons,
+    VehicleCardComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
