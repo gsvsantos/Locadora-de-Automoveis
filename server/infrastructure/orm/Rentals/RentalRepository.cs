@@ -154,6 +154,15 @@ public class RentalRepository(AppDbContext context)
         return await this.records.AnyAsync(r => r.CouponId == couponId);
     }
 
+    public async Task<List<Guid>> GetRentedVehicleIds()
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .Where(r => r.Status == ERentalStatus.Open)
+            .Select(r => r.VehicleId)
+            .ToListAsync();
+    }
+
     public async Task<List<Rental>> SearchAsync(string term, CancellationToken ct)
     {
         return await this.records
@@ -247,15 +256,6 @@ public class RentalRepository(AppDbContext context)
             .Where(r => r.Status == ERentalStatus.Open)
             .Where(r => r.Client.LoginUserId.Equals(loginUserId))
             .FirstOrDefaultAsync();
-    }
-
-    public async Task<List<Guid>> GetRentedVehicleIds()
-    {
-        return await this.records
-            .IgnoreQueryFilters()
-            .Where(r => r.Status == ERentalStatus.Open)
-            .Select(r => r.VehicleId)
-            .ToListAsync();
     }
 
     public override async Task<List<Rental>> GetAllAsync()

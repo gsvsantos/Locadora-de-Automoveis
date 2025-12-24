@@ -39,7 +39,7 @@ public class VehicleRepository(AppDbContext context)
         int pageNumber, int pageSize,
         string? term, Guid? groupId,
         EFuelType? fuelType, List<Guid> rentedIds,
-        CancellationToken cancellationToken
+        List<Guid?> validTenantIds, CancellationToken cancellationToken
     )
     {
         IQueryable<Vehicle> query = this.records
@@ -48,6 +48,15 @@ public class VehicleRepository(AppDbContext context)
             .Include(v => v.Group)
             .Where(v => !rentedIds.Contains(v.Id))
             .Where(v => v.IsActive == true);
+
+        if (validTenantIds.Count > 0)
+        {
+            query = query.Where(v => validTenantIds.Contains(v.TenantId));
+        }
+        else
+        {
+            return new PagedResult<Vehicle>([], 0, pageNumber, pageSize);
+        }
 
         if (!string.IsNullOrWhiteSpace(term))
         {

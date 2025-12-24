@@ -13,6 +13,17 @@ public class DriverRepository(AppDbContext context)
             r.ClientId.Equals(clientId));
     }
 
+    public async Task<List<Guid?>> GetTenantsWithActiveDriversAsync()
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Where(d => d.IsActive == true)
+            .Select(d => d.TenantId)
+            .Distinct()
+            .ToListAsync();
+    }
+
     public async Task<Driver?> GetDriverByClientId(Guid clientId)
     {
         return await this.records

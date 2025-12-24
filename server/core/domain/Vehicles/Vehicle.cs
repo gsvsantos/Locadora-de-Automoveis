@@ -98,8 +98,3 @@ public enum EFuelType
     Diesel,
     Alcohol
 }
-
-public enum EVehicleStatus
-{
-
-}
