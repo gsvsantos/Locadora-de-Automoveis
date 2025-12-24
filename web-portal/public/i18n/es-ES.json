@@ -309,10 +309,18 @@
           "estimatedKilometers": "Ej.: 400",
           "coupon": "Selecciona un cupón (opcional)"
         },
+        "helper": {
+          "multiSelect": "Mantenga Ctrl (Windows) o Cmd (Mac) para seleccionar varias opciones."
+        },
         "plan": {
           "daily": "Plan diario (Tarifa + Km)",
           "controlled": "Plan controlado (límite fijo)",
           "free": "Plan libre (Km ilimitados)"
+        },
+        "warnings": {
+          "noCoupons": "No hay cupones disponibles para este vehículo.",
+          "noExtras": "No hay servicios extra disponibles.",
+          "noOptionsAvailable": "No hay cupones ni extras disponibles para este alquiler."
         },
         "errors": {
           "vehicleNotFound": "No se han podido cargar los detalles del vehículo.",

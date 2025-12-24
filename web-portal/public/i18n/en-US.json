@@ -309,10 +309,18 @@
           "estimatedKilometers": "Ex: 400",
           "coupon": "Select a coupon (optional)"
         },
+        "helper": {
+          "multiSelect": "Hold Ctrl (Windows) or Cmd (Mac) to select multiple options."
+        },
         "plan": {
           "daily": "Daily Plan (Rate + Km)",
           "controlled": "Controlled Plan (Fixed Limit)",
           "free": "Free Plan (Unlimited Km)"
+        },
+        "warnings": {
+          "noCoupons": "No coupons available for this vehicle.",
+          "noExtras": "No extra services available.",
+          "noOptionsAvailable": "No coupons or extras available for this rental."
         },
         "errors": {
           "vehicleNotFound": "Could not load vehicle details.",
