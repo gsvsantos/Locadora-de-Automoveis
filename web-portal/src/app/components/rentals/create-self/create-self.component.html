@@ -12,7 +12,6 @@
         </span>
 
         <h3 class="full-width">{{ t('card.section.vehicle') }}</h3>
-
         <div class="form-field full-width">
           @if (vehicle$ | async; as vehicle) {
             <div class="vehicle-summary">
@@ -41,7 +40,6 @@
         </div>
 
         <h3 class="full-width">{{ t('card.section.driver') }}</h3>
-
         <div class="form-field full-width">
           <label>{{ t('card.label.driver') }}</label>
           <select class="form-input" formControlName="driverId">
@@ -56,7 +54,6 @@
         </div>
 
         <h3 class="full-width">{{ t('card.section.datesAndPlan') }}</h3>
-
         <div class="form-row full-width">
           <div class="form-field">
             <label>{{ t('card.label.startDate') }}</label>
@@ -150,7 +147,7 @@
         <gs-buttons
           [buttonType]="buttonType.Link"
           [text]="t('card.buttons.back')"
-          routerLink="/rentals"
+          routerLink="/home"
         ></gs-buttons>
 
         <gs-buttons

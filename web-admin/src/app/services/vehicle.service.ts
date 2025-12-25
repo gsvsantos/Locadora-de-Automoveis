@@ -67,6 +67,7 @@ export class VehicleService {
       model: apiVehicle.model,
       fuelType: apiVehicle.fuelType,
       fuelTankCapacity: apiVehicle.fuelTankCapacity,
+      kilometers: apiVehicle.kilometers,
       year: apiVehicle.year,
       image: apiVehicle.image,
       group: apiVehicle.group,

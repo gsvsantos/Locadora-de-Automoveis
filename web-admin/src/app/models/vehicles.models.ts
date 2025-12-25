@@ -7,6 +7,7 @@ export interface VehicleDto {
   model: string;
   fuelType: FuelType;
   fuelTankCapacity: number;
+  kilometers: number;
   year: number;
   image?: File;
   group: Group;

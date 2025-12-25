@@ -81,27 +81,29 @@
             }
           </div>
 
-          <div class="form-field full-width">
-            <label>{{ t('card.label.startKm') }}</label>
-            <input
-              class="form-input"
-              formControlName="startKm"
-              type="number"
-              [placeholder]="t('card.placeholder.startKm')"
-            />
-            @if (startKm?.errors?.['required'] && startKm?.dirty) {
-              <span class="error-message">{{ t('card.errors.startKmRequired') }}</span>
-            }
-            @if (startKm?.errors?.['min'] && startKm?.dirty) {
-              <span class="error-message">{{ t('card.errors.startKmMin') }}</span>
-            }
-          </div>
+          @if (selectedVehicle$ | async) {
+            <div class="form-field full-width">
+              <label>{{ t('card.label.startKm') }}</label>
+              <input
+                class="form-input"
+                formControlName="startKm"
+                type="number"
+                [placeholder]="t('card.placeholder.startKm')"
+              />
+              @if (startKm?.errors?.['required'] && startKm?.dirty) {
+                <span class="error-message">{{ t('card.errors.startKmRequired') }}</span>
+              }
+              @if (startKm?.errors?.['min'] && startKm?.dirty) {
+                <span class="error-message">{{ t('card.errors.startKmMin') }}</span>
+              }
+            </div>
+          }
 
           <h3 class="full-width">{{ t('card.section.billing') }}</h3>
-          <div class="form-field">
+          <div class="form-field full-width">
             <label>{{ t('card.label.billingPlanType') }}</label>
             <select class="form-input" formControlName="billingPlanType">
-              <option [ngValue]="null">{{ t('card.placeholder.billingPlanType') }}</option>
+              <option [ngValue]="null" disabled>{{ t('card.placeholder.billingPlanType') }}</option>
               <option value="Daily">{{ t('card.plan.daily') }}</option>
               <option value="Controlled">{{ t('card.plan.controlled') }}</option>
               <option value="Free">{{ t('card.plan.free') }}</option>
@@ -111,40 +113,64 @@
             }
           </div>
 
-          <div class="form-field">
-            <label>{{ t('card.label.estimatedKilometers') }}</label>
-            <input
-              class="form-input"
-              formControlName="estimatedKilometers"
-              type="number"
-              [placeholder]="t('card.placeholder.estimatedKilometers')"
-            />
-            @if (estimatedKilometers?.errors?.['required'] && estimatedKilometers?.dirty) {
-              <span class="error-message">{{ t('card.errors.estimatedKilometersRequired') }}</span>
+          @if (billingPlanType?.value === 'Controlled') {
+            <div class="form-field full-width">
+              <label>{{ t('card.label.estimatedKilometers') }}</label>
+              <input
+                class="form-input"
+                formControlName="estimatedKilometers"
+                type="number"
+                [placeholder]="t('card.placeholder.estimatedKilometers')"
+              />
+              @if (estimatedKilometers?.errors?.['required'] && estimatedKilometers?.dirty) {
+                <span class="error-message">{{
+                  t('card.errors.estimatedKilometersRequired')
+                }}</span>
+              }
+            </div>
+          }
+
+          @if ({ hasCoupon: hasCoupon$ | async, hasExtras: hasExtras$ | async }; as state) {
+            @if (state.hasCoupon || state.hasExtras) {
+              <h3 class="full-width">{{ t('card.section.extras') }}</h3>
             }
-          </div>
 
-          <h3 class="full-width">{{ t('card.section.extrasAndCoupon') }}</h3>
-          <div class="form-field full-width">
-            <label>{{ t('card.label.extras') }}</label>
-            <select class="form-input" formControlName="rentalRentalExtrasIds" multiple>
-              @for (extra of extras$ | async; track extra.id) {
-                <option [value]="extra.id">
-                  {{ extra.name }} ({{ extra.price | currency: 'BRL' : 'symbol' : '1.2-2' }})
-                </option>
-              }
-            </select>
-          </div>
+            @if (state.hasCoupon) {
+              <div class="form-field full-width">
+                <label>{{ t('card.label.coupon') }}</label>
+                <select class="form-input" formControlName="couponId">
+                  <option [ngValue]="null">{{ t('card.placeholder.coupon') }}</option>
 
-          <div class="form-field full-width">
-            <label>{{ t('card.label.coupon') }}</label>
-            <select class="form-input" formControlName="couponId">
-              <option [ngValue]="null">{{ t('card.placeholder.coupon') }}</option>
-              @for (coupon of coupons$ | async; track coupon.id) {
-                <option [ngValue]="coupon.id">{{ coupon.name }}</option>
-              }
-            </select>
-          </div>
+                  @for (coupon of coupons$ | async; track coupon.id) {
+                    <option [ngValue]="coupon.id">
+                      {{ coupon.name }}
+                      @if (coupon.discountValue) {
+                        (-{{ coupon.discountValue | currency: 'BRL' }})
+                      }
+                    </option>
+                  }
+                </select>
+              </div>
+            } @else if (state.hasExtras) {}
+
+            @if (state.hasExtras) {
+              <div class="form-field full-width">
+                <label>{{ t('card.label.extras') }}</label>
+                <select class="form-input" formControlName="rentalRentalExtrasIds" multiple>
+                  @for (extra of extras$ | async; track extra.id) {
+                    <option [value]="extra.id">
+                      {{ extra.name }} ({{ extra.price | currency: 'BRL' : 'symbol' : '1.2-2' }})
+                    </option>
+                  }
+                </select>
+                <small class="helper-text">{{ t('card.helper.multiSelect') }}</small>
+              </div>
+            } @else if (state.hasCoupon) {}
+          } @else {
+            <div class="info-message full-width">
+              {{ t('card.warnings.noOptionsAvailable') }}
+            </div>
+          }
         </div>
 
         <div class="buttons">

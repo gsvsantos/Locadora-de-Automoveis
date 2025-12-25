@@ -61,20 +61,18 @@ export class CreateSelfComponent {
     startDate: [new Date().toISOString().substring(0, 10), [Validators.required.bind(this)]],
     expectedReturnDate: [null, [Validators.required.bind(this)]],
     driverId: [null, [Validators.required.bind(this)]],
-    vehicleId: [this.route.snapshot.paramMap.get('vehicleId'), [Validators.required.bind(this)]],
+    vehicleId: [null, [Validators.required.bind(this)]],
     couponId: [null],
-    billingPlanType: ['Daily', [Validators.required.bind(this)]],
+    billingPlanType: [null, [Validators.required.bind(this)]],
     estimatedKilometers: [null],
     rentalRentalExtrasIds: [[]],
   });
 
   protected readonly hasCoupon$: Observable<boolean> = this.coupons$.pipe(
-    tap((res) => console.log(res)),
     map((res) => res.length >= 1),
   );
 
   protected readonly hasExtras$: Observable<boolean> = this.extras$.pipe(
-    tap((res) => console.log(res)),
     map((res) => res.length >= 1),
   );
 

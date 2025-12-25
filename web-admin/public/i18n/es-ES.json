@@ -1001,7 +1001,7 @@
           "association": "Asociación de cliente, conductor y empleado",
           "vehicleAndDates": "Vehículo y periodo",
           "billing": "Facturación y kilómetros estimados",
-          "extrasAndCoupon": "Extras y descuentos"
+          "extras": "Extras y descuentos"
         },
         "placeholder": {
           "client": "Selecciona el cliente...",
@@ -1026,10 +1026,18 @@
           "extras": "Servicios adicionales/Extras",
           "coupon": "Cupón"
         },
+        "helper": {
+          "multiSelect": "Mantenga Ctrl (Windows) o Cmd (Mac) para seleccionar varias opciones."
+        },
         "plan": {
           "daily": "Facturación diaria",
           "controlled": "Facturación controlada",
           "free": "Facturación libre"
+        },
+        "warnings": {
+          "noCoupons": "No hay cupones disponibles para este vehículo.",
+          "noExtras": "No hay servicios extra disponibles.",
+          "noOptionsAvailable": "No hay cupones ni extras disponibles para este alquiler."
         },
         "errors": {
           "clientRequired": "La selección del cliente es obligatoria.",

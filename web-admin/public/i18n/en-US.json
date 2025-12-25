@@ -1001,7 +1001,7 @@
           "association": "Client, Driver, and Employee Association",
           "vehicleAndDates": "Vehicle and Timeline",
           "billing": "Billing and Estimated Kilometers",
-          "extrasAndCoupon": "Extras and Discounts"
+          "extras": "Extras and Discounts"
         },
         "placeholder": {
           "client": "Select Client...",
@@ -1026,10 +1026,18 @@
           "extras": "Additional Services/Extras",
           "coupon": "Coupon"
         },
+        "helper": {
+          "multiSelect": "Hold Ctrl (Windows) or Cmd (Mac) to select multiple options."
+        },
         "plan": {
           "daily": "Daily Billing",
           "controlled": "Controlled Billing",
           "free": "Free Billing"
+        },
+        "warnings": {
+          "noCoupons": "No coupons available for this vehicle.",
+          "noExtras": "No extra services available.",
+          "noOptionsAvailable": "No coupons or extras available for this rental."
         },
         "errors": {
           "clientRequired": "Client selection is mandatory.",

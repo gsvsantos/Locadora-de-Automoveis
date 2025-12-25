@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
-import { filter, map, Observer } from 'rxjs';
+import { combineLatest, defer, filter, map, Observable, Observer, of, startWith, tap } from 'rxjs';
 import { Client } from '../../../models/client.models';
 import { NotificationService } from '../../../services/notification.service';
 import { RentalService } from './../../../services/rental.service';
@@ -71,9 +71,9 @@ export class CreateRentalComponent {
 
   protected formGroup: FormGroup = this.formBuilder.group(
     {
-      startDate: [null, [Validators.required.bind(this)]],
+      startDate: [new Date().toISOString().substring(0, 10), [Validators.required.bind(this)]],
       expectedReturnDate: [null, [Validators.required.bind(this)]],
-      startKm: [null, [Validators.required.bind(this)]],
+      startKm: [{ value: null, disabled: true }, [Validators.required.bind(this)]],
       clientId: [null, [Validators.required.bind(this)]],
       employeeId: [null, [Validators.required.bind(this)]],
       driverId: [null, [Validators.required.bind(this)]],
@@ -85,6 +85,53 @@ export class CreateRentalComponent {
     },
     { validators: [needsIndividualValidator] },
   );
+
+  protected readonly hasCoupon$: Observable<boolean> = this.coupons$.pipe(
+    map((res) => res.length >= 1),
+  );
+
+  protected readonly hasExtras$: Observable<boolean> = this.extras$.pipe(
+    map((res) => res.length >= 1),
+  );
+
+  protected readonly selectedVehicle$ = combineLatest([
+    this.vehicleId!.valueChanges.pipe(startWith(this.vehicleId?.value)),
+    this.vehicles$,
+  ]).pipe(
+    map(([id, vehicles]) => {
+      const foundVehicle = vehicles.find((vehicle) => vehicle.id === id);
+
+      if (foundVehicle) {
+        this.formGroup.patchValue({
+          startKm: foundVehicle.kilometers,
+        });
+      }
+
+      return foundVehicle;
+    }),
+  );
+
+  protected readonly billingPlanLogic$: Observable<string | null> = defer(() => {
+    const planControl = this.billingPlanType;
+
+    if (!planControl) return of(null);
+
+    return planControl.valueChanges.pipe(
+      startWith(planControl.value),
+      tap((planType: string) => {
+        const kmControl = this.estimatedKilometers;
+        if (!kmControl) return;
+
+        if (planType === 'Controlled') {
+          kmControl.setValidators([Validators.required.bind(this), Validators.min(1)]);
+        } else {
+          kmControl.clearValidators();
+          kmControl.setValue(null);
+        }
+        kmControl.updateValueAndValidity();
+      }),
+    );
+  });
 
   public get startDate(): AbstractControl | null {
     return this.formGroup.get('startDate');
@@ -110,7 +157,7 @@ export class CreateRentalComponent {
     return this.formGroup.get('driverId');
   }
 
-  public get vehicleId(): AbstractControl | null {
+  public get vehicleId(): AbstractControl<string> | null {
     return this.formGroup.get('vehicleId');
   }
 
@@ -118,7 +165,7 @@ export class CreateRentalComponent {
     return this.formGroup.get('couponId');
   }
 
-  public get billingPlanType(): AbstractControl | null {
+  public get billingPlanType(): AbstractControl<string> | null {
     return this.formGroup.get('billingPlanType');
   }
 
