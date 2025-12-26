@@ -4,6 +4,19 @@ namespace LocadoraDeAutomoveis.Application.Auth;
 
 public abstract class AuthErrorResults
 {
+    public static Error UserIsClientError()
+    {
+        return new Error("User is a Client")
+            .CausedBy($"You don't have permission to sign in.")
+            .WithMetadata("ErrorType", "BadRequest");
+    }
+    public static Error UserNotClientError()
+    {
+        return new Error("User is not a Client")
+            .CausedBy($"User is not registered as a client")
+            .WithMetadata("ErrorType", "BadRequest");
+    }
+
     public static Error PendingEmailConfirmationError(string email)
     {
         return new Error("Pending email confirmation")
@@ -14,14 +27,14 @@ public abstract class AuthErrorResults
     public static Error PhoneNumberNotConfirmedError(string phoneNumber)
     {
         return new Error("Phone number not confirmed")
-            .CausedBy($"The phone number \"{phoneNumber}\" must be confirmed to proceed.")
+            .CausedBy($"The phone number \"{phoneNumber}\" must be confirmed to proceed")
             .WithMetadata("ErrorType", "BadRequest");
     }
 
     public static Error LoginNotAllowedError()
     {
         return new Error("Login not allowed")
-            .CausedBy("Login is blocked due to security restrictions (e.g., unconfirmed email or phone number).")
+            .CausedBy("Login is blocked due to security restrictions (e.g., unconfirmed email or phone number)")
             .WithMetadata("ErrorType", "BadRequest");
     }
 

@@ -22,7 +22,7 @@ import {
   RegisterAuthDto,
   ResetPasswordRequestDto,
 } from '../models/auth.models';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { googleAuthConfig } from '../core/auth.google.config';
 import { AdminService } from './admin.service';
 import { LocalStorageService } from './local-storage.service';
@@ -83,14 +83,18 @@ export class AuthService {
             }
           }),
           take(1),
-          catchError((err: HttpErrorResponse) => {
-            console.log('Auth failed:', err);
-
-            if (this.oauthService.hasValidIdToken()) {
-              const apiError = err.error as { errors?: string[] };
+          catchError((err: HttpErrorResponse | OAuthErrorEvent | string) => {
+            if (this.oauthService.hasValidIdToken() && err instanceof HttpErrorResponse) {
+              const apiError = err.error as HttpErrorResponse as { errors?: string[] };
               const errorMessage: string | undefined = apiError?.errors?.[0];
               this.notificationService.error(errorMessage!);
               this.clearUrlParams();
+            } else if (err instanceof OAuthErrorEvent) {
+              const oAuthError = err.params as { error?: string };
+              const errorMessage: string | undefined = oAuthError.error;
+              this.notificationService.error(errorMessage!);
+            } else {
+              this.notificationService.error(err as string);
             }
             this.handleLogoutCleanup();
             return of(undefined);

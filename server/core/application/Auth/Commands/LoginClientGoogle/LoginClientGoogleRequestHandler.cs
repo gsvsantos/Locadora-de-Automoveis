@@ -106,6 +106,13 @@ public class LoginClientGoogleRequestHandler(
                 }
             }
 
+            IList<string> userRoles = await userManager.GetRolesAsync(userLogin!);
+
+            if (!userRoles.Contains("Client"))
+            {
+                return Result.Fail(AuthErrorResults.UserNotClientError());
+            }
+
             AccessToken? accessToken = await tokenProvider.GenerateAccessToken(userLogin) as AccessToken;
 
             if (accessToken is null)
