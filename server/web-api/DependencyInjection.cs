@@ -295,7 +295,7 @@ public static class DependencyInjection
     private static void ConfigureEmailSender(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<AppUrlsOptions>(configuration.GetSection("APPURLS"));
-        services.Configure<MailSettings>(configuration.GetSection("MAILOPTIONS"));
+        services.Configure<MailSettings>(configuration.GetSection(MailSettings.SectionName));
         services.Configure<EmailTemplateOptions>(opt =>
         {
             opt.TemplatesFolderName = "Templates";

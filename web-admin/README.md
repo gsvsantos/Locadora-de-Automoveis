@@ -1,59 +1,97 @@
-# LocadoraDeAutomoveis
+# 🛠️ Web Admin — Angular 20 (Painel de Gestão)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.2.
+SPA administrativa da plataforma **Locadora de Automóveis**. Aqui ficam as telas de operação interna (cadastros, gestão e controle), com **rotas protegidas por perfil** e uso intensivo de **Resolvers** para pré-carregar dados críticos.
 
-## Development server
+> Para visão geral do sistema (Server + Admin + Portal), veja o README da raiz.
 
-To start a local development server, run:
+---
 
+- Angular: `@angular/core` **^20.3.0**
+- Rotas: **70**
+- Telas documentadas: **53**
+- Guards: **5** (ex.: `adminOnly`, `employeeOnly`, `platformAdminOnly`)
+- Resolvers: **23**
+- Services: **16**
+
+---
+
+## ⚡ Rodar localmente (dev)
+
+### Pré-requisitos
+- Node.js + npm (compatível com Angular CLI)
+- Backend rodando (API)
+
+### Subir o Admin
 ```bash
-ng serve
-```
+cd web-admin
+npm install
+npm start
+````
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+> `npm start` executa `ng serve --port 4200`
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🧩 Scripts
 
-```bash
-ng generate component component-name
-```
+* `npm start` → `ng serve --port 4200`
+* `npm run build` → `ng build`
+* `npm run watch` → `ng build --watch --configuration development`
+* `npm run format` → `prettier --write .`
+* `npm run build:prod` → `npm run prebuild:prod && ng build --configuration production`
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## ⚙️ Configuração de ambiente
 
-## Building
+### Dev
 
-To build the project run:
+Arquivo:
 
-```bash
-ng build
-```
+* `src/environments/environment.ts`
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Chaves usadas:
 
-## Running unit tests
+* `production`
+* `apiUrl`
+* `client_id`
+* `captcha_key`
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Build de produção
 
-```bash
-ng test
-```
+O build prod injeta as configs em build time via:
 
-## Running end-to-end tests
+* `scripts/write-environment-prod.js`
 
-For end-to-end (e2e) testing, run:
+Esse script lê as env vars:
 
-```bash
-ng e2e
-```
+* `APIURL`
+* `CLIENT_ID`
+* `CAPTCHA_KEY`
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 🧭 Arquitetura do app (pontos relevantes)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+* Angular moderno (standalone: `bootstrapApplication(...)` + `imports: [...]` nos componentes)
+* Router com organização por áreas e lazy loading
+* Uso forte de **Resolvers**:
+
+  * melhora UX (tela já abre com dados),
+  * mas aumenta o “custo” de navegação se você concentrar tudo em resolvers.
+* Guards por perfil (admin/employee/platform admin)
+* i18n com Transloco 
+
+---
+
+## 🔐 Autorização 
+
+O Admin separa acessos por perfil; o padrão é:
+
+* **Guard bloqueia cedo** (sem renderizar UI indevida)
+* API valida de verdade (policy/roles) — o front é só a primeira linha
+
+---
+
+**Gustavo Santos**
+*Full Stack Developer .NET & Angular*

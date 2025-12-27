@@ -2,7 +2,7 @@
 
 public class MailSettings
 {
-    public const string SectionName = "MailSettings";
+    public const string SectionName = "MAILOPTIONS";
     public string Host { get; set; } = string.Empty;
     public int Port { get; set; }
     public string UserName { get; set; } = string.Empty;

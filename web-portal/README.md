@@ -1,59 +1,122 @@
-# WebPortal
+# 🌐 Web Portal — Angular 20 (Self-Service do Cliente)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.2.
+SPA do cliente final (autoatendimento) da plataforma **Locadora de Automóveis**. O foco aqui é UX e um fluxo de sessão resiliente (login, refresh, rotas protegidas), com o menor “peso” possível comparado ao Admin.
 
-## Development server
+> Para visão geral do sistema (Server + Admin + Portal), veja o README da raiz.
 
-To start a local development server, run:
+---
 
+- Angular: `@angular/core` **^20.3.0**
+- Componentes: **13**
+- Arquivos de rotas: **4**
+- Guards: **2**
+- Interceptors: **2**
+- Resolvers: **9**
+- Services HTTP: **10**
+
+---
+
+## ⚡ Rodar localmente (dev)
+
+### Pré-requisitos
+- Node.js + npm (compatível com Angular CLI)
+- Backend rodando (API)
+
+### Subir o Portal
 ```bash
-ng serve
-```
+cd web-portal
+npm install
+npm start
+````
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+> `npm start` executa `ng serve --port 4201`
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🧩 Scripts
 
-```bash
-ng generate component component-name
-```
+* `npm start` → `ng serve --port 4201`
+* `npm run build` → `ng build`
+* `npm run watch` → `ng build --watch --configuration development`
+* `npm run format` → `prettier --write .`
+* `npm run build:prod` → `npm run prebuild:prod && ng build --configuration production`
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## ⚙️ Configuração de ambiente
 
-## Building
+### Dev
 
-To build the project run:
+Arquivo:
 
-```bash
-ng build
-```
+* `src/environments/environment.ts`
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Chaves usadas:
 
-## Running unit tests
+* `production`
+* `apiUrl`
+* `client_id`
+* `captcha_key`
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Build de produção
 
-```bash
-ng test
-```
+O build prod injeta as configs em build time via:
 
-## Running end-to-end tests
+* `scripts/write-environment-prod.js`
 
-For end-to-end (e2e) testing, run:
+Esse script lê as env vars:
 
-```bash
-ng e2e
-```
+* `APIURL`
+* `CLIENT_ID`
+* `CAPTCHA_KEY`
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 🧭 Rotas principais (alto nível)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+* Auth:
+
+  * login
+  * register
+  * forget-password
+  * reset-password
+* Home
+* Account:
+
+  * details
+  * edit
+* Rentals:
+
+  * list
+  * new
+  * details
+
+---
+
+## 🔐 Sessão e autenticação
+
+O portal mantém a experiência do usuário consistente com:
+
+### Interceptor de autenticação
+
+* adiciona Bearer token nas chamadas
+* tenta refresh automático em `401` (quando o backend está configurado)
+
+### Interceptor de idioma
+
+* garante consistência de cultura/i18n nas requisições (ex.: header/idioma)
+
+---
+
+## 🌍 i18n
+
+O projeto usa Transloco e segue o padrão de idiomas:
+
+* `pt-BR`
+* `en-US`
+* `es-ES`
+
+---
+
+**Gustavo Santos**
+*Full Stack Developer .NET & Angular*
