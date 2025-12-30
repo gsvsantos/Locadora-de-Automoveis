@@ -48,11 +48,102 @@ public sealed class UserTests
     {
         // Arrange & Act
         Guid tenantId = Guid.NewGuid();
-
         User user = new();
         user.AssociateTenant(tenantId);
 
         // Assert
         Assert.AreEqual(tenantId, user.TenantId);
+    }
+
+    [TestMethod]
+    public void UserMethod_AssociateTenant_SameTenantId_ShouldReturn()
+    {
+        // Arrange
+        Guid tenantId = Guid.NewGuid();
+        User user = new();
+        user.AssociateTenant(tenantId);
+
+        // Act
+        user.AssociateTenant(tenantId);
+
+        // Assert
+        Assert.AreEqual(tenantId, user.TenantId);
+    }
+
+    [TestMethod]
+    public void UserMethod_AssociateTenant_NullTenantId_ShouldReturn()
+    {
+        // Arrange
+        Guid tenantId = Guid.NewGuid();
+        User user = new();
+
+        // Act
+        user.AssociateTenant(Guid.Empty);
+
+        // Assert
+        Assert.IsNull(user.TenantId);
+    }
+
+    [TestMethod]
+    public void UserMethod_AssociateTenant_EmptyTenantId_ShouldWorks()
+    {
+        // Arrange
+        Guid tenantId = Guid.NewGuid();
+        User user = new();
+        user.AssociateTenant(tenantId);
+
+        // Act
+        user.AssociateTenant(Guid.Empty);
+
+        // Assert
+        Assert.IsNull(user.TenantId);
+    }
+
+    [TestMethod]
+    public void UserMethod_AssociateTenant_DiffTenantId_ShouldWorks()
+    {
+        // Arrange
+        Guid tenantId = Guid.NewGuid();
+
+        User user = new() { TenantId = tenantId };
+
+        // Act
+        user.AssociateTenant(Guid.Empty);
+
+        // Assert
+        Assert.IsNull(user.TenantId);
+    }
+
+    [TestMethod]
+    public void UserMethod_SetPreferredLanguage_ShouldWorks()
+    {
+        // Arrange
+        User user = new();
+        string lang = "pt-BR";
+
+        // Act
+        user.SetPreferredLanguage(lang);
+
+        // Assert
+        Assert.AreEqual(lang, user.PreferredLanguage);
+    }
+
+    [TestMethod]
+    public void EntityMethod_GetTenantId_ShouldWorks()
+    {
+        // Arrange
+        Guid tenantId = Guid.NewGuid();
+        User userWithTenant = new();
+        userWithTenant.AssociateTenant(tenantId);
+
+        User userWithoutTenant = new();
+
+        // Act
+        Guid retrievedTenantId = userWithTenant.GetTenantId();
+        Guid retrievedEmptyTenantId = userWithoutTenant.GetTenantId();
+
+        // Assert
+        Assert.AreEqual(tenantId, retrievedTenantId);
+        Assert.AreEqual(Guid.Empty, retrievedEmptyTenantId);
     }
 }

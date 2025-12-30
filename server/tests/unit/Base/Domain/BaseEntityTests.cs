@@ -106,19 +106,18 @@ public sealed class BaseEntityTests
     {
         // Arrange & Act
         Guid tenantId = Guid.NewGuid();
-
         TestEntity entity = new();
         entity.AssociateTenant(tenantId);
 
         // Assert
         Assert.AreEqual(tenantId, entity.TenantId);
     }
+
     [TestMethod]
     public void EntityMethod_AssociateTenant_SameTenant_ShouldReturn()
     {
         // Arrange
         Guid tenantId = Guid.NewGuid();
-
         TestEntity entity = new();
         entity.AssociateTenant(tenantId);
 
