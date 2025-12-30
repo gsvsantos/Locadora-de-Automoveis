@@ -76,7 +76,7 @@ jobs:
         run: dotnet restore ./server/LocadoraDeAutomoveis.sln
     
       - name: Install EF Core CLI
-        run: dotnet tool install --global dotnet-ef
+        run: dotnet tool install --global dotnet-ef --version 8.*
 
       - name: Apply EF Core Migrations
         run: dotnet ef database update --project ./server/infrastructure/orm --startup-project ./server/web-api --configuration Release
