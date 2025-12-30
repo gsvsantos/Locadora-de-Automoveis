@@ -18,14 +18,14 @@ public class RefreshToken : BaseEntity<RefreshToken>
     {
         get
         {
-            return this.RevokedDateUtc is null || DateTimeOffset.UtcNow <= this.ExpirationDateUtc;
+            return this.RevokedDateUtc is null && DateTimeOffset.UtcNow <= this.ExpirationDateUtc;
         }
     }
 
-    public override void AssociateUser(User user)
+    public override void AssociateUser(User? user)
     {
         base.AssociateUser(user);
-        this.UserAuthenticatedId = user.Id;
+        this.UserAuthenticatedId = user!.Id;
     }
 
     public override void Update(RefreshToken updatedEntity)

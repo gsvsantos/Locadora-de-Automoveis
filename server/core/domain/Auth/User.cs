@@ -19,7 +19,14 @@ public class User : IdentityUser<Guid>
 
     public void AssociateTenant(Guid tenantId)
     {
-        this.TenantId = tenantId == Guid.Empty ? null : tenantId;
+        Guid? targetId = tenantId == Guid.Empty ? null : tenantId;
+
+        if (this.TenantId == targetId)
+        {
+            return;
+        }
+
+        this.TenantId = targetId;
     }
 
     public void SetPreferredLanguage(string language)
