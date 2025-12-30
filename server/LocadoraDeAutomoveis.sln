@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.Domain
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.Application", "core\application\LocadoraDeAutomoveis.Application.csproj", "{60BC23DC-D45F-C6EE-51AF-90C92BF679D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.WebApi", "web-api\LocadoraDeAutomoveis.WebApi.csproj", "{BFE7E912-8076-5139-F52C-B18711532EF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.WebAPI", "web-api\LocadoraDeAutomoveis.WebAPI.csproj", "{BFE7E912-8076-5139-F52C-B18711532EF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{5BE4D413-7C50-4F75-B26E-B10B3D527ED7}"
 EndProject
