@@ -3,7 +3,7 @@
 namespace LocadoraDeAutomoveis.Tests.Unit.Auth.Domain;
 
 [TestClass]
-[TestCategory("Impersonation Actor Dto Domain - Unit Tests")]
+[TestCategory("ImpersonationActorDto Domain - Unit Tests")]
 public sealed class ImpersonationActorDtoTests
 {
     [TestMethod]

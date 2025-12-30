@@ -3,7 +3,7 @@
 namespace LocadoraDeAutomoveis.Tests.Unit.Auth.Domain;
 
 [TestClass]
-[TestCategory("Issued Refresh Token Dto Domain - Unit Tests")]
+[TestCategory("IssuedRefreshTokenDto Domain - Unit Tests")]
 public sealed class IssuedRefreshTokenDtoTests
 {
     [TestMethod]

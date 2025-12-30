@@ -23,7 +23,7 @@ public sealed class RentalExtraTests
     }
 
     [TestMethod]
-    public void RentalExtraConstructor_WithParams_ShouldInitializeProperties()
+    public void RentalExtraConstructor_WithParams_ShouldWorks()
     {
         // Arrange & Act
         RentalExtra rentalExtra = new(

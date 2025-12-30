@@ -29,7 +29,7 @@ public sealed class ClientTests
     }
 
     [TestMethod]
-    public void ClientFirstConstructor_Parameterized_ShouldInitializeProperties()
+    public void ClientFirstConstructor_Parameterized_ShouldWorks()
     {
         // Arrange & Act
         Client client = new(

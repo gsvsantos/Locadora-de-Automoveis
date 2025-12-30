@@ -299,7 +299,7 @@ public static class DependencyInjection
         services.Configure<EmailTemplateOptions>(opt =>
         {
             opt.TemplatesFolderName = "Templates";
-            opt.DefaultLanguage = "en-US";
+            opt.DefaultLanguage = "pt-BR";
             opt.EnableNeutralLanguageFallback = true;
             opt.HtmlEncodeValues = true;
         });

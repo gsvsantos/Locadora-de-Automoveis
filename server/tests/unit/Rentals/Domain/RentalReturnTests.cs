@@ -27,7 +27,7 @@ public sealed class RentalReturnTests
     }
 
     [TestMethod]
-    public void RentalReturnConstructor_Parametered_ShouldInitializeProperties()
+    public void RentalReturnConstructor_Parametered_ShouldWorks()
     {
         // Arrange
         DateTimeOffset returnDate = DateTimeOffset.UtcNow;

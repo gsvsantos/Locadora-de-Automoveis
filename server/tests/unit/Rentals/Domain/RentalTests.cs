@@ -32,7 +32,7 @@ public sealed class RentalTests
     }
 
     [TestMethod]
-    public void RentalConstructor_Parametered_ShouldInitializeProperties()
+    public void RentalConstructor_Parametered_ShouldWorks()
     {
         // Arrange
         DateTimeOffset start = DateTimeOffset.Now;

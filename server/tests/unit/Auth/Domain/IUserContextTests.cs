@@ -3,7 +3,7 @@
 namespace LocadoraDeAutomoveis.Tests.Unit.Auth.Domain;
 
 [TestClass]
-[TestCategory("ITenantProvider Domain - Unit Tests")]
+[TestCategory("IUserContext Domain - Unit Tests")]
 public sealed class IUserContextTests
 {
     public class StubUserContext : IUserContext
@@ -47,5 +47,20 @@ public sealed class IUserContextTests
 
         // Assert
         Assert.AreEqual(expectedId, result);
+    }
+
+    [TestMethod]
+    public void IsInRole_AlwaysReturnTrue()
+    {
+        // O método real (IdentityTenantProvider) depende de infraestrutura (IHttpContextAccessor).
+        // Este teste valida apenas o comportamento do Stub usado para simular esse contrato no Domínio.
+        // Arrange
+        StubUserContext context = new();
+
+        // Act
+        bool result = ((IUserContext)context).IsInRole("teste");
+
+        // Assert
+        Assert.IsTrue(result);
     }
 }

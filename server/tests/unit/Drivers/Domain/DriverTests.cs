@@ -26,7 +26,7 @@ public sealed class DriverTests
     }
 
     [TestMethod]
-    public void DriverConstructor_Parametered_ShouldInitializeProperties()
+    public void DriverConstructor_Parametered_ShouldWorks()
     {
         // Arrange & Act
         DateTimeOffset date = DateTimeOffset.Now;

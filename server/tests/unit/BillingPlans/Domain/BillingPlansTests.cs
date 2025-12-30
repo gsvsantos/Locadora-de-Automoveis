@@ -8,7 +8,7 @@ namespace LocadoraDeAutomoveis.Tests.Unit.BillingPlans.Domain;
 public class BillingPlanTests
 {
     [TestMethod]
-    public void BillingPlanConstructor_Default_ShouldWorks()
+    public void BillingPlanConstructor_Default_ShouldInitializeProperties()
     {
         // Arrange & Act
         BillingPlan billingPlan = new();
