@@ -5,10 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LocadoraDeAutomoveis.Tests.Integration.Shared;
 
-public sealed class TestAppDbContext : AppDbContext
+public sealed class TestAppDbContext(DbContextOptions options) : AppDbContext(options)
 {
-    public TestAppDbContext(DbContextOptions options) : base(options) { }
-
     public DbSet<TestEntity> TestEntities
     {
         get

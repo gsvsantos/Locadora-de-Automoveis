@@ -79,12 +79,10 @@ jobs:
         run: dotnet tool install --global dotnet-ef --version 8.*
 
       - name: Apply EF Core Migrations
-        run: dotnet ef database update --project ./server/infrastructure/orm --startup-project ./server/web-api --configuration Release
+        run: dotnet ef database update --project ./server/infrastructure/orm --startup-project ./server/web-api -c Release
         env: 
           ASPNET_ENVIRONMENT: "GITHUB_ACTIONS"
           SQL_CONNECTION_STRING: ${{ secrets.SQL_CONNECTION_STRING }}
-          NEWRELIC_LICENSE_KEY: ${{ secrets.NEWRELIC_LICENSE_KEY }}
-          LUCKYPENNYSOFTWARE_LICENSE_KEY: ${{ secrets.LUCKYPENNYSOFTWARE_LICENSE_KEY }}
 
   deploy:
     runs-on: windows-latest
