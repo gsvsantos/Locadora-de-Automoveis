@@ -54,7 +54,7 @@ jobs:
       - name: Run tests
         run: dotnet test ./server/LocadoraDeAutomoveis.sln -c Release --verbosity normal
         env: 
-          ASPNET_ENVIRONMENT: "GITHUB_ACTIONS"
+          ASPNETCORE_ENVIRONMENT: "GITHUB_ACTIONS"
           SQL_CONNECTION_STRING: ${{ secrets.SQL_CONNECTION_STRING }}
           
   migrate:
@@ -79,9 +79,9 @@ jobs:
         run: dotnet tool install --global dotnet-ef --version 8.*
 
       - name: Apply EF Core Migrations
-        run: dotnet ef database update --project ./server/infrastructure/orm --startup-project ./server/web-api -c Release
+        run: dotnet ef database update --project ./server/infrastructure/orm --startup-project ./server/infrastructure/orm --configuration Release
         env: 
-          ASPNET_ENVIRONMENT: "GITHUB_ACTIONS"
+          ASPNETCORE_ENVIRONMENT: "GITHUB_ACTIONS"
           SQL_CONNECTION_STRING: ${{ secrets.SQL_CONNECTION_STRING }}
 
   deploy:
