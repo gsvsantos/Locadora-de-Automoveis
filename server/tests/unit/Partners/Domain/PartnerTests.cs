@@ -84,12 +84,37 @@ public sealed class PartnerTests
     }
 
     [TestMethod]
-    public void PartnerMethod_AddRangeCoupons_ShouldWorks()
+    public void PartnerMethod_AddRangeCoupons_ShouldNotAddRangeWhen_PartnerCouponsHasSameValue()
     {
         // Arrange
         Partner partner = new("G2A");
         List<Coupon> coupons = Builder<Coupon>.CreateListOfSize(3).All()
             .Do(c => c.AssociatePartner(partner))
+            .Build().ToList();
+
+        // Act
+        partner.AddRangeCoupons(coupons);
+
+        // Assert
+        Assert.AreEqual(3, partner.Coupons.Count);
+
+        for (int i = 0; i < partner.Coupons.Count; i++)
+        {
+            Coupon coupon = partner.Coupons[i];
+
+            Assert.IsNotNull(coupon);
+            Assert.AreEqual(coupon.Name, coupons[i].Name);
+            Assert.AreEqual(coupon.DiscountValue, coupons[i].DiscountValue);
+            Assert.AreEqual(coupon.ExpirationDate, coupons[i].ExpirationDate);
+        }
+    }
+
+    [TestMethod]
+    public void PartnerMethod_AddRangeCoupons_ShouldAddRangeWhen_PartnerCouponsIsEmpty()
+    {
+        // Arrange
+        Partner partner = new("MACHINIMA");
+        List<Coupon> coupons = Builder<Coupon>.CreateListOfSize(3).All()
             .Build().ToList();
 
         // Act

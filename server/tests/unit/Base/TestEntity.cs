@@ -7,9 +7,9 @@ public class TestEntity : BaseEntity<TestEntity>
     public string Name { get; set; } = string.Empty;
     public int Age { get; set; }
 
-    public override void Update(TestEntity source)
+    public override void Update(TestEntity updatedEntity)
     {
-        this.Name = source.Name;
-        this.Age = source.Age;
+        this.Name = updatedEntity.Name;
+        this.Age = updatedEntity.Age;
     }
 }

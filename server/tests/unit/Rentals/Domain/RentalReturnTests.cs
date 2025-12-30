@@ -21,6 +21,7 @@ public sealed class RentalReturnTests
         Assert.AreEqual(0, rentalReturn.ExtrasTotalCost);
         Assert.AreEqual(0, rentalReturn.FuelPenalty);
         Assert.AreEqual(0, rentalReturn.PenaltyTotalCost);
+        Assert.AreEqual(0, rentalReturn.DiscountTotal);
         Assert.AreEqual(0, rentalReturn.FinalPrice);
         Assert.AreEqual(DateTimeOffset.MinValue, rentalReturn.ReturnDate);
     }
@@ -97,6 +98,20 @@ public sealed class RentalReturnTests
 
         // Assert
         Assert.AreEqual(penaltyTotal, rentalReturn.PenaltyTotalCost);
+    }
+
+    [TestMethod]
+    public void RentalReturnMethod_SetDiscountTotal_ShouldUpdateProperty()
+    {
+        // Arrange
+        RentalReturn rentalReturn = new();
+        decimal discount = 250.00m;
+
+        // Act
+        rentalReturn.SetDiscountTotal(discount);
+
+        // Assert
+        Assert.AreEqual(discount, rentalReturn.DiscountTotal);
     }
 
     [TestMethod]

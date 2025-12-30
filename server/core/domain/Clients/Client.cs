@@ -154,6 +154,7 @@ public class Client : BaseEntity<Client>
         this.Document = updatedEntity.Document;
         this.Address = updatedEntity.Address;
         this.LicenseNumber = updatedEntity.LicenseNumber;
+        this.LicenseValidity = updatedEntity.LicenseValidity;
         DefineType(updatedEntity.Type);
     }
 }

@@ -51,7 +51,7 @@ public sealed class DriverTests
     }
 
     [TestMethod]
-    public void VehicleMethod_Update_ShouldWorks()
+    public void DriverMethod_Update_ShouldWorks()
     {
         RandomGenerator random = new();
 
@@ -90,7 +90,7 @@ public sealed class DriverTests
     }
 
     [TestMethod]
-    public void VehicleMethod_AssociateClientCPF_ShouldWorks()
+    public void DriverMethod_AssociateClientCPF_ShouldWorks()
     {
         // Arrange
         Driver driver = new();
@@ -108,7 +108,7 @@ public sealed class DriverTests
     }
 
     [TestMethod]
-    public void VehicleMethod_DisassociateClientCPF_ShouldWorks()
+    public void DriverMethod_DisassociateClientCPF_ShouldWorks()
     {
         // Arrange
         Driver driver = new();
@@ -127,7 +127,7 @@ public sealed class DriverTests
     }
 
     [TestMethod]
-    public void VehicleMethod_AssociateClientCNPJ_ShouldWorks()
+    public void DriverMethod_AssociateClientCNPJ_ShouldWorks()
     {
         // Arrange
         Driver driver = new();
@@ -145,7 +145,7 @@ public sealed class DriverTests
     }
 
     [TestMethod]
-    public void VehicleMethod_DisassociateClientCNPJ_ShouldWorks()
+    public void DriverMethod_DisassociateClientCNPJ_ShouldWorks()
     {
         // Arrange
         Driver driver = new();
@@ -161,5 +161,60 @@ public sealed class DriverTests
         // Assert
         Assert.AreNotEqual(clientCNPJ.Id, driver.ClientId);
         Assert.AreNotEqual(clientCNPJ, driver.Client);
+    }
+
+    [TestMethod]
+    public void DriverMethod_AssociateClient_ShouldReturn()
+    {
+        // Arrange
+        Driver driver = new();
+
+        Client client = Builder<Client>.CreateNew().Build();
+        client.DefineType(EClientType.Individual);
+        driver.AssociateClient(client);
+
+        // Act
+        driver.AssociateClient(client);
+
+        // Assert
+        Assert.AreEqual(client.Id, driver.ClientId);
+        Assert.AreEqual(client, driver.Client);
+        Assert.IsTrue(driver.Client.Type == EClientType.Individual);
+    }
+
+    [TestMethod]
+    public void DriverMethod_AssociateClient_ShouldDisassociateBefore_And_Work()
+    {
+        // Arrange
+        Driver driver = new();
+
+        Client client1 = Builder<Client>.CreateNew().Build();
+        client1.DefineType(EClientType.Business);
+        driver.AssociateClient(client1);
+
+        Client client2 = Builder<Client>.CreateNew().Build();
+        client2.DefineType(EClientType.Individual);
+
+        // Act
+        driver.AssociateClient(client2);
+
+        // Assert
+        Assert.AreEqual(client2.Id, driver.ClientId);
+        Assert.AreEqual(client2, driver.Client);
+        Assert.IsTrue(driver.Client.Type == EClientType.Individual);
+    }
+
+    [TestMethod]
+    public void DriverMethod_DisassociateClient_ShouldNotWork()
+    {
+        // Arrange
+        Driver driver = new();
+
+        // Act
+        driver.DisassociateClient();
+
+        // Assert
+        Assert.AreEqual(Guid.Empty, driver.ClientId);
+        Assert.IsNull(driver.Client);
     }
 }

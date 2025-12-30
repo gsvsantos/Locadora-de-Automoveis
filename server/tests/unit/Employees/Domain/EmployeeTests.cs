@@ -1,4 +1,6 @@
-﻿using LocadoraDeAutomoveis.Domain.Employees;
+﻿using FizzWare.NBuilder;
+using LocadoraDeAutomoveis.Domain.Auth;
+using LocadoraDeAutomoveis.Domain.Employees;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Employees.Domain;
 
@@ -63,5 +65,20 @@ public sealed class EmployeeTests
         Assert.AreEqual("Employee Updated da Silva", employee.FullName);
         Assert.AreEqual(admissionDate.AddDays(10), employee.AdmissionDate);
         Assert.AreEqual(3000m, employee.Salary);
+    }
+
+    [TestMethod]
+    public void EmployeeMethod_AssociateLoginUser_ShouldWorks()
+    {
+        // Arrange
+        Employee employee = Builder<Employee>.CreateNew().Build();
+        User loginUser = Builder<User>.CreateNew().Build();
+
+        // Act
+        employee.AssociateLoginUser(loginUser);
+
+        // Assert
+        Assert.AreEqual(loginUser.Id, employee.LoginUserId);
+        Assert.AreEqual(loginUser, employee.LoginUser);
     }
 }

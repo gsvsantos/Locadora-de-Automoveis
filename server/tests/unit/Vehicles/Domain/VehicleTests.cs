@@ -81,7 +81,7 @@ public sealed class VehicleTests
             1984,
             "https://aquelesite.net/ze"
         );
-        vehicle.SetFuelType(EFuelType.Gasoline);
+        updatedVehicle.SetFuelType(EFuelType.Gasoline);
 
         // Act
         vehicle.Update(updatedVehicle);
@@ -105,9 +105,7 @@ public sealed class VehicleTests
     {
         // Arrange
         Vehicle vehicle = new();
-
         Group group = new("Grupo");
-
         vehicle.AssociateGroup(group);
 
         Vehicle updatedVehicle = new();
@@ -120,6 +118,28 @@ public sealed class VehicleTests
         Assert.AreEqual(group.Id, vehicle.GroupId);
         Assert.AreEqual(group, vehicle.Group);
         Assert.IsTrue(group.Vehicles.Contains(vehicle));
+    }
+
+    [TestMethod]
+    public void VehicleMethod_Update_ShouldChangeGroup_WhenDifferent()
+    {
+        // Arrange
+        Vehicle vehicle = new();
+        Group groupA = new("Grupo A");
+        vehicle.AssociateGroup(groupA);
+
+        Group groupB = new("Grupo B");
+        Vehicle updatedVehicle = new();
+        updatedVehicle.AssociateGroup(groupB);
+
+        // Act
+        vehicle.Update(updatedVehicle);
+
+        // Assert
+        Assert.AreEqual(groupB.Id, vehicle.GroupId);
+        Assert.AreEqual(groupB, vehicle.Group);
+        Assert.IsFalse(groupA.Vehicles.Contains(vehicle));
+        Assert.IsTrue(groupB.Vehicles.Contains(vehicle));
     }
 
     [TestMethod]
@@ -140,6 +160,44 @@ public sealed class VehicleTests
     }
 
     [TestMethod]
+    public void VehicleMethod_AssociateGroup_ShouldReturn()
+    {
+        // Arrange
+        Vehicle vehicle = new();
+
+        Group group = new("Grupo");
+        vehicle.AssociateGroup(group);
+
+        // Act
+        vehicle.AssociateGroup(group);
+
+        // Assert
+        Assert.AreEqual(group.Id, vehicle.GroupId);
+        Assert.AreEqual(group, vehicle.Group);
+        Assert.IsTrue(group.Vehicles.Contains(vehicle));
+    }
+
+    [TestMethod]
+    public void VehicleMethod_AssociateGroup_ShouldDisassociateBefore_And_Work()
+    {
+        // Arrange
+        Vehicle vehicle = new();
+
+        Group group1 = new("Grupo");
+        vehicle.AssociateGroup(group1);
+
+        Group group2 = new("Grupo2");
+
+        // Act
+        vehicle.AssociateGroup(group2);
+
+        // Assert
+        Assert.AreEqual(group2.Id, vehicle.GroupId);
+        Assert.AreEqual(group2, vehicle.Group);
+        Assert.IsTrue(group2.Vehicles.Contains(vehicle));
+    }
+
+    [TestMethod]
     public void VehicleMethod_DisassociateGroup_ShouldWorks()
     {
         // Arrange
@@ -156,5 +214,19 @@ public sealed class VehicleTests
         Assert.AreEqual(Guid.Empty, vehicle.GroupId);
         Assert.IsNull(vehicle.Group);
         Assert.IsFalse(group.Vehicles.Contains(vehicle));
+    }
+
+    [TestMethod]
+    public void VehicleMethod_DisassociateGroup_ShouldReturn()
+    {
+        // Arrange
+        Vehicle vehicle = new();
+
+        // Act
+        vehicle.DisassociateGroup();
+
+        // Assert
+        Assert.AreEqual(Guid.Empty, vehicle.GroupId);
+        Assert.IsNull(vehicle.Group);
     }
 }

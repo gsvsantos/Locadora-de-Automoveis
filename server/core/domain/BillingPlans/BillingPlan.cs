@@ -59,7 +59,6 @@ public class BillingPlan : BaseEntity<BillingPlan>
     }
 }
 
-public abstract record BillingMode;
-public record DailyBilling(decimal DailyRate, decimal PricePerKm) : BillingMode;
-public record ControlledBilling(decimal DailyRate, decimal PricePerKmExtrapolated) : BillingMode;
-public record FreeBilling(decimal FixedRate) : BillingMode;
+public record DailyBilling(decimal DailyRate, decimal PricePerKm);
+public record ControlledBilling(decimal DailyRate, decimal PricePerKmExtrapolated);
+public record FreeBilling(decimal FixedRate);

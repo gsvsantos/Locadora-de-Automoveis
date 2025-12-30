@@ -136,5 +136,21 @@ public sealed class CouponTests
         // Assert
         Assert.AreNotEqual(partner.Id, coupon.PartnerId);
         Assert.AreNotEqual(partner, coupon.Partner);
+        Assert.AreEqual(Guid.Empty, coupon.PartnerId);
+        Assert.IsNull(coupon.Partner);
+    }
+
+    [TestMethod]
+    public void CouponMethod_DisassociatePartner_ShouldNotWork()
+    {
+        // Arrange
+        Coupon coupon = new();
+
+        // Act
+        coupon.DisassociatePartner();
+
+        // Assert
+        Assert.AreEqual(Guid.Empty, coupon.PartnerId);
+        Assert.IsNull(coupon.Partner);
     }
 }

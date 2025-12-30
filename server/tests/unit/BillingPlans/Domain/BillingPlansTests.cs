@@ -97,6 +97,74 @@ public class BillingPlanTests
     }
 
     [TestMethod]
+    public void BillingPlanMethod_AssociateGroup_ShouldReturn()
+    {
+        // Arrange
+        BillingPlan BillingPlan = new(
+            "SUV Plan",
+            new DailyBilling(100m, 2m),
+            new ControlledBilling(80m, 200),
+            new FreeBilling(70m)
+        );
+        Group group = new("Group A");
+        BillingPlan.AssociateGroup(group);
+
+        // Act
+        BillingPlan.AssociateGroup(group);
+
+        // Assert
+        Assert.AreEqual(group.Id, BillingPlan.GroupId);
+        Assert.AreEqual("SUV Plan", BillingPlan.Name);
+        Assert.AreEqual(group, BillingPlan.Group);
+        Assert.IsTrue(group.BillingPlans.Contains(BillingPlan));
+    }
+
+    [TestMethod]
+    public void BillingPlanMethod_AssociateGroup_ShouldDisassociateBefore_And_Work()
+    {
+        // Arrange
+        BillingPlan BillingPlan = new(
+            "SUV Plan",
+            new DailyBilling(100m, 2m),
+            new ControlledBilling(80m, 200),
+            new FreeBilling(70m)
+        );
+        Group group1 = new("Group A");
+        BillingPlan.AssociateGroup(group1);
+
+        Group group2 = new("Group B");
+
+        // Act
+        BillingPlan.AssociateGroup(group2);
+
+        // Assert
+        Assert.AreEqual(group2.Id, BillingPlan.GroupId);
+        Assert.AreEqual("SUV Plan", BillingPlan.Name);
+        Assert.AreEqual(group2, BillingPlan.Group);
+        Assert.IsTrue(group2.BillingPlans.Contains(BillingPlan));
+    }
+
+    [TestMethod]
+    public void BillingPlanMethod_DisassociateGroup_ShouldNotWork()
+    {
+        // Arrange
+        BillingPlan BillingPlan = new(
+            "SUV Plan",
+            new DailyBilling(100m, 2m),
+            new ControlledBilling(80m, 200),
+            new FreeBilling(70m)
+        );
+
+        // Act
+        BillingPlan.DisassociateGroup();
+
+        // Assert
+        Assert.AreEqual(Guid.Empty, BillingPlan.GroupId);
+        Assert.AreEqual("SUV Plan", BillingPlan.Name);
+        Assert.IsNull(BillingPlan.Group);
+    }
+
+    [TestMethod]
     public void BillingPlanMethod_DisassociateGroup_ShouldWorks()
     {
         // Arrange
@@ -120,4 +188,5 @@ public class BillingPlanTests
         Assert.IsNull(BillingPlan.Group);
         Assert.IsFalse(group.BillingPlans.Contains(BillingPlan));
     }
+
 }

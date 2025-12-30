@@ -22,7 +22,7 @@ public abstract class BaseEntity<T>
         this.IsActive = false;
     }
 
-    public virtual void AssociateUser(User user)
+    public virtual void AssociateUser(User? user)
     {
         if (user is null)
         {
@@ -31,22 +31,6 @@ public abstract class BaseEntity<T>
 
         this.User = user;
         this.UserId = user.Id;
-    }
-
-    public virtual void AssociateTenant(User tenant)
-    {
-        if (tenant is null)
-        {
-            return;
-        }
-
-        if (this.Tenant is not null && this.Tenant.Id == tenant.Id)
-        {
-            return;
-        }
-
-        this.Tenant = tenant;
-        this.TenantId = tenant.Id;
     }
 
     public virtual void AssociateTenant(Guid tenantId)

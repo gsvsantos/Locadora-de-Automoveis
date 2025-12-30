@@ -1,6 +1,7 @@
 ﻿using FizzWare.NBuilder;
 using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.RentalExtras;
@@ -110,6 +111,21 @@ public sealed class RentalTests
     }
 
     [TestMethod]
+    public void RentalMethod_AssociateCoupon_ShouldWorks()
+    {
+        // Arrange
+        Rental rental = new();
+        Coupon coupon = Builder<Coupon>.CreateNew().Build();
+
+        // Act
+        rental.AssociateCoupon(coupon);
+
+        // Assert
+        Assert.AreEqual(coupon.Id, rental.CouponId);
+        Assert.AreEqual(coupon, rental.Coupon);
+    }
+
+    [TestMethod]
     public void RentalMethod_AssociateBillingPlan_ShouldWorks()
     {
         // Arrange
@@ -175,11 +191,13 @@ public sealed class RentalTests
         Rental rental = new();
 
         // Act
+        rental.SetBasePrice(1500);
         rental.SetEstimatedKilometers(500);
         rental.SetStatus(ERentalStatus.Completed);
         rental.SetFinalPrice(1200);
 
         // Assert
+        Assert.AreEqual(1500, rental.BaseRentalPrice);
         Assert.AreEqual(500, rental.EstimatedKilometers);
         Assert.AreEqual(ERentalStatus.Completed, rental.Status);
         Assert.AreEqual(1200, rental.FinalPrice);
@@ -206,6 +224,7 @@ public sealed class RentalTests
         updatedData.SetStartKm(200);
 
         Employee newEmployee = Builder<Employee>.CreateNew().Build();
+        Coupon newCoupon = Builder<Coupon>.CreateNew().Build();
         Client newClient = Builder<Client>.CreateNew().Build();
         Driver newDriver = Builder<Driver>.CreateNew().Build();
         Vehicle newVehicle = Builder<Vehicle>.CreateNew().Build();
@@ -213,11 +232,13 @@ public sealed class RentalTests
         List<RentalExtra> newExtras = Builder<RentalExtra>.CreateListOfSize(2).Build().ToList();
 
         updatedData.AssociateEmployee(newEmployee);
+        updatedData.AssociateCoupon(newCoupon);
         updatedData.AssociateClient(newClient);
         updatedData.AssociateDriver(newDriver);
         updatedData.AssociateVehicle(newVehicle);
         updatedData.AssociateBillingPlan(newPlan);
         updatedData.AddRangeExtras(newExtras);
+        updatedData.SetEstimatedKilometers(300);
 
         // Act
         rental.Update(updatedData);
@@ -227,9 +248,11 @@ public sealed class RentalTests
         Assert.AreEqual(updatedData.ExpectedReturnDate, rental.ExpectedReturnDate);
         Assert.AreEqual(updatedData.StartKm, rental.StartKm);
         Assert.AreEqual(newEmployee.Id, rental.EmployeeId);
+        Assert.AreEqual(newCoupon.Id, rental.CouponId);
         Assert.AreEqual(newClient.Id, rental.ClientId);
         Assert.AreEqual(newDriver.Id, rental.DriverId);
         Assert.AreEqual(newPlan.Id, rental.BillingPlanId);
         Assert.AreEqual(2, rental.Extras.Count);
+        Assert.AreEqual(300, rental.EstimatedKilometers);
     }
 }
