@@ -10,7 +10,17 @@ public static class PipelineExtensions
 {
     public static async Task<WebApplication> UseWebApiPipelineDefaults(this WebApplication app)
     {
-        app.AutoMigrateDatabase();
+        if (app.Environment.IsDevelopment())
+        {
+            app.AutoMigrateDatabase();
+
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseExceptionHandler("/error");
+        }
+
         app.StartRefreshTokenCleanupJob();
 
         await app.IdentitySeederAsync();

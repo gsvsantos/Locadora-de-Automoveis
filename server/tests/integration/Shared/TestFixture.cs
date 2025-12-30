@@ -62,7 +62,7 @@ public abstract class TestFixture
     public static async Task Setup(TestContext _)
     {
         dbContainer = new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
+            .WithImage("mcr.microsoft.com/mssql/server:2019-latest")
             .WithName("locadora-de-automoveis-db-testes")
             .WithPassword("SenhaSuperSecreta1!")
             .WithEnvironment("ACCEPT_EULA", "Y")

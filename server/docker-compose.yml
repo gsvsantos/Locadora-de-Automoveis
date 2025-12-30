@@ -1,0 +1,30 @@
+services:
+  locadoradeautomoveis.webapi:
+    image: ${DOCKER_REGISTRY-}locadoradeautomoveiswebapi
+    build:
+      context: .
+      dockerfile: web-api/Dockerfile
+    depends_on:
+      mssqlserver:
+        condition: service_healthy
+    networks:
+      - locadoradeautomoveis-net
+
+  mssqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: locadora-de-automoveis-db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "bash -lc 'timeout 1 bash -c \"</dev/tcp/localhost/1433\"'"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - locadoradeautomoveis-net
+
+networks:
+  locadoradeautomoveis-net:
+    driver: bridge
+
+volumes:
+  locadoradeautomoveis-dbdata:
