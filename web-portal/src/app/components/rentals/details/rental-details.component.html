@@ -35,12 +35,12 @@
             <div class="data-grid">
               <div class="data-item">
                 <label>{{ t('label.startDate') }}</label>
-                <span>{{ rental.startDate | date: 'dd/MM/yyyy' }}</span>
+                <span>{{ rental.startDate | date: 'dd/MM/yyyy' : 'UTC' }}</span>
               </div>
 
               <div class="data-item">
                 <label>{{ t('label.expectedReturnDate') }}</label>
-                <span>{{ rental.expectedReturnDate | date: 'dd/MM/yyyy' }}</span>
+                <span>{{ rental.expectedReturnDate | date: 'dd/MM/yyyy' : 'UTC' }}</span>
               </div>
 
               <div class="data-item">
@@ -171,7 +171,7 @@
 
                 @if (rr.returnDate) {
                   <span class="return-date-badge">
-                    {{ rr.returnDate | date: 'dd/MM/yyyy' }}
+                    {{ rr.returnDate | date: 'dd/MM/yyyy' : 'UTC' }}
                   </span>
                 }
               </div>

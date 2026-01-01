@@ -22,7 +22,7 @@
 
               <p>
                 <strong>{{ t('card.label.expirationDate') }}: </strong>
-                <span>{{ coupon.expirationDate | date: 'dd/MM/yyyy' }}</span>
+                <span>{{ coupon.expirationDate | date: 'dd/MM/yyyy' : 'UTC' }}</span>
               </p>
             </div>
           }

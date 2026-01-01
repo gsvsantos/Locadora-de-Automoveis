@@ -18,7 +18,7 @@
               </p>
               <p>
                 <strong>{{ t('card.label.admissionDate') }}: </strong>
-                <span>{{ employee.admissionDate | date: 'dd/MM/yyyy' }}</span>
+                <span>{{ employee.admissionDate | date: 'dd/MM/yyyy' : 'UTC' }}</span>
               </p>
               <p>
                 <strong>{{ t('card.label.salary') }}: </strong>

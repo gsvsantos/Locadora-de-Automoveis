@@ -23,7 +23,11 @@
 
             <div class="form-field">
               <label>{{ t('card.label.startDate') }}</label>
-              <input class="form-input" [value]="rental.startDate | date: 'dd/MM/yyyy'" disabled />
+              <input
+                class="form-input"
+                [value]="rental.startDate | date: 'dd/MM/yyyy' : 'UTC'"
+                disabled
+              />
             </div>
 
             <div class="form-field">

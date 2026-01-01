@@ -47,7 +47,7 @@
                 <span class="material-icons">event_available</span>
                 <span
                   >{{ t('label.licenseValidity') }}:
-                  {{ driver.licenseValidity | date: 'dd/MM/yyyy' }}</span
+                  {{ driver.licenseValidity | date: 'dd/MM/yyyy' : 'UTC' }}</span
                 >
               </div>
 

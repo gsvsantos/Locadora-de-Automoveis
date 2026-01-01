@@ -35,7 +35,7 @@
             <div class="card__content">
               <div class="info-row">
                 <span class="material-icons">badge</span>
-                <span>{{ employee.admissionDate | date: 'dd/MM/yyyy' }}</span>
+                <span>{{ employee.admissionDate | date: 'dd/MM/yyyy' : 'UTC' }}</span>
               </div>
               <div class="info-row">
                 <span class="material-icons">attach_money</span>

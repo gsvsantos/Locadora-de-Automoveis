@@ -53,7 +53,7 @@
                 <span class="material-icons">event_busy</span>
                 <span
                   >{{ t('label.expirationDate') }}:
-                  {{ coupon.expirationDate | date: 'dd/MM/yyyy' }}</span
+                  {{ coupon.expirationDate | date: 'dd/MM/yyyy' : 'UTC' }}</span
                 >
               </div>
 

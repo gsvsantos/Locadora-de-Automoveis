@@ -27,11 +27,11 @@
               </p>
               <p>
                 <strong>{{ t('card.label.startDate') }}: </strong>
-                <span>{{ rental.startDate | date: 'dd/MM/yyyy' }}</span>
+                <span>{{ rental.startDate | date: 'dd/MM/yyyy' : 'UTC' }}</span>
               </p>
               <p>
                 <strong>{{ t('card.label.expectedReturnDate') }}: </strong>
-                <span>{{ rental.expectedReturnDate | date: 'dd/MM/yyyy' }}</span>
+                <span>{{ rental.expectedReturnDate | date: 'dd/MM/yyyy' : 'UTC' }}</span>
               </p>
 
               <h4>{{ t('card.section.pricing') }}</h4>

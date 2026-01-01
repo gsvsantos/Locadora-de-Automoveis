@@ -48,7 +48,7 @@
 
               <p>
                 <strong>{{ t('card.label.licenseValidity') }}: </strong>
-                <span>{{ driver.licenseValidity | date: 'dd/MM/yyyy' }}</span>
+                <span>{{ driver.licenseValidity | date: 'dd/MM/yyyy' : 'UTC' }}</span>
               </p>
 
               <hr />

@@ -49,13 +49,16 @@
               }
               <div class="info-row">
                 <span class="material-icons">event_note</span>
-                <span>{{ t('label.startDate') }}: {{ rental.startDate | date: 'dd/MM/yyyy' }}</span>
+                <span
+                  >{{ t('label.startDate') }}:
+                  {{ rental.startDate | date: 'dd/MM/yyyy' : 'UTC' }}</span
+                >
               </div>
               <div class="info-row">
                 <span class="material-icons">calendar_today</span>
                 <span>
                   {{ t('label.expectedReturnDate') }}:
-                  {{ rental.expectedReturnDate | date: 'dd/MM/yyyy' }}
+                  {{ rental.expectedReturnDate | date: 'dd/MM/yyyy' : 'UTC' }}
                 </span>
               </div>
               @if (rental.returnDate) {
@@ -63,7 +66,7 @@
                   <span class="material-icons">calendar_today</span>
                   <span>
                     {{ t('label.returnDate') }}:
-                    {{ rental.returnDate | date: 'dd/MM/yyyy' }}
+                    {{ rental.returnDate | date: 'dd/MM/yyyy' : 'UTC' }}
                   </span>
                 </div>
               }
