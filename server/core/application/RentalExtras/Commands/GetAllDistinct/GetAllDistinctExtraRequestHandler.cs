@@ -4,7 +4,9 @@ using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace LocadoraDeAutomoveis.Application.RentalExtras.Commands.GetAllDistinct;
 
@@ -12,6 +14,7 @@ public class GetAllDistinctExtraRequestHandler(
     IMapper mapper,
     IRepositoryRentalExtra repositoryRentalExtra,
     IRepositoryVehicle repositoryVehicle,
+    IDistributedCache cache,
     ILogger<GetAllDistinctExtraRequestHandler> logger
 ) : IRequestHandler<GetAllDistinctExtraRequest, Result<GetAllDistinctExtraResponse>>
 {
@@ -29,9 +32,32 @@ public class GetAllDistinctExtraRequestHandler(
 
             Guid tenantId = vehicle.GetTenantId();
 
+            string cacheKey = $"extrasDistinct?t={tenantId}";
+
+            string? jsonString = await cache.GetStringAsync(cacheKey, cancellationToken);
+
+            if (!string.IsNullOrWhiteSpace(jsonString))
+            {
+                GetAllDistinctExtraResponse? cachedResult = JsonSerializer.Deserialize<GetAllDistinctExtraResponse>(jsonString);
+
+                if (cachedResult is not null)
+                {
+                    return Result.Ok(cachedResult);
+                }
+            }
+
             List<RentalExtra> extras = await repositoryRentalExtra.GetAllByTenantDistinctAsync(tenantId);
 
             GetAllDistinctExtraResponse response = mapper.Map<GetAllDistinctExtraResponse>(extras);
+
+            string jsonPayload = JsonSerializer.Serialize(response);
+
+            DistributedCacheEntryOptions cacheOptions = new()
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60)
+            };
+
+            await cache.SetStringAsync(cacheKey, jsonPayload, cacheOptions, cancellationToken);
 
             return Result.Ok(response);
         }

@@ -22,9 +22,25 @@ services:
     networks:
       - locadoradeautomoveis-net
 
+  redis:
+    image: redis:8.2.1
+    container_name: locadora-de-automoveis-redis
+    command: >
+      redis-server
+      --appendonly yes
+      --save 60 1000
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - locadoradeautomoveis-net
+
 networks:
   locadoradeautomoveis-net:
     driver: bridge
 
 volumes:
   locadoradeautomoveis-dbdata:
+  locadoradeautomoveis-redisdata:

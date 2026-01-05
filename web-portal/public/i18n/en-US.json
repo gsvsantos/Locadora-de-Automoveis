@@ -347,7 +347,7 @@
         "billingPlan": "Billing Plan",
         "estimatedKilometers": "Estimated Kilometers",
         "startDate": "Pick-up Date",
-        "expectedReturnDate": "Return Date",
+        "expectedReturnDate": "Expected Return Date",
         "returnDate": "Returned on",
         "startKm": "Start Km",
         "driver": "Driver",
@@ -382,7 +382,7 @@
         },
         "label": {
           "startDate": "Pick-up Date",
-          "expectedReturnDate": "Return Date",
+          "expectedReturnDate": "Expected Return Date",
           "startKm": "Start Km",
           "estimatedKilometers": "Estimated Kilometers",
           "driver": "Driver",

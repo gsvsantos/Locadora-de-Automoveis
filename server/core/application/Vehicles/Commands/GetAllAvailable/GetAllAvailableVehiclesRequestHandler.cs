@@ -7,6 +7,7 @@ using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAllAvailable;
@@ -16,6 +17,7 @@ public class GetAllAvailableVehiclesRequestHandler(
     IRepositoryVehicle repositoryVehicle,
     IRepositoryDriver repositoryDriver,
     IRepositoryRental repositoryRental,
+    IDistributedCache cache,
     ILogger<GetAllAvailableVehiclesRequestHandler> logger
 ) : IRequestHandler<GetAllAvailableVehiclesRequest, Result<GetAllAvailableVehiclesResponse>>
 {

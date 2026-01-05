@@ -26,3 +26,11 @@ services:
       - "1433:1433"
     volumes:
       - locadoradeautomoveis-dbdata:/var/opt/mssql
+ 
+  redis:
+    environment:
+      name: gestaoEstacionamento-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - locadoradeautomoveis-redisdata:/data

@@ -3,13 +3,16 @@ using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace LocadoraDeAutomoveis.Application.Rentals.Commands.GetAll;
 
 public class GetAllRentalRequestHandler(
     IMapper mapper,
     IRepositoryRental repositoryRental,
+    IDistributedCache cache,
     ILogger<GetAllRentalRequestHandler> logger
 ) : IRequestHandler<GetAllRentalRequest, Result<GetAllRentalResponse>>
 {
@@ -21,6 +24,23 @@ public class GetAllRentalRequestHandler(
             List<Rental> rentals = [];
             bool quantityProvided = request.Quantity.HasValue && request.Quantity.Value > 0;
             bool inactiveProvided = request.IsActive.HasValue;
+
+            string cacheSubKey = quantityProvided ? $"qty-{request.Quantity!.Value}:" : "qty-all:";
+            cacheSubKey += inactiveProvided ? $"active-{request.IsActive!.Value}" : "active-true";
+
+            string cacheKey = $"rentals:{cacheSubKey}";
+
+            string? jsonString = await cache.GetStringAsync(cacheKey, cancellationToken);
+
+            if (!string.IsNullOrWhiteSpace(jsonString))
+            {
+                GetAllRentalResponse? cachedResult = JsonSerializer.Deserialize<GetAllRentalResponse>(jsonString);
+
+                if (cachedResult is not null)
+                {
+                    return Result.Ok(cachedResult);
+                }
+            }
 
             if (quantityProvided && inactiveProvided)
             {
@@ -47,6 +67,15 @@ public class GetAllRentalRequestHandler(
             }
 
             GetAllRentalResponse response = mapper.Map<GetAllRentalResponse>(rentals);
+
+            string jsonPayload = JsonSerializer.Serialize(response);
+
+            DistributedCacheEntryOptions cacheOptions = new()
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60)
+            };
+
+            await cache.SetStringAsync(cacheKey, jsonPayload, cacheOptions, cancellationToken);
 
             return Result.Ok(response);
         }

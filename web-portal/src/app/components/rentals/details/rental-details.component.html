@@ -7,7 +7,7 @@
         bootstrapIcon="bi-arrow-left"
         [target]="targetType.SameTab"
         [variant]="variantType.Outline"
-        routerLink="/my-rentals"
+        routerLink="/rentals"
       ></gs-buttons>
     </div>
 
@@ -19,7 +19,11 @@
           <h2 class="subtitle">{{ rental.client.fullName | titlecase }}</h2>
         </div>
 
-        <div class="status-badge" [class.returned]="rental.returnDate">
+        <div
+          class="status-badge"
+          [class.active]="rental.isActive"
+          [class.returned]="rental.returnDate"
+        >
           {{ rental.returnDate ? t('status.returned') : t('status.active') }}
         </div>
       </header>

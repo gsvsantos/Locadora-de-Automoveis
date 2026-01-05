@@ -5,7 +5,9 @@ using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAllAvailable;
 using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace LocadoraDeAutomoveis.Application.Coupons.Commands.GetAllDistinct;
 
@@ -13,6 +15,7 @@ public class GetAllDistinctCouponRequestHandler(
     IMapper mapper,
     IRepositoryCoupon repositoryCoupon,
     IRepositoryVehicle repositoryVehicle,
+    IDistributedCache cache,
     ILogger<GetAllAvailableVehiclesRequestHandler> logger
 ) : IRequestHandler<GetAllDistinctCouponRequest, Result<GetAllDistinctCouponResponse>>
 {
@@ -30,9 +33,32 @@ public class GetAllDistinctCouponRequestHandler(
 
             Guid tenantId = vehicle.GetTenantId();
 
+            string cacheKey = $"couponsDistinct?t={tenantId}";
+
+            string? jsonString = await cache.GetStringAsync(cacheKey, cancellationToken);
+
+            if (!string.IsNullOrWhiteSpace(jsonString))
+            {
+                GetAllDistinctCouponResponse? cachedResult = JsonSerializer.Deserialize<GetAllDistinctCouponResponse>(jsonString);
+
+                if (cachedResult is not null)
+                {
+                    return Result.Ok(cachedResult);
+                }
+            }
+
             List<Coupon> coupons = await repositoryCoupon.GetAllByTenantDistinctAsync(tenantId);
 
             GetAllDistinctCouponResponse response = mapper.Map<GetAllDistinctCouponResponse>(coupons);
+
+            string jsonPayload = JsonSerializer.Serialize(response);
+
+            DistributedCacheEntryOptions cacheOptions = new()
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60)
+            };
+
+            await cache.SetStringAsync(cacheKey, jsonPayload, cacheOptions, cancellationToken);
 
             return Result.Ok(response);
         }

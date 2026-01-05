@@ -347,7 +347,7 @@
         "billingPlan": "Plan de facturación",
         "estimatedKilometers": "Kilómetros estimados",
         "startDate": "Fecha de recogida",
-        "expectedReturnDate": "Fecha de devolución",
+        "expectedReturnDate": "Fecha Prevista de Devolución",
         "returnDate": "Devuelto el",
         "startKm": "Km inicial",
         "driver": "Conductor",
@@ -382,7 +382,7 @@
         },
         "label": {
           "startDate": "Fecha de recogida",
-          "expectedReturnDate": "Fecha de devolución",
+          "expectedReturnDate": "Fecha Prevista de Devolución",
           "startKm": "Km inicial",
           "estimatedKilometers": "Kilómetros estimados",
           "driver": "Conductor",
