@@ -1,20 +1,22 @@
 ﻿using AutoMapper;
 using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
-using LocadoraDeAutomoveis.Application.Vehicles.Commands.GetAllAvailable;
 using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace LocadoraDeAutomoveis.Application.Rentals.Commands.GetMyRentals;
 
 public class GetMyRentalsRequestHandler(
     IMapper mapper,
     IRepositoryRental repositoryRental,
+    IDistributedCache cache,
     IUserContext userContext,
-    ILogger<GetAllAvailableVehiclesRequestHandler> logger
+    ILogger<GetMyRentalsRequestHandler> logger
 ) : IRequestHandler<GetMyRentalsRequest, Result<GetMyRentalsResponse>>
 {
     public async Task<Result<GetMyRentalsResponse>> Handle(
@@ -32,6 +34,36 @@ public class GetMyRentalsRequestHandler(
             if (request.PageSize is < 1 or > 100)
             {
                 return Result.Fail(ErrorResults.BadRequestError("PageSize must be between 1 and 100."));
+            }
+
+            string versionKey = "rentals:master-version";
+            string? version = await cache.GetStringAsync(versionKey, cancellationToken);
+
+            if (string.IsNullOrEmpty(version))
+            {
+                version = Guid.NewGuid().ToString();
+
+                await cache.SetStringAsync(versionKey, version, cancellationToken);
+            }
+
+            string termKey = string.IsNullOrWhiteSpace(request.Term) ? "all" : request.Term.Trim().ToLower();
+            string tenantKey = request.TenantId.HasValue ? request.TenantId.Value.ToString() : "all";
+            string statusKey = request.Status.HasValue ? request.Status.Value.ToString() : "all";
+
+            string cacheSubKey = $"uid={loginUserId}:p={request.PageNumber}:s={request.PageSize}:t={termKey}:tid={tenantKey}:st={statusKey}";
+
+            string cacheKey = $"rentals:v={version}:{cacheSubKey}";
+
+            string? jsonString = await cache.GetStringAsync(cacheKey, cancellationToken);
+
+            if (!string.IsNullOrWhiteSpace(jsonString))
+            {
+                GetMyRentalsResponse? cachedResult = JsonSerializer.Deserialize<GetMyRentalsResponse>(jsonString);
+
+                if (cachedResult is not null)
+                {
+                    return Result.Ok(cachedResult);
+                }
             }
 
             PagedResult<Rental> pagedRentals = await repositoryRental.GetMyRentalsDistinctAsync(
@@ -54,6 +86,15 @@ public class GetMyRentalsRequestHandler(
             );
 
             GetMyRentalsResponse response = new(result);
+
+            string jsonPayload = JsonSerializer.Serialize(response);
+
+            DistributedCacheEntryOptions cacheOptions = new()
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(3)
+            };
+
+            await cache.SetStringAsync(cacheKey, jsonPayload, cacheOptions, cancellationToken);
 
             return Result.Ok(response);
         }

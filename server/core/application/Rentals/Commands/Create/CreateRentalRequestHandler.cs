@@ -15,6 +15,7 @@ using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Rentals.Commands.Create;
@@ -31,6 +32,7 @@ public class CreateRentalRequestHandler(
     IRepositoryCoupon repositoryCoupon,
     IRepositoryBillingPlan repositoryBillingPlan,
     IRepositoryRentalExtra repositoryRentalExtra,
+    IDistributedCache cache,
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IRentalEmailService emailService,
@@ -170,6 +172,9 @@ public class CreateRentalRequestHandler(
             await repositoryRental.AddAsync(rental);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("rentals:master-version", Guid.NewGuid().ToString(), cancellationToken);
+            await cache.SetStringAsync("vehicles:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             try
             {

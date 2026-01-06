@@ -8,6 +8,7 @@ using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Groups.Commands.Create;
@@ -18,6 +19,7 @@ public class CreateGroupRequestHandler(
     IMapper mapper,
     IRepositoryGroup repositoryGroup,
     ITenantProvider tenantProvider,
+    IDistributedCache cache,
     IUserContext userContext,
     IValidator<Group> validator,
     ILogger<CreateGroupRequestHandler> logger
@@ -62,6 +64,8 @@ public class CreateGroupRequestHandler(
             await repositoryGroup.AddAsync(group);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("groups:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new CreateGroupResponse(group.Id));
         }

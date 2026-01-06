@@ -8,6 +8,7 @@ using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Clients.Commands.Create;
@@ -17,6 +18,7 @@ public class CreateClientRequestHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper,
     IRepositoryClient repositoryClient,
+    IDistributedCache cache,
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IAuthEmailService emailService,
@@ -92,6 +94,8 @@ public class CreateClientRequestHandler(
             await repositoryClient.AddAsync(client);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("clients:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             string token = await userManager.GeneratePasswordResetTokenAsync(userLogin);
 

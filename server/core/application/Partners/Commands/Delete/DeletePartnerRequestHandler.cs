@@ -4,13 +4,16 @@ using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Partners.Commands.Delete;
 
 public class DeletePartnerRequestHandler(
     IUnitOfWork unitOfWork,
-    IRepositoryPartner repositoryPartner, IRepositoryCoupon repositoryCoupon,
+    IRepositoryPartner repositoryPartner,
+    IRepositoryCoupon repositoryCoupon,
+    IDistributedCache cache,
     ILogger<DeletePartnerRequestHandler> logger
 ) : IRequestHandler<DeletePartnerRequest, Result<DeletePartnerResponse>>
 {
@@ -45,6 +48,8 @@ public class DeletePartnerRequestHandler(
             }
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("partners:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new DeletePartnerResponse());
 

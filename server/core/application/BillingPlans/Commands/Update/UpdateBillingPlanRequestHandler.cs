@@ -7,6 +7,7 @@ using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.BillingPlans.Commands.Update;
@@ -16,6 +17,7 @@ public class UpdateBillingPlanRequestHandler(
     IMapper mapper,
     IRepositoryBillingPlan repositoryBillingPlan,
     IRepositoryGroup repositoryGroup,
+    IDistributedCache cache,
     IValidator<BillingPlan> validator,
     ILogger<UpdateBillingPlanRequestHandler> logger
 ) : IRequestHandler<UpdateBillingPlanRequest, Result<UpdateBillingPlanResponse>>
@@ -66,6 +68,8 @@ public class UpdateBillingPlanRequestHandler(
             await repositoryBillingPlan.UpdateAsync(selectedBillingPlan.Id, updatedBillingPlan);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("billingPlans:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new UpdateBillingPlanResponse(selectedBillingPlan.Id));
         }

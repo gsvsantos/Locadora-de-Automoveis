@@ -5,6 +5,7 @@ using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Clients.Commands.Delete;
@@ -14,6 +15,7 @@ public class DeleteClientRequestHandler(
     IRepositoryClient repositoryClient,
     IRepositoryDriver repositoryDriver,
     IRepositoryRental repositoryRental,
+    IDistributedCache cache,
     ILogger<DeleteClientRequestHandler> logger
 ) : IRequestHandler<DeleteClientRequest, Result<DeleteClientResponse>>
 {
@@ -62,6 +64,8 @@ public class DeleteClientRequestHandler(
             }
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("clients:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new DeleteClientResponse());
         }

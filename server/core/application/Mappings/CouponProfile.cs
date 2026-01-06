@@ -3,6 +3,7 @@ using LocadoraDeAutomoveis.Application.Coupons.Commands.Create;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetAllDistinct;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.GetById;
+using LocadoraDeAutomoveis.Application.Coupons.Commands.GetMostUsed;
 using LocadoraDeAutomoveis.Application.Coupons.Commands.Update;
 using LocadoraDeAutomoveis.Application.Partners.Commands.GetAll;
 using LocadoraDeAutomoveis.Application.Partners.Commands.GetCoupons;
@@ -82,6 +83,14 @@ public class CouponProfile : Profile
                 src.Count,
                 src.Select(c => ctx.Mapper.Map<CouponDto>(c)).ToImmutableList()
                     ?? ImmutableList<CouponDto>.Empty
+            ));
+
+        // GetMostUsed
+        CreateMap<List<CouponUsageDto>, GetMostUsedCouponResponse>()
+            .ConvertUsing((src, dest, ctx) => new GetMostUsedCouponResponse(
+                src.Count,
+                src.ToImmutableList()
+                    ?? ImmutableList<CouponUsageDto>.Empty
             ));
     }
 }

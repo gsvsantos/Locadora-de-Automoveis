@@ -8,6 +8,7 @@ using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Employees.Commands.Create;
@@ -17,6 +18,7 @@ public class CreateEmployeeRequestHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper,
     IRepositoryEmployee repositoryEmployee,
+    IDistributedCache cache,
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<Employee> validator,
@@ -85,6 +87,8 @@ public class CreateEmployeeRequestHandler(
             await repositoryEmployee.AddAsync(employee);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("employees:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new CreateEmployeeResponse(employee.Id));
         }

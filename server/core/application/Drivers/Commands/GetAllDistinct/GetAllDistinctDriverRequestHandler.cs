@@ -32,7 +32,17 @@ public class GetAllDistinctDriverRequestHandler(
 
             Guid tenantId = vehicle.GetTenantId();
 
-            string cacheKey = $"driversDistinct?t={tenantId}";
+            string versionKey = "drivers:master-version";
+            string? version = await cache.GetStringAsync(versionKey, cancellationToken);
+
+            if (string.IsNullOrEmpty(version))
+            {
+                version = Guid.NewGuid().ToString();
+
+                await cache.SetStringAsync(versionKey, version, cancellationToken);
+            }
+
+            string cacheKey = $"drivers:v={version}:t={tenantId}:distinct";
 
             string? jsonString = await cache.GetStringAsync(cacheKey, cancellationToken);
 

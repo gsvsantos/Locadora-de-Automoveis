@@ -7,6 +7,7 @@ using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Clients.Commands.Update;
@@ -16,6 +17,7 @@ public class UpdateClientRequestHandler(
     IMapper mapper,
     IRepositoryClient repositoryClient,
     IRepositoryDriver repositoryDriver,
+    IDistributedCache cache,
     IValidator<Client> validator,
     ILogger<UpdateClientRequestHandler> logger
 ) : IRequestHandler<UpdateClientRequest, Result<UpdateClientResponse>>
@@ -67,6 +69,8 @@ public class UpdateClientRequestHandler(
             await repositoryClient.UpdateAsync(selectedClient.Id, updatedClient);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("clients:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new UpdateClientResponse(selectedClient.Id));
         }

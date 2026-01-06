@@ -5,6 +5,7 @@ using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Groups.Commands.Delete;
@@ -14,6 +15,7 @@ public class DeleteGroupRequestHandler(
     IRepositoryGroup repositoryGroup,
     IRepositoryVehicle repositoryVehicle,
     IRepositoryBillingPlan repositoryBillingPlan,
+    IDistributedCache cache,
     ILogger<DeleteGroupRequestHandler> logger
 ) : IRequestHandler<DeleteGroupRequest, Result<DeleteGroupResponse>>
 {
@@ -51,6 +53,8 @@ public class DeleteGroupRequestHandler(
             }
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("groups:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new DeleteGroupResponse());
         }

@@ -8,6 +8,7 @@ using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.RentalExtras.Commands.Create;
@@ -17,6 +18,7 @@ public class CreateRentalExtraRequestHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper,
     IRepositoryRentalExtra repositoryRentalExtra,
+    IDistributedCache cache,
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<RentalExtra> validator,
@@ -72,6 +74,8 @@ public class CreateRentalExtraRequestHandler(
             await repositoryRentalExtra.AddAsync(rentalExtra);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("extras:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new CreateRentalExtraResponse(rentalExtra.Id));
         }

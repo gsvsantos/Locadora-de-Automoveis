@@ -8,6 +8,7 @@ using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Partners.Commands.Create;
@@ -17,6 +18,7 @@ public class CreatePartnerRequestHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper,
     IRepositoryPartner repositoryPartner,
+    IDistributedCache cache,
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<Partner> validator,
@@ -62,6 +64,8 @@ public class CreatePartnerRequestHandler(
             await repositoryPartner.AddAsync(partner);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("partners:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new CreatePartnerResponse(partner.Id));
         }

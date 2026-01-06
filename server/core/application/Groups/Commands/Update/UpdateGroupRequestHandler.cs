@@ -6,6 +6,7 @@ using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Groups.Commands.Update;
@@ -14,6 +15,7 @@ public class UpdateGroupRequestHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper,
     IRepositoryGroup repositoryGroup,
+    IDistributedCache cache,
     IValidator<Group> validator,
     ILogger<UpdateGroupRequestHandler> logger
 ) : IRequestHandler<UpdateGroupRequest, Result<UpdateGroupResponse>>
@@ -53,6 +55,8 @@ public class UpdateGroupRequestHandler(
             await repositoryGroup.UpdateAsync(request.Id, updatedGroup);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("groups:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new UpdateGroupResponse(request.Id));
         }

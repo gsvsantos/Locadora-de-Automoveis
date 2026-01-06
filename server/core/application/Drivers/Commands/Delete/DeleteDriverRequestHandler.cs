@@ -4,6 +4,7 @@ using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Drivers.Commands.Delete;
@@ -12,6 +13,7 @@ public class DeleteDriverRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryDriver repositoryDriver,
     IRepositoryRental repositoryRental,
+    IDistributedCache cache,
     ILogger<DeleteDriverRequestHandler> logger
 ) : IRequestHandler<DeleteDriverRequest, Result<DeleteDriverResponse>>
 {
@@ -59,6 +61,8 @@ public class DeleteDriverRequestHandler(
             }
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("drivers:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new DeleteDriverResponse());
         }

@@ -13,4 +13,5 @@ public interface IRepositoryCoupon : IRepository<Coupon>
     Task<List<Coupon>> GetAllByTenantDistinctAsync(Guid tenantId);
 
     Task<Coupon?> GetByTenantAndIdAsync(Guid tenantId, Guid entityId);
+
 }

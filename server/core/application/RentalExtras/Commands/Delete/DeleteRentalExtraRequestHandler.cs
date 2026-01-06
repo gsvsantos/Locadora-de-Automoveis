@@ -4,6 +4,7 @@ using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.RentalExtras.Commands.Delete;
@@ -12,6 +13,7 @@ public class DeleteRentalExtraRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryRentalExtra repositoryRentalExtra,
     IRepositoryRental repositoryRental,
+    IDistributedCache cache,
     ILogger<DeleteRentalExtraRequestHandler> logger
 ) : IRequestHandler<DeleteRentalExtraRequest, Result<DeleteRentalExtraResponse>>
 {
@@ -56,6 +58,8 @@ public class DeleteRentalExtraRequestHandler(
             }
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("extras:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new DeleteRentalExtraResponse());
         }

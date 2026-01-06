@@ -10,6 +10,7 @@ using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Drivers.Commands.Create;
@@ -20,6 +21,7 @@ public class CreateDriverRequestHandler(
     IMapper mapper,
     IRepositoryDriver repositoryDriver,
     IRepositoryClient repositoryClient,
+    IDistributedCache cache,
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<Driver> validator,
@@ -118,6 +120,8 @@ public class CreateDriverRequestHandler(
             await repositoryDriver.AddAsync(driver);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("drivers:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new CreateDriverResponse(driver.Id));
         }

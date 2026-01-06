@@ -8,6 +8,7 @@ using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Employees.Commands.SelfUpdate;
@@ -17,6 +18,7 @@ public class SelfUpdateEmployeeRequestHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper,
     IRepositoryEmployee repositoryEmployee,
+    IDistributedCache cache,
     IValidator<Employee> validator,
     ILogger<SelfUpdateEmployeeRequestHandler> logger
 ) : IRequestHandler<SelfUpdateEmployeeRequest, Result<SelfUpdateEmployeeResponse>>
@@ -72,6 +74,8 @@ public class SelfUpdateEmployeeRequestHandler(
             await userManager.UpdateAsync(selectedEmployee.User);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("employees:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new SelfUpdateEmployeeResponse(selectedEmployee.Id));
         }

@@ -10,6 +10,7 @@ using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.S3;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.Update;
@@ -20,6 +21,7 @@ public class UpdateVehicleRequestHandler(
     IRepositoryVehicle repositoryVehicle,
     IRepositoryGroup repositoryGroup,
     IRepositoryRental repositoryRental,
+    IDistributedCache cache,
     IR2FileStorageService fileStorageService,
     ITenantProvider tenantProvider,
     IValidator<Vehicle> validator,
@@ -99,6 +101,8 @@ public class UpdateVehicleRequestHandler(
             await repositoryVehicle.UpdateAsync(selectedVehicle.Id, updatedVehicle);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("vehicles:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new UpdateVehicleResponse(selectedVehicle.Id));
         }

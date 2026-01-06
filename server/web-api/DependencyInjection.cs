@@ -336,7 +336,7 @@ public static class DependencyInjection
         services.AddStackExchangeRedisCache(option =>
         {
             option.Configuration = redisConnectionString;
-            option.InstanceName = "locadoradeautomoveis";
+            option.InstanceName = "locadoradeautomoveis:";
         });
     }
 }

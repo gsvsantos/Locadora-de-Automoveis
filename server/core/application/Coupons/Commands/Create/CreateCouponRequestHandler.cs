@@ -9,6 +9,7 @@ using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Coupons.Commands.Create;
@@ -19,6 +20,7 @@ public class CreateCouponRequestHandler(
     IMapper mapper,
     IRepositoryCoupon repositoryCoupon,
     IRepositoryPartner repositoryPartner,
+    IDistributedCache cache,
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<Coupon> validator,
@@ -72,6 +74,8 @@ public class CreateCouponRequestHandler(
             await repositoryCoupon.AddAsync(coupon);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("coupons:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new CreateCouponResponse(coupon.Id));
         }

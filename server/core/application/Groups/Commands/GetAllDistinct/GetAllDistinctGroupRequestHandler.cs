@@ -21,7 +21,17 @@ public class GetAllDistinctGroupRequestHandler(
     {
         try
         {
-            string cacheKey = $"groupsDistinct";
+            string versionKey = "groups:master-version";
+            string? version = await cache.GetStringAsync(versionKey, cancellationToken);
+
+            if (string.IsNullOrEmpty(version))
+            {
+                version = Guid.NewGuid().ToString();
+
+                await cache.SetStringAsync(versionKey, version, cancellationToken);
+            }
+
+            string cacheKey = $"groups:v={version}:distinct";
 
             string? jsonString = await cache.GetStringAsync(cacheKey, cancellationToken);
 

@@ -9,6 +9,7 @@ using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.BillingPlans.Commands.Create;
@@ -19,6 +20,7 @@ public class CreateBillingPlanRequestHandler(
     IMapper mapper,
     IRepositoryBillingPlan repositoryBillingPlan,
     IRepositoryGroup repositoryGroup,
+    IDistributedCache cache,
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<BillingPlan> validator,
@@ -72,6 +74,8 @@ public class CreateBillingPlanRequestHandler(
             await repositoryBillingPlan.AddAsync(BillingPlan);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("billingPlans:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new CreateBillingPlanResponse(BillingPlan.Id));
         }

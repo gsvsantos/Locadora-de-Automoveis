@@ -32,7 +32,17 @@ public class GetAllDistinctExtraRequestHandler(
 
             Guid tenantId = vehicle.GetTenantId();
 
-            string cacheKey = $"extrasDistinct?t={tenantId}";
+            string versionKey = "extras:master-version";
+            string? version = await cache.GetStringAsync(versionKey, cancellationToken);
+
+            if (string.IsNullOrEmpty(version))
+            {
+                version = Guid.NewGuid().ToString();
+
+                await cache.SetStringAsync(versionKey, version, cancellationToken);
+            }
+
+            string cacheKey = $"extras:v={version}:t={tenantId}:distinct";
 
             string? jsonString = await cache.GetStringAsync(cacheKey, cancellationToken);
 

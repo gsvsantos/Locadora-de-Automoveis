@@ -4,6 +4,7 @@ using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Coupons.Commands.Delete;
@@ -12,6 +13,7 @@ public class DeleteCouponRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryCoupon repositoryCoupon,
     IRepositoryRental repositoryRental,
+    IDistributedCache cache,
     ILogger<DeleteCouponRequestHandler> logger
 ) : IRequestHandler<DeleteCouponRequest, Result<DeleteCouponResponse>>
 {
@@ -55,6 +57,8 @@ public class DeleteCouponRequestHandler(
             }
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("coupons:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new DeleteCouponResponse());
         }

@@ -7,6 +7,7 @@ using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Coupons.Commands.Update;
@@ -16,6 +17,7 @@ public class UpdateCouponRequestHandler(
     IMapper mapper,
     IRepositoryCoupon repositoryCoupon,
     IRepositoryPartner repositoryPartner,
+    IDistributedCache cache,
     IValidator<Coupon> validator,
     ILogger<UpdateCouponRequestHandler> logger
 ) : IRequestHandler<UpdateCouponRequest, Result<UpdateCouponResponse>>
@@ -64,6 +66,8 @@ public class UpdateCouponRequestHandler(
             await repositoryCoupon.UpdateAsync(selectedCoupon.Id, updatedCoupon);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("coupons:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new UpdateCouponResponse(selectedCoupon.Id));
         }

@@ -10,6 +10,7 @@ using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Rentals.Commands.Return;
@@ -21,6 +22,7 @@ public class ReturnRentalRequestHandler(
     IRepositoryRentalReturn repositoryRentalReturn,
     IRepositoryRental repositoryRental,
     IRepositoryConfiguration repositoryConfiguration,
+    IDistributedCache cache,
     ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<RentalReturn> validator,
@@ -116,6 +118,9 @@ public class ReturnRentalRequestHandler(
             await repositoryRentalReturn.AddAsync(rentalReturn);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("rentals:master-version", Guid.NewGuid().ToString(), cancellationToken);
+            await cache.SetStringAsync("vehicles:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new ReturnRentalResponse(rentalReturn.Id));
         }

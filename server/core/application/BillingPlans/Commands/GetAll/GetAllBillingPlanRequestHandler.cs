@@ -25,10 +25,20 @@ public class GetAllBillingPlanRequestHandler(
             bool quantityProvided = request.Quantity.HasValue && request.Quantity.Value > 0;
             bool inactiveProvided = request.IsActive.HasValue;
 
-            string cacheSubKey = quantityProvided ? $"qty-{request.Quantity!.Value}:" : "qty-all:";
-            cacheSubKey += inactiveProvided ? $"active-{request.IsActive!.Value}" : "active-true";
+            string versionKey = "billingPlans:master-version";
+            string? version = await cache.GetStringAsync(versionKey, cancellationToken);
 
-            string cacheKey = $"billingPlans:{cacheSubKey}";
+            if (string.IsNullOrEmpty(version))
+            {
+                version = Guid.NewGuid().ToString();
+
+                await cache.SetStringAsync(versionKey, version, cancellationToken);
+            }
+
+            string cacheSubKey = quantityProvided ? $"qty={request.Quantity!.Value}:" : "qty=all:";
+            cacheSubKey += inactiveProvided ? $":active={request.IsActive!.Value}" : ":active=true";
+
+            string cacheKey = $"billingPlans:v={version}:{cacheSubKey}";
 
             string? jsonString = await cache.GetStringAsync(cacheKey, cancellationToken);
 

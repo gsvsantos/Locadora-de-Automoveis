@@ -10,6 +10,7 @@ using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.S3;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Vehicles.Commands.Create;
@@ -20,6 +21,7 @@ public class CreateVehicleRequestHandler(
     IMapper mapper,
     IRepositoryVehicle repositoryVehicle,
     IRepositoryGroup repositoryGroup,
+    IDistributedCache cache,
     IR2FileStorageService fileStorageService,
     ITenantProvider tenantProvider,
     IUserContext userContext,
@@ -96,6 +98,8 @@ public class CreateVehicleRequestHandler(
             await repositoryVehicle.AddAsync(vehicle);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("vehicles:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new CreateVehicleResponse(vehicle.Id));
         }

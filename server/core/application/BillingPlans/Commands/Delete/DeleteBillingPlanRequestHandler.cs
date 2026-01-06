@@ -4,6 +4,7 @@ using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.BillingPlans.Commands.Delete;
@@ -12,6 +13,7 @@ public class DeleteBillingPlanRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryBillingPlan repositoryBillingPlan,
     IRepositoryRental repositoryRental,
+    IDistributedCache cache,
     ILogger<DeleteBillingPlanRequestHandler> logger
 ) : IRequestHandler<DeleteBillingPlanRequest, Result<DeleteBillingPlanResponse>>
 {
@@ -59,6 +61,8 @@ public class DeleteBillingPlanRequestHandler(
             }
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("billingPlans:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new DeleteBillingPlanResponse());
         }

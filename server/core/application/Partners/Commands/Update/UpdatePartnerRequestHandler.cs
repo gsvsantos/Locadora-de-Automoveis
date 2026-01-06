@@ -6,6 +6,7 @@ using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Partners.Commands.Update;
@@ -14,6 +15,7 @@ public class UpdatePartnerRequestHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper,
     IRepositoryPartner repositoryPartner,
+    IDistributedCache cache,
     IValidator<Partner> validator,
     ILogger<UpdatePartnerRequestHandler> logger
 ) : IRequestHandler<UpdatePartnerRequest, Result<UpdatePartnerResponse>>
@@ -53,6 +55,8 @@ public class UpdatePartnerRequestHandler(
             await repositoryPartner.UpdateAsync(selectedPartner.Id, updatedPartner);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("partners:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new UpdatePartnerResponse(selectedPartner.Id));
         }

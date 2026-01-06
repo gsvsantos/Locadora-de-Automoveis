@@ -6,6 +6,7 @@ using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.Employees.Commands.Delete;
@@ -15,6 +16,7 @@ public class DeleteEmployeeRequestHandler(
     IUnitOfWork unitOfWork,
     IRepositoryEmployee repositoryEmployee,
     IRepositoryRental repositoryRental,
+    IDistributedCache cache,
     ILogger<DeleteEmployeeRequestHandler> logger
 ) : IRequestHandler<DeleteEmployeeRequest, Result<DeleteEmployeeResponse>>
 {
@@ -72,6 +74,8 @@ public class DeleteEmployeeRequestHandler(
             }
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("employees:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new DeleteEmployeeResponse());
         }

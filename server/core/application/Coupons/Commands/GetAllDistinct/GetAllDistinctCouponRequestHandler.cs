@@ -33,7 +33,17 @@ public class GetAllDistinctCouponRequestHandler(
 
             Guid tenantId = vehicle.GetTenantId();
 
-            string cacheKey = $"couponsDistinct?t={tenantId}";
+            string versionKey = "coupons:master-version";
+            string? version = await cache.GetStringAsync(versionKey, cancellationToken);
+
+            if (string.IsNullOrEmpty(version))
+            {
+                version = Guid.NewGuid().ToString();
+
+                await cache.SetStringAsync(versionKey, version, cancellationToken);
+            }
+
+            string cacheKey = $"coupons:v={version}:t={tenantId}:distinct";
 
             string? jsonString = await cache.GetStringAsync(cacheKey, cancellationToken);
 

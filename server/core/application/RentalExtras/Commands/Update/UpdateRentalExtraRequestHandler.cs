@@ -7,6 +7,7 @@ using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
 namespace LocadoraDeAutomoveis.Application.RentalExtras.Commands.Update;
@@ -16,6 +17,7 @@ public class UpdateRentalExtraRequestHandler(
     IMapper mapper,
     IRepositoryRentalExtra repositoryRentalExtra,
     IRepositoryRental repositoryRental,
+    IDistributedCache cache,
     IValidator<RentalExtra> validator,
     ILogger<UpdateRentalExtraRequestHandler> logger
 
@@ -72,6 +74,8 @@ public class UpdateRentalExtraRequestHandler(
             await repositoryRentalExtra.UpdateAsync(selectedRentalExtra.Id, updatedRentalExtra);
 
             await unitOfWork.CommitAsync();
+
+            await cache.SetStringAsync("extras:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new UpdateRentalExtraResponse(selectedRentalExtra.Id));
 
