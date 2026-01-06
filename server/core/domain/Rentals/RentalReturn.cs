@@ -5,10 +5,12 @@ namespace LocadoraDeAutomoveis.Domain.Rentals;
 public class RentalReturn : BaseEntity<RentalReturn>
 {
     public DateTimeOffset ReturnDate { get; set; }
+    public int DaysUsed { get; set; }
     public decimal EndKm { get; set; }
     public decimal TotalMileage { get; set; }
     public decimal ExtrasTotalCost { get; set; }
     public decimal FuelPenalty { get; set; }
+    public decimal DelayPenalty { get; set; }
     public decimal PenaltyTotalCost { get; set; }
     public decimal DiscountTotal { get; set; }
     public decimal FinalPrice { get; set; }
@@ -25,6 +27,11 @@ public class RentalReturn : BaseEntity<RentalReturn>
         this.TotalMileage = totalMileage;
     }
 
+    public void SetDaysUsed(int daysUsed)
+    {
+        this.DaysUsed = daysUsed;
+    }
+
     public void SetFuelLevel(EFuelLevel fuelLevel)
     {
         this.FuelLevelAtReturn = fuelLevel;
@@ -38,6 +45,11 @@ public class RentalReturn : BaseEntity<RentalReturn>
     public void SetFuelPenalty(decimal fuelPenality)
     {
         this.FuelPenalty = fuelPenality;
+    }
+
+    public void SetDelayPenalty(decimal delayPenalty)
+    {
+        this.DelayPenalty = delayPenalty;
     }
 
     public void SetPenaltyTotal(decimal penaltyTotal)

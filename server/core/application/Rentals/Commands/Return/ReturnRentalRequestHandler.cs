@@ -76,6 +76,7 @@ public class ReturnRentalRequestHandler(
 
         rentalReturn.SetFuelLevel(request.FuelLevelAtReturn);
         rentalReturn.AssociateRental(selectedRental);
+        rentalReturn.SetDaysUsed(daysUsed);
 
         try
         {
@@ -100,12 +101,13 @@ public class ReturnRentalRequestHandler(
 
             rentalReturn.SetExtrasTotalCost(calculationResult.ServicesTotal);
             rentalReturn.SetFuelPenalty(calculationResult.FuelPenalty);
+            rentalReturn.SetDelayPenalty(calculationResult.DelayPenalty);
             rentalReturn.SetPenaltyTotal(calculationResult.PenaltiesTotal);
             rentalReturn.SetDiscountTotal(calculationResult.DiscountTotal);
             rentalReturn.SetFinalPrice(calculationResult.FinalPrice);
 
             selectedRental.SetStatus(ERentalStatus.Completed);
-            selectedRental.ReturnDate = returnDate;
+            selectedRental.SetReturnDate(returnDate);
             selectedRental.SetFinalPrice(calculationResult.FinalPrice);
 
             rentalReturn.AssociateTenant(tenantId);

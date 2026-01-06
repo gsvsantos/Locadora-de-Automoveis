@@ -78,6 +78,11 @@ public class Rental : BaseEntity<Rental>
         this.Status = status;
     }
 
+    public void SetReturnDate(DateTimeOffset returnDate)
+    {
+        this.ReturnDate = returnDate;
+    }
+
     public void SetBillingPlanType(EBillingPlanType selectedPlanType)
     {
         this.BillingPlanType = selectedPlanType;

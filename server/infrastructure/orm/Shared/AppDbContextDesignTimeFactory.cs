@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
 namespace LocadoraDeAutomoveis.Infrastructure.Shared;
 
@@ -7,7 +8,15 @@ public sealed class AppDbContextDesignTimeFactory : IDesignTimeDbContextFactory<
 {
     public AppDbContext CreateDbContext(string[] args)
     {
-        string? sqlConnectionString = Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING");
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true)
+            .AddJsonFile($"appsettings.Development.json", optional: true)
+            .AddEnvironmentVariables()
+            .AddUserSecrets<AppDbContextDesignTimeFactory>()
+            .Build();
+
+        string? sqlConnectionString = configuration["SQL_CONNECTION_STRING"];
 
         if (string.IsNullOrWhiteSpace(sqlConnectionString))
         {

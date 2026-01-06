@@ -91,10 +91,12 @@ public class RentalProfile : Profile
         CreateMap<RentalReturn, RentalReturnDto>()
             .ConvertUsing(src => new RentalReturnDto(
                 src.ReturnDate,
+                src.DaysUsed,
                 src.EndKm,
                 src.TotalMileage,
                 src.ExtrasTotalCost,
                 src.FuelPenalty,
+                src.DelayPenalty,
                 src.PenaltyTotalCost,
                 src.DiscountTotal,
                 src.FinalPrice,

@@ -71,13 +71,14 @@ public static class RentalCalculator
             extrasTotalCost,
             penaltiesTotalCost,
             discountTotal,
-            fuelPenalty
+            fuelPenalty,
+            delayPenalty
         );
     }
 
     private static int CalculateDays(DateTimeOffset start, DateTimeOffset end)
     {
-        int days = (int)Math.Ceiling((end - start).TotalDays);
+        int days = (int)Math.Ceiling((end.Date - start.Date).TotalDays);
         return days <= 0 ? 1 : days;
     }
 
@@ -178,5 +179,6 @@ public record CalculationResult(
     decimal ServicesTotal,
     decimal PenaltiesTotal,
     decimal DiscountTotal,
-    decimal FuelPenalty
+    decimal FuelPenalty,
+    decimal DelayPenalty
 );

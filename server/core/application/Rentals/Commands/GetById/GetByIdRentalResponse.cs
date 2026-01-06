@@ -50,10 +50,12 @@ public record ByIdRentalDto(
 
 public record RentalReturnDto(
     DateTimeOffset ReturnDate,
+    int DaysUsed,
     decimal EndKm,
     decimal TotalMileage,
     decimal ExtrasTotalCost,
     decimal FuelPenalty,
+    decimal DelayPenalty,
     decimal PenaltyTotalCost,
     decimal DiscountTotal,
     decimal FinalPrice,
