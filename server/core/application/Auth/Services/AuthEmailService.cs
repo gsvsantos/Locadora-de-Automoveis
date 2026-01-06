@@ -129,6 +129,22 @@ public class AuthEmailService(
 
         BackgroundJob.Enqueue(() => emailSender.SendAsync(email, subject, body));
     }
+
+    public async Task ScheduleAccountDeactivationNotice(string email, string fullName, string? language = null)
+    {
+        string resolvedLanguage = language ?? "pt-BR";
+
+        Dictionary<string, string> placeholders = new()
+        {
+            {"UserFullName", fullName },
+        };
+
+        string body = await templateService.GetTemplateAsync("account-deactivated", placeholders, resolvedLanguage);
+        string subject = GetSubject("account-deactivated", resolvedLanguage);
+
+        BackgroundJob.Enqueue(() => emailSender.SendAsync(email, subject, body));
+    }
+
     private static string GetSubject(string templateKey, string language)
     {
         return (templateKey, language) switch
@@ -156,6 +172,10 @@ public class AuthEmailService(
             ("client-invitation", "pt-BR") => "Bem-vindo à família - LDA",
             ("client-invitation", "es-ES") => "Bienvenido a la familia - LDA",
             ("client-invitation", _) => "Welcome to the Family - LDA",
+
+            ("account-deactivated", "pt-BR") => "Aviso importante sobre sua conta - LDA",
+            ("account-deactivated", "es-ES") => "Aviso importante sobre su cuenta - LDA",
+            ("account-deactivated", _) => "Important notice regarding your account - LDA",
 
             _ => "LDA"
         };

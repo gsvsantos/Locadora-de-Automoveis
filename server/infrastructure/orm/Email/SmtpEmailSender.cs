@@ -4,6 +4,7 @@ using MailKit.Security;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
+using System.Text;
 
 namespace LocadoraDeAutomoveis.Infrastructure.Email;
 
@@ -19,12 +20,14 @@ public class SmtpEmailSender(
         try
         {
             MimeMessage message = new();
-            message.From.Add(new MailboxAddress(this.settings.SenderName, this.settings.SenderEmail));
+            message.From.Add(new MailboxAddress(Encoding.UTF8, this.settings.SenderName, this.settings.SenderEmail));
             message.To.Add(MailboxAddress.Parse(to));
             message.Subject = subject;
 
             BodyBuilder builder = new() { HtmlBody = htmlBody };
             message.Body = builder.ToMessageBody();
+
+            message.Prepare(EncodingConstraint.SevenBit);
 
             using SmtpClient client = new();
 

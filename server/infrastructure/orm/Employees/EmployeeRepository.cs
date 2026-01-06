@@ -25,4 +25,11 @@ public class EmployeeRepository(AppDbContext context)
             .Take(5)
             .ToListAsync(ct);
     }
+
+    public override async Task<Employee?> GetByIdAsync(Guid entityId)
+    {
+        return await this.records
+            .Include(d => d.LoginUser)
+            .FirstOrDefaultAsync(d => d.Id.Equals(entityId));
+    }
 }

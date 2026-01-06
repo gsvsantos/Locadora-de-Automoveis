@@ -17,6 +17,7 @@ public class DeleteEmployeeRequestHandler(
     IRepositoryEmployee repositoryEmployee,
     IRepositoryRental repositoryRental,
     IDistributedCache cache,
+    IAuthEmailService authEmailService,
     ILogger<DeleteEmployeeRequestHandler> logger
 ) : IRequestHandler<DeleteEmployeeRequest, Result<DeleteEmployeeResponse>>
 {
@@ -43,20 +44,32 @@ public class DeleteEmployeeRequestHandler(
             {
                 selectedEmployee.Deactivate();
 
-                if (selectedEmployee.User is not null)
+                if (selectedEmployee.LoginUser is not null)
                 {
-                    await userManager.SetLockoutEndDateAsync(selectedEmployee.User, DateTimeOffset.MaxValue);
+                    await userManager.SetLockoutEndDateAsync(selectedEmployee.LoginUser, DateTimeOffset.MaxValue);
 
-                    // todo: enviar email alertando a desativação da conta
+                    try
+                    {
+                        await authEmailService.ScheduleAccountDeactivationNotice(selectedEmployee.LoginUser.Email!, selectedEmployee.FullName, selectedEmployee.LoginUser.PreferredLanguage);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(
+                            ex,
+                            "Failed to send deactivation email for user {UserId}", selectedEmployee.LoginUser.Id
+                        );
+                    }
 
                     logger.LogInformation(
                         "User account '{Email}' (ID: {UserId}) has been locked indefinitely due to employee deactivation.",
-                        selectedEmployee.User.Email,
-                        selectedEmployee.User.Id
+                        selectedEmployee.LoginUser.Email,
+                        selectedEmployee.LoginUser.Id
                     );
                 }
 
                 await repositoryEmployee.UpdateAsync(selectedEmployee.Id, selectedEmployee);
+
+                await unitOfWork.CommitAsync();
 
                 logger.LogInformation(
                     "Employee {@EmployeeId} was deactivated (Soft Delete) instead of permanently deleted to preserve rental history.",
@@ -67,13 +80,22 @@ public class DeleteEmployeeRequestHandler(
             {
                 await repositoryEmployee.DeleteAsync(request.Id);
 
-                if (selectedEmployee.User is not null)
+                await unitOfWork.CommitAsync();
+
+                if (selectedEmployee.LoginUser is not null)
                 {
-                    await userManager.DeleteAsync(selectedEmployee.User);
+                    IdentityResult deleteResult = await userManager.DeleteAsync(selectedEmployee.LoginUser);
+
+                    if (!deleteResult.Succeeded)
+                    {
+                        IEnumerable<string> errors = deleteResult.Errors
+                        .Select(failure => failure.Description)
+                        .ToList();
+
+                        return Result.Fail(ErrorResults.BadRequestError(errors));
+                    }
                 }
             }
-
-            await unitOfWork.CommitAsync();
 
             await cache.SetStringAsync("employees:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
