@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Application.Employees.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Employees.Application;
 
@@ -12,17 +13,20 @@ public sealed class GetAllEmployeeRequestHandlerTests : UnitTestBase
     private GetAllEmployeeRequestHandler handler = null!;
 
     private Mock<IRepositoryEmployee> repositoryEmployeeMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ILogger<GetAllEmployeeRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
     public void Setup()
     {
         this.repositoryEmployeeMock = new Mock<IRepositoryEmployee>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.loggerMock = new Mock<ILogger<GetAllEmployeeRequestHandler>>();
 
         this.handler = new GetAllEmployeeRequestHandler(
             this.mapper,
             this.repositoryEmployeeMock.Object,
+            this.cacheMock.Object,
             this.loggerMock.Object);
     }
 

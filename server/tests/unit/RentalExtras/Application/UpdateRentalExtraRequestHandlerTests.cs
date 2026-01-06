@@ -3,6 +3,7 @@ using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.RentalExtras.Application;
 
@@ -15,6 +16,7 @@ public sealed class UpdateRentalExtraRequestHandlerTests : UnitTestBase
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryRentalExtra> repositoryRentalExtraMock = null!;
     private Mock<IRepositoryRental> repositoryRentalMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<IValidator<RentalExtra>> validatorMock = null!;
     private Mock<ILogger<UpdateRentalExtraRequestHandler>> loggerMock = null!;
 
@@ -24,6 +26,7 @@ public sealed class UpdateRentalExtraRequestHandlerTests : UnitTestBase
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryRentalExtraMock = new Mock<IRepositoryRentalExtra>();
         this.repositoryRentalMock = new Mock<IRepositoryRental>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.validatorMock = new Mock<IValidator<RentalExtra>>();
         this.loggerMock = new Mock<ILogger<UpdateRentalExtraRequestHandler>>();
 
@@ -32,6 +35,7 @@ public sealed class UpdateRentalExtraRequestHandlerTests : UnitTestBase
             this.mapper,
             this.repositoryRentalExtraMock.Object,
             this.repositoryRentalMock.Object,
+            this.cacheMock.Object,
             this.validatorMock.Object,
             this.loggerMock.Object
         );

@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Groups.Application;
 
@@ -13,6 +14,7 @@ public sealed class UpdateGroupRequestHandlerTests : UnitTestBase
 
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryGroup> repositoryGroupMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<IValidator<Group>> validatorMock = null!;
     private Mock<ILogger<UpdateGroupRequestHandler>> loggerMock = null!;
 
@@ -21,6 +23,7 @@ public sealed class UpdateGroupRequestHandlerTests : UnitTestBase
     {
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryGroupMock = new Mock<IRepositoryGroup>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.validatorMock = new Mock<IValidator<Group>>();
         this.loggerMock = new Mock<ILogger<UpdateGroupRequestHandler>>();
 
@@ -28,6 +31,7 @@ public sealed class UpdateGroupRequestHandlerTests : UnitTestBase
             this.unitOfWorkMock.Object,
             this.mapper,
             this.repositoryGroupMock.Object,
+            this.cacheMock.Object,
             this.validatorMock.Object,
             this.loggerMock.Object
         );

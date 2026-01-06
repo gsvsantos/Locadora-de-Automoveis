@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.RentalExtras.Application;
 
@@ -14,6 +15,7 @@ public sealed class DeleteRentalExtraRequestHandlerTests
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryRentalExtra> repositoryRentalExtraMock = null!;
     private Mock<IRepositoryRental> repositoryRentalMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ILogger<DeleteRentalExtraRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
@@ -22,12 +24,14 @@ public sealed class DeleteRentalExtraRequestHandlerTests
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryRentalExtraMock = new Mock<IRepositoryRentalExtra>();
         this.repositoryRentalMock = new Mock<IRepositoryRental>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.loggerMock = new Mock<ILogger<DeleteRentalExtraRequestHandler>>();
 
         this.handler = new DeleteRentalExtraRequestHandler(
             this.unitOfWorkMock.Object,
             this.repositoryRentalExtraMock.Object,
             this.repositoryRentalMock.Object,
+            this.cacheMock.Object,
             this.loggerMock.Object
         );
     }

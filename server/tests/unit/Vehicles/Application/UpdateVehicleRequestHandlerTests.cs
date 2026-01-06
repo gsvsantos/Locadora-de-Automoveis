@@ -6,6 +6,7 @@ using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Infrastructure.S3;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Vehicles.Application;
 
@@ -19,6 +20,7 @@ public sealed class UpdateVehicleRequestHandlerTests : UnitTestBase
     private Mock<IRepositoryVehicle> repositoryVehicleMock = null!;
     private Mock<IRepositoryGroup> repositoryGroupMock = null!;
     private Mock<IRepositoryRental> repositoryRentalMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<IR2FileStorageService> fileStorageMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IValidator<Vehicle>> validatorMock = null!;
@@ -31,6 +33,7 @@ public sealed class UpdateVehicleRequestHandlerTests : UnitTestBase
         this.repositoryVehicleMock = new Mock<IRepositoryVehicle>();
         this.repositoryGroupMock = new Mock<IRepositoryGroup>();
         this.repositoryRentalMock = new Mock<IRepositoryRental>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.fileStorageMock = new Mock<IR2FileStorageService>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.validatorMock = new Mock<IValidator<Vehicle>>();
@@ -42,6 +45,7 @@ public sealed class UpdateVehicleRequestHandlerTests : UnitTestBase
             this.repositoryVehicleMock.Object,
             this.repositoryGroupMock.Object,
             this.repositoryRentalMock.Object,
+            this.cacheMock.Object,
             this.fileStorageMock.Object,
             this.tenantProviderMock.Object,
             this.validatorMock.Object,

@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.BillingPlans.Application;
 
@@ -14,6 +15,7 @@ public class DeleteBillingPlanRequestHandlerTests
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryBillingPlan> repositoryBillingPlanMock = null!;
     private Mock<IRepositoryRental> repositoryRentalMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ILogger<DeleteBillingPlanRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
@@ -22,12 +24,14 @@ public class DeleteBillingPlanRequestHandlerTests
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryBillingPlanMock = new Mock<IRepositoryBillingPlan>();
         this.repositoryRentalMock = new Mock<IRepositoryRental>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.loggerMock = new Mock<ILogger<DeleteBillingPlanRequestHandler>>();
 
         this.handler = new DeleteBillingPlanRequestHandler(
             this.unitOfWorkMock.Object,
             this.repositoryBillingPlanMock.Object,
             this.repositoryRentalMock.Object,
+            this.cacheMock.Object,
             this.loggerMock.Object
         );
     }

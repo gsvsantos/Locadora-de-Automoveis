@@ -3,6 +3,7 @@ using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Groups.Application;
 
@@ -16,6 +17,7 @@ public sealed class DeleteGroupRequestHandlerTests
     private Mock<IRepositoryGroup> repositoryGroupMock = null!;
     private Mock<IRepositoryVehicle> repositoryVehicleMock = null!;
     private Mock<IRepositoryBillingPlan> repositoryBillingPlanMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ILogger<DeleteGroupRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
@@ -25,6 +27,7 @@ public sealed class DeleteGroupRequestHandlerTests
         this.repositoryGroupMock = new Mock<IRepositoryGroup>();
         this.repositoryVehicleMock = new Mock<IRepositoryVehicle>();
         this.repositoryBillingPlanMock = new Mock<IRepositoryBillingPlan>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.loggerMock = new Mock<ILogger<DeleteGroupRequestHandler>>();
 
         this.handler = new DeleteGroupRequestHandler(
@@ -32,6 +35,7 @@ public sealed class DeleteGroupRequestHandlerTests
             this.repositoryGroupMock.Object,
             this.repositoryVehicleMock.Object,
             this.repositoryBillingPlanMock.Object,
+            this.cacheMock.Object,
             this.loggerMock.Object
         );
     }

@@ -63,6 +63,8 @@ public sealed class GetByIdClientRequestHandlerTests : UnitTestBase
         Assert.AreEqual(client.FullName, dto.FullName);
         Assert.AreEqual(client.Email, dto.Email);
         Assert.AreEqual(client.PhoneNumber, dto.PhoneNumber);
+        Assert.IsNotNull(client.Address);
+        Assert.IsNotNull(dto.Address);
         Assert.AreEqual(client.Address.State, dto.Address.State);
         Assert.AreEqual(client.Address.City, dto.Address.City);
         Assert.AreEqual(client.Address.Neighborhood, dto.Address.Neighborhood);

@@ -3,6 +3,7 @@ using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Clients.Application;
 
@@ -16,6 +17,7 @@ public sealed class DeleteClientRequestHandlerTests
     private Mock<IRepositoryClient> repositoryClientMock = null!;
     private Mock<IRepositoryDriver> repositoryDriverMock = null!;
     private Mock<IRepositoryRental> repositoryRentalMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ILogger<DeleteClientRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
@@ -25,6 +27,7 @@ public sealed class DeleteClientRequestHandlerTests
         this.repositoryClientMock = new Mock<IRepositoryClient>();
         this.repositoryDriverMock = new Mock<IRepositoryDriver>();
         this.repositoryRentalMock = new Mock<IRepositoryRental>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.loggerMock = new Mock<ILogger<DeleteClientRequestHandler>>();
 
         this.handler = new DeleteClientRequestHandler(
@@ -32,6 +35,7 @@ public sealed class DeleteClientRequestHandlerTests
             this.repositoryClientMock.Object,
             this.repositoryDriverMock.Object,
             this.repositoryRentalMock.Object,
+            this.cacheMock.Object,
             this.loggerMock.Object
         );
     }

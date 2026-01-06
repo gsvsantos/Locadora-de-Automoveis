@@ -3,6 +3,7 @@ using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Employees;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Employees.Application;
 
@@ -21,6 +22,7 @@ public sealed class CreateEmployeeRequestHandlerTests : UnitTestBase
     private Mock<UserManager<User>> userManagerMock = null!;
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryEmployee> repositoryEmployeeMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IUserContext> userContextMock = null!;
     private Mock<IValidator<Employee>> validatorMock = null!;
@@ -36,6 +38,7 @@ public sealed class CreateEmployeeRequestHandlerTests : UnitTestBase
 
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryEmployeeMock = new Mock<IRepositoryEmployee>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.userContextMock = new Mock<IUserContext>();
         this.validatorMock = new Mock<IValidator<Employee>>();
@@ -46,6 +49,7 @@ public sealed class CreateEmployeeRequestHandlerTests : UnitTestBase
             this.unitOfWorkMock.Object,
             this.mapper,
             this.repositoryEmployeeMock.Object,
+            this.cacheMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,
             this.validatorMock.Object,

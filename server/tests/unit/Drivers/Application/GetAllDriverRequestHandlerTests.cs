@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Application.Drivers.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Drivers.Application;
 
@@ -12,17 +13,20 @@ public sealed class GetAllDriverRequestHandlerTests : UnitTestBase
     private GetAllDriverRequestHandler handler = null!;
 
     private Mock<IRepositoryDriver> repositoryDriverMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ILogger<GetAllDriverRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
     public void Setup()
     {
         this.repositoryDriverMock = new Mock<IRepositoryDriver>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.loggerMock = new Mock<ILogger<GetAllDriverRequestHandler>>();
 
         this.handler = new GetAllDriverRequestHandler(
             this.mapper,
             this.repositoryDriverMock.Object,
+            this.cacheMock.Object,
             this.loggerMock.Object
         );
     }

@@ -4,6 +4,7 @@ using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Coupons.Application;
 
@@ -22,6 +23,7 @@ public sealed class CreateCouponRequestHandlerTests : UnitTestBase
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryCoupon> repositoryCouponMock = null!;
     private Mock<IRepositoryPartner> repositoryPartnerMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IUserContext> userContextMock = null!;
     private Mock<IValidator<Coupon>> validatorMock = null!;
@@ -38,6 +40,7 @@ public sealed class CreateCouponRequestHandlerTests : UnitTestBase
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryCouponMock = new Mock<IRepositoryCoupon>();
         this.repositoryPartnerMock = new Mock<IRepositoryPartner>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.userContextMock = new Mock<IUserContext>();
         this.validatorMock = new Mock<IValidator<Coupon>>();
@@ -49,6 +52,7 @@ public sealed class CreateCouponRequestHandlerTests : UnitTestBase
             this.mapper,
             this.repositoryCouponMock.Object,
             this.repositoryPartnerMock.Object,
+            this.cacheMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,
             this.validatorMock.Object,

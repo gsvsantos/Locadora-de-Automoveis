@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Application.RentalExtras.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.RentalExtras;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.RentalExtras.Application;
 
@@ -12,17 +13,20 @@ public sealed class GetAllRentalExtraRequestHandlerTests : UnitTestBase
     private GetAllRentalExtraRequestHandler handler = null!;
 
     private Mock<IRepositoryRentalExtra> repositoryRentalExtraMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ILogger<GetAllRentalExtraRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
     public void Setup()
     {
         this.repositoryRentalExtraMock = new Mock<IRepositoryRentalExtra>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.loggerMock = new Mock<ILogger<GetAllRentalExtraRequestHandler>>();
 
         this.handler = new GetAllRentalExtraRequestHandler(
             this.mapper,
             this.repositoryRentalExtraMock.Object,
+            this.cacheMock.Object,
             this.loggerMock.Object
         );
     }

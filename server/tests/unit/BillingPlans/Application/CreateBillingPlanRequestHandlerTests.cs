@@ -4,6 +4,7 @@ using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.BillingPlans.Application;
 
@@ -22,6 +23,7 @@ public sealed class CreateBillingPlanRequestHandlerTests : UnitTestBase
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryBillingPlan> repositoryBillingPlanMock = null!;
     private Mock<IRepositoryGroup> repositoryGroupMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IUserContext> userContextMock = null!;
     private Mock<IValidator<BillingPlan>> validatorMock = null!;
@@ -38,6 +40,7 @@ public sealed class CreateBillingPlanRequestHandlerTests : UnitTestBase
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryBillingPlanMock = new Mock<IRepositoryBillingPlan>();
         this.repositoryGroupMock = new Mock<IRepositoryGroup>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.userContextMock = new Mock<IUserContext>();
         this.validatorMock = new Mock<IValidator<BillingPlan>>();
@@ -49,6 +52,7 @@ public sealed class CreateBillingPlanRequestHandlerTests : UnitTestBase
             this.mapper,
             this.repositoryBillingPlanMock.Object,
             this.repositoryGroupMock.Object,
+            this.cacheMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,
             this.validatorMock.Object,

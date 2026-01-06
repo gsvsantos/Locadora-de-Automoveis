@@ -6,6 +6,7 @@ using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Rentals.Application;
 
@@ -20,6 +21,7 @@ public sealed class ReturnRentalRequestHandlerTests : UnitTestBase
     private Mock<IRepositoryRentalReturn> repositoryRentalReturnMock = null!;
     private Mock<IRepositoryRental> repositoryRentalMock = null!;
     private Mock<IRepositoryConfiguration> repositoryConfigurationMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IUserContext> userContextMock = null!;
     private Mock<IValidator<RentalReturn>> validatorMock = null!;
@@ -37,6 +39,7 @@ public sealed class ReturnRentalRequestHandlerTests : UnitTestBase
         this.repositoryRentalReturnMock = new Mock<IRepositoryRentalReturn>();
         this.repositoryRentalMock = new Mock<IRepositoryRental>();
         this.repositoryConfigurationMock = new Mock<IRepositoryConfiguration>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.userContextMock = new Mock<IUserContext>();
         this.validatorMock = new Mock<IValidator<RentalReturn>>();
@@ -49,6 +52,7 @@ public sealed class ReturnRentalRequestHandlerTests : UnitTestBase
             this.repositoryRentalReturnMock.Object,
             this.repositoryRentalMock.Object,
             this.repositoryConfigurationMock.Object,
+            this.cacheMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,
             this.validatorMock.Object,

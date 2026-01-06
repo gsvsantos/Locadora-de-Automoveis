@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Application.Clients.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Clients.Application;
 
@@ -12,17 +13,20 @@ public sealed class GetAllClientRequestHandlerTests : UnitTestBase
     private GetAllClientRequestHandler handler = null!;
 
     private Mock<IRepositoryClient> repositoryClientMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ILogger<GetAllClientRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
     public void Setup()
     {
         this.repositoryClientMock = new Mock<IRepositoryClient>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.loggerMock = new Mock<ILogger<GetAllClientRequestHandler>>();
 
         this.handler = new GetAllClientRequestHandler(
             this.mapper,
             this.repositoryClientMock.Object,
+            this.cacheMock.Object,
             this.loggerMock.Object
         );
     }
@@ -68,11 +72,11 @@ public sealed class GetAllClientRequestHandlerTests : UnitTestBase
                     Assert.AreEqual(clients[i].FullName, clients[j].FullName);
                     Assert.AreEqual(clients[i].Email, clients[j].Email);
                     Assert.AreEqual(clients[i].PhoneNumber, clients[j].PhoneNumber);
-                    Assert.AreEqual(clients[i].Address.State, clients[j].Address.State);
-                    Assert.AreEqual(clients[i].Address.City, clients[j].Address.City);
-                    Assert.AreEqual(clients[i].Address.Neighborhood, clients[j].Address.Neighborhood);
-                    Assert.AreEqual(clients[i].Address.Street, clients[j].Address.Street);
-                    Assert.AreEqual(clients[i].Address.Number, clients[j].Address.Number);
+                    Assert.AreEqual(clients[i].Address!.State, clients[j].Address!.State);
+                    Assert.AreEqual(clients[i].Address!.City, clients[j].Address!.City);
+                    Assert.AreEqual(clients[i].Address!.Neighborhood, clients[j].Address!.Neighborhood);
+                    Assert.AreEqual(clients[i].Address!.Street, clients[j].Address!.Street);
+                    Assert.AreEqual(clients[i].Address!.Number, clients[j].Address!.Number);
                     Assert.AreEqual(clients[i].Document, clients[j].Document);
                 }
             }
@@ -120,11 +124,11 @@ public sealed class GetAllClientRequestHandlerTests : UnitTestBase
                     Assert.AreEqual(clients[i].FullName, clients[j].FullName);
                     Assert.AreEqual(clients[i].Email, clients[j].Email);
                     Assert.AreEqual(clients[i].PhoneNumber, clients[j].PhoneNumber);
-                    Assert.AreEqual(clients[i].Address.State, clients[j].Address.State);
-                    Assert.AreEqual(clients[i].Address.City, clients[j].Address.City);
-                    Assert.AreEqual(clients[i].Address.Neighborhood, clients[j].Address.Neighborhood);
-                    Assert.AreEqual(clients[i].Address.Street, clients[j].Address.Street);
-                    Assert.AreEqual(clients[i].Address.Number, clients[j].Address.Number);
+                    Assert.AreEqual(clients[i].Address!.State, clients[j].Address!.State);
+                    Assert.AreEqual(clients[i].Address!.City, clients[j].Address!.City);
+                    Assert.AreEqual(clients[i].Address!.Neighborhood, clients[j].Address!.Neighborhood);
+                    Assert.AreEqual(clients[i].Address!.Street, clients[j].Address!.Street);
+                    Assert.AreEqual(clients[i].Address!.Number, clients[j].Address!.Number);
                     Assert.AreEqual(clients[i].Document, clients[j].Document);
                 }
             }

@@ -49,7 +49,7 @@ public class JwtProvider : ITokenProvider
             new Claim(JwtRegisteredClaimNames.Email, user.Email!),
             new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName!),
             new Claim(JwtRegisteredClaimNames.Jti, user.AccessTokenVersionId.ToString()),
-            new Claim("tenant_id", user.TenantId.ToString()),
+            new Claim("tenant_id", user.TenantId.ToString()!),
         ];
 
         foreach (string role in userRoles)

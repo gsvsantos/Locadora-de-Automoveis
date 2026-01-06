@@ -4,6 +4,7 @@ using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Drivers;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Drivers.Application;
 
@@ -22,6 +23,7 @@ public sealed class CreateDriverRequestHandlerTests : UnitTestBase
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryDriver> repositoryDriverMock = null!;
     private Mock<IRepositoryClient> repositoryClientMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IUserContext> userContextMock = null!;
     private Mock<IValidator<Driver>> validatorMock = null!;
@@ -38,6 +40,7 @@ public sealed class CreateDriverRequestHandlerTests : UnitTestBase
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryDriverMock = new Mock<IRepositoryDriver>();
         this.repositoryClientMock = new Mock<IRepositoryClient>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.userContextMock = new Mock<IUserContext>();
         this.validatorMock = new Mock<IValidator<Driver>>();
@@ -49,6 +52,7 @@ public sealed class CreateDriverRequestHandlerTests : UnitTestBase
             this.mapper,
             this.repositoryDriverMock.Object,
             this.repositoryClientMock.Object,
+            this.cacheMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,
             this.validatorMock.Object,

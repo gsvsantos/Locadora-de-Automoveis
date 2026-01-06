@@ -140,7 +140,7 @@ public class CreateDriverRequestHandler(
 
     private Client CreateNewClient(CreateDriverRequest request, User user, Client selectedClient)
     {
-        Address addressCopy = selectedClient.Address with { };
+        Address addressCopy = selectedClient.Address! with { };
         Client newCLient = mapper.Map<Client>((request, addressCopy));
         newCLient.DefineType(EClientType.Individual);
         newCLient.AssociateTenant(tenantProvider.GetTenantId());

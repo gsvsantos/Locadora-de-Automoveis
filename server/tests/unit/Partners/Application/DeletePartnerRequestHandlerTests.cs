@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Domain.Coupons;
 using LocadoraDeAutomoveis.Domain.Partners;
 using LocadoraDeAutomoveis.Domain.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Partners.Application;
 
@@ -14,6 +15,7 @@ public sealed class DeletePartnerRequestHandlerTests
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryPartner> repositoryPartnerMock = null!;
     private Mock<IRepositoryCoupon> repositoryCouponMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ILogger<DeletePartnerRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
@@ -22,12 +24,14 @@ public sealed class DeletePartnerRequestHandlerTests
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryPartnerMock = new Mock<IRepositoryPartner>();
         this.repositoryCouponMock = new Mock<IRepositoryCoupon>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.loggerMock = new Mock<ILogger<DeletePartnerRequestHandler>>();
 
         this.handler = new DeletePartnerRequestHandler(
             this.unitOfWorkMock.Object,
             this.repositoryPartnerMock.Object,
             this.repositoryCouponMock.Object,
+            this.cacheMock.Object,
             this.loggerMock.Object
         );
     }

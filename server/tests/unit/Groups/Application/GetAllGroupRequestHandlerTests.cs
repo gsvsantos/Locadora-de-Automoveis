@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Application.Groups.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.Groups;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Groups.Application;
 
@@ -12,17 +13,20 @@ public sealed class GetAllGroupRequestHandlerTests : UnitTestBase
     private GetAllGroupRequestHandler handler = null!;
 
     private Mock<IRepositoryGroup> repositoryGroupMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ILogger<GetAllGroupRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
     public void Setup()
     {
         this.repositoryGroupMock = new Mock<IRepositoryGroup>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.loggerMock = new Mock<ILogger<GetAllGroupRequestHandler>>();
 
         this.handler = new GetAllGroupRequestHandler(
             this.mapper,
             this.repositoryGroupMock.Object,
+            this.cacheMock.Object,
             this.loggerMock.Object
         );
     }

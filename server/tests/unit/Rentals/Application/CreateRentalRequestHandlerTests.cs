@@ -11,6 +11,7 @@ using LocadoraDeAutomoveis.Domain.Rentals;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Domain.Vehicles;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Rentals.Application;
 
@@ -35,6 +36,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
     private Mock<IRepositoryCoupon> repositoryCouponMock = null!;
     private Mock<IRepositoryBillingPlan> repositoryBillingPlanMock = null!;
     private Mock<IRepositoryRentalExtra> repositoryRentalExtraMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IUserContext> userContextMock = null!;
     private Mock<IRentalEmailService> emailServiceMock = null!;
@@ -58,6 +60,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
         this.repositoryCouponMock = new Mock<IRepositoryCoupon>();
         this.repositoryBillingPlanMock = new Mock<IRepositoryBillingPlan>();
         this.repositoryRentalExtraMock = new Mock<IRepositoryRentalExtra>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.userContextMock = new Mock<IUserContext>();
 
@@ -81,6 +84,7 @@ public sealed class CreateRentalRequestHandlerTests : UnitTestBase
             this.repositoryCouponMock.Object,
             this.repositoryBillingPlanMock.Object,
             this.repositoryRentalExtraMock.Object,
+            this.cacheMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,
             this.emailServiceMock.Object,

@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Application.BillingPlans.Commands.GetAll;
 using LocadoraDeAutomoveis.Domain.BillingPlans;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.BillingPlans.Application;
 
@@ -12,17 +13,20 @@ public sealed class GetAllBillingPlanRequestHandlerTests : UnitTestBase
     private GetAllBillingPlanRequestHandler handler = null!;
 
     private Mock<IRepositoryBillingPlan> repositoryBillingPlanMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ILogger<GetAllBillingPlanRequestHandler>> loggerMock = null!;
 
     [TestInitialize]
     public void Setup()
     {
         this.repositoryBillingPlanMock = new Mock<IRepositoryBillingPlan>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.loggerMock = new Mock<ILogger<GetAllBillingPlanRequestHandler>>();
 
         this.handler = new GetAllBillingPlanRequestHandler(
             this.mapper,
             this.repositoryBillingPlanMock.Object,
+            this.cacheMock.Object,
             this.loggerMock.Object
         );
     }

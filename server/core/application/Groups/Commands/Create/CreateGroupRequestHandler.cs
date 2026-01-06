@@ -18,8 +18,8 @@ public class CreateGroupRequestHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper,
     IRepositoryGroup repositoryGroup,
-    ITenantProvider tenantProvider,
     IDistributedCache cache,
+    ITenantProvider tenantProvider,
     IUserContext userContext,
     IValidator<Group> validator,
     ILogger<CreateGroupRequestHandler> logger

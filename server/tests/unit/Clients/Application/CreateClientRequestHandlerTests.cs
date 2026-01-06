@@ -3,6 +3,7 @@ using LocadoraDeAutomoveis.Domain.Auth;
 using LocadoraDeAutomoveis.Domain.Clients;
 using LocadoraDeAutomoveis.Domain.Shared;
 using LocadoraDeAutomoveis.Tests.Unit.Shared;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace LocadoraDeAutomoveis.Tests.Unit.Clients.Application;
 
@@ -20,6 +21,7 @@ public sealed class CreateClientRequestHandlerTests : UnitTestBase
     private Mock<UserManager<User>> userManagerMock = null!;
     private Mock<IUnitOfWork> unitOfWorkMock = null!;
     private Mock<IRepositoryClient> repositoryClientMock = null!;
+    private Mock<IDistributedCache> cacheMock = null!;
     private Mock<ITenantProvider> tenantProviderMock = null!;
     private Mock<IUserContext> userContextMock = null!;
     private Mock<IAuthEmailService> emailServiceMock = null!;
@@ -36,6 +38,7 @@ public sealed class CreateClientRequestHandlerTests : UnitTestBase
 
         this.unitOfWorkMock = new Mock<IUnitOfWork>();
         this.repositoryClientMock = new Mock<IRepositoryClient>();
+        this.cacheMock = new Mock<IDistributedCache>();
         this.tenantProviderMock = new Mock<ITenantProvider>();
         this.userContextMock = new Mock<IUserContext>();
         this.emailServiceMock = new Mock<IAuthEmailService>();
@@ -47,6 +50,7 @@ public sealed class CreateClientRequestHandlerTests : UnitTestBase
             this.unitOfWorkMock.Object,
             this.mapper,
             this.repositoryClientMock.Object,
+            this.cacheMock.Object,
             this.tenantProviderMock.Object,
             this.userContextMock.Object,
             this.emailServiceMock.Object,
