@@ -1125,7 +1125,21 @@
           "extras": "Extras Seleccionados",
           "return": "Datos de Devolución"
         },
+        "planType": {
+          "daily": "Diario",
+          "controlled": "Controlado",
+          "free": "Libre"
+        },
+        "extras": {
+          "daily": "diario"
+        },
+        "return": {
+          "inspection": "Inspección",
+          "closing": "Cierre"
+        },
         "label": {
+          "daysUsed": "Días usados",
+          "delayPenalty": "Penalización por retraso",
           "billingPlan": "Plan de Facturación",
           "estimatedKilometers": "Km Estimado",
           "startDate": "Fecha de Inicio",
@@ -1149,7 +1163,7 @@
           "totalMileage": "Kilometraje Total",
           "extrasTotalCost": "Total de Extras",
           "fuelPenalty": "Multa de Combustible",
-          "penaltyTotalCost": "Otras Penalizaciones",
+          "penaltyTotalCost": "Penalizaciones Total",
           "discountTotal": "Descuento Total",
           "finalPrice": "Precio Final"
         },

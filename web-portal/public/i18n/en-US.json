@@ -367,28 +367,62 @@
     },
     "details": {
       "card": {
-        "buttons": {
-          "back": "Back"
-        },
-        "sections": {
-          "summary": "Summary",
-          "plan": "Billing Plan",
-          "extras": "Extras",
-          "return": "Return"
-        },
+        "title": "Rental Details",
+        "subtitle": "Complete overview of the rental contract.",
         "status": {
           "active": "Active",
           "returned": "Returned"
         },
+        "sections": {
+          "summary": "Rental Summary",
+          "plan": "Billing Plan Details",
+          "extras": "Selected Extras",
+          "return": "Return Details"
+        },
+        "planType": {
+          "daily": "Daily",
+          "controlled": "Controlled",
+          "free": "Free"
+        },
+        "extras": {
+          "daily": "daily"
+        },
+        "return": {
+          "inspection": "Inspection",
+          "closing": "Closing"
+        },
         "label": {
-          "startDate": "Pick-up Date",
+          "daysUsed": "Days Used",
+          "delayPenalty": "Delay Penalty",
+          "billingPlan": "Billing Plan",
+          "estimatedKilometers": "Estimated KM",
+          "startDate": "Start Date",
           "expectedReturnDate": "Expected Return Date",
-          "startKm": "Start Km",
-          "estimatedKilometers": "Estimated Kilometers",
+          "returnDate": "Return Date",
+          "startKm": "Starting KM",
           "driver": "Driver",
+          "employee": "Employee",
           "coupon": "Coupon",
-          "estimated": "Estimated",
-          "noExtras": "No extras selected."
+          "estimated": "Estimated Total",
+          "final": "Final Amount",
+          "none": "None",
+          "noExtras": "No extras selected.",
+          "dailyRate": "Daily Rate",
+          "pricePerKm": "Price per Km",
+          "controlledDailyRate": "Controlled Daily Rate",
+          "pricePerKmExtrapolated": "Price per Km (Extra)",
+          "fixedRate": "Fixed Rate",
+          "fuelLevelAtReturn": "Fuel Level",
+          "endKm": "End KM",
+          "totalMileage": "Total Mileage",
+          "extrasTotalCost": "Extras Total",
+          "fuelPenalty": "Fuel Penalty",
+          "penaltyTotalCost": "Total Penalty",
+          "discountTotal": "Total Discount",
+          "finalPrice": "Final Price"
+        },
+        "buttons": {
+          "back": "Back"
         }
       }
     }

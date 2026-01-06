@@ -41,7 +41,7 @@ export interface ListRentalsDto {
 export interface RentalDetailsDto extends Rental {
   billingPlan: BillingPlanDto;
   rentalExtras: Extra[];
-  rentalReturn?: RentalReturnDto | null;
+  rentalReturn?: RentalReturn | null;
 }
 
 export interface RentalDetailsApiDto {
@@ -55,9 +55,11 @@ export interface RentalReturnDto {
 
 export interface RentalReturn extends RentalReturnDto {
   returnDate: Date;
+  daysUsed: number;
   totalMileage: number;
   extrasTotalCost: number;
   fuelPenalty: number;
+  delayPenalty: number;
   penaltyTotalCost: number;
   discountTotal: number;
   finalPrice: number;

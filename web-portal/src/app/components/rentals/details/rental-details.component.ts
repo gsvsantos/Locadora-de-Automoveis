@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { filter, map, shareReplay } from 'rxjs';
 import { RentalDetailsDto, RentalReturn } from '../../../models/rental.models';
-import { AsyncPipe, DatePipe, CurrencyPipe, TitleCasePipe } from '@angular/common';
+import { AsyncPipe, DatePipe, CurrencyPipe, TitleCasePipe, LowerCasePipe } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
@@ -12,6 +12,7 @@ import { TranslocoModule } from '@jsverse/transloco';
     AsyncPipe,
     DatePipe,
     CurrencyPipe,
+    LowerCasePipe,
     TitleCasePipe,
     RouterLink,
     TranslocoModule,

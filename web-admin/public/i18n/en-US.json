@@ -1125,7 +1125,21 @@
           "extras": "Selected Extras",
           "return": "Return Details"
         },
+        "planType": {
+          "daily": "Daily",
+          "controlled": "Controlled",
+          "free": "Free"
+        },
+        "extras": {
+          "daily": "daily"
+        },
+        "return": {
+          "inspection": "Inspection",
+          "closing": "Closing"
+        },
         "label": {
+          "daysUsed": "Days Used",
+          "delayPenalty": "Delay Penalty",
           "billingPlan": "Billing Plan",
           "estimatedKilometers": "Estimated KM",
           "startDate": "Start Date",
@@ -1149,7 +1163,7 @@
           "totalMileage": "Total Mileage",
           "extrasTotalCost": "Extras Total",
           "fuelPenalty": "Fuel Penalty",
-          "penaltyTotalCost": "Other Penalties",
+          "penaltyTotalCost": "Total Penalty",
           "discountTotal": "Total Discount",
           "finalPrice": "Final Price"
         },

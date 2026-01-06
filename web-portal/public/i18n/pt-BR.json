@@ -367,28 +367,62 @@
     },
     "details": {
       "card": {
-        "buttons": {
-          "back": "Voltar"
+        "title": "Detalhes da Locação",
+        "subtitle": "Visão geral completa do contrato de locação.",
+        "status": {
+          "active": "Ativo",
+          "returned": "Devolvido"
         },
         "sections": {
-          "summary": "Resumo",
-          "plan": "Plano de cobrança",
-          "extras": "Extras",
-          "return": "Devolução"
+          "summary": "Resumo da Locação",
+          "plan": "Detalhes do Plano",
+          "extras": "Extras Selecionados",
+          "return": "Dados da Devolução"
         },
-        "status": {
-          "active": "Ativa",
-          "returned": "Devolvida"
+        "planType": {
+          "daily": "Diária",
+          "controlled": "Controlada",
+          "free": "Livre"
+        },
+        "extras": {
+          "daily": "diária"
+        },
+        "return": {
+          "inspection": "Vistoria",
+          "closing": "Fechamento"
         },
         "label": {
-          "startDate": "Data de retirada",
+          "daysUsed": "Dias usados",
+          "delayPenalty": "Multa de atraso",
+          "billingPlan": "Plano de Cobrança",
+          "estimatedKilometers": "Km Estimado",
+          "startDate": "Data de Início",
           "expectedReturnDate": "Previsão de Entrega",
-          "startKm": "Km inicial",
-          "estimatedKilometers": "Quilometragem estimada",
+          "returnDate": "Data de Devolução",
+          "startKm": "Km Inicial",
           "driver": "Condutor",
+          "employee": "Funcionário",
           "coupon": "Cupom",
-          "estimated": "Estimado",
-          "noExtras": "Nenhum extra selecionado."
+          "estimated": "Total Estimado",
+          "final": "Valor Final",
+          "none": "Nenhum",
+          "noExtras": "Nenhum extra selecionado.",
+          "dailyRate": "Diária",
+          "pricePerKm": "Preço por Km",
+          "controlledDailyRate": "Diária Controlada",
+          "pricePerKmExtrapolated": "Preço por Km (Extra)",
+          "fixedRate": "Taxa Fixa",
+          "fuelLevelAtReturn": "Nível de Combustível",
+          "endKm": "Km Final",
+          "totalMileage": "Total Rodado",
+          "extrasTotalCost": "Total de Extras",
+          "fuelPenalty": "Multa de Combustível",
+          "penaltyTotalCost": "Penalidades Total",
+          "discountTotal": "Desconto Total",
+          "finalPrice": "Preço Final"
+        },
+        "buttons": {
+          "back": "Voltar"
         }
       }
     }

@@ -367,28 +367,62 @@
     },
     "details": {
       "card": {
-        "buttons": {
-          "back": "Volver"
-        },
-        "sections": {
-          "summary": "Resumen",
-          "plan": "Plan de facturación",
-          "extras": "Extras",
-          "return": "Devolución"
-        },
+        "title": "Detalles del Alquiler",
+        "subtitle": "Visión general completa del contrato de alquiler.",
         "status": {
           "active": "Activo",
           "returned": "Devuelto"
         },
+        "sections": {
+          "summary": "Resumen del Alquiler",
+          "plan": "Detalles del Plan",
+          "extras": "Extras Seleccionados",
+          "return": "Datos de Devolución"
+        },
+        "planType": {
+          "daily": "Diario",
+          "controlled": "Controlado",
+          "free": "Libre"
+        },
+        "extras": {
+          "daily": "diario"
+        },
+        "return": {
+          "inspection": "Inspección",
+          "closing": "Cierre"
+        },
         "label": {
-          "startDate": "Fecha de recogida",
+          "daysUsed": "Días usados",
+          "delayPenalty": "Penalización por retraso",
+          "billingPlan": "Plan de Facturación",
+          "estimatedKilometers": "Km Estimado",
+          "startDate": "Fecha de Inicio",
           "expectedReturnDate": "Fecha Prevista de Devolución",
-          "startKm": "Km inicial",
-          "estimatedKilometers": "Kilómetros estimados",
+          "returnDate": "Fecha de Devolución",
+          "startKm": "Km Inicial",
           "driver": "Conductor",
+          "employee": "Empleado",
           "coupon": "Cupón",
-          "estimated": "Estimado",
-          "noExtras": "No se han seleccionado extras."
+          "estimated": "Total Estimado",
+          "final": "Monto Final",
+          "none": "Ninguno",
+          "noExtras": "Ningún extra seleccionado.",
+          "dailyRate": "Tarifa Diaria",
+          "pricePerKm": "Precio por Km",
+          "controlledDailyRate": "Tarifa Diaria Controlada",
+          "pricePerKmExtrapolated": "Precio por Km (Extra)",
+          "fixedRate": "Tarifa Fija",
+          "fuelLevelAtReturn": "Nivel de Combustible",
+          "endKm": "Km Final",
+          "totalMileage": "Kilometraje Total",
+          "extrasTotalCost": "Total de Extras",
+          "fuelPenalty": "Multa de Combustible",
+          "penaltyTotalCost": "Penalizaciones Total",
+          "discountTotal": "Descuento Total",
+          "finalPrice": "Precio Final"
+        },
+        "buttons": {
+          "back": "Volver"
         }
       }
     }

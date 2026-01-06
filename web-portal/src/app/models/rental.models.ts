@@ -97,9 +97,11 @@ export interface RentalReturnDto {
 
 export interface RentalReturn extends RentalReturnDto {
   returnDate: Date;
+  daysUsed: number;
   totalMileage: number;
   extrasTotalCost: number;
   fuelPenalty: number;
+  delayPenalty: number;
   penaltyTotalCost: number;
   discountTotal: number;
   finalPrice: number;

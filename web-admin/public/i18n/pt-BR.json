@@ -1126,7 +1126,21 @@
           "extras": "Extras Selecionados",
           "return": "Dados da Devolução"
         },
+        "planType": {
+          "daily": "Diária",
+          "controlled": "Controlada",
+          "free": "Livre"
+        },
+        "extras": {
+          "daily": "diária"
+        },
+        "return": {
+          "inspection": "Vistoria",
+          "closing": "Fechamento"
+        },
         "label": {
+          "daysUsed": "Dias usados",
+          "delayPenalty": "Multa de atraso",
           "billingPlan": "Plano de Cobrança",
           "estimatedKilometers": "Km Estimado",
           "startDate": "Data de Início",
@@ -1150,7 +1164,7 @@
           "totalMileage": "Total Rodado",
           "extrasTotalCost": "Total de Extras",
           "fuelPenalty": "Multa de Combustível",
-          "penaltyTotalCost": "Outras Penalidades",
+          "penaltyTotalCost": "Penalidades Total",
           "discountTotal": "Desconto Total",
           "finalPrice": "Preço Final"
         },

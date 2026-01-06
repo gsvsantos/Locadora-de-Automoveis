@@ -68,8 +68,6 @@ export class ReturnRentalComponent {
   protected readonly targetType = gsTabTargetEnum;
   protected readonly variantType = gsVariant;
 
-  private readonly returnDate: Date = new Date();
-
   protected readonly rental$ = this.route.data.pipe(
     filter((data) => data['rental'] as boolean),
     map((data) => data['rental'] as RentalDetailsDto),
@@ -102,7 +100,8 @@ export class ReturnRentalComponent {
     map(([rental, config, formValue]) => {
       if (this.formGroup.invalid) return 0;
       const form = formValue as ReturnFormValue;
-      const daysUsed = this.calculateDays(rental.startDate, this.returnDate);
+      const returnDate: Date = new Date();
+      const daysUsed = this.calculateDays(rental.startDate, returnDate);
       const endKm = Number(form.endKm ?? 0);
       const kmDriven = Math.max(0, endKm - rental.startKm);
 
@@ -121,7 +120,7 @@ export class ReturnRentalComponent {
         this.calculateFuelPenalty(form.fuelLevelAtReturn, rental.vehicle, config),
       );
       const delayPenalty = this.money(
-        this.calculateDelayPenalty(planTotalCost, rental.expectedReturnDate, this.returnDate),
+        this.calculateDelayPenalty(planTotalCost, new Date(rental.expectedReturnDate), returnDate),
       );
       const penaltiesTotalCost = this.money(fuelPenality + delayPenalty);
 
@@ -163,15 +162,26 @@ export class ReturnRentalComponent {
   }
 
   private calculateDays(start: Date, end: Date): number {
-    const date1 = new Date(start).getTime();
-    const date2 = new Date(end).getTime();
+    const date1 = new Date(start);
+    const date2 = new Date(end);
 
-    const diffInMs = date2 - date1;
-    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+    const startUtcMidnightMs = Date.UTC(
+      date1.getUTCFullYear(),
+      date1.getUTCMonth(),
+      date1.getUTCDate(),
+    );
 
-    const days = Math.ceil(diffInDays);
+    const endUtcMidnightMs = Date.UTC(
+      date2.getUTCFullYear(),
+      date2.getUTCMonth(),
+      date2.getUTCDate(),
+    );
 
-    return days <= 0 ? 1 : days;
+    const millisecondsPerDay = 1000 * 60 * 60 * 24;
+    const diffInDays = (endUtcMidnightMs - startUtcMidnightMs) / millisecondsPerDay;
+
+    const daysUsed = Math.ceil(diffInDays);
+    return daysUsed <= 0 ? 1 : daysUsed;
   }
 
   private calculatePlanPrice(
@@ -259,10 +269,22 @@ export class ReturnRentalComponent {
     expectedReturn: Date,
     actualReturn: Date,
   ): number {
-    const expected = new Date(expectedReturn).setHours(0, 0, 0, 0);
-    const actual = new Date(actualReturn).setHours(0, 0, 0, 0);
+    const expected = new Date(expectedReturn);
+    const actual = new Date(actualReturn);
 
-    return actual > expected ? planTotal * 0.1 : 0;
+    const expectedUtcMidnightMs = Date.UTC(
+      expected.getUTCFullYear(),
+      expected.getUTCMonth(),
+      expected.getUTCDate(),
+    );
+
+    const actualUtcMidnightMs = Date.UTC(
+      actual.getUTCFullYear(),
+      actual.getUTCMonth(),
+      actual.getUTCDate(),
+    );
+
+    return actualUtcMidnightMs > expectedUtcMidnightMs ? planTotal * 0.1 : 0;
   }
 
   private money(value: number): number {
