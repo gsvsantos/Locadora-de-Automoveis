@@ -140,14 +140,14 @@ public sealed class ReturnRentalRequestHandlerTests : UnitTestBase
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
-        Assert.AreEqual(1600m, rental.FinalPrice);
+        Assert.AreEqual(1500m, rental.FinalPrice);
         Assert.AreEqual(ERentalStatus.Completed, rental.Status);
 
         this.repositoryRentalReturnMock
             .Verify(r => r.AddAsync(
             It.Is<RentalReturn>(rr =>
                 rr.RentalId == rentalId &&
-                rr.FinalPrice == 1600m &&
+                rr.FinalPrice == 1500m &&
                 rr.EndKm == 1100m
         )), Times.Once);
 

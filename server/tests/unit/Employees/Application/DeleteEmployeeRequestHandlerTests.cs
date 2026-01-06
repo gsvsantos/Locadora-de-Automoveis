@@ -70,7 +70,7 @@ public sealed class DeleteEmployeeRequestHandlerTests
             3000m
         )
         { Id = employeeId };
-        employee.AssociateUser(new User
+        employee.AssociateLoginUser(new User
         {
             UserName = _userName,
             Email = _email,
@@ -85,7 +85,8 @@ public sealed class DeleteEmployeeRequestHandlerTests
             .Setup(r => r.DeleteAsync(employeeId));
 
         this.userManagerMock
-            .Setup(r => r.DeleteAsync(employee.User!));
+            .Setup(r => r.DeleteAsync(employee.LoginUser!))
+            .ReturnsAsync(IdentityResult.Success);
 
         this.unitOfWorkMock
             .Setup(u => u.CommitAsync());
@@ -102,10 +103,10 @@ public sealed class DeleteEmployeeRequestHandlerTests
             .Verify(r => r.DeleteAsync(employeeId),
             Times.Once);
 
-        Assert.IsNotNull(employee.User);
+        Assert.IsNotNull(employee.LoginUser);
 
         this.userManagerMock
-            .Verify(r => r.DeleteAsync(employee.User),
+            .Verify(r => r.DeleteAsync(employee.LoginUser),
             Times.Once);
 
         this.unitOfWorkMock.Verify(c => c.CommitAsync(), Times.Once);
