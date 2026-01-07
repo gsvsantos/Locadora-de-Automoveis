@@ -2,8 +2,8 @@
   "auth": {
     "register": {
       "card": {
-        "title": "Criar conta",
-        "subtitle": "Junte-se a nós e comece a alugar hoje mesmo",
+        "title": "Criar Conta",
+        "subtitle": "Junte-se a nós e comece a alugar hoje",
         "placeholder": {
           "fullName": "Seu nome completo",
           "email": "nome@exemplo.com",
@@ -13,26 +13,26 @@
           "confirmPassword": "Repita a senha"
         },
         "label": {
-          "userName": "Nome de usuário",
-          "fullName": "Nome completo",
-          "email": "Endereço de e-mail",
-          "phoneNumber": "Telefone (ex.: (99) 99999-9999)",
+          "userName": "Nome de Usuário",
+          "fullName": "Nome Completo",
+          "email": "Endereço de Email",
+          "phoneNumber": "Telefone (ex: (99) 99999-9999)",
           "password": "Senha",
-          "confirmPassword": "Confirmar senha"
+          "confirmPassword": "Confirmar Senha"
         },
         "errors": {
           "userNameRequired": "Nome de usuário é obrigatório.",
-          "userNameLength": "O nome de usuário deve ter pelo menos 5 caracteres.",
+          "userNameLength": "O usuário deve ter pelo menos 5 caracteres.",
           "fullNameRequired": "Nome completo é obrigatório.",
-          "fullNameLength": "O nome completo deve ter pelo menos 3 caracteres.",
-          "fullNamePattern": "O nome completo contém caracteres inválidos.",
-          "emailRequired": "E-mail é obrigatório.",
-          "emailLength": "Informe um e-mail válido.",
+          "fullNameLength": "O nome deve ter pelo menos 3 caracteres.",
+          "fullNamePattern": "O nome contém caracteres inválidos.",
+          "emailRequired": "Email é obrigatório.",
+          "emailLength": "Deve ser um email válido.",
           "phoneNumberRequired": "Telefone é obrigatório.",
           "phoneNumberPattern": "Formato de telefone inválido.",
           "passwordRequired": "Senha é obrigatória.",
           "passwordLength": "A senha deve ter pelo menos 6 caracteres.",
-          "passwordMustMatch": "As senhas não coincidem."
+          "passwordMustMatch": "As senhas não conferem."
         },
         "buttons": {
           "confirm": "Registrar",
@@ -45,16 +45,16 @@
         "title": "Bem-vindo de volta",
         "subtitle": "Entre na sua conta para continuar",
         "placeholder": {
-          "userName": "Informe seu e-mail ou nome de usuário",
-          "password": "Informe sua senha"
+          "userName": "Digite seu email ou usuário",
+          "password": "Digite sua senha"
         },
         "label": {
-          "userName": "E-mail ou nome de usuário",
+          "userName": "Email ou Usuário",
           "password": "Senha"
         },
         "errors": {
           "userNameRequired": "Nome de usuário é obrigatório.",
-          "userNameLength": "O nome de usuário deve ter pelo menos 5 caracteres.",
+          "userNameLength": "O usuário deve ter pelo menos 5 caracteres.",
           "passwordRequired": "Senha é obrigatória.",
           "passwordLength": "A senha deve ter pelo menos 6 caracteres."
         },
@@ -66,36 +66,36 @@
       }
     },
     "reset-password": {
-      "title": "Redefinir senha",
+      "title": "Alterar Senha",
       "label": {
-        "newPassword": "Nova senha",
-        "confirmNewPassword": "Confirmar nova senha"
+        "newPassword": "Nova Senha",
+        "confirmNewPassword": "Confirmar Nova Senha"
       },
       "errors": {
         "required": "Campo obrigatório.",
         "minLength": "A senha deve ter pelo menos 6 caracteres.",
-        "mismatch": "As novas senhas não coincidem."
+        "mismatch": "As novas senhas não conferem."
       },
       "buttons": {
-        "change": "Definir nova senha"
+        "change": "Definir Nova Senha"
       }
     },
     "forgot-password": {
-      "title": "Esqueceu a senha?",
-      "subtitle": "Informe seu e-mail para receber um link de recuperação.",
+      "title": "Esqueceu a Senha?",
+      "subtitle": "Digite seu email para receber um link de recuperação.",
       "placeholder": {
-        "email": "Endereço de e-mail"
+        "email": "Endereço de Email"
       },
       "label": {
-        "email": "Endereço de e-mail"
+        "email": "Endereço de Email"
       },
       "errors": {
-        "emailRequired": "E-mail é obrigatório.",
-        "emailLength": "Informe um endereço de e-mail válido."
+        "emailRequired": "Email é obrigatório.",
+        "emailLength": "Por favor, insira um endereço de email válido."
       },
       "buttons": {
-        "change": "Enviar link de recuperação",
-        "login": "Voltar para o login"
+        "change": "Enviar Link de Recuperação",
+        "login": "Voltar para Login"
       }
     }
   },

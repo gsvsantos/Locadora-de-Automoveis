@@ -20,7 +20,7 @@
               class="form-input"
               formControlName="userName"
               type="text"
-              placeholder="UserName"
+              [placeholder]="t('card.placeholder.userName')"
               autocomplete="name"
             />
             @if (userName?.errors?.['required'] && userName?.dirty) {
@@ -35,7 +35,7 @@
               class="form-input"
               formControlName="password"
               type="password"
-              placeholder="Password"
+              [placeholder]="t('card.placeholder.password')"
               autocomplete="current-password"
             />
             @if (password?.errors?.['required'] && password?.dirty) {

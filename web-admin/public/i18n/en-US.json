@@ -5,20 +5,20 @@
         "title": "Create Account",
         "subtitle": "Or use your email for registration",
         "placeholder": {
-          "userName": "Username",
-          "fullName": "Full Name",
-          "email": "Email",
-          "phoneNumber": "Phone Number (e.g., (99) 99999-9999)",
-          "password": "Password",
-          "confirmPassword": "Confirm Password"
-        },
-        "label": {
-          "userName": "Choose a username",
           "fullName": "Your full name",
           "email": "name@example.com",
+          "userName": "Choose a username",
           "phoneNumber": "(99) 99999-9999",
           "password": "Min. 6 characters",
           "confirmPassword": "Repeat password"
+        },
+        "label": {
+          "userName": "Username",
+          "fullName": "Full Name",
+          "email": "Email Address",
+          "phoneNumber": "Phone Number (e.g., (99) 99999-9999)",
+          "password": "Password",
+          "confirmPassword": "Confirm Password"
         },
         "errors": {
           "userNameRequired": "Username is required.",
@@ -35,8 +35,8 @@
           "passwordMustMatch": "Passwords do not match."
         },
         "buttons": {
-          "login": "Already have an account?",
-          "confirm": "Register"
+          "confirm": "Register",
+          "login": "Already have an account?"
         }
       }
     },
@@ -45,11 +45,11 @@
         "title": "Welcome Back",
         "subtitle": "Sign in to your account to continue",
         "placeholder": {
-          "userName": "Username",
-          "password": "Password"
+          "userName": "Enter your email or username",
+          "password": "Enter your password"
         },
         "label": {
-          "userName": "Username",
+          "userName": "Email or Username",
           "password": "Password"
         },
         "errors": {
@@ -59,9 +59,9 @@
           "passwordLength": "Password must be at least 6 characters long."
         },
         "buttons": {
-          "register": "Create an account",
           "confirm": "Sign In",
-          "password": "Forgot your password?"
+          "register": "Create an account",
+          "password": "Forgot password?"
         }
       }
     },
@@ -95,7 +95,7 @@
       },
       "buttons": {
         "change": "Send Recovery Link",
-        "back": "Back to Login"
+        "login": "Back to Login"
       }
     }
   },
@@ -165,7 +165,17 @@
       "notFound": "No results found."
     }
   },
-  "employee": {
+  "employees": {
+    "list": {
+      "header": {
+        "title": "Employees"
+      },
+      "buttons": {
+        "register": "Register New Employee",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives"
+      }
+    },
     "create": {
       "card": {
         "title": "New Employee Registration",
@@ -265,7 +275,17 @@
       }
     }
   },
-  "group": {
+  "groups": {
+    "list": {
+      "header": {
+        "title": "Groups"
+      },
+      "buttons": {
+        "register": "Register New Group",
+        "seeActives": "See Actives",
+        "seeInactives": "See Inactives"
+      }
+    },
     "create": {
       "card": {
         "title": "Register Vehicle Group",

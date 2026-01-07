@@ -2,8 +2,8 @@
   "auth": {
     "register": {
       "card": {
-        "title": "Crear cuenta",
-        "subtitle": "Únete a nosotros y empieza a alquilar hoy mismo",
+        "title": "Crear Cuenta",
+        "subtitle": "Únete a nosotros y empieza a alquilar hoy",
         "placeholder": {
           "fullName": "Tu nombre completo",
           "email": "nombre@ejemplo.com",
@@ -13,23 +13,23 @@
           "confirmPassword": "Repite la contraseña"
         },
         "label": {
-          "userName": "Nombre de usuario",
-          "fullName": "Nombre completo",
-          "email": "Correo electrónico",
-          "phoneNumber": "Número de teléfono (p. ej., (99) 99999-9999)",
+          "userName": "Nombre de Usuario",
+          "fullName": "Nombre Completo",
+          "email": "Dirección de Correo",
+          "phoneNumber": "Teléfono (ej: (99) 99999-9999)",
           "password": "Contraseña",
-          "confirmPassword": "Confirmar contraseña"
+          "confirmPassword": "Confirmar Contraseña"
         },
         "errors": {
           "userNameRequired": "El nombre de usuario es obligatorio.",
-          "userNameLength": "El nombre de usuario debe tener al menos 5 caracteres.",
+          "userNameLength": "El usuario debe tener al menos 5 caracteres.",
           "fullNameRequired": "El nombre completo es obligatorio.",
-          "fullNameLength": "El nombre completo debe tener al menos 3 caracteres.",
-          "fullNamePattern": "El nombre completo contiene caracteres no válidos.",
-          "emailRequired": "El correo electrónico es obligatorio.",
-          "emailLength": "Debes introducir un correo electrónico válido.",
-          "phoneNumberRequired": "El número de teléfono es obligatorio.",
-          "phoneNumberPattern": "Formato de número de teléfono no válido.",
+          "fullNameLength": "El nombre debe tener al menos 3 caracteres.",
+          "fullNamePattern": "El nombre contiene caracteres no válidos.",
+          "emailRequired": "El correo es obligatorio.",
+          "emailLength": "Debe ser un correo válido.",
+          "phoneNumberRequired": "El teléfono es obligatorio.",
+          "phoneNumberPattern": "Formato de teléfono no válido.",
           "passwordRequired": "La contraseña es obligatoria.",
           "passwordLength": "La contraseña debe tener al menos 6 caracteres.",
           "passwordMustMatch": "Las contraseñas no coinciden."
@@ -45,57 +45,57 @@
         "title": "Bienvenido de nuevo",
         "subtitle": "Inicia sesión en tu cuenta para continuar",
         "placeholder": {
-          "userName": "Introduce tu correo o nombre de usuario",
+          "userName": "Introduce tu correo o usuario",
           "password": "Introduce tu contraseña"
         },
         "label": {
-          "userName": "Correo o nombre de usuario",
+          "userName": "Correo o Usuario",
           "password": "Contraseña"
         },
         "errors": {
           "userNameRequired": "El nombre de usuario es obligatorio.",
-          "userNameLength": "El nombre de usuario debe tener al menos 5 caracteres.",
+          "userNameLength": "El usuario debe tener al menos 5 caracteres.",
           "passwordRequired": "La contraseña es obligatoria.",
           "passwordLength": "La contraseña debe tener al menos 6 caracteres."
         },
         "buttons": {
-          "confirm": "Iniciar sesión",
+          "confirm": "Iniciar Sesión",
           "register": "Crear una cuenta",
           "password": "¿Has olvidado tu contraseña?"
         }
       }
     },
     "reset-password": {
-      "title": "Restablecer contraseña",
+      "title": "Cambiar Contraseña",
       "label": {
-        "newPassword": "Nueva contraseña",
-        "confirmNewPassword": "Confirmar nueva contraseña"
+        "newPassword": "Nueva Contraseña",
+        "confirmNewPassword": "Confirmar Nueva Contraseña"
       },
       "errors": {
-        "required": "Campo obligatorio.",
+        "required": "El campo es obligatorio.",
         "minLength": "La contraseña debe tener al menos 6 caracteres.",
         "mismatch": "Las nuevas contraseñas no coinciden."
       },
       "buttons": {
-        "change": "Establecer nueva contraseña"
+        "change": "Establecer Nueva Contraseña"
       }
     },
     "forgot-password": {
-      "title": "¿Has olvidado la contraseña?",
-      "subtitle": "Introduce tu correo electrónico para recibir un enlace de recuperación.",
+      "title": "¿Has olvidado tu contraseña?",
+      "subtitle": "Introduce tu correo para recibir un enlace de recuperación.",
       "placeholder": {
-        "email": "Correo electrónico"
+        "email": "Dirección de Correo"
       },
       "label": {
-        "email": "Correo electrónico"
+        "email": "Dirección de Correo"
       },
       "errors": {
-        "emailRequired": "El correo electrónico es obligatorio.",
-        "emailLength": "Introduce una dirección de correo electrónico válida."
+        "emailRequired": "El correo es obligatorio.",
+        "emailLength": "Por favor, introduce una dirección de correo válida."
       },
       "buttons": {
-        "change": "Enviar enlace de recuperación",
-        "login": "Volver al inicio de sesión"
+        "change": "Enviar Enlace de Recuperación",
+        "login": "Volver a Iniciar Sesión"
       }
     }
   },

@@ -4,10 +4,11 @@ import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-butt
 import { map, filter } from 'rxjs';
 import { AsyncPipe, TitleCasePipe } from '@angular/common';
 import { Group } from '../../../models/group.models';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-list-groups.component',
-  imports: [AsyncPipe, TitleCasePipe, RouterLink, GsButtons],
+  imports: [AsyncPipe, TitleCasePipe, TranslocoModule, RouterLink, GsButtons],
   templateUrl: './list-groups.component.html',
   styleUrl: './list-groups.component.scss',
 })

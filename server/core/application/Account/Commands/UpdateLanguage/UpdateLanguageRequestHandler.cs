@@ -31,15 +31,26 @@ public class UpdateLanguageRequestHandler(
                 return Result.Fail(ErrorResults.NotFoundError("User not found."));
             }
 
-            Client? client = await repositoryClient.GetGlobalByLoginUserIdAsync(loginUserId);
+            IList<string> userRoles = await userManager.GetRolesAsync(user);
 
-            if (client is null)
+            if (userRoles.Contains("Client"))
             {
-                return Result.Fail(ErrorResults.NotFoundError("Client not found."));
+
+                Client? client = await repositoryClient.GetGlobalByLoginUserIdAsync(loginUserId);
+
+                if (client is null)
+                {
+                    return Result.Fail(ErrorResults.NotFoundError("Client not found."));
+                }
+
+                client.SetPreferredLanguage(request.Language);
+
+                await repositoryClient.UpdateAsync(client.Id, client);
+
+                await unitOfWork.CommitAsync();
             }
 
             user.SetPreferredLanguage(request.Language);
-            client.SetPreferredLanguage(request.Language);
 
             await userManager.UpdateAsync(user);
 
@@ -49,10 +60,6 @@ public class UpdateLanguageRequestHandler(
             {
                 return Result.Fail(ErrorResults.BadRequestError("Failed to update user language."));
             }
-
-            await repositoryClient.UpdateAsync(client.Id, client);
-
-            await unitOfWork.CommitAsync();
 
             UpdateLanguageResponse response = new();
 

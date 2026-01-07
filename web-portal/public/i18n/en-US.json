@@ -66,7 +66,7 @@
       }
     },
     "reset-password": {
-      "title": "Reset Password",
+      "title": "Change Password",
       "label": {
         "newPassword": "New Password",
         "confirmNewPassword": "Confirm New Password"

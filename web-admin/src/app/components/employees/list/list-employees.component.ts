@@ -4,10 +4,19 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { AsyncPipe, CurrencyPipe, DatePipe, TitleCasePipe } from '@angular/common';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-list-employees.component',
-  imports: [AsyncPipe, CurrencyPipe, DatePipe, TitleCasePipe, RouterLink, GsButtons],
+  imports: [
+    AsyncPipe,
+    CurrencyPipe,
+    DatePipe,
+    TitleCasePipe,
+    TranslocoModule,
+    RouterLink,
+    GsButtons,
+  ],
   templateUrl: './list-employees.component.html',
   styleUrl: './list-employees.component.scss',
 })

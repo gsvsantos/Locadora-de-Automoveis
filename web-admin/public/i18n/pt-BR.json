@@ -2,101 +2,100 @@
   "auth": {
     "register": {
       "card": {
-        "title": "Criar conta",
-        "subtitle": "Ou use seu e-mail para se registrar",
+        "title": "Criar Conta",
+        "subtitle": "Ou use seu email para cadastro",
         "placeholder": {
-          "userName": "Nome de usuário",
-          "fullName": "Nome completo",
-          "email": "E-mail",
-          "phoneNumber": "Telefone (ex.: (99) 99999-9999)",
-          "password": "Senha",
-          "confirmPassword": "Confirmar senha"
+          "fullName": "Seu nome completo",
+          "email": "nome@exemplo.com",
+          "userName": "Escolha um nome de usuário",
+          "phoneNumber": "(99) 99999-9999",
+          "password": "Mín. 6 caracteres",
+          "confirmPassword": "Repita a senha"
         },
         "label": {
-          "userName": "Nome de usuário",
-          "fullName": "Nome completo",
-          "email": "E-mail",
-          "phoneNumber": "Telefone",
+          "userName": "Nome de Usuário",
+          "fullName": "Nome Completo",
+          "email": "Endereço de Email",
+          "phoneNumber": "Telefone (ex: (99) 99999-9999)",
           "password": "Senha",
-          "confirmPassword": "Confirmar senha"
+          "confirmPassword": "Confirmar Senha"
         },
         "errors": {
-          "userNameRequired": "O nome de usuário é obrigatório.",
-          "userNameLength": "O nome de usuário deve ter pelo menos 5 caracteres.",
-          "fullNameRequired": "O nome completo é obrigatório.",
-          "fullNameLength": "O nome completo deve ter pelo menos 3 caracteres.",
-          "fullNamePattern": "O nome completo contém caracteres inválidos.",
-          "emailRequired": "O e-mail é obrigatório.",
-          "emailLength": "Informe um e-mail válido.",
-          "phoneNumberRequired": "O telefone é obrigatório.",
+          "userNameRequired": "Nome de usuário é obrigatório.",
+          "userNameLength": "O usuário deve ter pelo menos 5 caracteres.",
+          "fullNameRequired": "Nome completo é obrigatório.",
+          "fullNameLength": "O nome deve ter pelo menos 3 caracteres.",
+          "fullNamePattern": "O nome contém caracteres inválidos.",
+          "emailRequired": "Email é obrigatório.",
+          "emailLength": "Deve ser um email válido.",
+          "phoneNumberRequired": "Telefone é obrigatório.",
           "phoneNumberPattern": "Formato de telefone inválido.",
-          "passwordRequired": "A senha é obrigatória.",
+          "passwordRequired": "Senha é obrigatória.",
           "passwordLength": "A senha deve ter pelo menos 6 caracteres.",
-          "passwordMustMatch": "As senhas não coincidem."
+          "passwordMustMatch": "As senhas não conferem."
         },
         "buttons": {
-          "login": "Já possui uma conta?",
-          "confirm": "Registrar"
+          "confirm": "Registrar",
+          "login": "Já tem uma conta?"
         }
       }
     },
     "login": {
       "card": {
-        "title": "Entrar",
-        "subtitle": "Ou use sua conta",
+        "title": "Bem-vindo de volta",
+        "subtitle": "Entre na sua conta para continuar",
         "placeholder": {
-          "userName": "Nome de usuário",
-          "password": "Senha"
+          "userName": "Digite seu email ou usuário",
+          "password": "Digite sua senha"
         },
         "label": {
-          "userName": "Nome de usuário",
+          "userName": "Email ou Usuário",
           "password": "Senha"
         },
         "errors": {
-          "userNameRequired": "O nome de usuário é obrigatório.",
-          "userNameLength": "O nome de usuário deve ter pelo menos 5 caracteres.",
-          "passwordRequired": "A senha é obrigatória.",
+          "userNameRequired": "Nome de usuário é obrigatório.",
+          "userNameLength": "O usuário deve ter pelo menos 5 caracteres.",
+          "passwordRequired": "Senha é obrigatória.",
           "passwordLength": "A senha deve ter pelo menos 6 caracteres."
         },
         "buttons": {
-          "register": "Criar uma conta",
           "confirm": "Entrar",
-          "password": "Esqueceu sua senha?"
+          "register": "Criar uma conta",
+          "password": "Esqueceu a senha?"
         }
       }
     },
     "reset-password": {
       "title": "Alterar Senha",
       "label": {
-        "currentPassword": "Senha Atual",
         "newPassword": "Nova Senha",
         "confirmNewPassword": "Confirmar Nova Senha"
       },
       "errors": {
         "required": "Campo obrigatório.",
         "minLength": "A senha deve ter pelo menos 6 caracteres.",
-        "mismatch": "As novas senhas não coincidem.",
-        "samePassword": "A senha atual e a nova são iguais."
+        "mismatch": "As novas senhas não conferem."
       },
       "buttons": {
-        "change": "Confirmar"
+        "change": "Definir Nova Senha"
       }
     },
     "forgot-password": {
       "title": "Esqueceu a Senha?",
+      "subtitle": "Digite seu email para receber um link de recuperação.",
       "placeholder": {
-        "email": "E-mail"
+        "email": "Endereço de Email"
       },
       "label": {
-        "email": "E-mail"
+        "email": "Endereço de Email"
       },
       "errors": {
-        "emailRequired": "O e-mail é obrigatório.",
-        "emailLength": "Insira um e-mail válido."
+        "emailRequired": "Email é obrigatório.",
+        "emailLength": "Por favor, insira um endereço de email válido."
       },
       "buttons": {
-        "login": "Já possui uma conta?",
-        "change": "Enviar Link"
+        "change": "Enviar Link de Recuperação",
+        "login": "Voltar para Login"
       }
     }
   },
@@ -166,7 +165,17 @@
       "notFound": "Nenhum resultado encontrado."
     }
   },
-  "employee": {
+  "employees": {
+    "list": {
+      "header": {
+        "title": "Funcionários"
+      },
+      "buttons": {
+        "register": "Cadastrar Novo Funcionário",
+        "seeActives": "Ver Ativos",
+        "seeInactives": "Ver Inativos"
+      }
+    },
     "create": {
       "card": {
         "title": "Cadastro de novo funcionário",
@@ -266,7 +275,17 @@
       }
     }
   },
-  "group": {
+  "groups": {
+    "list": {
+      "header": {
+        "title": "Grupos"
+      },
+      "buttons": {
+        "register": "Cadastrar Novo Grupo",
+        "seeActives": "Ver Ativos",
+        "seeInactives": "Ver Inativos"
+      }
+    },
     "create": {
       "card": {
         "title": "Cadastrar grupo de veículos",
