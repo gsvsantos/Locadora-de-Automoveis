@@ -17,10 +17,18 @@ import { passwordMatchValidator } from '../../../validators/auth.validators';
 import { RecaptchaModule } from 'ng-recaptcha-2';
 import { environment } from '../../../../environments/environment';
 import { LocalStorageService, ThemeType } from '../../../services/local-storage.service';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-register.component',
-  imports: [RouterLink, ReactiveFormsModule, RecaptchaModule, TranslocoModule, GsButtons],
+  imports: [
+    RouterLink,
+    NgxMaskDirective,
+    ReactiveFormsModule,
+    RecaptchaModule,
+    TranslocoModule,
+    GsButtons,
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })

@@ -5,10 +5,19 @@ import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { map, filter } from 'rxjs';
+import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-list-drivers.component',
-  imports: [AsyncPipe, DatePipe, TitleCasePipe, TranslocoModule, RouterLink, GsButtons],
+  imports: [
+    AsyncPipe,
+    DatePipe,
+    NgxMaskPipe,
+    TitleCasePipe,
+    TranslocoModule,
+    RouterLink,
+    GsButtons,
+  ],
   templateUrl: './list-drivers.component.html',
   styleUrl: './list-drivers.component.scss',
 })

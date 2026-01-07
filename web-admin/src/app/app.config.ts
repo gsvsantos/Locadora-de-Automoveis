@@ -17,6 +17,7 @@ import { routes } from './routes/app.routes';
 import { provideOAuthClient } from 'angular-oauth2-oidc';
 import { AuthService } from './services/auth.service';
 import { RECAPTCHA_LOADER_OPTIONS } from 'ng-recaptcha-2';
+import { provideNgxMask } from 'ngx-mask';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -65,6 +66,7 @@ export const appConfig: ApplicationConfig = {
       deps: [LOCALE_ID],
     },
     provideAnimationsAsync(),
+    provideNgxMask(),
   ],
 };
 

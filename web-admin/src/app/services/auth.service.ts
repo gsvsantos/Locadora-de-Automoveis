@@ -93,9 +93,8 @@ export class AuthService {
               const oAuthError = err.params as { error?: string };
               const errorMessage: string | undefined = oAuthError.error;
               this.notificationService.error(errorMessage!);
-            } else {
-              this.notificationService.error(err as string);
             }
+
             this.handleLogoutCleanup();
             return of(undefined);
           }),

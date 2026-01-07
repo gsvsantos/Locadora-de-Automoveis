@@ -54,6 +54,7 @@
               formControlName="phoneNumber"
               type="tel"
               [placeholder]="t('card.placeholder.phoneNumber')"
+              mask="(00) 0000-0000||(00) 00000-0000"
             />
             @if (phoneNumber?.errors?.['required'] && phoneNumber?.dirty) {
               <span class="error-message">{{ t('card.errors.phoneNumberRequired') }}</span>

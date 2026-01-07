@@ -14,10 +14,11 @@ import { NotificationService } from '../../../services/notification.service';
 import { EmployeeDto } from '../../../models/employee.models';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 import { TranslocoModule } from '@jsverse/transloco';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-create-employee.component',
-  imports: [RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
+  imports: [RouterLink, NgxMaskDirective, ReactiveFormsModule, TranslocoModule, GsButtons],
   templateUrl: './create-employee.component.html',
   styleUrl: './create-employee.component.scss',
 })

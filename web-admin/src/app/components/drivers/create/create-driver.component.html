@@ -18,7 +18,11 @@
               </option>
 
               @for (client of clients$ | async; track client.id) {
-                <option [ngValue]="client.id">{{ client.fullName }} ({{ client.document }})</option>
+                <option [ngValue]="client.id">
+                  {{ client.fullName }} ({{
+                    client.document | mask: '000.000.000-00||00.000.000/0000-00'
+                  }})
+                </option>
               }
             </select>
           </div>
@@ -84,6 +88,7 @@
                   formControlName="document"
                   type="text"
                   [placeholder]="t('card.placeholder.document')"
+                  mask="000.000.000-00"
                 />
                 @if (document?.errors?.['required'] && document?.dirty) {
                   <span class="error-message">{{ t('card.errors.documentRequired') }}</span>
@@ -111,6 +116,7 @@
                   formControlName="phoneNumber"
                   type="tel"
                   [placeholder]="t('card.placeholder.phoneNumber')"
+                  mask="(00) 0000-0000||(00) 00000-0000"
                 />
                 @if (phoneNumber?.errors?.['required'] && phoneNumber?.dirty) {
                   <span class="error-message">{{ t('card.errors.phoneNumberRequired') }}</span>
@@ -125,6 +131,7 @@
                   formControlName="licenseNumber"
                   type="text"
                   [placeholder]="t('card.placeholder.licenseNumber')"
+                  mask="00000000000"
                 />
                 @if (licenseNumber?.errors?.['required'] && licenseNumber?.dirty) {
                   <span class="error-message">{{ t('card.errors.licenseNumberRequired') }}</span>

@@ -4,11 +4,12 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { filter, map, shareReplay } from 'rxjs';
 import { ClientProfile } from '../../../models/account.models';
-import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from "gs-buttons";
+import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
+import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-details-account.component',
-  imports: [AsyncPipe, TranslocoModule, GsButtons, RouterLink],
+  imports: [AsyncPipe, RouterLink, NgxMaskPipe, TranslocoModule, GsButtons],
   templateUrl: './details-account.component.html',
   styleUrl: './details-account.component.scss',
 })

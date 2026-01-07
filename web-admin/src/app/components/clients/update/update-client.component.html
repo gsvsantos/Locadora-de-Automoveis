@@ -50,6 +50,7 @@
                 formControlName="document"
                 type="text"
                 [placeholder]="t('card.placeholder.document')"
+                mask="000.000.000-00||00.000.000/0000-00"
               />
               @if (document?.errors?.['required'] && document?.dirty) {
                 <span class="error-message">{{ t('card.errors.documentRequired') }}</span>
@@ -80,6 +81,7 @@
                 formControlName="phoneNumber"
                 type="tel"
                 [placeholder]="t('card.placeholder.phoneNumber')"
+                mask="(00) 0000-0000||(00) 00000-0000"
               />
               @if (phoneNumber?.errors?.['required'] && phoneNumber?.dirty) {
                 <span class="error-message">{{ t('card.errors.phoneNumberRequired') }}</span>

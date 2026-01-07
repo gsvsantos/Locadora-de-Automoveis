@@ -15,10 +15,11 @@ import { Component, inject } from '@angular/core';
 import { CreateClientDto } from '../../../models/client.models';
 import { Observer } from 'rxjs';
 import { IdApiResponse } from '../../../models/api.models';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-create-client.component',
-  imports: [RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
+  imports: [RouterLink, NgxMaskDirective, ReactiveFormsModule, TranslocoModule, GsButtons],
   templateUrl: './create-client.component.html',
   styleUrl: './create-client.component.scss',
 })

@@ -34,10 +34,19 @@ import { Client } from '../../../models/client.models';
 import { ClientService } from '../../../services/client.service';
 import { needsIndividualValidator } from '../../../validators/driver.validators';
 import { dateToInputDateString } from '../../../utils/date.utils';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-create-driver.component',
-  imports: [AsyncPipe, RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
+  imports: [
+    AsyncPipe,
+    RouterLink,
+    NgxMaskDirective,
+    NgxMaskPipe,
+    ReactiveFormsModule,
+    TranslocoModule,
+    GsButtons,
+  ],
   templateUrl: './create-driver.component.html',
   styleUrl: './create-driver.component.scss',
 })
@@ -184,9 +193,7 @@ export class CreateDriverComponent {
         '',
         [
           Validators.required.bind(this),
-          Validators.pattern(
-            /^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}|[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/,
-          ),
+          Validators.pattern(/^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2})$/),
         ],
       ],
       email: ['', [Validators.required.bind(this), Validators.email.bind(this)]],

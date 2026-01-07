@@ -16,10 +16,18 @@ import { IdApiResponse } from '../../../models/api.models';
 import { ClientService } from '../../../services/client.service';
 import { NotificationService } from '../../../services/notification.service';
 import { Client, ClientDto } from '../../../models/client.models';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-update-client.component',
-  imports: [AsyncPipe, RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
+  imports: [
+    AsyncPipe,
+    RouterLink,
+    NgxMaskDirective,
+    ReactiveFormsModule,
+    TranslocoModule,
+    GsButtons,
+  ],
   templateUrl: './update-client.component.html',
   styleUrl: './update-client.component.scss',
 })

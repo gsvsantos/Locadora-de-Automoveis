@@ -35,12 +35,18 @@
             <div class="card__content">
               <div class="info-row">
                 <span class="material-icons">badge</span>
-                <span>{{ t('label.document') }}: {{ driver.document }}</span>
+                <span
+                  >{{ t('label.document') }}:
+                  {{ driver.document | mask: '000.000.000-00||00.000.000/0000-00' }}</span
+                >
               </div>
 
               <div class="info-row">
                 <span class="material-icons">assignment_ind</span>
-                <span>{{ t('label.licenseNumber') }}: {{ driver.licenseNumber }}</span>
+                <span
+                  >{{ t('label.licenseNumber') }}:
+                  {{ driver.licenseNumber | mask: '00000000000' }}</span
+                >
               </div>
 
               <div class="info-row">

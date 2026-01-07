@@ -274,6 +274,7 @@
           "emailInvalid": "Please enter a valid email.",
           "phoneNumberRequired": "Phone number is required.",
           "phoneNumberInvalid": "Invalid phone format.",
+          "documentRequired": "The document is required.",
           "documentInvalid": "Invalid document format."
         },
         "buttons": {

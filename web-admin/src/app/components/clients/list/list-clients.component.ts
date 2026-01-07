@@ -5,10 +5,11 @@ import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-butt
 import { map, filter } from 'rxjs';
 import { AsyncPipe, TitleCasePipe } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
+import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-list-clients.component',
-  imports: [AsyncPipe, TitleCasePipe, TranslocoModule, RouterLink, GsButtons],
+  imports: [AsyncPipe, NgxMaskPipe, TitleCasePipe, TranslocoModule, RouterLink, GsButtons],
   templateUrl: './list-clients.component.html',
   styleUrl: './list-clients.component.scss',
 })

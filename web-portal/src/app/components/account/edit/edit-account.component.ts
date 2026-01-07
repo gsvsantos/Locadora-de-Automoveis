@@ -15,10 +15,18 @@ import { filter, map, tap, shareReplay, Observer, take } from 'rxjs';
 import { ClientProfile } from '../../../models/account.models';
 import { AccountService } from '../../../services/account.service';
 import { NotificationService } from '../../../services/notification.service';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-edit-account.component',
-  imports: [AsyncPipe, RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
+  imports: [
+    AsyncPipe,
+    RouterLink,
+    NgxMaskDirective,
+    ReactiveFormsModule,
+    TranslocoModule,
+    GsButtons,
+  ],
   templateUrl: './edit-account.component.html',
   styleUrl: './edit-account.component.scss',
 })
@@ -59,9 +67,8 @@ export class EditAccountComponent {
     document: [
       '',
       [
-        Validators.pattern(
-          /^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}|[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/,
-        ),
+        Validators.required.bind(this),
+        Validators.pattern(/^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2})$/),
       ],
     ],
     state: [''],
