@@ -10,6 +10,7 @@ public abstract class AuthErrorResults
             .CausedBy($"You don't have permission to sign in.")
             .WithMetadata("ErrorType", "BadRequest");
     }
+
     public static Error UserNotClientError()
     {
         return new Error("User is not a Client")

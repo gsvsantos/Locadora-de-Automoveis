@@ -45,7 +45,26 @@ public class CreateDriverRequestHandler(
             return Result.Fail(ErrorResults.NotFoundError(request.ClientId));
         }
 
-        Driver driver = mapper.Map<Driver>(request);
+        bool isNewDriver = false;
+        Driver? driver = await repositoryDriver.GetByDocumentAsync(request.Document);
+
+        if (driver is not null)
+        {
+            if (driver.IsActive)
+            {
+                return Result.Fail(DriverErrorResults.DocumentAlreadyRegistredError(request.Document));
+            }
+
+            mapper.Map(request, driver);
+
+            driver.Activate();
+        }
+        else
+        {
+            driver = mapper.Map<Driver>(request);
+
+            isNewDriver = true;
+        }
 
         try
         {
@@ -60,47 +79,41 @@ public class CreateDriverRequestHandler(
                 return Result.Fail(ErrorResults.BadRequestError(errors));
             }
 
-            List<Client> existingClients = await repositoryClient.GetAllAsync();
-
-            List<Driver> existingDrivers = await repositoryDriver.GetAllAsync();
-
-            if (DriverDocumentAlreadyRegistred(request.Document, existingDrivers))
-            {
-                return Result.Fail(DriverErrorResults.DocumentAlreadyRegistredError(request.Document));
-            }
-
             if (selectedClient.Type == EClientType.Business)
             {
                 Client? newCLient = null!;
 
-                bool businessClientHasIndividuals = await repositoryClient.BusinessClientHasIndividuals(selectedClient.Id);
-
-                if (businessClientHasIndividuals)
+                if (request.IndividualClientId.HasValue)
                 {
-                    if (!request.IndividualClientId.HasValue)
-                    {
-                        return Result.Fail(DriverErrorResults.IndividualClientIdError());
-                    }
-                    else
-                    {
-                        newCLient = await repositoryClient.GetByIdAsync(request.IndividualClientId.Value);
+                    newCLient = await repositoryClient.GetByIdAsync(request.IndividualClientId.Value);
 
-                        if (newCLient is null)
-                        {
-                            return Result.Fail(ErrorResults.NotFoundError(request.IndividualClientId.Value));
-                        }
+                    if (newCLient is null)
+                    {
+                        return Result.Fail(ErrorResults.NotFoundError(request.IndividualClientId.Value));
                     }
                 }
                 else
                 {
-                    if (ClientDocumentAlreadyRegistred(request.Document, existingClients))
+                    bool documentExists = await repositoryClient.ExistsByDocumentAsync(request.Document);
+
+                    if (documentExists)
                     {
-                        return Result.Fail(ClientErrorResults.DocumentAlreadyRegistredError(request.Document));
+                        Client? existingClient = await repositoryClient.GetByTenantAndDocumentAsync(tenantProvider.GetTenantId(), request.Document);
+                        if (existingClient != null)
+                        {
+                            newCLient = existingClient;
+                        }
+                        else
+                        {
+                            return Result.Fail(ClientErrorResults.DocumentAlreadyRegistredError(request.Document));
+                        }
                     }
+                    else
+                    {
+                        newCLient = CreateNewClient(request, user, selectedClient);
 
-                    newCLient = CreateNewClient(request, user, selectedClient);
-
-                    await repositoryClient.AddAsync(newCLient);
+                        await repositoryClient.AddAsync(newCLient);
+                    }
                 }
 
                 driver.AssociateClient(newCLient);
@@ -117,10 +130,18 @@ public class CreateDriverRequestHandler(
 
             driver.AssociateUser(user);
 
-            await repositoryDriver.AddAsync(driver);
+            if (isNewDriver)
+            {
+                await repositoryDriver.AddAsync(driver);
+            }
+            else
+            {
+                await repositoryDriver.UpdateAsync(driver.Id, driver);
+            }
 
             await unitOfWork.CommitAsync();
 
+            await cache.SetStringAsync("clients:master-version", Guid.NewGuid().ToString(), cancellationToken);
             await cache.SetStringAsync("drivers:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new CreateDriverResponse(driver.Id));
@@ -149,17 +170,5 @@ public class CreateDriverRequestHandler(
         newCLient.SetLicenseNumber(request.LicenseNumber);
         newCLient.SetLicenseValidity(request.LicenseValidity);
         return newCLient;
-    }
-
-    private static bool ClientDocumentAlreadyRegistred(string document, List<Client> existingClients)
-    {
-        return existingClients.Any(entity =>
-            string.Equals(entity.Document, document, StringComparison.CurrentCultureIgnoreCase));
-    }
-
-    private static bool DriverDocumentAlreadyRegistred(string document, List<Driver> existingDrivers)
-    {
-        return existingDrivers.Any(entity =>
-            string.Equals(entity.Document, document, StringComparison.CurrentCultureIgnoreCase));
     }
 }

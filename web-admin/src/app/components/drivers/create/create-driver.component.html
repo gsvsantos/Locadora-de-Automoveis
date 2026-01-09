@@ -31,27 +31,34 @@
             @if (clientTypeIsBusiness$ | async) {
               @if ((individualClients$ | async)?.length) {
                 <h3 class="full-width">{{ t('card.section.associatedDrivers') }}</h3>
-                <div class="form-field full-width">
-                  <label>{{ t('card.label.selectDriver') }}</label>
-                  <select class="form-input" formControlName="individualClientId">
-                    <option [ngValue]="null">{{ t('card.placeholder.selectDriver') }}</option>
-                    @for (
-                      individualClient of individualClients$ | async;
-                      track individualClient.id
-                    ) {
-                      <option [ngValue]="individualClient.id">
-                        {{ individualClient.fullName }} ({{ individualClient.document }})
-                      </option>
-                    }
-                  </select>
-                  @if (
-                    formGroup.errors?.['needsIndividual'] &&
-                    individualClientId?.enabled &&
-                    clientId?.dirty
-                  ) {
-                    <span class="error-message">{{ t('card.errors.selectedDriverRequired') }}</span>
-                  }
+
+                <div class="form-field full-width checkbox-container">
+                  <label class="checkbox-label">
+                    <input type="checkbox" formControlName="registerNewDriver" />
+                    <span>{{ t('card.label.registerNewDriverInstead') }}</span>
+                  </label>
                 </div>
+
+                @if (!registerNewDriver?.value) {
+                  <div class="form-field full-width">
+                    <label>{{ t('card.label.selectDriver') }}</label>
+                    <select class="form-input" formControlName="individualClientId">
+                      <option [ngValue]="null">{{ t('card.placeholder.selectDriver') }}</option>
+                      @for (
+                        individualClient of individualClients$ | async;
+                        track individualClient.id
+                      ) {
+                        <option [ngValue]="individualClient.id">
+                          {{ individualClient.fullName }} ({{ individualClient.document }})
+                        </option>
+                      }
+                    </select>
+                  </div>
+                } @else {
+                  <p class="small-info full-width">
+                    {{ t('card.info.enteringNewDriverData') }}
+                  </p>
+                }
               } @else {
                 <h3 class="full-width">{{ t('card.section.personalData') }}</h3>
                 <p class="small-info full-width">
@@ -63,7 +70,10 @@
               <p class="small-info full-width">{{ t('card.info.clientDetailsPrepopulated') }}</p>
             }
 
-            @if (!((clientTypeIsBusiness$ | async) && (individualClients$ | async)?.length)) {
+            @if (
+              !((clientTypeIsBusiness$ | async) && (individualClients$ | async)?.length) ||
+              registerNewDriver?.value
+            ) {
               <div class="form-field">
                 <label>{{ t('card.label.fullName') }}</label>
                 <input

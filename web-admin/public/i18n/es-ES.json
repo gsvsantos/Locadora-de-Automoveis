@@ -810,11 +810,13 @@
           "email": "Correo electrónico",
           "phoneNumber": "Número de teléfono",
           "licenseNumber": "Número de permiso",
-          "licenseValidity": "Validez del permiso"
+          "licenseValidity": "Validez del permiso",
+          "registerNewDriverInstead": "Asociar nuevo conductor"
         },
         "info": {
           "clientDetailsPrepopulated": "Los datos del cliente se han rellenado automáticamente y están bloqueados para edición. Introduce únicamente la información del permiso.",
-          "registerNewDriverForCorporate": "Rellena los siguientes datos para registrar un nuevo conductor asociado al cliente empresa."
+          "registerNewDriverForCorporate": "Rellena los siguientes datos para registrar un nuevo conductor asociado al cliente empresa.",
+          "enteringNewDriverData": "Estás registrando un nuevo conductor. Completa los datos a continuación."
         },
         "errors": {
           "clientRequired": "La asociación con un cliente es obligatoria.",

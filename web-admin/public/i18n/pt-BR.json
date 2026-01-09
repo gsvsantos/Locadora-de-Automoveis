@@ -790,7 +790,7 @@
           "identification": "Associação ao cliente",
           "personalData": "Dados pessoais do condutor",
           "licenseData": "Dados da CNH do condutor",
-          "associatedDrivers": "Selecionar condutor existente (cliente PJ)"
+          "associatedDrivers": "Selecionar condutor existente (cliente CPF)"
         },
         "placeholder": {
           "client": "Selecione o cliente associado...",
@@ -810,11 +810,13 @@
           "email": "E-mail",
           "phoneNumber": "Telefone",
           "licenseNumber": "Número da CNH",
-          "licenseValidity": "Validade da CNH"
+          "licenseValidity": "Validade da CNH",
+          "registerNewDriverInstead": "Associar novo condutor"
         },
         "info": {
           "clientDetailsPrepopulated": "Os dados do cliente foram preenchidos automaticamente e estão bloqueados para edição. Informe apenas os dados da CNH.",
-          "registerNewDriverForCorporate": "Preencha os dados abaixo para cadastrar um novo condutor (PF) associado ao cliente corporativo."
+          "registerNewDriverForCorporate": "Preencha os dados abaixo para cadastrar um novo condutor (PF) associado ao cliente corporativo.",
+          "enteringNewDriverData": "Você está cadastrando um novo condutor. Preencha os dados abaixo."
         },
         "errors": {
           "clientRequired": "A associação a um cliente é obrigatória.",

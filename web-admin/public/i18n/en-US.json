@@ -810,11 +810,13 @@
           "email": "Email",
           "phoneNumber": "Phone Number",
           "licenseNumber": "License Number",
-          "licenseValidity": "License Validity"
+          "licenseValidity": "License Validity",
+          "registerNewDriverInstead": "Associar novo condutor"
         },
         "info": {
           "clientDetailsPrepopulated": "Client details have been pre-filled and disabled for editing. Please only provide the license information.",
-          "registerNewDriverForCorporate": "Fill in the details below to register a new individual driver associated with the corporate client."
+          "registerNewDriverForCorporate": "Fill in the details below to register a new individual driver associated with the corporate client.",
+          "enteringNewDriverData": "You are registering a new driver. Please fill in the details below."
         },
         "errors": {
           "clientRequired": "Client association is mandatory.",

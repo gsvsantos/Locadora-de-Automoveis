@@ -8,6 +8,10 @@ public interface IRepositoryDriver : IRepository<Driver>
 
     Task<List<Guid?>> GetTenantsWithActiveDriversAsync();
 
+    Task<List<Guid>> GetDriverClientIdsAsync();
+
+    Task<Driver?> GetByDocumentAsync(string document);
+
     Task<Driver?> GetDriverByClientId(Guid clientId);
 
     Task<List<Driver>> SearchAsync(string term, CancellationToken ct = default);

@@ -26,10 +26,8 @@ public class GetMostUsedCouponRequestHandler(
             if (string.IsNullOrEmpty(version))
             {
                 version = Guid.NewGuid().ToString();
-                await cache.SetStringAsync(versionKey, version, new DistributedCacheEntryOptions
-                {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(7)
-                }, cancellationToken);
+
+                await cache.SetStringAsync(versionKey, version, cancellationToken);
             }
 
             string cacheKey = $"coupons:v={version}:most-used";

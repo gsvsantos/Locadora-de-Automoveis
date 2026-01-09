@@ -12,7 +12,7 @@ public interface IRepositoryClient : IRepository<Client>
 
     Task<bool> UpdateGlobalAsync(Guid clientId, Client updatedClient);
 
-    Task<List<Client>> GetIndividualClientsFromBusinessId(Guid id, CancellationToken ct = default);
+    Task<List<Client>> GetIndividualClientsFromBusinessIdAsync(Guid id, List<Guid> driversIds, CancellationToken ct = default);
 
     Task<List<Client>> SearchAsync(string term, CancellationToken ct = default);
 

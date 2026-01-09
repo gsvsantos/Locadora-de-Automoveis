@@ -28,7 +28,7 @@ public class LoginUserRequestHandler(
 
         if (user is null)
         {
-            return Result.Fail(ErrorResults.NotFoundError("User not found."));
+            return Result.Fail(AuthErrorResults.UserNotFoundError(request.UserName));
         }
 
         if (!await recaptchaService.VerifyRecaptchaToken(request.RecaptchaToken))

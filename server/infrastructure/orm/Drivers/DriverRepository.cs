@@ -24,6 +24,24 @@ public class DriverRepository(AppDbContext context)
             .ToListAsync();
     }
 
+    public async Task<List<Guid>> GetDriverClientIdsAsync()
+    {
+        return await this.records
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Where(d => d.IsActive == true)
+            .Select(d => d.ClientId)
+            .Distinct()
+            .ToListAsync();
+    }
+
+    public async Task<Driver?> GetByDocumentAsync(string document)
+    {
+        return await this.records
+            .Include(d => d.Client)
+            .FirstOrDefaultAsync(d => d.Document.Equals(document));
+    }
+
     public async Task<Driver?> GetDriverByClientId(Guid clientId)
     {
         return await this.records

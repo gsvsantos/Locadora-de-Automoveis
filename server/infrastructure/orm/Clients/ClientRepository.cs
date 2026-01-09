@@ -65,11 +65,12 @@ public class ClientRepository(AppDbContext context)
             .ToListAsync(ct);
     }
 
-    public async Task<List<Client>> GetIndividualClientsFromBusinessId(Guid id, CancellationToken ct = default)
+    public async Task<List<Client>> GetIndividualClientsFromBusinessIdAsync(Guid id, List<Guid> driversIds, CancellationToken ct = default)
     {
         return await this.records
             .Include(c => c.JuristicClient)
             .Where(c => c.JuristicClientId.Equals(id))
+            .Where(c => !driversIds.Contains(c.Id))
             .Where(c => c.IsActive == true)
             .ToListAsync(ct);
     }

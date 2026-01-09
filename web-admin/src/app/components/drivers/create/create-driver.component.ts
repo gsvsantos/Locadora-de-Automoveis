@@ -13,6 +13,7 @@ import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-butt
 import {
   BehaviorSubject,
   defer,
+  delay,
   filter,
   map,
   merge,
@@ -102,6 +103,41 @@ export class CreateDriverComponent {
       );
     });
 
+  protected readonly toggleNewDriverMode$: Observable<boolean> = defer(() => {
+    const newDriverControl = this.registerNewDriver;
+
+    if (!newDriverControl) {
+      return of(false);
+    }
+
+    return newDriverControl.valueChanges.pipe(
+      startWith(newDriverControl.value),
+      delay(0),
+      tap((isRegisteringNew: boolean) => {
+        if (isRegisteringNew) {
+          this.individualClientId?.setValue(null, { emitEvent: false });
+          this.individualClientId?.disable({ emitEvent: false });
+
+          this.resetDriverFields();
+          this.toggleManualFields(true);
+          this.toggleLicenseFields(true);
+        } else {
+          this.toggleManualFields(false);
+
+          if (this.individualClientsSubject.value.length > 0) {
+            this.individualClientId?.enable({ emitEvent: false });
+          } else {
+            this.individualClientId?.disable({ emitEvent: false });
+          }
+
+          if (!this.individualClientId?.value) {
+            this.resetDriverFields();
+          }
+        }
+      }),
+    );
+  });
+
   protected readonly clientTypeIsBusiness$: Observable<boolean> = defer(() => {
     const clientIdControl = this.clientId;
 
@@ -123,10 +159,14 @@ export class CreateDriverComponent {
       switchMap(({ selectedId, isBusinessClient, selectedClient }) => {
         this.formGroup.get('clientTypeIsBusiness')?.setValue(isBusinessClient);
 
+        this.registerNewDriver?.setValue(false, { emitEvent: false });
+        this.registerNewDriver?.enable({ emitEvent: false });
+        this.individualClientId?.setValue(null, { emitEvent: false });
+        this.individualClientsSubject.next([]);
         this.resetDriverFields();
+        this.toggleManualFields(false);
 
         if (!isBusinessClient && selectedClient) {
-          this.toggleManualFields(false);
           this.fillDriverFields(selectedClient);
           this.toggleLicenseFields(true);
           this.formGroup.updateValueAndValidity();
@@ -139,17 +179,13 @@ export class CreateDriverComponent {
             .pipe(
               tap((individualClients) => {
                 this.individualClientsSubject.next(individualClients);
-
                 const hasExistingIndividuals: boolean = individualClients.length > 0;
 
                 if (hasExistingIndividuals) {
-                  this.toggleIndividualClientId(true);
-                  this.toggleManualFields(true);
-                  this.toggleLicenseFields(true);
+                  this.registerNewDriver?.setValue(false, { emitEvent: true });
                 } else {
-                  this.toggleIndividualClientId(false);
-                  this.toggleManualFields(true);
-                  this.toggleLicenseFields(true);
+                  this.registerNewDriver?.setValue(true, { emitEvent: true });
+                  this.registerNewDriver?.disable({ emitEvent: false });
                 }
 
                 this.formGroup.updateValueAndValidity();
@@ -167,7 +203,13 @@ export class CreateDriverComponent {
             map(() => true),
           );
 
-          return merge(individualClientsLoaded$, selectedClientLogged$).pipe(
+          return merge(
+            individualClientsLoaded$,
+            selectedClientLogged$,
+            this.toggleNewDriverMode$,
+          ).pipe(
+            startWith(true),
+            map(() => true),
             shareReplay({ bufferSize: 1, refCount: true }),
           );
         }
@@ -176,7 +218,7 @@ export class CreateDriverComponent {
         return of(false);
       }),
     );
-  });
+  }).pipe(shareReplay({ bufferSize: 1, refCount: true }));
 
   protected formGroup: FormGroup = this.formBuilder.group(
     {
@@ -210,6 +252,7 @@ export class CreateDriverComponent {
       ],
       licenseValidity: ['', [Validators.required.bind(this)]],
       clientTypeIsBusiness: [false],
+      registerNewDriver: [false],
       individualClientId: [null],
     },
     { validators: [needsIndividualValidator] },
@@ -245,6 +288,14 @@ export class CreateDriverComponent {
 
   public get individualClientId(): AbstractControl | null {
     return this.formGroup.get('individualClientId');
+  }
+
+  public get clientTypeIsBusiness(): AbstractControl | null {
+    return this.formGroup.get('clientTypeIsBusiness');
+  }
+
+  public get registerNewDriver(): AbstractControl | null {
+    return this.formGroup.get('registerNewDriver');
   }
 
   public register(): void {
@@ -328,25 +379,5 @@ export class CreateDriverComponent {
 
       control.updateValueAndValidity();
     });
-  }
-
-  private toggleIndividualClientId(enable: boolean): void {
-    const control = this.individualClientId;
-
-    const hasExistingIndividuals = this.individualClientsSubject.value.length > 0;
-
-    if (enable) {
-      if (hasExistingIndividuals) {
-        control?.enable();
-      } else {
-        control?.disable();
-      }
-    } else {
-      control?.disable();
-      control?.setValue(null);
-    }
-
-    control?.updateValueAndValidity();
-    this.formGroup.updateValueAndValidity();
   }
 }

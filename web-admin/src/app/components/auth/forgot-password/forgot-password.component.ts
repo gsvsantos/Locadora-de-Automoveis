@@ -50,7 +50,7 @@ export class ForgotPasswordComponent {
     };
 
     const forgetPasswordObserver: PartialObserver<void> = {
-      error: (err: string) => (console.log(err), this.notificationService.error(err)),
+      error: (err: string) => this.notificationService.error(err),
       complete: () => (
         this.notificationService.success('Success! Please, check in your email.'),
         void this.router.navigate(['/auth', 'login'])

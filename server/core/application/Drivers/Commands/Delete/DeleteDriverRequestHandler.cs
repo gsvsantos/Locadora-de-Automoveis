@@ -62,6 +62,7 @@ public class DeleteDriverRequestHandler(
 
             await unitOfWork.CommitAsync();
 
+            await cache.SetStringAsync("clients:master-version", Guid.NewGuid().ToString(), cancellationToken);
             await cache.SetStringAsync("drivers:master-version", Guid.NewGuid().ToString(), cancellationToken);
 
             return Result.Ok(new DeleteDriverResponse());

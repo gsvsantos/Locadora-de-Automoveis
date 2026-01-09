@@ -5,8 +5,13 @@ export const needsIndividualValidator: ValidatorFn = (
 ): ValidationErrors | null => {
   const clientTypeIsBusiness = formGroup.get('clientTypeIsBusiness')?.value as boolean;
   const individualClientControl = formGroup.get('individualClientId');
+  const registerNew = formGroup.get('registerNewDriver')?.value as boolean;
 
   if (!clientTypeIsBusiness || !individualClientControl) {
+    return null;
+  }
+
+  if (registerNew) {
     return null;
   }
 

@@ -2,6 +2,7 @@
 using FluentResults;
 using LocadoraDeAutomoveis.Application.Shared;
 using LocadoraDeAutomoveis.Domain.Clients;
+using LocadoraDeAutomoveis.Domain.Drivers;
 using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ namespace LocadoraDeAutomoveis.Application.Clients.Commands.GetIndividuals;
 public class GetIndividualsRequestHandler(
     IMapper mapper,
     IRepositoryClient repositoryClient,
+    IRepositoryDriver repositoryDriver,
     IDistributedCache cache,
     ILogger<GetIndividualsRequestHandler> logger
 ) : IRequestHandler<GetIndividualsRequest, Result<GetIndividualsResponse>>
@@ -57,7 +59,9 @@ public class GetIndividualsRequestHandler(
                 }
             }
 
-            List<Client> clients = await repositoryClient.GetIndividualClientsFromBusinessId(selectedClient.Id, cancellationToken);
+            List<Guid> driversIds = await repositoryDriver.GetDriverClientIdsAsync();
+
+            List<Client> clients = await repositoryClient.GetIndividualClientsFromBusinessIdAsync(selectedClient.Id, driversIds, cancellationToken);
 
             GetIndividualsResponse response = mapper.Map<GetIndividualsResponse>(clients);
 

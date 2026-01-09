@@ -78,10 +78,9 @@ export class ResetPasswordComponent {
       newPassword: resetPasswordModelPartia.newPassword,
       confirmNewPassword: resetPasswordModelPartia.confirmNewPassword,
     };
-    console.log(resetPasswordModel);
 
     const resetPasswordObserver: PartialObserver<void> = {
-      error: (err: string) => (console.log(err), this.notificationService.error(err)),
+      error: (err: string) => this.notificationService.error(err),
       complete: () => (
         this.notificationService.success('Success! Please, sign in.'),
         void this.router.navigate(['/auth', 'login'])

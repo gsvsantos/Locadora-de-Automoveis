@@ -17,6 +17,11 @@ public abstract class BaseEntity<T>
         this.Id = Guid.NewGuid();
     }
 
+    public virtual void Activate()
+    {
+        this.IsActive = true;
+    }
+
     public virtual void Deactivate()
     {
         this.IsActive = false;

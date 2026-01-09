@@ -119,6 +119,10 @@ public sealed class CreateDriverRequestHandlerTests : UnitTestBase
              null
         );
 
+        this.repositoryDriverMock
+            .Setup(r => r.GetByDocumentAsync(request.Document))
+            .ReturnsAsync((Driver?)null);
+
         this.validatorMock
             .Setup(v => v.ValidateAsync(
                 It.Is<Driver>(d =>
@@ -139,14 +143,6 @@ public sealed class CreateDriverRequestHandlerTests : UnitTestBase
             request.LicenseValidity
         )
         { Id = driverId };
-
-        this.repositoryClientMock
-            .Setup(r => r.GetAllAsync())
-            .ReturnsAsync([physicalClient]);
-
-        this.repositoryDriverMock
-            .Setup(r => r.GetAllAsync())
-            .ReturnsAsync([]);
 
         this.repositoryDriverMock
             .Setup(r => r.AddAsync(
@@ -175,21 +171,18 @@ public sealed class CreateDriverRequestHandlerTests : UnitTestBase
         this.repositoryClientMock
             .Verify(r => r.GetByIdAsync(clientId), Times.Once);
 
+        this.repositoryDriverMock
+            .Verify(r => r.GetByDocumentAsync(request.Document), Times.Once);
+
         this.validatorMock
             .Verify(v => v.ValidateAsync(
-                    It.Is<Driver>(d =>
+                It.Is<Driver>(d =>
                         d.FullName == request.FullName && d.Email == request.Email &&
                         d.PhoneNumber == request.PhoneNumber && d.Document == request.Document &&
                         d.LicenseNumber == request.LicenseNumber && d.LicenseValidity == request.LicenseValidity
                     ), CancellationToken.None
                 ), Times.Once
             );
-
-        this.repositoryClientMock
-            .Verify(r => r.GetAllAsync(), Times.Once);
-
-        this.repositoryDriverMock
-            .Verify(r => r.GetAllAsync(), Times.Once);
 
         this.repositoryDriverMock
             .Verify(r => r.AddAsync(
@@ -268,6 +261,10 @@ public sealed class CreateDriverRequestHandlerTests : UnitTestBase
             null
         );
 
+        this.repositoryDriverMock
+            .Setup(r => r.GetByDocumentAsync(request.Document))
+            .ReturnsAsync((Driver?)null);
+
         this.validatorMock
             .Setup(v => v.ValidateAsync(
                 It.Is<Driver>(d =>
@@ -279,12 +276,8 @@ public sealed class CreateDriverRequestHandlerTests : UnitTestBase
             .ReturnsAsync(new ValidationResult());
 
         this.repositoryClientMock
-            .Setup(r => r.GetAllAsync())
-            .ReturnsAsync([juridicalClient]);
-
-        this.repositoryDriverMock
-            .Setup(r => r.GetAllAsync())
-            .ReturnsAsync([]);
+            .Setup(r => r.ExistsByDocumentAsync(request.Document))
+            .ReturnsAsync(false);
 
         this.repositoryClientMock
             .Setup(r => r.AddAsync(
@@ -322,6 +315,9 @@ public sealed class CreateDriverRequestHandlerTests : UnitTestBase
         this.repositoryClientMock
             .Verify(r => r.GetByIdAsync(clientId), Times.Once);
 
+        this.repositoryDriverMock
+            .Verify(r => r.GetByDocumentAsync(request.Document), Times.Once);
+
         this.validatorMock
             .Verify(v => v.ValidateAsync(
                 It.Is<Driver>(d =>
@@ -333,10 +329,7 @@ public sealed class CreateDriverRequestHandlerTests : UnitTestBase
             );
 
         this.repositoryClientMock
-            .Verify(r => r.GetAllAsync(), Times.Once);
-
-        this.repositoryDriverMock
-            .Verify(r => r.GetAllAsync(), Times.Once);
+            .Verify(r => r.ExistsByDocumentAsync(request.Document), Times.Once);
 
         this.repositoryClientMock
             .Verify(r => r.AddAsync(
