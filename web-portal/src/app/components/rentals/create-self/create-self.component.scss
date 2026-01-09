@@ -121,8 +121,8 @@ select[multiple] {
     margin-bottom: 2px;
 
     &:checked {
-      background-color: $primary-light;
-      color: $primary-active;
+      background-color: $primary;
+      color: $text-main;
     }
   }
 }

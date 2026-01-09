@@ -13,10 +13,13 @@
           <div class="form-field">
             <label>{{ t('card.label.licensePlate') }}</label>
             <input
-              class="form-input"
+              class="form-input uppercase-input"
               formControlName="licensePlate"
               type="text"
               [placeholder]="t('card.placeholder.licensePlate')"
+              mask="AAA-0000||AAA-0A00"
+              [dropSpecialCharacters]="false"
+              appUppercase
             />
             @if (licensePlate?.errors?.['required'] && licensePlate?.dirty) {
               <span class="error-message">{{ t('card.errors.licensePlateRequired') }}</span>

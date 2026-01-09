@@ -121,7 +121,7 @@
                 }
               </select>
             </div>
-          } @else if (state.hasExtras) {}
+          }
 
           @if (state.hasExtras) {
             <div class="form-field full-width">
@@ -135,7 +135,7 @@
               </select>
               <small class="helper-text">{{ t('card.helper.multiSelect') }}</small>
             </div>
-          } @else if (state.hasCoupon) {}
+          }
         } @else {
           <div class="info-message full-width">
             {{ t('card.warnings.noOptionsAvailable') }}

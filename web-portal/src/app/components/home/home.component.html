@@ -59,54 +59,54 @@
             }
           </div>
         </div>
-      }
-
-      <div class="list">
-        @for (vehicle of vm.state.items; track vehicle.id) {
-          <div class="item">
-            <app-vehicle-card
-              [vehicle]="vehicle"
-              [imageBaseUrl]="urlS3"
-              [canRent]="vm.rentalStatus.canRent"
-              [rentalBlockReason]="vm.rentalStatus.reason"
-              [activeRentalPlate]="vm.rentalStatus.rental?.vehicleLicensePlate ?? null"
-            >
-            </app-vehicle-card>
-          </div>
-        } @empty {
-          <p class="empty-state">{{ t('noVehiclesFound') }}</p>
-        }
-      </div>
-
-      @if (vm.state.totalCount > vm.state.pageSize) {
-        <div class="pagination">
-          <gs-buttons
-            [buttonType]="buttonType.Default"
-            [text]="t('pagination.prev')"
-            [variant]="variantType.Outline"
-            [disabled]="vm.state.currentPage === 1"
-            (click)="onPageChange(vm.state.currentPage - 1)"
-          >
-          </gs-buttons>
-
-          <span>
-            {{
-              t('pagination.info', {
-                page: vm.state.currentPage,
-                total: Math.ceil(vm.state.totalCount / vm.state.pageSize),
-              })
-            }}
-          </span>
-
-          <gs-buttons
-            [buttonType]="buttonType.Default"
-            [text]="t('pagination.next')"
-            [variant]="variantType.Outline"
-            [disabled]="vm.state.currentPage * vm.state.pageSize >= vm.state.totalCount"
-            (click)="onPageChange(vm.state.currentPage + 1)"
-          >
-          </gs-buttons>
+      } @else {
+        <div class="list">
+          @for (vehicle of vm.state.items; track vehicle.id) {
+            <div class="item">
+              <app-vehicle-card
+                [vehicle]="vehicle"
+                [imageBaseUrl]="urlS3"
+                [canRent]="vm.rentalStatus.canRent"
+                [rentalBlockReason]="vm.rentalStatus.reason"
+                [activeRentalPlate]="vm.rentalStatus.rental?.vehicleLicensePlate ?? null"
+              >
+              </app-vehicle-card>
+            </div>
+          } @empty {
+            <p class="empty-state">{{ t('noVehiclesFound') }}</p>
+          }
         </div>
+
+        @if (vm.state.totalCount > vm.state.pageSize) {
+          <div class="pagination">
+            <gs-buttons
+              [buttonType]="buttonType.Default"
+              [text]="t('pagination.prev')"
+              [variant]="variantType.Outline"
+              [disabled]="vm.state.currentPage === 1"
+              (click)="onPageChange(vm.state.currentPage - 1)"
+            >
+            </gs-buttons>
+
+            <span>
+              {{
+                t('pagination.info', {
+                  page: vm.state.currentPage,
+                  total: Math.ceil(vm.state.totalCount / vm.state.pageSize),
+                })
+              }}
+            </span>
+
+            <gs-buttons
+              [buttonType]="buttonType.Default"
+              [text]="t('pagination.next')"
+              [variant]="variantType.Outline"
+              [disabled]="vm.state.currentPage * vm.state.pageSize >= vm.state.totalCount"
+              (click)="onPageChange(vm.state.currentPage + 1)"
+            >
+            </gs-buttons>
+          </div>
+        }
       }
     } @else {
       <div class="loading-skeleton">{{ t('loading') }}</div>

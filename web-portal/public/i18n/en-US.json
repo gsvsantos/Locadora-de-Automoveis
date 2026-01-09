@@ -311,7 +311,7 @@
           "coupon": "Select a coupon (optional)"
         },
         "helper": {
-          "multiSelect": "Hold Ctrl (Windows) or Cmd (Mac) to select multiple options."
+          "multiSelect": "Hold Ctrl (Windows) or Cmd (Mac) to select or deselect multiple options."
         },
         "plan": {
           "daily": "Daily Plan (Rate + Km)",

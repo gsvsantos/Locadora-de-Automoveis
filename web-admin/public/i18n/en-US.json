@@ -1307,6 +1307,23 @@
           "confirm": "Save Changes"
         }
       }
+    },
+    "change-password": {
+      "title": "Change Password",
+      "label": {
+        "currentPassword": "Current password",
+        "newPassword": "New password",
+        "confirmNewPassword": "Confirm new password"
+      },
+      "errors": {
+        "required": "Required field.",
+        "minLength": "Password must be at least 6 characters long.",
+        "mismatch": "New passwords do not match.",
+        "samePassword": "Current and new passwords are the same."
+      },
+      "buttons": {
+        "change": "Update password"
+      }
     }
   },
   "configuration": {

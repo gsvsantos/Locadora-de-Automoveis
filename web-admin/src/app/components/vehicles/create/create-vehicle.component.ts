@@ -1,3 +1,4 @@
+import { NgxMaskDirective } from 'ngx-mask';
 import {
   FormBuilder,
   FormGroup,
@@ -7,7 +8,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
-import { filter, map, Observer } from 'rxjs';
+import { filter, map, Observer, tap } from 'rxjs';
 import { IdApiResponse } from '../../../models/api.models';
 import { VehicleDto } from '../../../models/vehicles.models';
 import { NotificationService } from '../../../services/notification.service';
@@ -16,10 +17,19 @@ import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
 import { Group } from '../../../models/group.models';
+import { UppercaseDirective } from '../../../directives/uppercase.directive';
 
 @Component({
   selector: 'app-create-vehicle.component',
-  imports: [AsyncPipe, RouterLink, ReactiveFormsModule, TranslocoModule, GsButtons],
+  imports: [
+    AsyncPipe,
+    NgxMaskDirective,
+    RouterLink,
+    ReactiveFormsModule,
+    TranslocoModule,
+    GsButtons,
+    UppercaseDirective,
+  ],
   templateUrl: './create-vehicle.component.html',
   styleUrl: './create-vehicle.component.scss',
 })

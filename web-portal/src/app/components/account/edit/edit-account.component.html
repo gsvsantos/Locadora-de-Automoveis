@@ -101,7 +101,7 @@
               />
             </div>
 
-            <div class="form-field full-width">
+            <div class="form-field">
               <label>{{ t('card.label.neighborhood') }}</label>
               <input
                 class="form-input"
@@ -112,22 +112,22 @@
             </div>
 
             <div class="form-field">
-              <label>{{ t('card.label.street') }}</label>
-              <input
-                class="form-input"
-                formControlName="street"
-                type="text"
-                [placeholder]="t('card.placeholder.street')"
-              />
-            </div>
-
-            <div class="form-field">
               <label>{{ t('card.label.number') }}</label>
               <input
                 class="form-input"
                 formControlName="number"
                 type="text"
                 [placeholder]="t('card.placeholder.number')"
+              />
+            </div>
+
+            <div class="form-field full-width">
+              <label>{{ t('card.label.street') }}</label>
+              <input
+                class="form-input"
+                formControlName="street"
+                type="text"
+                [placeholder]="t('card.placeholder.street')"
               />
             </div>
           </div>

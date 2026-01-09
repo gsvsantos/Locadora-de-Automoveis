@@ -310,7 +310,7 @@
           "coupon": "Selecciona un cupón (opcional)"
         },
         "helper": {
-          "multiSelect": "Mantenga Ctrl (Windows) o Cmd (Mac) para seleccionar varias opciones."
+          "multiSelect": "Mantenga Ctrl (Windows) o Cmd (Mac) para seleccionar o deseleccionar varias opciones."
         },
         "plan": {
           "daily": "Plan diario (Tarifa + Km)",
