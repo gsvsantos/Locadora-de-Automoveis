@@ -100,7 +100,7 @@
     }
   },
   "navbar": {
-    "logo": "Locadora de Veículos",
+    "logo": "Locadora de Automóveis",
     "home": "Home",
     "myRentals": "My Rentals",
     "login": "Sign In",
@@ -108,7 +108,7 @@
     "profile": "My Profile",
     "logout": "Logout",
     "welcome": "Hello",
-    "footerRights": "Locadora de Veículos. All rights reserved."
+    "footerRights": "Locadora de Automóveis. All rights reserved."
   },
   "home": {
     "rentBlocked": {

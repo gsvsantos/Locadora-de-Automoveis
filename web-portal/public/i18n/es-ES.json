@@ -100,7 +100,7 @@
     }
   },
   "navbar": {
-    "logo": "Alquiler de Vehículos",
+    "logo": "Locadora de Automóveis",
     "home": "Inicio",
     "myRentals": "Mis alquileres",
     "login": "Iniciar sesión",
@@ -108,7 +108,7 @@
     "profile": "Mi perfil",
     "logout": "Cerrar sesión",
     "welcome": "Hola",
-    "footerRights": "Alquiler de Vehículos. Todos los derechos reservados."
+    "footerRights": "Locadora de Automóveis. Todos los derechos reservados."
   },
   "home": {
     "rentBlocked": {
