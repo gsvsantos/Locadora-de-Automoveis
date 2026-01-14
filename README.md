@@ -120,7 +120,6 @@ Dois SPAs independentes, ambos com arquitetura moderna e foco em UX.
 #### Stack moderna (comprovada no código)
 
 - Standalone-style (sem NgModules): `bootstrapApplication(...)` e componentes com `imports: [...]`
-- `provideZonelessChangeDetection()` habilitado
 - Router com `withViewTransitions(...)`
 - Transloco i18n completo: `pt-BR`, `en-US`, `es-ES`
 
@@ -293,16 +292,6 @@ A aplicação usa `IConfiguration` de duas formas:
 - `server/` → detalhes de arquitetura, env vars e execução
 - `web-admin/` → rotas, guards, resolvers, telas
 - `web-portal/` → rotas, auth, i18n, telas
-
----
-
-## 🚧 Melhorias Técnicas (Backlog)
-
-- [ ] Segregação estrita de contratos (Response/DTOs bem separados por contexto)
-- [ ] Response slimming (reduzir payloads e campos redundantes)
-- [ ] Harmonização de nomenclatura (Models do Admin/Portal alinhados aos contratos do backend)
-- [ ] Cache estratégico (Redis) para catálogos/configurações por tenant
-- [ ] Testes E2E com Playwright
 
 ---
 
